@@ -1,0 +1,39 @@
+{
+  "name": "bowser-fantasy-football",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "data:import": "python3 scripts/import_nflverse_2025.py",
+    "data:refresh": "python3 scripts/import_nflverse_2025.py --refresh",
+    "data:verify": "python3 scripts/verify_warehouse.py",
+    "test": "node --test tests/warehouse.test.mjs",
+    "test:ui": "vitest run tests/ui.test.jsx",
+    "check": "npm run data:verify && npm test && npm run test:ui && npm run build && npm run test:production && npm run test:sites",
+    "build": "vite build && node scripts/prepare-sites-build.mjs",
+    "vercel-build": "vite build",
+    "serve": "node scripts/serve-production.mjs",
+    "test:production": "node --test tests/production-server.test.mjs",
+    "preview": "vite preview",
+    "test:sites": "node --test tests/sites-worker.test.mjs"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "2.1.10",
+    "@vitejs/plugin-react": "5.0.4",
+    "express": "5.2.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "vite": "6.4.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@testing-library/user-event": "14.6.3",
+    "jsdom": "26.1.0",
+    "vitest": "3.2.7"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "provider": "Vercel",
+  "project": "fantasy-football-stats-preview",
+  "product_name_assigned": true,
+  "product_name": "Bowser",
+  "environment": "production",
+  "production_url": "https://fantasy-football-stats-preview.vercel.app",
+  "deployment_id": "dpl_3q52KvBUQErq6c1WHKwLMh443tCn",
+  "deployment_url": "https://fantasy-football-stats-preview-mavdq71lz-rbarbieri13s-projects.vercel.app",
+  "deployed_at": "2026-08-10T20:21:47-05:00",
+  "verification": {
+    "status": "passed",
+    "public_homepage": 200,
+    "public_api_players": 609,
+    "public_api_rows": 7525,
+    "full_season_rows_returned": 609,
+    "browser_console_errors": 0
+  }
+}

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.DS_Store
+.env*
+!.env.example
+npm-debug.log*
+.graph-session/
+artifacts/
+data/*.sqlite-shm
+data/*.sqlite-wal
+artifacts/design-qa/*-pass-1.png
+artifacts/design-qa/*-pass-1b.png
+.vercel/
+.vercel
