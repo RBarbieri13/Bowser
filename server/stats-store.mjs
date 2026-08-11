@@ -1,5 +1,5 @@
 import { DatabaseSync } from "node:sqlite";
-import { copyFileSync, existsSync } from "node:fs";
+import { copyFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -7,7 +7,7 @@ const DEFAULT_DB_PATH = fileURLToPath(new URL("../data/fantasy_football.sqlite",
 const VERCEL_DB_PATH = path.join("/tmp", "fantasy_football_2025.sqlite");
 
 const SORT_COLUMNS = new Map([
-  ["rank", "fantasy_points_per_game"], ["name", "player_display_name"],
+  ["rank", "fantasy_points"], ["name", "player_display_name"],
   ["team", "team"], ["position", "position"], ["games_played", "games_played"],
   ["snaps", "snaps"], ["snap_pct", "snap_pct"],
   ["passing_attempts", "passing_attempts"], ["completions", "completions"],
@@ -41,8 +41,8 @@ export class QueryValidationError extends Error {
 export function openDatabase(dbPath = process.env.FANTASY_DB_PATH || DEFAULT_DB_PATH) {
   let resolved = path.resolve(dbPath);
   if (!process.env.FANTASY_DB_PATH && process.env.VERCEL) {
-    if (!existsSync(VERCEL_DB_PATH)) copyFileSync(DEFAULT_DB_PATH, VERCEL_DB_PATH);
     resolved = VERCEL_DB_PATH;
+    if (!database || activePath !== resolved) copyFileSync(DEFAULT_DB_PATH, resolved);
   }
   if (!database || activePath !== resolved) {
     database?.close();
@@ -67,7 +67,7 @@ function list(value, map = (item) => item) {
 }
 
 function sortTerms(sortValue, directionValue) {
-  const keys = list(sortValue || "fantasy_points_per_game");
+  const keys = list(sortValue || "fantasy_points");
   const directions = list(directionValue || "desc");
   if (!keys.length || keys.length > 3) throw new QueryValidationError("sort", "Provide between one and three sort fields");
   return keys.map((key, index) => {
@@ -123,6 +123,7 @@ export function getMeta(dbPath) {
     positions: db.prepare("SELECT DISTINCT position FROM player_week_stats WHERE position <> '' ORDER BY position").all().map((row) => row.position),
     teams: db.prepare("SELECT DISTINCT team FROM player_week_stats WHERE team <> '' AND team <> 'UNK' ORDER BY team").all().map((row) => row.team),
     weeks: db.prepare("SELECT season_type, GROUP_CONCAT(week) AS weeks FROM (SELECT DISTINCT season_type, week FROM player_week_stats ORDER BY season_type, week) GROUP BY season_type ORDER BY season_type").all(),
+    weekOptions: db.prepare("SELECT DISTINCT season_type, week FROM player_week_stats WHERE season = 2025 ORDER BY week").all(),
     warehouse: summary,
     attribution: { name: "nflverse", url: "https://github.com/nflverse/nflverse-data", license: "CC BY 4.0" },
   };
@@ -231,6 +232,185 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
       queryMs: Number((performance.now() - started).toFixed(2)),
       season: 2025, seasonType, scoring, positions, teams, weeks, search,
       minGames, minSnaps, sorts: sorts.map(({ key, direction }) => ({ key, direction })), limit, ranks,
+    },
+  };
+}
+
+function scoringBonus(scoring) {
+  if (!["standard", "half", "ppr"].includes(scoring)) {
+    throw new QueryValidationError("scoring", "Unknown scoring system");
+  }
+  return scoring === "ppr" ? 1 : scoring === "half" ? 0.5 : 0;
+}
+
+export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath) {
+  const db = openDatabase(dbPath);
+  const started = performance.now();
+  const playerId = String(searchParams.get("playerId") || "").trim().slice(0, 40);
+  if (!playerId) throw new QueryValidationError("playerId", "A playerId is required");
+  const scoring = searchParams.get("scoring") || "ppr";
+  const receptionBonus = scoringBonus(scoring);
+
+  const playerRow = db.prepare(`
+    SELECT
+      p.player_id,
+      p.display_name AS player_display_name,
+      p.position,
+      COALESCE(
+        NULLIF(p.latest_team, ''),
+        (
+          SELECT stats.team
+          FROM player_week_stats stats
+          WHERE stats.player_id = p.player_id AND stats.season = 2025 AND stats.team <> 'UNK'
+          ORDER BY stats.week DESC
+          LIMIT 1
+        ),
+        'UNK'
+      ) AS team,
+      p.headshot_url
+    FROM players p
+    WHERE p.player_id = ?
+  `).get(playerId);
+  if (!playerRow) throw new QueryValidationError("playerId", "Unknown player");
+
+  const gameLogs = db.prepare(`
+    WITH weekly AS (
+      SELECT
+        player_id,
+        season_type,
+        week,
+        team,
+        opponent_team,
+        position,
+        player_display_name,
+        offense_snaps,
+        CASE WHEN offense_pct IS NOT NULL THEN ROUND(offense_pct * 100.0, 1) END AS snap_pct,
+        completions,
+        attempts AS passing_attempts,
+        passing_yards,
+        passing_tds,
+        interceptions,
+        sacks_suffered,
+        carries,
+        rushing_yards,
+        rushing_tds,
+        targets,
+        receptions,
+        receiving_yards,
+        receiving_tds,
+        CASE WHEN attempts > 0 THEN ROUND(1.0 * passing_yards / attempts, 1) END AS passing_yards_per_attempt,
+        CASE WHEN carries > 0 THEN ROUND(1.0 * rushing_yards / carries, 1) END AS rushing_yards_per_attempt,
+        CASE WHEN receptions > 0 THEN ROUND(1.0 * receiving_yards / receptions, 1) END AS receiving_yards_per_reception,
+        ROUND(fantasy_points + receptions * ?, 1) AS fantasy_points,
+        DENSE_RANK() OVER (
+          PARTITION BY season_type, week, position
+          ORDER BY (fantasy_points + receptions * ?) DESC, player_id ASC
+        ) AS position_finish
+      FROM player_week_stats
+      WHERE season = 2025 AND source_player_stats = 1
+    )
+    SELECT * FROM weekly WHERE player_id = ? ORDER BY week ASC
+  `).all(receptionBonus, receptionBonus, playerId);
+
+  const seasonStats = db.prepare(`
+    WITH totals AS (
+      SELECT
+        player_id,
+        MAX(player_display_name) AS player_display_name,
+        GROUP_CONCAT(DISTINCT NULLIF(team, 'UNK')) AS team,
+        MAX(position) AS position,
+        COUNT(DISTINCT season_type || '-' || week) AS games_played,
+        SUM(attempts) AS passing_attempts,
+        SUM(completions) AS completions,
+        SUM(passing_yards) AS passing_yards,
+        SUM(passing_tds) AS passing_tds,
+        SUM(interceptions) AS interceptions,
+        SUM(sacks_suffered) AS sacks_suffered,
+        CASE WHEN SUM(attempts) > 0 THEN ROUND(1.0 * SUM(passing_yards) / SUM(attempts), 1) END AS passing_yards_per_attempt,
+        SUM(carries) AS carries,
+        SUM(rushing_yards) AS rushing_yards,
+        SUM(rushing_tds) AS rushing_tds,
+        CASE WHEN SUM(carries) > 0 THEN ROUND(1.0 * SUM(rushing_yards) / SUM(carries), 1) END AS rushing_yards_per_attempt,
+        SUM(targets) AS targets,
+        SUM(receptions) AS receptions,
+        SUM(receiving_yards) AS receiving_yards,
+        SUM(receiving_tds) AS receiving_tds,
+        CASE WHEN SUM(receptions) > 0 THEN ROUND(1.0 * SUM(receiving_yards) / SUM(receptions), 1) END AS receiving_yards_per_reception,
+        ROUND(SUM(fantasy_points + receptions * ?), 1) AS fantasy_points
+      FROM player_week_stats
+      WHERE season = 2025
+      GROUP BY player_id
+    ), ranked AS (
+      SELECT *, DENSE_RANK() OVER (PARTITION BY position ORDER BY fantasy_points DESC, player_id ASC) AS position_finish
+      FROM totals
+    )
+    SELECT 2025 AS season, * FROM ranked WHERE player_id = ?
+  `).get(receptionBonus, playerId);
+
+  const depthRows = db.prepare(`
+    WITH totals AS (
+      SELECT
+        player_id,
+        MAX(player_display_name) AS player_display_name,
+        MAX(position) AS position,
+        ROUND(SUM(fantasy_points + receptions * ?), 1) AS fantasy_points,
+        COALESCE(SUM(offense_snaps), 0) AS snaps
+      FROM player_week_stats
+      WHERE season = 2025
+      GROUP BY player_id
+    ), ranked AS (
+      SELECT *, DENSE_RANK() OVER (PARTITION BY position ORDER BY fantasy_points DESC, player_id ASC) AS position_rank
+      FROM totals
+    ), team_players AS (
+      SELECT DISTINCT player_id FROM player_week_stats WHERE season = 2025 AND team = ?
+    )
+    SELECT ranked.*
+    FROM ranked
+    INNER JOIN team_players USING (player_id)
+    WHERE position IN ('QB', 'RB', 'FB', 'WR', 'TE')
+    ORDER BY
+      CASE position WHEN 'QB' THEN 1 WHEN 'RB' THEN 2 WHEN 'FB' THEN 2 WHEN 'WR' THEN 3 WHEN 'TE' THEN 4 ELSE 5 END,
+      fantasy_points DESC,
+      snaps DESC,
+      player_display_name ASC
+  `).all(receptionBonus, playerRow.team);
+
+  const groupedDepth = [];
+  for (const row of depthRows) {
+    const groupPosition = row.position === "FB" ? "RB" : row.position;
+    let group = groupedDepth.find((item) => item.position === groupPosition);
+    if (!group) {
+      group = { position: groupPosition, players: [] };
+      groupedDepth.push(group);
+    }
+    group.players.push({
+      playerId: row.player_id,
+      name: row.player_display_name,
+      position: row.position,
+      positionRank: row.position_rank,
+      fantasyPoints: row.fantasy_points,
+      selected: row.player_id === playerId,
+    });
+  }
+
+  return {
+    data: {
+      player: {
+        playerId: playerRow.player_id,
+        name: playerRow.player_display_name,
+        position: playerRow.position,
+        team: playerRow.team,
+        headshotUrl: playerRow.headshot_url,
+        leagueStatus: "Roster data not connected",
+      },
+      gameLogs,
+      seasonStats: seasonStats ? [seasonStats] : [],
+      depthChart: { team: playerRow.team, groups: groupedDepth },
+    },
+    meta: {
+      season: 2025,
+      scoring,
+      queryMs: Number((performance.now() - started).toFixed(2)),
     },
   };
 }

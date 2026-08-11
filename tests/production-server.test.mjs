@@ -41,6 +41,12 @@ test("production API serves the packaged SQLite warehouse", async () => {
   const stats = await statsResponse.json();
   assert.equal(stats.data.length, 609);
   assert.ok(stats.meta.queryMs < 250);
+
+  const profileResponse = await fetch(`${origin}/api/v1/player-profile?playerId=00-0033280&scoring=ppr`);
+  assert.equal(profileResponse.status, 200);
+  const profile = await profileResponse.json();
+  assert.equal(profile.data.player.name, "Christian McCaffrey");
+  assert.equal(profile.data.seasonStats[0].fantasy_points, 458.4);
 });
 
 test("unknown API routes do not fall back to the app shell", async () => {

@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   CaretDown, CaretUp, Check, Info, MagnifyingGlass, Minus, Plus, SlidersHorizontal, X,
 } from "@phosphor-icons/react";
+import { PlayerProfile } from "./PlayerProfile.jsx";
+import { WeekRangePicker } from "./WeekRangePicker.jsx";
 
 
 const numberFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
@@ -65,7 +67,7 @@ const GROUPS = [
     key: "dfs",
     columns: [
       { key: "draft_kings_price", label: "DraftKings Price", width: 90, align: "center", sortable: false },
-      { key: "fantasy_points_per_game", label: "Fantasy Points", width: 90, format: "decimal" },
+      { key: "fantasy_points", label: "Fantasy Points", width: 90, format: "decimal" },
     ],
   },
 ];
@@ -124,7 +126,6 @@ export function App() {
   const [meta, setMeta] = useState(null);
   const [rows, setRows] = useState([]);
   const [responseMeta, setResponseMeta] = useState(null);
-  const [seasonType, setSeasonType] = useState("REG");
   const [position, setPosition] = useState("ALL");
   const [scoring, setScoring] = useState("ppr");
   const [search, setSearch] = useState("");
@@ -135,17 +136,25 @@ export function App() {
   const [customRanks, setCustomRanks] = useState("");
   const [appliedRanks, setAppliedRanks] = useState("");
   const [customError, setCustomError] = useState("");
-  const [weeks, setWeeks] = useState("");
+  const [weekStart, setWeekStart] = useState(1);
+  const [weekEnd, setWeekEnd] = useState(18);
   const [team, setTeam] = useState("ALL");
   const [minGames, setMinGames] = useState("0");
   const [minSnaps, setMinSnaps] = useState("0");
   const [moreOpen, setMoreOpen] = useState(false);
-  const [sorts, setSorts] = useState([{ key: "fantasy_points_per_game", direction: "desc" }]);
+  const [sorts, setSorts] = useState([{ key: "fantasy_points", direction: "desc" }]);
   const [selected, setSelected] = useState(() => new Set());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showSwipeHint, setShowSwipeHint] = useState(() => localStorage.getItem("stats-scroll-hint-dismissed") !== "1");
+  const [profilePlayer, setProfilePlayer] = useState(null);
   const tableScroller = useRef(null);
+  const profileOpener = useRef(null);
+
+  const selectedWeeks = useMemo(
+    () => Array.from({ length: weekEnd - weekStart + 1 }, (_, index) => weekStart + index),
+    [weekStart, weekEnd],
+  );
 
   useEffect(() => {
     fetch("/api/v1/meta")
@@ -161,7 +170,7 @@ export function App() {
     const controller = new AbortController();
     const querySorts = sorts.length ? sorts : [{ key: "name", direction: "asc" }];
     const params = new URLSearchParams({
-      seasonType,
+      seasonType: "ALL",
       scoring,
       search: debouncedSearch,
       sort: querySorts.map((item) => item.key).join(","),
@@ -169,10 +178,10 @@ export function App() {
       limit: topEnabled ? limit : "all",
       minGames,
       minSnaps,
+      weeks: selectedWeeks.join(","),
     });
     if (position !== "ALL") params.set("positions", position);
     if (team !== "ALL") params.set("teams", team);
-    if (weeks.trim()) params.set("weeks", weeks.trim());
     if (customEnabled && appliedRanks) params.set("ranks", appliedRanks);
     setLoading(true);
     setError("");
@@ -193,7 +202,7 @@ export function App() {
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [seasonType, scoring, debouncedSearch, sorts, topEnabled, limit, customEnabled, appliedRanks, position, team, weeks, minGames, minSnaps]);
+  }, [scoring, debouncedSearch, sorts, topEnabled, limit, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps]);
 
   const allVisibleSelected = rows.length > 0 && rows.every((row) => selected.has(row.player_id));
   const someVisibleSelected = rows.some((row) => selected.has(row.player_id)) && !allVisibleSelected;
@@ -217,7 +226,7 @@ export function App() {
 
   const handleSort = (key, shiftKey = false) => {
     if (key === "select" || key === "draft_kings_price") return;
-    const normalized = key === "rank" ? "fantasy_points_per_game" : key;
+    const normalized = key === "rank" ? "fantasy_points" : key;
     const defaultDirection = ["name", "team", "position"].includes(normalized) ? "asc" : "desc";
     setSorts((current) => {
       const index = current.findIndex((item) => item.key === normalized);
@@ -257,11 +266,21 @@ export function App() {
   };
 
   const filterSummary = useMemo(() => {
-    const parts = [seasonType === "REG" ? "Regular season" : seasonType === "POST" ? "Postseason" : "Full season", scoring.toUpperCase()];
+    const range = weekStart === weekEnd ? `Week ${weekStart}` : `Weeks ${weekStart}–${weekEnd}`;
+    const parts = [range, scoring.toUpperCase()];
     if (position !== "ALL") parts.push(position);
-    if (weeks) parts.push(`Weeks ${weeks}`);
     return parts.join(" · ");
-  }, [seasonType, scoring, position, weeks]);
+  }, [weekStart, weekEnd, scoring, position]);
+
+  const openProfile = (row, opener) => {
+    profileOpener.current = opener;
+    setProfilePlayer({ playerId: row.player_id, name: row.player_display_name });
+  };
+
+  const closeProfile = useCallback(() => {
+    setProfilePlayer(null);
+    window.requestAnimationFrame(() => profileOpener.current?.focus());
+  }, []);
 
   const onHorizontalScroll = () => {
     if (tableScroller.current?.scrollLeft > 16 && showSwipeHint) {
@@ -277,11 +296,7 @@ export function App() {
           <SelectField label="Season" value="2025" onChange={() => {}} info="NFL season used for this table.">
             <option value="2025">2025</option>
           </SelectField>
-          <SelectField label="Week(s)" value={seasonType} onChange={(event) => { setSeasonType(event.target.value); setWeeks(""); }}>
-            <option value="REG">Regular</option>
-            <option value="POST">Postseason</option>
-            <option value="ALL">Full Season</option>
-          </SelectField>
+          <WeekRangePicker start={weekStart} end={weekEnd} onChange={(start, end) => { setWeekStart(start); setWeekEnd(end); }} />
           <SelectField label="Position(s)" value={position} onChange={(event) => setPosition(event.target.value)}>
             <option value="ALL">All</option>
             {(meta?.positions || []).map((item) => <option key={item} value={item}>{item}</option>)}
@@ -307,7 +322,6 @@ export function App() {
           <div className="more-popover" id="more-filters">
             <div className="popover-heading"><SlidersHorizontal aria-hidden="true" /><span>More filters</span><button onClick={() => setMoreOpen(false)} aria-label="Close more filters"><X /></button></div>
             <label>Team<select value={team} onChange={(event) => setTeam(event.target.value)}><option value="ALL">All teams</option>{(meta?.teams || []).map((item) => <option key={item}>{item}</option>)}</select></label>
-            <label>NFL weeks<input type="text" value={weeks} onChange={(event) => setWeeks(event.target.value)} placeholder="e.g. 1, 3, 7" /></label>
             <label>Minimum games<input type="number" min="0" max="25" value={minGames} onChange={(event) => setMinGames(event.target.value)} /></label>
             <label>Minimum snaps<input type="number" min="0" max="3000" value={minSnaps} onChange={(event) => setMinSnaps(event.target.value)} /></label>
           </div>
@@ -353,7 +367,7 @@ export function App() {
               </tr>
               <tr className="column-row">
                 {COLUMNS.map((column) => {
-                  const normalizedSortKey = column.key === "rank" ? "fantasy_points_per_game" : column.key;
+                  const normalizedSortKey = column.key === "rank" ? "fantasy_points" : column.key;
                   const sortIndex = sorts.findIndex((item) => item.key === normalizedSortKey);
                   const activeSort = sortIndex >= 0;
                   const activeDirection = activeSort ? sorts[sortIndex].direction : undefined;
@@ -370,14 +384,18 @@ export function App() {
             </thead>
             <tbody>
               {!loading && !error && rows.length === 0 ? (
-                <tr><td className="empty-state" colSpan={COLUMNS.length}><strong>No players match these filters.</strong><button onClick={() => { setSearch(""); setPosition("ALL"); setTeam("ALL"); setWeeks(""); setMinGames("0"); setMinSnaps("0"); setCustomEnabled(false); }}>Clear filters</button></td></tr>
+                <tr><td className="empty-state" colSpan={COLUMNS.length}><strong>No players match these filters.</strong><button onClick={() => { setSearch(""); setPosition("ALL"); setTeam("ALL"); setWeekStart(1); setWeekEnd(18); setMinGames("0"); setMinSnaps("0"); setCustomEnabled(false); }}>Clear filters</button></td></tr>
               ) : rows.map((row) => (
                 <tr key={row.player_id} className={selected.has(row.player_id) ? "selected" : ""}>
                   {COLUMNS.map((column) => {
                     if (column.key === "select") return <td key={column.key} className="identity sticky-select"><Checkbox checked={selected.has(row.player_id)} label={`Select ${row.player_display_name}`} onChange={() => toggleRow(row.player_id)} /></td>;
                     const field = column.field || column.key;
                     const value = column.key === "draft_kings_price" ? null : row[field];
-                    return <td key={column.key} title={column.key === "name" ? row.player_display_name : undefined} className={`${column.align === "center" ? "center " : ""}${column.key === "rank" ? "identity sticky-rank " : ""}${column.key === "name" ? "identity sticky-name player-name " : ""}${column.key === "fantasy_points_per_game" ? "fantasy-cell " : ""}${column.key === "snap_pct" || column.key === "interceptions" || column.key === "rushing_tds" || column.key === "receiving_tds" ? "group-end" : ""}`}>{formatCell(value, column.format)}</td>;
+                    const className = `${column.align === "center" ? "center " : ""}${column.key === "rank" ? "identity sticky-rank " : ""}${column.key === "name" ? "identity sticky-name player-name " : ""}${column.key === "fantasy_points" ? "fantasy-cell " : ""}${column.key === "snap_pct" || column.key === "interceptions" || column.key === "rushing_tds" || column.key === "receiving_tds" ? "group-end" : ""}`;
+                    if (column.key === "name") {
+                      return <td key={column.key} title={row.player_display_name} className={className}><button type="button" className="player-name-button" onClick={(event) => openProfile(row, event.currentTarget)}>{row.player_display_name}</button></td>;
+                    }
+                    return <td key={column.key} className={className}>{formatCell(value, column.format)}</td>;
                   })}
                 </tr>
               ))}
@@ -390,6 +408,14 @@ export function App() {
           <a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noreferrer">Data: nflverse · CC BY 4.0</a>
         </footer>
       </section>
+      {profilePlayer ? (
+        <PlayerProfile
+          player={profilePlayer}
+          scoring={scoring}
+          onClose={closeProfile}
+          onSelectPlayer={(playerId, name) => setProfilePlayer({ playerId, name })}
+        />
+      ) : null}
     </main>
   );
 }

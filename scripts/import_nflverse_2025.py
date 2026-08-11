@@ -41,7 +41,7 @@ REVIEWED_PFR_ALIASES = {
 }
 
 STAT_FIELDS = (
-    "completions", "attempts", "passing_yards", "passing_tds", "interceptions",
+    "completions", "attempts", "passing_yards", "passing_tds", "interceptions", "sacks_suffered",
     "passing_first_downs", "passing_2pt_conversions", "carries", "rushing_yards",
     "rushing_tds", "rushing_first_downs", "rushing_2pt_conversions", "receptions",
     "targets", "receiving_yards", "receiving_tds", "receiving_first_downs",
@@ -209,6 +209,7 @@ CREATE TABLE player_week_stats (
     passing_yards REAL NOT NULL DEFAULT 0,
     passing_tds INTEGER NOT NULL DEFAULT 0,
     interceptions INTEGER NOT NULL DEFAULT 0,
+    sacks_suffered INTEGER NOT NULL DEFAULT 0,
     passing_first_downs INTEGER NOT NULL DEFAULT 0,
     passing_2pt_conversions INTEGER NOT NULL DEFAULT 0,
     carries INTEGER NOT NULL DEFAULT 0,
@@ -301,7 +302,7 @@ def build_database(refresh: bool) -> dict:
         ])
         rows.append(tuple(values))
 
-    placeholders = ",".join("?" for _ in range(45))
+    placeholders = ",".join("?" for _ in range(len(rows[0])))
     connection.executemany(f"INSERT INTO player_week_stats VALUES ({placeholders})", rows)
 
     imported_at = datetime.now(timezone.utc).isoformat()

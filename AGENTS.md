@@ -13,6 +13,9 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - The product name is Bowser. Use that name consistently in project metadata and product-level documentation.
 - nflverse source data is immutable input. Never hand-edit warehouse values or replace imported rows with mock statistics.
 - The app is read-only in this phase. Controls may query, filter, sort and select, but must not mutate player data.
+- Treat fantasy points in the main table as cumulative totals for the exact selected week range, never as per-game averages.
+- Keep Week 1 through the Super Bowl individually selectable. Regular season, postseason and full season are range presets, not the only choices.
+- Player cards must remain warehouse-backed. Label team ordering as production order unless an authoritative depth-chart feed is connected, and never infer league membership without roster data.
 - The grain of `player_week_stats` is player, team, season type and NFL week. Preserve it for future 2026 incremental loads.
 - Run `npm run check` after warehouse, API or table changes. Do not weaken completeness checks to make a build pass.
 - Before pushing a repository update, run `npm run check` and confirm `git status --short` contains only intended files.

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test, { after } from "node:test";
 
-import { closeDatabase, getMeta, queryPlayers, QueryValidationError } from "../server/stats-store.mjs";
+import { closeDatabase, getMeta, queryPlayerProfile, queryPlayers, QueryValidationError } from "../server/stats-store.mjs";
 
 after(() => closeDatabase());
 
@@ -26,8 +26,31 @@ test("default request returns ranked PPR leaders quickly", () => {
   assert.equal(result.data.length, 10);
   assert.ok(result.meta.totalCount > 300);
   assert.equal(result.data[0].rank, 1);
-  assert.ok(result.data[0].fantasy_points_per_game >= result.data[1].fantasy_points_per_game);
+  assert.ok(result.data[0].fantasy_points >= result.data[1].fantasy_points);
   assert.ok(result.meta.queryMs < 250);
+});
+
+test("week ranges return selected-period fantasy totals rather than per-game averages", () => {
+  const regular = queryPlayers(new URLSearchParams("seasonType=ALL&weeks=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18&search=Christian%20McCaffrey&sort=fantasy_points&limit=1"));
+  assert.equal(regular.data[0].fantasy_points, 416.6);
+  assert.equal(regular.data[0].fantasy_points_per_game, 24.5);
+
+  const weekOne = queryPlayers(new URLSearchParams("seasonType=ALL&weeks=1&search=Christian%20McCaffrey&sort=fantasy_points&limit=1"));
+  assert.equal(weekOne.data[0].fantasy_points, 23.2);
+
+  const full = queryPlayers(new URLSearchParams("seasonType=ALL&weeks=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22&search=Christian%20McCaffrey&sort=fantasy_points&limit=1"));
+  assert.equal(full.data[0].fantasy_points, 458.4);
+});
+
+test("player profiles expose game logs, season totals, and team-relative depth data", () => {
+  const profile = queryPlayerProfile(new URLSearchParams("playerId=00-0033280&scoring=ppr"));
+  assert.equal(profile.data.player.name, "Christian McCaffrey");
+  assert.equal(profile.data.gameLogs.length, 19);
+  assert.equal(profile.data.gameLogs[0].fantasy_points, 23.2);
+  assert.equal(profile.data.seasonStats[0].fantasy_points, 458.4);
+  assert.equal(profile.data.seasonStats[0].sacks_suffered, 0);
+  assert.ok(profile.data.depthChart.groups.some((group) => group.position === "RB" && group.players.some((player) => player.selected)));
+  assert.ok(profile.meta.queryMs < 250);
 });
 
 test("filters, weeks, search and sorting are server-side", () => {
