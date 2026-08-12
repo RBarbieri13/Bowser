@@ -18,7 +18,7 @@ For a standalone local production run, `server.mjs` serves the built React clien
 
 ## Production
 
-The standalone production deployment is available at [fantasy-football-stats-preview.vercel.app](https://fantasy-football-stats-preview.vercel.app). The existing Vercel project slug remains a neutral technical identifier for Bowser. Deployment evidence is recorded in [`deployment.json`](deployment.json).
+The standalone production deployment is available at [bowser-fantasy-football.vercel.app](https://bowser-fantasy-football.vercel.app). The Vercel project is named `bowser-fantasy-football`, is publicly accessible without Vercel authentication, and deploys from the canonical GitHub repository. Deployment evidence is recorded in [`deployment.json`](deployment.json).
 
 The canonical source repository is [RBarbieri13/Bowser](https://github.com/RBarbieri13/Bowser).
 
