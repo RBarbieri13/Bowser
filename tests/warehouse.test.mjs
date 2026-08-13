@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test, { after } from "node:test";
 
-import { closeDatabase, getMeta, queryPlayerProfile, queryPlayers, QueryValidationError } from "../server/stats-store.mjs";
+import { closeDatabase, getMeta, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "../server/stats-store.mjs";
 
 after(() => closeDatabase());
 
@@ -51,6 +51,18 @@ test("player profiles expose game logs, season totals, and team-relative depth d
   assert.equal(profile.data.seasonStats[0].sacks_suffered, 0);
   assert.ok(profile.data.depthChart.groups.some((group) => group.position === "RB" && group.players.some((player) => player.selected)));
   assert.ok(profile.meta.queryMs < 250);
+});
+
+test("team box scores return position-grouped weekly rows and matchup metadata", () => {
+  const result = queryTeamBoxScores(new URLSearchParams("team=NYG&weeks=4,5,6,7&scoring=ppr&seasonType=ALL"));
+  assert.equal(result.meta.team, "NYG");
+  assert.equal(result.meta.weeks.length, 4);
+  assert.equal(result.meta.weeks[0].opponent, "LAC");
+  assert.ok(result.meta.playerCount >= 10);
+  assert.ok(result.data.some((row) => row.position_group === "QB" && row.week === 4));
+  assert.ok(result.data.some((row) => row.position_group === "WR" && row.fantasy_points > 0));
+  assert.ok(result.meta.queryMs < 250);
+  assert.throws(() => queryTeamBoxScores(new URLSearchParams("team=NOT-A-TEAM")), QueryValidationError);
 });
 
 test("filters, weeks, search and sorting are server-side", () => {

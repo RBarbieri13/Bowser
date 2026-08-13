@@ -243,6 +243,94 @@ function scoringBonus(scoring) {
   return scoring === "ppr" ? 1 : scoring === "half" ? 0.5 : 0;
 }
 
+export function queryTeamBoxScores(searchParams = new URLSearchParams(), dbPath) {
+  const db = openDatabase(dbPath);
+  const started = performance.now();
+  const team = String(searchParams.get("team") || "NYG").trim().toUpperCase();
+  const knownTeam = db.prepare("SELECT 1 FROM player_week_stats WHERE season = 2025 AND team = ? LIMIT 1").get(team);
+  if (!knownTeam) throw new QueryValidationError("team", "Choose a valid 2025 NFL team");
+
+  const scoring = searchParams.get("scoring") || "ppr";
+  const receptionBonus = scoringBonus(scoring);
+  const seasonType = searchParams.get("seasonType") || "REG";
+  if (!["REG", "POST", "ALL"].includes(seasonType)) throw new QueryValidationError("seasonType", "Unknown season type");
+
+  const requestedWeeks = list(searchParams.get("weeks"), Number);
+  const weeks = [...new Set(requestedWeeks.length ? requestedWeeks : Array.from({ length: 18 }, (_, index) => index + 1))]
+    .filter((week) => Number.isInteger(week) && week >= 1 && week <= 22)
+    .sort((a, b) => a - b);
+  if (!weeks.length) throw new QueryValidationError("weeks", "Choose at least one week between 1 and 22");
+
+  const where = [
+    "season = 2025",
+    "team = ?",
+    "source_player_stats = 1",
+    "position IN ('QB', 'RB', 'FB', 'HB', 'WR', 'TE')",
+    `week IN (${placeholders(weeks)})`,
+  ];
+  const params = [team, ...weeks];
+  if (seasonType !== "ALL") {
+    where.push("season_type = ?");
+    params.push(seasonType);
+  }
+
+  const rows = db.prepare(`
+    SELECT
+      player_id,
+      player_display_name,
+      CASE WHEN position IN ('RB', 'FB', 'HB') THEN 'RB' ELSE position END AS position_group,
+      position,
+      week,
+      season_type,
+      opponent_team,
+      COALESCE(offense_snaps, 0) AS snaps,
+      CASE WHEN offense_pct IS NOT NULL THEN ROUND(offense_pct * 100.0, 1) END AS snap_pct,
+      completions,
+      attempts AS passing_attempts,
+      passing_yards,
+      passing_tds,
+      interceptions,
+      carries,
+      rushing_yards,
+      rushing_tds,
+      targets,
+      receptions,
+      receiving_yards,
+      receiving_tds,
+      ROUND(fantasy_points + receptions * ?, 1) AS fantasy_points
+    FROM player_week_stats
+    WHERE ${where.join(" AND ")}
+    ORDER BY
+      CASE WHEN position = 'QB' THEN 1 WHEN position IN ('RB', 'FB', 'HB') THEN 2 WHEN position = 'WR' THEN 3 WHEN position = 'TE' THEN 4 ELSE 5 END,
+      player_display_name COLLATE NOCASE,
+      week
+  `).all(receptionBonus, ...params);
+
+  const matchupByWeek = new Map();
+  for (const row of rows) {
+    if (!matchupByWeek.has(row.week) && row.opponent_team) {
+      matchupByWeek.set(row.week, { opponent: row.opponent_team, seasonType: row.season_type });
+    }
+  }
+
+  return {
+    data: rows,
+    meta: {
+      season: 2025,
+      team,
+      scoring,
+      seasonType,
+      weeks: weeks.map((week) => ({
+        week,
+        opponent: matchupByWeek.get(week)?.opponent ?? null,
+        seasonType: matchupByWeek.get(week)?.seasonType ?? (week <= 18 ? "REG" : "POST"),
+      })),
+      playerCount: new Set(rows.map((row) => row.player_id)).size,
+      queryMs: Number((performance.now() - started).toFixed(2)),
+    },
+  };
+}
+
 export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath) {
   const db = openDatabase(dbPath);
   const started = performance.now();

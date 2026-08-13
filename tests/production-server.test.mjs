@@ -47,6 +47,12 @@ test("production API serves the packaged SQLite warehouse", async () => {
   const profile = await profileResponse.json();
   assert.equal(profile.data.player.name, "Christian McCaffrey");
   assert.equal(profile.data.seasonStats[0].fantasy_points, 458.4);
+
+  const boxScoreResponse = await fetch(`${origin}/api/v1/team-box-scores?team=NYG&weeks=4,5,6,7&scoring=ppr&seasonType=ALL`);
+  assert.equal(boxScoreResponse.status, 200);
+  const boxScores = await boxScoreResponse.json();
+  assert.equal(boxScores.meta.weeks.length, 4);
+  assert.ok(boxScores.data.some((row) => row.position_group === "QB"));
 });
 
 test("unknown API routes do not fall back to the app shell", async () => {

@@ -1,4 +1,4 @@
-import { getMeta, queryPlayerProfile, queryPlayers, QueryValidationError } from "./stats-store.mjs";
+import { getMeta, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "./stats-store.mjs";
 
 function sendJson(response, status, payload) {
   response.statusCode = status;
@@ -18,6 +18,7 @@ export function fantasyStatsApiPlugin() {
           if (url.pathname === "/meta") return sendJson(response, 200, getMeta());
           if (url.pathname === "/player-stats") return sendJson(response, 200, queryPlayers(url.searchParams));
           if (url.pathname === "/player-profile") return sendJson(response, 200, queryPlayerProfile(url.searchParams));
+          if (url.pathname === "/team-box-scores") return sendJson(response, 200, queryTeamBoxScores(url.searchParams));
           return next();
         } catch (error) {
           if (error instanceof QueryValidationError) {

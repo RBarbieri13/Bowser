@@ -43,4 +43,32 @@ The final desktop state was inspected at a 1,600 × 900 CSS viewport. Browser sc
 - P1 blockers: none.
 - P2 blockers: none.
 
+## 2026-08-12 brand lockup and team box-score page
+
+### Source truth and comparison evidence
+
+| Surface | Reference | Final implementation | Same-input comparison |
+| --- | --- | --- | --- |
+| Bowser header lockup | `/Users/robert.barbieri/Downloads/Bowser _ Peeking Mascot Lockup 2.png` | [`src/assets/bowser-mascot-lockup.png`](src/assets/bowser-mascot-lockup.png) | Transparent asset checked on both white and Bowser dark surfaces in `artifacts/logo-qa/` |
+| Team box scores | `/var/folders/mk/4zpvpljs7757dgf6h9qswksh0000gn/T/codex-clipboard-2b4b3659-a249-4e10-ae88-b0beacabc003.png` and the linked Google Sheet `Dashboard!A1:AW35` | [`artifacts/logo-qa/team-boxscores-desktop-clean.png`](artifacts/logo-qa/team-boxscores-desktop-clean.png) | [`artifacts/logo-qa/reference-vs-implementation.png`](artifacts/logo-qa/reference-vs-implementation.png) |
+
+The final comparison preserves the reference's defining information architecture: frozen position/player identity, forward-looking DraftKings Salary and DraftKings Projection slots, repeated historical week headers, matchup context, position-specific passing or receiving groups, rushing groups, fantasy points, and vertical position sections. It translates the spreadsheet's white canvas into Bowser's existing dark analytics system without altering the data hierarchy.
+
+### Visual and interaction review
+
+- The supplied mascot lockup is the only visible brand asset in the shared header; the prior text/initial treatment is absent. The processed 1200 × 591 PNG has a transparent canvas and retains the internal black artwork.
+- The team selector, scoring selector, Week 1–22 range picker, player profile links, and one-week horizontal scroll controls were exercised in the in-app browser.
+- NYG Weeks 4–7 matched the reference state with real 2025 opponents and nflverse player lines. The local team query returned 37 player-week rows across 13 players in under 1 ms.
+- DraftKings Salary and DraftKings Projection are deliberately rendered as unavailable slots because no DraftKings source is connected; no values are inferred.
+- Desktop and narrow-screen states keep horizontal overflow inside the box-score scroller. At the narrow check, document width equaled viewport width while the table retained a separately scrollable 2,624 px analysis surface.
+- The Next Weeks control moved the weekly analysis surface by one week block (553.75 px measured).
+- Player Database remained reachable through the shared navigation and retained the same responsive header/logo.
+- Final browser console: zero warnings and zero errors.
+
+### Severity review
+
+- P0 blockers: none.
+- P1 blockers: none.
+- P2 blockers: none.
+
 final result: passed

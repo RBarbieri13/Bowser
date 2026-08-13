@@ -4,6 +4,8 @@ import {
 } from "@phosphor-icons/react";
 import { PlayerProfile } from "./PlayerProfile.jsx";
 import { WeekRangePicker } from "./WeekRangePicker.jsx";
+import { AppHeader } from "./AppHeader.jsx";
+import { TeamBoxScores } from "./TeamBoxScores.jsx";
 
 
 const numberFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
@@ -123,6 +125,7 @@ function SortIcon({ active, direction, priority }) {
 }
 
 export function App() {
+  const [currentPage, setCurrentPage] = useState(() => window.location.hash.includes("team-box-scores") ? "team-box-scores" : "players");
   const [meta, setMeta] = useState(null);
   const [rows, setRows] = useState([]);
   const [responseMeta, setResponseMeta] = useState(null);
@@ -151,6 +154,12 @@ export function App() {
   const tableScroller = useRef(null);
   const profileOpener = useRef(null);
 
+  useEffect(() => {
+    const syncPage = () => setCurrentPage(window.location.hash.includes("team-box-scores") ? "team-box-scores" : "players");
+    window.addEventListener("hashchange", syncPage);
+    return () => window.removeEventListener("hashchange", syncPage);
+  }, []);
+
   const selectedWeeks = useMemo(
     () => Array.from({ length: weekEnd - weekStart + 1 }, (_, index) => weekStart + index),
     [weekStart, weekEnd],
@@ -167,6 +176,7 @@ export function App() {
   }, []);
 
   useEffect(() => {
+    if (currentPage !== "players") return undefined;
     const controller = new AbortController();
     const querySorts = sorts.length ? sorts : [{ key: "name", direction: "asc" }];
     const params = new URLSearchParams({
@@ -202,7 +212,7 @@ export function App() {
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [scoring, debouncedSearch, sorts, topEnabled, limit, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps]);
+  }, [currentPage, scoring, debouncedSearch, sorts, topEnabled, limit, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps]);
 
   const allVisibleSelected = rows.length > 0 && rows.every((row) => selected.has(row.player_id));
   const someVisibleSelected = rows.some((row) => selected.has(row.player_id)) && !allVisibleSelected;
@@ -272,9 +282,13 @@ export function App() {
     return parts.join(" · ");
   }, [weekStart, weekEnd, scoring, position]);
 
-  const openProfile = (row, opener) => {
+  const openProfile = (row, opener, profileScoring = scoring) => {
     profileOpener.current = opener;
-    setProfilePlayer({ playerId: row.player_id, name: row.player_display_name });
+    setProfilePlayer({
+      playerId: row.player_id || row.playerId,
+      name: row.player_display_name || row.name,
+      scoring: profileScoring,
+    });
   };
 
   const closeProfile = useCallback(() => {
@@ -290,7 +304,12 @@ export function App() {
   };
 
   return (
-    <main className="app-shell">
+    <div className="app-shell">
+      <AppHeader currentPage={currentPage} />
+      {currentPage === "team-box-scores" ? (
+        <TeamBoxScores meta={meta} onOpenPlayer={openProfile} />
+      ) : (
+      <main className="page-content player-database-page">
       <section className="filter-band" aria-label="Statistics filters">
         <div className="filter-grid">
           <SelectField label="Season" value="2025" onChange={() => {}} info="NFL season used for this table.">
@@ -408,14 +427,16 @@ export function App() {
           <a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noreferrer">Data: nflverse · CC BY 4.0</a>
         </footer>
       </section>
+      </main>
+      )}
       {profilePlayer ? (
         <PlayerProfile
           player={profilePlayer}
-          scoring={scoring}
+          scoring={profilePlayer.scoring || scoring}
           onClose={closeProfile}
           onSelectPlayer={(playerId, name) => setProfilePlayer({ playerId, name })}
         />
       ) : null}
-    </main>
+    </div>
   );
 }

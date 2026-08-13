@@ -68,12 +68,27 @@ const sampleProfile = {
   meta: { season: 2025, scoring: "ppr", queryMs: 2.1 },
 };
 
+const sampleBoxScores = {
+  data: [{
+    player_id: "00-test", player_display_name: "Test Player", position_group: "QB", position: "QB",
+    week: 1, season_type: "REG", opponent_team: "KC", snaps: 70, snap_pct: 100,
+    completions: 24, passing_attempts: 31, passing_yards: 282, passing_tds: 3, interceptions: 0,
+    carries: 8, rushing_yards: 46, rushing_tds: 1, targets: 0, receptions: 0,
+    receiving_yards: 0, receiving_tds: 0, fantasy_points: 31.2,
+  }],
+  meta: {
+    season: 2025, team: "BUF", scoring: "ppr", seasonType: "ALL",
+    weeks: [{ week: 1, opponent: "KC", seasonType: "REG" }], playerCount: 1, queryMs: 2.4,
+  },
+};
+
 function latestPlayerUrl() {
   const calls = fetch.mock.calls.map(([input]) => String(input)).filter((url) => url.startsWith("/api/v1/player-stats?"));
   return new URL(calls.at(-1), "http://local");
 }
 
 beforeEach(() => {
+  window.location.hash = "";
   localStorage.clear();
   vi.stubGlobal("fetch", vi.fn(async (input) => {
     const url = String(input);
@@ -84,6 +99,7 @@ beforeEach(() => {
       };
     }
     if (url.startsWith("/api/v1/player-profile?")) return { ok: true, json: async () => sampleProfile };
+    if (url.startsWith("/api/v1/team-box-scores?")) return { ok: true, json: async () => sampleBoxScores };
     return {
       ok: true,
       json: async () => ({ data: [samplePlayer], meta: { returnedCount: 1, totalCount: 609, queryMs: 4.2 } }),
@@ -97,6 +113,19 @@ afterEach(() => {
 });
 
 describe("statistics table UI", () => {
+  test("uses the Bowser mascot lockup and navigates to team box scores", async () => {
+    render(<App />);
+    expect(screen.getByAltText("Bowser")).toBeInTheDocument();
+    window.location.hash = "#/team-box-scores";
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
+
+    expect(await screen.findByRole("heading", { name: "Team Box Scores" })).toBeInTheDocument();
+    expect(await screen.findByRole("table", { name: "QB week-by-week player statistics" })).toBeInTheDocument();
+    expect(screen.getByText("DK Salary")).toBeInTheDocument();
+    expect(screen.getByText("DK Proj.")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Test Player" })).toBeInTheDocument();
+  });
+
   test("renders total fantasy points and exposes individual and range week controls", async () => {
     const user = userEvent.setup();
     render(<App />);
