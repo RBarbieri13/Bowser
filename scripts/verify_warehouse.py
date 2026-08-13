@@ -37,6 +37,14 @@ def main() -> int:
         "orphan_players": connection.execute("SELECT COUNT(*) FROM player_week_stats s LEFT JOIN players p ON p.player_id = s.player_id WHERE p.player_id IS NULL").fetchone()[0],
         "invalid_arithmetic": connection.execute("SELECT COUNT(*) FROM player_week_stats WHERE completions > attempts OR receptions > targets OR attempts < 0 OR carries < 0 OR targets < 0 OR offense_snaps < 0 OR offense_pct < 0 OR offense_pct > 1").fetchone()[0],
         "ppr_identity_errors": connection.execute("SELECT COUNT(*) FROM player_week_stats WHERE source_player_stats = 1 AND ABS(fantasy_points_ppr - fantasy_points - receptions) > 0.001").fetchone()[0],
+        "games": connection.execute("SELECT COUNT(*) FROM games").fetchone()[0],
+        "games_with_play_by_play": connection.execute("SELECT COUNT(*) FROM games WHERE play_by_play_available = 1").fetchone()[0],
+        "game_team_rows": connection.execute("SELECT COUNT(*) FROM game_team_summary").fetchone()[0],
+        "quarter_score_rows": connection.execute("SELECT COUNT(*) FROM game_quarter_scores").fetchone()[0],
+        "game_flow_events": connection.execute("SELECT COUNT(*) FROM game_flow_events").fetchone()[0],
+        "invalid_game_totals": connection.execute("SELECT COUNT(*) FROM games WHERE home_score < 0 OR away_score < 0").fetchone()[0],
+        "invalid_play_mix": connection.execute("SELECT COUNT(*) FROM game_team_summary WHERE offensive_plays <> rush_plays + pass_plays OR ABS(COALESCE(rush_pct, 0) + COALESCE(pass_pct, 0) - 100) > 0.2").fetchone()[0],
+        "invalid_time_share": connection.execute("SELECT COUNT(*) FROM game_team_summary WHERE ABS(COALESCE(pct_time_leading, 0) + COALESCE(pct_time_trailing, 0) + COALESCE(pct_time_tied, 0) - 100) > 0.2").fetchone()[0],
     }
     connection.close()
     expectations = {
@@ -56,6 +64,14 @@ def main() -> int:
         "orphan_players": checks["orphan_players"] == 0,
         "invalid_arithmetic": checks["invalid_arithmetic"] == 0,
         "ppr_identity_errors": checks["ppr_identity_errors"] == 0,
+        "games": checks["games"] == report["games"] == 285,
+        "games_with_play_by_play": checks["games_with_play_by_play"] == report["games_with_play_by_play"] == 285,
+        "game_team_rows": checks["game_team_rows"] == checks["games"] * 2,
+        "quarter_score_rows": checks["quarter_score_rows"] >= checks["games"] * 4,
+        "game_flow_events": checks["game_flow_events"] == report["game_flow_events"] and checks["game_flow_events"] > 3000,
+        "invalid_game_totals": checks["invalid_game_totals"] == 0,
+        "invalid_play_mix": checks["invalid_play_mix"] == 0,
+        "invalid_time_share": checks["invalid_time_share"] == 0,
     }
     failures = [name for name, passed in expectations.items() if not passed]
     print(json.dumps({"checks": checks, "expectations": expectations}, indent=2, sort_keys=True))

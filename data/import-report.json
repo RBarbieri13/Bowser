@@ -1,7 +1,10 @@
 {
   "aggregate_mismatches": {},
   "database": "data/fantasy_football.sqlite",
-  "imported_at": "2026-08-11T15:53:27.460933+00:00",
+  "game_flow_events": 3777,
+  "games": 285,
+  "games_with_play_by_play": 285,
+  "imported_at": "2026-08-13T23:28:09.189833+00:00",
   "player_stat_rows": 5630,
   "players": 609,
   "positions": [
@@ -62,6 +65,12 @@
   },
   "snap_rows": 7525,
   "sources": {
+    "play_by_play": {
+      "bytes": 19105296,
+      "path": "data/raw/play_by_play.csv.gz",
+      "sha256": "2f135887790a013fd004e609e37096bb4816d5cc80b9f19122e1bad478961978",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2025.csv.gz"
+    },
     "player_stats": {
       "bytes": 8461830,
       "path": "data/raw/player_stats.csv",
@@ -73,6 +82,12 @@
       "path": "data/raw/players.csv",
       "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/players/players.csv"
+    },
+    "schedules": {
+      "bytes": 2175363,
+      "path": "data/raw/schedules.csv",
+      "sha256": "d2acae3817b9568eff14ba10034cca711753a1d4b2c46366f7591fb2437a9d25",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/schedules/games.csv"
     },
     "snap_counts": {
       "bytes": 2401193,

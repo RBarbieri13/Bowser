@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, CaretDown, TrendUp } from "@phosphor-icons/react";
-import { WeekRangePicker } from "./WeekRangePicker.jsx";
+import { ArrowLeft, ArrowRight, CaretDown, Check, TrendUp } from "@phosphor-icons/react";
+import { ScheduleWeekSelector } from "./ScheduleWeekSelector.jsx";
 
 const POSITION_ORDER = ["QB", "RB", "WR", "TE"];
 const WEEK_COLUMNS = {
@@ -20,6 +20,20 @@ const WEEK_COLUMNS = {
 
 const WEEK_WIDTH = 554;
 const IDENTITY_WIDTH = 408;
+const TEAM_BOX_STATE_KEY = "bowser:team-box-score-state:v1";
+
+function savedTeamBoxState() {
+  try {
+    return JSON.parse(window.sessionStorage.getItem(TEAM_BOX_STATE_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function draftKingsPrice(row) {
+  const value = row.draftkings_salary ?? row.dk_salary ?? row.draftkings_price;
+  return value === null || value === undefined || value === "" ? null : Number(value);
+}
 
 function formatStat(value, key) {
   if (value === null || value === undefined || value === "") return "—";
@@ -39,12 +53,39 @@ function groupRows(rows) {
         name: row.player_display_name,
         position: row.position_group,
         weeks: new Map(),
+        draftKingsPrice: draftKingsPrice(row),
       });
+    }
+    if (group.get(row.player_id).draftKingsPrice === null && draftKingsPrice(row) !== null) {
+      group.get(row.player_id).draftKingsPrice = draftKingsPrice(row);
     }
     group.get(row.player_id).weeks.set(row.week, row);
   }
   return POSITION_ORDER.map((position) => ({ position, players: [...byPosition.get(position).values()] }))
     .filter((group) => group.players.length);
+}
+
+function metricMaxima(rows) {
+  const maxima = new Map();
+  for (const row of rows) {
+    for (const key of ["fantasy_points", "snaps", "targets", "carries"]) {
+      const value = Number(row[key]);
+      if (!Number.isFinite(value)) continue;
+      const lookup = `${row.week}:${key}`;
+      maxima.set(lookup, Math.max(maxima.get(lookup) || 0, value));
+    }
+  }
+  return maxima;
+}
+
+function heatClass(week, key, value, maxima) {
+  if (!["fantasy_points", "snaps", "targets", "carries"].includes(key) || value === null || value === undefined) return "";
+  const numeric = Number(value);
+  if (numeric <= 0) return " metric-heat metric-zero";
+  const ratio = numeric / Math.max(1, maxima.get(`${week}:${key}`) || numeric);
+  if (ratio >= .75) return " metric-heat metric-high";
+  if (ratio >= .4) return " metric-heat metric-medium";
+  return " metric-heat metric-low";
 }
 
 function WeekSubgroups({ position }) {
@@ -65,19 +106,26 @@ function WeekSubgroups({ position }) {
   );
 }
 
-function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer }) {
+function formatGameDate(item) {
+  if (!item.gameday) return item.seasonType === "POST" ? "Postseason" : null;
+  const parsed = new Date(`${item.gameday}T${item.gametime || "12:00"}:00-04:00`);
+  return parsed.toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+}
+
+function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer, onOpenGame, weekWidth, maxima }) {
   const columns = group.position === "QB" ? WEEK_COLUMNS.QB : WEEK_COLUMNS.SKILL;
-  const tableWidth = IDENTITY_WIDTH + weeks.length * WEEK_WIDTH;
+  const weekScale = weekWidth / WEEK_WIDTH;
+  const tableWidth = IDENTITY_WIDTH + weeks.length * weekWidth;
   return (
     <section className={`box-position-section position-${group.position.toLowerCase()}`} aria-labelledby={`position-${group.position}`}>
       <h2 id={`position-${group.position}`} className="sr-only">{group.position} weekly box scores</h2>
-      <table className="boxscore-table" style={{ width: tableWidth, minWidth: tableWidth }}>
+      <table className="boxscore-table" style={{ width: tableWidth, minWidth: tableWidth, "--week-scale": weekScale }}>
         <caption>{group.position} week-by-week player statistics</caption>
         <colgroup>
           <col style={{ width: 64 }} /><col style={{ width: 190 }} />
           <col style={{ width: 82 }} /><col style={{ width: 72 }} />
           {weeks.flatMap(({ week }) => columns.map(([key], index) => (
-            <col key={`${week}-${key}-${index}`} style={{ width: index === 2 ? 76 : index === 9 ? 62 : 52 }} />
+            <col key={`${week}-${key}-${index}`} style={{ width: (index === 2 ? 76 : index === 9 ? 62 : 52) * weekScale }} />
           )))}
         </colgroup>
         <thead>
@@ -90,9 +138,15 @@ function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer }) {
             </th>
             {weeks.map((item) => (
               <th key={item.week} colSpan="10" className="box-week-title">
-                <span>Week {item.week}</span>
-                <strong>{item.opponent ? `vs ${item.opponent}` : "No game"}</strong>
-                {item.seasonType === "POST" ? <small>Postseason</small> : null}
+                {item.gameId ? (
+                  <button type="button" className="box-game-link" onClick={() => onOpenGame?.(item)} aria-label={`Open Week ${item.week} game breakdown`}>
+                    <span>Week {item.week}</span>
+                    <strong>{item.opponent ? `${item.homeAway === "away" ? "@" : "vs"} ${item.opponent}` : "No game"} · {item.scoreLabel || "Scheduled"}</strong>
+                    <small>{formatGameDate(item)}</small>
+                  </button>
+                ) : (
+                  <><span>Week {item.week}</span><strong>No game</strong><small>{formatGameDate(item)}</small></>
+                )}
               </th>
             ))}
           </tr>
@@ -127,7 +181,7 @@ function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer }) {
                   return (
                     <td
                       key={`${week}-${key}-${index}`}
-                      className={`${key === "fantasy_points" ? "box-fpts-cell" : ""}${!stats ? " no-game" : ""}`}
+                      className={`${key === "fantasy_points" ? "box-fpts-cell" : ""}${!stats ? " no-game" : ""}${stats ? heatClass(week, key, value, maxima) : ""}`}
                     >
                       {key === "passing_line" ? (value || "—") : formatStat(value, key)}
                     </td>
@@ -142,20 +196,99 @@ function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer }) {
   );
 }
 
-export function TeamBoxScores({ meta, onOpenPlayer }) {
-  const [team, setTeam] = useState("NYG");
-  const [scoring, setScoring] = useState("ppr");
-  const [weekStart, setWeekStart] = useState(1);
-  const [weekEnd, setWeekEnd] = useState(18);
+function PositionFilter({ selected, onChange }) {
+  const [open, setOpen] = useState(false);
+  const toggle = (position) => {
+    const next = selected.includes(position)
+      ? selected.filter((item) => item !== position)
+      : [...selected, position].sort((a, b) => POSITION_ORDER.indexOf(a) - POSITION_ORDER.indexOf(b));
+    if (next.length) onChange(next);
+  };
+  return (
+    <div className="field position-filter-field">
+      <span className="field-label">Positions</span>
+      <button type="button" className="position-filter-trigger" onClick={() => setOpen((current) => !current)} aria-expanded={open}>
+        <span>{selected.length === POSITION_ORDER.length ? "QB, RB, WR, TE" : selected.join(", ")}</span>
+        <CaretDown weight="bold" aria-hidden="true" />
+      </button>
+      {open ? (
+        <div className="position-filter-menu" role="group" aria-label="Positions">
+          {POSITION_ORDER.map((position) => (
+            <label key={position}>
+              <input type="checkbox" checked={selected.includes(position)} onChange={() => toggle(position)} />
+              <span>{selected.includes(position) ? <Check weight="bold" aria-hidden="true" /> : null}</span>
+              {position}
+            </label>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+export function TeamBoxScores({ meta, onOpenPlayer, onOpenGame }) {
+  const initialState = useRef(savedTeamBoxState()).current;
+  const [team, setTeam] = useState(initialState.team || "NYG");
+  const [scoring, setScoring] = useState(["ppr", "half", "standard"].includes(initialState.scoring) ? initialState.scoring : "ppr");
+  const [weekStart, setWeekStart] = useState(Number(initialState.weekStart) || 1);
+  const [weekEnd, setWeekEnd] = useState(Number(initialState.weekEnd) || 18);
+  const [extraWeeks, setExtraWeeks] = useState(Array.isArray(initialState.extraWeeks) ? initialState.extraWeeks : []);
+  const [positions, setPositions] = useState(Array.isArray(initialState.positions) && initialState.positions.length ? initialState.positions : POSITION_ORDER);
+  const [dkMin, setDkMin] = useState(initialState.dkMin || "3000");
+  const [dkMax, setDkMax] = useState(initialState.dkMax || "11000");
+  const [weekWidth, setWeekWidth] = useState(Number(initialState.weekWidth) || WEEK_WIDTH);
+  const [schedule, setSchedule] = useState([]);
   const [payload, setPayload] = useState({ data: [], meta: null });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const scroller = useRef(null);
 
   const selectedWeeks = useMemo(
-    () => Array.from({ length: weekEnd - weekStart + 1 }, (_, index) => weekStart + index),
-    [weekStart, weekEnd],
+    () => [...new Set([
+      ...Array.from({ length: weekEnd - weekStart + 1 }, (_, index) => weekStart + index),
+      ...extraWeeks.filter((week) => week < weekStart || week > weekEnd),
+    ])].sort((a, b) => a - b),
+    [weekStart, weekEnd, extraWeeks],
   );
+  const visibleExtraWeeks = useMemo(
+    () => extraWeeks.filter((week) => week < weekStart || week > weekEnd).sort((a, b) => a - b),
+    [extraWeeks, weekStart, weekEnd],
+  );
+  const changeRange = (start, end) => {
+    setWeekStart(start);
+    setWeekEnd(end);
+    setExtraWeeks((current) => current.filter((week) => week < start || week > end));
+  };
+
+  useEffect(() => {
+    window.sessionStorage.setItem(TEAM_BOX_STATE_KEY, JSON.stringify({
+      team, scoring, weekStart, weekEnd, extraWeeks, positions, dkMin, dkMax, weekWidth,
+    }));
+  }, [team, scoring, weekStart, weekEnd, extraWeeks, positions, dkMin, dkMax, weekWidth]);
+
+  const openGame = (game) => onOpenGame?.(game, scoring);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const params = new URLSearchParams({
+      team,
+      scoring: "ppr",
+      seasonType: "ALL",
+      weeks: Array.from({ length: 22 }, (_, index) => index + 1).join(","),
+    });
+    fetch(`/api/v1/team-box-scores?${params}`, { signal: controller.signal })
+      .then((response) => response.ok ? response.json() : null)
+      .then((result) => {
+        if (result?.meta?.schedule || result?.meta?.weeks) {
+          const nextSchedule = result.meta.schedule || result.meta.weeks;
+          const matchupWeeks = new Set(nextSchedule.filter((item) => item.gameId).map((item) => Number(item.week)));
+          setSchedule(nextSchedule);
+          setExtraWeeks((current) => current.filter((week) => matchupWeeks.has(Number(week))));
+        }
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
+  }, [team]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -183,9 +316,24 @@ export function TeamBoxScores({ meta, onOpenPlayer }) {
     return () => controller.abort();
   }, [team, scoring, selectedWeeks]);
 
-  const groups = useMemo(() => groupRows(payload.data), [payload.data]);
+  const hasDraftKingsData = useMemo(
+    () => payload.data.some((row) => Number.isFinite(draftKingsPrice(row))),
+    [payload.data],
+  );
+  const groups = useMemo(() => {
+    const minimum = Number(dkMin) || 0;
+    const maximum = Number(dkMax) || Number.MAX_SAFE_INTEGER;
+    return groupRows(payload.data)
+      .filter((group) => positions.includes(group.position))
+      .map((group) => ({
+        ...group,
+        players: group.players.filter((player) => !hasDraftKingsData || (Number(player.draftKingsPrice) >= minimum && Number(player.draftKingsPrice) <= maximum)),
+      }))
+      .filter((group) => group.players.length);
+  }, [payload.data, positions, dkMin, dkMax, hasDraftKingsData]);
+  const maxima = useMemo(() => metricMaxima(payload.data), [payload.data]);
   const weeks = payload.meta?.weeks || selectedWeeks.map((week) => ({ week, opponent: null, seasonType: week <= 18 ? "REG" : "POST" }));
-  const upcomingWeek = weekEnd < 22 ? weekEnd + 1 : null;
+  const upcomingWeek = null;
 
   return (
     <main className="page-content team-boxscore-page">
@@ -205,7 +353,7 @@ export function TeamBoxScores({ meta, onOpenPlayer }) {
               <CaretDown weight="bold" aria-hidden="true" />
             </span>
           </label>
-          <WeekRangePicker start={weekStart} end={weekEnd} onChange={(start, end) => { setWeekStart(start); setWeekEnd(end); }} />
+          <PositionFilter selected={positions} onChange={setPositions} />
           <label className="field">
             <span className="field-label">Scoring</span>
             <span className="select-wrap">
@@ -217,15 +365,40 @@ export function TeamBoxScores({ meta, onOpenPlayer }) {
               <CaretDown weight="bold" aria-hidden="true" />
             </span>
           </label>
+          <div className={`field dk-price-field${hasDraftKingsData ? "" : " unavailable"}`}>
+            <span className="field-label">DraftKings Price</span>
+            <span className="dk-price-inputs">
+              <input aria-label="Minimum DraftKings price" type="number" min="0" step="100" value={dkMin} onChange={(event) => setDkMin(event.target.value)} disabled={!hasDraftKingsData} />
+              <span>to</span>
+              <input aria-label="Maximum DraftKings price" type="number" min="0" step="100" value={dkMax} onChange={(event) => setDkMax(event.target.value)} disabled={!hasDraftKingsData} />
+            </span>
+            {!hasDraftKingsData ? <small>Price feed not connected</small> : null}
+          </div>
+          <label className="field week-width-field">
+            <span className="field-label">Week Width <small>{Math.round(weekWidth / WEEK_WIDTH * 100)}%</small></span>
+            <span className="week-width-control">
+              <input aria-label="Week column width" type="range" min="320" max="720" step="8" value={weekWidth} onChange={(event) => setWeekWidth(Number(event.target.value))} />
+            </span>
+          </label>
         </div>
+        <ScheduleWeekSelector
+          team={team}
+          schedule={schedule}
+          start={weekStart}
+          end={weekEnd}
+          extras={extraWeeks}
+          onRangeChange={changeRange}
+          onExtrasChange={setExtraWeeks}
+          onOpenGame={openGame}
+        />
         <div className="boxscore-context">
           <strong>{team}</strong>
-          <span>{weekStart === weekEnd ? `Week ${weekStart}` : `Weeks ${weekStart}–${weekEnd}`}</span>
+          <span>{weekStart === weekEnd ? `Week ${weekStart}` : `Weeks ${weekStart}–${weekEnd}`}{visibleExtraWeeks.length ? ` + ${visibleExtraWeeks.map((week) => `W${week}`).join(", ")}` : ""}</span>
           <span>{scoring === "ppr" ? "PPR" : scoring === "half" ? "Half PPR" : "Standard"}</span>
           <span className="dk-status">DraftKings salary + projection awaiting source</span>
           <div className="box-scroll-buttons" aria-label="Scroll weekly columns">
-            <button type="button" onClick={() => scroller.current?.scrollBy({ left: -WEEK_WIDTH, behavior: "smooth" })} aria-label="Previous weeks"><ArrowLeft /></button>
-            <button type="button" onClick={() => scroller.current?.scrollBy({ left: WEEK_WIDTH, behavior: "smooth" })} aria-label="Next weeks"><ArrowRight /></button>
+            <button type="button" onClick={() => scroller.current?.scrollBy({ left: -weekWidth, behavior: "smooth" })} aria-label="Previous weeks"><ArrowLeft /></button>
+            <button type="button" onClick={() => scroller.current?.scrollBy({ left: weekWidth, behavior: "smooth" })} aria-label="Next weeks"><ArrowRight /></button>
           </div>
         </div>
       </section>
@@ -241,6 +414,9 @@ export function TeamBoxScores({ meta, onOpenPlayer }) {
               group={group}
               weeks={weeks}
               upcomingWeek={upcomingWeek}
+              weekWidth={weekWidth}
+              maxima={maxima}
+              onOpenGame={openGame}
               onOpenPlayer={(player, opener) => onOpenPlayer(player, opener, scoring)}
             />
           ))}

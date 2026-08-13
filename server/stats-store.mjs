@@ -243,6 +243,50 @@ function scoringBonus(scoring) {
   return scoring === "ppr" ? 1 : scoring === "half" ? 0.5 : 0;
 }
 
+function scheduleGame(row) {
+  return {
+    gameId: row.game_id,
+    week: row.week,
+    seasonType: row.season_type,
+    gameType: row.game_type,
+    opponent: row.opponent,
+    homeAway: row.home_away,
+    gameday: row.gameday,
+    weekday: row.weekday,
+    gametime: row.gametime,
+    timeZone: "America/New_York",
+    homeTeam: row.home_team,
+    awayTeam: row.away_team,
+    homeScore: row.home_score,
+    awayScore: row.away_score,
+    pointsFor: row.points_for,
+    pointsAgainst: row.points_against,
+    result: row.result,
+    scoreLabel: row.result && row.points_for !== null && row.points_against !== null
+      ? `${row.result} ${row.points_for}-${row.points_against}`
+      : null,
+    overtime: Boolean(row.overtime),
+    stadium: row.stadium,
+    roof: row.roof,
+    surface: row.surface,
+    playByPlayAvailable: Boolean(row.play_by_play_available),
+  };
+}
+
+function queryScheduleForTeam(db, team, seasonType = "ALL") {
+  const params = [team];
+  const seasonTypeFilter = seasonType === "ALL" ? "" : "AND g.season_type = ?";
+  if (seasonType !== "ALL") params.push(seasonType);
+  return db.prepare(`
+    SELECT g.*, summary.opponent, summary.home_away, summary.points_for,
+      summary.points_against, summary.result
+    FROM game_team_summary summary
+    INNER JOIN games g USING (game_id)
+    WHERE g.season = 2025 AND summary.team = ? ${seasonTypeFilter}
+    ORDER BY g.week, g.gameday, g.gametime, g.game_id
+  `).all(...params).map(scheduleGame);
+}
+
 export function queryTeamBoxScores(searchParams = new URLSearchParams(), dbPath) {
   const db = openDatabase(dbPath);
   const started = performance.now();
@@ -276,6 +320,7 @@ export function queryTeamBoxScores(searchParams = new URLSearchParams(), dbPath)
 
   const rows = db.prepare(`
     SELECT
+      game_id,
       player_id,
       player_display_name,
       CASE WHEN position IN ('RB', 'FB', 'HB') THEN 'RB' ELSE position END AS position_group,
@@ -306,12 +351,8 @@ export function queryTeamBoxScores(searchParams = new URLSearchParams(), dbPath)
       week
   `).all(receptionBonus, ...params);
 
-  const matchupByWeek = new Map();
-  for (const row of rows) {
-    if (!matchupByWeek.has(row.week) && row.opponent_team) {
-      matchupByWeek.set(row.week, { opponent: row.opponent_team, seasonType: row.season_type });
-    }
-  }
+  const schedule = queryScheduleForTeam(db, team, seasonType);
+  const matchupByWeek = new Map(schedule.map((game) => [game.week, game]));
 
   return {
     data: rows,
@@ -320,12 +361,146 @@ export function queryTeamBoxScores(searchParams = new URLSearchParams(), dbPath)
       team,
       scoring,
       seasonType,
-      weeks: weeks.map((week) => ({
+      weeks: weeks.map((week) => matchupByWeek.get(week) ?? {
         week,
-        opponent: matchupByWeek.get(week)?.opponent ?? null,
-        seasonType: matchupByWeek.get(week)?.seasonType ?? (week <= 18 ? "REG" : "POST"),
-      })),
+        opponent: null,
+        seasonType: week <= 18 ? "REG" : "POST",
+        gameId: null,
+        result: null,
+        scoreLabel: null,
+        gameday: null,
+        gametime: null,
+        playByPlayAvailable: false,
+      }),
+      schedule,
       playerCount: new Set(rows.map((row) => row.player_id)).size,
+      queryMs: Number((performance.now() - started).toFixed(2)),
+    },
+  };
+}
+
+export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath) {
+  const db = openDatabase(dbPath);
+  const started = performance.now();
+  const gameId = String(searchParams.get("gameId") || "").trim().slice(0, 40);
+  if (!gameId) throw new QueryValidationError("gameId", "A gameId is required");
+  const scoring = searchParams.get("scoring") || "ppr";
+  const receptionBonus = scoringBonus(scoring);
+
+  const game = db.prepare(`
+    SELECT * FROM games WHERE season = 2025 AND game_id = ?
+  `).get(gameId);
+  if (!game) throw new QueryValidationError("gameId", "Choose a valid 2025 NFL game");
+
+  const teamSummaries = db.prepare(`
+    SELECT * FROM game_team_summary
+    WHERE game_id = ?
+    ORDER BY CASE home_away WHEN 'away' THEN 1 ELSE 2 END
+  `).all(gameId);
+  const quarterScores = db.prepare(`
+    SELECT quarter, home_points, away_points, home_score_end, away_score_end
+    FROM game_quarter_scores WHERE game_id = ? ORDER BY quarter
+  `).all(gameId);
+  const timelineRows = db.prepare(`
+    SELECT sequence, quarter, clock, elapsed_seconds, home_score, away_score, leader, description
+    FROM game_flow_events WHERE game_id = ? ORDER BY elapsed_seconds, sequence
+  `).all(gameId);
+  const timeline = [
+    { sequence: 0, quarter: 1, clock: "15:00", elapsed_seconds: 0, home_score: 0, away_score: 0, leader: "tied", leaderTeam: null, description: "Game start" },
+    ...timelineRows.map((event) => ({
+      ...event,
+      leaderTeam: event.leader === "home" ? game.home_team : event.leader === "away" ? game.away_team : null,
+    })),
+  ];
+
+  const boxScore = db.prepare(`
+    SELECT
+      game_id, team, opponent_team, player_id, player_display_name, position,
+      CASE WHEN position IN ('RB', 'FB', 'HB') THEN 'RB' ELSE position END AS position_group,
+      COALESCE(offense_snaps, 0) AS snaps,
+      CASE WHEN offense_pct IS NOT NULL THEN ROUND(offense_pct * 100.0, 1) END AS snap_pct,
+      completions, attempts AS passing_attempts, passing_yards, passing_tds, interceptions,
+      carries, rushing_yards, rushing_tds, targets, receptions, receiving_yards, receiving_tds,
+      ROUND(fantasy_points + receptions * ?, 1) AS fantasy_points
+    FROM player_week_stats
+    WHERE season = 2025 AND game_id = ? AND source_player_stats = 1
+      AND position IN ('QB', 'RB', 'FB', 'HB', 'WR', 'TE')
+    ORDER BY team,
+      CASE WHEN position = 'QB' THEN 1 WHEN position IN ('RB', 'FB', 'HB') THEN 2 WHEN position = 'WR' THEN 3 WHEN position = 'TE' THEN 4 ELSE 5 END,
+      fantasy_points DESC, player_display_name COLLATE NOCASE
+  `).all(receptionBonus, gameId);
+
+  const hasFlow = Boolean(game.play_by_play_available && timelineRows.length);
+  const unavailable = [];
+  if (!hasFlow) unavailable.push({
+    metric: "gameFlow",
+    reason: "nflverse play-by-play is unavailable for this game; schedule and player box-score fields remain available.",
+  });
+
+  return {
+    data: {
+      game: {
+        gameId: game.game_id,
+        season: game.season,
+        seasonType: game.season_type,
+        gameType: game.game_type,
+        week: game.week,
+        gameday: game.gameday,
+        weekday: game.weekday,
+        gametime: game.gametime,
+        timeZone: "America/New_York",
+        homeTeam: game.home_team,
+        awayTeam: game.away_team,
+        homeScore: game.home_score,
+        awayScore: game.away_score,
+        overtime: Boolean(game.overtime),
+        stadium: game.stadium,
+        roof: game.roof,
+        surface: game.surface,
+      },
+      teams: teamSummaries.map((team) => ({
+        team: team.team,
+        opponent: team.opponent,
+        homeAway: team.home_away,
+        pointsFor: team.points_for,
+        pointsAgainst: team.points_against,
+        result: team.result,
+        rushPlays: team.rush_plays,
+        passPlays: team.pass_plays,
+        offensiveSnaps: team.offensive_plays,
+        rushPct: team.rush_pct,
+        passPct: team.pass_pct,
+        secondsLeading: team.seconds_leading,
+        secondsTrailing: team.seconds_trailing,
+        secondsTied: team.seconds_tied,
+        pctTimeLeading: team.pct_time_leading,
+        pctTimeTrailing: team.pct_time_trailing,
+        pctTimeTied: team.pct_time_tied,
+      })),
+      totalOffensiveSnaps: teamSummaries.reduce((sum, team) => sum + (team.offensive_plays || 0), 0),
+      quarterScores,
+      timeline: hasFlow ? timeline : [],
+      boxScore,
+      availability: {
+        schedule: true,
+        playerBoxScore: boxScore.length > 0,
+        quarterScores: quarterScores.length > 0,
+        scoringTimeline: hasFlow,
+        timeInScoreState: hasFlow,
+        playMix: teamSummaries.every((team) => team.rush_plays !== null && team.pass_plays !== null),
+        unavailable,
+      },
+    },
+    meta: {
+      season: 2025,
+      scoring,
+      source: "nflverse schedules, weekly player stats, snap counts, and play-by-play",
+      methodology: {
+        timeInScoreState: "Integrated from each score change to the next score change or end of the game clock.",
+        playMix: "Rush plays use nflverse rush_attempt; pass plays use pass_attempt plus sacks not already counted as attempts.",
+        offensiveSnaps: "Team offensive scrimmage plays (rush plus pass), not the sum of individual-player personnel snaps.",
+        gameTimeZone: "nflverse schedule kickoff times are represented in America/New_York.",
+      },
       queryMs: Number((performance.now() - started).toFixed(2)),
     },
   };
@@ -365,6 +540,7 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
     WITH weekly AS (
       SELECT
         player_id,
+        game_id,
         season_type,
         week,
         team,

@@ -33,13 +33,13 @@ The check covers SQLite integrity and foreign keys, the pinned 2025 nflverse row
 ## Data flow
 
 ```text
-nflverse release CSVs -> immutable local cache -> idempotent importer
-                     -> SQLite player-week warehouse -> read-only Node API
-                     -> React statistics table
+nflverse schedules, player stats, snaps, and play-by-play -> local source cache
+                     -> SQLite player-week and game-flow warehouse
+                     -> read-only Node API -> React research tables
 ```
 
 - `scripts/import_nflverse_2025.py` downloads or reuses the pinned source assets and replaces the database atomically only after reconciliation checks pass.
-- `data/fantasy_football.sqlite` contains 7,525 player-week rows for 609 players. Rows with a relevant statistic are augmented with every available offensive snap row for those players, so games played and snap totals remain complete.
+- `data/fantasy_football.sqlite` contains 7,525 player-week rows for 609 players plus all 285 games, quarter scoring, team play mix, score-state timing, and 3,777 scoring timeline events from the 2025 season and postseason. Rows with a relevant statistic are augmented with every available offensive snap row for those players, so games played and snap totals remain complete.
 - `server/stats-store.mjs` validates query inputs and performs aggregation, filtering, ranking, and sorting in SQLite.
 - `src/App.jsx` renders the interactive table. Fantasy points are selected-period totals; DraftKings price is intentionally an em dash in this phase.
 - `src/WeekRangePicker.jsx` selects any inclusive range from Week 1 through the Super Bowl and applies it immediately.
@@ -51,9 +51,13 @@ nflverse release CSVs -> immutable local cache -> idempotent importer
 - `GET /api/v1/meta`
 - `GET /api/v1/player-stats`
 - `GET /api/v1/player-profile?playerId=<id>&scoring=PPR`
+- `GET /api/v1/team-box-scores?team=NYG&weeks=4,5,6,7&scoring=ppr&seasonType=ALL`
+- `GET /api/v1/game-breakdown?gameId=2025_08_NYG_PHI&scoring=ppr`
 
 Player queries accept `seasonType`, `scoring`, `positions`, `teams`, `weeks`, `search`, `sort`, `direction`, `limit`, `minGames`, `minSnaps`, and `ranks`. `sort` and `direction` accept up to three comma-separated fields for secondary ordering; `limit=all` exposes the complete 609-player warehouse.
 
 Player profiles return 2025 regular- and postseason game logs (including quarterback sacks suffered), a season aggregate, weekly and season positional finishes, and the selected player's teammates grouped by offensive fantasy position. The league-membership field remains explicitly unavailable until league roster data is connected.
+
+Team box-score responses include the selected team's full schedule with stable game IDs, opponent, home/away status, kickoff date and Eastern time, final score, and result. Game breakdowns return both teams' fantasy box scores, scoring by quarter, score-over-time events, time leading/trailing/tied, run/pass play mix, and offensive scrimmage-play totals. Each response includes source availability and calculation methodology so a missing nflverse artifact is shown explicitly rather than fabricated.
 
 Data: [nflverse](https://github.com/nflverse/nflverse-data), licensed under CC BY 4.0. Snap counts are distributed by nflverse from Pro Football Reference data.
