@@ -87,11 +87,30 @@ test("game breakdown exposes both teams, quarter scoring, game flow, and documen
   assert.equal(result.data.timeline.at(-1).away_score, 20);
   assert.ok(result.data.boxScore.some((row) => row.team === "NYG" && row.position_group === "QB"));
   assert.ok(result.data.boxScore.some((row) => row.team === "PHI" && row.position_group === "RB"));
+  assert.equal(result.data.segments.length, 6);
+  assert.equal(result.data.teamSegments.length, 12);
+  assert.equal(result.data.playerSegments.filter((row) => row.team === "NYG").length, 9);
+  assert.ok(result.data.playerSegments.every((row) => row.segments.length === 6));
+  const giantsQuarterback = result.data.playerSegments.find((row) => row.team === "NYG" && row.position === "QB");
+  assert.ok(giantsQuarterback.total.passAttempts > 0);
+  assert.ok(giantsQuarterback.total.snaps > 0);
+  assert.equal(result.data.availability.playerParticipation, true);
   assert.equal(result.data.availability.scoringTimeline, true);
   assert.equal(result.data.availability.unavailable.length, 0);
   assert.match(result.meta.methodology.offensiveSnaps, /scrimmage plays/);
+  assert.match(result.meta.methodology.metricScaling, /same KPI/);
   assert.ok(result.meta.queryMs < 250);
   assert.throws(() => queryGameBreakdown(new URLSearchParams("gameId=missing")), QueryValidationError);
+  const participationExample = queryGameBreakdown(new URLSearchParams("gameId=2025_01_NYG_WAS&scoring=ppr"));
+  assert.equal(participationExample.data.playerSegments.filter((row) => row.team === "WAS").length, 9);
+  assert.equal(participationExample.data.playerSegments.filter((row) => row.team === "NYG").length, 9);
+  for (const [gameId, team] of [["2025_10_BUF_MIA", "MIA"], ["2025_11_NYJ_NE", "NE"]]) {
+    const edgeCase = queryGameBreakdown(new URLSearchParams({ gameId, scoring: "ppr" }));
+    assert.equal(edgeCase.data.playerSegments.filter((row) => row.team === team).length, 9);
+  }
+  assert.deepEqual(Object.keys(participationExample.data.playerSegments[0].segments[0]).sort(), [
+    "fantasyPoints", "passAttempts", "receptions", "rushAttempts", "segment", "snaps", "targets", "touchdowns", "yards",
+  ]);
 });
 
 test("filters, weeks, search and sorting are server-side", () => {

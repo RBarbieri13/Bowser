@@ -415,7 +415,7 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
 
   const boxScore = db.prepare(`
     SELECT
-      game_id, team, opponent_team, player_id, player_display_name, position,
+      game_id, team, opponent_team, player_id, player_display_name, position, headshot_url,
       CASE WHEN position IN ('RB', 'FB', 'HB') THEN 'RB' ELSE position END AS position_group,
       COALESCE(offense_snaps, 0) AS snaps,
       CASE WHEN offense_pct IS NOT NULL THEN ROUND(offense_pct * 100.0, 1) END AS snap_pct,
@@ -429,6 +429,113 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
       CASE WHEN position = 'QB' THEN 1 WHEN position IN ('RB', 'FB', 'HB') THEN 2 WHEN position = 'WR' THEN 3 WHEN position = 'TE' THEN 4 ELSE 5 END,
       fantasy_points DESC, player_display_name COLLATE NOCASE
   `).all(receptionBonus, gameId);
+
+  const rawPlayerSegments = db.prepare(`
+    SELECT
+      segments.team, segments.player_id, players.display_name AS player_display_name,
+      players.position, players.headshot_url, segments.segment, segments.snaps,
+      segments.rush_attempts, segments.pass_attempts, segments.targets,
+      segments.yards, segments.touchdowns, segments.receptions,
+      ROUND(segments.fantasy_points + segments.receptions * ?, 1) AS fantasy_points
+    FROM player_game_segments AS segments
+    JOIN players ON players.player_id = segments.player_id
+    WHERE segments.game_id = ?
+      AND players.position IN ('QB', 'RB', 'FB', 'HB', 'WR', 'TE')
+    ORDER BY segments.team, players.position, segments.player_id, segments.segment
+  `).all(receptionBonus, gameId);
+  const participationRoster = db.prepare(`
+    SELECT player_id, team, player_display_name, position, headshot_url,
+      CASE WHEN position IN ('RB', 'FB', 'HB') THEN 'RB' ELSE position END AS position_group,
+      COALESCE(offense_snaps, 0) AS weekly_snaps
+    FROM player_week_stats
+    WHERE season = 2025 AND game_id = ?
+      AND (source_player_stats = 1 OR source_snap_counts = 1)
+      AND position IN ('QB', 'RB', 'FB', 'HB', 'WR', 'TE')
+    ORDER BY team, weekly_snaps DESC, player_display_name COLLATE NOCASE
+  `).all(gameId);
+  const teamSegments = db.prepare(`
+    SELECT team, segment, rush_plays, pass_plays, offensive_plays, yards, epa, successful_plays
+    FROM game_team_segments WHERE game_id = ? ORDER BY team, segment
+  `).all(gameId).map((row) => ({
+    team: row.team,
+    segment: row.segment,
+    rushPlays: row.rush_plays,
+    passPlays: row.pass_plays,
+    offensivePlays: row.offensive_plays,
+    yards: row.yards,
+    epa: row.epa,
+    successfulPlays: row.successful_plays,
+    passPct: row.offensive_plays ? Number((100 * row.pass_plays / row.offensive_plays).toFixed(1)) : 0,
+    rushPct: row.offensive_plays ? Number((100 * row.rush_plays / row.offensive_plays).toFixed(1)) : 0,
+    successRate: row.offensive_plays ? Number((100 * row.successful_plays / row.offensive_plays).toFixed(1)) : 0,
+  }));
+
+  const groupedPlayers = new Map();
+  for (const row of rawPlayerSegments) {
+    const key = `${row.team}:${row.player_id}`;
+    if (!groupedPlayers.has(key)) groupedPlayers.set(key, {
+      team: row.team,
+      playerId: row.player_id,
+      playerDisplayName: row.player_display_name,
+      position: ["FB", "HB"].includes(row.position) ? "RB" : row.position,
+      headshotUrl: row.headshot_url || null,
+      segments: [],
+    });
+    groupedPlayers.get(key).segments.push({
+      segment: row.segment,
+      snaps: row.snaps,
+      rushAttempts: row.rush_attempts,
+      passAttempts: row.pass_attempts,
+      targets: row.targets,
+      yards: row.yards,
+      touchdowns: row.touchdowns,
+      receptions: row.receptions,
+      fantasyPoints: row.fantasy_points,
+    });
+  }
+  const sumMetrics = (segments) => segments.reduce((total, segment) => ({
+    snaps: total.snaps + segment.snaps,
+    rushAttempts: total.rushAttempts + segment.rushAttempts,
+    passAttempts: total.passAttempts + segment.passAttempts,
+    targets: total.targets + segment.targets,
+    yards: Number((total.yards + segment.yards).toFixed(1)),
+    touchdowns: total.touchdowns + segment.touchdowns,
+    receptions: total.receptions + segment.receptions,
+    fantasyPoints: Number((total.fantasyPoints + segment.fantasyPoints).toFixed(1)),
+  }), { snaps: 0, rushAttempts: 0, passAttempts: 0, targets: 0, yards: 0, touchdowns: 0, receptions: 0, fantasyPoints: 0 });
+  const allSegmentPlayers = [...groupedPlayers.values()].map((player) => ({ ...player, total: sumMetrics(player.segments) }));
+  for (const row of participationRoster) {
+    if (allSegmentPlayers.some((player) => player.team === row.team && player.playerId === row.player_id)) continue;
+    const emptySegments = Array.from({ length: 6 }, (_, segment) => ({
+      segment, snaps: 0, rushAttempts: 0, passAttempts: 0, targets: 0,
+      yards: 0, touchdowns: 0, receptions: 0, fantasyPoints: 0,
+    }));
+    allSegmentPlayers.push({
+      team: row.team,
+      playerId: row.player_id,
+      playerDisplayName: row.player_display_name,
+      position: row.position_group,
+      headshotUrl: row.headshot_url || null,
+      segments: emptySegments,
+      total: sumMetrics(emptySegments),
+    });
+  }
+  const playerSegments = [];
+  for (const team of [game.away_team, game.home_team]) {
+    const teamPlayers = allSegmentPlayers.filter((player) => player.team === team);
+    const selected = [];
+    const take = (position, count) => teamPlayers
+      .filter((player) => player.position === position)
+      .sort((a, b) => b.total.snaps - a.total.snaps || b.total.fantasyPoints - a.total.fantasyPoints || a.playerDisplayName.localeCompare(b.playerDisplayName))
+      .slice(0, count);
+    selected.push(...take("QB", 1), ...take("WR", 3), ...take("RB", 2), ...take("TE", 2));
+    const selectedIds = new Set(selected.map((player) => player.playerId));
+    const flexPlayers = teamPlayers
+      .filter((player) => !selectedIds.has(player.playerId))
+      .sort((a, b) => b.total.snaps - a.total.snaps || b.total.fantasyPoints - a.total.fantasyPoints || a.playerDisplayName.localeCompare(b.playerDisplayName));
+    selected.push(...flexPlayers.slice(0, Math.max(0, 9 - selected.length)));
+    selected.slice(0, 9).forEach((player, depthIndex) => playerSegments.push({ ...player, depthIndex: depthIndex + 1 }));
+  }
 
   const hasFlow = Boolean(game.play_by_play_available && timelineRows.length);
   const unavailable = [];
@@ -481,6 +588,16 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
       quarterScores,
       timeline: hasFlow ? timeline : [],
       boxScore,
+      segments: [
+        { segment: 0, label: "0:00–10:00", phase: "Q1" },
+        { segment: 1, label: "10:00–20:00", phase: "Q1–Q2" },
+        { segment: 2, label: "20:00–30:00", phase: "Q2–Half" },
+        { segment: 3, label: "30:00–40:00", phase: "Q3" },
+        { segment: 4, label: "40:00–50:00", phase: "Q3–Q4" },
+        { segment: 5, label: "50:00–Final", phase: game.overtime ? "Q4–OT" : "Q4" },
+      ],
+      teamSegments,
+      playerSegments,
       availability: {
         schedule: true,
         playerBoxScore: boxScore.length > 0,
@@ -488,17 +605,20 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
         scoringTimeline: hasFlow,
         timeInScoreState: hasFlow,
         playMix: teamSummaries.every((team) => team.rush_plays !== null && team.pass_plays !== null),
+        playerParticipation: playerSegments.length > 0,
         unavailable,
       },
     },
     meta: {
       season: 2025,
       scoring,
-      source: "nflverse schedules, weekly player stats, snap counts, and play-by-play",
+      source: "nflverse schedules, weekly player stats, snap counts, play-by-play, and play participation",
       methodology: {
         timeInScoreState: "Integrated from each score change to the next score change or end of the game clock.",
         playMix: "Rush plays use nflverse rush_attempt; pass plays use pass_attempt plus sacks not already counted as attempts.",
         offensiveSnaps: "Team offensive scrimmage plays (rush plus pass), not the sum of individual-player personnel snaps.",
+        playerParticipation: "Player snaps use nflverse play-participation personnel. Opportunity and production are grouped into six elapsed-game segments; fantasy points use the selected reception bonus.",
+        metricScaling: "Each participation bar is normalized only against the same KPI in the active team and comparison scope; values are never normalized across unlike metrics.",
         gameTimeZone: "nflverse schedule kickoff times are represented in America/New_York.",
       },
       queryMs: Number((performance.now() - started).toFixed(2)),

@@ -28,6 +28,7 @@ SOURCES = {
     "players": "https://github.com/nflverse/nflverse-data/releases/download/players/players.csv",
     "schedules": "https://github.com/nflverse/nflverse-data/releases/download/schedules/games.csv",
     "play_by_play": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2025.csv.gz",
+    "participation": "https://github.com/nflverse/nflverse-data/releases/download/pbp_participation/pbp_participation_2025.csv",
 }
 
 SOURCE_FILENAMES = {
@@ -36,6 +37,7 @@ SOURCE_FILENAMES = {
     "players": "players.csv",
     "schedules": "schedules.csv",
     "play_by_play": "play_by_play.csv.gz",
+    "participation": "pbp_participation_2025.csv",
 }
 
 OFFENSIVE_SIGNALS = (
@@ -229,9 +231,15 @@ def load_sources(refresh: bool):
             "team_plays": defaultdict(lambda: {"rush": 0, "pass": 0}),
             "last_score": (0, 0),
             "max_elapsed": 0,
+            "team_segments": defaultdict(lambda: defaultdict(lambda: {"rush": 0, "pass": 0, "plays": 0, "yards": 0.0, "epa": 0.0, "successes": 0})),
+            "player_segments": defaultdict(lambda: defaultdict(lambda: {
+                "snaps": 0, "rush_attempts": 0, "pass_attempts": 0, "targets": 0,
+                "yards": 0.0, "touchdowns": 0, "receptions": 0, "fantasy_points": 0.0,
+            })),
         }
         for game_id in games
     }
+    play_context: dict[tuple[str, int], tuple[str, int]] = {}
     with gzip.open(paths["play_by_play"], "rt", newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
             game_id = row.get("game_id", "")
@@ -263,10 +271,81 @@ def load_sources(refresh: bool):
             possession = row.get("posteam", "")
             if possession not in {game.get("home_team"), game.get("away_team")}:
                 continue
-            if integer(row.get("rush_attempt")) == 1:
+            is_rush = integer(row.get("rush_attempt")) == 1
+            is_pass = integer(row.get("pass_attempt")) == 1
+            is_sack = integer(row.get("sack")) == 1
+            is_play = integer(row.get("no_play")) != 1 and (is_rush or is_pass or is_sack)
+            if not is_play:
+                continue
+            segment = min(5, max(0, elapsed // 600))
+            play_id = integer(row.get("play_id"))
+            play_context[(game_id, play_id)] = (possession, segment)
+            team_segment = flow["team_segments"][possession][segment]
+            team_segment["plays"] += 1
+            team_segment["yards"] += number(row.get("yards_gained"))
+            team_segment["epa"] += number(row.get("epa"))
+            team_segment["successes"] += integer(row.get("success"))
+            if is_rush:
                 flow["team_plays"][possession]["rush"] += 1
-            if integer(row.get("pass_attempt")) == 1 or integer(row.get("sack")) == 1:
+                team_segment["rush"] += 1
+            if is_pass or is_sack:
                 flow["team_plays"][possession]["pass"] += 1
+                team_segment["pass"] += 1
+
+            player_segments = flow["player_segments"]
+            passer_id = row.get("passer_player_id", "")
+            rusher_id = row.get("rusher_player_id", "")
+            receiver_id = row.get("receiver_player_id", "")
+            if is_pass and not is_sack and passer_id:
+                metric = player_segments[passer_id][segment]
+                metric["pass_attempts"] += 1
+                metric["yards"] += number(row.get("passing_yards"))
+                metric["touchdowns"] += integer(row.get("pass_touchdown"))
+                metric["fantasy_points"] += number(row.get("passing_yards")) * 0.04
+                metric["fantasy_points"] += integer(row.get("pass_touchdown")) * 4
+                metric["fantasy_points"] -= integer(row.get("interception")) * 2
+            if is_rush and rusher_id:
+                metric = player_segments[rusher_id][segment]
+                metric["rush_attempts"] += 1
+                metric["yards"] += number(row.get("rushing_yards"))
+                metric["touchdowns"] += integer(row.get("rush_touchdown"))
+                metric["fantasy_points"] += number(row.get("rushing_yards")) * 0.1
+                metric["fantasy_points"] += integer(row.get("rush_touchdown")) * 6
+            if receiver_id and is_pass and not is_sack:
+                metric = player_segments[receiver_id][segment]
+                metric["targets"] += 1
+                metric["receptions"] += integer(row.get("complete_pass"))
+                metric["yards"] += number(row.get("receiving_yards"))
+                metric["touchdowns"] += integer(row.get("pass_touchdown"))
+                metric["fantasy_points"] += number(row.get("receiving_yards")) * 0.1
+                metric["fantasy_points"] += integer(row.get("pass_touchdown")) * 6
+            if integer(row.get("fumble_lost")) == 1:
+                fumbler_id = row.get("fumbled_1_player_id", "") or row.get("fumbled_2_player_id", "")
+                if fumbler_id:
+                    player_segments[fumbler_id][segment]["fantasy_points"] -= 2
+
+    seen_participation_plays: set[tuple[str, int]] = set()
+    with paths["participation"].open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            game_id = row.get("nflverse_game_id", "")
+            play_id = integer(row.get("play_id"))
+            play_key = (game_id, play_id)
+            if play_key in seen_participation_plays or play_key not in play_context:
+                continue
+            seen_participation_plays.add(play_key)
+            possession, segment = play_context[play_key]
+            if possession != row.get("possession_team", ""):
+                continue
+            offense_ids = (row.get("offense_players", "") or "").split(";")
+            offense_names = (row.get("offense_names", "") or "").split(";")
+            for source_id, source_name in zip(offense_ids, offense_names, strict=False):
+                player_id = player_id_by_game_team_name.get((game_id, possession, source_name))
+                if not player_id and source_id in relevant_ids:
+                    registered_name = players_by_gsis.get(source_id, {}).get("display_name", "")
+                    if registered_name == source_name:
+                        player_id = source_id
+                if player_id in relevant_ids:
+                    flow_by_game[game_id]["player_segments"][player_id][segment]["snaps"] += 1
 
     return (
         paths, players_by_gsis, stats, snaps, relevant_ids, raw_totals,
@@ -407,6 +486,35 @@ CREATE TABLE game_flow_events (
     PRIMARY KEY (game_id, sequence)
 );
 
+CREATE TABLE game_team_segments (
+    game_id TEXT NOT NULL REFERENCES games(game_id),
+    team TEXT NOT NULL,
+    segment INTEGER NOT NULL CHECK (segment BETWEEN 0 AND 5),
+    rush_plays INTEGER NOT NULL,
+    pass_plays INTEGER NOT NULL,
+    offensive_plays INTEGER NOT NULL,
+    yards REAL NOT NULL,
+    epa REAL NOT NULL,
+    successful_plays INTEGER NOT NULL,
+    PRIMARY KEY (game_id, team, segment)
+);
+
+CREATE TABLE player_game_segments (
+    game_id TEXT NOT NULL REFERENCES games(game_id),
+    team TEXT NOT NULL,
+    player_id TEXT NOT NULL REFERENCES players(player_id),
+    segment INTEGER NOT NULL CHECK (segment BETWEEN 0 AND 5),
+    snaps INTEGER NOT NULL,
+    rush_attempts INTEGER NOT NULL,
+    pass_attempts INTEGER NOT NULL,
+    targets INTEGER NOT NULL,
+    yards REAL NOT NULL,
+    touchdowns INTEGER NOT NULL,
+    receptions INTEGER NOT NULL,
+    fantasy_points REAL NOT NULL,
+    PRIMARY KEY (game_id, player_id, segment)
+);
+
 CREATE TABLE warehouse_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE INDEX idx_stats_scope ON player_week_stats (season, season_type, week, position);
 CREATE INDEX idx_stats_player ON player_week_stats (season, season_type, player_id, week, team);
@@ -415,6 +523,8 @@ CREATE INDEX idx_players_name ON players (display_name COLLATE NOCASE);
 CREATE INDEX idx_games_team_week ON games (season, week, home_team, away_team);
 CREATE INDEX idx_game_team_summary_team ON game_team_summary (team, game_id);
 CREATE INDEX idx_game_flow_game_time ON game_flow_events (game_id, elapsed_seconds);
+CREATE INDEX idx_game_segments_game_team ON game_team_segments (game_id, team, segment);
+CREATE INDEX idx_player_segments_game_team ON player_game_segments (game_id, team, player_id, segment);
 """
 
 
@@ -474,11 +584,18 @@ def build_database(refresh: bool) -> dict:
 
     placeholders = ",".join("?" for _ in range(len(rows[0])))
     connection.executemany(f"INSERT INTO player_week_stats VALUES ({placeholders})", rows)
+    player_team_by_game = {
+        (stat.get("game_id", ""), player_id): team
+        for (season_type, player_id, week, team), stat in stats.items()
+        if stat.get("game_id")
+    }
 
     game_rows = []
     quarter_rows = []
     team_summary_rows = []
     flow_rows = []
+    team_segment_rows = []
+    player_segment_rows = []
     for game_id, game in sorted(games.items(), key=lambda item: (integer(item[1].get("week")), item[0])):
         flow = flow_by_game[game_id]
         home_team = game.get("home_team", "")
@@ -512,6 +629,27 @@ def build_database(refresh: bool) -> dict:
                 event["home_score"], event["away_score"],
                 score_state(event["home_score"], event["away_score"]), event["description"],
             ))
+
+        for team in (away_team, home_team):
+            for segment in range(6):
+                metric = flow["team_segments"][team][segment]
+                team_segment_rows.append((
+                    game_id, team, segment, metric["rush"], metric["pass"], metric["plays"],
+                    round(metric["yards"], 1), round(metric["epa"], 3), metric["successes"],
+                ))
+        for player_id, segments in flow["player_segments"].items():
+            if player_id not in relevant_ids:
+                continue
+            player_team = player_team_by_game.get((game_id, player_id), "")
+            if player_team not in {away_team, home_team}:
+                continue
+            for segment in range(6):
+                metric = segments[segment]
+                player_segment_rows.append((
+                    game_id, player_team, player_id, segment, metric["snaps"], metric["rush_attempts"],
+                    metric["pass_attempts"], metric["targets"], round(metric["yards"], 1),
+                    metric["touchdowns"], metric["receptions"], round(metric["fantasy_points"], 3),
+                ))
 
         duration = max(3600, flow["max_elapsed"]) if has_pbp else 0
         time_totals = duration_breakdown(flow["events"], duration) if has_pbp else {"home": 0, "away": 0, "tied": 0}
@@ -547,6 +685,8 @@ def build_database(refresh: bool) -> dict:
     connection.executemany("INSERT INTO game_quarter_scores VALUES (?, ?, ?, ?, ?, ?)", quarter_rows)
     connection.executemany("INSERT INTO game_team_summary VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", team_summary_rows)
     connection.executemany("INSERT INTO game_flow_events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", flow_rows)
+    connection.executemany("INSERT INTO game_team_segments VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", team_segment_rows)
+    connection.executemany("INSERT INTO player_game_segments VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", player_segment_rows)
 
     imported_at = datetime.now(timezone.utc).isoformat()
     source_metadata = {
@@ -584,6 +724,8 @@ def build_database(refresh: bool) -> dict:
         "games": connection.execute("SELECT COUNT(*) FROM games").fetchone()[0],
         "games_with_play_by_play": connection.execute("SELECT COUNT(*) FROM games WHERE play_by_play_available = 1").fetchone()[0],
         "game_flow_events": connection.execute("SELECT COUNT(*) FROM game_flow_events").fetchone()[0],
+        "game_team_segments": connection.execute("SELECT COUNT(*) FROM game_team_segments").fetchone()[0],
+        "player_game_segments": connection.execute("SELECT COUNT(*) FROM player_game_segments").fetchone()[0],
     }
     if mismatches:
         raise RuntimeError(f"source/database aggregate mismatch: {mismatches}")

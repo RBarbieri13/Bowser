@@ -97,8 +97,15 @@ const sampleGameBreakdown = {
     totalOffensiveSnaps: 125,
     quarterScores: [{ quarter: 1, away_points: 7, home_points: 10 }, { quarter: 2, away_points: 7, home_points: 7 }, { quarter: 3, away_points: 3, home_points: 7 }, { quarter: 4, away_points: 7, home_points: 7 }],
     timeline: [{ sequence: 0, quarter: 1, clock: "15:00", elapsed_seconds: 0, away_score: 0, home_score: 0, leader: "tied", description: "Game start" }, { sequence: 1, quarter: 1, clock: "10:00", elapsed_seconds: 300, away_score: 0, home_score: 7, leader: "home", description: "BUF touchdown" }],
+    segments: Array.from({ length: 6 }, (_, segment) => ({ segment, label: `${segment * 10}:00–${segment === 5 ? "Final" : `${(segment + 1) * 10}:00`}`, phase: `Phase ${segment + 1}` })),
+    teamSegments: ["KC", "BUF"].flatMap((team) => Array.from({ length: 6 }, (_, segment) => ({ team, segment, rushPlays: 4 + segment, passPlays: 6 + segment, offensivePlays: 10 + segment * 2, yards: 45 + segment * 8, epa: 0.4, successfulPlays: 5, passPct: 60, rushPct: 40, successRate: 50 }))),
+    playerSegments: ["KC", "BUF"].map((team, teamIndex) => ({
+      team, playerId: `00-${team}`, playerDisplayName: team === "BUF" ? "Test Player" : "Road Player", position: "QB", headshotUrl: null,
+      segments: Array.from({ length: 6 }, (_, segment) => ({ segment, snaps: 8 + segment, rushAttempts: segment % 2, passAttempts: 3 + segment, targets: 0, yards: 28 + segment * 9, touchdowns: segment === 4 ? 1 : 0, receptions: 0, fantasyPoints: 1.2 + segment })),
+      total: { snaps: 63 + teamIndex, rushAttempts: 3, passAttempts: 33, targets: 0, yards: 303, touchdowns: 1, receptions: 0, fantasyPoints: 22.2 },
+    })),
     boxScore: sampleBoxScores.data.map((row) => ({ ...row, team: "BUF" })),
-    availability: { scoringTimeline: true },
+    availability: { scoringTimeline: true, playerParticipation: true },
   },
   meta: { methodology: { playMix: "Rush and pass play mix from nflverse play-by-play." } },
 };
@@ -203,8 +210,25 @@ describe("statistics table UI", () => {
     await user.click(screen.getByRole("button", { name: "Open Week 1 against KC game breakdown" }));
 
     expect(await screen.findByRole("heading", { name: /KC 24.*31 BUF/ })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Score by quarter" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Score over time" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Score, possession pressure, and play selection" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Key player participation" })).toBeInTheDocument();
+    expect(screen.getByRole("table", { name: "BUF opportunity by game segment" })).toBeInTheDocument();
+    expect(screen.getAllByText("Snaps").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Rush attempts").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Pass attempts").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Targets").length).toBeGreaterThan(0);
+    const segmentCell = document.querySelector(".participation-table tbody td .kpi-stack");
+    expect(segmentCell.querySelectorAll(".kpi-lane")).toHaveLength(4);
+    const userProduction = user;
+    await userProduction.click(screen.getByRole("button", { name: "Production" }));
+    expect(screen.getByLabelText("Sort participation players")).toHaveValue("yards");
+    expect(screen.getAllByText("Yards").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Touchdowns").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Receptions").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Fantasy points").length).toBeGreaterThan(0);
+    const resizer = screen.getByRole("separator", { name: "Resize player participation section" });
+    fireEvent.keyDown(resizer, { key: "ArrowDown" });
+    expect(resizer).toHaveAttribute("aria-valuenow", "494");
     const gameCall = fetch.mock.calls.map(([input]) => String(input)).find((url) => url.startsWith("/api/v1/game-breakdown?"));
     expect(new URL(gameCall, "http://local").searchParams.get("scoring")).toBe("half");
 
