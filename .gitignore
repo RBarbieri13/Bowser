@@ -11,6 +11,8 @@ artifacts/
 data/*.sqlite-shm
 data/*.sqlite-wal
 data/raw/play_by_play.csv.gz
+data/raw/pbp_participation_2025.csv
+data/raw/pbp_participation_2025.parquet
 artifacts/design-qa/*-pass-1.png
 artifacts/design-qa/*-pass-1b.png
 design-qa-implementation.png
