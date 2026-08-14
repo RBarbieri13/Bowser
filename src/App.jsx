@@ -319,7 +319,7 @@ export function App() {
     <div className="app-shell">
       <AppHeader currentPage={currentPage === "game" ? "team-box-scores" : currentPage} />
       {currentPage === "game" ? (
-        <GameBreakdown gameId={route.gameId} scoring={route.scoring} onBack={() => { window.location.hash = "#/team-box-scores"; }} />
+        <GameBreakdown gameId={route.gameId} scoring={route.scoring} onBack={() => { window.location.hash = "#/team-box-scores"; }} onOpenPlayer={(row, opener) => openProfile(row, opener, route.scoring)} />
       ) : currentPage === "team-box-scores" ? (
         <TeamBoxScores meta={meta} onOpenPlayer={openProfile} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}`; }} />
       ) : (
@@ -390,6 +390,10 @@ export function App() {
         {loading ? <div className="progress" role="progressbar" aria-label="Updating statistics"><span /></div> : null}
         {error ? <div className="error-banner" role="alert"><span>{error}</span><button onClick={() => window.location.reload()}>Retry</button></div> : null}
         {showSwipeHint ? <div className="swipe-hint">Swipe horizontally for more stats <button onClick={() => { setShowSwipeHint(false); localStorage.setItem("stats-scroll-hint-dismissed", "1"); }} aria-label="Dismiss horizontal scroll hint"><X /></button></div> : null}
+        <header className="table-panel-heading">
+          <h1>Player Database</h1>
+          <span>{filterSummary} · {topEnabled ? `Top ${limit === "all" ? "All" : limit}` : "All matching"}</span>
+        </header>
         <div className="table-scroller" ref={tableScroller} onScroll={onHorizontalScroll} tabIndex="0" aria-label="Scrollable player statistics table">
           <table>
             <caption>2025 NFL player fantasy statistics. {filterSummary}. {responseMeta?.totalCount ?? 0} matching players.</caption>

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ChartLineUp, LinkBreak, ListBullets, UsersThree, X } from "@phosphor-icons/react";
+import { ChartLineUp, LinkBreak, ListBullets, User, UsersThree, X } from "@phosphor-icons/react";
 
 const number = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 const decimal = new Intl.NumberFormat("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
@@ -185,6 +185,7 @@ export function PlayerProfile({ player, scoring, onClose, onSelectPlayer }) {
   const [profile, setProfile] = useState(null);
   const [activeTab, setActiveTab] = useState("logs");
   const [error, setError] = useState("");
+  const [headshotFailed, setHeadshotFailed] = useState(false);
   const dialogRef = useRef(null);
   const closeRef = useRef(null);
 
@@ -192,6 +193,7 @@ export function PlayerProfile({ player, scoring, onClose, onSelectPlayer }) {
     const controller = new AbortController();
     setProfile(null);
     setError("");
+    setHeadshotFailed(false);
     fetch(`/api/v1/player-profile?${new URLSearchParams({ playerId: player.playerId, scoring })}`, { signal: controller.signal })
       .then(async (response) => {
         const payload = await response.json();
@@ -236,7 +238,7 @@ export function PlayerProfile({ player, scoring, onClose, onSelectPlayer }) {
     <div className="profile-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <section className="player-profile" role="dialog" aria-modal="true" aria-labelledby="player-profile-title" ref={dialogRef}>
         <header className="profile-header">
-          {profile?.player.headshotUrl ? <img src={profile.player.headshotUrl} alt="" onError={(event) => { event.currentTarget.hidden = true; }} /> : null}
+          <div className="profile-media-tile">{profile?.player.headshotUrl && !headshotFailed ? <img src={profile.player.headshotUrl} alt="" onError={() => setHeadshotFailed(true)} /> : <User weight="duotone" aria-hidden="true" />}</div>
           <div className="profile-identity">
             <span className="profile-eyebrow">Bowser player card</span>
             <h2 id="player-profile-title">{profile?.player.name || player.name}</h2>
