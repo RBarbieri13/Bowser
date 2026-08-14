@@ -186,7 +186,7 @@ describe("statistics table UI", () => {
     const widthControl = screen.getByLabelText("Week column width");
     fireEvent.change(widthControl, { target: { value: "320" } });
     const table = await screen.findByRole("table", { name: "QB week-by-week player statistics" });
-    expect(table).toHaveStyle({ width: "728px" });
+    expect(table).toHaveStyle({ width: "776px" });
 
     expect(screen.getByText("31.2")).toHaveClass("metric-high");
     expect(screen.getByLabelText("Minimum DraftKings price")).toBeDisabled();
@@ -210,6 +210,48 @@ describe("statistics table UI", () => {
 
     await user.click(screen.getByRole("button", { name: "Back to team box scores" }));
     expect(await screen.findByLabelText("Scoring")).toHaveValue("half");
+  });
+
+  test("synchronizes column widths, stat visibility, markers, and league preferences across remounts", async () => {
+    const user = userEvent.setup();
+    window.location.hash = "#/team-box-scores";
+    const view = render(<App />);
+    const table = await screen.findByRole("table", { name: "QB week-by-week player statistics" });
+
+    const fptsResize = screen.getByRole("separator", { name: "Resize Fantasy points column" });
+    fireEvent.keyDown(fptsResize, { key: "ArrowRight", shiftKey: true });
+    expect(fptsResize).toHaveAttribute("aria-valuenow", "74");
+    expect(table.querySelector('col[data-column="fantasy_points"]')).toHaveStyle({ width: "74px" });
+
+    const playerResize = screen.getByRole("separator", { name: "Resize Player column" });
+    fireEvent.keyDown(playerResize, { key: "ArrowRight", shiftKey: true });
+    expect(table).toHaveStyle({ width: "1034px" });
+
+    await user.click(screen.getByRole("button", { name: /All defaults/ }));
+    await user.click(screen.getByRole("checkbox", { name: "Passing yards" }));
+    expect(table.querySelector('col[data-column="passing_yards"]')).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Reset defaults" }));
+    expect(table.querySelector('col[data-column="passing_yards"]')).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Test Player: No marker" }));
+    await user.click(screen.getByRole("radio", { name: "Favorite" }));
+    expect(screen.getByRole("button", { name: "Test Player: Favorite" })).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "All leagues" }));
+    await user.click(screen.getByRole("checkbox", { name: "LOEG" }));
+    expect(screen.getByText(/Roster sync is not connected yet/)).toBeInTheDocument();
+
+    const stored = JSON.parse(localStorage.getItem("bowser:team-box-preferences:v2"));
+    expect(stored.columnWidths.fantasy_points).toBe(74);
+    expect(stored.columnWidths.player).toBe(202);
+    expect(stored.markers["00-test"]).toBe("favorite");
+    expect(stored.selectedLeagues).not.toContain("LOEG");
+
+    view.unmount();
+    render(<App />);
+    const restoredTable = await screen.findByRole("table", { name: "QB week-by-week player statistics" });
+    expect(restoredTable.querySelector('col[data-column="fantasy_points"]')).toHaveStyle({ width: "74px" });
+    expect(await screen.findByRole("button", { name: "Test Player: Favorite" })).toBeInTheDocument();
   });
 
   test("renders total fantasy points and exposes individual and range week controls", async () => {
