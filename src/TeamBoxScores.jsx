@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   ArrowLeft, ArrowRight, Binoculars, CaretDown, Check, Crosshair, Eye, Question,
-  Star, TrendUp, X,
+  Star, TrendUp, WarningCircle, X,
 } from "@phosphor-icons/react";
 import { ScheduleWeekSelector } from "./ScheduleWeekSelector.jsx";
 import {
@@ -264,13 +264,14 @@ function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer, onOpenGame,
   const oneWeekWidth = columns.reduce((sum, column) => sum + columnWidths[column.key] * weekScale, 0);
   const tableWidth = identityWidth + weeks.length * oneWeekWidth;
   const sticky = {
-    "--w-position": `${columnWidths.position}px`, "--w-marker": `${columnWidths.marker}px`, "--w-player": `${columnWidths.player}px`,
+    "--w-position": "0px", "--w-marker": `${columnWidths.marker}px`, "--w-player": `${columnWidths.player}px`,
     "--w-salary": `${columnWidths.dk_salary}px`, "--w-projection": `${columnWidths.dk_projection}px`, "--week-scale": weekScale,
   };
   const identityHandles = Object.fromEntries(IDENTITY_COLUMNS.map((column) => [column.key, showIdentityHandles ? <ResizeHandle key={column.key} columnKey={column.key} width={columnWidths[column.key]} onResize={onResize} /> : null]));
   return (
-    <section className={`box-position-section position-${group.position.toLowerCase()}`} aria-labelledby={`position-${group.position}`}>
+    <section className={`box-position-section position-${group.position.toLowerCase()}`} aria-labelledby={`position-${group.position}`} style={{ "--position-rail-width": `${columnWidths.position}px` }}>
       <h2 id={`position-${group.position}`} className="sr-only">{group.position} weekly box scores</h2>
+      <div className="box-position-rail" aria-hidden="true"><span>{group.position}</span>{identityHandles.position}</div>
       <table className="boxscore-table" style={{ width: tableWidth, minWidth: tableWidth, ...sticky }}>
         <caption>{group.position} week-by-week player statistics</caption>
         <colgroup>
@@ -279,15 +280,16 @@ function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer, onOpenGame,
         </colgroup>
         <thead>
           <tr className="box-week-row">
-            <th rowSpan="3" className="box-sticky box-position-head">Pos{identityHandles.position}</th>
-            <th rowSpan="3" className="box-sticky box-marker-head" aria-label="Player marker">Mark{identityHandles.marker}</th>
-            <th rowSpan="3" className="box-sticky box-player-head">Player{identityHandles.player}</th>
+            <th rowSpan="3" className="sr-only box-position-head">Position</th>
+            <th colSpan="2" className="box-sticky box-player-title">Player</th>
             <th colSpan="2" className="box-sticky box-upcoming-title"><span>Upcoming</span><strong>{upcomingWeek ? `Week ${upcomingWeek}` : "Next slate"}</strong></th>
             {weeks.map((item) => <th key={item.week} colSpan={columns.length} className="box-week-title">
               {item.gameId ? <button type="button" className="box-game-link" onClick={() => onOpenGame?.(item)} aria-label={`Open Week ${item.week} game breakdown`}><span>Week {item.week}</span><strong>{item.opponent ? `${item.homeAway === "away" ? "@" : "vs"} ${item.opponent}` : "No game"} · {item.scoreLabel || "Scheduled"}</strong><small>{formatGameDate(item)}</small></button> : <><span>Week {item.week}</span><strong>No game</strong><small>{formatGameDate(item)}</small></>}
             </th>)}
           </tr>
           <tr className="box-subgroup-row">
+            <th rowSpan="2" className="box-sticky box-marker-head" aria-label="Player marker">Mark{identityHandles.marker}</th>
+            <th rowSpan="2" className="box-sticky box-player-head" aria-label="Player">{identityHandles.player}</th>
             <th rowSpan="2" className="box-sticky box-salary-head">DK Salary{identityHandles.dk_salary}</th>
             <th rowSpan="2" className="box-sticky box-projection-head">DK Proj.{identityHandles.dk_projection}</th>
             {weeks.flatMap((item) => groups.map((columnGroup) => <th key={`${item.week}-${columnGroup.name}`} colSpan={columnGroup.columns.length} rowSpan={columnGroup.name === "Fantasy" ? 2 : undefined} className={`box-week-subgroup${columnGroup.name === "Fantasy" ? " box-fpts-header" : ""}`}>{columnGroup.name === "Fantasy" ? <>FPTS{resizableWeekKeys.has("fantasy_points") && item.week === weeks[0]?.week ? <ResizeHandle columnKey="fantasy_points" width={columnWidths.fantasy_points} onResize={onResize} /> : null}</> : columnGroup.name}</th>))}
@@ -297,7 +299,7 @@ function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer, onOpenGame,
           </tr>
         </thead>
         <tbody>{group.players.map((player, playerIndex) => <tr key={player.playerId}>
-          {playerIndex === 0 ? <th rowSpan={group.players.length} scope="rowgroup" className="box-sticky box-position-cell">{group.position}</th> : null}
+          {playerIndex === 0 ? <th rowSpan={group.players.length} scope="rowgroup" className="sr-only box-position-cell">{group.position}</th> : null}
           <td className="box-sticky box-marker-cell"><PlayerMarker player={player} marker={markers[player.playerId]} onChange={(marker) => onMarkerChange(player.playerId, marker)} /></td>
           <th scope="row" className="box-sticky box-player-cell"><button type="button" onClick={(event) => onOpenPlayer(player, event.currentTarget)}>{player.name}</button></th>
           <td className="box-sticky box-salary-cell unavailable" title="DraftKings salary source not connected">—</td>
@@ -398,12 +400,12 @@ export function TeamBoxScores({ meta, onOpenPlayer, onOpenGame }) {
         <label className="field week-width-field"><span className="field-label">Week Width <small>{Math.round(weekWidth / WEEK_WIDTH * 100)}%</small></span><span className="week-width-control"><input aria-label="Week column width" type="range" min="320" max="720" step="8" value={weekWidth} onChange={(event) => setWeekWidth(Number(event.target.value))} /></span></label>
       </div>
       <ScheduleWeekSelector team={team} schedule={schedule} start={weekStart} end={weekEnd} extras={extraWeeks} onRangeChange={changeRange} onExtrasChange={setExtraWeeks} onOpenGame={openGame} />
-      <div className="boxscore-context"><strong>{team}</strong><span>{weekStart === weekEnd ? `Week ${weekStart}` : `Weeks ${weekStart}–${weekEnd}`}{visibleExtraWeeks.length ? ` + ${visibleExtraWeeks.map((week) => `W${week}`).join(", ")}` : ""}</span><span>{scoring === "ppr" ? "PPR" : scoring === "half" ? "Half PPR" : "Standard"}</span><span className="dk-status">DraftKings salary + projection awaiting source</span><div className="box-scroll-buttons" aria-label="Scroll weekly columns"><button type="button" onClick={() => scroller.current?.scrollBy({ left: -weekWidth, behavior: "smooth" })} aria-label="Previous weeks"><ArrowLeft /></button><button type="button" onClick={() => scroller.current?.scrollBy({ left: weekWidth, behavior: "smooth" })} aria-label="Next weeks"><ArrowRight /></button></div></div>
+      <div className="boxscore-context"><strong>{team}</strong><span>{weekStart === weekEnd ? `Week ${weekStart}` : `Weeks ${weekStart}–${weekEnd}`}{visibleExtraWeeks.length ? ` + ${visibleExtraWeeks.map((week) => `W${week}`).join(", ")}` : ""}</span><span>{scoring === "ppr" ? "PPR" : scoring === "half" ? "Half PPR" : "Standard"}</span><span className="dk-status"><WarningCircle aria-hidden="true" />DraftKings salary + projection awaiting source</span><div className="box-scroll-buttons" aria-label="Scroll weekly columns"><button type="button" onClick={() => scroller.current?.scrollBy({ left: -weekWidth, behavior: "smooth" })} aria-label="Previous weeks"><ArrowLeft /></button><button type="button" onClick={() => scroller.current?.scrollBy({ left: weekWidth, behavior: "smooth" })} aria-label="Next weeks"><ArrowRight /></button></div></div>
     </section>
     <section className="boxscore-panel" aria-label={`${team} weekly team box scores`}>
       {loading ? <div className="progress" role="progressbar" aria-label="Updating team box scores"><span /></div> : null}{error ? <div className="error-banner" role="alert"><span>{error}</span></div> : null}
       <div className="boxscore-scroller" ref={scroller} tabIndex="0" aria-label="Scrollable weekly team box scores">{!loading && !error && !groups.length ? <div className="boxscore-empty">No player data is available for this team and week range.</div> : null}{groups.map((group, index) => <PositionSection key={group.position} group={group} weeks={weeks} upcomingWeek={null} weekWidth={weekWidth} maxima={maxima} columnWidths={columnWidths} visibleStats={visibleStats} markers={markers} onMarkerChange={(playerId, marker) => setMarkers((current) => { const next = { ...current }; if (marker) next[playerId] = marker; else delete next[playerId]; return next; })} onResize={resizeColumn} showIdentityHandles={index === 0} resizableWeekKeys={new Set([...resizeOwners].filter(([, owner]) => owner === index).map(([key]) => key))} onOpenGame={openGame} onOpenPlayer={(player, opener) => onOpenPlayer(player, opener, scoring)} />)}</div>
-      <footer className="data-status" aria-live="polite"><span><strong>{payload.meta?.playerCount ?? 0}</strong> players · <strong>{weeks.length}</strong> weeks</span><span>{payload.meta ? `${payload.meta.queryMs} ms query` : "Loading warehouse"}</span><a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noreferrer">Data: nflverse · CC BY 4.0</a></footer>
+      <footer className="data-status" aria-live="polite"><div className="performance-legend" aria-label="Performance color legend"><span><i className="strong" />Strong relative performance</span><span><i className="lower" />Lower relative performance</span><span><i className="typical" />Typical range</span></div><span><strong>{payload.meta?.playerCount ?? 0}</strong> players · <strong>{weeks.length}</strong> weeks</span><span>{payload.meta ? `${payload.meta.queryMs} ms query` : "Loading warehouse"}</span><a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noreferrer">Data: nflverse · CC BY 4.0</a></footer>
     </section>
   </main>;
 }

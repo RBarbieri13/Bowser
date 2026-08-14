@@ -5,6 +5,8 @@ dist/
 !.env.example
 npm-debug.log*
 .graph-session/
+.graph-delivery/
+.playwright-cli/
 artifacts/
 data/*.sqlite-shm
 data/*.sqlite-wal
