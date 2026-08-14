@@ -234,6 +234,12 @@ describe("statistics table UI", () => {
     expect(table.querySelector('col[data-column="passing_yards"]')).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Test Player: No marker" }));
+    const markerMenu = screen.getByRole("radiogroup", { name: "Marker for Test Player" });
+    expect(markerMenu.parentElement).toBe(document.body);
+    expect(screen.getAllByRole("radio")).toHaveLength(7);
+    expect(screen.getByRole("radio", { name: "Like" })).toBeVisible();
+    expect(screen.getByRole("radio", { name: "Dislike" })).toBeVisible();
+    expect(screen.getByRole("radio", { name: "Maybe" })).toBeVisible();
     await user.click(screen.getByRole("radio", { name: "Favorite" }));
     expect(screen.getByRole("button", { name: "Test Player: Favorite" })).toBeInTheDocument();
 

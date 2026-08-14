@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   ArrowLeft, ArrowRight, Binoculars, CaretDown, Check, Crosshair, Eye, Question,
   Star, TrendUp, X,
@@ -198,29 +199,59 @@ function ResizeHandle({ columnKey, width, onResize }) {
   );
 }
 
+function markerMenuPosition(trigger, menuHeight = 268) {
+  const rect = trigger?.getBoundingClientRect();
+  if (!rect) return { left: 8, top: 8 };
+  const margin = 8;
+  const gap = 6;
+  const menuWidth = 176;
+  const availableBelow = window.innerHeight - rect.bottom - margin;
+  const openAbove = availableBelow < menuHeight && rect.top > availableBelow;
+  const preferredTop = openAbove ? rect.top - menuHeight - gap : rect.bottom + gap;
+  return {
+    left: Math.max(margin, Math.min(rect.left, window.innerWidth - menuWidth - margin)),
+    top: Math.max(margin, Math.min(preferredTop, window.innerHeight - menuHeight - margin)),
+  };
+}
+
 function PlayerMarker({ player, marker, onChange }) {
   const [open, setOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ left: 8, top: 8 });
   const root = useRef(null);
+  const trigger = useRef(null);
+  const popover = useRef(null);
   const current = MARKER_OPTIONS.find((option) => option.key === marker);
   const CurrentIcon = current?.icon || Star;
   useEffect(() => {
     if (!open) return undefined;
     const close = (event) => {
-      if (event.key === "Escape" || (event.type === "pointerdown" && !root.current?.contains(event.target))) setOpen(false);
+      if (event.key === "Escape" || (event.type === "pointerdown" && !root.current?.contains(event.target) && !popover.current?.contains(event.target))) setOpen(false);
     };
     document.addEventListener("keydown", close);
     document.addEventListener("pointerdown", close);
     return () => { document.removeEventListener("keydown", close); document.removeEventListener("pointerdown", close); };
   }, [open]);
+  useLayoutEffect(() => {
+    if (!open) return undefined;
+    const update = () => setMenuPosition(markerMenuPosition(trigger.current, popover.current?.offsetHeight || 268));
+    update();
+    window.addEventListener("resize", update);
+    window.addEventListener("scroll", update, true);
+    return () => { window.removeEventListener("resize", update); window.removeEventListener("scroll", update, true); };
+  }, [open]);
+  const toggle = () => {
+    if (!open) setMenuPosition(markerMenuPosition(trigger.current));
+    setOpen((value) => !value);
+  };
   return (
     <div className="player-marker" ref={root}>
-      <button type="button" className={`marker-trigger ${marker || "unmarked"}`} onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label={`${player.name}: ${current?.label || "No marker"}`}>
+      <button ref={trigger} type="button" className={`marker-trigger ${marker || "unmarked"}`} onClick={toggle} aria-expanded={open} aria-label={`${player.name}: ${current?.label || "No marker"}`}>
         <CurrentIcon weight={marker ? "fill" : "regular"} aria-hidden="true" />
       </button>
-      {open ? <div className="marker-popover" role="radiogroup" aria-label={`Marker for ${player.name}`}>
+      {open ? createPortal(<div ref={popover} className="marker-popover" style={menuPosition} role="radiogroup" aria-label={`Marker for ${player.name}`}>
         {MARKER_OPTIONS.map((option) => { const Icon = option.icon; return <button type="button" key={option.key} className={option.key} role="radio" aria-checked={marker === option.key} onClick={() => { onChange(option.key); setOpen(false); }}><Icon weight="fill" /><span>{option.label}</span></button>; })}
         <button type="button" className="clear" role="radio" aria-checked={!marker} onClick={() => { onChange(null); setOpen(false); }}><X /><span>Clear marker</span></button>
-      </div> : null}
+      </div>, document.body) : null}
     </div>
   );
 }
