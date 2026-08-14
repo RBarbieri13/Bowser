@@ -8,7 +8,11 @@ npm-debug.log*
 artifacts/
 data/*.sqlite-shm
 data/*.sqlite-wal
+data/raw/play_by_play.csv.gz
 artifacts/design-qa/*-pass-1.png
 artifacts/design-qa/*-pass-1b.png
+design-qa-implementation.png
+design-qa-implementation-normalized.png
+design-qa-comparison.png
 .vercel/
 .vercel

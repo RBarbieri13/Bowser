@@ -52,7 +52,16 @@ test("production API serves the packaged SQLite warehouse", async () => {
   assert.equal(boxScoreResponse.status, 200);
   const boxScores = await boxScoreResponse.json();
   assert.equal(boxScores.meta.weeks.length, 4);
+  assert.equal(boxScores.meta.schedule.length, 17);
   assert.ok(boxScores.data.some((row) => row.position_group === "QB"));
+
+  const gameResponse = await fetch(`${origin}/api/v1/game-breakdown?gameId=2025_08_NYG_PHI&scoring=ppr`);
+  assert.equal(gameResponse.status, 200);
+  const game = await gameResponse.json();
+  assert.equal(game.data.game.homeScore, 38);
+  assert.equal(game.data.game.awayScore, 20);
+  assert.deepEqual(game.data.teams.map((team) => team.team), ["NYG", "PHI"]);
+  assert.equal(game.data.availability.scoringTimeline, true);
 });
 
 test("unknown API routes do not fall back to the app shell", async () => {

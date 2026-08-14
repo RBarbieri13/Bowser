@@ -78,8 +78,29 @@ const sampleBoxScores = {
   }],
   meta: {
     season: 2025, team: "BUF", scoring: "ppr", seasonType: "ALL",
-    weeks: [{ week: 1, opponent: "KC", seasonType: "REG" }], playerCount: 1, queryMs: 2.4,
+    weeks: [{ week: 1, opponent: "KC", seasonType: "REG", gameId: "2025_01_BUF_KC", homeAway: "home", gameday: "2025-09-07", gametime: "13:00", scoreLabel: "W 31-24" }],
+    schedule: [
+      { week: 1, opponent: "KC", seasonType: "REG", gameId: "2025_01_BUF_KC", homeAway: "home", gameday: "2025-09-07", gametime: "13:00", scoreLabel: "W 31-24" },
+      { week: 20, opponent: "BAL", seasonType: "POST", gameId: "2025_20_BAL_BUF", homeAway: "home", gameday: "2026-01-18", gametime: "18:30", scoreLabel: "W 27-24" },
+    ],
+    playerCount: 1, queryMs: 2.4,
   },
+};
+
+const sampleGameBreakdown = {
+  data: {
+    game: { gameId: "2025_01_BUF_KC", week: 1, seasonType: "REG", awayTeam: "KC", homeTeam: "BUF", awayScore: 24, homeScore: 31, gameday: "2025-09-07", gametime: "13:00", stadium: "Highmark Stadium", overtime: false },
+    teams: [
+      { team: "KC", result: "L", pointsFor: 24, pointsAgainst: 31, passPlays: 39, passPct: 61.9, rushPlays: 24, rushPct: 38.1, offensiveSnaps: 63, pctTimeLeading: 20, pctTimeTrailing: 70 },
+      { team: "BUF", result: "W", pointsFor: 31, pointsAgainst: 24, passPlays: 31, passPct: 50, rushPlays: 31, rushPct: 50, offensiveSnaps: 62, pctTimeLeading: 70, pctTimeTrailing: 20 },
+    ],
+    totalOffensiveSnaps: 125,
+    quarterScores: [{ quarter: 1, away_points: 7, home_points: 10 }, { quarter: 2, away_points: 7, home_points: 7 }, { quarter: 3, away_points: 3, home_points: 7 }, { quarter: 4, away_points: 7, home_points: 7 }],
+    timeline: [{ sequence: 0, quarter: 1, clock: "15:00", elapsed_seconds: 0, away_score: 0, home_score: 0, leader: "tied", description: "Game start" }, { sequence: 1, quarter: 1, clock: "10:00", elapsed_seconds: 300, away_score: 0, home_score: 7, leader: "home", description: "BUF touchdown" }],
+    boxScore: sampleBoxScores.data.map((row) => ({ ...row, team: "BUF" })),
+    availability: { scoringTimeline: true },
+  },
+  meta: { methodology: { playMix: "Rush and pass play mix from nflverse play-by-play." } },
 };
 
 function latestPlayerUrl() {
@@ -87,9 +108,15 @@ function latestPlayerUrl() {
   return new URL(calls.at(-1), "http://local");
 }
 
+function latestBoxScoreUrl() {
+  const calls = fetch.mock.calls.map(([input]) => String(input)).filter((url) => url.startsWith("/api/v1/team-box-scores?"));
+  return new URL(calls.at(-1), "http://local");
+}
+
 beforeEach(() => {
   window.location.hash = "";
   localStorage.clear();
+  sessionStorage.clear();
   vi.stubGlobal("fetch", vi.fn(async (input) => {
     const url = String(input);
     if (url === "/api/v1/meta") {
@@ -99,6 +126,7 @@ beforeEach(() => {
       };
     }
     if (url.startsWith("/api/v1/player-profile?")) return { ok: true, json: async () => sampleProfile };
+    if (url.startsWith("/api/v1/game-breakdown?")) return { ok: true, json: async () => sampleGameBreakdown };
     if (url.startsWith("/api/v1/team-box-scores?")) return { ok: true, json: async () => sampleBoxScores };
     return {
       ok: true,
@@ -124,6 +152,106 @@ describe("statistics table UI", () => {
     expect(screen.getByText("DK Salary")).toBeInTheDocument();
     expect(screen.getByText("DK Proj.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Test Player" })).toBeInTheDocument();
+  });
+
+  test("uses a collapsed schedule brush, adds sporadic weeks, and resizes every week column", async () => {
+    const user = userEvent.setup();
+    window.location.hash = "#/team-box-scores";
+    render(<App />);
+
+    const scheduleTrigger = await screen.findByRole("button", { name: /schedule/i });
+    expect(scheduleTrigger).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByRole("button", { name: "Add individual weeks" })).not.toBeInTheDocument();
+
+    await user.click(scheduleTrigger);
+    expect(scheduleTrigger).toHaveAttribute("aria-expanded", "true");
+
+    await user.click(screen.getByRole("button", { name: /Selected week 7/i }));
+    await waitFor(() => expect(latestBoxScoreUrl().searchParams.get("weeks")).toBe("7"));
+
+    const brushTrack = document.querySelector(".schedule-filmstrip-scroll");
+    vi.spyOn(brushTrack, "getBoundingClientRect").mockReturnValue({ left: 0, right: 1200, top: 0, bottom: 106, width: 1200, height: 106, x: 0, y: 0, toJSON: () => ({}) });
+    const rangeEnd = screen.getByRole("button", { name: "Resize last selected week" });
+    fireEvent(rangeEnd, new MouseEvent("pointerdown", { bubbles: true, clientX: 650 }));
+    fireEvent(document, new MouseEvent("pointermove", { bubbles: true, clientX: 928 }));
+    fireEvent(document, new MouseEvent("pointerup", { bubbles: true, clientX: 928 }));
+    await waitFor(() => expect(latestBoxScoreUrl().searchParams.get("weeks")).toBe("7,8,9,10"));
+
+    await user.click(screen.getByRole("button", { name: "Add individual weeks" }));
+    await user.click(screen.getByRole("button", { name: /Select week 20/i }));
+
+    await waitFor(() => expect(latestBoxScoreUrl().searchParams.get("weeks").split(",")).toContain("20"));
+    expect(screen.getAllByText(/W7–10 \+ W20/).length).toBeGreaterThan(0);
+
+    const widthControl = screen.getByLabelText("Week column width");
+    fireEvent.change(widthControl, { target: { value: "320" } });
+    const table = await screen.findByRole("table", { name: "QB week-by-week player statistics" });
+    expect(table).toHaveStyle({ width: "776px" });
+
+    expect(screen.getByText("31.2")).toHaveClass("metric-high");
+    expect(screen.getByLabelText("Minimum DraftKings price")).toBeDisabled();
+  });
+
+  test("opens a game breakdown with the active scoring and restores box-score state on return", async () => {
+    const user = userEvent.setup();
+    window.location.hash = "#/team-box-scores";
+    render(<App />);
+
+    await screen.findByRole("table", { name: "QB week-by-week player statistics" });
+    await user.selectOptions(screen.getByLabelText("Scoring"), "half");
+    await user.click(screen.getByRole("button", { name: /schedule/i }));
+    await user.click(screen.getByRole("button", { name: "Open Week 1 against KC game breakdown" }));
+
+    expect(await screen.findByRole("heading", { name: /KC 24.*31 BUF/ })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Score by quarter" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Score over time" })).toBeInTheDocument();
+    const gameCall = fetch.mock.calls.map(([input]) => String(input)).find((url) => url.startsWith("/api/v1/game-breakdown?"));
+    expect(new URL(gameCall, "http://local").searchParams.get("scoring")).toBe("half");
+
+    await user.click(screen.getByRole("button", { name: "Back to team box scores" }));
+    expect(await screen.findByLabelText("Scoring")).toHaveValue("half");
+  });
+
+  test("synchronizes column widths, stat visibility, markers, and league preferences across remounts", async () => {
+    const user = userEvent.setup();
+    window.location.hash = "#/team-box-scores";
+    const view = render(<App />);
+    const table = await screen.findByRole("table", { name: "QB week-by-week player statistics" });
+
+    const fptsResize = screen.getByRole("separator", { name: "Resize Fantasy points column" });
+    fireEvent.keyDown(fptsResize, { key: "ArrowRight", shiftKey: true });
+    expect(fptsResize).toHaveAttribute("aria-valuenow", "74");
+    expect(table.querySelector('col[data-column="fantasy_points"]')).toHaveStyle({ width: "74px" });
+
+    const playerResize = screen.getByRole("separator", { name: "Resize Player column" });
+    fireEvent.keyDown(playerResize, { key: "ArrowRight", shiftKey: true });
+    expect(table).toHaveStyle({ width: "1034px" });
+
+    await user.click(screen.getByRole("button", { name: /All defaults/ }));
+    await user.click(screen.getByRole("checkbox", { name: "Passing yards" }));
+    expect(table.querySelector('col[data-column="passing_yards"]')).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Reset defaults" }));
+    expect(table.querySelector('col[data-column="passing_yards"]')).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Test Player: No marker" }));
+    await user.click(screen.getByRole("radio", { name: "Favorite" }));
+    expect(screen.getByRole("button", { name: "Test Player: Favorite" })).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "All leagues" }));
+    await user.click(screen.getByRole("checkbox", { name: "LOEG" }));
+    expect(screen.getByText(/Roster sync is not connected yet/)).toBeInTheDocument();
+
+    const stored = JSON.parse(localStorage.getItem("bowser:team-box-preferences:v2"));
+    expect(stored.columnWidths.fantasy_points).toBe(74);
+    expect(stored.columnWidths.player).toBe(202);
+    expect(stored.markers["00-test"]).toBe("favorite");
+    expect(stored.selectedLeagues).not.toContain("LOEG");
+
+    view.unmount();
+    render(<App />);
+    const restoredTable = await screen.findByRole("table", { name: "QB week-by-week player statistics" });
+    expect(restoredTable.querySelector('col[data-column="fantasy_points"]')).toHaveStyle({ width: "74px" });
+    expect(await screen.findByRole("button", { name: "Test Player: Favorite" })).toBeInTheDocument();
   });
 
   test("renders total fantasy points and exposes individual and range week controls", async () => {

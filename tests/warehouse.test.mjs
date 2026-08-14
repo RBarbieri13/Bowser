@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test, { after } from "node:test";
 
-import { closeDatabase, getMeta, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "../server/stats-store.mjs";
+import { closeDatabase, getMeta, queryGameBreakdown, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "../server/stats-store.mjs";
 
 after(() => closeDatabase());
 
@@ -58,11 +58,40 @@ test("team box scores return position-grouped weekly rows and matchup metadata",
   assert.equal(result.meta.team, "NYG");
   assert.equal(result.meta.weeks.length, 4);
   assert.equal(result.meta.weeks[0].opponent, "LAC");
+  assert.equal(result.meta.weeks[0].gameId, "2025_04_LAC_NYG");
+  assert.equal(result.meta.weeks[0].gameday, "2025-09-28");
+  assert.equal(result.meta.weeks[0].scoreLabel, "W 21-18");
+  assert.equal(result.meta.schedule.length, 17);
   assert.ok(result.meta.playerCount >= 10);
   assert.ok(result.data.some((row) => row.position_group === "QB" && row.week === 4));
   assert.ok(result.data.some((row) => row.position_group === "WR" && row.fantasy_points > 0));
   assert.ok(result.meta.queryMs < 250);
   assert.throws(() => queryTeamBoxScores(new URLSearchParams("team=NOT-A-TEAM")), QueryValidationError);
+});
+
+test("game breakdown exposes both teams, quarter scoring, game flow, and documented play mix", () => {
+  const result = queryGameBreakdown(new URLSearchParams("gameId=2025_08_NYG_PHI&scoring=ppr"));
+  assert.equal(result.data.game.week, 8);
+  assert.equal(result.data.game.gameday, "2025-10-26");
+  assert.equal(result.data.game.gametime, "13:00");
+  assert.equal(result.data.game.homeScore, 38);
+  assert.equal(result.data.game.awayScore, 20);
+  assert.deepEqual(result.data.quarterScores.map((quarter) => [quarter.home_points, quarter.away_points]), [
+    [7, 7], [14, 3], [3, 3], [14, 7],
+  ]);
+  assert.deepEqual(result.data.teams.map((team) => team.team), ["NYG", "PHI"]);
+  assert.equal(result.data.teams.find((team) => team.team === "NYG").result, "L");
+  assert.equal(result.data.totalOffensiveSnaps, 107);
+  assert.ok(result.data.timeline.length > 10);
+  assert.equal(result.data.timeline.at(-1).home_score, 38);
+  assert.equal(result.data.timeline.at(-1).away_score, 20);
+  assert.ok(result.data.boxScore.some((row) => row.team === "NYG" && row.position_group === "QB"));
+  assert.ok(result.data.boxScore.some((row) => row.team === "PHI" && row.position_group === "RB"));
+  assert.equal(result.data.availability.scoringTimeline, true);
+  assert.equal(result.data.availability.unavailable.length, 0);
+  assert.match(result.meta.methodology.offensiveSnaps, /scrimmage plays/);
+  assert.ok(result.meta.queryMs < 250);
+  assert.throws(() => queryGameBreakdown(new URLSearchParams("gameId=missing")), QueryValidationError);
 });
 
 test("filters, weeks, search and sorting are server-side", () => {

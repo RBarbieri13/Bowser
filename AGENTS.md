@@ -20,3 +20,12 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Run `npm run check` after warehouse, API or table changes. Do not weaken completeness checks to make a build pass.
 - Before pushing a repository update, run `npm run check` and confirm `git status --short` contains only intended files.
 - Keep external credentials out of source and local data artifacts.
+- On Team Box Scores, the expanded schedule selector is optional workspace chrome and must be collapsed on initial load. Its collapsed summary must still state the active continuous week range and any independently selected matchup weeks.
+- Treat continuous week-range selection and isolated matchup selection as separate, composable interactions: resizing or moving the primary range must not silently discard independent weeks, and selecting an independent week must not move the primary range.
+- Distinguish opening a game breakdown from selecting that game for the comparison table with separate accessible controls and labels; never overload one click with both actions.
+- Week-column width is a synchronized table-level setting. Every visible week must use the same width, and typography must scale or truncate safely without allowing values to overlap adjacent cells.
+- Conditional formatting on Team Box Scores is contextual, not absolute: compare fantasy points, snaps, targets, and rushing attempts against the selected team's players in the same game/week, use a restrained green scale for relatively high values, and reserve red for zero or negative values.
+- DraftKings price filtering must be disabled and explicitly labeled unavailable until a real salary feed is connected; never fabricate or infer DFS prices.
+- Team Box Score column widths are semantic and synchronized: resizing a stat in the first applicable week changes that same stat in every week and position section, while identity columns resize independently with derived sticky offsets.
+- Persist table widths, visible stat categories, player research markers, league-filter selections, and the bulk week-width setting in validated, versioned local storage so they survive browser restarts. Keep code-owned default stat sets immutable and always provide a reset-to-defaults action.
+- Player research markers are local preferences keyed by stable player ID; they must never modify nflverse warehouse data. League filtering must remain explicitly labeled inactive until real roster ownership data is connected.

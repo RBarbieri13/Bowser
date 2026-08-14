@@ -6,6 +6,7 @@ import { PlayerProfile } from "./PlayerProfile.jsx";
 import { WeekRangePicker } from "./WeekRangePicker.jsx";
 import { AppHeader } from "./AppHeader.jsx";
 import { TeamBoxScores } from "./TeamBoxScores.jsx";
+import { GameBreakdown } from "./GameBreakdown.jsx";
 
 
 const numberFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
@@ -124,8 +125,19 @@ function SortIcon({ active, direction, priority }) {
   return <span className="sort-indicator" aria-hidden="true">{direction === "asc" ? <CaretUp weight="bold" /> : <CaretDown weight="bold" />}{priority > 0 ? <small>{priority + 1}</small> : null}</span>;
 }
 
+function routeFromHash() {
+  const gameMatch = window.location.hash.match(/^#\/game\/([^?]+)/);
+  if (gameMatch) {
+    const query = window.location.hash.split("?")[1] || "";
+    const scoring = new URLSearchParams(query).get("scoring");
+    return { page: "game", gameId: decodeURIComponent(gameMatch[1]), scoring: ["ppr", "half", "standard"].includes(scoring) ? scoring : "ppr" };
+  }
+  return { page: window.location.hash.includes("team-box-scores") ? "team-box-scores" : "players", gameId: null };
+}
+
 export function App() {
-  const [currentPage, setCurrentPage] = useState(() => window.location.hash.includes("team-box-scores") ? "team-box-scores" : "players");
+  const [route, setRoute] = useState(routeFromHash);
+  const currentPage = route.page;
   const [meta, setMeta] = useState(null);
   const [rows, setRows] = useState([]);
   const [responseMeta, setResponseMeta] = useState(null);
@@ -155,7 +167,7 @@ export function App() {
   const profileOpener = useRef(null);
 
   useEffect(() => {
-    const syncPage = () => setCurrentPage(window.location.hash.includes("team-box-scores") ? "team-box-scores" : "players");
+    const syncPage = () => setRoute(routeFromHash());
     window.addEventListener("hashchange", syncPage);
     return () => window.removeEventListener("hashchange", syncPage);
   }, []);
@@ -305,9 +317,11 @@ export function App() {
 
   return (
     <div className="app-shell">
-      <AppHeader currentPage={currentPage} />
-      {currentPage === "team-box-scores" ? (
-        <TeamBoxScores meta={meta} onOpenPlayer={openProfile} />
+      <AppHeader currentPage={currentPage === "game" ? "team-box-scores" : currentPage} />
+      {currentPage === "game" ? (
+        <GameBreakdown gameId={route.gameId} scoring={route.scoring} onBack={() => { window.location.hash = "#/team-box-scores"; }} />
+      ) : currentPage === "team-box-scores" ? (
+        <TeamBoxScores meta={meta} onOpenPlayer={openProfile} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}`; }} />
       ) : (
       <main className="page-content player-database-page">
       <section className="filter-band" aria-label="Statistics filters">
