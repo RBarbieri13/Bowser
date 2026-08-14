@@ -1,11 +1,11 @@
 export const POSITION_ORDER = ["QB", "RB", "WR", "TE"];
 
 export const IDENTITY_COLUMNS = [
-  { key: "position", label: "Pos", defaultWidth: 64, min: 48, max: 104 },
-  { key: "marker", label: "Mark", defaultWidth: 44, min: 38, max: 70 },
-  { key: "player", label: "Player", defaultWidth: 190, min: 132, max: 360 },
-  { key: "dk_salary", label: "DK Salary", defaultWidth: 82, min: 66, max: 150 },
-  { key: "dk_projection", label: "DK Proj.", defaultWidth: 76, min: 66, max: 150 },
+  { key: "position", label: "Pos", defaultWidth: 64, min: 40, max: 104 },
+  { key: "marker", label: "Mark", defaultWidth: 44, min: 34, max: 70 },
+  { key: "player", label: "Player", defaultWidth: 190, min: 112, max: 360 },
+  { key: "dk_salary", label: "DK$", defaultWidth: 66, min: 48, max: 150 },
+  { key: "dk_projection", label: "DK FPTX", defaultWidth: 72, min: 54, max: 150 },
 ];
 
 export const WEEK_COLUMN_REGISTRY = {
@@ -93,7 +93,7 @@ export function sanitizeTeamBoxPreferences(value) {
   const selectedLeagues = Array.isArray(source.selectedLeagues)
     ? [...new Set(source.selectedLeagues)].filter((league) => LEAGUE_OPTIONS.includes(league))
     : LEAGUE_OPTIONS;
-  const weekWidth = Math.max(320, Math.min(720, Number(source.weekWidth) || 554));
+  const weekWidth = Math.max(220, Math.min(720, Number(source.weekWidth) || 554));
   return {
     version: 2,
     columnWidths,
@@ -111,4 +111,3 @@ export function readTeamBoxPreferences(storage = window.localStorage) {
     return sanitizeTeamBoxPreferences({});
   }
 }
-

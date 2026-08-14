@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
-  ArrowLeft, ArrowRight, Binoculars, CaretDown, Check, Crosshair, Eye, Question,
-  Star, TrendUp, WarningCircle, X,
+  ArrowLeft, ArrowRight, ArrowsHorizontal, Binoculars, CaretDown, Check, Crosshair,
+  CrownSimple, Eye, Question, Star, TrendUp, X,
 } from "@phosphor-icons/react";
 import { ScheduleWeekSelector } from "./ScheduleWeekSelector.jsx";
 import {
@@ -10,6 +10,7 @@ import {
   LEAGUE_OPTIONS, POSITION_ORDER, TEAM_BOX_PREFERENCE_KEY, WEEK_COLUMN_REGISTRY,
   clampColumnWidth, columnGroups, columnsForPosition, readTeamBoxPreferences,
 } from "./teamBoxColumns.js";
+import { gameTotalPoints, TeamLogo } from "./teamLogos.jsx";
 
 const WEEK_WIDTH = 554;
 const TEAM_BOX_STATE_KEY = "bowser:team-box-score-state:v1";
@@ -199,6 +200,59 @@ function ResizeHandle({ columnKey, width, onResize }) {
   );
 }
 
+function WeekResizeHandle({ width, onResize }) {
+  const startDrag = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const origin = event.clientX;
+    const initial = width;
+    const move = (moveEvent) => onResize(Math.max(220, Math.min(720, initial + moveEvent.clientX - origin)));
+    const end = () => {
+      document.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerup", end);
+    };
+    document.addEventListener("pointermove", move);
+    document.addEventListener("pointerup", end, { once: true });
+  };
+  const onKeyDown = (event) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.key === "Home") return onResize(220);
+    if (event.key === "End") return onResize(720);
+    onResize(Math.max(220, Math.min(720, width + (event.key === "ArrowRight" ? 1 : -1) * (event.shiftKey ? 24 : 8))));
+  };
+  return (
+    <span
+      role="separator"
+      tabIndex="0"
+      className="week-group-resizer"
+      aria-label="Resize all week groups"
+      aria-orientation="vertical"
+      aria-valuemin="220"
+      aria-valuemax="720"
+      aria-valuenow={width}
+      title="Drag to resize every displayed week"
+      onPointerDown={startDrag}
+      onKeyDown={onKeyDown}
+      onDoubleClick={() => onResize(WEEK_WIDTH)}
+    ><ArrowsHorizontal weight="bold" aria-hidden="true" /></span>
+  );
+}
+
+function TeamFilter({ team, teams, onChange }) {
+  return (
+    <label className="field team-filter-field">
+      <span className="field-label">Team</span>
+      <span className="select-wrap team-select-wrap">
+        <select aria-label="Team" value={team} onChange={onChange}>{teams.map((item) => <option key={item} value={item}>{item}</option>)}</select>
+        <TeamLogo team={team} className="team-filter-logo" decorative />
+        <CaretDown weight="bold" aria-hidden="true" />
+      </span>
+    </label>
+  );
+}
+
 function markerMenuPosition(trigger, menuHeight = 268) {
   const rect = trigger?.getBoundingClientRect();
   if (!rect) return { left: 8, top: 8 };
@@ -256,15 +310,15 @@ function PlayerMarker({ player, marker, onChange }) {
   );
 }
 
-function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer, onOpenGame, weekWidth, maxima, columnWidths, visibleStats, markers, onMarkerChange, onResize, showIdentityHandles, resizableWeekKeys }) {
+function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer, onOpenGame, weekWidth, onWeekResize, maxima, columnWidths, visibleStats, markers, onMarkerChange, onResize, showIdentityHandles, resizableWeekKeys }) {
   const columns = columnsForPosition(group.position, visibleStats);
   const groups = columnGroups(columns);
   const weekScale = weekWidth / WEEK_WIDTH;
-  const identityWidth = IDENTITY_COLUMNS.reduce((sum, column) => sum + columnWidths[column.key], 0);
+  const identityWidth = IDENTITY_COLUMNS.filter((column) => column.key !== "position").reduce((sum, column) => sum + columnWidths[column.key], 0);
   const oneWeekWidth = columns.reduce((sum, column) => sum + columnWidths[column.key] * weekScale, 0);
   const tableWidth = identityWidth + weeks.length * oneWeekWidth;
   const sticky = {
-    "--w-position": "0px", "--w-marker": `${columnWidths.marker}px`, "--w-player": `${columnWidths.player}px`,
+    "--w-position": `${columnWidths.position}px`, "--w-marker": `${columnWidths.marker}px`, "--w-player": `${columnWidths.player}px`,
     "--w-salary": `${columnWidths.dk_salary}px`, "--w-projection": `${columnWidths.dk_projection}px`, "--week-scale": weekScale,
   };
   const identityHandles = Object.fromEntries(IDENTITY_COLUMNS.map((column) => [column.key, showIdentityHandles ? <ResizeHandle key={column.key} columnKey={column.key} width={columnWidths[column.key]} onResize={onResize} /> : null]));
@@ -283,15 +337,19 @@ function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer, onOpenGame,
             <th rowSpan="3" className="sr-only box-position-head">Position</th>
             <th colSpan="2" className="box-sticky box-player-title">Player</th>
             <th colSpan="2" className="box-sticky box-upcoming-title"><span>Upcoming</span><strong>{upcomingWeek ? `Week ${upcomingWeek}` : "Next slate"}</strong></th>
-            {weeks.map((item) => <th key={item.week} colSpan={columns.length} className="box-week-title">
-              {item.gameId ? <button type="button" className="box-game-link" onClick={() => onOpenGame?.(item)} aria-label={`Open Week ${item.week} game breakdown`}><span>Week {item.week}</span><strong>{item.opponent ? `${item.homeAway === "away" ? "@" : "vs"} ${item.opponent}` : "No game"} · {item.scoreLabel || "Scheduled"}</strong><small>{formatGameDate(item)}</small></button> : <><span>Week {item.week}</span><strong>No game</strong><small>{formatGameDate(item)}</small></>}
-            </th>)}
+            {weeks.map((item, weekIndex) => {
+              const totalPoints = gameTotalPoints(item);
+              return <th key={item.week} colSpan={columns.length} className="box-week-title">
+                {item.gameId ? <button type="button" className="box-game-link" onClick={() => onOpenGame?.(item)} aria-label={`Open Week ${item.week} game breakdown`}><span className="box-game-kicker"><span>Week {item.week}</span>{totalPoints !== null ? <b title="Total points scored">{totalPoints} PTS</b> : null}</span><strong className="box-matchup"><TeamLogo team={item.opponent} className="box-opponent-logo" decorative /><span>{item.opponent ? `${item.homeAway === "away" ? "@" : "vs"} ${item.opponent}` : "No game"} · {item.scoreLabel || "Scheduled"}</span></strong><small>{formatGameDate(item)}</small></button> : <><span>Week {item.week}</span><strong>No game</strong><small>{formatGameDate(item)}</small></>}
+                {showIdentityHandles && weekIndex === 0 ? <WeekResizeHandle width={weekWidth} onResize={onWeekResize} /> : null}
+              </th>;
+            })}
           </tr>
           <tr className="box-subgroup-row">
             <th rowSpan="2" className="box-sticky box-marker-head" aria-label="Player marker">Mark{identityHandles.marker}</th>
             <th rowSpan="2" className="box-sticky box-player-head" aria-label="Player">{identityHandles.player}</th>
-            <th rowSpan="2" className="box-sticky box-salary-head">DK Salary{identityHandles.dk_salary}</th>
-            <th rowSpan="2" className="box-sticky box-projection-head">DK Proj.{identityHandles.dk_projection}</th>
+            <th rowSpan="2" className="box-sticky box-salary-head"><span className="dk-column-label"><CrownSimple weight="fill" aria-hidden="true" />DK$</span>{identityHandles.dk_salary}</th>
+            <th rowSpan="2" className="box-sticky box-projection-head"><span className="dk-column-label"><CrownSimple weight="fill" aria-hidden="true" />DK FPTX</span>{identityHandles.dk_projection}</th>
             {weeks.flatMap((item) => groups.map((columnGroup) => <th key={`${item.week}-${columnGroup.name}`} colSpan={columnGroup.columns.length} rowSpan={columnGroup.name === "Fantasy" ? 2 : undefined} className={`box-week-subgroup${columnGroup.name === "Fantasy" ? " box-fpts-header" : ""}`}>{columnGroup.name === "Fantasy" ? <>FPTS{resizableWeekKeys.has("fantasy_points") && item.week === weeks[0]?.week ? <ResizeHandle columnKey="fantasy_points" width={columnWidths.fantasy_points} onResize={onResize} /> : null}</> : columnGroup.name}</th>))}
           </tr>
           <tr className="box-column-row">
@@ -391,20 +449,20 @@ export function TeamBoxScores({ meta, onOpenPlayer, onOpenGame }) {
     <section className="boxscore-toolbar" aria-labelledby="team-boxscore-title">
       <div className="boxscore-intro"><span className="page-eyebrow"><TrendUp weight="bold" aria-hidden="true" /> Sequential analysis</span><h1 id="team-boxscore-title">Team Box Scores</h1><p>Compare every fantasy-relevant player across completed weeks, from left to right.</p></div>
       <div className="boxscore-filters" aria-label="Team box score filters">
-        <label className="field"><span className="field-label">Team</span><span className="select-wrap"><select aria-label="Team" value={team} onChange={(event) => setTeam(event.target.value)}>{(meta?.teams || ["NYG"]).map((item) => <option key={item} value={item}>{item}</option>)}</select><CaretDown weight="bold" aria-hidden="true" /></span></label>
+        <TeamFilter team={team} teams={meta?.teams || ["NYG"]} onChange={(event) => setTeam(event.target.value)} />
         <PositionFilter selected={positions} onChange={setPositions} />
         <StatisticsFilter visibleStats={visibleStats} onChange={setVisibleStats} />
         <LeagueFilter selected={selectedLeagues} onChange={setSelectedLeagues} />
         <label className="field"><span className="field-label">Scoring</span><span className="select-wrap"><select aria-label="Scoring" value={scoring} onChange={(event) => setScoring(event.target.value)}><option value="ppr">PPR</option><option value="half">Half PPR</option><option value="standard">Standard</option></select><CaretDown weight="bold" aria-hidden="true" /></span></label>
-        <div className={`field dk-price-field${hasDraftKingsData ? "" : " unavailable"}`}><span className="field-label">DraftKings Price</span><span className="dk-price-inputs"><input aria-label="Minimum DraftKings price" type="number" min="0" step="100" value={dkMin} onChange={(event) => setDkMin(event.target.value)} disabled={!hasDraftKingsData} /><span>to</span><input aria-label="Maximum DraftKings price" type="number" min="0" step="100" value={dkMax} onChange={(event) => setDkMax(event.target.value)} disabled={!hasDraftKingsData} /></span>{!hasDraftKingsData ? <small>Price feed not connected</small> : null}</div>
-        <label className="field week-width-field"><span className="field-label">Week Width <small>{Math.round(weekWidth / WEEK_WIDTH * 100)}%</small></span><span className="week-width-control"><input aria-label="Week column width" type="range" min="320" max="720" step="8" value={weekWidth} onChange={(event) => setWeekWidth(Number(event.target.value))} /></span></label>
+        <div className={`field dk-price-field${hasDraftKingsData ? "" : " unavailable"}`}><span className="field-label dk-filter-label"><CrownSimple weight="fill" aria-hidden="true" />DK$</span><span className="dk-price-inputs"><input aria-label="Minimum DraftKings price" type="number" min="0" step="100" value={dkMin} onChange={(event) => setDkMin(event.target.value)} disabled={!hasDraftKingsData} /><span>to</span><input aria-label="Maximum DraftKings price" type="number" min="0" step="100" value={dkMax} onChange={(event) => setDkMax(event.target.value)} disabled={!hasDraftKingsData} /></span>{!hasDraftKingsData ? <small>Price feed not connected</small> : null}</div>
+        <label className="field week-width-field"><span className="field-label">Week Width <small>{Math.round(weekWidth / WEEK_WIDTH * 100)}%</small></span><span className="week-width-control"><input aria-label="Week column width" type="range" min="220" max="720" step="8" value={weekWidth} onChange={(event) => setWeekWidth(Number(event.target.value))} /></span></label>
       </div>
       <ScheduleWeekSelector team={team} schedule={schedule} start={weekStart} end={weekEnd} extras={extraWeeks} onRangeChange={changeRange} onExtrasChange={setExtraWeeks} onOpenGame={openGame} />
-      <div className="boxscore-context"><strong>{team}</strong><span>{weekStart === weekEnd ? `Week ${weekStart}` : `Weeks ${weekStart}–${weekEnd}`}{visibleExtraWeeks.length ? ` + ${visibleExtraWeeks.map((week) => `W${week}`).join(", ")}` : ""}</span><span>{scoring === "ppr" ? "PPR" : scoring === "half" ? "Half PPR" : "Standard"}</span><span className="dk-status"><WarningCircle aria-hidden="true" />DraftKings salary + projection awaiting source</span><div className="box-scroll-buttons" aria-label="Scroll weekly columns"><button type="button" onClick={() => scroller.current?.scrollBy({ left: -weekWidth, behavior: "smooth" })} aria-label="Previous weeks"><ArrowLeft /></button><button type="button" onClick={() => scroller.current?.scrollBy({ left: weekWidth, behavior: "smooth" })} aria-label="Next weeks"><ArrowRight /></button></div></div>
+      <div className="boxscore-context"><strong className="selected-team-pill"><span>{team}</span><TeamLogo team={team} decorative /></strong><span>{weekStart === weekEnd ? `Week ${weekStart}` : `Weeks ${weekStart}–${weekEnd}`}{visibleExtraWeeks.length ? ` + ${visibleExtraWeeks.map((week) => `W${week}`).join(", ")}` : ""}</span><span>{scoring === "ppr" ? "PPR" : scoring === "half" ? "Half PPR" : "Standard"}</span><span className="dk-status"><CrownSimple weight="fill" aria-hidden="true" />DK$ + DK FPTX awaiting source</span><div className="box-scroll-buttons" aria-label="Scroll weekly columns"><button type="button" onClick={() => scroller.current?.scrollBy({ left: -weekWidth, behavior: "smooth" })} aria-label="Previous weeks"><ArrowLeft /></button><button type="button" onClick={() => scroller.current?.scrollBy({ left: weekWidth, behavior: "smooth" })} aria-label="Next weeks"><ArrowRight /></button></div></div>
     </section>
     <section className="boxscore-panel" aria-label={`${team} weekly team box scores`}>
       {loading ? <div className="progress" role="progressbar" aria-label="Updating team box scores"><span /></div> : null}{error ? <div className="error-banner" role="alert"><span>{error}</span></div> : null}
-      <div className="boxscore-scroller" ref={scroller} tabIndex="0" aria-label="Scrollable weekly team box scores">{!loading && !error && !groups.length ? <div className="boxscore-empty">No player data is available for this team and week range.</div> : null}{groups.map((group, index) => <PositionSection key={group.position} group={group} weeks={weeks} upcomingWeek={null} weekWidth={weekWidth} maxima={maxima} columnWidths={columnWidths} visibleStats={visibleStats} markers={markers} onMarkerChange={(playerId, marker) => setMarkers((current) => { const next = { ...current }; if (marker) next[playerId] = marker; else delete next[playerId]; return next; })} onResize={resizeColumn} showIdentityHandles={index === 0} resizableWeekKeys={new Set([...resizeOwners].filter(([, owner]) => owner === index).map(([key]) => key))} onOpenGame={openGame} onOpenPlayer={(player, opener) => onOpenPlayer(player, opener, scoring)} />)}</div>
+      <div className="boxscore-scroller" ref={scroller} tabIndex="0" aria-label="Scrollable weekly team box scores">{!loading && !error && !groups.length ? <div className="boxscore-empty">No player data is available for this team and week range.</div> : null}{groups.map((group, index) => <PositionSection key={group.position} group={group} weeks={weeks} upcomingWeek={null} weekWidth={weekWidth} onWeekResize={setWeekWidth} maxima={maxima} columnWidths={columnWidths} visibleStats={visibleStats} markers={markers} onMarkerChange={(playerId, marker) => setMarkers((current) => { const next = { ...current }; if (marker) next[playerId] = marker; else delete next[playerId]; return next; })} onResize={resizeColumn} showIdentityHandles={index === 0} resizableWeekKeys={new Set([...resizeOwners].filter(([, owner]) => owner === index).map(([key]) => key))} onOpenGame={openGame} onOpenPlayer={(player, opener) => onOpenPlayer(player, opener, scoring)} />)}</div>
       <footer className="data-status" aria-live="polite"><div className="performance-legend" aria-label="Performance color legend"><span><i className="strong" />Strong relative performance</span><span><i className="lower" />Lower relative performance</span><span><i className="typical" />Typical range</span></div><span><strong>{payload.meta?.playerCount ?? 0}</strong> players · <strong>{weeks.length}</strong> weeks</span><span>{payload.meta ? `${payload.meta.queryMs} ms query` : "Loading warehouse"}</span><a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noreferrer">Data: nflverse · CC BY 4.0</a></footer>
     </section>
   </main>;
