@@ -448,7 +448,7 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
 .marker-trigger.maybe, .marker-popover .maybe { color: #e8b94e; }
 .marker-trigger.watch, .marker-popover .watch { color: #6ebcff; }
 .marker-trigger.research, .marker-popover .research { color: #b898ff; }
-.marker-popover { position: absolute; top: 34px; left: 2px; z-index: 180; width: 176px; padding: 6px; display: grid; gap: 2px; border: 1px solid #505657; border-radius: 8px; background: #181c1d; box-shadow: 0 16px 42px rgba(0,0,0,.62); }
+.marker-popover { position: fixed; z-index: 300; width: 176px; max-height: calc(100dvh - 16px); padding: 6px; overflow-y: auto; display: grid; gap: 2px; border: 1px solid #505657; border-radius: 8px; background: #181c1d; box-shadow: 0 16px 42px rgba(0,0,0,.62); }
 .marker-popover button { min-height: 34px; padding: 0 8px; border: 0; border-radius: 5px; display: grid; grid-template-columns: 20px 1fr; align-items: center; gap: 7px; background: transparent; color: #dce0e0; text-align: left; font-size: 10px; font-weight: 720; }
 .marker-popover button:hover, .marker-popover button[aria-checked="true"] { background: #272c2d; }
 .marker-popover svg { width: 16px; height: 16px; }

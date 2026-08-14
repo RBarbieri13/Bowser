@@ -20,4 +20,15 @@ Viewport compared: 1200 × 1644 desktop, Team Box Scores, NYG, Weeks 1–18, 100
 
 - P3 — At minimum week width, low-priority headers necessarily abbreviate; the current labels and ellipsis preserve legibility without overflow.
 
+## Marker-menu clipping regression — 2026-08-14
+
+Reference: `codex-clipboard-843d09e2-1723-4b06-bc9d-ab9b8d4f1b85.png`
+
+Prototype capture: `artifacts/design-qa/marker-menu-fixed.png`
+
+- PASS — The marker chooser renders through a body-level portal instead of inside a position table, so the following position header cannot cover it.
+- PASS — Favorite, Like, Dislike, Maybe, Watch, Research priority, and Clear marker are all visible in the narrow table viewport.
+- PASS — The menu remains anchored to the clicked player, flips above when needed, and is clamped inside the viewport.
+- PASS — Selecting Like updates the player marker and closes the chooser.
+
 Final result: passed
