@@ -104,6 +104,10 @@ test("game breakdown exposes both teams, quarter scoring, game flow, and documen
   const participationExample = queryGameBreakdown(new URLSearchParams("gameId=2025_01_NYG_WAS&scoring=ppr"));
   assert.equal(participationExample.data.playerSegments.filter((row) => row.team === "WAS").length, 9);
   assert.equal(participationExample.data.playerSegments.filter((row) => row.team === "NYG").length, 9);
+  for (const [gameId, team] of [["2025_10_BUF_MIA", "MIA"], ["2025_11_NYJ_NE", "NE"]]) {
+    const edgeCase = queryGameBreakdown(new URLSearchParams({ gameId, scoring: "ppr" }));
+    assert.equal(edgeCase.data.playerSegments.filter((row) => row.team === team).length, 9);
+  }
   assert.deepEqual(Object.keys(participationExample.data.playerSegments[0].segments[0]).sort(), [
     "fantasyPoints", "passAttempts", "receptions", "rushAttempts", "segment", "snaps", "targets", "touchdowns", "yards",
   ]);

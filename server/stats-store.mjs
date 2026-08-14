@@ -530,10 +530,10 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
       .slice(0, count);
     selected.push(...take("QB", 1), ...take("WR", 3), ...take("RB", 2), ...take("TE", 2));
     const selectedIds = new Set(selected.map((player) => player.playerId));
-    const flex = teamPlayers
+    const flexPlayers = teamPlayers
       .filter((player) => !selectedIds.has(player.playerId))
-      .sort((a, b) => b.total.snaps - a.total.snaps || b.total.fantasyPoints - a.total.fantasyPoints)[0];
-    if (flex) selected.push(flex);
+      .sort((a, b) => b.total.snaps - a.total.snaps || b.total.fantasyPoints - a.total.fantasyPoints || a.playerDisplayName.localeCompare(b.playerDisplayName));
+    selected.push(...flexPlayers.slice(0, Math.max(0, 9 - selected.length)));
     selected.slice(0, 9).forEach((player, depthIndex) => playerSegments.push({ ...player, depthIndex: depthIndex + 1 }));
   }
 
