@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowsHorizontal, CaretDown, Check, Plus, X } from "@phosphor-icons/react";
+import { gameTotalPoints, TeamLogo } from "./teamLogos.jsx";
 
 const CARD_WIDTH = 96;
 const CARD_GAP = 6;
@@ -153,6 +154,7 @@ export function ScheduleWeekSelector({
                 const isExtra = cleanExtras.includes(item.week);
                 const hasMatchup = Boolean(item.gameId);
                 const date = matchupDate(item);
+                const totalPoints = gameTotalPoints(item);
                 return (
                   <div className="schedule-card-wrap" key={item.week}>
                     <button
@@ -163,9 +165,10 @@ export function ScheduleWeekSelector({
                       aria-pressed={inRange || isExtra}
                       aria-label={`${inRange ? "Selected" : isExtra ? "Additional selected" : "Select"} week ${item.week}${item.opponent ? ` against ${item.opponent}` : hasMatchup ? "" : ", no matchup"}`}
                     >
-                      <span>W{item.week}</span>
-                      <strong>{item.opponent ? `${item.homeAway === "away" ? "@" : "vs"} ${item.opponent}` : item.seasonType === "POST" ? "Did not advance" : "BYE"}</strong>
+                      <span className="schedule-week-label">W{item.week}</span>
+                      <span className="schedule-opponent"><TeamLogo team={item.opponent} className="schedule-opponent-logo" decorative /><strong>{item.opponent ? `${item.homeAway === "away" ? "@" : "vs"} ${item.opponent}` : item.seasonType === "POST" ? "Did not advance" : "BYE"}</strong></span>
                       <small>{item.scoreLabel || (isExtra ? "Added week" : hasMatchup ? "Scheduled" : "No game")}</small>
+                      {totalPoints !== null ? <span className="schedule-total" title="Total points scored">{totalPoints} PTS</span> : null}
                       {date ? <time>{date}</time> : null}
                     </button>
                     {item.gameId ? (

@@ -156,9 +156,22 @@ describe("statistics table UI", () => {
 
     expect(await screen.findByRole("heading", { name: "Team Box Scores" })).toBeInTheDocument();
     expect(await screen.findByRole("table", { name: "QB week-by-week player statistics" })).toBeInTheDocument();
-    expect(screen.getByText("DK Salary")).toBeInTheDocument();
-    expect(screen.getByText("DK Proj.")).toBeInTheDocument();
+    expect(screen.getAllByText("DK$").length).toBeGreaterThan(0);
+    expect(screen.getByText("DK FPTX")).toBeInTheDocument();
+    expect(document.querySelector(".team-filter-logo")).toHaveAttribute("src", expect.stringContaining("/nyg.png"));
+    expect(screen.getByText("55 PTS")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Test Player" })).toBeInTheDocument();
+  });
+
+  test("persists a manually resizable icon-only navigation sidebar", async () => {
+    render(<App />);
+    const resizer = screen.getByRole("separator", { name: "Resize navigation sidebar" });
+    expect(resizer).toHaveAttribute("aria-valuenow", "216");
+    fireEvent.keyDown(resizer, { key: "Home" });
+    expect(resizer).toHaveAttribute("aria-valuenow", "56");
+    expect(document.querySelector(".app-shell")).toHaveClass("sidebar-icon-only");
+    expect(localStorage.getItem("bowser:sidebar-width:v1")).toBe("56");
+    expect(screen.getByRole("link", { name: "Player Database" })).toHaveAttribute("title", "Player Database");
   });
 
   test("uses a collapsed schedule brush, adds sporadic weeks, and resizes every week column", async () => {
@@ -172,6 +185,8 @@ describe("statistics table UI", () => {
 
     await user.click(scheduleTrigger);
     expect(scheduleTrigger).toHaveAttribute("aria-expanded", "true");
+    expect(document.querySelector(".schedule-opponent-logo")).toHaveAttribute("src", expect.stringContaining("/kc.png"));
+    expect(screen.getAllByText("55 PTS").length).toBeGreaterThan(1);
 
     await user.click(screen.getByRole("button", { name: /Selected week 7/i }));
     await waitFor(() => expect(latestBoxScoreUrl().searchParams.get("weeks")).toBe("7"));
@@ -191,9 +206,14 @@ describe("statistics table UI", () => {
     expect(screen.getAllByText(/W7–10 \+ W20/).length).toBeGreaterThan(0);
 
     const widthControl = screen.getByLabelText("Week column width");
-    fireEvent.change(widthControl, { target: { value: "320" } });
+    fireEvent.change(widthControl, { target: { value: "220" } });
     const table = await screen.findByRole("table", { name: "QB week-by-week player statistics" });
-    expect(table).toHaveStyle({ width: "776px" });
+    expect(table).toHaveStyle({ width: "592px" });
+    const synchronizedWeekResizer = screen.getAllByRole("separator", { name: "Resize all week groups" })[0];
+    expect(synchronizedWeekResizer).toHaveAttribute("aria-valuenow", "220");
+    fireEvent.keyDown(synchronizedWeekResizer, { key: "ArrowRight", shiftKey: true });
+    expect(screen.getByLabelText("Week column width")).toHaveValue("244");
+    expect(JSON.parse(localStorage.getItem("bowser:team-box-preferences:v2")).weekWidth).toBe(244);
 
     expect(screen.getByText("31.2")).toHaveClass("metric-high");
     expect(screen.getByLabelText("Minimum DraftKings price")).toBeDisabled();
@@ -249,7 +269,7 @@ describe("statistics table UI", () => {
 
     const playerResize = screen.getByRole("separator", { name: "Resize Player column" });
     fireEvent.keyDown(playerResize, { key: "ArrowRight", shiftKey: true });
-    expect(table).toHaveStyle({ width: "1034px" });
+    expect(table).toHaveStyle({ width: "950px" });
 
     await user.click(screen.getByRole("button", { name: /All defaults/ }));
     await user.click(screen.getByRole("checkbox", { name: "Passing yards" }));

@@ -11,6 +11,12 @@ import { GameBreakdown } from "./GameBreakdown.jsx";
 
 const numberFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 const decimalFormatter = new Intl.NumberFormat("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const SIDEBAR_WIDTH_KEY = "bowser:sidebar-width:v1";
+
+function initialSidebarWidth() {
+  const stored = Number(window.localStorage.getItem(SIDEBAR_WIDTH_KEY));
+  return Number.isFinite(stored) && stored >= 56 && stored <= 280 ? stored : 216;
+}
 
 const GROUPS = [
   {
@@ -163,6 +169,7 @@ export function App() {
   const [error, setError] = useState("");
   const [showSwipeHint, setShowSwipeHint] = useState(() => localStorage.getItem("stats-scroll-hint-dismissed") !== "1");
   const [profilePlayer, setProfilePlayer] = useState(null);
+  const [sidebarWidth, setSidebarWidth] = useState(initialSidebarWidth);
   const tableScroller = useRef(null);
   const profileOpener = useRef(null);
 
@@ -171,6 +178,14 @@ export function App() {
     window.addEventListener("hashchange", syncPage);
     return () => window.removeEventListener("hashchange", syncPage);
   }, []);
+
+  const resizeSidebar = useCallback((nextWidth) => {
+    setSidebarWidth(Math.round(Math.max(56, Math.min(280, Number(nextWidth) || 216))));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(SIDEBAR_WIDTH_KEY, String(sidebarWidth));
+  }, [sidebarWidth]);
 
   const selectedWeeks = useMemo(
     () => Array.from({ length: weekEnd - weekStart + 1 }, (_, index) => weekStart + index),
@@ -316,8 +331,8 @@ export function App() {
   };
 
   return (
-    <div className="app-shell">
-      <AppHeader currentPage={currentPage === "game" ? "team-box-scores" : currentPage} />
+    <div className={`app-shell${sidebarWidth < 112 ? " sidebar-icon-only" : ""}`} style={{ "--sidebar-width": `${sidebarWidth}px` }}>
+      <AppHeader currentPage={currentPage === "game" ? "team-box-scores" : currentPage} width={sidebarWidth} collapsed={sidebarWidth < 112} onResize={resizeSidebar} />
       {currentPage === "game" ? (
         <GameBreakdown gameId={route.gameId} scoring={route.scoring} onBack={() => { window.location.hash = "#/team-box-scores"; }} onOpenPlayer={(row, opener) => openProfile(row, opener, route.scoring)} />
       ) : currentPage === "team-box-scores" ? (
