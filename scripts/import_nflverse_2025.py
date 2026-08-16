@@ -112,6 +112,43 @@ def elapsed_seconds(quarter: int, clock: str, game_type: str) -> int:
     return 3600 + (quarter - 5) * overtime_period + max(0, overtime_period - remaining)
 
 
+def possession_minutes(value: str | None) -> float:
+    """Convert nflverse drive time-of-possession values (M:SS) to decimal minutes."""
+    try:
+        minutes, seconds = (int(part) for part in str(value).split(":"))
+        return minutes + seconds / 60
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def own_start_yard(line: str | None, possession: str) -> int:
+    """Return a drive start as distance from the possessing team's own goal."""
+    parts = str(line or "").strip().split()
+    if len(parts) != 2:
+        return 50 if str(line or "").strip() == "50" else 25
+    try:
+        yard = max(0, min(100, int(parts[1])))
+    except ValueError:
+        return 25
+    return yard if parts[0] == possession else 100 - yard
+
+
+def normalized_drive_result(raw_result: str, saw_interception: bool, saw_kneel: bool) -> str:
+    """Map nflverse drive outcomes onto the public DriveWaterfall result contract."""
+    result = (raw_result or "").lower()
+    if result == "touchdown":
+        return "TD"
+    if result == "field goal":
+        return "FG"
+    if result == "punt":
+        return "PUNT"
+    if result == "end of half":
+        return "KNEEL" if saw_kneel else "HALF"
+    if "turnover" in result or result in {"opp touchdown", "missed field goal", "safety"}:
+        return "INT" if saw_interception else "DOWNS"
+    return "KNEEL" if saw_kneel else "HALF"
+
+
 def score_state(home_score: int, away_score: int) -> str:
     if home_score == away_score:
         return "tied"
@@ -231,6 +268,7 @@ def load_sources(refresh: bool):
             "team_plays": defaultdict(lambda: {"rush": 0, "pass": 0}),
             "last_score": (0, 0),
             "max_elapsed": 0,
+            "drives": {},
             "team_segments": defaultdict(lambda: defaultdict(lambda: {"rush": 0, "pass": 0, "plays": 0, "yards": 0.0, "epa": 0.0, "successes": 0})),
             "player_segments": defaultdict(lambda: defaultdict(lambda: {
                 "snaps": 0, "rush_attempts": 0, "pass_attempts": 0, "targets": 0,
@@ -271,12 +309,53 @@ def load_sources(refresh: bool):
             possession = row.get("posteam", "")
             if possession not in {game.get("home_team"), game.get("away_team")}:
                 continue
+            fixed_drive = integer(row.get("fixed_drive"))
+            if fixed_drive > 0:
+                drive = flow["drives"].setdefault(fixed_drive, {
+                    "team": possession,
+                    "start_min": elapsed / 60,
+                    "top_min": 0.0,
+                    "plays": 0,
+                    "yards": 0.0,
+                    "pass_plays": 0,
+                    "run_plays": 0,
+                    "pass_yards": 0.0,
+                    "run_yards": 0.0,
+                    "own_start": own_start_yard(row.get("drive_start_yard_line"), possession),
+                    "raw_result": "",
+                    "home_score": 0,
+                    "away_score": 0,
+                    "saw_interception": False,
+                    "saw_kneel": False,
+                })
+                drive["start_min"] = min(drive["start_min"], elapsed / 60)
+                if row.get("drive_time_of_possession"):
+                    drive["top_min"] = possession_minutes(row.get("drive_time_of_possession"))
+                if row.get("drive_play_count"):
+                    drive["plays"] = max(drive["plays"], integer(row.get("drive_play_count")))
+                if row.get("ydsnet"):
+                    drive["yards"] = number(row.get("ydsnet"))
+                if row.get("fixed_drive_result"):
+                    drive["raw_result"] = row.get("fixed_drive_result", "")
+                drive["home_score"] = integer(row.get("total_home_score"))
+                drive["away_score"] = integer(row.get("total_away_score"))
+                drive["saw_interception"] = drive["saw_interception"] or integer(row.get("interception")) == 1
+                drive["saw_kneel"] = drive["saw_kneel"] or integer(row.get("qb_kneel")) == 1
             is_rush = integer(row.get("rush_attempt")) == 1
             is_pass = integer(row.get("pass_attempt")) == 1
             is_sack = integer(row.get("sack")) == 1
             is_play = integer(row.get("no_play")) != 1 and (is_rush or is_pass or is_sack)
             if not is_play:
                 continue
+            if fixed_drive > 0:
+                drive = flow["drives"][fixed_drive]
+                gained = number(row.get("yards_gained"))
+                if is_rush:
+                    drive["run_plays"] += 1
+                    drive["run_yards"] += gained
+                if is_pass or is_sack:
+                    drive["pass_plays"] += 1
+                    drive["pass_yards"] += gained
             segment = min(5, max(0, elapsed // 600))
             play_id = integer(row.get("play_id"))
             play_context[(game_id, play_id)] = (possession, segment)
@@ -499,6 +578,26 @@ CREATE TABLE game_team_segments (
     PRIMARY KEY (game_id, team, segment)
 );
 
+CREATE TABLE game_drives (
+    game_id TEXT NOT NULL REFERENCES games(game_id),
+    drive_number INTEGER NOT NULL,
+    team TEXT NOT NULL,
+    start_min REAL NOT NULL,
+    top_min REAL NOT NULL,
+    plays INTEGER NOT NULL,
+    yards REAL NOT NULL,
+    pass_plays INTEGER NOT NULL,
+    run_plays INTEGER NOT NULL,
+    pass_yards REAL NOT NULL,
+    run_yards REAL NOT NULL,
+    own_start INTEGER NOT NULL CHECK (own_start BETWEEN 0 AND 100),
+    result TEXT NOT NULL CHECK (result IN ('TD', 'FG', 'PUNT', 'DOWNS', 'INT', 'HALF', 'KNEEL')),
+    score_after TEXT NOT NULL,
+    margin_after INTEGER NOT NULL,
+    raw_result TEXT NOT NULL,
+    PRIMARY KEY (game_id, drive_number)
+);
+
 CREATE TABLE player_game_segments (
     game_id TEXT NOT NULL REFERENCES games(game_id),
     team TEXT NOT NULL,
@@ -524,6 +623,7 @@ CREATE INDEX idx_games_team_week ON games (season, week, home_team, away_team);
 CREATE INDEX idx_game_team_summary_team ON game_team_summary (team, game_id);
 CREATE INDEX idx_game_flow_game_time ON game_flow_events (game_id, elapsed_seconds);
 CREATE INDEX idx_game_segments_game_team ON game_team_segments (game_id, team, segment);
+CREATE INDEX idx_game_drives_game_order ON game_drives (game_id, drive_number);
 CREATE INDEX idx_player_segments_game_team ON player_game_segments (game_id, team, player_id, segment);
 """
 
@@ -594,6 +694,7 @@ def build_database(refresh: bool) -> dict:
     quarter_rows = []
     team_summary_rows = []
     flow_rows = []
+    drive_rows = []
     team_segment_rows = []
     player_segment_rows = []
     for game_id, game in sorted(games.items(), key=lambda item: (integer(item[1].get("week")), item[0])):
@@ -628,6 +729,18 @@ def build_database(refresh: bool) -> dict:
                 game_id, event["sequence"], event["quarter"], event["clock"], event["elapsed_seconds"],
                 event["home_score"], event["away_score"],
                 score_state(event["home_score"], event["away_score"]), event["description"],
+            ))
+
+        for drive_number, drive in sorted(flow["drives"].items()):
+            away_after = drive["away_score"]
+            home_after = drive["home_score"]
+            drive_rows.append((
+                game_id, drive_number, drive["team"], round(drive["start_min"], 3),
+                round(drive["top_min"], 3), drive["plays"], round(drive["yards"], 1),
+                drive["pass_plays"], drive["run_plays"], round(drive["pass_yards"], 1),
+                round(drive["run_yards"], 1), drive["own_start"],
+                normalized_drive_result(drive["raw_result"], drive["saw_interception"], drive["saw_kneel"]),
+                f"{away_after}\u2013{home_after}", away_after - home_after, drive["raw_result"],
             ))
 
         for team in (away_team, home_team):
@@ -685,6 +798,7 @@ def build_database(refresh: bool) -> dict:
     connection.executemany("INSERT INTO game_quarter_scores VALUES (?, ?, ?, ?, ?, ?)", quarter_rows)
     connection.executemany("INSERT INTO game_team_summary VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", team_summary_rows)
     connection.executemany("INSERT INTO game_flow_events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", flow_rows)
+    connection.executemany("INSERT INTO game_drives VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", drive_rows)
     connection.executemany("INSERT INTO game_team_segments VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", team_segment_rows)
     connection.executemany("INSERT INTO player_game_segments VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", player_segment_rows)
 
@@ -724,6 +838,7 @@ def build_database(refresh: bool) -> dict:
         "games": connection.execute("SELECT COUNT(*) FROM games").fetchone()[0],
         "games_with_play_by_play": connection.execute("SELECT COUNT(*) FROM games WHERE play_by_play_available = 1").fetchone()[0],
         "game_flow_events": connection.execute("SELECT COUNT(*) FROM game_flow_events").fetchone()[0],
+        "game_drives": connection.execute("SELECT COUNT(*) FROM game_drives").fetchone()[0],
         "game_team_segments": connection.execute("SELECT COUNT(*) FROM game_team_segments").fetchone()[0],
         "player_game_segments": connection.execute("SELECT COUNT(*) FROM player_game_segments").fetchone()[0],
     }
