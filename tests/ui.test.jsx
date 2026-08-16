@@ -97,6 +97,10 @@ const sampleGameBreakdown = {
     totalOffensiveSnaps: 125,
     quarterScores: [{ quarter: 1, away_points: 7, home_points: 10 }, { quarter: 2, away_points: 7, home_points: 7 }, { quarter: 3, away_points: 3, home_points: 7 }, { quarter: 4, away_points: 7, home_points: 7 }],
     timeline: [{ sequence: 0, quarter: 1, clock: "15:00", elapsed_seconds: 0, away_score: 0, home_score: 0, leader: "tied", description: "Game start" }, { sequence: 1, quarter: 1, clock: "10:00", elapsed_seconds: 300, away_score: 0, home_score: 7, leader: "home", description: "BUF touchdown" }],
+    drives: [
+      { driveNumber: 1, team: "KC", startMin: 0, topMin: 3.2, plays: 7, yards: 62, passPlays: 5, runPlays: 2, passYards: 48, runYards: 14, ownStart: 25, result: "TD", scoreAfter: "7–0", marginAfter: 7, rawResult: "Touchdown" },
+      { driveNumber: 2, team: "BUF", startMin: 3.2, topMin: 2.4, plays: 5, yards: 35, passPlays: 3, runPlays: 2, passYards: 24, runYards: 11, ownStart: 20, result: "FG", scoreAfter: "7–3", marginAfter: 4, rawResult: "Field goal" },
+    ],
     segments: Array.from({ length: 6 }, (_, segment) => ({ segment, label: `${segment * 10}:00–${segment === 5 ? "Final" : `${(segment + 1) * 10}:00`}`, phase: `Phase ${segment + 1}` })),
     teamSegments: ["KC", "BUF"].flatMap((team) => Array.from({ length: 6 }, (_, segment) => ({ team, segment, rushPlays: 4 + segment, passPlays: 6 + segment, offensivePlays: 10 + segment * 2, yards: 45 + segment * 8, epa: 0.4, successfulPlays: 5, passPct: 60, rushPct: 40, successRate: 50 }))),
     playerSegments: ["KC", "BUF"].map((team, teamIndex) => ({
@@ -105,9 +109,9 @@ const sampleGameBreakdown = {
       total: { snaps: 63 + teamIndex, rushAttempts: 3, passAttempts: 33, targets: 0, yards: 303, touchdowns: 1, receptions: 0, fantasyPoints: 22.2 },
     })),
     boxScore: sampleBoxScores.data.map((row) => ({ ...row, team: "BUF" })),
-    availability: { scoringTimeline: true, playerParticipation: true },
+    availability: { scoringTimeline: true, driveWaterfall: true, playerParticipation: true },
   },
-  meta: { methodology: { playMix: "Rush and pass play mix from nflverse play-by-play." } },
+  meta: { methodology: { driveWaterfall: "Drive totals from nflverse play-by-play.", playerParticipation: "Player participation from nflverse." } },
 };
 
 function latestPlayerUrl() {
@@ -230,7 +234,9 @@ describe("statistics table UI", () => {
     await user.click(screen.getByRole("button", { name: "Open Week 1 against KC game breakdown" }));
 
     expect(await screen.findByRole("heading", { name: /KC 24.*31 BUF/ })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Score, possession pressure, and play selection" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Scoreboard–Rail Waterfall v2" })).toBeInTheDocument();
+    expect(screen.getByText("1ST QUARTER")).toBeInTheDocument();
+    expect(screen.getByLabelText(/KC · Touchdown · 7 plays, 62 yds/)).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Key player participation" })).toBeInTheDocument();
     expect(screen.getByRole("table", { name: "BUF opportunity by game segment" })).toBeInTheDocument();
     expect(screen.getAllByText("Snaps").length).toBeGreaterThan(0);

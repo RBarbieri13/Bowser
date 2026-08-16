@@ -412,6 +412,27 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
       leaderTeam: event.leader === "home" ? game.home_team : event.leader === "away" ? game.away_team : null,
     })),
   ];
+  const drives = db.prepare(`
+    SELECT drive_number, team, start_min, top_min, plays, yards, pass_plays, run_plays,
+      pass_yards, run_yards, own_start, result, score_after, margin_after, raw_result
+    FROM game_drives WHERE game_id = ? ORDER BY drive_number
+  `).all(gameId).map((drive) => ({
+    driveNumber: drive.drive_number,
+    team: drive.team,
+    startMin: drive.start_min,
+    topMin: drive.top_min,
+    plays: drive.plays,
+    yards: drive.yards,
+    passPlays: drive.pass_plays,
+    runPlays: drive.run_plays,
+    passYards: drive.pass_yards,
+    runYards: drive.run_yards,
+    ownStart: drive.own_start,
+    result: drive.result,
+    scoreAfter: drive.score_after,
+    marginAfter: drive.margin_after,
+    rawResult: drive.raw_result,
+  }));
 
   const boxScore = db.prepare(`
     SELECT
@@ -587,6 +608,7 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
       totalOffensiveSnaps: teamSummaries.reduce((sum, team) => sum + (team.offensive_plays || 0), 0),
       quarterScores,
       timeline: hasFlow ? timeline : [],
+      drives: hasFlow ? drives : [],
       boxScore,
       segments: [
         { segment: 0, label: "0:00–10:00", phase: "Q1" },
@@ -603,6 +625,7 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
         playerBoxScore: boxScore.length > 0,
         quarterScores: quarterScores.length > 0,
         scoringTimeline: hasFlow,
+        driveWaterfall: hasFlow && drives.length > 0,
         timeInScoreState: hasFlow,
         playMix: teamSummaries.every((team) => team.rush_plays !== null && team.pass_plays !== null),
         playerParticipation: playerSegments.length > 0,
@@ -616,6 +639,7 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
       methodology: {
         timeInScoreState: "Integrated from each score change to the next score change or end of the game clock.",
         playMix: "Rush plays use nflverse rush_attempt; pass plays use pass_attempt plus sacks not already counted as attempts.",
+        driveWaterfall: "Each drive is aggregated from nflverse play-by-play. Passing and rushing yardage are summed directly from yards_gained by play type; field position, time of possession, result, and score come from nflverse drive fields.",
         offensiveSnaps: "Team offensive scrimmage plays (rush plus pass), not the sum of individual-player personnel snaps.",
         playerParticipation: "Player snaps use nflverse play-participation personnel. Opportunity and production are grouped into six elapsed-game segments; fantasy points use the selected reception bonus.",
         metricScaling: "Each participation bar is normalized only against the same KPI in the active team and comparison scope; values are never normalized across unlike metrics.",

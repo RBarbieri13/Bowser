@@ -85,6 +85,13 @@ test("game breakdown exposes both teams, quarter scoring, game flow, and documen
   assert.ok(result.data.timeline.length > 10);
   assert.equal(result.data.timeline.at(-1).home_score, 38);
   assert.equal(result.data.timeline.at(-1).away_score, 20);
+  assert.ok(result.data.drives.length >= 15);
+  assert.deepEqual(Object.keys(result.data.drives[0]).sort(), [
+    "driveNumber", "marginAfter", "ownStart", "passPlays", "passYards", "plays", "rawResult",
+    "result", "runPlays", "runYards", "scoreAfter", "startMin", "team", "topMin", "yards",
+  ]);
+  assert.ok(result.data.drives.every((drive) => drive.plays >= 0 && drive.ownStart >= 0 && drive.ownStart <= 100));
+  assert.ok(result.data.drives.some((drive) => drive.passYards !== 0 || drive.runYards !== 0));
   assert.ok(result.data.boxScore.some((row) => row.team === "NYG" && row.position_group === "QB"));
   assert.ok(result.data.boxScore.some((row) => row.team === "PHI" && row.position_group === "RB"));
   assert.equal(result.data.segments.length, 6);
@@ -96,6 +103,7 @@ test("game breakdown exposes both teams, quarter scoring, game flow, and documen
   assert.ok(giantsQuarterback.total.snaps > 0);
   assert.equal(result.data.availability.playerParticipation, true);
   assert.equal(result.data.availability.scoringTimeline, true);
+  assert.equal(result.data.availability.driveWaterfall, true);
   assert.equal(result.data.availability.unavailable.length, 0);
   assert.match(result.meta.methodology.offensiveSnaps, /scrimmage plays/);
   assert.match(result.meta.methodology.metricScaling, /same KPI/);
