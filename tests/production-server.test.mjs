@@ -55,6 +55,13 @@ test("production API serves the packaged SQLite warehouse", async () => {
   assert.equal(boxScores.meta.schedule.length, 17);
   assert.ok(boxScores.data.some((row) => row.position_group === "QB"));
 
+  const opportunityResponse = await fetch(`${origin}/api/v1/opportunity-tracker?team=NYG&games=10`);
+  assert.equal(opportunityResponse.status, 200);
+  const opportunity = await opportunityResponse.json();
+  assert.equal(opportunity.data.team, "NYG");
+  assert.ok(opportunity.meta.playerCount >= 25);
+  assert.equal(opportunity.data.groups.length, 4);
+
   const gameResponse = await fetch(`${origin}/api/v1/game-breakdown?gameId=2025_08_NYG_PHI&scoring=ppr`);
   assert.equal(gameResponse.status, 200);
   const game = await gameResponse.json();

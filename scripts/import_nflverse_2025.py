@@ -8,12 +8,15 @@ import csv
 import gzip
 import hashlib
 import json
+import shutil
 import sqlite3
+import subprocess
 import sys
 import urllib.request
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +32,8 @@ SOURCES = {
     "schedules": "https://github.com/nflverse/nflverse-data/releases/download/schedules/games.csv",
     "play_by_play": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2025.csv.gz",
     "participation": "https://github.com/nflverse/nflverse-data/releases/download/pbp_participation/pbp_participation_2025.csv",
+    "roster_2026": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
+    "depth_charts_2026": "https://github.com/nflverse/nflverse-data/releases/download/depth_charts/depth_charts_2026.csv",
 }
 
 SOURCE_FILENAMES = {
@@ -38,6 +43,8 @@ SOURCE_FILENAMES = {
     "schedules": "schedules.csv",
     "play_by_play": "play_by_play.csv.gz",
     "participation": "pbp_participation_2025.csv",
+    "roster_2026": "roster_2026.csv",
+    "depth_charts_2026": "depth_charts_2026.csv",
 }
 
 OFFENSIVE_SIGNALS = (
@@ -68,6 +75,19 @@ REAL_FIELDS = {
 }
 
 SOURCE_FIELD = {"interceptions": "passing_interceptions"}
+
+FANTASY_POSITION_MAP = {
+    "QB": "QB",
+    "RB": "RB",
+    "HB": "RB",
+    "FB": "RB",
+    "WR": "WR",
+    "LWR": "WR",
+    "RWR": "WR",
+    "SWR": "WR",
+    "TE": "TE",
+}
+TEAM_CODE_ALIASES = {"AZ": "ARI"}
 
 
 def number(value: str | None) -> float:
@@ -186,8 +206,81 @@ def source_value(row: dict[str, str], field: str) -> str | None:
     return row.get(SOURCE_FIELD.get(field, field))
 
 
+def fantasy_position(value: str | None) -> str:
+    return FANTASY_POSITION_MAP.get(str(value or "").strip().upper(), "")
+
+
+def canonical_team(value: str | None) -> str:
+    team = str(value or "").strip().upper()
+    return TEAM_CODE_ALIASES.get(team, team)
+
+
+def load_current_roster(paths: dict[str, Path]) -> list[tuple]:
+    """Return the latest 2026 fantasy-position roster enriched with official depth ranks."""
+    latest_depth_timestamp: dict[str, str] = {}
+    depth_rows: dict[tuple[str, str], dict[str, str]] = {}
+    with paths["depth_charts_2026"].open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            team = canonical_team(row.get("team"))
+            player_id = row.get("gsis_id", "")
+            timestamp = row.get("dt", "")
+            if not team or not player_id or not fantasy_position(row.get("pos_abb")):
+                continue
+            latest = latest_depth_timestamp.get(team, "")
+            if timestamp > latest:
+                latest_depth_timestamp[team] = timestamp
+                for key in [key for key in depth_rows if key[0] == team]:
+                    del depth_rows[key]
+            if timestamp == latest_depth_timestamp.get(team):
+                depth_rows[(team, player_id)] = row
+
+    roster_rows: dict[tuple[str, str], dict[str, str]] = {}
+    with paths["roster_2026"].open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            team = canonical_team(row.get("team"))
+            position = fantasy_position(row.get("position"))
+            if row.get("season") != "2026" or not team or not position:
+                continue
+            stable_id = row.get("gsis_id", "") or "roster-" + hashlib.sha1(
+                f"{team}:{row.get('full_name', '')}".encode("utf-8")
+            ).hexdigest()[:16]
+            roster_rows[(team, stable_id)] = row
+
+    results = []
+    for (team, player_id), roster in roster_rows.items():
+        depth = depth_rows.get((team, player_id), {})
+        results.append((
+            2026,
+            team,
+            player_id,
+            roster.get("full_name", "") or depth.get("player_name", "") or player_id,
+            fantasy_position(roster.get("position")) or fantasy_position(depth.get("pos_abb")),
+            depth.get("pos_abb", "") or roster.get("depth_chart_position", ""),
+            integer(depth.get("pos_rank")) if depth.get("pos_rank") else None,
+            roster.get("status", ""),
+            roster.get("status_description_abbr", ""),
+            integer(roster.get("rookie_year")) if roster.get("rookie_year") else None,
+            integer(roster.get("years_exp")) if roster.get("years_exp") else None,
+            roster.get("headshot_url", ""),
+            depth.get("dt", "") or latest_depth_timestamp.get(team, ""),
+        ))
+
+    roster_keys = set(roster_rows)
+    for (team, player_id), depth in depth_rows.items():
+        if (team, player_id) in roster_keys:
+            continue
+        results.append((
+            2026, team, player_id, depth.get("player_name", "") or player_id,
+            fantasy_position(depth.get("pos_abb")), depth.get("pos_abb", ""),
+            integer(depth.get("pos_rank")) if depth.get("pos_rank") else None,
+            "DEPTH", "", None, None, "", depth.get("dt", ""),
+        ))
+    return sorted(results, key=lambda row: (row[1], row[4], row[6] or 99, row[3]))
+
+
 def load_sources(refresh: bool):
     paths = {name: download(name, url, refresh) for name, url in SOURCES.items()}
+    current_roster = load_current_roster(paths)
     players_by_gsis: dict[str, dict[str, str]] = {}
     gsis_by_pfr: dict[str, str] = {}
     with paths["players"].open(newline="", encoding="utf-8") as handle:
@@ -253,8 +346,11 @@ def load_sources(refresh: bool):
             join_method_counts[join_method] += 1
 
     games: dict[str, dict[str, str]] = {}
+    upcoming_schedule: list[dict[str, str]] = []
     with paths["schedules"].open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
+            if row.get("season") == "2026" and row.get("game_type") == "REG":
+                upcoming_schedule.append(row)
             if row.get("season") != "2025" or row.get("game_type") not in {"REG", *POSTSEASON_GAME_TYPES}:
                 continue
             game_id = row.get("game_id", "")
@@ -428,7 +524,8 @@ def load_sources(refresh: bool):
 
     return (
         paths, players_by_gsis, stats, snaps, relevant_ids, raw_totals,
-        sorted(unmatched_snap_ids), dict(join_method_counts), games, flow_by_game,
+        sorted(unmatched_snap_ids), dict(join_method_counts), games, flow_by_game, upcoming_schedule,
+        current_roster,
     )
 
 
@@ -518,6 +615,22 @@ CREATE TABLE games (
     roof TEXT,
     surface TEXT,
     play_by_play_available INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE team_schedule (
+    season INTEGER NOT NULL,
+    season_type TEXT NOT NULL CHECK (season_type IN ('REG', 'POST')),
+    week INTEGER NOT NULL,
+    team TEXT NOT NULL,
+    opponent TEXT NOT NULL,
+    home_away TEXT NOT NULL CHECK (home_away IN ('home', 'away')),
+    game_id TEXT NOT NULL,
+    gameday TEXT NOT NULL,
+    weekday TEXT,
+    gametime TEXT,
+    kickoff_utc TEXT,
+    espn_game_id TEXT,
+    PRIMARY KEY (season, week, team)
 );
 
 CREATE TABLE game_quarter_scores (
@@ -614,24 +727,95 @@ CREATE TABLE player_game_segments (
     PRIMARY KEY (game_id, player_id, segment)
 );
 
+CREATE TABLE team_roster (
+    season INTEGER NOT NULL,
+    team TEXT NOT NULL,
+    player_id TEXT NOT NULL,
+    full_name TEXT NOT NULL,
+    position TEXT NOT NULL CHECK (position IN ('QB', 'RB', 'WR', 'TE')),
+    depth_position TEXT,
+    depth_rank INTEGER,
+    roster_status TEXT,
+    status_detail TEXT,
+    rookie_year INTEGER,
+    years_exp INTEGER,
+    headshot_url TEXT,
+    depth_updated_at TEXT,
+    PRIMARY KEY (season, team, player_id)
+);
+
+CREATE TABLE draft_rankings (
+    player_id TEXT PRIMARY KEY REFERENCES players(player_id),
+    source_player_id INTEGER NOT NULL,
+    season INTEGER NOT NULL,
+    scoring TEXT NOT NULL CHECK (scoring IN ('PPR')),
+    adp REAL NOT NULL CHECK (adp > 0),
+    position TEXT NOT NULL,
+    position_rank INTEGER NOT NULL CHECK (position_rank > 0),
+    source_team TEXT,
+    source_url TEXT NOT NULL,
+    captured_at TEXT NOT NULL,
+    imported_at TEXT NOT NULL,
+    match_method TEXT NOT NULL
+);
+
+CREATE TABLE yahoo_player_metrics (
+    player_id TEXT PRIMARY KEY REFERENCES players(player_id),
+    yahoo_player_key TEXT,
+    roster_pct REAL,
+    start_pct REAL,
+    adds INTEGER,
+    drops INTEGER,
+    source_url TEXT NOT NULL,
+    captured_at TEXT NOT NULL
+);
+
+CREATE TABLE yahoo_league_ownership (
+    league_key TEXT NOT NULL,
+    player_id TEXT NOT NULL REFERENCES players(player_id),
+    league_name TEXT NOT NULL,
+    ownership_status TEXT NOT NULL,
+    owning_team_key TEXT,
+    owning_team_name TEXT,
+    captured_at TEXT NOT NULL,
+    PRIMARY KEY (league_key, player_id)
+);
+
 CREATE TABLE warehouse_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE INDEX idx_stats_scope ON player_week_stats (season, season_type, week, position);
 CREATE INDEX idx_stats_player ON player_week_stats (season, season_type, player_id, week, team);
 CREATE INDEX idx_stats_team ON player_week_stats (season, season_type, team, week);
 CREATE INDEX idx_players_name ON players (display_name COLLATE NOCASE);
 CREATE INDEX idx_games_team_week ON games (season, week, home_team, away_team);
+CREATE INDEX idx_team_schedule_lookup ON team_schedule (season, team, week, gameday);
 CREATE INDEX idx_game_team_summary_team ON game_team_summary (team, game_id);
 CREATE INDEX idx_game_flow_game_time ON game_flow_events (game_id, elapsed_seconds);
 CREATE INDEX idx_game_segments_game_team ON game_team_segments (game_id, team, segment);
 CREATE INDEX idx_game_drives_game_order ON game_drives (game_id, drive_number);
 CREATE INDEX idx_player_segments_game_team ON player_game_segments (game_id, team, player_id, segment);
+CREATE INDEX idx_team_roster_lookup ON team_roster (season, team, position, depth_rank, full_name);
+CREATE INDEX idx_draft_rankings_scope ON draft_rankings (season, scoring, adp, position, position_rank);
+CREATE INDEX idx_yahoo_ownership_player ON yahoo_league_ownership (player_id, league_key);
 """
 
 
 def build_database(refresh: bool) -> dict:
+    active_sidecars = [path for path in (Path(f"{DB_PATH}-wal"), Path(f"{DB_PATH}-shm")) if path.exists()]
+    if active_sidecars:
+        lsof = shutil.which("lsof")
+        if not lsof:
+            names = ", ".join(path.name for path in active_sidecars)
+            raise RuntimeError(f"cannot confirm warehouse is idle while SQLite sidecars exist ({names})")
+        open_processes = subprocess.run(
+            [lsof, "-t", str(DB_PATH)], capture_output=True, text=True, check=False
+        ).stdout.strip()
+        if open_processes:
+            raise RuntimeError("warehouse is open; stop the local dev/preview server before importing")
+        for path in active_sidecars:
+            path.unlink()
     (
         paths, player_source, stats, snaps, relevant_ids, raw_totals,
-        unmatched_snap_ids, join_method_counts, games, flow_by_game,
+        unmatched_snap_ids, join_method_counts, games, flow_by_game, upcoming_schedule, current_roster,
     ) = load_sources(refresh)
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     temporary = DB_PATH.with_suffix(".sqlite.tmp")
@@ -654,6 +838,7 @@ def build_database(refresh: bool) -> dict:
             fallback.get("headshot_url") or source.get("headshot", ""),
         ))
     connection.executemany("INSERT INTO players VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", player_rows)
+    connection.executemany("INSERT INTO team_roster VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", current_roster)
 
     rows = []
     for season_type, player_id, week, team in sorted(set(stats) | set(snaps), key=lambda key: (key[0], key[2], key[1], key[3])):
@@ -795,6 +980,25 @@ def build_database(refresh: bool) -> dict:
             ))
 
     connection.executemany("INSERT INTO games VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", game_rows)
+    eastern = ZoneInfo("America/New_York")
+    schedule_rows = []
+    for game in upcoming_schedule:
+        kickoff_utc = None
+        try:
+            local_kickoff = datetime.fromisoformat(f"{game['gameday']}T{game['gametime']}").replace(tzinfo=eastern)
+            kickoff_utc = local_kickoff.astimezone(timezone.utc).isoformat()
+        except (KeyError, TypeError, ValueError):
+            pass
+        for team, opponent, home_away in (
+            (game.get("away_team", ""), game.get("home_team", ""), "away"),
+            (game.get("home_team", ""), game.get("away_team", ""), "home"),
+        ):
+            schedule_rows.append((
+                2026, "REG", integer(game.get("week")), team, opponent, home_away,
+                game.get("game_id", ""), game.get("gameday", ""), game.get("weekday", ""),
+                game.get("gametime", ""), kickoff_utc, game.get("espn", ""),
+            ))
+    connection.executemany("INSERT INTO team_schedule VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", schedule_rows)
     connection.executemany("INSERT INTO game_quarter_scores VALUES (?, ?, ?, ?, ?, ?)", quarter_rows)
     connection.executemany("INSERT INTO game_team_summary VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", team_summary_rows)
     connection.executemany("INSERT INTO game_flow_events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", flow_rows)
@@ -841,6 +1045,9 @@ def build_database(refresh: bool) -> dict:
         "game_drives": connection.execute("SELECT COUNT(*) FROM game_drives").fetchone()[0],
         "game_team_segments": connection.execute("SELECT COUNT(*) FROM game_team_segments").fetchone()[0],
         "player_game_segments": connection.execute("SELECT COUNT(*) FROM player_game_segments").fetchone()[0],
+        "current_roster_rows": connection.execute("SELECT COUNT(*) FROM team_roster WHERE season = 2026").fetchone()[0],
+        "current_roster_teams": connection.execute("SELECT COUNT(DISTINCT team) FROM team_roster WHERE season = 2026").fetchone()[0],
+        "current_rookies": connection.execute("SELECT COUNT(*) FROM team_roster WHERE season = 2026 AND rookie_year = 2026").fetchone()[0],
     }
     if mismatches:
         raise RuntimeError(f"source/database aggregate mismatch: {mismatches}")
@@ -853,7 +1060,9 @@ def build_database(refresh: bool) -> dict:
         key: {"expected": expected, "actual": summary[key]}
         for key, expected in expected_snapshot.items() if summary[key] != expected
     }
-    if failed_snapshot_checks or len(summary["regular_season_weeks"]) != 18 or len(summary["postseason_weeks"]) != 4:
+    if (failed_snapshot_checks or len(summary["regular_season_weeks"]) != 18
+            or len(summary["postseason_weeks"]) != 4 or summary["current_roster_teams"] != 32
+            or summary["current_roster_rows"] < 500):
         raise RuntimeError(f"pinned-snapshot completeness failed: {failed_snapshot_checks or summary}")
 
     metadata = {

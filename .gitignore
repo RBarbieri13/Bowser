@@ -13,6 +13,9 @@ data/*.sqlite-wal
 data/raw/play_by_play.csv.gz
 data/raw/pbp_participation_2025.csv
 data/raw/pbp_participation_2025.parquet
+data/raw/depth_charts_2026.csv
+data/raw/roster_2026.csv
+__pycache__/
 artifacts/design-qa/*-pass-1.png
 artifacts/design-qa/*-pass-1b.png
 design-qa-implementation.png

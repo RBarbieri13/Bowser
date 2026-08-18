@@ -5,7 +5,7 @@ export const IDENTITY_COLUMNS = [
   { key: "marker", label: "Mark", defaultWidth: 44, min: 34, max: 70 },
   { key: "player", label: "Player", defaultWidth: 190, min: 112, max: 360 },
   { key: "dk_salary", label: "DK$", defaultWidth: 66, min: 48, max: 150 },
-  { key: "dk_projection", label: "DK FPTX", defaultWidth: 72, min: 54, max: 150 },
+  { key: "dk_projection", label: "FPTS", defaultWidth: 72, min: 54, max: 150 },
 ];
 
 export const WEEK_COLUMN_REGISTRY = {
