@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test, { after } from "node:test";
 
-import { closeDatabase, getMeta, queryGameBreakdown, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "../server/stats-store.mjs";
+import { closeDatabase, getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "../server/stats-store.mjs";
 
 after(() => closeDatabase());
 
@@ -19,6 +19,23 @@ test("postseason round names are normalized and snap-backed", () => {
   assert.ok(result.data.length > 100);
   assert.ok(result.data.some((row) => row.snaps > 0));
   assert.equal(getMeta().warehouse.postseason_weeks.length, 4);
+});
+
+test("opportunity tracker joins the current full roster to honest recent-game history", () => {
+  const result = queryOpportunityTracker(new URLSearchParams("team=NYG&games=10"));
+  assert.equal(result.data.team, "NYG");
+  assert.deepEqual(result.data.groups.map((group) => group.position), ["QB", "RB", "WR", "TE"]);
+  assert.ok(result.meta.playerCount >= 25);
+  assert.ok(result.meta.playersWithHistory > 15);
+  assert.ok(result.meta.rookies >= 1);
+  assert.equal(result.meta.injuryNewsAvailable, false);
+  assert.match(result.meta.ordering, /Official nflverse depth rank/);
+  const players = result.data.groups.flatMap((group) => group.players);
+  assert.ok(players.some((player) => player.rookie && player.history.length === 0));
+  assert.ok(players.some((player) => player.history.length === 10));
+  assert.ok(players.every((player) => player.history.length <= 10));
+  assert.ok(players.filter((player) => player.hasNFLHistory).every((player) => player.history.every((game) => Number.isFinite(game.snaps) && Number.isFinite(game.fantasyPoints))));
+  assert.throws(() => queryOpportunityTracker(new URLSearchParams("team=INVALID")), QueryValidationError);
 });
 
 test("default request returns ranked PPR leaders quickly", () => {
@@ -138,6 +155,34 @@ test("PPR adds exactly one point per reception over standard", () => {
   assert.equal(standard.data.length, 1);
   assert.equal(ppr.data.length, 1);
   assert.equal(Number((ppr.data[0].fantasy_points - standard.data[0].fantasy_points).toFixed(1)), ppr.data[0].receptions);
+});
+
+test("FantasyPros PPR ADP and positional rank are joined and sortable", () => {
+  const meta = getMeta();
+  assert.equal(meta.draftRankings.season, 2026);
+  assert.equal(meta.draftRankings.scoring, "PPR");
+  assert.ok(meta.draftRankings.matched_rows >= 400);
+  assert.match(meta.draftRankings.source_url, /fantasypros\.com\/nfl\/adp\/ppr-overall\.php/);
+
+  const player = queryPlayers(new URLSearchParams("search=Christian%20McCaffrey&limit=1")).data[0];
+  assert.equal(player.adp, 5.4);
+  assert.equal(player.draft_position_rank, 3);
+  assert.equal(player.draft_position_rank_label, "RB3");
+
+  const sorted = queryPlayers(new URLSearchParams("sort=adp&direction=asc&limit=5")).data;
+  assert.ok(sorted.every((row) => row.adp !== null));
+  assert.deepEqual(sorted.map((row) => row.adp), [...sorted.map((row) => row.adp)].sort((a, b) => a - b));
+});
+
+test("player rows expose the next 2026 matchup and Yahoo-ready nullable fields", () => {
+  const result = queryPlayers(new URLSearchParams("seasonType=ALL&weeks=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18&search=Jahmyr%20Gibbs&limit=all"));
+  assert.equal(result.data.length, 1);
+  assert.match(result.data[0].upcoming_matchup, /^Sun \d{1,2}:\d{2} (am|pm) (vs|@) [A-Z]+$/);
+  assert.match(result.data[0].upcoming_game_url, /^https:\/\/www\.espn\.com\/nfl\/game\/_\/gameId\//);
+  assert.equal(result.data[0].yahoo_roster_pct, null);
+  assert.equal(result.data[0].yahoo_start_pct, null);
+  assert.equal(result.data[0].yahoo_adds, null);
+  assert.equal(result.data[0].yahoo_drops, null);
 });
 
 test("custom ranks and invalid query values are deterministic", () => {

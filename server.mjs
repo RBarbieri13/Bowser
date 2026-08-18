@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
-import { getMeta, queryGameBreakdown, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "./server/stats-store.mjs";
+import { getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "./server/stats-store.mjs";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const clientDirectory = path.join(root, "dist", "client");
@@ -47,6 +47,7 @@ app.get("/api/v1/meta", apiHandler(() => getMeta()));
 app.get("/api/v1/player-stats", apiHandler((params) => queryPlayers(params)));
 app.get("/api/v1/player-profile", apiHandler((params) => queryPlayerProfile(params)));
 app.get("/api/v1/team-box-scores", apiHandler((params) => queryTeamBoxScores(params)));
+app.get("/api/v1/opportunity-tracker", apiHandler((params) => queryOpportunityTracker(params)));
 app.get("/api/v1/game-breakdown", apiHandler((params) => queryGameBreakdown(params)));
 app.use("/api", (request, response) => sendApi(response, 404, {
   error: { code: "not_found", message: `Unknown API route: ${request.originalUrl}` },

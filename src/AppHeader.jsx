@@ -1,9 +1,10 @@
-import { CaretLeft, CaretRight, Football, Table } from "@phosphor-icons/react";
+import { CaretLeft, CaretRight, ChartLineUp, Football, Table } from "@phosphor-icons/react";
 import bowserLogo from "./assets/bowser-logo.png";
 
 const NAV_ITEMS = [
   { key: "players", label: "Player Database", href: "#/players", icon: Table },
   { key: "team-box-scores", label: "Team Box Scores", href: "#/team-box-scores", icon: Football },
+  { key: "opportunity-tracker", label: "Opportunity Tracker", href: "#/opportunity-tracker", icon: ChartLineUp },
 ];
 
 export function AppHeader({ currentPage, width, collapsed, onResize }) {

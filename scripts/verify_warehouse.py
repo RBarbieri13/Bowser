@@ -53,6 +53,19 @@ def main() -> int:
         "invalid_game_totals": connection.execute("SELECT COUNT(*) FROM games WHERE home_score < 0 OR away_score < 0").fetchone()[0],
         "invalid_play_mix": connection.execute("SELECT COUNT(*) FROM game_team_summary WHERE offensive_plays <> rush_plays + pass_plays OR ABS(COALESCE(rush_pct, 0) + COALESCE(pass_pct, 0) - 100) > 0.2").fetchone()[0],
         "invalid_time_share": connection.execute("SELECT COUNT(*) FROM game_team_summary WHERE ABS(COALESCE(pct_time_leading, 0) + COALESCE(pct_time_trailing, 0) + COALESCE(pct_time_tied, 0) - 100) > 0.2").fetchone()[0],
+        "draft_rankings": connection.execute("SELECT COUNT(*) FROM draft_rankings WHERE season = 2026 AND scoring = 'PPR'").fetchone()[0],
+        "invalid_draft_rankings": connection.execute("SELECT COUNT(*) FROM draft_rankings WHERE adp <= 0 OR position_rank <= 0 OR position NOT IN ('QB', 'RB', 'WR', 'TE')").fetchone()[0],
+        "orphan_draft_rankings": connection.execute("SELECT COUNT(*) FROM draft_rankings d LEFT JOIN players p ON p.player_id = d.player_id WHERE p.player_id IS NULL").fetchone()[0],
+        "draft_ranking_metadata": connection.execute("SELECT COUNT(*) FROM warehouse_meta WHERE key = 'fantasypros_adp_summary'").fetchone()[0],
+        "upcoming_schedule_rows": connection.execute("SELECT COUNT(*) FROM team_schedule WHERE season = 2026 AND season_type = 'REG'").fetchone()[0],
+        "invalid_upcoming_schedule": connection.execute("SELECT COUNT(*) FROM team_schedule WHERE opponent = '' OR team = '' OR home_away NOT IN ('home', 'away') OR kickoff_utc IS NULL").fetchone()[0],
+        "yahoo_metrics_table": connection.execute("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = 'yahoo_player_metrics'").fetchone()[0],
+        "yahoo_ownership_table": connection.execute("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = 'yahoo_league_ownership'").fetchone()[0],
+        "current_roster_rows": connection.execute("SELECT COUNT(*) FROM team_roster WHERE season = 2026").fetchone()[0],
+        "current_roster_teams": connection.execute("SELECT COUNT(DISTINCT team) FROM team_roster WHERE season = 2026").fetchone()[0],
+        "current_rookies": connection.execute("SELECT COUNT(*) FROM team_roster WHERE season = 2026 AND rookie_year = 2026").fetchone()[0],
+        "invalid_roster_rows": connection.execute("SELECT COUNT(*) FROM team_roster WHERE full_name = '' OR team = '' OR position NOT IN ('QB', 'RB', 'WR', 'TE') OR depth_rank < 1").fetchone()[0],
+        "duplicate_roster_rows": connection.execute("SELECT COUNT(*) FROM (SELECT 1 FROM team_roster GROUP BY season, team, player_id HAVING COUNT(*) > 1)").fetchone()[0],
     }
     connection.close()
     expectations = {
@@ -88,6 +101,19 @@ def main() -> int:
         "invalid_game_totals": checks["invalid_game_totals"] == 0,
         "invalid_play_mix": checks["invalid_play_mix"] == 0,
         "invalid_time_share": checks["invalid_time_share"] == 0,
+        "draft_rankings": checks["draft_rankings"] >= 400,
+        "invalid_draft_rankings": checks["invalid_draft_rankings"] == 0,
+        "orphan_draft_rankings": checks["orphan_draft_rankings"] == 0,
+        "draft_ranking_metadata": checks["draft_ranking_metadata"] == 1,
+        "upcoming_schedule_rows": checks["upcoming_schedule_rows"] == 544,
+        "invalid_upcoming_schedule": checks["invalid_upcoming_schedule"] == 0,
+        "yahoo_metrics_table": checks["yahoo_metrics_table"] == 1,
+        "yahoo_ownership_table": checks["yahoo_ownership_table"] == 1,
+        "current_roster_rows": checks["current_roster_rows"] == report["current_roster_rows"] and checks["current_roster_rows"] >= 500,
+        "current_roster_teams": checks["current_roster_teams"] == report["current_roster_teams"] == 32,
+        "current_rookies": checks["current_rookies"] == report["current_rookies"] and checks["current_rookies"] > 100,
+        "invalid_roster_rows": checks["invalid_roster_rows"] == 0,
+        "duplicate_roster_rows": checks["duplicate_roster_rows"] == 0,
     }
     failures = [name for name, passed in expectations.items() if not passed]
     print(json.dumps({"checks": checks, "expectations": expectations}, indent=2, sort_keys=True))

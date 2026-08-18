@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "data:import": "python3 scripts/import_nflverse_2025.py",
-    "data:refresh": "python3 scripts/import_nflverse_2025.py --refresh",
+    "data:import": "python3 scripts/import_nflverse_2025.py && python3 scripts/import_fantasypros_adp.py",
+    "data:refresh": "python3 scripts/import_nflverse_2025.py --refresh && python3 scripts/import_fantasypros_adp.py",
+    "data:rankings": "python3 scripts/import_fantasypros_adp.py",
     "data:verify": "python3 scripts/verify_warehouse.py",
     "test": "node --test tests/warehouse.test.mjs",
     "test:ui": "vitest run tests/ui.test.jsx",

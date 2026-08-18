@@ -14,10 +14,10 @@ const samplePlayer = {
   position: "QB",
   games_played: 17,
   snaps: 1000,
-  snap_pct: 90,
+  snap_pct: 90.4,
   passing_attempts: 500,
   completions: 350,
-  completion_pct: 70,
+  completion_pct: 70.4,
   passing_yards: 4200,
   passing_yards_per_game: 247.1,
   passing_yards_per_attempt: 8.4,
@@ -30,13 +30,23 @@ const samplePlayer = {
   rushing_tds: 7,
   targets: 0,
   receptions: 0,
-  reception_pct: null,
+  reception_pct: 56.6,
   receiving_yards: 0,
   receiving_yards_per_game: 0,
   receiving_yards_per_reception: null,
   receiving_tds: 0,
   fantasy_points: 411.4,
   fantasy_points_per_game: 24.2,
+  adp: 18.6,
+  draft_position_rank: 7,
+  draft_position_rank_label: "QB7",
+  upcoming_matchup: "Sun 12:00 pm vs KC",
+  upcoming_game_url: "https://www.espn.com/nfl/game/_/gameId/401-test",
+  yahoo_league_status: "LOEG: Robert's Team",
+  yahoo_roster_pct: 92,
+  yahoo_start_pct: 71,
+  yahoo_adds: 840,
+  yahoo_drops: 160,
   rank: 1,
 };
 
@@ -114,6 +124,30 @@ const sampleGameBreakdown = {
   meta: { methodology: { driveWaterfall: "Drive totals from nflverse play-by-play.", playerParticipation: "Player participation from nflverse." } },
 };
 
+const sampleOpportunityTracker = {
+  data: {
+    team: "NYG",
+    groups: [
+      { position: "QB", players: [{
+        playerId: "00-test", name: "Test Player", team: "NYG", position: "QB", depthPosition: "QB", depthRank: 1,
+        rosterStatus: "ACT", rosterStatusLabel: "Active roster", rookie: false, yearsExperience: 3, headshotUrl: null,
+        hasNFLHistory: true, opportunityMetric: "passAttempts",
+        averages: { snaps: 68, snapPct: 98, opportunity: 31, fantasyPoints: 24.2 },
+        trend: { direction: "up", delta: 9, label: "Snap share up 9 pts over prior 3" },
+        history: Array.from({ length: 10 }, (_, index) => ({ gameId: `game-${index}`, week: index + 1, team: "NYG", opponent: "DAL", snaps: 59 + index, snapPct: 90 + index, passAttempts: 22 + index, carries: 4, targets: 0, fantasyPoints: 15 + index })),
+      }] },
+      { position: "RB", players: [{
+        playerId: "rookie-test", name: "Rookie Runner", team: "NYG", position: "RB", depthPosition: "RB", depthRank: 4,
+        rosterStatus: "ACT", rosterStatusLabel: "Active roster", rookie: true, yearsExperience: 0, headshotUrl: null,
+        hasNFLHistory: false, opportunityMetric: "carries", averages: { snaps: null, snapPct: null, opportunity: null, fantasyPoints: null },
+        trend: { direction: "new", delta: null, label: "No 2025 NFL game history" }, history: [],
+      }] },
+      { position: "WR", players: [] }, { position: "TE", players: [] },
+    ],
+  },
+  meta: { rosterSeason: 2026, historySeason: 2025, gameWindow: 10, playerCount: 2, playersWithHistory: 1, rookies: 1, depthUpdatedAt: "2026-08-18T07:33:20Z", ordering: "Official nflverse depth rank, then recent recorded snap volume", injuryNewsAvailable: false, injuryNewsMessage: "The 2026 injury feed is not published yet.", source: { name: "nflverse", license: "CC BY 4.0", url: "https://github.com/nflverse/nflverse-data" }, queryMs: 3.2 },
+};
+
 function latestPlayerUrl() {
   const calls = fetch.mock.calls.map(([input]) => String(input)).filter((url) => url.startsWith("/api/v1/player-stats?"));
   return new URL(calls.at(-1), "http://local");
@@ -133,12 +167,13 @@ beforeEach(() => {
     if (url === "/api/v1/meta") {
       return {
         ok: true,
-        json: async () => ({ positions: ["QB", "RB", "WR", "TE"], teams: ["BUF", "KC"], weekOptions: Array.from({ length: 22 }, (_, index) => ({ week: index + 1 })) }),
+        json: async () => ({ positions: ["QB", "RB", "WR", "TE"], teams: ["NYG", "BUF", "KC"], weekOptions: Array.from({ length: 22 }, (_, index) => ({ week: index + 1 })) }),
       };
     }
     if (url.startsWith("/api/v1/player-profile?")) return { ok: true, json: async () => sampleProfile };
     if (url.startsWith("/api/v1/game-breakdown?")) return { ok: true, json: async () => sampleGameBreakdown };
     if (url.startsWith("/api/v1/team-box-scores?")) return { ok: true, json: async () => sampleBoxScores };
+    if (url.startsWith("/api/v1/opportunity-tracker?")) return { ok: true, json: async () => sampleOpportunityTracker };
     return {
       ok: true,
       json: async () => ({ data: [samplePlayer], meta: { returnedCount: 1, totalCount: 609, queryMs: 4.2 } }),
@@ -160,8 +195,9 @@ describe("statistics table UI", () => {
 
     expect(await screen.findByRole("heading", { name: "Team Box Scores" })).toBeInTheDocument();
     expect(await screen.findByRole("table", { name: "QB week-by-week player statistics" })).toBeInTheDocument();
-    expect(screen.getAllByText("DK$").length).toBeGreaterThan(0);
-    expect(screen.getByText("DK FPTX")).toBeInTheDocument();
+    expect(screen.getAllByText("$").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("FPTS").length).toBeGreaterThan(0);
+    expect(screen.queryByText("DK FPTX")).not.toBeInTheDocument();
     expect(document.querySelector(".team-filter-logo")).toHaveAttribute("src", expect.stringContaining("/nyg.png"));
     expect(screen.getByText("55 PTS")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Test Player" })).toBeInTheDocument();
@@ -176,6 +212,24 @@ describe("statistics table UI", () => {
     expect(document.querySelector(".app-shell")).toHaveClass("sidebar-icon-only");
     expect(localStorage.getItem("bowser:sidebar-width:v1")).toBe("56");
     expect(screen.getByRole("link", { name: "Player Database" })).toHaveAttribute("title", "Player Database");
+  });
+
+  test("renders the roster-backed Opportunity Tracker with trend charts and rookie states", async () => {
+    const user = userEvent.setup();
+    window.location.hash = "#/opportunity-tracker";
+    render(<App />);
+    expect(await screen.findByRole("heading", { name: "Opportunity Tracker" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Opportunity Tracker" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("heading", { name: "Quarterbacks" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Running backs" })).toBeInTheDocument();
+    expect(screen.getByLabelText(/Snaps: NYG Week 1, 59/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Pass att: NYG Week 1, 22/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/PPR pts: NYG Week 1, 15/)).toBeInTheDocument();
+    expect(screen.getByText("Awaiting NFL debut")).toBeInTheDocument();
+    expect(screen.getByText(/injury feed is not published yet/i)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "RB" }));
+    expect(screen.queryByRole("heading", { name: "Quarterbacks" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Running backs" })).toBeInTheDocument();
   });
 
   test("uses a collapsed schedule brush, adds sporadic weeks, and resizes every week column", async () => {
@@ -316,11 +370,18 @@ describe("statistics table UI", () => {
     expect(await screen.findByRole("button", { name: "Test Player" })).toBeInTheDocument();
     expect(screen.getByText("411.4")).toBeInTheDocument();
 
-    await user.click(screen.getByLabelText("Limit results to top players"));
+    expect(screen.queryByText("SELECT TOP")).not.toBeInTheDocument();
     await waitFor(() => expect(latestPlayerUrl().searchParams.get("limit")).toBe("all"));
+    await waitFor(() => expect(latestPlayerUrl().searchParams.get("positions")).toBe("QB,RB,WR,TE"));
 
     await user.selectOptions(screen.getByLabelText("Position(s)"), "QB");
     await waitFor(() => expect(latestPlayerUrl().searchParams.get("positions")).toBe("QB"));
+
+    await user.selectOptions(screen.getByLabelText("Position(s)"), "FLEX");
+    await waitFor(() => expect(latestPlayerUrl().searchParams.get("positions")).toBe("RB,WR,TE"));
+
+    await user.selectOptions(screen.getByLabelText("Team"), "BUF");
+    await waitFor(() => expect(latestPlayerUrl().searchParams.get("teams")).toBe("BUF"));
 
     await user.click(screen.getByRole("button", { name: /Regular · W1–18/ }));
     await user.click(screen.getByRole("button", { name: "Show only week 7" }));
@@ -331,6 +392,88 @@ describe("statistics table UI", () => {
 
     await user.click(screen.getByRole("button", { name: "Full season" }));
     await waitFor(() => expect(latestPlayerUrl().searchParams.get("weeks").split(",")).toHaveLength(22));
+  });
+
+  test("shows, hides, resizes, and restores every Player Database column", async () => {
+    const user = userEvent.setup();
+    const view = render(<App />);
+    await screen.findByRole("button", { name: "Test Player" });
+    const table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
+    expect(screen.getByRole("button", { name: "ADP" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "POS RK" })).toBeInTheDocument();
+    expect(screen.getByText("18.6")).toHaveClass("draft-metric");
+    expect(screen.getByText("QB7")).toHaveClass("draft-metric");
+    expect(screen.getAllByRole("separator", { name: /Resize .* column/ })).toHaveLength(34);
+    expect(screen.getByRole("link", { name: "Sun 12:00 pm vs KC" })).toHaveAttribute("href", expect.stringContaining("401-test"));
+    expect(table.querySelector('col[data-column="draft_kings_price"]')).toBeInTheDocument();
+    expect(table.querySelector('col[data-column="draft_kings_projection"]')).toBeInTheDocument();
+    expect(screen.getByText("90%")).toBeInTheDocument();
+    expect(screen.getByText("70%")).toBeInTheDocument();
+    expect(screen.getByText("57%")).toBeInTheDocument();
+
+    const adpResizer = screen.getByRole("separator", { name: "Resize ADP column" });
+    fireEvent.keyDown(adpResizer, { key: "ArrowRight", shiftKey: true });
+    expect(adpResizer).toHaveAttribute("aria-valuenow", "76");
+    expect(table.querySelector('col[data-column="adp"]')).toHaveStyle({ width: "76px" });
+
+    await user.click(screen.getByRole("button", { name: "Hide draft rankings" }));
+    expect(table.querySelector('col[data-column="adp"]')).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Show draft rankings" })).toHaveAttribute("aria-pressed", "false");
+    let stored = JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1"));
+    expect(stored.showDraftMetrics).toBe(false);
+    expect(stored.columnWidths.adp).toBe(76);
+
+    view.unmount();
+    render(<App />);
+    await screen.findByRole("button", { name: "Test Player" });
+    expect(screen.queryByRole("button", { name: "ADP" })).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Show draft rankings" }));
+    expect(screen.getByRole("separator", { name: "Resize ADP column" })).toHaveAttribute("aria-valuenow", "76");
+
+    await user.click(screen.getByRole("button", { name: "Show Yahoo fantasy statistics" }));
+    expect(screen.getByText("% Ros")).toBeInTheDocument();
+    expect(screen.getByText("LOEG: Robert's Team")).toHaveClass("yahoo-metric");
+    expect(screen.getByLabelText("840 adds and 160 drops")).toBeInTheDocument();
+    stored = JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1"));
+    expect(stored.showYahooMetrics).toBe(true);
+  });
+
+  test("collapses, proportionally resizes, auto-fits, and restores Player Database sections", async () => {
+    const user = userEvent.setup();
+    const view = render(<App />);
+    await screen.findByRole("button", { name: "Test Player" });
+    let table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
+
+    await user.click(screen.getByRole("button", { name: "Collapse Passing section" }));
+    expect(table.querySelector('col[data-column="passing_attempts"]')).not.toBeInTheDocument();
+    expect(table.querySelector('col[data-column="collapsed-passing"]')).toHaveStyle({ width: "46px" });
+    expect(screen.getAllByRole("button", { name: "Expand Passing section" }).length).toBeGreaterThan(0);
+    let stored = JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1"));
+    expect(stored.collapsedGroups).toContain("passing");
+
+    await user.click(screen.getAllByRole("button", { name: "Expand Passing section" })[0]);
+    expect(table.querySelector('col[data-column="passing_attempts"]')).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Section Resize" }));
+    const passingResizer = screen.getByRole("separator", { name: "Resize Passing section" });
+    const attemptsBefore = Number.parseInt(table.querySelector('col[data-column="passing_attempts"]').style.width, 10);
+    const yardsBefore = Number.parseInt(table.querySelector('col[data-column="passing_yards"]').style.width, 10);
+    fireEvent.keyDown(passingResizer, { key: "ArrowLeft", shiftKey: true });
+    expect(Number.parseInt(table.querySelector('col[data-column="passing_attempts"]').style.width, 10)).toBeLessThan(attemptsBefore);
+    expect(Number.parseInt(table.querySelector('col[data-column="passing_yards"]').style.width, 10)).toBeLessThan(yardsBefore);
+
+    await user.click(screen.getByRole("button", { name: "Auto Fit" }));
+    await waitFor(() => expect(screen.getByRole("button", { name: "Auto Fit" })).toHaveAttribute("aria-pressed", "true"));
+    await waitFor(() => expect(table.querySelector('col[data-column="adp"]')).toHaveStyle({ width: "53px" }));
+    stored = JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1"));
+    expect(stored.autoFit).toBe(true);
+
+    view.unmount();
+    render(<App />);
+    await screen.findByRole("button", { name: "Test Player" });
+    table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
+    expect(screen.getByRole("button", { name: "Auto Fit" })).toHaveAttribute("aria-pressed", "true");
+    expect(table.querySelector('col[data-column="adp"]')).toHaveStyle({ width: "53px" });
   });
 
   test("opens an accessible player card with three working tabs", async () => {
