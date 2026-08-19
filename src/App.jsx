@@ -8,6 +8,7 @@ import { AppHeader } from "./AppHeader.jsx";
 import { TeamBoxScores } from "./TeamBoxScores.jsx";
 import { GameBreakdown } from "./GameBreakdown.jsx";
 import { OpportunityTracker } from "./OpportunityTracker.jsx";
+import { LeagueHub } from "./LeagueHub.jsx";
 import {
   clampPlayerTableWidth,
   PLAYER_TABLE_GROUPS,
@@ -210,6 +211,7 @@ function routeFromHash() {
     return { page: "game", gameId: decodeURIComponent(gameMatch[1]), scoring: ["ppr", "half", "standard"].includes(scoring) ? scoring : "ppr" };
   }
   if (window.location.hash.includes("opportunity-tracker")) return { page: "opportunity-tracker", gameId: null };
+  if (window.location.hash.includes("league-hub")) return { page: "league-hub", gameId: null };
   return { page: window.location.hash.includes("team-box-scores") ? "team-box-scores" : "players", gameId: null };
 }
 
@@ -516,6 +518,8 @@ export function App() {
         <TeamBoxScores meta={meta} onOpenPlayer={openProfile} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}`; }} />
       ) : currentPage === "opportunity-tracker" ? (
         <OpportunityTracker meta={meta} onOpenPlayer={openProfile} />
+      ) : currentPage === "league-hub" ? (
+        <LeagueHub />
       ) : (
       <main className="page-content player-database-page">
       <section className="filter-band" aria-label="Statistics filters">

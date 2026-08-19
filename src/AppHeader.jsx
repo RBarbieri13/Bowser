@@ -1,7 +1,8 @@
-import { CaretLeft, CaretRight, ChartLineUp, Football, Table } from "@phosphor-icons/react";
+import { CaretLeft, CaretRight, ChartLineUp, Football, SquaresFour, Table } from "@phosphor-icons/react";
 import bowserLogo from "./assets/bowser-logo.png";
 
 const NAV_ITEMS = [
+  { key: "league-hub", label: "League Hub", href: "#/league-hub", icon: SquaresFour },
   { key: "players", label: "Player Database", href: "#/players", icon: Table },
   { key: "team-box-scores", label: "Team Box Scores", href: "#/team-box-scores", icon: Football },
   { key: "opportunity-tracker", label: "Opportunity Tracker", href: "#/opportunity-tracker", icon: ChartLineUp },
