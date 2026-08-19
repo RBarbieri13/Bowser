@@ -232,6 +232,26 @@ describe("statistics table UI", () => {
     expect(screen.getByRole("heading", { name: "Running backs" })).toBeInTheDocument();
   });
 
+  test("renders a four-league Yahoo-ready League Hub without inventing private data", async () => {
+    const user = userEvent.setup();
+    window.location.hash = "#/league-hub";
+    render(<App />);
+
+    expect(await screen.findByRole("heading", { name: "League Hub" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "League Hub" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("option", { name: "All four leagues" })).toBeInTheDocument();
+    expect(screen.getAllByText("LOEG").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Loongi League").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("College Football Fantasy").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("League 4").length).toBeGreaterThan(0);
+    expect(screen.getByText("0 of 4 leagues")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Connect Yahoo/i })).toBeDisabled();
+    expect(screen.getByText("No private Yahoo data is stored in this build.")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Waivers" }));
+    expect(screen.getByRole("button", { name: "Waivers" })).toHaveAttribute("aria-pressed", "true");
+  });
+
   test("uses a collapsed schedule brush, adds sporadic weeks, and resizes every week column", async () => {
     const user = userEvent.setup();
     window.location.hash = "#/team-box-scores";
@@ -473,7 +493,7 @@ describe("statistics table UI", () => {
     await screen.findByRole("button", { name: "Test Player" });
     table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
     expect(screen.getByRole("button", { name: "Auto Fit" })).toHaveAttribute("aria-pressed", "true");
-    expect(table.querySelector('col[data-column="adp"]')).toHaveStyle({ width: "53px" });
+    await waitFor(() => expect(table.querySelector('col[data-column="adp"]')).toHaveStyle({ width: "53px" }));
   });
 
   test("opens an accessible player card with three working tabs", async () => {
