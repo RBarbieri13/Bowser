@@ -89,3 +89,57 @@
 - Remaining differences: intentional table integration described above
 
 final result: passed
+
+## Player Database View Settings and Collapsed-State Cleanup
+
+### Target and evidence
+
+- Supplied problem state: `/var/folders/mk/4zpvpljs7757dgf6h9qswksh0000gn/T/codex-clipboard-9c78892a-a619-4914-b288-c851a48d7681.png`
+- Normalized source: `artifacts/design-qa/player-view-settings/source-normalized.png`
+- Verified default: `artifacts/design-qa/player-view-settings/default-clean.png`
+- Verified collapsed state: `artifacts/design-qa/player-view-settings/collapsed-clean.png`
+- Verified settings drawer: `artifacts/design-qa/player-view-settings/custom-columns-drawer.png`
+- Side-by-side comparison: `artifacts/design-qa/player-view-settings/before-after-comparison.png`
+- Browser viewport: 1600 x 900.
+
+### Visual contract
+
+- Collapsed sections occupy zero table width. No synthetic columns, plus-button rails, blank gutters, or full-height spacer bands remain.
+- One-pixel section borders carry normal hierarchy; only true segment endings use the restrained two-pixel divider.
+- One collapsed section produces a single restore chip in the panel title bar. Multiple collapsed sections consolidate into one count-based menu with individual and restore-all actions.
+- Smart Compact uses content-fit widths and shorter group labels only when at least two sections are hidden or collapsed; stored manual widths are preserved for the restored layout.
+- Custom Columns is a right-side settings drawer with quick views, individual and group visibility, group collapse/restore, Auto Fit, Smart Compact, and 3/5/6/8/10-game trend controls.
+- The standalone Depth column is removed. A blue `D` rank badge sits inside the player-name cell and retains the complete hover, focus, click, Escape, and focus-return tooltip behavior.
+- Player Trend group headers now use the same 13 px type scale and tracking as other section headers. Bar gaps are one pixel, chart widths are reduced, and the numeric labels use a larger 8 px bold data style.
+- Snap percentage is hidden in the migrated/default view but remains available through Custom Columns.
+
+### States checked
+
+- Default view after preference migration/reset
+- Passing and Receiving collapsed together with Smart Compact active
+- No `[data-column^="collapsed-"]` elements in the rendered table
+- One and multiple collapsed-section restoration controls
+- Individual source-column hiding automatically hides its linked trend chart
+- Trend range changed from 10 games to 5 games
+- Depth badge popover opened and dismissed
+- Custom Columns opened, reset, closed, and returned focus to its trigger
+- Persisted version-2 preferences retained across remounts in UI tests
+- Browser console warnings and errors: none observed during the interactive pass
+
+### Iterations
+
+1. Replaced the original 46 px synthetic collapsed columns with true zero-width section removal and moved collapse controls into the settings drawer.
+2. Reduced the original three-pixel divider treatment after the combined comparison showed that it still dominated the dense table hierarchy.
+3. Changed Smart Compact from a destructive width rewrite to a derived presentation state so manually chosen widths return when sections are restored.
+4. Removed nested labels from the settings column list and added trigger focus restoration for valid, predictable keyboard behavior.
+5. Added preference migration so existing users receive the new compact chart widths and default-hidden Snap % without changing the established localStorage key.
+6. Fixed the independent verifier's cross-control findings so toolbar toggles restore groups hidden through Custom Columns, mixed group checkboxes perform the advertised show-all action, and the embedded depth badge is explicitly associated with its open tooltip for assistive technology.
+
+### Final assessment
+
+- P0 issues: none
+- P1 issues: none
+- P2 issues: none
+- Remaining differences from the supplied screenshot: intentional removal of collapsed spacer rails, consolidated restoration, embedded depth badge, and calmer divider hierarchy
+
+final result: passed
