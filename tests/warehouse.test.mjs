@@ -47,6 +47,57 @@ test("default request returns ranked PPR leaders quickly", () => {
   assert.ok(result.meta.queryMs < 250);
 });
 
+test("player rows expose chronological ten-game REG trends with touches and selected scoring", () => {
+  const common = "seasonType=REG&search=Christian%20McCaffrey&limit=1";
+  const ppr = queryPlayers(new URLSearchParams(`${common}&scoring=ppr`)).data[0];
+  const standard = queryPlayers(new URLSearchParams(`${common}&scoring=standard`)).data[0];
+
+  assert.equal(ppr.player_trends.length, 10);
+  assert.deepEqual(ppr.player_trends.map((game) => game.week), [8, 9, 10, 11, 12, 13, 15, 16, 17, 18]);
+  assert.ok(ppr.player_trends.every((game) => game.seasonType === "REG"));
+  assert.deepEqual(
+    ppr.player_trends.map((game) => game.gameday),
+    [...ppr.player_trends.map((game) => game.gameday)].sort(),
+  );
+
+  const weekEight = ppr.player_trends[0];
+  assert.equal(weekEight.rushAttempts, 8);
+  assert.equal(weekEight.receptions, 3);
+  assert.equal(weekEight.touches, weekEight.rushAttempts + weekEight.receptions);
+  assert.equal(weekEight.touches, 11);
+  assert.equal(weekEight.fantasyPoints, 9.8);
+  assert.equal(standard.player_trends[0].fantasyPoints, 6.8);
+});
+
+test("player rows expose current nflverse depth rank and same-position teammates", () => {
+  const player = queryPlayers(new URLSearchParams("seasonType=REG&search=Christian%20McCaffrey&includeDepthCharts=1&limit=1")).data[0];
+  assert.equal(player.current_depth_team, "SF");
+  assert.equal(player.current_depth_position, "RB");
+  assert.equal(player.current_depth_rank, 1);
+  assert.match(player.current_depth_updated_at, /^2026-/);
+  assert.equal(player.current_depth_chart[0].name, "Christian McCaffrey");
+  assert.equal(player.current_depth_chart[0].selected, true);
+  assert.ok(player.current_depth_chart.every((depthPlayer) => depthPlayer.depthPosition === "RB"));
+  assert.ok(player.current_depth_chart.some((depthPlayer) => depthPlayer.depthRank === 2 && depthPlayer.name === "Jordan James"));
+});
+
+test("player trend payload is skippable while compact keyed depth metadata remains", () => {
+  const result = queryPlayers(new URLSearchParams("seasonType=REG&search=Christian%20McCaffrey&includeTrends=0&limit=1"));
+  const player = result.data[0];
+
+  assert.equal(Object.hasOwn(player, "player_trends"), false);
+  assert.equal(Object.hasOwn(player, "current_depth_chart"), false);
+  assert.equal(player.current_depth_rank, 1);
+  assert.equal(player.current_depth_key, "SF:RB");
+  assert.equal(result.meta.includeTrends, false);
+  assert.equal(result.meta.includeDepthCharts, false);
+  assert.equal(result.meta.depthCharts["SF:RB"].team, "SF");
+  assert.equal(result.meta.depthCharts["SF:RB"].depthPosition, "RB");
+  assert.equal(result.meta.depthCharts["SF:RB"].players[0].name, "Christian McCaffrey");
+  assert.ok(result.meta.depthCharts["SF:RB"].players.some((depthPlayer) => depthPlayer.depthRank === 2 && depthPlayer.name === "Jordan James"));
+  assert.throws(() => queryPlayers(new URLSearchParams("includeTrends=true")), QueryValidationError);
+});
+
 test("week ranges return selected-period fantasy totals rather than per-game averages", () => {
   const regular = queryPlayers(new URLSearchParams("seasonType=ALL&weeks=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18&search=Christian%20McCaffrey&sort=fantasy_points&limit=1"));
   assert.equal(regular.data[0].fantasy_points, 416.6);

@@ -47,6 +47,22 @@ const samplePlayer = {
   yahoo_start_pct: 71,
   yahoo_adds: 840,
   yahoo_drops: 160,
+  current_depth_key: "BUF:QB",
+  current_depth_rank: 2,
+  current_depth_position: "QB",
+  player_trends: Array.from({ length: 10 }, (_, index) => ({
+    week: index + 1,
+    seasonType: "REG",
+    gameId: `2025_${String(index + 1).padStart(2, "0")}_BUF_TEST`,
+    team: "BUF",
+    opponent: index % 2 ? "MIA" : "NYJ",
+    snaps: index === 9 ? 96 : 58 + index,
+    rushAttempts: 3 + (index % 4),
+    receptions: 0,
+    touches: 3 + (index % 4),
+    targets: index % 3,
+    fantasyPoints: 12.4 + index,
+  })),
   rank: 1,
 };
 
@@ -176,7 +192,23 @@ beforeEach(() => {
     if (url.startsWith("/api/v1/opportunity-tracker?")) return { ok: true, json: async () => sampleOpportunityTracker };
     return {
       ok: true,
-      json: async () => ({ data: [samplePlayer], meta: { returnedCount: 1, totalCount: 609, queryMs: 4.2 } }),
+      json: async () => ({
+        data: [samplePlayer],
+        meta: {
+          returnedCount: 1,
+          totalCount: 609,
+          queryMs: 4.2,
+          depthCharts: {
+            "BUF:QB": {
+              players: [
+                { playerId: "00-starter", name: "Starter Quarterback", depthPosition: "QB", depthRank: 1, rosterStatus: "ACT", selected: false },
+                { playerId: "00-test", name: "Test Player", depthPosition: "QB", depthRank: 2, rosterStatus: "ACT", selected: true },
+                { playerId: "00-third", name: "Third Quarterback", depthPosition: "QB", depthRank: 3, rosterStatus: "ACT", selected: false },
+              ],
+            },
+          },
+        },
+      }),
     };
   }));
 });
@@ -423,7 +455,7 @@ describe("statistics table UI", () => {
     expect(screen.getByRole("button", { name: "POS RK" })).toBeInTheDocument();
     expect(screen.getByText("18.6")).toHaveClass("draft-metric");
     expect(screen.getByText("QB7")).toHaveClass("draft-metric");
-    expect(screen.getAllByRole("separator", { name: /Resize .* column/ })).toHaveLength(34);
+    expect(screen.getAllByRole("separator", { name: /Resize .* column/ })).toHaveLength(39);
     expect(screen.getByRole("link", { name: "Sun 12:00 pm vs KC" })).toHaveAttribute("href", expect.stringContaining("401-test"));
     expect(table.querySelector('col[data-column="draft_kings_price"]')).toBeInTheDocument();
     expect(table.querySelector('col[data-column="draft_kings_projection"]')).toBeInTheDocument();
@@ -456,6 +488,56 @@ describe("statistics table UI", () => {
     expect(screen.getByLabelText("840 adds and 160 drops")).toBeInTheDocument();
     stored = JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1"));
     expect(stored.showYahooMetrics).toBe(true);
+  });
+
+  test("shows sticky Player Trends beside their source metrics and an accessible depth chart", async () => {
+    const user = userEvent.setup();
+    const view = render(<App />);
+    await screen.findByRole("button", { name: "Test Player" });
+    const table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
+    const columnOrder = Array.from(table.querySelectorAll("col")).map((column) => column.dataset.column);
+
+    expect(columnOrder.indexOf("trend_snaps")).toBe(columnOrder.indexOf("snaps") + 1);
+    expect(columnOrder.indexOf("trend_touches")).toBe(columnOrder.indexOf("carries") + 1);
+    expect(columnOrder.indexOf("trend_targets")).toBe(columnOrder.indexOf("targets") + 1);
+    expect(columnOrder.indexOf("trend_fantasy_points")).toBe(columnOrder.indexOf("fantasy_points") + 1);
+    expect(columnOrder.indexOf("depth_rank")).toBe(columnOrder.indexOf("upcoming_matchup") + 1);
+    expect(screen.getByRole("img", { name: /Snaps trend for Test Player: Week 1: 58;.*Week 10: 96/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Touches trend for Test Player/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Targets trend for Test Player: Week 1: 0/ })).toBeInTheDocument();
+    expect(table.querySelector('.trend-touches .trend-bar-item[title*="touches (CAR+REC)"]')).toBeInTheDocument();
+    expect(latestPlayerUrl().searchParams.get("includeTrends")).toBe("1");
+
+    const depthButton = screen.getByRole("button", { name: "Test Player is QB 2 on the BUF depth chart" });
+    expect(depthButton).toHaveAttribute("aria-expanded", "false");
+    await user.click(depthButton);
+    expect(depthButton).toHaveAttribute("aria-expanded", "true");
+    const tooltip = screen.getByRole("tooltip");
+    expect(tooltip).toBeVisible();
+    expect(tooltip).toHaveTextContent("BUF QB depth chart");
+    expect(tooltip).toHaveTextContent("Starter Quarterback");
+    expect(tooltip).toHaveTextContent("Third Quarterback");
+    fireEvent.keyDown(document, { key: "Escape" });
+    await waitFor(() => expect(screen.queryByRole("tooltip")).not.toBeInTheDocument());
+    expect(depthButton).toHaveFocus();
+
+    await user.click(screen.getByRole("button", { name: "Collapse Player Trends section" }));
+    expect(table.querySelector('col[data-column="trend_snaps"]')).not.toBeInTheDocument();
+    expect(table.querySelector('col[data-column="trend_touches"]')).not.toBeInTheDocument();
+    expect(table.querySelector('col[data-column="collapsed-trends"]')).toHaveStyle({ width: "46px" });
+    await user.click(screen.getAllByRole("button", { name: "Expand Player Trends section" })[0]);
+
+    await user.click(screen.getByRole("button", { name: "Hide player trends" }));
+    await waitFor(() => expect(latestPlayerUrl().searchParams.get("includeTrends")).toBe("0"));
+    expect(table.querySelector('col[data-column="trend_snaps"]')).not.toBeInTheDocument();
+    let stored = JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1"));
+    expect(stored.showPlayerTrends).toBe(false);
+
+    view.unmount();
+    render(<App />);
+    await screen.findByRole("button", { name: "Test Player" });
+    expect(screen.getByRole("button", { name: "Show player trends" })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i }).querySelector('col[data-column="trend_snaps"]')).not.toBeInTheDocument();
   });
 
   test("collapses, proportionally resizes, auto-fits, and restores Player Database sections", async () => {
