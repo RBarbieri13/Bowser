@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   CaretDown, CaretUp, Check, Eye, EyeSlash, Info, MagnifyingGlass, Minus, Plus, SlidersHorizontal, X,
 } from "@phosphor-icons/react";
@@ -12,6 +13,7 @@ import { LeagueHub } from "./LeagueHub.jsx";
 import {
   clampPlayerTableWidth,
   PLAYER_TABLE_GROUPS,
+  PLAYER_TABLE_SEGMENTS,
   PLAYER_TABLE_PREFERENCE_KEY,
   readPlayerTablePreferences,
 } from "./playerTableColumns.js";
@@ -21,7 +23,13 @@ const numberFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 
 const decimalFormatter = new Intl.NumberFormat("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const SIDEBAR_WIDTH_KEY = "bowser:sidebar-width:v1";
 const COLLAPSED_GROUP_WIDTH = 46;
-const COMPACT_GROUP_NAMES = { player: "Players", draft: "Draft", yahoo: "Yahoo", upcoming: "Next", usage: "Usage" };
+const COMPACT_GROUP_NAMES = { player: "Players", draft: "Draft", yahoo: "Yahoo", upcoming: "Next", depth: "Depth", usage: "Usage", trends: "Trends" };
+const TREND_METRICS = {
+  snaps: { label: "Snaps", unit: "snaps", className: "snaps", decimals: 0 },
+  touches: { label: "Touches", unit: "touches (CAR+REC)", className: "touches", decimals: 0 },
+  targets: { label: "Targets", unit: "targets", className: "targets", decimals: 0 },
+  fantasy_points: { label: "Fantasy points", unit: "fantasy points", className: "fantasy", decimals: 1 },
+};
 
 function initialSidebarWidth() {
   const stored = Number(window.localStorage.getItem(SIDEBAR_WIDTH_KEY));
@@ -52,8 +60,212 @@ function splitUpcomingMatchup(value) {
   return match ? [match[1], `${match[2]} ${match[3]}`] : [text];
 }
 
+function trendGamesFor(row) {
+  const games = row.player_trends ?? row.trends ?? row.last_10_games ?? row.recent_games;
+  return Array.isArray(games) ? games.slice(-10) : [];
+}
+
+function trendMetricValue(game, metric) {
+  if (metric === "fantasy_points") {
+    const value = game.fantasyPoints ?? game.fantasy_points;
+    return value === null || value === undefined ? null : Number(value);
+  }
+  if (metric === "touches") {
+    if (game.touches !== null && game.touches !== undefined && Number.isFinite(Number(game.touches))) return Number(game.touches);
+    const carries = game.carries ?? game.rushAttempts ?? game.rush_attempts;
+    const receptions = game.receptions;
+    if ((carries === null || carries === undefined) && (receptions === null || receptions === undefined)) return null;
+    return (Number(carries) || 0) + (Number(receptions) || 0);
+  }
+  const value = game[metric];
+  return value === null || value === undefined ? null : Number(value);
+}
+
+function percentile(values, proportion) {
+  if (!values.length) return 1;
+  const ordered = [...values].sort((a, b) => a - b);
+  const position = (ordered.length - 1) * proportion;
+  const lower = Math.floor(position);
+  const upper = Math.ceil(position);
+  if (lower === upper) return ordered[lower];
+  return ordered[lower] + (ordered[upper] - ordered[lower]) * (position - lower);
+}
+
+let sharedTrendObserver;
+const trendVisibilityCallbacks = new WeakMap();
+
+function observeTrendVisibility(node, callback) {
+  if (typeof IntersectionObserver === "undefined") {
+    callback();
+    return () => {};
+  }
+  if (!sharedTrendObserver) {
+    sharedTrendObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        trendVisibilityCallbacks.get(entry.target)?.();
+        trendVisibilityCallbacks.delete(entry.target);
+        sharedTrendObserver.unobserve(entry.target);
+      });
+    }, { rootMargin: "160px 320px" });
+  }
+  trendVisibilityCallbacks.set(node, callback);
+  sharedTrendObserver.observe(node);
+  return () => {
+    trendVisibilityCallbacks.delete(node);
+    sharedTrendObserver?.unobserve(node);
+  };
+}
+
+function InlinePlayerTrend({ row, metric }) {
+  const definition = TREND_METRICS[metric];
+  const games = trendGamesFor(row);
+  const chartRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(() => typeof IntersectionObserver === "undefined");
+  useEffect(() => {
+    if (isVisible || !chartRef.current) return undefined;
+    return observeTrendVisibility(chartRef.current, () => setIsVisible(true));
+  }, [isVisible]);
+  const points = games.map((game) => ({
+    game,
+    value: trendMetricValue(game, metric),
+  }));
+  const slots = [
+    ...Array.from({ length: Math.max(0, 10 - points.length) }, () => ({ game: null, value: null })),
+    ...points,
+  ];
+  const availableValues = points.map((point) => point.value).filter((value) => Number.isFinite(value));
+  if (!games.length) {
+    return <span className="player-trend-empty" aria-label={`No regular-season ${definition.label.toLowerCase()} trend available`}>No games</span>;
+  }
+  if (!availableValues.length) {
+    return <span className="player-trend-empty" aria-label={`Regular-season games exist, but ${definition.label.toLowerCase()} data is unavailable`}>No data</span>;
+  }
+  const scale = Math.max(1, percentile(availableValues.map((value) => Math.max(0, value)), .9));
+  const playerName = row.player_display_name || row.name || "Player";
+  const summary = points.map(({ game, value }) => `Week ${game.week}: ${Number.isFinite(value) ? (definition.decimals ? decimalFormatter.format(value) : numberFormatter.format(value)) : "no data"}`).join("; ");
+  if (!isVisible) {
+    return <span ref={chartRef} className={`inline-player-trend trend-${definition.className} trend-awaiting-viewport`} role="img" aria-label={`${definition.label} trend for ${playerName}: ${summary}`}><i /></span>;
+  }
+  return (
+    <span ref={chartRef} className={`inline-player-trend trend-${definition.className}`} role="img" aria-label={`${definition.label} trend for ${playerName}: ${summary}`}>
+      {slots.map(({ game, value }, index) => {
+        const emptySlot = !game;
+        const missing = !Number.isFinite(value);
+        const displayValue = missing ? "—" : definition.decimals ? decimalFormatter.format(value) : numberFormatter.format(value);
+        const height = missing ? 0 : value <= 0 ? 2 : Math.max(4, Math.min(22, (Math.max(0, value) / scale) * 22));
+        const gameLabel = emptySlot ? "No earlier recorded game" : `Week ${game.week}: ${missing ? "no data" : `${displayValue} ${definition.unit}`}${game.opponent ? ` vs ${game.opponent}` : ""}`;
+        return (
+          <span className={`trend-bar-item${missing ? " missing" : ""}${emptySlot ? " empty-slot" : ""}`} key={game?.gameId ?? game?.game_id ?? `${game?.week ?? "empty"}-${index}`} title={gameLabel} aria-hidden="true">
+            <b>{displayValue}</b>
+            {missing ? <i /> : <i style={{ height: `${height}px` }} />}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
+function DepthChartCell({ row, depthChart }) {
+  const [open, setOpen] = useState(false);
+  const [position, setPosition] = useState({ top: 0, left: 0, above: false });
+  const triggerRef = useRef(null);
+  const popoverRef = useRef(null);
+  const closeTimer = useRef(null);
+  const rank = row.current_depth_rank ?? row.depth_rank ?? row.depthRank;
+  const depthPosition = row.current_depth_position ?? row.depth_position ?? row.position;
+  const rawChartSource = depthChart ?? row.current_depth_chart ?? row.depth_chart ?? row.depthChart;
+  const rawChart = rawChartSource?.players ?? rawChartSource;
+  const chart = (Array.isArray(rawChart) ? rawChart : [])
+    .filter((player) => !depthPosition || !player.depthPosition || player.depthPosition === depthPosition)
+    .sort((a, b) => (Number(a.depthRank ?? a.depth_rank) || 99) - (Number(b.depthRank ?? b.depth_rank) || 99));
+  const hasDepthData = !((rank === null || rank === undefined || rank === "") && !chart.length);
+  const playerName = row.player_display_name || row.name || "Player";
+  const team = row.current_depth_team ?? row.team ?? "Team";
+  const tooltipId = `depth-${String(row.player_id || playerName).replace(/[^a-z0-9_-]/gi, "-")}`;
+  const cancelClose = () => window.clearTimeout(closeTimer.current);
+  const positionPopover = () => {
+    const rect = triggerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const above = rect.bottom + 224 > window.innerHeight && rect.top > 224;
+    setPosition({
+      top: above ? rect.top - 7 : rect.bottom + 7,
+      left: Math.max(120, Math.min(window.innerWidth - 120, rect.left + rect.width / 2)),
+      above,
+    });
+  };
+  const openPopover = () => {
+    cancelClose();
+    positionPopover();
+    setOpen(true);
+  };
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimer.current = window.setTimeout(() => setOpen(false), 100);
+  };
+  useEffect(() => {
+    if (!open) return undefined;
+    const reposition = () => positionPopover();
+    const dismiss = (event) => {
+      if (!triggerRef.current?.contains(event.target) && !popoverRef.current?.contains(event.target)) setOpen(false);
+    };
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
+    };
+    window.addEventListener("resize", reposition);
+    window.addEventListener("scroll", reposition, true);
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("resize", reposition);
+      window.removeEventListener("scroll", reposition, true);
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+  useEffect(() => () => window.clearTimeout(closeTimer.current), []);
+  if (!hasDepthData) {
+    return <span className="depth-chart-empty" title="Current depth-chart data is not available">—</span>;
+  }
+  const popover = open ? (
+    <span
+      ref={popoverRef}
+      className="player-depth-chart-popover"
+      id={tooltipId}
+      role="tooltip"
+      style={{ top: `${position.top}px`, left: `${position.left}px`, transform: `translate(-50%, ${position.above ? "-100%" : "0"})` }}
+      onMouseEnter={cancelClose}
+      onMouseLeave={scheduleClose}
+    >
+      <strong>{team} {depthPosition} depth chart</strong>
+      {chart.length ? (
+        <span className="player-depth-chart-list">
+          {chart.map((player, index) => {
+            const playerRank = player.depthRank ?? player.depth_rank ?? index + 1;
+            const name = player.name ?? player.player_display_name ?? "Unknown player";
+            const selected = player.selected || player.playerId === row.player_id || player.player_id === row.player_id;
+            return <span key={player.playerId ?? player.player_id ?? `${name}-${playerRank}`} className={selected ? "selected" : ""}><b>{playerRank}</b><span>{name}</span>{player.rosterStatus ? <small>{player.rosterStatus}</small> : null}</span>;
+          })}
+        </span>
+      ) : <em>Depth-chart lineup is not available.</em>}
+    </span>
+  ) : null;
+  return (
+    <span className="depth-chart-cell-wrap" onMouseEnter={openPopover} onMouseLeave={scheduleClose}>
+      <button ref={triggerRef} type="button" className="depth-rank-trigger" aria-controls={tooltipId} aria-expanded={open} aria-label={`${playerName} is ${depthPosition || "position"} ${rank ?? "unranked"} on the ${team} depth chart`} onFocus={openPopover} onBlur={scheduleClose} onClick={() => { if (!open) openPopover(); }}>
+        {rank ?? "—"}
+      </button>
+      {popover ? createPortal(popover, document.body) : null}
+    </span>
+  );
+}
+
 function autoFitPlayerWidth(column, rows) {
   if (column.key === "select") return column.minWidth;
+  if (column.group === "trends" || column.metric) return column.minWidth;
   const values = [column.label];
   for (const row of rows) {
     if (column.key === "draft_kings_price" || column.key === "draft_kings_projection") {
@@ -245,6 +457,7 @@ export function App() {
   const [sidebarWidth, setSidebarWidth] = useState(initialSidebarWidth);
   const [showDraftMetrics, setShowDraftMetrics] = useState(initialTablePreferences.showDraftMetrics);
   const [showYahooMetrics, setShowYahooMetrics] = useState(initialTablePreferences.showYahooMetrics);
+  const [showPlayerTrends, setShowPlayerTrends] = useState(initialTablePreferences.showPlayerTrends);
   const [autoFitPlayerTable, setAutoFitPlayerTable] = useState(initialTablePreferences.autoFit);
   const [collapsedPlayerGroups, setCollapsedPlayerGroups] = useState(initialTablePreferences.collapsedGroups);
   const [sectionResizeEnabled, setSectionResizeEnabled] = useState(false);
@@ -271,11 +484,12 @@ export function App() {
       version: 1,
       showDraftMetrics,
       showYahooMetrics,
+      showPlayerTrends,
       autoFit: autoFitPlayerTable,
       collapsedGroups: collapsedPlayerGroups,
       columnWidths: playerColumnWidths,
     }));
-  }, [showDraftMetrics, showYahooMetrics, autoFitPlayerTable, collapsedPlayerGroups, playerColumnWidths]);
+  }, [showDraftMetrics, showYahooMetrics, showPlayerTrends, autoFitPlayerTable, collapsedPlayerGroups, playerColumnWidths]);
 
   const resizePlayerColumn = useCallback((key, nextWidth) => {
     const width = clampPlayerTableWidth(key, nextWidth);
@@ -284,8 +498,10 @@ export function App() {
     setPlayerColumnWidths((current) => current[key] === width ? current : { ...current, [key]: width });
   }, []);
 
-  const availablePlayerGroups = useMemo(() => PLAYER_TABLE_GROUPS
-    .filter((group) => (showDraftMetrics || group.key !== "draft") && (showYahooMetrics || group.key !== "yahoo")), [showDraftMetrics, showYahooMetrics]);
+  const availablePlayerSegments = useMemo(() => PLAYER_TABLE_SEGMENTS
+    .filter((segment) => (showDraftMetrics || segment.groupKey !== "draft")
+      && (showYahooMetrics || segment.groupKey !== "yahoo")
+      && (showPlayerTrends || segment.groupKey !== "trends")), [showDraftMetrics, showYahooMetrics, showPlayerTrends]);
 
   const resizePlayerGroup = useCallback((groupKey, nextTotalWidth) => {
     const group = PLAYER_TABLE_GROUPS.find((item) => item.key === groupKey);
@@ -323,9 +539,9 @@ export function App() {
 
   useEffect(() => {
     if (!autoFitPlayerTable) return;
-    const columns = availablePlayerGroups
-      .filter((group) => !collapsedPlayerGroups.includes(group.key))
-      .flatMap((group) => group.columns);
+    const columns = availablePlayerSegments
+      .filter((segment) => !collapsedPlayerGroups.includes(segment.groupKey))
+      .flatMap((segment) => segment.columns);
     setPlayerColumnWidths((current) => {
       const next = { ...current };
       let changed = false;
@@ -338,19 +554,32 @@ export function App() {
       });
       return changed ? next : current;
     });
-  }, [autoFitPlayerTable, availablePlayerGroups, collapsedPlayerGroups, rows]);
+  }, [autoFitPlayerTable, availablePlayerSegments, collapsedPlayerGroups, rows]);
 
   const collapsedPlayerGroupSet = useMemo(() => new Set(collapsedPlayerGroups), [collapsedPlayerGroups]);
-  const visiblePlayerGroups = useMemo(() => availablePlayerGroups.map((group) => {
-    if (!collapsedPlayerGroupSet.has(group.key)) {
-      return { ...group, collapsed: false, columns: group.columns.map((column) => ({ ...column, group: group.key, width: playerColumnWidths[column.key] })) };
-    }
-    return {
-      ...group,
-      collapsed: true,
-      columns: [{ key: `collapsed-${group.key}`, label: "", group: group.key, synthetic: true, width: COLLAPSED_GROUP_WIDTH }],
-    };
-  }), [availablePlayerGroups, collapsedPlayerGroupSet, playerColumnWidths]);
+  const visiblePlayerGroups = useMemo(() => {
+    const renderedCollapsedGroups = new Set();
+    const renderedExpandedGroups = new Set();
+    return availablePlayerSegments.flatMap((segment) => {
+      const groupKey = segment.groupKey;
+      if (!collapsedPlayerGroupSet.has(groupKey)) {
+        const controlsGroup = segment.controlsGroup === true || !renderedExpandedGroups.has(groupKey);
+        renderedExpandedGroups.add(groupKey);
+        return [{ ...segment, controlsGroup, collapsed: false, columns: segment.columns.map((column) => ({ ...column, group: groupKey, width: playerColumnWidths[column.key] })) }];
+      }
+      if (renderedCollapsedGroups.has(groupKey)) return [];
+      renderedCollapsedGroups.add(groupKey);
+      const logicalGroup = PLAYER_TABLE_GROUPS.find((group) => group.key === groupKey);
+      return [{
+        ...segment,
+        key: `collapsed-${groupKey}`,
+        name: logicalGroup?.name || segment.name,
+        collapsed: true,
+        controlsGroup: true,
+        columns: [{ key: `collapsed-${groupKey}`, label: "", group: groupKey, synthetic: true, width: COLLAPSED_GROUP_WIDTH }],
+      }];
+    });
+  }, [availablePlayerSegments, collapsedPlayerGroupSet, playerColumnWidths]);
   const visiblePlayerColumns = useMemo(() => visiblePlayerGroups.flatMap((group) => group.columns), [visiblePlayerGroups]);
   const playerTableWidth = useMemo(() => visiblePlayerColumns.reduce(
     (total, column) => total + column.width, 0,
@@ -392,6 +621,7 @@ export function App() {
       minGames,
       minSnaps,
       weeks: selectedWeeks.join(","),
+      includeTrends: showPlayerTrends ? "1" : "0",
     });
     if (position === "ALL") params.set("positions", "QB,RB,WR,TE");
     else if (position === "FLEX") params.set("positions", "RB,WR,TE");
@@ -417,7 +647,7 @@ export function App() {
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [currentPage, scoring, debouncedSearch, sorts, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps]);
+  }, [currentPage, scoring, debouncedSearch, sorts, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps, showPlayerTrends]);
 
   const allVisibleSelected = rows.length > 0 && rows.every((row) => selected.has(row.player_id));
   const someVisibleSelected = rows.some((row) => selected.has(row.player_id)) && !allVisibleSelected;
@@ -579,6 +809,20 @@ export function App() {
               <span>{showYahooMetrics ? "Shown" : "Hidden"}</span>
             </button>
           </div>
+          <div className="draft-toggle-field player-trends-toggle-field">
+            <span className="field-label">Player Trends</span>
+            <button
+              type="button"
+              className={showPlayerTrends ? "active" : ""}
+              aria-pressed={showPlayerTrends}
+              aria-label={showPlayerTrends ? "Hide player trends" : "Show player trends"}
+              onClick={() => setShowPlayerTrends((current) => !current)}
+              title="Show or hide each player's last 10 played regular-season games"
+            >
+              {showPlayerTrends ? <Eye weight="bold" aria-hidden="true" /> : <EyeSlash weight="bold" aria-hidden="true" />}
+              <span>{showPlayerTrends ? "Shown" : "Hidden"}</span>
+            </button>
+          </div>
         </div>
         <div className="view-tabs" role="tablist" aria-label="Statistic views">
           <button className="active" role="tab" aria-selected="true">Player</button>
@@ -648,23 +892,23 @@ export function App() {
             <thead>
               <tr className="group-row">
                 {visiblePlayerGroups.map((group) => {
-                  const sourceGroup = PLAYER_TABLE_GROUPS.find((item) => item.key === group.key);
+                  const sourceGroup = PLAYER_TABLE_GROUPS.find((item) => item.key === group.groupKey);
                   const groupWidth = sourceGroup.columns.reduce((total, column) => total + playerColumnWidths[column.key], 0);
-                  const groupLabel = autoFitPlayerTable ? (COMPACT_GROUP_NAMES[group.key] || group.name) : group.name;
+                  const groupLabel = group.shortName || (autoFitPlayerTable ? (COMPACT_GROUP_NAMES[group.groupKey] || group.name) : group.name);
                   return (
-                    <th key={group.key} colSpan={group.columns.length} scope="colgroup" className={`group-${group.key}${group.collapsed ? " collapsed" : ""}`}>
+                    <th key={group.key} colSpan={group.columns.length} scope="colgroup" className={`group-${group.groupKey}${group.collapsed ? " collapsed" : ""}${group.controlsGroup ? "" : " passive-group-segment"}`}>
                       <span title={group.name}>{group.collapsed ? group.name.slice(0, 3).toUpperCase() : groupLabel}</span>
-                      <button
+                      {group.controlsGroup ? <button
                         type="button"
                         className="group-collapse-button"
                         aria-label={`${group.collapsed ? "Expand" : "Collapse"} ${group.name} section`}
                         aria-expanded={!group.collapsed}
-                        onClick={() => togglePlayerGroup(group.key)}
+                        onClick={() => togglePlayerGroup(group.groupKey)}
                         title={`${group.collapsed ? "Expand" : "Collapse"} ${group.name}`}
                       >
                         {group.collapsed ? <Plus weight="bold" aria-hidden="true" /> : <Minus weight="bold" aria-hidden="true" />}
-                      </button>
-                      {!group.collapsed ? <PlayerGroupResizeHandle group={sourceGroup} width={groupWidth} enabled={sectionResizeEnabled} onResize={resizePlayerGroup} onReset={resetPlayerGroup} /> : null}
+                      </button> : null}
+                      {!group.collapsed && group.controlsGroup ? <PlayerGroupResizeHandle group={sourceGroup} width={groupWidth} enabled={sectionResizeEnabled} onResize={resizePlayerGroup} onReset={resetPlayerGroup} /> : null}
                     </th>
                   );
                 })}
@@ -672,8 +916,8 @@ export function App() {
               <tr className="column-row">
                 {visiblePlayerColumns.map((column) => {
                   if (column.synthetic) {
-                    const group = PLAYER_TABLE_GROUPS.find((item) => item.key === column.group);
-                    return <th key={column.key} className="collapsed-group-head"><button type="button" onClick={() => togglePlayerGroup(group.key)} aria-label={`Expand ${group.name} section`} title={`Expand ${group.name}`}><Plus weight="bold" aria-hidden="true" /></button></th>;
+                    const logicalGroup = PLAYER_TABLE_GROUPS.find((item) => item.key === column.group);
+                    return <th key={column.key} className="collapsed-group-head"><button type="button" onClick={() => togglePlayerGroup(logicalGroup.key)} aria-label={`Expand ${logicalGroup.name} section`} title={`Expand ${logicalGroup.name}`}><Plus weight="bold" aria-hidden="true" /></button></th>;
                   }
                   const normalizedSortKey = column.key === "rank" ? "fantasy_points" : column.key;
                   const sortIndex = sorts.findIndex((item) => item.key === normalizedSortKey);
@@ -709,6 +953,12 @@ export function App() {
                       const matchupLines = splitUpcomingMatchup(value);
                       const content = matchupLines.map((line, index) => <span key={`${line}-${index}`}>{line}</span>);
                       return <td key={column.key} className={`${className} upcoming-matchup-cell`}>{row.upcoming_game_url ? <a href={row.upcoming_game_url} target="_blank" rel="noreferrer" aria-label={value || "No upcoming matchup"}>{content}</a> : <span className="upcoming-matchup-copy">{content}</span>}</td>;
+                    }
+                    if (column.key === "depth_rank") {
+                      return <td key={column.key} className={`${className} depth-chart-rank-cell`}><DepthChartCell row={row} depthChart={responseMeta?.depthCharts?.[row.current_depth_key]} /></td>;
+                    }
+                    if (column.group === "trends") {
+                      return <td key={column.key} className={`${className} player-trend-cell`}><InlinePlayerTrend row={row} metric={column.metric} /></td>;
                     }
                     if (column.key === "yahoo_add_drop_ratio") {
                       const adds = Number(row.yahoo_adds) || 0;

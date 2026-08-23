@@ -38,6 +38,13 @@ export const PLAYER_TABLE_GROUPS = [
     ],
   },
   {
+    name: "Depth Chart",
+    key: "depth",
+    columns: [
+      { key: "depth_rank", label: "Depth", defaultWidth: 68, minWidth: 54, maxWidth: 120, align: "center", sortable: false },
+    ],
+  },
+  {
     name: "Season Usage",
     key: "usage",
     columns: [
@@ -95,6 +102,42 @@ export const PLAYER_TABLE_GROUPS = [
       { key: "fantasy_points", label: "Fantasy Points", defaultWidth: 85, minWidth: 66, maxWidth: 170, format: "decimal" },
     ],
   },
+  {
+    name: "Player Trends",
+    key: "trends",
+    columns: [
+      { key: "trend_snaps", label: "Last 10", metric: "snaps", defaultWidth: 214, minWidth: 184, maxWidth: 320, sortable: false },
+      { key: "trend_touches", label: "Last 10", metric: "touches", defaultWidth: 214, minWidth: 184, maxWidth: 320, sortable: false },
+      { key: "trend_targets", label: "Last 10", metric: "targets", defaultWidth: 214, minWidth: 184, maxWidth: 320, sortable: false },
+      { key: "trend_fantasy_points", label: "Last 10", metric: "fantasy_points", defaultWidth: 214, minWidth: 184, maxWidth: 320, sortable: false },
+    ],
+  },
+];
+
+const group = (key) => PLAYER_TABLE_GROUPS.find((item) => item.key === key);
+const columns = (key, columnKeys) => columnKeys.map((columnKey) => group(key).columns.find((column) => column.key === columnKey));
+
+// Display segments let one logical group appear beside the statistic it explains.
+// All four trend segments still share the `trends` group for one toggle, one
+// collapse state, proportional resizing, auto-fit, and persisted widths.
+export const PLAYER_TABLE_SEGMENTS = [
+  { key: "player", groupKey: "player", name: "Player Details", columns: group("player").columns, controlsGroup: true },
+  { key: "draft", groupKey: "draft", name: "Draft Metrics", columns: group("draft").columns, controlsGroup: true },
+  { key: "yahoo", groupKey: "yahoo", name: "Yahoo Fantasy", columns: group("yahoo").columns, controlsGroup: true },
+  { key: "upcoming", groupKey: "upcoming", name: "Upcoming", columns: group("upcoming").columns, controlsGroup: true },
+  { key: "depth", groupKey: "depth", name: "Depth Chart", columns: group("depth").columns, controlsGroup: true },
+  { key: "usage-main", groupKey: "usage", name: "Season Usage", columns: columns("usage", ["team", "position", "games_played", "snaps"]), controlsGroup: true },
+  { key: "trends-snaps", groupKey: "trends", name: "Player Trends", shortName: "Snap Trend", columns: columns("trends", ["trend_snaps"]), controlsGroup: true },
+  { key: "usage-snap-pct", groupKey: "usage", name: "Season Usage", shortName: "Usage", columns: columns("usage", ["snap_pct"]) },
+  { key: "passing", groupKey: "passing", name: "Passing", columns: group("passing").columns, controlsGroup: true },
+  { key: "rushing-carries", groupKey: "rushing", name: "Rushing", columns: columns("rushing", ["carries"]), controlsGroup: true },
+  { key: "trends-touches", groupKey: "trends", name: "Player Trends", shortName: "Touch Trend", columns: columns("trends", ["trend_touches"]) },
+  { key: "rushing-rest", groupKey: "rushing", name: "Rushing", shortName: "Rushing", columns: columns("rushing", ["rushing_yards", "rushing_yards_per_game", "rushing_yards_per_attempt", "rushing_tds"]) },
+  { key: "receiving-targets", groupKey: "receiving", name: "Receiving", columns: columns("receiving", ["targets"]), controlsGroup: true },
+  { key: "trends-targets", groupKey: "trends", name: "Player Trends", shortName: "Target Trend", columns: columns("trends", ["trend_targets"]) },
+  { key: "receiving-rest", groupKey: "receiving", name: "Receiving", shortName: "Receiving", columns: columns("receiving", ["receptions", "reception_pct", "receiving_yards", "receiving_yards_per_game", "receiving_yards_per_reception", "receiving_tds"]) },
+  { key: "dfs", groupKey: "dfs", name: "DFS", columns: group("dfs").columns, controlsGroup: true },
+  { key: "trends-fantasy", groupKey: "trends", name: "Player Trends", shortName: "FPTS Trend", columns: columns("trends", ["trend_fantasy_points"]) },
 ];
 
 export const PLAYER_TABLE_COLUMNS = PLAYER_TABLE_GROUPS.flatMap((group) =>
@@ -125,6 +168,7 @@ export function sanitizePlayerTablePreferences(value) {
     version: 1,
     showDraftMetrics: raw.showDraftMetrics !== false,
     showYahooMetrics: raw.showYahooMetrics === true,
+    showPlayerTrends: raw.showPlayerTrends !== false,
     autoFit: raw.autoFit === true,
     collapsedGroups: Array.isArray(raw.collapsedGroups)
       ? [...new Set(raw.collapsedGroups.filter((key) => GROUP_KEYS.has(key)))]

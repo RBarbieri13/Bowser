@@ -70,6 +70,13 @@ function list(value, map = (item) => item) {
   return String(value || "").split(",").map((item) => item.trim()).filter(Boolean).map(map);
 }
 
+function binaryFlag(value, fallback, field) {
+  if (value === null || value === "") return fallback;
+  if (value === "1") return true;
+  if (value === "0") return false;
+  throw new QueryValidationError(field, `${field} must be 1 or 0`);
+}
+
 function sortTerms(sortValue, directionValue) {
   const keys = list(sortValue || "fantasy_points");
   const directions = list(directionValue || "desc");
@@ -123,6 +130,132 @@ function decorateUpcomingMatchup(row) {
   };
 }
 
+function enrichPlayerTrendsAndDepth(db, rows, receptionBonus, { includeTrends, includeDepthCharts }) {
+  const playerIds = rows.map((row) => row.player_id).filter(Boolean);
+  if (!playerIds.length) return { rows, depthCharts: {} };
+
+  const trendRows = includeTrends ? db.prepare(`
+    WITH recent_games AS (
+      SELECT
+        stats.player_id,
+        stats.week,
+        stats.season_type,
+        stats.game_id,
+        games.gameday,
+        stats.team,
+        stats.opponent_team,
+        COALESCE(stats.offense_snaps, 0) AS snaps,
+        COALESCE(stats.carries, 0) AS rush_attempts,
+        COALESCE(stats.receptions, 0) AS receptions,
+        COALESCE(stats.carries, 0) + COALESCE(stats.receptions, 0) AS touches,
+        COALESCE(stats.targets, 0) AS targets,
+        ROUND(stats.fantasy_points + stats.receptions * ?, 1) AS fantasy_points,
+        ROW_NUMBER() OVER (
+          PARTITION BY stats.player_id
+          ORDER BY COALESCE(games.gameday, printf('2025-%02d-01', stats.week)) DESC,
+            stats.week DESC, stats.game_id DESC
+        ) AS recent_rank
+      FROM player_week_stats AS stats
+      LEFT JOIN games ON games.game_id = stats.game_id
+      WHERE stats.season = 2025
+        AND stats.season_type = 'REG'
+        AND stats.played = 1
+        AND stats.player_id IN (${placeholders(playerIds)})
+    )
+    SELECT *
+    FROM recent_games
+    WHERE recent_rank <= 10
+    ORDER BY player_id,
+      COALESCE(gameday, printf('2025-%02d-01', week)) ASC,
+      week ASC,
+      game_id ASC
+  `).all(receptionBonus, ...playerIds) : [];
+
+  const trendsByPlayer = new Map();
+  for (const row of trendRows) {
+    if (!trendsByPlayer.has(row.player_id)) trendsByPlayer.set(row.player_id, []);
+    trendsByPlayer.get(row.player_id).push({
+      week: row.week,
+      seasonType: row.season_type,
+      gameId: row.game_id,
+      gameday: row.gameday,
+      team: row.team,
+      opponent: row.opponent_team,
+      snaps: row.snaps,
+      rushAttempts: row.rush_attempts,
+      receptions: row.receptions,
+      touches: row.touches,
+      targets: row.targets,
+      fantasyPoints: row.fantasy_points,
+    });
+  }
+
+  const rosterRows = db.prepare(`
+    SELECT season, team, player_id, full_name, position, depth_position, depth_rank,
+      roster_status, depth_updated_at
+    FROM team_roster
+    WHERE season = 2026
+      AND position IN ('QB', 'RB', 'WR', 'TE')
+    ORDER BY team,
+      CASE position WHEN 'QB' THEN 1 WHEN 'RB' THEN 2 WHEN 'WR' THEN 3 WHEN 'TE' THEN 4 ELSE 5 END,
+      COALESCE(NULLIF(depth_position, ''), position),
+      depth_rank IS NULL,
+      depth_rank,
+      full_name COLLATE NOCASE
+  `).all();
+  const rosterPriority = new Map([["ACT", 1], ["INA", 2], ["RES", 3], ["DEV", 4], ["DEPTH", 5], ["CUT", 6]]);
+  const rosterByPlayer = new Map();
+  for (const row of rosterRows) {
+    const existing = rosterByPlayer.get(row.player_id);
+    if (!existing || (rosterPriority.get(row.roster_status) ?? 99) < (rosterPriority.get(existing.roster_status) ?? 99)) {
+      rosterByPlayer.set(row.player_id, row);
+    }
+  }
+  const depthGroups = new Map();
+  for (const row of rosterRows) {
+    const depthPosition = row.depth_position || row.position;
+    const key = `${row.team}:${depthPosition}`;
+    if (!depthGroups.has(key)) depthGroups.set(key, []);
+    depthGroups.get(key).push(row);
+  }
+
+  const depthCharts = {};
+  const enrichedRows = rows.map((row) => {
+    const currentRoster = rosterByPlayer.get(row.player_id);
+    const depthPosition = currentRoster?.depth_position || currentRoster?.position || null;
+    const depthKey = currentRoster ? `${currentRoster.team}:${depthPosition}` : null;
+    const depthGroup = depthKey ? (depthGroups.get(depthKey) || []) : [];
+    const depthPlayers = depthGroup.map((depthPlayer) => ({
+      playerId: depthPlayer.player_id,
+      name: depthPlayer.full_name,
+      position: depthPlayer.position,
+      depthPosition: depthPlayer.depth_position || depthPlayer.position,
+      depthRank: depthPlayer.depth_rank,
+      rosterStatus: depthPlayer.roster_status,
+      selected: depthPlayer.player_id === row.player_id,
+    }));
+    if (depthKey && !depthCharts[depthKey]) {
+      depthCharts[depthKey] = {
+        team: currentRoster.team,
+        depthPosition,
+        updatedAt: currentRoster.depth_updated_at,
+        players: depthPlayers.map(({ selected, ...player }) => player),
+      };
+    }
+    return {
+      ...row,
+      ...(includeTrends ? { player_trends: trendsByPlayer.get(row.player_id) || [] } : {}),
+      current_depth_team: currentRoster?.team ?? null,
+      current_depth_rank: currentRoster?.depth_rank ?? null,
+      current_depth_position: depthPosition,
+      current_depth_updated_at: currentRoster?.depth_updated_at ?? null,
+      current_depth_key: depthKey,
+      ...(includeDepthCharts ? { current_depth_chart: depthPlayers } : {}),
+    };
+  });
+  return { rows: enrichedRows, depthCharts };
+}
+
 export function getMeta(dbPath) {
   const db = openDatabase(dbPath);
   const summaryRow = db.prepare("SELECT value FROM warehouse_meta WHERE key = 'summary'").get();
@@ -172,6 +305,8 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
   const minGames = boundedNumber(searchParams.get("minGames"), 0, 0, 25, "minGames");
   const minSnaps = boundedNumber(searchParams.get("minSnaps"), 0, 0, 3000, "minSnaps");
   const ranks = parseRanks(searchParams.get("ranks"));
+  const includeTrends = binaryFlag(searchParams.get("includeTrends"), true, "includeTrends");
+  const includeDepthCharts = binaryFlag(searchParams.get("includeDepthCharts"), false, "includeDepthCharts");
 
   const where = ["season = 2025"];
   const params = [];
@@ -296,7 +431,9 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
     ORDER BY rank ASC
     LIMIT ?
   `;
-  const rows = db.prepare(sql).all(receptionBonus, receptionBonus, ...params, minGames, minSnaps, ...ranks, limit).map(decorateUpcomingMatchup);
+  const baseRows = db.prepare(sql).all(receptionBonus, receptionBonus, ...params, minGames, minSnaps, ...ranks, limit).map(decorateUpcomingMatchup);
+  const enrichment = enrichPlayerTrendsAndDepth(db, baseRows, receptionBonus, { includeTrends, includeDepthCharts });
+  const rows = enrichment.rows;
   return {
     data: rows,
     meta: {
@@ -305,6 +442,7 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
       queryMs: Number((performance.now() - started).toFixed(2)),
       season: 2025, seasonType, scoring, positions, teams, weeks, search,
       minGames, minSnaps, sorts: sorts.map(({ key, direction }) => ({ key, direction })), limit, ranks,
+      includeTrends, includeDepthCharts, depthCharts: enrichment.depthCharts,
     },
   };
 }
