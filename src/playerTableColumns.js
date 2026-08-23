@@ -38,13 +38,6 @@ export const PLAYER_TABLE_GROUPS = [
     ],
   },
   {
-    name: "Depth Chart",
-    key: "depth",
-    columns: [
-      { key: "depth_rank", label: "Depth", defaultWidth: 68, minWidth: 54, maxWidth: 120, align: "center", sortable: false },
-    ],
-  },
-  {
     name: "Season Usage",
     key: "usage",
     columns: [
@@ -106,10 +99,10 @@ export const PLAYER_TABLE_GROUPS = [
     name: "Player Trends",
     key: "trends",
     columns: [
-      { key: "trend_snaps", label: "Last 10", metric: "snaps", defaultWidth: 214, minWidth: 184, maxWidth: 320, sortable: false },
-      { key: "trend_touches", label: "Last 10", metric: "touches", defaultWidth: 214, minWidth: 184, maxWidth: 320, sortable: false },
-      { key: "trend_targets", label: "Last 10", metric: "targets", defaultWidth: 214, minWidth: 184, maxWidth: 320, sortable: false },
-      { key: "trend_fantasy_points", label: "Last 10", metric: "fantasy_points", defaultWidth: 214, minWidth: 184, maxWidth: 320, sortable: false },
+      { key: "trend_snaps", label: "Last 10", metric: "snaps", defaultWidth: 166, minWidth: 146, maxWidth: 260, sortable: false },
+      { key: "trend_touches", label: "Last 10", metric: "touches", defaultWidth: 166, minWidth: 146, maxWidth: 260, sortable: false },
+      { key: "trend_targets", label: "Last 10", metric: "targets", defaultWidth: 166, minWidth: 146, maxWidth: 260, sortable: false },
+      { key: "trend_fantasy_points", label: "Last 10", metric: "fantasy_points", defaultWidth: 166, minWidth: 146, maxWidth: 260, sortable: false },
     ],
   },
 ];
@@ -125,7 +118,6 @@ export const PLAYER_TABLE_SEGMENTS = [
   { key: "draft", groupKey: "draft", name: "Draft Metrics", columns: group("draft").columns, controlsGroup: true },
   { key: "yahoo", groupKey: "yahoo", name: "Yahoo Fantasy", columns: group("yahoo").columns, controlsGroup: true },
   { key: "upcoming", groupKey: "upcoming", name: "Upcoming", columns: group("upcoming").columns, controlsGroup: true },
-  { key: "depth", groupKey: "depth", name: "Depth Chart", columns: group("depth").columns, controlsGroup: true },
   { key: "usage-main", groupKey: "usage", name: "Season Usage", columns: columns("usage", ["team", "position", "games_played", "snaps"]), controlsGroup: true },
   { key: "trends-snaps", groupKey: "trends", name: "Player Trends", shortName: "Snap Trend", columns: columns("trends", ["trend_snaps"]), controlsGroup: true },
   { key: "usage-snap-pct", groupKey: "usage", name: "Season Usage", shortName: "Usage", columns: columns("usage", ["snap_pct"]) },
@@ -150,6 +142,8 @@ export const DEFAULT_PLAYER_TABLE_WIDTHS = Object.fromEntries(
 
 const COLUMN_BY_KEY = new Map(PLAYER_TABLE_COLUMNS.map((column) => [column.key, column]));
 const GROUP_KEYS = new Set(PLAYER_TABLE_GROUPS.map((group) => group.key));
+const COLUMN_KEYS = new Set(PLAYER_TABLE_COLUMNS.map((column) => column.key));
+export const DEFAULT_HIDDEN_PLAYER_COLUMNS = ["snap_pct"];
 
 export function clampPlayerTableWidth(key, width) {
   const column = COLUMN_BY_KEY.get(key);
@@ -159,19 +153,30 @@ export function clampPlayerTableWidth(key, width) {
 
 export function sanitizePlayerTablePreferences(value) {
   const raw = value && typeof value === "object" ? value : {};
+  const migratingToViewSettings = Number(raw.version || 0) < 2;
   const rawWidths = raw.columnWidths && typeof raw.columnWidths === "object" ? raw.columnWidths : {};
   const columnWidths = { ...DEFAULT_PLAYER_TABLE_WIDTHS };
   for (const key of Object.keys(columnWidths)) {
     columnWidths[key] = clampPlayerTableWidth(key, rawWidths[key] ?? columnWidths[key]);
+    if (migratingToViewSettings && key.startsWith("trend_")) {
+      columnWidths[key] = Math.min(columnWidths[key], COLUMN_BY_KEY.get(key).defaultWidth);
+    }
   }
+  const hiddenColumns = new Set(Array.isArray(raw.hiddenColumns)
+    ? raw.hiddenColumns.filter((key) => COLUMN_KEYS.has(key) && key !== "name")
+    : DEFAULT_HIDDEN_PLAYER_COLUMNS);
+  if (migratingToViewSettings) DEFAULT_HIDDEN_PLAYER_COLUMNS.forEach((key) => hiddenColumns.add(key));
   return {
-    version: 1,
+    version: 2,
     showDraftMetrics: raw.showDraftMetrics !== false,
     showYahooMetrics: raw.showYahooMetrics === true,
     showPlayerTrends: raw.showPlayerTrends !== false,
     autoFit: raw.autoFit === true,
+    smartCompact: raw.smartCompact !== false,
+    trendGameCount: Math.max(3, Math.min(10, Math.round(Number(raw.trendGameCount) || 10))),
+    hiddenColumns: [...hiddenColumns],
     collapsedGroups: Array.isArray(raw.collapsedGroups)
-      ? [...new Set(raw.collapsedGroups.filter((key) => GROUP_KEYS.has(key)))]
+      ? [...new Set(raw.collapsedGroups.filter((key) => GROUP_KEYS.has(key) && key !== "player"))]
       : [],
     columnWidths,
   };
