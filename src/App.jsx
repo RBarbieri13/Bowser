@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
-  ArrowCounterClockwise, CaretDown, CaretUp, Check, Columns, Eye, EyeSlash, Info, MagnifyingGlass, Minus, Plus, SlidersHorizontal, Sparkle, X,
+  ArrowCounterClockwise, ArrowLeft, ArrowRight, CaretDown, CaretUp, ChartBar, Check, Columns,
+  Copy, Database, DotsSixVertical, Eye, EyeSlash, Football, Info, MagnifyingGlass, Minus, PencilSimple,
+  Person, PersonSimpleRun, Plus, SlidersHorizontal, Sparkle, Target, Trophy, X,
 } from "@phosphor-icons/react";
 import { PlayerProfile } from "./PlayerProfile.jsx";
 import { WeekRangePicker } from "./WeekRangePicker.jsx";
@@ -10,12 +12,16 @@ import { TeamBoxScores } from "./TeamBoxScores.jsx";
 import { GameBreakdown } from "./GameBreakdown.jsx";
 import { OpportunityTracker } from "./OpportunityTracker.jsx";
 import { LeagueHub } from "./LeagueHub.jsx";
+import { TeamLogo } from "./teamLogos.jsx";
 import {
   clampPlayerTableWidth,
+  DEFAULT_HIDDEN_PLAYER_COLUMNS,
+  DEFAULT_PLAYER_GROUP_ORDER,
   PLAYER_TABLE_COLUMNS,
   PLAYER_TABLE_GROUPS,
   PLAYER_TABLE_SEGMENTS,
   PLAYER_TABLE_PREFERENCE_KEY,
+  PLAYER_TABLE_SAVED_VIEWS_KEY,
   readPlayerTablePreferences,
 } from "./playerTableColumns.js";
 
@@ -23,29 +29,40 @@ import {
 const numberFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 const decimalFormatter = new Intl.NumberFormat("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const SIDEBAR_WIDTH_KEY = "bowser:sidebar-width:v1";
-const COMPACT_GROUP_NAMES = { player: "Players", draft: "Draft", yahoo: "Yahoo", upcoming: "Next", usage: "Usage", trends: "Trends" };
+const COMPACT_GROUP_NAMES = { player: "Details", draft: "Draft", yahoo: "Yahoo", usage: "Usage", advanced: "Advanced" };
 const TREND_PARENT_COLUMNS = {
   trend_snaps: "snaps",
-  trend_touches: "carries",
+  trend_pass_attempts: "passing_attempts",
+  trend_rush_attempts: "carries",
   trend_targets: "targets",
   trend_fantasy_points: "fantasy_points",
 };
 const REQUIRED_PLAYER_COLUMNS = new Set(["name"]);
 const PLAYER_VIEW_PRESETS = [
-  { key: "core", name: "Core", columns: ["select", "rank", "name", "upcoming_matchup", "team", "position", "games_played", "snaps", "fantasy_points"] },
-  { key: "opportunity", name: "Opportunity", columns: ["select", "rank", "name", "upcoming_matchup", "team", "position", "games_played", "snaps", "trend_snaps", "carries", "trend_touches", "targets", "trend_targets", "fantasy_points", "trend_fantasy_points"] },
-  { key: "passing", name: "Passing", groups: ["player", "upcoming", "usage", "passing", "dfs"] },
-  { key: "rushing", name: "Rushing", groups: ["player", "upcoming", "usage", "rushing", "dfs"] },
-  { key: "receiving", name: "Receiving", groups: ["player", "upcoming", "usage", "receiving", "dfs"] },
-  { key: "dfs", name: "DFS", groups: ["player", "draft", "upcoming", "usage", "dfs", "trends"] },
-  { key: "all", name: "All", groups: PLAYER_TABLE_GROUPS.map((group) => group.key) },
+  { key: "balanced", name: "Balanced", description: "All the key stats in a balanced view.", icon: SlidersHorizontal, groups: ["player", "usage", "passing", "rushing", "receiving", "fantasy"] },
+  { key: "opportunity", name: "Opportunity", description: "Focus on usage and opportunities.", icon: Target, columns: ["select", "rank", "name", "team", "position", "upcoming_matchup", "games_played", "snaps", "trend_snaps", "snap_pct", "passing_attempts", "trend_pass_attempts", "carries", "trend_rush_attempts", "targets", "trend_targets", "fantasy_points", "trend_fantasy_points"] },
+  { key: "passing", name: "Passing", description: "Deep dive into passing performance.", icon: Football, groups: ["player", "usage", "passing", "fantasy"] },
+  { key: "rushing", name: "Rushing", description: "Focus on rushing performance.", icon: PersonSimpleRun, groups: ["player", "usage", "rushing", "fantasy"] },
+  { key: "receiving", name: "Receiving", description: "Focus on receiving performance.", icon: Target, groups: ["player", "usage", "receiving", "fantasy"] },
+  { key: "fantasy", name: "Fantasy", description: "Optimize for fantasy scoring.", icon: Trophy, groups: ["player", "usage", "fantasy", "dfs"] },
+  { key: "all", name: "All Data", description: "Show everything available.", icon: Database, groups: PLAYER_TABLE_GROUPS.map((group) => group.key) },
 ];
 const TREND_METRICS = {
   snaps: { label: "Snaps", unit: "snaps", className: "snaps", decimals: 0 },
-  touches: { label: "Touches", unit: "touches (CAR+REC)", className: "touches", decimals: 0 },
+  pass_attempts: { label: "Pass attempts", unit: "pass attempts", className: "passing", decimals: 0 },
+  rush_attempts: { label: "Rush attempts", unit: "rush attempts", className: "rushing", decimals: 0 },
   targets: { label: "Targets", unit: "targets", className: "targets", decimals: 0 },
   fantasy_points: { label: "Fantasy points", unit: "fantasy points", className: "fantasy", decimals: 1 },
 };
+
+const GROUP_ICONS = { player: Person, usage: ChartBar, passing: Football, rushing: PersonSimpleRun, receiving: Target, fantasy: Trophy, draft: ChartBar, yahoo: Sparkle, dfs: Trophy, advanced: Database };
+
+function readSavedPlayerViews() {
+  try {
+    const value = JSON.parse(window.localStorage.getItem(PLAYER_TABLE_SAVED_VIEWS_KEY) || "[]");
+    return Array.isArray(value) ? value.filter((view) => view && typeof view.id === "string" && typeof view.name === "string") : [];
+  } catch { return []; }
+}
 
 function initialSidebarWidth() {
   const stored = Number(window.localStorage.getItem(SIDEBAR_WIDTH_KEY));
@@ -86,13 +103,8 @@ function trendMetricValue(game, metric) {
     const value = game.fantasyPoints ?? game.fantasy_points;
     return value === null || value === undefined ? null : Number(value);
   }
-  if (metric === "touches") {
-    if (game.touches !== null && game.touches !== undefined && Number.isFinite(Number(game.touches))) return Number(game.touches);
-    const carries = game.carries ?? game.rushAttempts ?? game.rush_attempts;
-    const receptions = game.receptions;
-    if ((carries === null || carries === undefined) && (receptions === null || receptions === undefined)) return null;
-    return (Number(carries) || 0) + (Number(receptions) || 0);
-  }
+  if (metric === "pass_attempts") return Number.isFinite(Number(game.passAttempts ?? game.passing_attempts)) ? Number(game.passAttempts ?? game.passing_attempts) : null;
+  if (metric === "rush_attempts") return Number.isFinite(Number(game.rushAttempts ?? game.rush_attempts ?? game.carries)) ? Number(game.rushAttempts ?? game.rush_attempts ?? game.carries) : null;
   const value = game[metric];
   return value === null || value === undefined ? null : Number(value);
 }
@@ -107,41 +119,9 @@ function percentile(values, proportion) {
   return ordered[lower] + (ordered[upper] - ordered[lower]) * (position - lower);
 }
 
-let sharedTrendObserver;
-const trendVisibilityCallbacks = new WeakMap();
-
-function observeTrendVisibility(node, callback) {
-  if (typeof IntersectionObserver === "undefined") {
-    callback();
-    return () => {};
-  }
-  if (!sharedTrendObserver) {
-    sharedTrendObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        trendVisibilityCallbacks.get(entry.target)?.();
-        trendVisibilityCallbacks.delete(entry.target);
-        sharedTrendObserver.unobserve(entry.target);
-      });
-    }, { rootMargin: "160px 320px" });
-  }
-  trendVisibilityCallbacks.set(node, callback);
-  sharedTrendObserver.observe(node);
-  return () => {
-    trendVisibilityCallbacks.delete(node);
-    sharedTrendObserver?.unobserve(node);
-  };
-}
-
 function InlinePlayerTrend({ row, metric, gameCount = 10 }) {
   const definition = TREND_METRICS[metric];
   const games = trendGamesFor(row).slice(-gameCount);
-  const chartRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(() => typeof IntersectionObserver === "undefined");
-  useEffect(() => {
-    if (isVisible || !chartRef.current) return undefined;
-    return observeTrendVisibility(chartRef.current, () => setIsVisible(true));
-  }, [isVisible]);
   const points = games.map((game) => ({
     game,
     value: trendMetricValue(game, metric),
@@ -160,11 +140,8 @@ function InlinePlayerTrend({ row, metric, gameCount = 10 }) {
   const scale = Math.max(1, percentile(availableValues.map((value) => Math.max(0, value)), .9));
   const playerName = row.player_display_name || row.name || "Player";
   const summary = points.map(({ game, value }) => `Week ${game.week}: ${Number.isFinite(value) ? (definition.decimals ? decimalFormatter.format(value) : numberFormatter.format(value)) : "no data"}`).join("; ");
-  if (!isVisible) {
-    return <span ref={chartRef} className={`inline-player-trend trend-${definition.className} trend-awaiting-viewport`} role="img" aria-label={`${definition.label} trend for ${playerName}: ${summary}`}><i /></span>;
-  }
   return (
-    <span ref={chartRef} className={`inline-player-trend trend-${definition.className}`} role="img" aria-label={`${definition.label} trend for ${playerName}: ${summary}`}>
+    <span className={`inline-player-trend trend-${definition.className}`} role="img" aria-label={`${definition.label} trend for ${playerName}: ${summary}`}>
       {slots.map(({ game, value }, index) => {
         const emptySlot = !game;
         const missing = !Number.isFinite(value);
@@ -320,24 +297,52 @@ function CustomColumnsPanel({
   smartCompact,
   autoFit,
   trendGameCount,
+  groupOrder,
+  savedViews,
+  activeViewId,
   onClose,
-  onSetHiddenColumns,
-  onSetCollapsedGroups,
-  onSetGroupGate,
-  onSetSmartCompact,
-  onSetAutoFit,
-  onSetTrendGameCount,
+  onApply,
+  onSaveView,
+  onRenameView,
+  onDuplicateView,
   onReset,
 }) {
-  const drawerRef = useRef(null);
-  const hiddenSet = useMemo(() => new Set(hiddenColumns), [hiddenColumns]);
-  const collapsedSet = useMemo(() => new Set(collapsedGroups), [collapsedGroups]);
+  const studioRef = useRef(null);
+  const [draftHidden, setDraftHidden] = useState(hiddenColumns);
+  const [draftCollapsed, setDraftCollapsed] = useState(collapsedGroups);
+  const [draftGates, setDraftGates] = useState({ draft: showDraftMetrics, yahoo: showYahooMetrics, trends: showPlayerTrends });
+  const [draftSmartCompact, setDraftSmartCompact] = useState(smartCompact);
+  const [draftAutoFit, setDraftAutoFit] = useState(autoFit);
+  const [draftTrendGameCount, setDraftTrendGameCount] = useState(trendGameCount);
+  const [draftOrder, setDraftOrder] = useState(groupOrder);
+  const [draftActiveViewId, setDraftActiveViewId] = useState(activeViewId);
+  const [expandedGroups, setExpandedGroups] = useState(() => new Set(["fantasy"]));
+  const [draggingGroup, setDraggingGroup] = useState(null);
+  const wasOpen = useRef(false);
+
+  const resetDraft = useCallback(() => {
+    setDraftHidden(hiddenColumns);
+    setDraftCollapsed(collapsedGroups);
+    setDraftGates({ draft: showDraftMetrics, yahoo: showYahooMetrics, trends: showPlayerTrends });
+    setDraftSmartCompact(smartCompact);
+    setDraftAutoFit(autoFit);
+    setDraftTrendGameCount(trendGameCount);
+    setDraftOrder(groupOrder);
+    setDraftActiveViewId(activeViewId);
+  }, [hiddenColumns, collapsedGroups, showDraftMetrics, showYahooMetrics, showPlayerTrends, smartCompact, autoFit, trendGameCount, groupOrder, activeViewId]);
+
+  useEffect(() => {
+    if (open && !wasOpen.current) resetDraft();
+    wasOpen.current = open;
+  }, [open, resetDraft]);
+
+  const hiddenSet = useMemo(() => new Set(draftHidden), [draftHidden]);
+  const collapsedSet = useMemo(() => new Set(draftCollapsed), [draftCollapsed]);
   const groupGate = useCallback((groupKey) => {
-    if (groupKey === "draft") return showDraftMetrics;
-    if (groupKey === "yahoo") return showYahooMetrics;
-    if (groupKey === "trends") return showPlayerTrends;
+    if (groupKey === "draft") return draftGates.draft;
+    if (groupKey === "yahoo") return draftGates.yahoo;
     return true;
-  }, [showDraftMetrics, showYahooMetrics, showPlayerTrends]);
+  }, [draftGates]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -345,18 +350,20 @@ function CustomColumnsPanel({
       if (event.key === "Escape") onClose();
     };
     document.addEventListener("keydown", onKeyDown);
-    window.requestAnimationFrame(() => drawerRef.current?.focus());
+    window.requestAnimationFrame(() => studioRef.current?.focus());
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
+
+  const visibleKeys = useMemo(() => new Set(PLAYER_TABLE_COLUMNS.filter((column) => groupGate(column.group) && !hiddenSet.has(column.key)).map((column) => column.key)), [groupGate, hiddenSet]);
 
   if (!open) return null;
 
   const setGroupVisible = (group, visible) => {
     const gated = ["draft", "yahoo", "trends"].includes(group.key);
-    onSetGroupGate(group.key, visible);
-    onSetCollapsedGroups((current) => current.filter((key) => key !== group.key));
+    if (group.key === "draft" || group.key === "yahoo") setDraftGates((current) => ({ ...current, [group.key]: visible }));
+    setDraftCollapsed((current) => current.filter((key) => key !== group.key));
     if (gated && !visible) return;
-    onSetHiddenColumns((current) => {
+    setDraftHidden((current) => {
       const next = new Set(current);
       group.columns.forEach((column) => {
         if (visible || REQUIRED_PLAYER_COLUMNS.has(column.key)) next.delete(column.key);
@@ -368,8 +375,8 @@ function CustomColumnsPanel({
 
   const setColumnVisible = (group, column, visible) => {
     if (REQUIRED_PLAYER_COLUMNS.has(column.key)) return;
-    if (visible) onSetGroupGate(group.key, true);
-    onSetHiddenColumns((current) => {
+    if (visible && (group.key === "draft" || group.key === "yahoo")) setDraftGates((current) => ({ ...current, [group.key]: true }));
+    setDraftHidden((current) => {
       const next = new Set(current);
       if (visible) next.delete(column.key);
       else next.add(column.key);
@@ -382,58 +389,138 @@ function CustomColumnsPanel({
       .filter((group) => preset.groups.includes(group.key))
       .flatMap((group) => group.columns.map((column) => column.key)));
     REQUIRED_PLAYER_COLUMNS.forEach((key) => visibleKeys.add(key));
-    onSetHiddenColumns(PLAYER_TABLE_COLUMNS.filter((column) => !visibleKeys.has(column.key)).map((column) => column.key));
-    onSetCollapsedGroups([]);
-    PLAYER_TABLE_GROUPS.forEach((group) => onSetGroupGate(group.key, group.columns.some((column) => visibleKeys.has(column.key))));
+    setDraftHidden(PLAYER_TABLE_COLUMNS.filter((column) => !visibleKeys.has(column.key)).map((column) => column.key));
+    setDraftCollapsed([]);
+    setDraftGates({
+      draft: visibleKeys.has("adp") || visibleKeys.has("draft_position_rank"),
+      yahoo: PLAYER_TABLE_GROUPS.find((group) => group.key === "yahoo").columns.some((column) => visibleKeys.has(column.key)),
+      trends: true,
+    });
+  };
+
+  const activePreset = PLAYER_VIEW_PRESETS.find((preset) => {
+    const keys = new Set(preset.columns || PLAYER_TABLE_GROUPS.filter((group) => preset.groups.includes(group.key)).flatMap((group) => group.columns.map((column) => column.key)));
+    REQUIRED_PLAYER_COLUMNS.forEach((key) => keys.add(key));
+    return keys.size === visibleKeys.size && [...keys].every((key) => visibleKeys.has(key));
+  })?.key;
+
+  const draftConfiguration = () => ({
+    hiddenColumns: draftHidden,
+    collapsedGroups: draftCollapsed,
+    showDraftMetrics: draftGates.draft,
+    showYahooMetrics: draftGates.yahoo,
+    showPlayerTrends: true,
+    smartCompact: draftSmartCompact,
+    autoFit: draftAutoFit,
+    trendGameCount: draftTrendGameCount,
+    groupOrder: draftOrder,
+    activeViewId: draftActiveViewId,
+  });
+
+  const applySavedViewToDraft = (viewId) => {
+    if (viewId === "default") {
+      resetDraft();
+      setDraftActiveViewId("default");
+      return;
+    }
+    const view = savedViews.find((item) => item.id === viewId);
+    if (!view?.config) return;
+    const config = view.config;
+    setDraftHidden(config.hiddenColumns || []);
+    setDraftCollapsed(config.collapsedGroups || []);
+    setDraftGates({ draft: config.showDraftMetrics !== false, yahoo: config.showYahooMetrics === true, trends: true });
+    setDraftSmartCompact(config.smartCompact !== false);
+    setDraftAutoFit(config.autoFit === true);
+    setDraftTrendGameCount([5, 8, 10].includes(config.trendGameCount) ? config.trendGameCount : 10);
+    setDraftOrder(config.groupOrder || DEFAULT_PLAYER_GROUP_ORDER);
+    setDraftActiveViewId(view.id);
+  };
+
+  const reorderGroup = (sourceKey, targetKey) => {
+    if (!sourceKey || sourceKey === targetKey) return;
+    setDraftOrder((current) => {
+      const sourceIndex = current.indexOf(sourceKey);
+      const targetIndex = current.indexOf(targetKey);
+      const next = current.filter((key) => key !== sourceKey);
+      const insertionIndex = next.indexOf(targetKey) + (sourceIndex < targetIndex ? 1 : 0);
+      next.splice(Math.max(0, insertionIndex), 0, sourceKey);
+      return next;
+    });
+  };
+
+  const moveGroup = (groupKey, direction) => {
+    setDraftOrder((current) => {
+      const visibleOrder = current.filter((key) => {
+        const group = PLAYER_TABLE_GROUPS.find((item) => item.key === key);
+        return group && groupGate(key) && !collapsedSet.has(key) && group.columns.some((column) => !hiddenSet.has(column.key));
+      });
+      const visibleIndex = visibleOrder.indexOf(groupKey);
+      const targetKey = visibleOrder[visibleIndex + direction];
+      if (visibleIndex < 0 || !targetKey) return current;
+      const index = current.indexOf(groupKey);
+      const targetIndex = current.indexOf(targetKey);
+      const next = [...current];
+      [next[index], next[targetIndex]] = [next[targetIndex], next[index]];
+      return next;
+    });
   };
 
   const panel = (
     <div className="column-settings-layer">
       <button type="button" className="column-settings-backdrop" aria-label="Close Custom Columns" onClick={onClose} />
-      <aside ref={drawerRef} className="column-settings-drawer" role="dialog" aria-modal="true" aria-labelledby="custom-columns-title" tabIndex="-1">
+      <aside ref={studioRef} className="column-settings-drawer" role="dialog" aria-modal="true" aria-labelledby="custom-columns-title" tabIndex="-1">
         <header>
-          <div><Columns weight="duotone" aria-hidden="true" /><span><small>View settings</small><h2 id="custom-columns-title">Custom Columns</h2></span></div>
+          <div><Columns weight="duotone" aria-hidden="true" /><span><small>Column Studio</small><h2 id="custom-columns-title">Build a Player Database view</h2></span></div>
           <button type="button" className="column-settings-close" onClick={onClose} aria-label="Close Custom Columns"><X weight="bold" /></button>
         </header>
-
-        <section className="column-settings-presets" aria-labelledby="column-presets-title">
-          <div className="column-settings-section-heading"><span><Sparkle weight="fill" aria-hidden="true" /><b id="column-presets-title">Quick views</b></span><small>Replaces the current layout</small></div>
-          <div>{PLAYER_VIEW_PRESETS.map((preset) => <button type="button" key={preset.key} onClick={() => applyPreset(preset)}>{preset.name}</button>)}</div>
+        <section className="column-studio-saved" aria-label="Saved views">
+          <label><span>Saved view</span><select value={draftActiveViewId} onChange={(event) => applySavedViewToDraft(event.target.value)}><option value="default">Current layout</option>{savedViews.map((view) => <option key={view.id} value={view.id}>{view.name}</option>)}</select></label>
+          <span className="column-studio-active">Active</span>
+          <button type="button" disabled={draftActiveViewId === "default"} onClick={() => onRenameView(draftActiveViewId)}><PencilSimple aria-hidden="true" />Rename</button>
+          <button type="button" disabled={draftActiveViewId === "default"} onClick={() => onDuplicateView(draftActiveViewId)}><Copy aria-hidden="true" />Duplicate</button>
+          <button type="button" className="column-studio-save" onClick={() => { const savedId = onSaveView(draftConfiguration()); if (savedId) setDraftActiveViewId(savedId); }}>Save current view</button>
         </section>
 
-        <section className="column-settings-behavior" aria-labelledby="view-behavior-title">
-          <div className="column-settings-section-heading"><span><SlidersHorizontal aria-hidden="true" /><b id="view-behavior-title">View behavior</b></span></div>
-          <label><span><b>Smart Compact</b><small>Auto-pack the table when two or more sections are hidden or collapsed.</small></span><input type="checkbox" checked={smartCompact} onChange={(event) => onSetSmartCompact(event.target.checked)} /></label>
-          <label><span><b>Auto Fit</b><small>Fit visible columns to the values currently displayed.</small></span><input type="checkbox" checked={autoFit} onChange={(event) => onSetAutoFit(event.target.checked)} /></label>
-          <label className="trend-game-count-setting"><span><b>Trend games</b><small>Choose how many played regular-season games appear in every inline chart.</small></span><select value={trendGameCount} onChange={(event) => onSetTrendGameCount(Number(event.target.value))}>{[3, 5, 6, 8, 10].map((count) => <option value={count} key={count}>{count} games</option>)}</select></label>
-        </section>
+        <div className="column-studio-main">
+          <section className="column-settings-presets" aria-labelledby="column-presets-title">
+            <div className="column-settings-section-heading"><span><b id="column-presets-title">Quick presets</b></span></div>
+            <div>{PLAYER_VIEW_PRESETS.map((preset) => { const Icon = preset.icon; return <button type="button" key={preset.key} className={activePreset === preset.key ? "active" : ""} aria-pressed={activePreset === preset.key} onClick={() => applyPreset(preset)}><Icon weight={activePreset === preset.key ? "fill" : "regular"} aria-hidden="true" /><span><b>{preset.name}</b><small>{preset.description}</small></span>{activePreset === preset.key ? <Check weight="bold" aria-hidden="true" /> : null}</button>; })}</div>
+          </section>
 
-        <div className="column-settings-groups" aria-label="Available column groups">
-          {PLAYER_TABLE_GROUPS.map((group) => {
+          <section className="column-settings-groups" aria-label="Sections and columns">
+            <div className="column-settings-section-heading"><span><b>Sections &amp; columns</b></span><small><i>Selected</i><i>Visible</i></small></div>
+          {draftOrder.map((groupKey) => PLAYER_TABLE_GROUPS.find((group) => group.key === groupKey)).filter(Boolean).map((group) => {
             const gateVisible = groupGate(group.key);
             const visibleCount = gateVisible ? group.columns.filter((column) => !hiddenSet.has(column.key)).length : 0;
             const allVisible = visibleCount === group.columns.length;
             const mixed = visibleCount > 0 && !allVisible;
             const collapsed = collapsedSet.has(group.key);
             return (
-              <section className={`column-settings-group${collapsed ? " collapsed" : ""}`} key={group.key}>
+              <section className={`column-settings-group tone-${group.tone}${collapsed ? " collapsed" : ""}`} key={group.key}>
                 <header>
-                  <span><Checkbox checked={allVisible} mixed={mixed} label={`${allVisible ? "Hide" : "Show"} all ${group.name} columns`} onChange={() => setGroupVisible(group, !allVisible)} /><b>{group.name}</b><small>{visibleCount}/{group.columns.length}</small></span>
-                  {group.key !== "player" ? <button type="button" className={collapsed ? "active" : ""} disabled={!gateVisible || visibleCount === 0} aria-pressed={collapsed} onClick={() => onSetCollapsedGroups((current) => collapsed ? current.filter((key) => key !== group.key) : [...new Set([...current, group.key])])}>{collapsed ? "Restore" : "Collapse"}</button> : <em>Required</em>}
+                  <span><Checkbox checked={allVisible} mixed={mixed} label={`${allVisible ? "Hide" : "Show"} all ${group.name} columns`} onChange={() => setGroupVisible(group, !allVisible)} />{(() => { const Icon = GROUP_ICONS[group.key] || Columns; return <Icon weight="duotone" aria-hidden="true" />; })()}<b>{group.name}</b><small>{visibleCount}/{group.columns.length}</small></span>
+                  <span className="column-group-actions"><input type="checkbox" className="column-group-switch" checked={gateVisible && visibleCount > 0 && !collapsed} aria-label={`${collapsed || !gateVisible || visibleCount === 0 ? "Show" : "Hide"} ${group.name} section`} onChange={(event) => { if (event.target.checked) { setGroupVisible(group, true); setDraftCollapsed((current) => current.filter((key) => key !== group.key)); } else if (group.key !== "player") setDraftCollapsed((current) => [...new Set([...current, group.key])]); }} disabled={group.key === "player"} /><button type="button" aria-label={`${expandedGroups.has(group.key) ? "Collapse" : "Expand"} ${group.name} column choices`} aria-expanded={expandedGroups.has(group.key)} onClick={() => setExpandedGroups((current) => { const next = new Set(current); if (next.has(group.key)) next.delete(group.key); else next.add(group.key); return next; })}>{expandedGroups.has(group.key) ? <CaretUp weight="bold" /> : <CaretDown weight="bold" />}</button></span>
                 </header>
-                <div>
+                {expandedGroups.has(group.key) ? <div>
                   {group.columns.map((column) => {
                     const required = REQUIRED_PLAYER_COLUMNS.has(column.key);
                     const visible = gateVisible && !hiddenSet.has(column.key);
-                    return <div className="column-settings-column" key={column.key}><Checkbox checked={visible} label={`${visible ? "Hide" : "Show"} ${column.label || "selection"} column`} disabled={required} onChange={() => setColumnVisible(group, column, !visible)} /><span><b>{column.label || "Player selection"}</b>{required ? <small>Always shown</small> : null}</span></div>;
+                    return <div className="column-settings-column" key={column.key}><Checkbox checked={visible} label={`${visible ? "Hide" : "Show"} ${column.studioLabel || column.label || "selection"} column`} disabled={required} onChange={() => setColumnVisible(group, column, !visible)} /><span><b>{column.studioLabel || column.label || "Player selection"}</b>{column.metric ? <small>{TREND_METRICS[column.metric]?.label} · last {draftTrendGameCount} games</small> : required ? <small>Always shown</small> : null}</span></div>;
                   })}
-                </div>
+                </div> : null}
               </section>
             );
           })}
+          </section>
         </div>
 
-        <footer><button type="button" className="column-settings-reset" onClick={onReset}><ArrowCounterClockwise aria-hidden="true" />Reset default</button><button type="button" className="column-settings-done" onClick={onClose}>Done</button></footer>
+        <section className="column-studio-bottom">
+          <div className="trend-window-setting"><b>Trend window</b><div role="group" aria-label="Trend window">{[5, 8, 10].map((count) => <button type="button" key={count} aria-pressed={draftTrendGameCount === count} className={draftTrendGameCount === count ? "active" : ""} onClick={() => setDraftTrendGameCount(count)}>{count}</button>)}</div></div>
+          <div className="column-studio-behaviors"><label><input type="checkbox" checked={draftSmartCompact} onChange={(event) => setDraftSmartCompact(event.target.checked)} /><span>Smart compact</span></label><label><input type="checkbox" checked={draftAutoFit} onChange={(event) => setDraftAutoFit(event.target.checked)} /><span>Auto Fit</span></label></div>
+          <div className="column-studio-order"><b>Table order <small>(drag to reorder)</small></b><div>{draftOrder.map((key) => { const group = PLAYER_TABLE_GROUPS.find((item) => item.key === key); if (!group || !groupGate(group.key) || collapsedSet.has(key) || group.columns.every((column) => hiddenSet.has(column.key))) return null; return <span key={key} className={`tone-${group.tone}${draggingGroup === key ? " dragging" : ""}`} draggable onDragStart={() => setDraggingGroup(key)} onDragEnd={() => setDraggingGroup(null)} onDragOver={(event) => event.preventDefault()} onDrop={() => reorderGroup(draggingGroup, key)}><DotsSixVertical aria-hidden="true" />{group.shortName || group.name}<button type="button" aria-label={`Move ${group.name} left`} onClick={() => moveGroup(key, -1)}><ArrowLeft /></button><button type="button" aria-label={`Move ${group.name} right`} onClick={() => moveGroup(key, 1)}><ArrowRight /></button></span>; })}</div></div>
+        </section>
+
+        <footer><button type="button" className="column-settings-reset" onClick={() => { onReset(); onClose(); }}><ArrowCounterClockwise aria-hidden="true" />Reset to default</button><span><button type="button" className="column-settings-cancel" onClick={onClose}>Cancel</button><button type="button" className="column-settings-done" onClick={() => { onApply(draftConfiguration()); onClose(); }}>Apply &amp; save</button></span></footer>
       </aside>
     </div>
   );
@@ -613,6 +700,9 @@ export function App() {
   const [customColumnsOpen, setCustomColumnsOpen] = useState(false);
   const [collapsedSectionsOpen, setCollapsedSectionsOpen] = useState(false);
   const [playerColumnWidths, setPlayerColumnWidths] = useState(initialTablePreferences.columnWidths);
+  const [playerGroupOrder, setPlayerGroupOrder] = useState(initialTablePreferences.groupOrder);
+  const [savedPlayerViews, setSavedPlayerViews] = useState(readSavedPlayerViews);
+  const [activePlayerViewId, setActivePlayerViewId] = useState(initialTablePreferences.activeViewId);
   const tableScroller = useRef(null);
   const profileOpener = useRef(null);
   const customColumnsOpener = useRef(null);
@@ -633,7 +723,7 @@ export function App() {
 
   useEffect(() => {
     window.localStorage.setItem(PLAYER_TABLE_PREFERENCE_KEY, JSON.stringify({
-      version: 2,
+      version: 3,
       showDraftMetrics,
       showYahooMetrics,
       showPlayerTrends,
@@ -642,9 +732,15 @@ export function App() {
       trendGameCount,
       hiddenColumns: hiddenPlayerColumns,
       collapsedGroups: collapsedPlayerGroups,
+      groupOrder: playerGroupOrder,
+      activeViewId: activePlayerViewId,
       columnWidths: playerColumnWidths,
     }));
-  }, [showDraftMetrics, showYahooMetrics, showPlayerTrends, autoFitPlayerTable, smartCompactPlayerTable, trendGameCount, hiddenPlayerColumns, collapsedPlayerGroups, playerColumnWidths]);
+  }, [showDraftMetrics, showYahooMetrics, showPlayerTrends, autoFitPlayerTable, smartCompactPlayerTable, trendGameCount, hiddenPlayerColumns, collapsedPlayerGroups, playerGroupOrder, activePlayerViewId, playerColumnWidths]);
+
+  useEffect(() => {
+    window.localStorage.setItem(PLAYER_TABLE_SAVED_VIEWS_KEY, JSON.stringify(savedPlayerViews));
+  }, [savedPlayerViews]);
 
   const setPlayerGroupGate = useCallback((groupKey, visible) => {
     if (groupKey === "draft") setShowDraftMetrics(visible);
@@ -666,16 +762,57 @@ export function App() {
   }, [setPlayerGroupGate]);
 
   const resetPlayerView = useCallback(() => {
-    setShowDraftMetrics(true);
+    setShowDraftMetrics(false);
     setShowYahooMetrics(false);
     setShowPlayerTrends(true);
     setAutoFitPlayerTable(false);
     setSmartCompactPlayerTable(true);
     setTrendGameCount(10);
-    setHiddenPlayerColumns(["snap_pct"]);
+    setHiddenPlayerColumns(DEFAULT_HIDDEN_PLAYER_COLUMNS);
     setCollapsedPlayerGroups([]);
+    setPlayerGroupOrder(DEFAULT_PLAYER_GROUP_ORDER);
+    setActivePlayerViewId("default");
     setPlayerColumnWidths(Object.fromEntries(PLAYER_TABLE_COLUMNS.map((column) => [column.key, column.defaultWidth])));
   }, []);
+
+  const applyPlayerViewConfiguration = useCallback((configuration) => {
+    setHiddenPlayerColumns(configuration.hiddenColumns || []);
+    setCollapsedPlayerGroups(configuration.collapsedGroups || []);
+    setShowDraftMetrics(configuration.showDraftMetrics !== false);
+    setShowYahooMetrics(configuration.showYahooMetrics === true);
+    setShowPlayerTrends(configuration.showPlayerTrends !== false);
+    setSmartCompactPlayerTable(configuration.smartCompact !== false);
+    setAutoFitPlayerTable(configuration.autoFit === true);
+    setTrendGameCount([5, 8, 10].includes(configuration.trendGameCount) ? configuration.trendGameCount : 10);
+    setPlayerGroupOrder(configuration.groupOrder || DEFAULT_PLAYER_GROUP_ORDER);
+    setActivePlayerViewId(typeof configuration.activeViewId === "string" ? configuration.activeViewId : "default");
+  }, []);
+
+  const savePlayerView = useCallback((configuration) => {
+    const suggested = activePlayerViewId === "default" ? "Weekly Research" : savedPlayerViews.find((view) => view.id === activePlayerViewId)?.name || "Weekly Research";
+    const name = window.prompt("Name this Player Database view", suggested)?.trim();
+    if (!name) return;
+    const id = activePlayerViewId === "default" ? `view-${Date.now()}` : activePlayerViewId;
+    setSavedPlayerViews((current) => [...current.filter((view) => view.id !== id), { id, name, config: configuration }]);
+    setActivePlayerViewId(id);
+    return id;
+  }, [activePlayerViewId, savedPlayerViews]);
+
+  const renamePlayerView = useCallback((viewId) => {
+    const view = savedPlayerViews.find((item) => item.id === viewId);
+    if (!view) return;
+    const name = window.prompt("Rename saved view", view.name)?.trim();
+    if (name) setSavedPlayerViews((current) => current.map((item) => item.id === viewId ? { ...item, name } : item));
+  }, [savedPlayerViews]);
+
+  const duplicatePlayerView = useCallback((viewId) => {
+    const view = savedPlayerViews.find((item) => item.id === viewId);
+    if (!view) return;
+    const id = `view-${Date.now()}`;
+    const duplicate = { ...view, id, name: `${view.name} copy` };
+    setSavedPlayerViews((current) => [...current, duplicate]);
+    setActivePlayerViewId(id);
+  }, [savedPlayerViews]);
 
   const closeCustomColumns = useCallback(() => {
     setCustomColumnsOpen(false);
@@ -698,11 +835,13 @@ export function App() {
   const hiddenPlayerColumnSet = useMemo(() => new Set(hiddenPlayerColumns), [hiddenPlayerColumns]);
   const collapsedPlayerGroupSet = useMemo(() => new Set(collapsedPlayerGroups), [collapsedPlayerGroups]);
   const playerColumnGroupByKey = useMemo(() => new Map(PLAYER_TABLE_COLUMNS.map((column) => [column.key, column.group])), []);
-  const availablePlayerSegments = useMemo(() => PLAYER_TABLE_SEGMENTS
+  const availablePlayerSegments = useMemo(() => [...PLAYER_TABLE_SEGMENTS]
+    .sort((a, b) => playerGroupOrder.indexOf(a.groupKey) - playerGroupOrder.indexOf(b.groupKey))
     .filter((segment) => isPlayerGroupEnabled(segment.groupKey))
     .map((segment) => ({
       ...segment,
       columns: segment.columns.filter((column) => {
+        if (column.metric && !showPlayerTrends) return false;
         if (hiddenPlayerColumnSet.has(column.key)) return false;
         const parentKey = TREND_PARENT_COLUMNS[column.key];
         if (!parentKey) return true;
@@ -712,7 +851,7 @@ export function App() {
           && isPlayerGroupEnabled(parentGroup);
       }),
     }))
-    .filter((segment) => segment.columns.length > 0), [isPlayerGroupEnabled, hiddenPlayerColumnSet, collapsedPlayerGroupSet, playerColumnGroupByKey]);
+    .filter((segment) => segment.columns.length > 0), [playerGroupOrder, isPlayerGroupEnabled, hiddenPlayerColumnSet, collapsedPlayerGroupSet, playerColumnGroupByKey, showPlayerTrends]);
 
   const fullyHiddenPlayerGroups = useMemo(() => PLAYER_TABLE_GROUPS
     .filter((group) => group.key !== "player" && (!isPlayerGroupEnabled(group.key)
@@ -789,7 +928,7 @@ export function App() {
         columns: segment.columns.map((column) => ({
           ...column,
           group: groupKey,
-          width: smartCompactActive ? autoFitPlayerWidth(column, rows) : playerColumnWidths[column.key],
+          width: playerColumnWidths[column.key],
         })),
       }];
     });
@@ -1039,7 +1178,7 @@ export function App() {
               className={showPlayerTrends ? "active" : ""}
               aria-pressed={showPlayerTrends}
               aria-label={showPlayerTrends ? "Hide player trends" : "Show player trends"}
-              onClick={() => togglePlayerGroupFromToolbar("trends", showPlayerTrends)}
+              onClick={() => setShowPlayerTrends((current) => !current)}
               title={`Show or hide each player's last ${trendGameCount} played regular-season games`}
             >
               {showPlayerTrends ? <Eye weight="bold" aria-hidden="true" /> : <EyeSlash weight="bold" aria-hidden="true" />}
@@ -1164,7 +1303,7 @@ export function App() {
                   }
                   return (
                     <th key={column.key} className={`${column.group === "dfs" ? "dfs-head " : ""}${column.group === "draft" ? "draft-head " : ""}${column.key === "rank" ? "identity sticky-rank " : ""}${column.key === "name" ? "identity sticky-name " : ""}${playerGroupEndKeys.has(column.key) ? "group-end" : ""}`} aria-sort={activeSort ? (activeDirection === "asc" ? "ascending" : "descending") : "none"}>
-                      {column.sortable === false ? <span>{column.group === "trends" ? `Last ${trendGameCount}` : column.label}</span> : <button onClick={(event) => handleSort(column.key, event.shiftKey)} title="Click to cycle sort; Shift-click adds a secondary sort"><span>{column.label}</span><SortIcon active={activeSort} direction={activeDirection} priority={sortIndex} /></button>}
+                      {column.sortable === false ? <span>{column.metric ? `Last ${trendGameCount}` : column.label}</span> : <button onClick={(event) => handleSort(column.key, event.shiftKey)} title="Click to cycle sort; Shift-click adds a secondary sort"><span>{column.label}</span><SortIcon active={activeSort} direction={activeDirection} priority={sortIndex} /></button>}
                       <PlayerColumnResizeHandle column={column} width={playerColumnWidths[column.key]} onResize={resizePlayerColumn} />
                     </th>
                   );
@@ -1184,12 +1323,15 @@ export function App() {
                     if (column.key === "name") {
                       return <td key={column.key} title={row.player_display_name} className={className}><span className="player-name-cell-content"><button type="button" className="player-name-button" onClick={(event) => openProfile(row, event.currentTarget)}>{row.player_display_name}</button><DepthChartCell row={row} depthChart={responseMeta?.depthCharts?.[row.current_depth_key]} compact /></span></td>;
                     }
+                    if (column.key === "team") {
+                      return <td key={column.key} className={`${className} team-logo-cell`} title={row.team}><TeamLogo team={row.team} decorative /><span className="sr-only">{row.team}</span></td>;
+                    }
                     if (column.key === "upcoming_matchup") {
                       const matchupLines = splitUpcomingMatchup(value);
                       const content = matchupLines.map((line, index) => <span key={`${line}-${index}`}>{line}</span>);
                       return <td key={column.key} className={`${className} upcoming-matchup-cell`}>{row.upcoming_game_url ? <a href={row.upcoming_game_url} target="_blank" rel="noreferrer" aria-label={value || "No upcoming matchup"}>{content}</a> : <span className="upcoming-matchup-copy">{content}</span>}</td>;
                     }
-                    if (column.group === "trends") {
+                    if (column.metric) {
                       return <td key={column.key} className={`${className} player-trend-cell`}><InlinePlayerTrend row={row} metric={column.metric} gameCount={trendGameCount} /></td>;
                     }
                     if (column.key === "yahoo_add_drop_ratio") {
@@ -1223,13 +1365,14 @@ export function App() {
         smartCompact={smartCompactPlayerTable}
         autoFit={autoFitPlayerTable}
         trendGameCount={trendGameCount}
+        groupOrder={playerGroupOrder}
+        savedViews={savedPlayerViews}
+        activeViewId={activePlayerViewId}
         onClose={closeCustomColumns}
-        onSetHiddenColumns={setHiddenPlayerColumns}
-        onSetCollapsedGroups={setCollapsedPlayerGroups}
-        onSetGroupGate={setPlayerGroupGate}
-        onSetSmartCompact={setSmartCompactPlayerTable}
-        onSetAutoFit={setAutoFitPlayerTable}
-        onSetTrendGameCount={setTrendGameCount}
+        onApply={applyPlayerViewConfiguration}
+        onSaveView={savePlayerView}
+        onRenameView={renamePlayerView}
+        onDuplicateView={duplicatePlayerView}
         onReset={resetPlayerView}
       />
       </main>

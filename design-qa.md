@@ -143,3 +143,42 @@ final result: passed
 - Remaining differences from the supplied screenshot: intentional removal of collapsed spacer rails, consolidated restoration, embedded depth badge, and calmer divider hierarchy
 
 final result: passed
+
+# Player Database Column Studio Design QA
+
+- Reference: `/var/folders/mk/4zpvpljs7757dgf6h9qswksh0000gn/T/codex-clipboard-b8cce57e-3edd-431b-9868-d66b5d60be8b.png`
+- Implementation screenshot: `artifacts/player-database-redesign/column-studio-1440x1024.png`
+- Focused implementation region: `artifacts/player-database-redesign/column-studio-focused.png`
+- Combined comparison input: `artifacts/player-database-redesign/column-studio-comparison.png`
+- Browser viewport: 1440 x 1024 CSS pixels
+- Reference pixels: 1360 x 1124
+- Implementation pixels: 1800 x 1279 (browser capture scale); focused region: 650 x 512
+- Verified state: Player Database loaded with nflverse rows; Column Studio open; Balanced preset active; primary sections visible; optional sections available; settings footer visible.
+
+## Visual comparison
+
+The implementation preserves the selected middle concept's hierarchy and interaction model: centered dark modal, mint eyebrow and actions, saved-view toolbar, vertical quick-presets rail, two-column section controls with centered checkboxes, selected and visible status, per-section expansion, segmented trend window, ordered section chips, and paired cancel/apply actions.
+
+The implementation intentionally adds Draft Metrics, Yahoo Fantasy, DFS, and Advanced Stats to the section list because those existing data contracts must remain configurable. They use the same row treatment and do not change the selected concept's visual language.
+
+## Interaction evidence
+
+- Quick preset selection changes the active highlighted row and `aria-pressed` state.
+- Trend window switches between 5, 8, and 10 games.
+- Section rows expand to reveal named metrics such as Snap trend rather than ambiguous repeated labels.
+- Section visibility switches and individual metric checkboxes update the staged view.
+- Table-order controls support drag-and-drop plus explicit left and right moves.
+- Applying the Opportunity preset with a 5-game window closed the modal and rendered five bars in each visible trend chart.
+- Browser console contained no errors.
+
+## Findings and iteration history
+
+1. Initial browser pass exposed a warehouse query regression (`stats.passing_attempts`); corrected it to the real `player_week_stats.attempts` column and reloaded with live player rows.
+2. Directional table-order controls initially used insertion semantics; changed them to adjacent swaps so both left and right actions are deterministic.
+3. Added a single-column mobile expansion layout below 680 px to prevent checkbox and label misalignment.
+4. Directly rendered trend bars so changing the trend window cannot leave lazy placeholders blank.
+5. The independent verifier found that hidden optional sections could make adjacent order controls appear inert and that saved-view selection was committing before Apply. Visible-order movement now swaps the nearest visible sections, drag/drop inserts on the correct side of its target, and saved-view selection is fully staged until Apply. Dedicated UI coverage now exercises both paths.
+
+No remaining P0, P1, or P2 visual defects were found in the combined comparison.
+
+final result: passed

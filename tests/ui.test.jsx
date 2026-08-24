@@ -57,6 +57,7 @@ const samplePlayer = {
     team: "BUF",
     opponent: index % 2 ? "MIA" : "NYJ",
     snaps: index === 9 ? 96 : 58 + index,
+    passAttempts: 25 + index,
     rushAttempts: 3 + (index % 4),
     receptions: 0,
     touches: 3 + (index % 4),
@@ -451,17 +452,24 @@ describe("statistics table UI", () => {
     const view = render(<App />);
     await screen.findByRole("button", { name: "Test Player" });
     const table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
+    expect(screen.queryByRole("button", { name: "ADP" })).not.toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Details" })).toHaveAttribute("colspan", "6");
+    expect(screen.getByRole("columnheader", { name: "Usage" })).toHaveAttribute("colspan", "4");
+    expect(screen.getByRole("columnheader", { name: "Passing" })).toHaveAttribute("colspan", "5");
+    expect(screen.getByRole("columnheader", { name: "Rushing" })).toHaveAttribute("colspan", "4");
+    expect(screen.getByRole("columnheader", { name: "Receiving" })).toHaveAttribute("colspan", "5");
+    expect(screen.getByRole("columnheader", { name: "Fantasy" })).toHaveAttribute("colspan", "2");
+    expect(screen.getByRole("link", { name: "Sun 12:00 pm vs KC" })).toHaveAttribute("href", expect.stringContaining("401-test"));
+    expect(table.querySelector('col[data-column="draft_kings_price"]')).not.toBeInTheDocument();
+    expect(table.querySelector('col[data-column="draft_kings_projection"]')).not.toBeInTheDocument();
+    expect(table.querySelector('col[data-column="snap_pct"]')).toBeInTheDocument();
+    expect(screen.getByText("90%")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Show draft rankings" }));
     expect(screen.getByRole("button", { name: "ADP" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "POS RK" })).toBeInTheDocument();
     expect(screen.getByText("18.6")).toHaveClass("draft-metric");
     expect(screen.getByText("QB7")).toHaveClass("draft-metric");
-    expect(screen.getAllByRole("separator", { name: /Resize .* column/ })).toHaveLength(37);
-    expect(screen.getByRole("link", { name: "Sun 12:00 pm vs KC" })).toHaveAttribute("href", expect.stringContaining("401-test"));
-    expect(table.querySelector('col[data-column="draft_kings_price"]')).toBeInTheDocument();
-    expect(table.querySelector('col[data-column="draft_kings_projection"]')).toBeInTheDocument();
-    expect(table.querySelector('col[data-column="snap_pct"]')).not.toBeInTheDocument();
-    expect(screen.getByText("70%")).toBeInTheDocument();
-    expect(screen.getByText("57%")).toBeInTheDocument();
 
     const adpResizer = screen.getByRole("separator", { name: "Resize ADP column" });
     fireEvent.keyDown(adpResizer, { key: "ArrowRight", shiftKey: true });
@@ -498,14 +506,16 @@ describe("statistics table UI", () => {
     const columnOrder = Array.from(table.querySelectorAll("col")).map((column) => column.dataset.column);
 
     expect(columnOrder.indexOf("trend_snaps")).toBe(columnOrder.indexOf("snaps") + 1);
-    expect(columnOrder.indexOf("trend_touches")).toBe(columnOrder.indexOf("carries") + 1);
-    expect(columnOrder.indexOf("trend_targets")).toBe(columnOrder.indexOf("targets") + 1);
+    expect(columnOrder.indexOf("trend_pass_attempts")).toBe(columnOrder.indexOf("passing_tds") + 1);
+    expect(columnOrder.indexOf("trend_rush_attempts")).toBe(columnOrder.indexOf("rushing_tds") + 1);
+    expect(columnOrder.indexOf("trend_targets")).toBe(columnOrder.indexOf("receiving_tds") + 1);
     expect(columnOrder.indexOf("trend_fantasy_points")).toBe(columnOrder.indexOf("fantasy_points") + 1);
     expect(columnOrder).not.toContain("depth_rank");
     expect(screen.getByRole("img", { name: /Snaps trend for Test Player: Week 1: 58;.*Week 10: 96/ })).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Touches trend for Test Player/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Pass attempts trend for Test Player/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Rush attempts trend for Test Player/ })).toBeInTheDocument();
     expect(screen.getByRole("img", { name: /Targets trend for Test Player: Week 1: 0/ })).toBeInTheDocument();
-    expect(table.querySelector('.trend-touches .trend-bar-item[title*="touches (CAR+REC)"]')).toBeInTheDocument();
+    expect(table.querySelector('.trend-rushing .trend-bar-item[title*="rush attempts"]')).toBeInTheDocument();
     expect(latestPlayerUrl().searchParams.get("includeTrends")).toBe("1");
 
     const depthButton = screen.getByRole("button", { name: "Test Player is QB 2 on the BUF depth chart" });
@@ -523,16 +533,9 @@ describe("statistics table UI", () => {
     expect(depthButton).toHaveFocus();
 
     await user.click(screen.getByRole("button", { name: "Custom Columns" }));
-    expect(screen.getByRole("dialog", { name: "Custom Columns" })).toBeVisible();
-    const trendsGroup = screen.getByText("Player Trends", { selector: ".column-settings-group > header b" }).closest("section");
-    await user.click(within(trendsGroup).getByRole("button", { name: "Collapse" }));
-    await user.selectOptions(screen.getByDisplayValue("10 games"), "5");
-    expect(screen.getByDisplayValue("5 games")).toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Done" }));
-    expect(table.querySelector('col[data-column="trend_snaps"]')).not.toBeInTheDocument();
-    expect(table.querySelector('col[data-column="trend_touches"]')).not.toBeInTheDocument();
-    expect(table.querySelector('col[data-column="collapsed-trends"]')).not.toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Restore Player Trends" }));
+    expect(screen.getByRole("dialog", { name: "Build a Player Database view" })).toBeVisible();
+    await user.click(within(screen.getByRole("group", { name: "Trend window" })).getByRole("button", { name: "5" }));
+    await user.click(screen.getByRole("button", { name: "Apply & save" }));
     expect(table.querySelectorAll(".trend-snaps .trend-bar-item")).toHaveLength(5);
     expect(screen.getAllByText("Last 5").length).toBeGreaterThan(0);
 
@@ -557,8 +560,8 @@ describe("statistics table UI", () => {
 
     await user.click(screen.getByRole("button", { name: "Custom Columns" }));
     const passingGroup = screen.getByText("Passing", { selector: ".column-settings-group > header b" }).closest("section");
-    await user.click(within(passingGroup).getByRole("button", { name: "Collapse" }));
-    await user.click(screen.getByRole("button", { name: "Done" }));
+    await user.click(within(passingGroup).getByLabelText("Hide Passing section"));
+    await user.click(screen.getByRole("button", { name: "Apply & save" }));
     expect(table.querySelector('col[data-column="passing_attempts"]')).not.toBeInTheDocument();
     expect(table.querySelector('col[data-column="collapsed-passing"]')).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Restore Passing" })).toBeInTheDocument();
@@ -578,7 +581,7 @@ describe("statistics table UI", () => {
 
     await user.click(screen.getByRole("button", { name: "Auto Fit" }));
     await waitFor(() => expect(screen.getByRole("button", { name: "Auto Fit" })).toHaveAttribute("aria-pressed", "true"));
-    await waitFor(() => expect(table.querySelector('col[data-column="adp"]')).toHaveStyle({ width: "53px" }));
+    await waitFor(() => expect(table.querySelector('col[data-column="snaps"]')).toHaveStyle({ width: "60px" }));
     stored = JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1"));
     expect(stored.autoFit).toBe(true);
 
@@ -587,7 +590,7 @@ describe("statistics table UI", () => {
     await screen.findByRole("button", { name: "Test Player" });
     table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
     expect(screen.getByRole("button", { name: "Auto Fit" })).toHaveAttribute("aria-pressed", "true");
-    await waitFor(() => expect(table.querySelector('col[data-column="adp"]')).toHaveStyle({ width: "53px" }));
+    await waitFor(() => expect(table.querySelector('col[data-column="snaps"]')).toHaveStyle({ width: "60px" }));
   });
 
   test("customizes individual columns, follows trend dependencies, and consolidates collapsed sections", async () => {
@@ -598,16 +601,17 @@ describe("statistics table UI", () => {
 
     await user.click(screen.getByRole("button", { name: "Custom Columns" }));
     const rushingGroup = screen.getByText("Rushing", { selector: ".column-settings-group > header b" }).closest("section");
-    await user.click(within(rushingGroup).getByLabelText("Hide ATT column"));
-    expect(table.querySelector('col[data-column="carries"]')).not.toBeInTheDocument();
-    expect(table.querySelector('col[data-column="trend_touches"]')).not.toBeInTheDocument();
+    await user.click(within(rushingGroup).getByRole("button", { name: "Expand Rushing column choices" }));
+    await user.click(within(rushingGroup).getByLabelText("Hide Rush attempts column"));
 
     const passingGroup = screen.getByText("Passing", { selector: ".column-settings-group > header b" }).closest("section");
     const receivingGroup = screen.getByText("Receiving", { selector: ".column-settings-group > header b" }).closest("section");
-    await user.click(within(passingGroup).getByRole("button", { name: "Collapse" }));
-    await user.click(within(receivingGroup).getByRole("button", { name: "Collapse" }));
-    await user.click(screen.getByRole("button", { name: "Done" }));
+    await user.click(within(passingGroup).getByLabelText("Hide Passing section"));
+    await user.click(within(receivingGroup).getByLabelText("Hide Receiving section"));
+    await user.click(screen.getByRole("button", { name: "Apply & save" }));
 
+    expect(table.querySelector('col[data-column="carries"]')).not.toBeInTheDocument();
+    expect(table.querySelector('col[data-column="trend_rush_attempts"]')).not.toBeInTheDocument();
     expect(table.querySelector('col[data-column="passing_attempts"]')).not.toBeInTheDocument();
     expect(table.querySelector('col[data-column="targets"]')).not.toBeInTheDocument();
     expect(table.querySelector('[data-column^="collapsed-"]')).not.toBeInTheDocument();
@@ -620,25 +624,93 @@ describe("statistics table UI", () => {
     expect(table.querySelector('col[data-column="targets"]')).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Custom Columns" }));
-    await user.click(screen.getByLabelText("Hide all Player Trends columns"));
-    await user.click(screen.getByRole("button", { name: "Done" }));
+    const usageGroup = screen.getByText("Usage", { selector: ".column-settings-group > header b" }).closest("section");
+    await user.click(within(usageGroup).getByRole("button", { name: "Expand Usage column choices" }));
+    await user.click(within(usageGroup).getByLabelText("Hide Snap trend column"));
+    await user.click(screen.getByRole("button", { name: "Apply & save" }));
     expect(table.querySelector('col[data-column="trend_snaps"]')).not.toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Show player trends" }));
-    expect(table.querySelector('col[data-column="trend_snaps"]')).toBeInTheDocument();
-
-    await user.click(screen.getByRole("button", { name: "Custom Columns" }));
-    const trendGroup = screen.getByText("Player Trends", { selector: ".column-settings-group > header b" }).closest("section");
-    await user.click(within(trendGroup).getAllByLabelText("Hide Last 10 column")[0]);
-    expect(within(trendGroup).getByLabelText("Show all Player Trends columns").querySelector("input")).toHaveAttribute("aria-checked", "mixed");
-    await user.click(within(trendGroup).getByLabelText("Show all Player Trends columns"));
-    expect(within(trendGroup).getAllByLabelText("Hide Last 10 column")).toHaveLength(4);
-    await user.click(screen.getByRole("button", { name: "Done" }));
-    expect(table.querySelector('col[data-column="trend_fantasy_points"]')).toBeInTheDocument();
 
     const stored = JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1"));
     expect(stored.hiddenColumns).toContain("carries");
-    expect(stored.hiddenColumns).not.toContain("trend_snaps");
+    expect(stored.hiddenColumns).toContain("trend_snaps");
     expect(stored.collapsedGroups).toEqual([]);
+  });
+
+  test("highlights quick presets and saves a named Column Studio view", async () => {
+    const user = userEvent.setup();
+    vi.spyOn(window, "prompt").mockReturnValue("Weekly Research");
+    render(<App />);
+    await screen.findByRole("button", { name: "Test Player" });
+    await user.click(screen.getByRole("button", { name: "Custom Columns" }));
+    const balanced = screen.getByRole("button", { name: /Balanced/ });
+    expect(balanced).toHaveAttribute("aria-pressed", "true");
+    await user.click(screen.getByRole("button", { name: /Opportunity/ }));
+    expect(screen.getByRole("button", { name: /Opportunity/ })).toHaveAttribute("aria-pressed", "true");
+    await user.click(screen.getByRole("button", { name: "Save current view" }));
+    expect(JSON.parse(localStorage.getItem("bowser:player-table-saved-views:v1"))).toEqual(expect.arrayContaining([expect.objectContaining({ name: "Weekly Research" })]));
+  });
+
+  test("reorders visible sections across hidden optional groups", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole("button", { name: "Test Player" });
+    await user.click(screen.getByRole("button", { name: "Custom Columns" }));
+
+    const visibleOrder = () => [...document.querySelectorAll(".column-studio-order > div > span")]
+      .map((chip) => chip.childNodes[1]?.textContent?.trim() || "");
+    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Receiving", "Fantasy"]);
+
+    await user.click(screen.getByRole("button", { name: "Move Fantasy left" }));
+    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Fantasy", "Receiving"]);
+
+    const receivingChip = [...document.querySelectorAll(".column-studio-order > div > span")]
+      .find((chip) => chip.textContent.includes("Receiving"));
+    const fantasyChip = [...document.querySelectorAll(".column-studio-order > div > span")]
+      .find((chip) => chip.textContent.includes("Fantasy"));
+    fireEvent.dragStart(receivingChip);
+    await waitFor(() => expect(receivingChip).toHaveClass("dragging"));
+    fireEvent.dragOver(fantasyChip);
+    fireEvent.drop(fantasyChip);
+    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Receiving", "Fantasy"]);
+  });
+
+  test("stages saved-view selection until Apply and lets Current layout clear the selection", async () => {
+    localStorage.setItem("bowser:player-table-saved-views:v1", JSON.stringify([{
+      id: "saved-opportunity",
+      name: "Saved Opportunity",
+      config: {
+        hiddenColumns: ["passing_attempts", "completions", "passing_yards", "passing_tds", "trend_pass_attempts"],
+        collapsedGroups: ["passing"],
+        showDraftMetrics: false,
+        showYahooMetrics: false,
+        showPlayerTrends: true,
+        smartCompact: true,
+        autoFit: false,
+        trendGameCount: 5,
+        groupOrder: ["player", "usage", "passing", "rushing", "receiving", "draft", "yahoo", "dfs", "advanced", "fantasy"],
+      },
+    }]));
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole("button", { name: "Test Player" });
+    const table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
+
+    await user.click(screen.getByRole("button", { name: "Custom Columns" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Saved view" }), "saved-opportunity");
+    await user.click(screen.getByRole("button", { name: "Cancel" }));
+    expect(table.querySelector('col[data-column="passing_attempts"]')).toBeInTheDocument();
+    expect(JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1")).activeViewId).toBe("default");
+
+    await user.click(screen.getByRole("button", { name: "Custom Columns" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Saved view" }), "saved-opportunity");
+    await user.click(screen.getByRole("button", { name: "Apply & save" }));
+    expect(table.querySelector('col[data-column="passing_attempts"]')).not.toBeInTheDocument();
+    expect(JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1")).activeViewId).toBe("saved-opportunity");
+
+    await user.click(screen.getByRole("button", { name: "Custom Columns" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Saved view" }), "default");
+    await user.click(screen.getByRole("button", { name: "Apply & save" }));
+    expect(JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1")).activeViewId).toBe("default");
   });
 
   test("opens an accessible player card with three working tabs", async () => {
