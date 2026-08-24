@@ -107,15 +107,31 @@ export const PLAYER_TABLE_SEGMENTS = PLAYER_TABLE_GROUPS.map((group) => ({
 
 export const PLAYER_TABLE_COLUMNS = PLAYER_TABLE_GROUPS.flatMap((group) => group.columns.map((column) => ({ ...column, group: group.key })));
 export const DEFAULT_PLAYER_TABLE_WIDTHS = Object.fromEntries(PLAYER_TABLE_COLUMNS.map((column) => [column.key, column.defaultWidth]));
+export const DEFAULT_PLAYER_SORTS = [{ key: "fantasy_points", direction: "desc" }];
 const COLUMN_BY_KEY = new Map(PLAYER_TABLE_COLUMNS.map((column) => [column.key, column]));
 const GROUP_KEYS = new Set(PLAYER_TABLE_GROUPS.map((group) => group.key));
 const COLUMN_KEYS = new Set(PLAYER_TABLE_COLUMNS.map((column) => column.key));
+const SORT_KEYS = new Set(PLAYER_TABLE_COLUMNS
+  .filter((column) => column.sortable !== false && column.key !== "select")
+  .map((column) => column.key));
 export const DEFAULT_HIDDEN_PLAYER_COLUMNS = PLAYER_TABLE_GROUPS.filter((group) => group.optional).flatMap((group) => group.columns.map((column) => column.key));
 
 export function clampPlayerTableWidth(key, width) {
   const column = COLUMN_BY_KEY.get(key);
   if (!column) return null;
   return Math.round(Math.max(column.minWidth, Math.min(column.maxWidth, Number(width) || column.defaultWidth)));
+}
+
+export function sanitizePlayerSorts(value) {
+  if (!Array.isArray(value)) return DEFAULT_PLAYER_SORTS.map((sort) => ({ ...sort }));
+  const seen = new Set();
+  return value.slice(0, 3).flatMap((sort) => {
+    const key = sort && typeof sort === "object" ? String(sort.key || "") : "";
+    const direction = sort?.direction === "asc" ? "asc" : sort?.direction === "desc" ? "desc" : null;
+    if (!SORT_KEYS.has(key) || !direction || seen.has(key)) return [];
+    seen.add(key);
+    return [{ key, direction }];
+  });
 }
 
 export function sanitizePlayerTablePreferences(value) {
@@ -129,7 +145,7 @@ export function sanitizePlayerTablePreferences(value) {
     : Array.isArray(raw.hiddenColumns) ? raw.hiddenColumns.filter((key) => COLUMN_KEYS.has(key) && key !== "name") : DEFAULT_HIDDEN_PLAYER_COLUMNS);
   const suppliedOrder = Array.isArray(raw.groupOrder) ? raw.groupOrder.filter((key) => GROUP_KEYS.has(key)) : [];
   return {
-    version: 3,
+    version: 4,
     showDraftMetrics: migratingToColumnStudio ? false : raw.showDraftMetrics !== false,
     showYahooMetrics: migratingToColumnStudio ? false : raw.showYahooMetrics === true,
     showPlayerTrends: raw.showPlayerTrends !== false,
@@ -141,6 +157,7 @@ export function sanitizePlayerTablePreferences(value) {
     groupOrder: [...new Set([...suppliedOrder, ...DEFAULT_PLAYER_GROUP_ORDER])],
     activeViewId: typeof raw.activeViewId === "string" ? raw.activeViewId : "default",
     columnWidths,
+    sorts: sanitizePlayerSorts(raw.sorts),
   };
 }
 

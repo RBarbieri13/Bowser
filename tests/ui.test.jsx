@@ -516,6 +516,15 @@ describe("statistics table UI", () => {
     expect(screen.getByRole("img", { name: /Rush attempts trend for Test Player/ })).toBeInTheDocument();
     expect(screen.getByRole("img", { name: /Targets trend for Test Player: Week 1: 0/ })).toBeInTheDocument();
     expect(table.querySelector('.trend-rushing .trend-bar-item[title*="rush attempts"]')).toBeInTheDocument();
+    const snapTrend = screen.getByRole("img", { name: /Snaps trend for Test Player/ });
+    const targetTrend = screen.getByRole("img", { name: /Targets trend for Test Player/ });
+    expect(snapTrend).toHaveAttribute("data-scale-mode", "focus");
+    expect(snapTrend).toHaveAttribute("title", expect.stringContaining("focused row scale"));
+    expect(targetTrend).toHaveAttribute("data-scale-mode", "zero");
+    expect(targetTrend.querySelector('.trend-bar-item[data-week="1"]')).toHaveClass("zero");
+    expect(Number.parseFloat(targetTrend.querySelector('.trend-bar-item[data-week="3"] i').style.getPropertyValue("--trend-height"))).toBeGreaterThan(20);
+    expect(screen.getByText("Focus scale")).toBeInTheDocument();
+    expect(screen.getAllByText("0 baseline").length).toBeGreaterThan(0);
     expect(latestPlayerUrl().searchParams.get("includeTrends")).toBe("1");
 
     const depthButton = screen.getByRole("button", { name: "Test Player is QB 2 on the BUF depth chart" });
@@ -641,13 +650,18 @@ describe("statistics table UI", () => {
     vi.spyOn(window, "prompt").mockReturnValue("Weekly Research");
     render(<App />);
     await screen.findByRole("button", { name: "Test Player" });
+    fireEvent.keyDown(screen.getByRole("separator", { name: "Resize Snaps column" }), { key: "ArrowRight", shiftKey: true });
+    await user.click(screen.getByRole("button", { name: "Team" }));
+    await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("team"));
     await user.click(screen.getByRole("button", { name: "Custom Columns" }));
     const balanced = screen.getByRole("button", { name: /Balanced/ });
     expect(balanced).toHaveAttribute("aria-pressed", "true");
     await user.click(screen.getByRole("button", { name: /Opportunity/ }));
     expect(screen.getByRole("button", { name: /Opportunity/ })).toHaveAttribute("aria-pressed", "true");
-    await user.click(screen.getByRole("button", { name: "Save current view" }));
-    expect(JSON.parse(localStorage.getItem("bowser:player-table-saved-views:v1"))).toEqual(expect.arrayContaining([expect.objectContaining({ name: "Weekly Research" })]));
+    await user.click(screen.getByRole("button", { name: "Save full view including column sizes and sorting" }));
+    const savedView = JSON.parse(localStorage.getItem("bowser:player-table-saved-views:v1")).find((view) => view.name === "Weekly Research");
+    expect(savedView.config.columnWidths.snaps).toBe(76);
+    expect(savedView.config.sorts).toEqual([{ key: "team", direction: "asc" }]);
   });
 
   test("reorders visible sections across hidden optional groups", async () => {
@@ -688,6 +702,8 @@ describe("statistics table UI", () => {
         autoFit: false,
         trendGameCount: 5,
         groupOrder: ["player", "usage", "passing", "rushing", "receiving", "draft", "yahoo", "dfs", "advanced", "fantasy"],
+        columnWidths: { snaps: 88 },
+        sorts: [{ key: "team", direction: "asc" }],
       },
     }]));
     const user = userEvent.setup();
@@ -705,6 +721,8 @@ describe("statistics table UI", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Saved view" }), "saved-opportunity");
     await user.click(screen.getByRole("button", { name: "Apply & save" }));
     expect(table.querySelector('col[data-column="passing_attempts"]')).not.toBeInTheDocument();
+    expect(table.querySelector('col[data-column="snaps"]')).toHaveStyle({ width: "88px" });
+    await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("team"));
     expect(JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1")).activeViewId).toBe("saved-opportunity");
 
     await user.click(screen.getByRole("button", { name: "Custom Columns" }));
@@ -736,7 +754,7 @@ describe("statistics table UI", () => {
 
   test("cycles unsorted state and supports a shift-click secondary sort", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    const view = render(<App />);
     await screen.findByRole("button", { name: "Test Player" });
     const nameButton = screen.getByRole("button", { name: "Name" });
     const teamButton = screen.getByRole("button", { name: "Team" });
@@ -748,10 +766,23 @@ describe("statistics table UI", () => {
     fireEvent.click(teamButton, { shiftKey: true });
     await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("name,team"));
     expect(teamButton.closest("th")).toHaveAttribute("aria-sort", "ascending");
+    expect(JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1")).sorts).toEqual([
+      { key: "name", direction: "asc" },
+      { key: "team", direction: "asc" },
+    ]);
 
-    await user.click(nameButton);
-    await user.click(nameButton);
-    await user.click(nameButton);
-    expect(nameButton.closest("th")).toHaveAttribute("aria-sort", "none");
+    view.unmount();
+    render(<App />);
+    await screen.findByRole("button", { name: "Test Player" });
+    await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("name,team"));
+    const restoredNameButton = screen.getByRole("button", { name: "Name" });
+    const restoredTeamButton = screen.getByRole("button", { name: "Team" });
+    expect(restoredNameButton.closest("th")).toHaveAttribute("aria-sort", "ascending");
+    expect(restoredTeamButton.closest("th")).toHaveAttribute("aria-sort", "ascending");
+
+    await user.click(restoredNameButton);
+    await user.click(restoredNameButton);
+    await user.click(restoredNameButton);
+    expect(restoredNameButton.closest("th")).toHaveAttribute("aria-sort", "none");
   });
 });

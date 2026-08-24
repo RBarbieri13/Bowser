@@ -17,12 +17,14 @@ import {
   clampPlayerTableWidth,
   DEFAULT_HIDDEN_PLAYER_COLUMNS,
   DEFAULT_PLAYER_GROUP_ORDER,
+  DEFAULT_PLAYER_SORTS,
   PLAYER_TABLE_COLUMNS,
   PLAYER_TABLE_GROUPS,
   PLAYER_TABLE_SEGMENTS,
   PLAYER_TABLE_PREFERENCE_KEY,
   PLAYER_TABLE_SAVED_VIEWS_KEY,
   readPlayerTablePreferences,
+  sanitizePlayerSorts,
 } from "./playerTableColumns.js";
 
 
@@ -119,6 +121,27 @@ function percentile(values, proportion) {
   return ordered[lower] + (ordered[upper] - ordered[lower]) * (position - lower);
 }
 
+function trendScaleFor(values, metric) {
+  const clean = values.filter(Number.isFinite);
+  if (!clean.length) return { lower: 0, upper: 1, mode: "zero" };
+  if (metric === "snaps") {
+    const lowerBand = percentile(clean, .1);
+    const upperBand = percentile(clean, .9);
+    const spread = Math.max(1, upperBand - lowerBand);
+    const lower = Math.max(0, Math.floor(lowerBand - Math.max(1, spread * .22)));
+    const upper = Math.max(lower + 1, Math.ceil(upperBand + spread * .08));
+    return { lower, upper, mode: "focus" };
+  }
+  const nonNegative = clean.map((value) => Math.max(0, value));
+  return { lower: 0, upper: Math.max(1, Math.ceil(percentile(nonNegative, .9))), mode: "zero" };
+}
+
+function compactTrendValue(value, definition) {
+  if (!Number.isFinite(value)) return "—";
+  if (!definition.decimals || Math.abs(value) >= 10) return numberFormatter.format(value);
+  return decimalFormatter.format(value);
+}
+
 function InlinePlayerTrend({ row, metric, gameCount = 10 }) {
   const definition = TREND_METRICS[metric];
   const games = trendGamesFor(row).slice(-gameCount);
@@ -137,21 +160,44 @@ function InlinePlayerTrend({ row, metric, gameCount = 10 }) {
   if (!availableValues.length) {
     return <span className="player-trend-empty" aria-label={`Regular-season games exist, but ${definition.label.toLowerCase()} data is unavailable`}>No data</span>;
   }
-  const scale = Math.max(1, percentile(availableValues.map((value) => Math.max(0, value)), .9));
+  const scale = trendScaleFor(availableValues, metric);
   const playerName = row.player_display_name || row.name || "Player";
   const summary = points.map(({ game, value }) => `Week ${game.week}: ${Number.isFinite(value) ? (definition.decimals ? decimalFormatter.format(value) : numberFormatter.format(value)) : "no data"}`).join("; ");
+  const scaleDescription = scale.mode === "focus"
+    ? `focused row scale ${scale.lower} to ${scale.upper}`
+    : `zero baseline with a robust upper scale of ${scale.upper}`;
   return (
-    <span className={`inline-player-trend trend-${definition.className}`} role="img" aria-label={`${definition.label} trend for ${playerName}: ${summary}`}>
+    <span
+      className={`inline-player-trend trend-${definition.className} scale-${scale.mode}`}
+      role="img"
+      aria-label={`${definition.label} trend for ${playerName}: ${summary}`}
+      title={`${definition.label} uses a ${scaleDescription}. Exact values appear above each game; hover a bar for matchup context.`}
+      data-scale-mode={scale.mode}
+      data-scale-min={scale.lower}
+      data-scale-max={scale.upper}
+    >
       {slots.map(({ game, value }, index) => {
         const emptySlot = !game;
         const missing = !Number.isFinite(value);
         const displayValue = missing ? "—" : definition.decimals ? decimalFormatter.format(value) : numberFormatter.format(value);
-        const height = missing ? 0 : value <= 0 ? 2 : Math.max(4, Math.min(22, (Math.max(0, value) / scale) * 22));
+        const compactValue = compactTrendValue(value, definition);
+        const capped = !missing && value > scale.upper;
+        const negative = !missing && value < 0;
+        const zero = !missing && value === 0;
+        const normalized = missing || value <= scale.lower ? 0 : (Math.min(value, scale.upper) - scale.lower) / (scale.upper - scale.lower);
+        const height = missing ? 0 : negative || zero ? 2 : Math.max(5, Math.min(24, normalized * 24));
         const gameLabel = emptySlot ? "No earlier recorded game" : `Week ${game.week}: ${missing ? "no data" : `${displayValue} ${definition.unit}`}${game.opponent ? ` vs ${game.opponent}` : ""}`;
         return (
-          <span className={`trend-bar-item${missing ? " missing" : ""}${emptySlot ? " empty-slot" : ""}`} key={game?.gameId ?? game?.game_id ?? `${game?.week ?? "empty"}-${index}`} title={gameLabel} aria-hidden="true">
-            <b>{displayValue}</b>
-            {missing ? <i /> : <i style={{ height: `${height}px` }} />}
+          <span
+            className={`trend-bar-item${missing ? " missing" : ""}${emptySlot ? " empty-slot" : ""}${capped ? " capped" : ""}${negative ? " negative" : ""}${zero ? " zero" : ""}`}
+            key={game?.gameId ?? game?.game_id ?? `${game?.week ?? "empty"}-${index}`}
+            title={gameLabel}
+            data-week={game?.week ?? ""}
+            data-value={missing ? "" : value}
+            aria-hidden="true"
+          >
+            <b>{compactValue}</b>
+            {missing ? <i /> : <i style={{ "--trend-height": `${height}px` }} />}
           </span>
         );
       })}
@@ -298,6 +344,8 @@ function CustomColumnsPanel({
   autoFit,
   trendGameCount,
   groupOrder,
+  columnWidths,
+  sorts,
   savedViews,
   activeViewId,
   onClose,
@@ -315,6 +363,8 @@ function CustomColumnsPanel({
   const [draftAutoFit, setDraftAutoFit] = useState(autoFit);
   const [draftTrendGameCount, setDraftTrendGameCount] = useState(trendGameCount);
   const [draftOrder, setDraftOrder] = useState(groupOrder);
+  const [draftColumnWidths, setDraftColumnWidths] = useState(columnWidths);
+  const [draftSorts, setDraftSorts] = useState(sorts);
   const [draftActiveViewId, setDraftActiveViewId] = useState(activeViewId);
   const [expandedGroups, setExpandedGroups] = useState(() => new Set(["fantasy"]));
   const [draggingGroup, setDraggingGroup] = useState(null);
@@ -328,8 +378,10 @@ function CustomColumnsPanel({
     setDraftAutoFit(autoFit);
     setDraftTrendGameCount(trendGameCount);
     setDraftOrder(groupOrder);
+    setDraftColumnWidths(columnWidths);
+    setDraftSorts(sorts);
     setDraftActiveViewId(activeViewId);
-  }, [hiddenColumns, collapsedGroups, showDraftMetrics, showYahooMetrics, showPlayerTrends, smartCompact, autoFit, trendGameCount, groupOrder, activeViewId]);
+  }, [hiddenColumns, collapsedGroups, showDraftMetrics, showYahooMetrics, showPlayerTrends, smartCompact, autoFit, trendGameCount, groupOrder, columnWidths, sorts, activeViewId]);
 
   useEffect(() => {
     if (open && !wasOpen.current) resetDraft();
@@ -414,6 +466,8 @@ function CustomColumnsPanel({
     autoFit: draftAutoFit,
     trendGameCount: draftTrendGameCount,
     groupOrder: draftOrder,
+    columnWidths: draftColumnWidths,
+    sorts: draftSorts,
     activeViewId: draftActiveViewId,
   });
 
@@ -433,6 +487,10 @@ function CustomColumnsPanel({
     setDraftAutoFit(config.autoFit === true);
     setDraftTrendGameCount([5, 8, 10].includes(config.trendGameCount) ? config.trendGameCount : 10);
     setDraftOrder(config.groupOrder || DEFAULT_PLAYER_GROUP_ORDER);
+    setDraftColumnWidths(config.columnWidths && typeof config.columnWidths === "object"
+      ? Object.fromEntries(PLAYER_TABLE_COLUMNS.map((column) => [column.key, clampPlayerTableWidth(column.key, config.columnWidths[column.key] ?? columnWidths[column.key])]))
+      : columnWidths);
+    setDraftSorts(config.sorts ? sanitizePlayerSorts(config.sorts) : sorts);
     setDraftActiveViewId(view.id);
   };
 
@@ -478,7 +536,7 @@ function CustomColumnsPanel({
           <span className="column-studio-active">Active</span>
           <button type="button" disabled={draftActiveViewId === "default"} onClick={() => onRenameView(draftActiveViewId)}><PencilSimple aria-hidden="true" />Rename</button>
           <button type="button" disabled={draftActiveViewId === "default"} onClick={() => onDuplicateView(draftActiveViewId)}><Copy aria-hidden="true" />Duplicate</button>
-          <button type="button" className="column-studio-save" onClick={() => { const savedId = onSaveView(draftConfiguration()); if (savedId) setDraftActiveViewId(savedId); }}>Save current view</button>
+          <button type="button" className="column-studio-save" aria-label="Save full view including column sizes and sorting" title="Saves columns, section order, column widths, trend window, and multi-column sorting" onClick={() => { const savedId = onSaveView(draftConfiguration()); if (savedId) setDraftActiveViewId(savedId); }}>Save full view</button>
         </section>
 
         <div className="column-studio-main">
@@ -681,7 +739,7 @@ export function App() {
   const [minGames, setMinGames] = useState("0");
   const [minSnaps, setMinSnaps] = useState("0");
   const [moreOpen, setMoreOpen] = useState(false);
-  const [sorts, setSorts] = useState([{ key: "fantasy_points", direction: "desc" }]);
+  const [sorts, setSorts] = useState(initialTablePreferences.sorts);
   const [selected, setSelected] = useState(() => new Set());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -723,7 +781,7 @@ export function App() {
 
   useEffect(() => {
     window.localStorage.setItem(PLAYER_TABLE_PREFERENCE_KEY, JSON.stringify({
-      version: 3,
+      version: 4,
       showDraftMetrics,
       showYahooMetrics,
       showPlayerTrends,
@@ -735,8 +793,9 @@ export function App() {
       groupOrder: playerGroupOrder,
       activeViewId: activePlayerViewId,
       columnWidths: playerColumnWidths,
+      sorts,
     }));
-  }, [showDraftMetrics, showYahooMetrics, showPlayerTrends, autoFitPlayerTable, smartCompactPlayerTable, trendGameCount, hiddenPlayerColumns, collapsedPlayerGroups, playerGroupOrder, activePlayerViewId, playerColumnWidths]);
+  }, [showDraftMetrics, showYahooMetrics, showPlayerTrends, autoFitPlayerTable, smartCompactPlayerTable, trendGameCount, hiddenPlayerColumns, collapsedPlayerGroups, playerGroupOrder, activePlayerViewId, playerColumnWidths, sorts]);
 
   useEffect(() => {
     window.localStorage.setItem(PLAYER_TABLE_SAVED_VIEWS_KEY, JSON.stringify(savedPlayerViews));
@@ -773,6 +832,7 @@ export function App() {
     setPlayerGroupOrder(DEFAULT_PLAYER_GROUP_ORDER);
     setActivePlayerViewId("default");
     setPlayerColumnWidths(Object.fromEntries(PLAYER_TABLE_COLUMNS.map((column) => [column.key, column.defaultWidth])));
+    setSorts(DEFAULT_PLAYER_SORTS.map((sort) => ({ ...sort })));
   }, []);
 
   const applyPlayerViewConfiguration = useCallback((configuration) => {
@@ -785,15 +845,21 @@ export function App() {
     setAutoFitPlayerTable(configuration.autoFit === true);
     setTrendGameCount([5, 8, 10].includes(configuration.trendGameCount) ? configuration.trendGameCount : 10);
     setPlayerGroupOrder(configuration.groupOrder || DEFAULT_PLAYER_GROUP_ORDER);
+    if (configuration.columnWidths && typeof configuration.columnWidths === "object") {
+      setPlayerColumnWidths(Object.fromEntries(PLAYER_TABLE_COLUMNS.map((column) => [column.key, clampPlayerTableWidth(column.key, configuration.columnWidths[column.key] ?? column.defaultWidth)])));
+    }
+    if (configuration.sorts) setSorts(sanitizePlayerSorts(configuration.sorts));
     setActivePlayerViewId(typeof configuration.activeViewId === "string" ? configuration.activeViewId : "default");
   }, []);
 
   const savePlayerView = useCallback((configuration) => {
-    const suggested = activePlayerViewId === "default" ? "Weekly Research" : savedPlayerViews.find((view) => view.id === activePlayerViewId)?.name || "Weekly Research";
+    const selectedViewId = typeof configuration.activeViewId === "string" ? configuration.activeViewId : activePlayerViewId;
+    const suggested = selectedViewId === "default" ? "Weekly Research" : savedPlayerViews.find((view) => view.id === selectedViewId)?.name || "Weekly Research";
     const name = window.prompt("Name this Player Database view", suggested)?.trim();
     if (!name) return;
-    const id = activePlayerViewId === "default" ? `view-${Date.now()}` : activePlayerViewId;
-    setSavedPlayerViews((current) => [...current.filter((view) => view.id !== id), { id, name, config: configuration }]);
+    const id = selectedViewId === "default" ? `view-${Date.now()}` : selectedViewId;
+    const config = { ...configuration, activeViewId: id };
+    setSavedPlayerViews((current) => [...current.filter((view) => view.id !== id), { id, name, config }]);
     setActivePlayerViewId(id);
     return id;
   }, [activePlayerViewId, savedPlayerViews]);
@@ -1303,7 +1369,11 @@ export function App() {
                   }
                   return (
                     <th key={column.key} className={`${column.group === "dfs" ? "dfs-head " : ""}${column.group === "draft" ? "draft-head " : ""}${column.key === "rank" ? "identity sticky-rank " : ""}${column.key === "name" ? "identity sticky-name " : ""}${playerGroupEndKeys.has(column.key) ? "group-end" : ""}`} aria-sort={activeSort ? (activeDirection === "asc" ? "ascending" : "descending") : "none"}>
-                      {column.sortable === false ? <span>{column.metric ? `Last ${trendGameCount}` : column.label}</span> : <button onClick={(event) => handleSort(column.key, event.shiftKey)} title="Click to cycle sort; Shift-click adds a secondary sort"><span>{column.label}</span><SortIcon active={activeSort} direction={activeDirection} priority={sortIndex} /></button>}
+                      {column.sortable === false ? (column.metric ? (
+                        <span className="trend-column-heading" title={column.metric === "snaps" ? "Focused row scale magnifies changes in snap volume. Exact values remain above every bar." : "Zero-baseline row scale uses a robust upper bound so one outlier does not flatten the other games."}>
+                          <b>Last {trendGameCount}</b><small>{column.metric === "snaps" ? "Focus scale" : "0 baseline"}</small>
+                        </span>
+                      ) : <span>{column.label}</span>) : <button onClick={(event) => handleSort(column.key, event.shiftKey)} title="Click to cycle sort; Shift-click adds a secondary sort"><span>{column.label}</span><SortIcon active={activeSort} direction={activeDirection} priority={sortIndex} /></button>}
                       <PlayerColumnResizeHandle column={column} width={playerColumnWidths[column.key]} onResize={resizePlayerColumn} />
                     </th>
                   );
@@ -1366,6 +1436,8 @@ export function App() {
         autoFit={autoFitPlayerTable}
         trendGameCount={trendGameCount}
         groupOrder={playerGroupOrder}
+        columnWidths={playerColumnWidths}
+        sorts={sorts}
         savedViews={savedPlayerViews}
         activeViewId={activePlayerViewId}
         onClose={closeCustomColumns}
