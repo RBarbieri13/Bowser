@@ -7,8 +7,7 @@ export const PLAYER_TABLE_GROUPS = [
     columns: [
       { key: "select", label: "", studioLabel: "Player selection", defaultWidth: 44, minWidth: 38, maxWidth: 76, align: "center", sortable: false },
       { key: "rank", label: "Rank", defaultWidth: 48, minWidth: 42, maxWidth: 96, align: "center" },
-      { key: "name", field: "player_display_name", label: "Name", defaultWidth: 208, minWidth: 140, maxWidth: 360, align: "left" },
-      { key: "team", label: "Team", defaultWidth: 58, minWidth: 50, maxWidth: 110, align: "center" },
+      { key: "name", field: "player_display_name", label: "Name", studioLabel: "Player, team, and depth", defaultWidth: 230, minWidth: 190, maxWidth: 400, align: "left" },
       { key: "position", label: "POS", studioLabel: "Position", defaultWidth: 52, minWidth: 44, maxWidth: 100, align: "center" },
       { key: "upcoming_matchup", label: "Next", studioLabel: "Upcoming game", defaultWidth: 132, minWidth: 104, maxWidth: 240, align: "left", sortable: false },
     ],

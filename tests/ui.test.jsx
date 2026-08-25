@@ -453,7 +453,7 @@ describe("statistics table UI", () => {
     await screen.findByRole("button", { name: "Test Player" });
     const table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
     expect(screen.queryByRole("button", { name: "ADP" })).not.toBeInTheDocument();
-    expect(screen.getByRole("columnheader", { name: "Details" })).toHaveAttribute("colspan", "6");
+    expect(screen.getByRole("columnheader", { name: "Details" })).toHaveAttribute("colspan", "5");
     expect(screen.getByRole("columnheader", { name: "Usage" })).toHaveAttribute("colspan", "4");
     expect(screen.getByRole("columnheader", { name: "Passing" })).toHaveAttribute("colspan", "5");
     expect(screen.getByRole("columnheader", { name: "Rushing" })).toHaveAttribute("colspan", "4");
@@ -511,6 +511,10 @@ describe("statistics table UI", () => {
     expect(columnOrder.indexOf("trend_targets")).toBe(columnOrder.indexOf("receiving_tds") + 1);
     expect(columnOrder.indexOf("trend_fantasy_points")).toBe(columnOrder.indexOf("fantasy_points") + 1);
     expect(columnOrder).not.toContain("depth_rank");
+    expect(columnOrder).not.toContain("team");
+    const playerNameCell = screen.getByRole("button", { name: "Test Player" }).closest("td");
+    expect(playerNameCell.querySelector(".player-name-team-logo img")).toHaveAttribute("src", expect.stringContaining("/buf.png"));
+    expect(within(table).queryByRole("button", { name: "Team" })).not.toBeInTheDocument();
     expect(screen.getByRole("img", { name: /Snaps trend for Test Player: Week 1: 58;.*Week 10: 96/ })).toBeInTheDocument();
     expect(screen.getByRole("img", { name: /Pass attempts trend for Test Player/ })).toBeInTheDocument();
     expect(screen.getByRole("img", { name: /Rush attempts trend for Test Player/ })).toBeInTheDocument();
@@ -528,6 +532,8 @@ describe("statistics table UI", () => {
     expect(latestPlayerUrl().searchParams.get("includeTrends")).toBe("1");
 
     const depthButton = screen.getByRole("button", { name: "Test Player is QB 2 on the BUF depth chart" });
+    expect(depthButton).toHaveTextContent(/^2$/);
+    expect(depthButton.querySelector("b, small")).not.toBeInTheDocument();
     expect(depthButton).toHaveAttribute("aria-expanded", "false");
     await user.click(depthButton);
     expect(depthButton).toHaveAttribute("aria-expanded", "true");
@@ -651,8 +657,8 @@ describe("statistics table UI", () => {
     render(<App />);
     await screen.findByRole("button", { name: "Test Player" });
     fireEvent.keyDown(screen.getByRole("separator", { name: "Resize Snaps column" }), { key: "ArrowRight", shiftKey: true });
-    await user.click(screen.getByRole("button", { name: "Team" }));
-    await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("team"));
+    await user.click(screen.getByRole("button", { name: "POS" }));
+    await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("position"));
     await user.click(screen.getByRole("button", { name: "Custom Columns" }));
     const balanced = screen.getByRole("button", { name: /Balanced/ });
     expect(balanced).toHaveAttribute("aria-pressed", "true");
@@ -661,7 +667,7 @@ describe("statistics table UI", () => {
     await user.click(screen.getByRole("button", { name: "Save full view including column sizes and sorting" }));
     const savedView = JSON.parse(localStorage.getItem("bowser:player-table-saved-views:v1")).find((view) => view.name === "Weekly Research");
     expect(savedView.config.columnWidths.snaps).toBe(76);
-    expect(savedView.config.sorts).toEqual([{ key: "team", direction: "asc" }]);
+    expect(savedView.config.sorts).toEqual([{ key: "position", direction: "asc" }]);
   });
 
   test("reorders visible sections across hidden optional groups", async () => {
@@ -703,7 +709,7 @@ describe("statistics table UI", () => {
         trendGameCount: 5,
         groupOrder: ["player", "usage", "passing", "rushing", "receiving", "draft", "yahoo", "dfs", "advanced", "fantasy"],
         columnWidths: { snaps: 88 },
-        sorts: [{ key: "team", direction: "asc" }],
+        sorts: [{ key: "position", direction: "asc" }],
       },
     }]));
     const user = userEvent.setup();
@@ -722,7 +728,7 @@ describe("statistics table UI", () => {
     await user.click(screen.getByRole("button", { name: "Apply & save" }));
     expect(table.querySelector('col[data-column="passing_attempts"]')).not.toBeInTheDocument();
     expect(table.querySelector('col[data-column="snaps"]')).toHaveStyle({ width: "88px" });
-    await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("team"));
+    await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("position"));
     expect(JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1")).activeViewId).toBe("saved-opportunity");
 
     await user.click(screen.getByRole("button", { name: "Custom Columns" }));
@@ -757,28 +763,28 @@ describe("statistics table UI", () => {
     const view = render(<App />);
     await screen.findByRole("button", { name: "Test Player" });
     const nameButton = screen.getByRole("button", { name: "Name" });
-    const teamButton = screen.getByRole("button", { name: "Team" });
+    const positionButton = screen.getByRole("button", { name: "POS" });
 
     await user.click(nameButton);
     await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("name"));
     expect(nameButton.closest("th")).toHaveAttribute("aria-sort", "ascending");
 
-    fireEvent.click(teamButton, { shiftKey: true });
-    await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("name,team"));
-    expect(teamButton.closest("th")).toHaveAttribute("aria-sort", "ascending");
+    fireEvent.click(positionButton, { shiftKey: true });
+    await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("name,position"));
+    expect(positionButton.closest("th")).toHaveAttribute("aria-sort", "ascending");
     expect(JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1")).sorts).toEqual([
       { key: "name", direction: "asc" },
-      { key: "team", direction: "asc" },
+      { key: "position", direction: "asc" },
     ]);
 
     view.unmount();
     render(<App />);
     await screen.findByRole("button", { name: "Test Player" });
-    await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("name,team"));
+    await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("name,position"));
     const restoredNameButton = screen.getByRole("button", { name: "Name" });
-    const restoredTeamButton = screen.getByRole("button", { name: "Team" });
+    const restoredPositionButton = screen.getByRole("button", { name: "POS" });
     expect(restoredNameButton.closest("th")).toHaveAttribute("aria-sort", "ascending");
-    expect(restoredTeamButton.closest("th")).toHaveAttribute("aria-sort", "ascending");
+    expect(restoredPositionButton.closest("th")).toHaveAttribute("aria-sort", "ascending");
 
     await user.click(restoredNameButton);
     await user.click(restoredNameButton);

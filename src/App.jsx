@@ -42,7 +42,7 @@ const TREND_PARENT_COLUMNS = {
 const REQUIRED_PLAYER_COLUMNS = new Set(["name"]);
 const PLAYER_VIEW_PRESETS = [
   { key: "balanced", name: "Balanced", description: "All the key stats in a balanced view.", icon: SlidersHorizontal, groups: ["player", "usage", "passing", "rushing", "receiving", "fantasy"] },
-  { key: "opportunity", name: "Opportunity", description: "Focus on usage and opportunities.", icon: Target, columns: ["select", "rank", "name", "team", "position", "upcoming_matchup", "games_played", "snaps", "trend_snaps", "snap_pct", "passing_attempts", "trend_pass_attempts", "carries", "trend_rush_attempts", "targets", "trend_targets", "fantasy_points", "trend_fantasy_points"] },
+  { key: "opportunity", name: "Opportunity", description: "Focus on usage and opportunities.", icon: Target, columns: ["select", "rank", "name", "position", "upcoming_matchup", "games_played", "snaps", "trend_snaps", "snap_pct", "passing_attempts", "trend_pass_attempts", "carries", "trend_rush_attempts", "targets", "trend_targets", "fantasy_points", "trend_fantasy_points"] },
   { key: "passing", name: "Passing", description: "Deep dive into passing performance.", icon: Football, groups: ["player", "usage", "passing", "fantasy"] },
   { key: "rushing", name: "Rushing", description: "Focus on rushing performance.", icon: PersonSimpleRun, groups: ["player", "usage", "rushing", "fantasy"] },
   { key: "receiving", name: "Receiving", description: "Focus on receiving performance.", icon: Target, groups: ["player", "usage", "receiving", "fantasy"] },
@@ -295,7 +295,7 @@ function DepthChartCell({ row, depthChart, compact = false }) {
   return (
     <span className="depth-chart-cell-wrap" onMouseEnter={openPopover} onMouseLeave={scheduleClose}>
       <button ref={triggerRef} type="button" className={`depth-rank-trigger${compact ? " compact" : ""}`} aria-controls={tooltipId} aria-describedby={open ? tooltipId : undefined} aria-expanded={open} aria-label={`${playerName} is ${depthPosition || "position"} ${rank ?? "unranked"} on the ${team} depth chart`} onFocus={openPopover} onBlur={scheduleClose} onClick={() => { if (!open) openPopover(); }}>
-        {compact ? <><b>D</b><small>{rank ?? "—"}</small></> : rank ?? "—"}
+        {rank ?? "—"}
       </button>
       {popover ? createPortal(popover, document.body) : null}
     </span>
@@ -1368,7 +1368,7 @@ export function App() {
                     return <th key={column.key} className="identity sticky-select"><Checkbox checked={allVisibleSelected} mixed={someVisibleSelected} label="Select all visible players" onChange={toggleAll} /><PlayerColumnResizeHandle column={column} width={playerColumnWidths[column.key]} onResize={resizePlayerColumn} /></th>;
                   }
                   return (
-                    <th key={column.key} className={`${column.group === "dfs" ? "dfs-head " : ""}${column.group === "draft" ? "draft-head " : ""}${column.key === "rank" ? "identity sticky-rank " : ""}${column.key === "name" ? "identity sticky-name " : ""}${playerGroupEndKeys.has(column.key) ? "group-end" : ""}`} aria-sort={activeSort ? (activeDirection === "asc" ? "ascending" : "descending") : "none"}>
+                    <th key={column.key} className={`group-${column.group} ${column.group === "dfs" ? "dfs-head " : ""}${column.group === "draft" ? "draft-head " : ""}${column.key === "rank" ? "identity sticky-rank " : ""}${column.key === "name" ? "identity sticky-name " : ""}${playerGroupEndKeys.has(column.key) ? "group-end" : ""}`} aria-sort={activeSort ? (activeDirection === "asc" ? "ascending" : "descending") : "none"}>
                       {column.sortable === false ? (column.metric ? (
                         <span className="trend-column-heading" title={column.metric === "snaps" ? "Focused row scale magnifies changes in snap volume. Exact values remain above every bar." : "Zero-baseline row scale uses a robust upper bound so one outlier does not flatten the other games."}>
                           <b>Last {trendGameCount}</b><small>{column.metric === "snaps" ? "Focus scale" : "0 baseline"}</small>
@@ -1389,12 +1389,9 @@ export function App() {
                     if (column.key === "select") return <td key={column.key} className="identity sticky-select"><Checkbox checked={selected.has(row.player_id)} label={`Select ${row.player_display_name}`} onChange={() => toggleRow(row.player_id)} /></td>;
                     const field = column.field || column.key;
                     const value = column.key === "draft_kings_price" || column.key === "draft_kings_projection" ? null : row[field];
-                    const className = `${column.align === "center" ? "center " : ""}${column.key === "rank" ? "identity sticky-rank " : ""}${column.key === "name" ? "identity sticky-name player-name " : ""}${column.key === "team" ? "team-cell " : ""}${column.key === "position" ? "position-cell " : ""}${column.group === "draft" ? "draft-metric " : ""}${column.group === "yahoo" ? "yahoo-metric " : ""}${column.key === "fantasy_points" ? "fantasy-cell " : ""}${playerGroupEndKeys.has(column.key) ? "group-end" : ""}`;
+                    const className = `${column.align === "center" ? "center " : ""}${column.align === "left" ? "left " : ""}${column.key === "rank" ? "identity sticky-rank " : ""}${column.key === "name" ? "identity sticky-name player-name " : ""}${column.key === "position" ? "position-cell " : ""}${column.group === "draft" ? "draft-metric " : ""}${column.group === "yahoo" ? "yahoo-metric " : ""}${column.key === "fantasy_points" ? "fantasy-cell " : ""}${playerGroupEndKeys.has(column.key) ? "group-end" : ""}`;
                     if (column.key === "name") {
-                      return <td key={column.key} title={row.player_display_name} className={className}><span className="player-name-cell-content"><button type="button" className="player-name-button" onClick={(event) => openProfile(row, event.currentTarget)}>{row.player_display_name}</button><DepthChartCell row={row} depthChart={responseMeta?.depthCharts?.[row.current_depth_key]} compact /></span></td>;
-                    }
-                    if (column.key === "team") {
-                      return <td key={column.key} className={`${className} team-logo-cell`} title={row.team}><TeamLogo team={row.team} decorative /><span className="sr-only">{row.team}</span></td>;
+                      return <td key={column.key} title={row.player_display_name} className={className}><span className="player-name-cell-content"><button type="button" className="player-name-button" onClick={(event) => openProfile(row, event.currentTarget)}>{row.player_display_name}</button><span className="player-name-team-logo" title={row.team}><TeamLogo team={row.team} decorative /><span className="sr-only">{row.team}</span></span><DepthChartCell row={row} depthChart={responseMeta?.depthCharts?.[row.current_depth_key]} compact /></span></td>;
                     }
                     if (column.key === "upcoming_matchup") {
                       const matchupLines = splitUpcomingMatchup(value);
