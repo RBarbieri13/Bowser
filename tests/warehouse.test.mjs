@@ -62,7 +62,12 @@ test("player rows expose chronological ten-game REG trends with touches and sele
 
   const weekEight = ppr.player_trends[0];
   assert.equal(weekEight.rushAttempts, 8);
+  assert.equal(weekEight.rushingYards, 25);
+  assert.equal(weekEight.rushingTds, 0);
   assert.equal(weekEight.receptions, 3);
+  assert.equal(weekEight.receivingYards, 43);
+  assert.equal(weekEight.receivingTds, 0);
+  assert.ok(Number.isFinite(weekEight.snapPct));
   assert.equal(weekEight.touches, weekEight.rushAttempts + weekEight.receptions);
   assert.equal(weekEight.touches, 11);
   assert.equal(weekEight.fantasyPoints, 9.8);

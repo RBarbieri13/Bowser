@@ -28,7 +28,6 @@ export const PLAYER_TABLE_GROUPS = [
       { key: "completions", label: "CMP", studioLabel: "Completions", defaultWidth: 60, minWidth: 46, maxWidth: 130 },
       { key: "passing_yards", label: "YDS", studioLabel: "Passing yards", defaultWidth: 68, minWidth: 50, maxWidth: 145 },
       { key: "passing_tds", label: "TD", studioLabel: "Passing touchdowns", defaultWidth: 48, minWidth: 42, maxWidth: 105 },
-      { key: "trend_pass_attempts", label: "Pass trend", metric: "pass_attempts", defaultWidth: 148, minWidth: 116, maxWidth: 240, sortable: false },
     ],
   },
   {
@@ -107,6 +106,26 @@ export const PLAYER_TABLE_SEGMENTS = PLAYER_TABLE_GROUPS.map((group) => ({
 export const PLAYER_TABLE_COLUMNS = PLAYER_TABLE_GROUPS.flatMap((group) => group.columns.map((column) => ({ ...column, group: group.key })));
 export const DEFAULT_PLAYER_TABLE_WIDTHS = Object.fromEntries(PLAYER_TABLE_COLUMNS.map((column) => [column.key, column.defaultWidth]));
 export const DEFAULT_PLAYER_SORTS = [{ key: "fantasy_points", direction: "desc" }];
+export const DEFAULT_PLAYER_TREND_METRICS = {
+  trend_snaps: "snaps",
+  trend_rush_attempts: "rush_attempts",
+  trend_targets: "targets",
+  trend_fantasy_points: "fantasy_points",
+};
+export const PLAYER_TREND_METRIC_OPTIONS = {
+  trend_snaps: ["snaps", "snap_pct"],
+  trend_rush_attempts: ["rush_attempts", "rushing_yards", "rushing_tds"],
+  trend_targets: ["targets", "receptions", "receiving_yards", "receiving_tds"],
+  trend_fantasy_points: ["fantasy_points"],
+};
+
+export function sanitizePlayerTrendMetrics(value) {
+  const raw = value && typeof value === "object" ? value : {};
+  return Object.fromEntries(Object.entries(DEFAULT_PLAYER_TREND_METRICS).map(([columnKey, fallback]) => {
+    const candidate = String(raw[columnKey] || "");
+    return [columnKey, PLAYER_TREND_METRIC_OPTIONS[columnKey].includes(candidate) ? candidate : fallback];
+  }));
+}
 const COLUMN_BY_KEY = new Map(PLAYER_TABLE_COLUMNS.map((column) => [column.key, column]));
 const GROUP_KEYS = new Set(PLAYER_TABLE_GROUPS.map((group) => group.key));
 const COLUMN_KEYS = new Set(PLAYER_TABLE_COLUMNS.map((column) => column.key));
@@ -143,14 +162,16 @@ export function sanitizePlayerTablePreferences(value) {
     ? DEFAULT_HIDDEN_PLAYER_COLUMNS
     : Array.isArray(raw.hiddenColumns) ? raw.hiddenColumns.filter((key) => COLUMN_KEYS.has(key) && key !== "name") : DEFAULT_HIDDEN_PLAYER_COLUMNS);
   const suppliedOrder = Array.isArray(raw.groupOrder) ? raw.groupOrder.filter((key) => GROUP_KEYS.has(key)) : [];
+  const trendMetrics = sanitizePlayerTrendMetrics(raw.trendMetrics);
   return {
-    version: 4,
+    version: 5,
     showDraftMetrics: migratingToColumnStudio ? false : raw.showDraftMetrics !== false,
     showYahooMetrics: migratingToColumnStudio ? false : raw.showYahooMetrics === true,
     showPlayerTrends: raw.showPlayerTrends !== false,
     autoFit: raw.autoFit === true,
     smartCompact: raw.smartCompact !== false,
     trendGameCount: [5, 8, 10].includes(Number(raw.trendGameCount)) ? Number(raw.trendGameCount) : 10,
+    trendMetrics,
     hiddenColumns: [...hiddenColumns],
     collapsedGroups: migratingToColumnStudio ? [] : Array.isArray(raw.collapsedGroups) ? [...new Set(raw.collapsedGroups.filter((key) => GROUP_KEYS.has(key) && key !== "player"))] : [],
     groupOrder: [...new Set([...suppliedOrder, ...DEFAULT_PLAYER_GROUP_ORDER])],

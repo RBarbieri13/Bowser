@@ -1869,6 +1869,65 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
   gap: 1px;
   text-align: center;
 }
+.player-database-page .trend-heading-control {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.player-database-page .trend-heading-control label {
+  min-width: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.player-database-page .trend-heading-control select {
+  width: 106px;
+  height: 20px;
+  padding: 0 17px 0 5px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  outline: 2px solid transparent;
+  outline-offset: 1px;
+  appearance: none;
+  background: transparent;
+  color: inherit;
+  font: 750 10px/18px var(--font-ui);
+  letter-spacing: .035em;
+  text-align: center;
+  cursor: pointer;
+}
+.player-database-page .trend-heading-control label > svg {
+  width: 9px;
+  height: 9px;
+  position: absolute;
+  right: 5px;
+  pointer-events: none;
+}
+.player-database-page .trend-heading-control select:hover { border-color: color-mix(in srgb, currentColor 38%, transparent); background: color-mix(in srgb, currentColor 7%, transparent); }
+.player-database-page .trend-heading-control select:focus-visible { border-color: currentColor; outline-color: color-mix(in srgb, currentColor 44%, transparent); }
+.player-database-page .trend-heading-control select:active { background: color-mix(in srgb, currentColor 12%, transparent); }
+.player-database-page .trend-heading-control select:disabled { opacity: .55; cursor: not-allowed; }
+.player-database-page .column-row th .trend-minimize {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  flex: 0 0 20px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  outline: 2px solid transparent;
+  outline-offset: 1px;
+  background: transparent;
+  color: var(--text-muted);
+}
+.player-database-page .column-row th .trend-minimize svg { width: 10px; height: 10px; }
+.player-database-page .column-row th .trend-minimize:hover { border-color: var(--border-strong); background: var(--bg-raised); color: var(--text); }
+.player-database-page .column-row th .trend-minimize:focus-visible { border-color: currentColor; outline-color: color-mix(in srgb, currentColor 42%, transparent); color: var(--text); }
+.player-database-page .column-row th .trend-minimize:active { background: var(--bg-canvas); }
+.player-database-page .column-row th .trend-minimize:disabled { opacity: .55; cursor: not-allowed; }
 .player-database-page .trend-column-heading b {
   color: inherit;
   font: 700 11px/12px var(--font-ui);
@@ -2057,6 +2116,59 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
 .collapsed-sections-menu > div button:hover,
 .collapsed-sections-menu > div button:focus-visible { background: var(--bg-header); color: var(--text); outline: none; }
 .collapsed-sections-menu > div .restore-all { margin-top: 3px; border-top: 1px solid var(--border); color: var(--accent); }
+
+.hidden-trend-restore {
+  height: 28px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  outline: 2px solid transparent;
+  outline-offset: 1px;
+  background: var(--bg-canvas);
+  color: var(--text-secondary);
+  font: 700 10px var(--font-ui);
+  white-space: nowrap;
+}
+.hidden-trend-restore:hover { border-color: var(--accent); color: var(--text); }
+.hidden-trend-restore:focus-visible { border-color: var(--accent); outline-color: color-mix(in srgb, var(--accent) 38%, transparent); color: var(--text); }
+.hidden-trend-restore:active { background: var(--bg-raised); }
+.hidden-trend-restore:disabled { opacity: .55; cursor: not-allowed; }
+.hidden-trend-restore svg { width: 11px; height: 11px; }
+.hidden-trends-menu { position: relative; }
+.hidden-trends-menu > div {
+  width: 190px;
+  padding: 6px;
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 6px);
+  left: 0;
+  display: grid;
+  gap: 2px;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--bg-raised);
+  box-shadow: var(--popover-shadow);
+}
+.hidden-trends-menu > div button {
+  min-height: 30px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 6px;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+  background: transparent;
+  color: var(--text-secondary);
+  text-align: left;
+  font: 650 11px var(--font-ui);
+}
+.hidden-trends-menu > div button:hover,
+.hidden-trends-menu > div button:focus-visible { background: var(--bg-header); color: var(--text); outline-color: var(--border-strong); }
+.hidden-trends-menu > div button:active { background: var(--bg-canvas); }
+.hidden-trends-menu > div button:disabled { opacity: .55; cursor: not-allowed; }
+.hidden-trends-menu > div .restore-all { margin-top: 3px; border-top: 1px solid var(--border); color: var(--accent); }
 
 .column-settings-layer {
   position: fixed;

@@ -18,13 +18,16 @@ import {
   DEFAULT_HIDDEN_PLAYER_COLUMNS,
   DEFAULT_PLAYER_GROUP_ORDER,
   DEFAULT_PLAYER_SORTS,
+  DEFAULT_PLAYER_TREND_METRICS,
   PLAYER_TABLE_COLUMNS,
   PLAYER_TABLE_GROUPS,
   PLAYER_TABLE_SEGMENTS,
   PLAYER_TABLE_PREFERENCE_KEY,
   PLAYER_TABLE_SAVED_VIEWS_KEY,
+  PLAYER_TREND_METRIC_OPTIONS,
   readPlayerTablePreferences,
   sanitizePlayerSorts,
+  sanitizePlayerTrendMetrics,
 } from "./playerTableColumns.js";
 
 
@@ -32,17 +35,11 @@ const numberFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 
 const decimalFormatter = new Intl.NumberFormat("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const SIDEBAR_WIDTH_KEY = "bowser:sidebar-width:v1";
 const COMPACT_GROUP_NAMES = { player: "Details", draft: "Draft", yahoo: "Yahoo", usage: "Usage", advanced: "Advanced" };
-const TREND_PARENT_COLUMNS = {
-  trend_snaps: "snaps",
-  trend_pass_attempts: "passing_attempts",
-  trend_rush_attempts: "carries",
-  trend_targets: "targets",
-  trend_fantasy_points: "fantasy_points",
-};
 const REQUIRED_PLAYER_COLUMNS = new Set(["name"]);
+const TREND_COLUMN_KEYS = Object.keys(DEFAULT_PLAYER_TREND_METRICS);
 const PLAYER_VIEW_PRESETS = [
   { key: "balanced", name: "Balanced", description: "All the key stats in a balanced view.", icon: SlidersHorizontal, groups: ["player", "usage", "passing", "rushing", "receiving", "fantasy"] },
-  { key: "opportunity", name: "Opportunity", description: "Focus on usage and opportunities.", icon: Target, columns: ["select", "rank", "name", "position", "upcoming_matchup", "games_played", "snaps", "trend_snaps", "snap_pct", "passing_attempts", "trend_pass_attempts", "carries", "trend_rush_attempts", "targets", "trend_targets", "fantasy_points", "trend_fantasy_points"] },
+  { key: "opportunity", name: "Opportunity", description: "Focus on usage and opportunities.", icon: Target, columns: ["select", "rank", "name", "position", "upcoming_matchup", "games_played", "snaps", "trend_snaps", "snap_pct", "passing_attempts", "carries", "trend_rush_attempts", "targets", "trend_targets", "fantasy_points", "trend_fantasy_points"] },
   { key: "passing", name: "Passing", description: "Deep dive into passing performance.", icon: Football, groups: ["player", "usage", "passing", "fantasy"] },
   { key: "rushing", name: "Rushing", description: "Focus on rushing performance.", icon: PersonSimpleRun, groups: ["player", "usage", "rushing", "fantasy"] },
   { key: "receiving", name: "Receiving", description: "Focus on receiving performance.", icon: Target, groups: ["player", "usage", "receiving", "fantasy"] },
@@ -50,11 +47,23 @@ const PLAYER_VIEW_PRESETS = [
   { key: "all", name: "All Data", description: "Show everything available.", icon: Database, groups: PLAYER_TABLE_GROUPS.map((group) => group.key) },
 ];
 const TREND_METRICS = {
-  snaps: { label: "Snaps", unit: "snaps", className: "snaps", decimals: 0 },
-  pass_attempts: { label: "Pass attempts", unit: "pass attempts", className: "passing", decimals: 0 },
-  rush_attempts: { label: "Rush attempts", unit: "rush attempts", className: "rushing", decimals: 0 },
-  targets: { label: "Targets", unit: "targets", className: "targets", decimals: 0 },
-  fantasy_points: { label: "Fantasy points", unit: "fantasy points", className: "fantasy", decimals: 1 },
+  snaps: { label: "Snaps", heading: "Snap Trend", unit: "snaps", className: "snaps", decimals: 0, focusScale: true },
+  snap_pct: { label: "Snap %", heading: "Snap % Trend", unit: "snap percentage", className: "snaps", decimals: 0, focusScale: true },
+  rush_attempts: { label: "Attempts", heading: "Attempt Trend", unit: "rush attempts", className: "rushing", decimals: 0 },
+  rushing_yards: { label: "Yards", heading: "Yardage Trend", unit: "rushing yards", className: "rushing", decimals: 0 },
+  rushing_tds: { label: "Touchdowns", heading: "TD Trend", unit: "rushing touchdowns", className: "rushing", decimals: 0 },
+  targets: { label: "Targets", heading: "Target Trend", unit: "targets", className: "targets", decimals: 0 },
+  receptions: { label: "Receptions", heading: "Reception Trend", unit: "receptions", className: "targets", decimals: 0 },
+  receiving_yards: { label: "Yards", heading: "Yardage Trend", unit: "receiving yards", className: "targets", decimals: 0 },
+  receiving_tds: { label: "Touchdowns", heading: "TD Trend", unit: "receiving touchdowns", className: "targets", decimals: 0 },
+  fantasy_points: { label: "Fantasy Points", heading: "FPTS Trend", unit: "fantasy points", className: "fantasy", decimals: 1 },
+};
+
+const TREND_COLUMN_LABELS = {
+  trend_snaps: "Usage",
+  trend_rush_attempts: "Rushing",
+  trend_targets: "Receiving",
+  trend_fantasy_points: "Fantasy",
 };
 
 const GROUP_ICONS = { player: Person, usage: ChartBar, passing: Football, rushing: PersonSimpleRun, receiving: Target, fantasy: Trophy, draft: ChartBar, yahoo: Sparkle, dfs: Trophy, advanced: Database };
@@ -107,7 +116,14 @@ function trendMetricValue(game, metric) {
   }
   if (metric === "pass_attempts") return Number.isFinite(Number(game.passAttempts ?? game.passing_attempts)) ? Number(game.passAttempts ?? game.passing_attempts) : null;
   if (metric === "rush_attempts") return Number.isFinite(Number(game.rushAttempts ?? game.rush_attempts ?? game.carries)) ? Number(game.rushAttempts ?? game.rush_attempts ?? game.carries) : null;
-  const value = game[metric];
+  const aliases = {
+    snap_pct: game.snapPct,
+    rushing_yards: game.rushingYards,
+    rushing_tds: game.rushingTds,
+    receiving_yards: game.receivingYards,
+    receiving_tds: game.receivingTds,
+  };
+  const value = aliases[metric] ?? game[metric];
   return value === null || value === undefined ? null : Number(value);
 }
 
@@ -124,7 +140,7 @@ function percentile(values, proportion) {
 function trendScaleFor(values, metric) {
   const clean = values.filter(Number.isFinite);
   if (!clean.length) return { lower: 0, upper: 1, mode: "zero" };
-  if (metric === "snaps") {
+  if (TREND_METRICS[metric]?.focusScale) {
     const lowerBand = percentile(clean, .1);
     const upperBand = percentile(clean, .9);
     const spread = Math.max(1, upperBand - lowerBand);
@@ -201,6 +217,32 @@ function InlinePlayerTrend({ row, metric, gameCount = 10 }) {
           </span>
         );
       })}
+    </span>
+  );
+}
+
+function TrendColumnHeader({ columnKey, metric, gameCount, onMetricChange, onMinimize }) {
+  const definition = TREND_METRICS[metric];
+  const options = PLAYER_TREND_METRIC_OPTIONS[columnKey] || [metric];
+  const selectable = options.length > 1;
+  const scaleLabel = definition.focusScale ? "Focus scale" : "0 baseline";
+  return (
+    <span className="trend-column-heading" title={definition.focusScale ? "Focused row scale magnifies changes in usage. Exact values remain above every bar." : "Zero-baseline row scale uses a robust upper bound so one outlier does not flatten the other games."}>
+      <span className="trend-heading-control">
+        {selectable ? (
+          <label>
+            <span className="sr-only">{TREND_COLUMN_LABELS[columnKey]} trend metric</span>
+            <select aria-label={`${TREND_COLUMN_LABELS[columnKey]} trend metric`} value={metric} onChange={(event) => onMetricChange(columnKey, event.target.value)}>
+              {options.map((option) => <option key={option} value={option}>{TREND_METRICS[option].heading}</option>)}
+            </select>
+            <CaretDown weight="bold" aria-hidden="true" />
+          </label>
+        ) : <b>{definition.heading}</b>}
+        <button type="button" className="trend-minimize" aria-label={`Hide ${TREND_COLUMN_LABELS[columnKey]} trend chart`} title={`Hide ${TREND_COLUMN_LABELS[columnKey]} trend chart`} onClick={() => onMinimize(columnKey)}>
+          <Minus weight="bold" aria-hidden="true" />
+        </button>
+      </span>
+      <small>Last {gameCount} · {scaleLabel}</small>
     </span>
   );
 }
@@ -343,6 +385,7 @@ function CustomColumnsPanel({
   smartCompact,
   autoFit,
   trendGameCount,
+  trendMetrics,
   groupOrder,
   columnWidths,
   sorts,
@@ -362,6 +405,7 @@ function CustomColumnsPanel({
   const [draftSmartCompact, setDraftSmartCompact] = useState(smartCompact);
   const [draftAutoFit, setDraftAutoFit] = useState(autoFit);
   const [draftTrendGameCount, setDraftTrendGameCount] = useState(trendGameCount);
+  const [draftTrendMetrics, setDraftTrendMetrics] = useState(trendMetrics);
   const [draftOrder, setDraftOrder] = useState(groupOrder);
   const [draftColumnWidths, setDraftColumnWidths] = useState(columnWidths);
   const [draftSorts, setDraftSorts] = useState(sorts);
@@ -377,11 +421,12 @@ function CustomColumnsPanel({
     setDraftSmartCompact(smartCompact);
     setDraftAutoFit(autoFit);
     setDraftTrendGameCount(trendGameCount);
+    setDraftTrendMetrics(trendMetrics);
     setDraftOrder(groupOrder);
     setDraftColumnWidths(columnWidths);
     setDraftSorts(sorts);
     setDraftActiveViewId(activeViewId);
-  }, [hiddenColumns, collapsedGroups, showDraftMetrics, showYahooMetrics, showPlayerTrends, smartCompact, autoFit, trendGameCount, groupOrder, columnWidths, sorts, activeViewId]);
+  }, [hiddenColumns, collapsedGroups, showDraftMetrics, showYahooMetrics, showPlayerTrends, smartCompact, autoFit, trendGameCount, trendMetrics, groupOrder, columnWidths, sorts, activeViewId]);
 
   useEffect(() => {
     if (open && !wasOpen.current) resetDraft();
@@ -465,6 +510,7 @@ function CustomColumnsPanel({
     smartCompact: draftSmartCompact,
     autoFit: draftAutoFit,
     trendGameCount: draftTrendGameCount,
+    trendMetrics: draftTrendMetrics,
     groupOrder: draftOrder,
     columnWidths: draftColumnWidths,
     sorts: draftSorts,
@@ -486,6 +532,7 @@ function CustomColumnsPanel({
     setDraftSmartCompact(config.smartCompact !== false);
     setDraftAutoFit(config.autoFit === true);
     setDraftTrendGameCount([5, 8, 10].includes(config.trendGameCount) ? config.trendGameCount : 10);
+    setDraftTrendMetrics(sanitizePlayerTrendMetrics(config.trendMetrics));
     setDraftOrder(config.groupOrder || DEFAULT_PLAYER_GROUP_ORDER);
     setDraftColumnWidths(config.columnWidths && typeof config.columnWidths === "object"
       ? Object.fromEntries(PLAYER_TABLE_COLUMNS.map((column) => [column.key, clampPlayerTableWidth(column.key, config.columnWidths[column.key] ?? columnWidths[column.key])]))
@@ -525,11 +572,11 @@ function CustomColumnsPanel({
 
   const panel = (
     <div className="column-settings-layer">
-      <button type="button" className="column-settings-backdrop" aria-label="Close Custom Columns" onClick={onClose} />
+      <button type="button" className="column-settings-backdrop" aria-label="Close Table Settings" onClick={onClose} />
       <aside ref={studioRef} className="column-settings-drawer" role="dialog" aria-modal="true" aria-labelledby="custom-columns-title" tabIndex="-1">
         <header>
           <div><Columns weight="duotone" aria-hidden="true" /><span><small>Column Studio</small><h2 id="custom-columns-title">Build a Player Database view</h2></span></div>
-          <button type="button" className="column-settings-close" onClick={onClose} aria-label="Close Custom Columns"><X weight="bold" /></button>
+          <button type="button" className="column-settings-close" onClick={onClose} aria-label="Close Table Settings"><X weight="bold" /></button>
         </header>
         <section className="column-studio-saved" aria-label="Saved views">
           <label><span>Saved view</span><select value={draftActiveViewId} onChange={(event) => applySavedViewToDraft(event.target.value)}><option value="default">Current layout</option>{savedViews.map((view) => <option key={view.id} value={view.id}>{view.name}</option>)}</select></label>
@@ -563,7 +610,8 @@ function CustomColumnsPanel({
                   {group.columns.map((column) => {
                     const required = REQUIRED_PLAYER_COLUMNS.has(column.key);
                     const visible = gateVisible && !hiddenSet.has(column.key);
-                    return <div className="column-settings-column" key={column.key}><Checkbox checked={visible} label={`${visible ? "Hide" : "Show"} ${column.studioLabel || column.label || "selection"} column`} disabled={required} onChange={() => setColumnVisible(group, column, !visible)} /><span><b>{column.studioLabel || column.label || "Player selection"}</b>{column.metric ? <small>{TREND_METRICS[column.metric]?.label} · last {draftTrendGameCount} games</small> : required ? <small>Always shown</small> : null}</span></div>;
+                    const trendMetric = column.metric ? (draftTrendMetrics[column.key] || column.metric) : null;
+                    return <div className="column-settings-column" key={column.key}><Checkbox checked={visible} label={`${visible ? "Hide" : "Show"} ${column.studioLabel || column.label || "selection"} column`} disabled={required} onChange={() => setColumnVisible(group, column, !visible)} /><span><b>{column.studioLabel || column.label || "Player selection"}</b>{trendMetric ? <small>{TREND_METRICS[trendMetric]?.heading} · last {draftTrendGameCount} games</small> : required ? <small>Always shown</small> : null}</span></div>;
                   })}
                 </div> : null}
               </section>
@@ -752,11 +800,13 @@ export function App() {
   const [autoFitPlayerTable, setAutoFitPlayerTable] = useState(initialTablePreferences.autoFit);
   const [smartCompactPlayerTable, setSmartCompactPlayerTable] = useState(initialTablePreferences.smartCompact);
   const [trendGameCount, setTrendGameCount] = useState(initialTablePreferences.trendGameCount);
+  const [trendMetrics, setTrendMetrics] = useState(initialTablePreferences.trendMetrics);
   const [hiddenPlayerColumns, setHiddenPlayerColumns] = useState(initialTablePreferences.hiddenColumns);
   const [collapsedPlayerGroups, setCollapsedPlayerGroups] = useState(initialTablePreferences.collapsedGroups);
   const [sectionResizeEnabled, setSectionResizeEnabled] = useState(false);
   const [customColumnsOpen, setCustomColumnsOpen] = useState(false);
   const [collapsedSectionsOpen, setCollapsedSectionsOpen] = useState(false);
+  const [hiddenTrendsOpen, setHiddenTrendsOpen] = useState(false);
   const [playerColumnWidths, setPlayerColumnWidths] = useState(initialTablePreferences.columnWidths);
   const [playerGroupOrder, setPlayerGroupOrder] = useState(initialTablePreferences.groupOrder);
   const [savedPlayerViews, setSavedPlayerViews] = useState(readSavedPlayerViews);
@@ -781,13 +831,14 @@ export function App() {
 
   useEffect(() => {
     window.localStorage.setItem(PLAYER_TABLE_PREFERENCE_KEY, JSON.stringify({
-      version: 4,
+      version: 5,
       showDraftMetrics,
       showYahooMetrics,
       showPlayerTrends,
       autoFit: autoFitPlayerTable,
       smartCompact: smartCompactPlayerTable,
       trendGameCount,
+      trendMetrics,
       hiddenColumns: hiddenPlayerColumns,
       collapsedGroups: collapsedPlayerGroups,
       groupOrder: playerGroupOrder,
@@ -795,7 +846,7 @@ export function App() {
       columnWidths: playerColumnWidths,
       sorts,
     }));
-  }, [showDraftMetrics, showYahooMetrics, showPlayerTrends, autoFitPlayerTable, smartCompactPlayerTable, trendGameCount, hiddenPlayerColumns, collapsedPlayerGroups, playerGroupOrder, activePlayerViewId, playerColumnWidths, sorts]);
+  }, [showDraftMetrics, showYahooMetrics, showPlayerTrends, autoFitPlayerTable, smartCompactPlayerTable, trendGameCount, trendMetrics, hiddenPlayerColumns, collapsedPlayerGroups, playerGroupOrder, activePlayerViewId, playerColumnWidths, sorts]);
 
   useEffect(() => {
     window.localStorage.setItem(PLAYER_TABLE_SAVED_VIEWS_KEY, JSON.stringify(savedPlayerViews));
@@ -827,6 +878,7 @@ export function App() {
     setAutoFitPlayerTable(false);
     setSmartCompactPlayerTable(true);
     setTrendGameCount(10);
+    setTrendMetrics(DEFAULT_PLAYER_TREND_METRICS);
     setHiddenPlayerColumns(DEFAULT_HIDDEN_PLAYER_COLUMNS);
     setCollapsedPlayerGroups([]);
     setPlayerGroupOrder(DEFAULT_PLAYER_GROUP_ORDER);
@@ -844,6 +896,7 @@ export function App() {
     setSmartCompactPlayerTable(configuration.smartCompact !== false);
     setAutoFitPlayerTable(configuration.autoFit === true);
     setTrendGameCount([5, 8, 10].includes(configuration.trendGameCount) ? configuration.trendGameCount : 10);
+    setTrendMetrics(sanitizePlayerTrendMetrics(configuration.trendMetrics));
     setPlayerGroupOrder(configuration.groupOrder || DEFAULT_PLAYER_GROUP_ORDER);
     if (configuration.columnWidths && typeof configuration.columnWidths === "object") {
       setPlayerColumnWidths(Object.fromEntries(PLAYER_TABLE_COLUMNS.map((column) => [column.key, clampPlayerTableWidth(column.key, configuration.columnWidths[column.key] ?? column.defaultWidth)])));
@@ -900,7 +953,22 @@ export function App() {
   }, [showDraftMetrics, showYahooMetrics, showPlayerTrends]);
   const hiddenPlayerColumnSet = useMemo(() => new Set(hiddenPlayerColumns), [hiddenPlayerColumns]);
   const collapsedPlayerGroupSet = useMemo(() => new Set(collapsedPlayerGroups), [collapsedPlayerGroups]);
-  const playerColumnGroupByKey = useMemo(() => new Map(PLAYER_TABLE_COLUMNS.map((column) => [column.key, column.group])), []);
+  const hiddenTrendColumns = useMemo(() => showPlayerTrends
+    ? TREND_COLUMN_KEYS.filter((key) => hiddenPlayerColumnSet.has(key))
+    : [], [showPlayerTrends, hiddenPlayerColumnSet]);
+  const setTrendColumnVisible = useCallback((columnKey, visible) => {
+    setHiddenPlayerColumns((current) => {
+      const next = new Set(current);
+      if (visible) next.delete(columnKey);
+      else next.add(columnKey);
+      return [...next];
+    });
+    if (visible) setHiddenTrendsOpen(false);
+  }, []);
+  const setTrendMetric = useCallback((columnKey, metric) => {
+    if (!PLAYER_TREND_METRIC_OPTIONS[columnKey]?.includes(metric)) return;
+    setTrendMetrics((current) => ({ ...current, [columnKey]: metric }));
+  }, []);
   const availablePlayerSegments = useMemo(() => [...PLAYER_TABLE_SEGMENTS]
     .sort((a, b) => playerGroupOrder.indexOf(a.groupKey) - playerGroupOrder.indexOf(b.groupKey))
     .filter((segment) => isPlayerGroupEnabled(segment.groupKey))
@@ -909,15 +977,10 @@ export function App() {
       columns: segment.columns.filter((column) => {
         if (column.metric && !showPlayerTrends) return false;
         if (hiddenPlayerColumnSet.has(column.key)) return false;
-        const parentKey = TREND_PARENT_COLUMNS[column.key];
-        if (!parentKey) return true;
-        const parentGroup = playerColumnGroupByKey.get(parentKey);
-        return !hiddenPlayerColumnSet.has(parentKey)
-          && !collapsedPlayerGroupSet.has(parentGroup)
-          && isPlayerGroupEnabled(parentGroup);
+        return true;
       }),
     }))
-    .filter((segment) => segment.columns.length > 0), [playerGroupOrder, isPlayerGroupEnabled, hiddenPlayerColumnSet, collapsedPlayerGroupSet, playerColumnGroupByKey, showPlayerTrends]);
+    .filter((segment) => segment.columns.length > 0), [playerGroupOrder, isPlayerGroupEnabled, hiddenPlayerColumnSet, showPlayerTrends]);
 
   const fullyHiddenPlayerGroups = useMemo(() => PLAYER_TABLE_GROUPS
     .filter((group) => group.key !== "player" && (!isPlayerGroupEnabled(group.key)
@@ -1292,7 +1355,7 @@ export function App() {
             title="Choose columns, section visibility, trend range, and compact behavior"
           >
             <Columns weight="duotone" aria-hidden="true" />
-            <span>Custom Columns</span>
+            <span>Table Settings</span>
           </button>
           <button
             type="button"
@@ -1323,6 +1386,21 @@ export function App() {
         {showSwipeHint ? <div className="swipe-hint">Swipe horizontally for more stats <button onClick={() => { setShowSwipeHint(false); localStorage.setItem("stats-scroll-hint-dismissed", "1"); }} aria-label="Dismiss horizontal scroll hint"><X /></button></div> : null}
         <header className="table-panel-heading">
           <h1>Player Database</h1>
+          {hiddenTrendColumns.length === 1 ? (
+            <button type="button" className="hidden-trend-restore" onClick={() => setTrendColumnVisible(hiddenTrendColumns[0], true)}>
+              <Plus weight="bold" aria-hidden="true" />Restore {TREND_COLUMN_LABELS[hiddenTrendColumns[0]]} trend
+            </button>
+          ) : hiddenTrendColumns.length > 1 ? (
+            <div className="hidden-trends-menu">
+              <button type="button" className="hidden-trend-restore" aria-expanded={hiddenTrendsOpen} onClick={() => setHiddenTrendsOpen((current) => !current)}>
+                <Plus weight="bold" aria-hidden="true" />{hiddenTrendColumns.length} hidden trends<CaretDown weight="bold" aria-hidden="true" />
+              </button>
+              {hiddenTrendsOpen ? <div role="menu" aria-label="Restore hidden trend charts">
+                {hiddenTrendColumns.map((columnKey) => <button type="button" role="menuitem" key={columnKey} onClick={() => setTrendColumnVisible(columnKey, true)}>Restore {TREND_COLUMN_LABELS[columnKey]} trend</button>)}
+                <button type="button" role="menuitem" className="restore-all" onClick={() => { setHiddenPlayerColumns((current) => current.filter((key) => !TREND_COLUMN_KEYS.includes(key))); setHiddenTrendsOpen(false); }}>Restore all trends</button>
+              </div> : null}
+            </div>
+          ) : null}
           {restorableCollapsedGroups.length === 1 ? (
             <button type="button" className="collapsed-section-restore" onClick={() => togglePlayerGroup(restorableCollapsedGroups[0].key)}>
               <Plus weight="bold" aria-hidden="true" />Restore {restorableCollapsedGroups[0].name}
@@ -1370,9 +1448,7 @@ export function App() {
                   return (
                     <th key={column.key} className={`group-${column.group} ${column.group === "dfs" ? "dfs-head " : ""}${column.group === "draft" ? "draft-head " : ""}${column.key === "rank" ? "identity sticky-rank " : ""}${column.key === "name" ? "identity sticky-name " : ""}${playerGroupEndKeys.has(column.key) ? "group-end" : ""}`} aria-sort={activeSort ? (activeDirection === "asc" ? "ascending" : "descending") : "none"}>
                       {column.sortable === false ? (column.metric ? (
-                        <span className="trend-column-heading" title={column.metric === "snaps" ? "Focused row scale magnifies changes in snap volume. Exact values remain above every bar." : "Zero-baseline row scale uses a robust upper bound so one outlier does not flatten the other games."}>
-                          <b>Last {trendGameCount}</b><small>{column.metric === "snaps" ? "Focus scale" : "0 baseline"}</small>
-                        </span>
+                        <TrendColumnHeader columnKey={column.key} metric={trendMetrics[column.key] || column.metric} gameCount={trendGameCount} onMetricChange={setTrendMetric} onMinimize={(columnKey) => setTrendColumnVisible(columnKey, false)} />
                       ) : <span>{column.label}</span>) : <button onClick={(event) => handleSort(column.key, event.shiftKey)} title="Click to cycle sort; Shift-click adds a secondary sort"><span>{column.label}</span><SortIcon active={activeSort} direction={activeDirection} priority={sortIndex} /></button>}
                       <PlayerColumnResizeHandle column={column} width={playerColumnWidths[column.key]} onResize={resizePlayerColumn} />
                     </th>
@@ -1399,7 +1475,7 @@ export function App() {
                       return <td key={column.key} className={`${className} upcoming-matchup-cell`}>{row.upcoming_game_url ? <a href={row.upcoming_game_url} target="_blank" rel="noreferrer" aria-label={value || "No upcoming matchup"}>{content}</a> : <span className="upcoming-matchup-copy">{content}</span>}</td>;
                     }
                     if (column.metric) {
-                      return <td key={column.key} className={`${className} player-trend-cell`}><InlinePlayerTrend row={row} metric={column.metric} gameCount={trendGameCount} /></td>;
+                      return <td key={column.key} className={`${className} player-trend-cell`}><InlinePlayerTrend row={row} metric={trendMetrics[column.key] || column.metric} gameCount={trendGameCount} /></td>;
                     }
                     if (column.key === "yahoo_add_drop_ratio") {
                       const adds = Number(row.yahoo_adds) || 0;
@@ -1432,6 +1508,7 @@ export function App() {
         smartCompact={smartCompactPlayerTable}
         autoFit={autoFitPlayerTable}
         trendGameCount={trendGameCount}
+        trendMetrics={trendMetrics}
         groupOrder={playerGroupOrder}
         columnWidths={playerColumnWidths}
         sorts={sorts}
