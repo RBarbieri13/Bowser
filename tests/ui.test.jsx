@@ -79,14 +79,14 @@ const sampleProfile = {
       leagueStatus: "Roster data not connected",
     },
     gameLogs: [{
-      season_type: "REG", week: 1, team: "BUF", opponent_team: "KC", position: "QB",
+      season_type: "REG", week: 1, team: "BUF", opponent_team: "KC", result: "W", position: "QB",
       fantasy_points: 31.2, snap_pct: 100, position_finish: 1, passing_attempts: 31, completions: 24,
       passing_yards_per_attempt: 9.1, passing_yards: 282, passing_tds: 3, interceptions: 0, sacks_suffered: 2,
       carries: 8, rushing_yards: 46, rushing_yards_per_attempt: 5.8, rushing_tds: 1,
       targets: 0, receptions: 0, receiving_yards: 0, receiving_yards_per_reception: null, receiving_tds: 0,
     }],
     seasonStats: [{
-      season: 2025, team: "BUF", games_played: 17, position_finish: 1, fantasy_points: 411.4,
+      season: 2025, team: "BUF", games_played: 17, position_finish: 1, fantasy_points: 411.4, fantasy_points_per_game: 24.2, snap_pct: 90.4,
       passing_attempts: 500, completions: 350, passing_yards_per_attempt: 8.4, passing_yards: 4200,
       passing_tds: 35, interceptions: 8, sacks_suffered: 22, carries: 75, rushing_yards: 500,
       rushing_yards_per_attempt: 6.7, rushing_tds: 7, targets: 0, receptions: 0,
@@ -94,7 +94,7 @@ const sampleProfile = {
     }],
     depthChart: {
       team: "BUF",
-      groups: [{ position: "QB", players: [{ playerId: "00-test", name: "Test Player", position: "QB", positionRank: 1, fantasyPoints: 411.4, selected: true }] }],
+      groups: [{ position: "QB", players: [{ playerId: "00-test", name: "Test Player", position: "QB", positionRank: 1, fantasyPoints: 411.4, fantasyPointsPerGame: 24.2, selected: true }] }],
     },
   },
   meta: { season: 2025, scoring: "ppr", queryMs: 2.1 },
@@ -569,7 +569,7 @@ describe("statistics table UI", () => {
     await user.click(screen.getByRole("button", { name: "Table Settings" }));
     expect(screen.getByRole("dialog", { name: "Build a Player Database view" })).toBeVisible();
     await user.click(within(screen.getByRole("group", { name: "Trend window" })).getByRole("button", { name: "5" }));
-    await user.click(screen.getByRole("button", { name: "Apply & save" }));
+    await user.click(screen.getByRole("button", { name: "Apply changes" }));
     expect(table.querySelectorAll(".trend-snaps .trend-bar-item")).toHaveLength(5);
     expect(screen.getAllByText(/Last 5 ·/).length).toBeGreaterThan(0);
 
@@ -595,7 +595,7 @@ describe("statistics table UI", () => {
     await user.click(screen.getByRole("button", { name: "Table Settings" }));
     const passingGroup = screen.getByText("Passing", { selector: ".column-settings-group > header b" }).closest("section");
     await user.click(within(passingGroup).getByLabelText("Hide Passing section"));
-    await user.click(screen.getByRole("button", { name: "Apply & save" }));
+    await user.click(screen.getByRole("button", { name: "Apply changes" }));
     expect(table.querySelector('col[data-column="passing_attempts"]')).not.toBeInTheDocument();
     expect(table.querySelector('col[data-column="collapsed-passing"]')).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Restore Passing" })).toBeInTheDocument();
@@ -642,7 +642,7 @@ describe("statistics table UI", () => {
     const receivingGroup = screen.getByText("Receiving", { selector: ".column-settings-group > header b" }).closest("section");
     await user.click(within(passingGroup).getByLabelText("Hide Passing section"));
     await user.click(within(receivingGroup).getByLabelText("Hide Receiving section"));
-    await user.click(screen.getByRole("button", { name: "Apply & save" }));
+    await user.click(screen.getByRole("button", { name: "Apply changes" }));
 
     expect(table.querySelector('col[data-column="carries"]')).not.toBeInTheDocument();
     expect(table.querySelector('col[data-column="trend_rush_attempts"]')).toBeInTheDocument();
@@ -661,7 +661,7 @@ describe("statistics table UI", () => {
     const usageGroup = screen.getByText("Usage", { selector: ".column-settings-group > header b" }).closest("section");
     await user.click(within(usageGroup).getByRole("button", { name: "Expand Usage column choices" }));
     await user.click(within(usageGroup).getByLabelText("Hide Snap trend column"));
-    await user.click(screen.getByRole("button", { name: "Apply & save" }));
+    await user.click(screen.getByRole("button", { name: "Apply changes" }));
     expect(table.querySelector('col[data-column="trend_snaps"]')).not.toBeInTheDocument();
 
     const stored = JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1"));
@@ -683,7 +683,7 @@ describe("statistics table UI", () => {
     expect(balanced).toHaveAttribute("aria-pressed", "true");
     await user.click(screen.getByRole("button", { name: /Opportunity/ }));
     expect(screen.getByRole("button", { name: /Opportunity/ })).toHaveAttribute("aria-pressed", "true");
-    await user.click(screen.getByRole("button", { name: "Save full view including column sizes and sorting" }));
+    await user.click(screen.getByRole("button", { name: "Save as new view" }));
     const savedView = JSON.parse(localStorage.getItem("bowser:player-table-saved-views:v1")).find((view) => view.name === "Weekly Research");
     expect(savedView.config.columnWidths.snaps).toBe(76);
     expect(savedView.config.sorts).toEqual([{ key: "position", direction: "asc" }]);
@@ -750,7 +750,7 @@ describe("statistics table UI", () => {
 
     await user.click(screen.getByRole("button", { name: "Table Settings" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Saved view" }), "saved-opportunity");
-    await user.click(screen.getByRole("button", { name: "Apply & save" }));
+    await user.click(screen.getByRole("button", { name: "Apply changes" }));
     expect(table.querySelector('col[data-column="passing_attempts"]')).not.toBeInTheDocument();
     expect(table.querySelector('col[data-column="snaps"]')).toHaveStyle({ width: "88px" });
     await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("position"));
@@ -758,11 +758,11 @@ describe("statistics table UI", () => {
 
     await user.click(screen.getByRole("button", { name: "Table Settings" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Saved view" }), "default");
-    await user.click(screen.getByRole("button", { name: "Apply & save" }));
+    await user.click(screen.getByRole("button", { name: "Apply changes" }));
     expect(JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1")).activeViewId).toBe("default");
   });
 
-  test("opens an accessible player card with three working tabs", async () => {
+  test("opens the accessible v2 player card with four working tabs", async () => {
     const user = userEvent.setup();
     render(<App />);
     const playerButton = await screen.findByRole("button", { name: "Test Player" });
@@ -770,8 +770,13 @@ describe("statistics table UI", () => {
 
     const dialog = await screen.findByRole("dialog", { name: "Test Player" });
     expect(dialog).toBeInTheDocument();
-    expect(screen.getByText("31.2")).toBeInTheDocument();
+    expect(screen.getAllByText("31.2").length).toBeGreaterThan(0);
     expect(screen.getByText("Roster data not connected")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "SNAP %" })).toBeInTheDocument();
+
+    await user.click(screen.getByRole("tab", { name: "Heat Map" }));
+    expect(screen.getByRole("tabpanel", { name: "Heat Map" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Rushing" })).toBeInTheDocument();
 
     await user.click(screen.getByRole("tab", { name: "Season Stats" }));
     expect(screen.getByRole("tabpanel", { name: "Season Stats" })).toBeInTheDocument();

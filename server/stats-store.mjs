@@ -1044,6 +1044,12 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
         week,
         team,
         opponent_team,
+        COALESCE((
+          SELECT summary.result
+          FROM game_team_summary summary
+          WHERE summary.game_id = player_week_stats.game_id
+            AND summary.team = player_week_stats.team
+        ), '') AS result,
         position,
         player_display_name,
         offense_snaps,
@@ -1078,11 +1084,14 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
   const seasonStats = db.prepare(`
     WITH totals AS (
       SELECT
+        season,
         player_id,
         MAX(player_display_name) AS player_display_name,
         GROUP_CONCAT(DISTINCT NULLIF(team, 'UNK')) AS team,
         MAX(position) AS position,
         COUNT(DISTINCT season_type || '-' || week) AS games_played,
+        COALESCE(SUM(offense_snaps), 0) AS offense_snaps,
+        ROUND(AVG(CASE WHEN offense_pct IS NOT NULL THEN offense_pct * 100.0 END), 1) AS snap_pct,
         SUM(attempts) AS passing_attempts,
         SUM(completions) AS completions,
         SUM(passing_yards) AS passing_yards,
@@ -1099,16 +1108,17 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
         SUM(receiving_yards) AS receiving_yards,
         SUM(receiving_tds) AS receiving_tds,
         CASE WHEN SUM(receptions) > 0 THEN ROUND(1.0 * SUM(receiving_yards) / SUM(receptions), 1) END AS receiving_yards_per_reception,
-        ROUND(SUM(fantasy_points + receptions * ?), 1) AS fantasy_points
+        ROUND(SUM(fantasy_points + receptions * ?), 1) AS fantasy_points,
+        ROUND(SUM(fantasy_points + receptions * ?) / COUNT(DISTINCT season_type || '-' || week), 1) AS fantasy_points_per_game
       FROM player_week_stats
-      WHERE season = 2025
-      GROUP BY player_id
+      WHERE source_player_stats = 1
+      GROUP BY season, player_id
     ), ranked AS (
-      SELECT *, DENSE_RANK() OVER (PARTITION BY position ORDER BY fantasy_points DESC, player_id ASC) AS position_finish
+      SELECT *, DENSE_RANK() OVER (PARTITION BY season, position ORDER BY fantasy_points DESC, player_id ASC) AS position_finish
       FROM totals
     )
-    SELECT 2025 AS season, * FROM ranked WHERE player_id = ?
-  `).get(receptionBonus, playerId);
+    SELECT * FROM ranked WHERE player_id = ? ORDER BY season DESC
+  `).all(receptionBonus, receptionBonus, playerId);
 
   const depthRows = db.prepare(`
     WITH totals AS (
@@ -1116,7 +1126,9 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
         player_id,
         MAX(player_display_name) AS player_display_name,
         MAX(position) AS position,
+        COUNT(DISTINCT season_type || '-' || week) AS games_played,
         ROUND(SUM(fantasy_points + receptions * ?), 1) AS fantasy_points,
+        ROUND(SUM(fantasy_points + receptions * ?) / COUNT(DISTINCT season_type || '-' || week), 1) AS fantasy_points_per_game,
         COALESCE(SUM(offense_snaps), 0) AS snaps
       FROM player_week_stats
       WHERE season = 2025
@@ -1136,7 +1148,7 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
       fantasy_points DESC,
       snaps DESC,
       player_display_name ASC
-  `).all(receptionBonus, playerRow.team);
+  `).all(receptionBonus, receptionBonus, playerRow.team);
 
   const groupedDepth = [];
   for (const row of depthRows) {
@@ -1152,6 +1164,7 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
       position: row.position,
       positionRank: row.position_rank,
       fantasyPoints: row.fantasy_points,
+      fantasyPointsPerGame: row.fantasy_points_per_game,
       selected: row.player_id === playerId,
     });
   }
@@ -1167,7 +1180,7 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
         leagueStatus: "Roster data not connected",
       },
       gameLogs,
-      seasonStats: seasonStats ? [seasonStats] : [],
+      seasonStats,
       depthChart: { team: playerRow.team, groups: groupedDepth },
     },
     meta: {

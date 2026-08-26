@@ -120,9 +120,12 @@ test("player profiles expose game logs, season totals, and team-relative depth d
   assert.equal(profile.data.player.name, "Christian McCaffrey");
   assert.equal(profile.data.gameLogs.length, 19);
   assert.equal(profile.data.gameLogs[0].fantasy_points, 23.2);
+  assert.equal(profile.data.gameLogs[0].result, "W");
   assert.equal(profile.data.seasonStats[0].fantasy_points, 458.4);
+  assert.equal(profile.data.seasonStats[0].fantasy_points_per_game, 24.1);
+  assert.equal(profile.data.seasonStats[0].snap_pct, 81.7);
   assert.equal(profile.data.seasonStats[0].sacks_suffered, 0);
-  assert.ok(profile.data.depthChart.groups.some((group) => group.position === "RB" && group.players.some((player) => player.selected)));
+  assert.ok(profile.data.depthChart.groups.some((group) => group.position === "RB" && group.players.some((player) => player.selected && player.fantasyPointsPerGame === 24.1)));
   assert.ok(profile.meta.queryMs < 250);
 });
 

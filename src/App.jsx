@@ -583,7 +583,7 @@ function CustomColumnsPanel({
           <span className="column-studio-active">Active</span>
           <button type="button" disabled={draftActiveViewId === "default"} onClick={() => onRenameView(draftActiveViewId)}><PencilSimple aria-hidden="true" />Rename</button>
           <button type="button" disabled={draftActiveViewId === "default"} onClick={() => onDuplicateView(draftActiveViewId)}><Copy aria-hidden="true" />Duplicate</button>
-          <button type="button" className="column-studio-save" aria-label="Save full view including column sizes and sorting" title="Saves columns, section order, column widths, trend window, and multi-column sorting" onClick={() => { const savedId = onSaveView(draftConfiguration()); if (savedId) setDraftActiveViewId(savedId); }}>Save full view</button>
+          <button type="button" className="column-studio-save" aria-label={draftActiveViewId === "default" ? "Save as new view" : "Update saved view"} title={draftActiveViewId === "default" ? "Save this configuration as a new named view" : "Overwrite the selected named view with this configuration"} onClick={() => { const savedId = onSaveView(draftConfiguration()); if (savedId) setDraftActiveViewId(savedId); }}>{draftActiveViewId === "default" ? "Save as new view" : "Update saved view"}</button>
         </section>
 
         <div className="column-studio-main">
@@ -626,7 +626,7 @@ function CustomColumnsPanel({
           <div className="column-studio-order"><b>Table order <small>(drag to reorder)</small></b><div>{draftOrder.map((key) => { const group = PLAYER_TABLE_GROUPS.find((item) => item.key === key); if (!group || !groupGate(group.key) || collapsedSet.has(key) || group.columns.every((column) => hiddenSet.has(column.key))) return null; return <span key={key} className={`tone-${group.tone}${draggingGroup === key ? " dragging" : ""}`} draggable onDragStart={() => setDraggingGroup(key)} onDragEnd={() => setDraggingGroup(null)} onDragOver={(event) => event.preventDefault()} onDrop={() => reorderGroup(draggingGroup, key)}><DotsSixVertical aria-hidden="true" />{group.shortName || group.name}<button type="button" aria-label={`Move ${group.name} left`} onClick={() => moveGroup(key, -1)}><ArrowLeft /></button><button type="button" aria-label={`Move ${group.name} right`} onClick={() => moveGroup(key, 1)}><ArrowRight /></button></span>; })}</div></div>
         </section>
 
-        <footer><button type="button" className="column-settings-reset" onClick={() => { onReset(); onClose(); }}><ArrowCounterClockwise aria-hidden="true" />Reset to default</button><span><button type="button" className="column-settings-cancel" onClick={onClose}>Cancel</button><button type="button" className="column-settings-done" onClick={() => { onApply(draftConfiguration()); onClose(); }}>Apply &amp; save</button></span></footer>
+        <footer><button type="button" className="column-settings-reset" onClick={() => { onReset(); onClose(); }}><ArrowCounterClockwise aria-hidden="true" />Reset to default</button><span><button type="button" className="column-settings-cancel" onClick={onClose}>Cancel</button><button type="button" className="column-settings-done" title="Apply these changes without overwriting the selected saved view" onClick={() => { onApply(draftConfiguration()); onClose(); }}>Apply changes</button></span></footer>
       </aside>
     </div>
   );
