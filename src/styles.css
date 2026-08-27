@@ -2864,7 +2864,8 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
 .player-database-page .inline-player-trend { grid-auto-columns: minmax(10px, 1fr); gap: 0; }
 .player-database-page .trend-bar-item { gap: 0; }
 
-/* Player Card v2 — PLAYER-CARD-V2-HANDOFF.md */
+/* Player Card v2 — PLAYER-CARD-V2-HANDOFF.md
+   Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V4 */
 .player-profile-v2 {
   --font-data: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --profile-bg: #181818;
@@ -2957,22 +2958,22 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
 .profile-trajectory-item { min-width: 0; height: 118px; flex: 1 1 0; display: grid; grid-template-rows: 96px 18px; align-items: end; }
 .profile-trajectory-item > b { z-index: 1; width: 100%; min-height: 8px; align-self: end; border-radius: 3px 3px 0 0; background: var(--profile-border-strong); }
 .profile-trajectory-item > b.above-average { background: var(--profile-green); }
-.profile-trajectory-item > small { align-self: center; color: #4e4e4e; text-align: center; font: 600 9px var(--font-data); }
+.profile-trajectory-item > small { align-self: center; color: #777; text-align: center; font: 700 10px var(--font-data); letter-spacing: .01em; }
 .profile-table-scroll { width: 100%; max-width: 100%; overflow: auto; scrollbar-color: var(--profile-border-strong) var(--profile-tab); }
 .profile-v2-table { width: 100%; min-width: 0; border-spacing: 0; border-collapse: separate; table-layout: fixed; color: var(--profile-text); font-variant-numeric: tabular-nums; }
 .profile-v2-table caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .profile-v2-table th,
 .profile-v2-table td { border: 0; background: transparent; }
-.profile-game-log-table .profile-log-groups th { height: 24px; padding: 0 5px; border-bottom: 1px solid var(--profile-border); color: var(--profile-muted); text-align: center; font: 700 10px var(--font-ui); letter-spacing: .1em; text-transform: uppercase; }
+.profile-game-log-table .profile-log-groups th { height: 24px; padding: 0 3px; border-bottom: 1px solid var(--profile-border); color: var(--profile-secondary); text-align: center; font: 800 11px var(--font-ui); letter-spacing: .08em; text-transform: uppercase; }
 .profile-game-log-table .profile-log-groups th:not(:first-child) { border-left: 1px solid var(--profile-border); }
-.profile-game-log-table .profile-log-columns th { height: 28px; padding: 0 7px; border-bottom: 1px solid var(--profile-border); color: var(--profile-label); text-align: right; font: 700 9px var(--font-ui); letter-spacing: .06em; }
+.profile-game-log-table .profile-log-columns th { height: 28px; padding: 0 3px; border-bottom: 1px solid var(--profile-border); color: #c6c6c6; text-align: right; font: 800 10px var(--font-ui); letter-spacing: .04em; }
 .profile-game-log-table .profile-log-columns th:nth-child(-n+2) { text-align: center; }
 .profile-game-log-table tbody tr:not(.profile-postseason-divider) > *,
-.profile-game-log-table tfoot tr > * { height: 40px; padding: 0 7px; border-bottom: 1px solid var(--profile-hairline); color: var(--profile-text); text-align: right; font: 600 13px var(--font-data); }
+.profile-game-log-table tfoot tr > * { height: 40px; padding: 0 3px; border-bottom: 1px solid var(--profile-hairline); color: var(--profile-text); text-align: right; font: 700 15px var(--font-data); letter-spacing: -.02em; }
 .profile-game-log-table tbody tr:not(.profile-postseason-divider) > th { color: var(--profile-label); text-align: center; font-weight: 700; }
 .profile-game-log-table .profile-opponent { text-align: center; }
-.profile-opponent strong { color: var(--profile-text); font: 700 12px var(--font-ui); }
-.profile-opponent span { margin-left: 6px; color: var(--profile-muted); font: 700 10px var(--font-data); }
+.profile-opponent strong { color: var(--profile-text); font: 800 13px var(--font-ui); }
+.profile-opponent span { margin-left: 4px; color: var(--profile-secondary); font: 700 11px var(--font-data); }
 .profile-opponent .result-w { color: var(--profile-green); }
 .profile-opponent .result-t { color: #ffc53d; }
 .profile-game-log-table.is-skill .profile-log-columns th:nth-child(3),
@@ -2995,11 +2996,11 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
   .profile-heat-table tbody tr:hover > *,
   .profile-season-table tbody tr:hover > * { background: #1c1c1c; }
 }
-.profile-fpts-pill { min-width: 58px; height: 28px; padding: 0 6px; display: inline-flex; align-items: center; justify-content: flex-end; border-radius: 7px; color: #fff; background: var(--profile-raised-strong); font: 700 15px var(--font-data); }
+.profile-fpts-pill { min-width: 58px; height: 28px; padding: 0 4px; display: inline-flex; align-items: center; justify-content: flex-end; border-radius: 7px; color: #fff; background: var(--profile-raised-strong); font: 800 16px var(--font-data); letter-spacing: -.025em; }
 .profile-fpts-pill.great { background: rgba(62,207,142,.16); color: var(--profile-green); }
 .profile-fpts-pill.poor { background: rgba(229,72,77,.14); color: var(--profile-negative-text); }
-.profile-snap-meter { display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px; }
-.profile-snap-meter b { min-width: 31px; color: var(--profile-text); font: 600 13px var(--font-data); }
+.profile-snap-meter { display: inline-flex; align-items: center; justify-content: flex-end; gap: 4px; }
+.profile-snap-meter b { min-width: 31px; color: var(--profile-text); font: 700 15px var(--font-data); letter-spacing: -.02em; }
 .profile-snap-meter > i { width: 52px; height: 6px; overflow: hidden; border-radius: 4px; background: #2a2a2a; }
 .profile-snap-meter > i > span { display: block; height: 100%; border-radius: inherit; background: rgba(62,207,142,.8); }
 .profile-v2-table .is-muted { color: #b8b8b8; }
@@ -3007,8 +3008,8 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
 .profile-v2-table .is-top-finish,
 .profile-summary-fpts { color: var(--profile-green); }
 .profile-v2-table .is-zero { color: var(--profile-zero); }
-.profile-postseason-divider th { height: 25px; padding: 0 7px; text-align: left; }
-.profile-postseason-divider span { display: flex; align-items: center; gap: 8px; color: var(--profile-muted); font: 700 9px var(--font-ui); letter-spacing: .14em; }
+.profile-postseason-divider th { height: 25px; padding: 0 3px; text-align: left; }
+.profile-postseason-divider span { display: flex; align-items: center; gap: 8px; color: var(--profile-secondary); font: 800 10px var(--font-ui); letter-spacing: .12em; }
 .profile-postseason-divider span::after { content: ""; height: 1px; flex: 1; background: var(--profile-raised-strong); }
 .profile-game-log-table tfoot { border-collapse: separate; }
 .profile-game-log-table tfoot tr > * { border-bottom: 0; }
@@ -3018,8 +3019,8 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
 .profile-summary-row.total > * { border-top: 1px solid var(--profile-raised-strong); border-bottom: 1px solid var(--profile-raised-strong); background: var(--profile-tab); }
 .profile-summary-row.total th:first-child { border-left: 1px solid var(--profile-raised-strong); border-radius: 9px 0 0 9px; }
 .profile-summary-row.total td:last-child { border-right: 1px solid var(--profile-raised-strong); border-radius: 0 9px 9px 0; }
-.profile-summary-row th { color: var(--profile-label) !important; text-align: left !important; font: 700 9px var(--font-ui) !important; letter-spacing: .1em; }
-.profile-performance-legend { margin-top: 12px; display: flex; align-items: center; flex-wrap: wrap; gap: 7px; color: var(--profile-secondary); font: 500 9px var(--font-ui); }
+.profile-summary-row th { color: var(--profile-secondary) !important; text-align: left !important; font: 800 10px var(--font-ui) !important; letter-spacing: .08em; }
+.profile-performance-legend { margin-top: 12px; display: flex; align-items: center; flex-wrap: wrap; gap: 7px; color: var(--profile-secondary); font: 600 10px var(--font-ui); }
 .profile-performance-legend > span { width: 10px; height: 10px; margin-left: 7px; border-radius: 3px; }
 .profile-performance-legend > span:first-child { margin-left: 0; }
 .profile-performance-legend .legend-great { background: rgba(62,207,142,.5); }
@@ -3028,24 +3029,24 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
 .profile-heat-table { margin-top: 2px; }
 .profile-heat-table col:not(:first-child):not(:nth-child(2)) { width: auto; }
 .profile-heat-table thead th,
-.profile-season-table thead th { height: 31px; padding: 0 8px; border-bottom: 1px solid var(--profile-border); color: var(--profile-label); text-align: right; font: 700 9px var(--font-ui); letter-spacing: .08em; }
+.profile-season-table thead th { height: 31px; padding: 0 4px; border-bottom: 1px solid var(--profile-border); color: #c6c6c6; text-align: right; font: 800 10px var(--font-ui); letter-spacing: .05em; }
 .profile-heat-table thead th:nth-child(-n+2),
 .profile-season-table thead th:first-child { text-align: center; }
-.profile-heat-table tbody > tr > * { height: 36px; padding: 0 6px; border-bottom: 1px solid var(--profile-hairline); text-align: right; }
-.profile-heat-table tbody th { color: var(--profile-label); text-align: center; font: 700 12px var(--font-data); }
+.profile-heat-table tbody > tr > * { height: 36px; padding: 0 3px; border-bottom: 1px solid var(--profile-hairline); text-align: right; }
+.profile-heat-table tbody th { color: var(--profile-secondary); text-align: center; font: 700 14px var(--font-data); }
 .profile-heat-table .profile-opponent { text-align: center; }
-.profile-heat-tile { min-width: 100%; height: 28px; padding: 0 9px; display: inline-flex; align-items: center; justify-content: flex-end; border-radius: 6px; background: rgba(62,207,142,var(--heat-alpha)); color: var(--heat-text); font: 600 12px var(--font-data); }
-.profile-heat-legend { margin-top: 13px; display: grid; grid-template-columns: 1fr 116px auto auto; align-items: center; gap: 7px; color: var(--profile-secondary); font: 500 9px var(--font-ui); }
+.profile-heat-tile { min-width: 100%; height: 28px; padding: 0 4px; display: inline-flex; align-items: center; justify-content: flex-end; border-radius: 6px; background: rgba(62,207,142,var(--heat-alpha)); color: var(--heat-text); font: 700 14px var(--font-data); letter-spacing: -.02em; }
+.profile-heat-legend { margin-top: 13px; display: grid; grid-template-columns: 1fr 116px auto auto; align-items: center; gap: 7px; color: var(--profile-secondary); font: 600 10px var(--font-ui); }
 .profile-heat-legend i { height: 8px; border-radius: 999px; background: linear-gradient(90deg, rgba(62,207,142,.04), rgba(62,207,142,.42)); }
-.profile-heat-legend small { color: var(--profile-muted); font: 600 8px var(--font-data); }
+.profile-heat-legend small { color: var(--profile-secondary); font: 700 9px var(--font-data); }
 .profile-season-table { min-width: 920px; }
 .profile-season-table col:not(:first-child) { width: auto; }
-.profile-season-table tbody > tr > * { height: 42px; padding: 0 7px; border-bottom: 1px solid var(--profile-hairline); color: var(--profile-text); text-align: right; font: 600 12px var(--font-data); }
+.profile-season-table tbody > tr > * { height: 42px; padding: 0 3px; border-bottom: 1px solid var(--profile-hairline); color: var(--profile-text); text-align: right; font: 700 14px var(--font-data); letter-spacing: -.02em; }
 .profile-season-table tbody th { color: var(--profile-label); text-align: center; font-weight: 700; }
 .profile-season-table tbody tr.current > * { background: rgba(62,207,142,.05); }
 .profile-season-table tbody tr.current th { color: var(--profile-green); }
 .profile-season-table .is-fantasy { color: var(--profile-green); }
-.player-profile-v2 .profile-note { margin: 14px 0 0; color: var(--profile-muted); font: 500 9px var(--font-ui); }
+.player-profile-v2 .profile-note { margin: 14px 0 0; color: var(--profile-secondary); font: 600 10px var(--font-ui); }
 .profile-depth-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
 .profile-depth-card { min-width: 0; min-height: 270px; padding: 12px; border: 1px solid var(--profile-raised-strong); border-radius: 14px; background: #121212; }
 .profile-depth-card h4 { margin: 0 0 9px; color: var(--profile-text); font: 800 14px var(--font-ui); }
@@ -3053,9 +3054,9 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
 .profile-depth-card ol { margin: 0; padding: 0; display: grid; gap: 3px; list-style: none; }
 .profile-depth-card li { border-left: 3px solid transparent; border-radius: 7px; }
 .profile-depth-card li.selected { border-left-color: var(--profile-green); background: rgba(62,207,142,.10); }
-.profile-depth-card button { width: 100%; min-height: 45px; padding: 6px 7px; display: grid; gap: 3px; border: 0; border-radius: 6px; background: transparent; text-align: left; }
-.profile-depth-card button span { min-width: 0; overflow: hidden; color: var(--profile-text); font: 700 11px var(--font-ui); text-overflow: ellipsis; white-space: nowrap; }
-.profile-depth-card button small { color: var(--profile-label); font: 500 8px var(--font-data); }
+.profile-depth-card button { width: 100%; min-height: 45px; padding: 3px 5px; display: grid; gap: 2px; border: 0; border-radius: 6px; background: transparent; text-align: left; }
+.profile-depth-card button span { min-width: 0; overflow: hidden; color: var(--profile-text); font: 800 13px var(--font-ui); text-overflow: ellipsis; white-space: nowrap; }
+.profile-depth-card button small { color: var(--profile-secondary); font: 650 10px var(--font-data); }
 .profile-depth-card li.selected button span { color: var(--profile-green); }
 @media (hover: hover) and (pointer: fine) { .profile-depth-card li:not(.selected):hover { background: var(--profile-raised); } }
 .player-profile-v2 .profile-loading,
