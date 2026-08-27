@@ -19,5 +19,6 @@ Rules:
 - Explain direct impact plus beneficiaries, competitors, and negative secondary effects.
 - For RBs emphasize goal-line, passing-down, two-minute, third-down, routes, targets, and committee structure. For WRs emphasize routes, targets, formation usage, red-zone work, and quarterback chemistry. For TEs emphasize route participation versus blocking. For QBs emphasize starting status, surrounding injuries, rushing usage, and scheme.
 - Every event must include working source URLs. Return null when a field cannot be determined. Exclude evergreen analysis and repeated commentary with no new information.
+- Return no more than 12 of the highest-signal underlying events.
 - The goal is a small, high-signal, source-traceable feed, not maximum volume.`;
 }

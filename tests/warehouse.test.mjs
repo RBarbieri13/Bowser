@@ -41,6 +41,7 @@ test("xAI Responses requests use the current text.format structured-output contr
   assert.equal(request.text.format.name, "bowser_fantasy_intelligence");
   assert.equal(request.text.format.strict, true);
   assert.equal(request.text.format.schema.type, "object");
+  assert.equal(request.max_turns, 2);
   assert.equal(request.tools[0].from_date, "2026-08-25");
   assert.equal(request.tools[0].to_date, "2026-08-26");
 });

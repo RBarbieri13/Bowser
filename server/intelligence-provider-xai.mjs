@@ -40,6 +40,7 @@ export function buildXaiRequestBody(options = {}, now = new Date()) {
       { type: "x_search", from_date: fromDate.toISOString().slice(0, 10), to_date: toDate.toISOString().slice(0, 10) },
       { type: "web_search" },
     ],
+    max_turns: 2,
     include: ["no_inline_citations"],
     text: {
       format: { type: "json_schema", name: "bowser_fantasy_intelligence", strict: true, schema: INTELLIGENCE_RESPONSE_SCHEMA },
