@@ -69,6 +69,16 @@ test("production API serves the packaged SQLite warehouse", async () => {
   assert.equal(game.data.game.awayScore, 20);
   assert.deepEqual(game.data.teams.map((team) => team.team), ["NYG", "PHI"]);
   assert.equal(game.data.availability.scoringTimeline, true);
+
+  const intelligenceResponse = await fetch(`${origin}/api/v1/intelligence-feed?hours=168`);
+  assert.equal(intelligenceResponse.status, 200);
+  const intelligence = await intelligenceResponse.json();
+  assert.equal(intelligence.events.length, 3);
+  assert.equal(intelligence.meta.snapshotMode, "curated_bootstrap");
+
+  const sourceResponse = await fetch(`${origin}/api/v1/intelligence-sources`);
+  assert.equal(sourceResponse.status, 200);
+  assert.equal((await sourceResponse.json()).summary.total, 15);
 });
 
 test("unknown API routes do not fall back to the app shell", async () => {

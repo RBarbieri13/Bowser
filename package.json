@@ -9,6 +9,7 @@
     "data:refresh": "python3 scripts/import_nflverse_2025.py --refresh && python3 scripts/import_fantasypros_adp.py",
     "data:rankings": "python3 scripts/import_fantasypros_adp.py",
     "data:verify": "python3 scripts/verify_warehouse.py",
+    "intelligence:refresh": "node scripts/refresh_intelligence.mjs",
     "test": "node --test tests/warehouse.test.mjs",
     "test:ui": "vitest run tests/ui.test.jsx",
     "check": "npm run data:verify && npm test && npm run test:ui && npm run build && npm run test:production && npm run test:sites",

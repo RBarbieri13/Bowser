@@ -196,6 +196,11 @@ beforeEach(() => {
     if (url.startsWith("/api/v1/game-breakdown?")) return { ok: true, json: async () => sampleGameBreakdown };
     if (url.startsWith("/api/v1/team-box-scores?")) return { ok: true, json: async () => sampleBoxScores };
     if (url.startsWith("/api/v1/opportunity-tracker?")) return { ok: true, json: async () => sampleOpportunityTracker };
+    if (url === "/api/v1/intelligence-sources") return { ok: true, json: async () => ({ summary: { total: 1 }, sources: [{ id: "xai", name: "xAI X Search", adoption: "primary", kind: "live_provider", role: "Cited X discovery", license: "Commercial API", automation: "supported_with_key", url: "https://docs.x.ai/developers/tools/x-search" }] }) };
+    if (url.startsWith("/api/v1/intelligence-feed?")) return { ok: true, json: async () => ({
+      meta: { total: 1, generatedAt: new Date().toISOString(), snapshotMode: "curated_bootstrap", provider: { configured: false, model: "grok-4.6" } },
+      events: [{ eventId: "evt-test", player: { name: "Test Player", team: "BUF", position: "QB" }, headline: "Test Player earns first-team work", summary: "An official team report confirms the usage change.", eventType: "ROLE_CHANGE", status: "CONFIRMED", fantasyImpact: "HIGH", fantasyAnalysis: "Monitor whether the usage continues in the next practice.", sentiment: { score: 35 }, buzz: { score: 50 }, sourceQuality: { confidence: 94 }, lastUpdatedAt: new Date().toISOString(), sources: [{ sourceName: "Buffalo Bills", url: "https://www.buffalobills.com/" }] }],
+    }) };
     return {
       ok: true,
       json: async () => ({
@@ -225,6 +230,18 @@ afterEach(() => {
 });
 
 describe("statistics table UI", () => {
+  test("renders the filterable intelligence feed and transparent source registry", async () => {
+    const user = userEvent.setup();
+    window.location.hash = "#/intelligence";
+    render(<App />);
+    expect(await screen.findByRole("heading", { name: "Fantasy Intelligence" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Test Player earns first-team work" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Scan now" })).toBeDisabled();
+    await user.click(screen.getByRole("tab", { name: "Source registry" }));
+    expect(await screen.findByRole("heading", { name: "Source registry" })).toBeInTheDocument();
+    expect(screen.getByText("xAI X Search")).toBeInTheDocument();
+  });
+
   test("uses the Bowser mascot lockup and navigates to team box scores", async () => {
     render(<App />);
     expect(screen.getByAltText("Bowser")).toBeInTheDocument();

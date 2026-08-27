@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-26T20:20:00-05:00",
+  "lookbackHours": 72,
+  "mode": "curated_bootstrap",
+  "events": [
+    {
+      "eventId": "nfl-2026-08-24-zamir-white-trade",
+      "player": { "playerId": null, "name": "Zamir White", "team": "NO", "position": "RB" },
+      "headline": "Saints acquire Zamir White from the 49ers",
+      "summary": "The NFL transaction wire lists Zamir White as traded from San Francisco to New Orleans on Aug. 24. The move changes his backfield context, but it does not by itself establish a fantasy-relevant workload.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "fantasyAnalysis": "Monitor New Orleans practice usage and the official depth chart before assigning touches. The transaction creates a possible role-change path without confirming one.",
+      "affectedPlayers": [],
+      "sentiment": { "score": 10, "direction": "NEUTRAL", "expertSentiment": null, "beatWriterSentiment": null, "socialSentiment": null, "reason": "A new team creates opportunity uncertainty, not a confirmed value increase." },
+      "buzz": { "score": null, "direction": "STABLE" },
+      "injury": { "isInjuryRelated": false, "bodyPart": null, "practiceStatus": null, "gameStatus": null, "expectedReturn": null },
+      "sourceQuality": { "confidence": 92, "primarySourceType": "OFFICIAL", "corroboratingSourceCount": 0 },
+      "sources": [
+        { "sourceName": "NFL Transactions", "author": null, "xHandle": null, "sourceType": "OFFICIAL", "publishedAt": "2026-08-24T12:00:00-04:00", "url": "https://www.nfl.com/transactions/", "isOriginalSource": true }
+      ],
+      "firstReportedAt": "2026-08-24T12:00:00-04:00",
+      "lastUpdatedAt": "2026-08-24T12:00:00-04:00"
+    },
+    {
+      "eventId": "nfl-2026-08-24-kayshon-boutte-trade",
+      "player": { "playerId": null, "name": "Kayshon Boutte", "team": "HOU", "position": "WR" },
+      "headline": "Texans acquire Kayshon Boutte from the Patriots",
+      "summary": "The NFL transaction wire lists Kayshon Boutte as traded from New England to Houston on Aug. 24. The destination changes his receiver competition and quarterback context, while his actual role remains unconfirmed.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "fantasyAnalysis": "Treat this as a watch-list event until Houston's first-team reps, formation usage, and depth order are reported by stronger team-level sources.",
+      "affectedPlayers": [],
+      "sentiment": { "score": 5, "direction": "NEUTRAL", "expertSentiment": null, "beatWriterSentiment": null, "socialSentiment": null, "reason": "The transaction is verified, but the fantasy role is unresolved." },
+      "buzz": { "score": null, "direction": "STABLE" },
+      "injury": { "isInjuryRelated": false, "bodyPart": null, "practiceStatus": null, "gameStatus": null, "expectedReturn": null },
+      "sourceQuality": { "confidence": 92, "primarySourceType": "OFFICIAL", "corroboratingSourceCount": 0 },
+      "sources": [
+        { "sourceName": "NFL Transactions", "author": null, "xHandle": null, "sourceType": "OFFICIAL", "publishedAt": "2026-08-24T12:00:00-04:00", "url": "https://www.nfl.com/transactions/", "isOriginalSource": true }
+      ],
+      "firstReportedAt": "2026-08-24T12:00:00-04:00",
+      "lastUpdatedAt": "2026-08-24T12:00:00-04:00"
+    },
+    {
+      "eventId": "nfl-2026-08-24-noah-brown-released",
+      "player": { "playerId": null, "name": "Noah Brown", "team": "FA", "position": "WR" },
+      "headline": "Raiders terminate Noah Brown's contract",
+      "summary": "The NFL termination wire lists Noah Brown as released by Las Vegas on Aug. 24. He becomes a free agent, removing any immediate team-specific role until he signs elsewhere.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "fantasyAnalysis": "His near-term redraft value is reduced while he is unattached. Reassess only after a signing and evidence of a defined receiving role.",
+      "affectedPlayers": [],
+      "sentiment": { "score": -35, "direction": "DOWN", "expertSentiment": null, "beatWriterSentiment": null, "socialSentiment": null, "reason": "A release removes a current path to snaps, though a future signing could change the outlook." },
+      "buzz": { "score": null, "direction": "STABLE" },
+      "injury": { "isInjuryRelated": false, "bodyPart": null, "practiceStatus": null, "gameStatus": null, "expectedReturn": null },
+      "sourceQuality": { "confidence": 94, "primarySourceType": "OFFICIAL", "corroboratingSourceCount": 0 },
+      "sources": [
+        { "sourceName": "NFL Transactions", "author": null, "xHandle": null, "sourceType": "OFFICIAL", "publishedAt": "2026-08-24T12:00:00-04:00", "url": "https://www.nfl.com/transactions/league/terminations/2026/8", "isOriginalSource": true }
+      ],
+      "firstReportedAt": "2026-08-24T12:00:00-04:00",
+      "lastUpdatedAt": "2026-08-24T12:00:00-04:00"
+    }
+  ]
+}

@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 import { getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "./server/stats-store.mjs";
+import { getIntelligenceRegistry, queryIntelligenceFeed, IntelligenceQueryError } from "./server/intelligence-store.mjs";
+import { scanWithXai, IntelligenceProviderError } from "./server/intelligence-provider-xai.mjs";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const clientDirectory = path.join(root, "dist", "client");
@@ -20,11 +22,11 @@ app.use((_request, response, next) => {
   next();
 });
 
-function sendApi(response, status, payload) {
+function sendApi(response, status, payload, cacheControl) {
   response.status(status);
-  response.setHeader("Cache-Control", status === 200
+  response.setHeader("Cache-Control", cacheControl || (status === 200
     ? "public, s-maxage=3600, stale-while-revalidate=86400"
-    : "no-store");
+    : "no-store"));
   response.json(payload);
 }
 
@@ -43,12 +45,34 @@ function apiHandler(handler) {
   };
 }
 
+function asyncApiHandler(handler) {
+  return async (request, response) => {
+    try {
+      const url = new URL(request.originalUrl, "https://local.invalid");
+      sendApi(response, 200, await handler(url.searchParams), url.searchParams.get("live") === "1" ? "no-store" : undefined);
+    } catch (error) {
+      if (error instanceof IntelligenceQueryError) return sendApi(response, 400, { error: { code: "invalid_query", field: error.field, message: error.message } });
+      if (error instanceof IntelligenceProviderError) return sendApi(response, error.status || 503, { error: { code: error.code, message: error.message } });
+      sendApi(response, 500, { error: { code: "intelligence_error", message: error instanceof Error ? error.message : "Unknown intelligence error" } });
+    }
+  };
+}
+
 app.get("/api/v1/meta", apiHandler(() => getMeta()));
 app.get("/api/v1/player-stats", apiHandler((params) => queryPlayers(params)));
 app.get("/api/v1/player-profile", apiHandler((params) => queryPlayerProfile(params)));
 app.get("/api/v1/team-box-scores", apiHandler((params) => queryTeamBoxScores(params)));
 app.get("/api/v1/opportunity-tracker", apiHandler((params) => queryOpportunityTracker(params)));
 app.get("/api/v1/game-breakdown", apiHandler((params) => queryGameBreakdown(params)));
+app.get("/api/v1/intelligence-sources", apiHandler(() => getIntelligenceRegistry()));
+app.get("/api/v1/intelligence-feed", asyncApiHandler((params) => params.get("live") === "1"
+  ? scanWithXai({
+      lookbackHours: Number(params.get("hours") || 24),
+      positions: String(params.get("position") || "QB,RB,WR,TE").split(",").filter(Boolean),
+      teams: String(params.get("team") || "").split(",").filter(Boolean),
+      query: params.get("search") || "",
+    })
+  : queryIntelligenceFeed(params)));
 app.use("/api", (request, response) => sendApi(response, 404, {
   error: { code: "not_found", message: `Unknown API route: ${request.originalUrl}` },
 }));

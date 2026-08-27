@@ -4,8 +4,8 @@
   "outputDirectory": "dist/client",
   "functions": {
     "api/**/*.mjs": {
-      "includeFiles": "data/fantasy_football.sqlite",
-      "maxDuration": 30
+      "includeFiles": ["data/fantasy_football.sqlite", "data/intelligence-feed.json", "data/intelligence-sources.json"],
+      "maxDuration": 60
     }
   }
 }

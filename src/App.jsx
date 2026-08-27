@@ -12,6 +12,7 @@ import { TeamBoxScores } from "./TeamBoxScores.jsx";
 import { GameBreakdown } from "./GameBreakdown.jsx";
 import { OpportunityTracker } from "./OpportunityTracker.jsx";
 import { LeagueHub } from "./LeagueHub.jsx";
+import { IntelligenceFeed } from "./IntelligenceFeed.jsx";
 import { TeamLogo } from "./teamLogos.jsx";
 import {
   clampPlayerTableWidth,
@@ -763,6 +764,7 @@ function routeFromHash() {
   }
   if (window.location.hash.includes("opportunity-tracker")) return { page: "opportunity-tracker", gameId: null };
   if (window.location.hash.includes("league-hub")) return { page: "league-hub", gameId: null };
+  if (window.location.hash.includes("intelligence")) return { page: "intelligence", gameId: null };
   return { page: window.location.hash.includes("team-box-scores") ? "team-box-scores" : "players", gameId: null };
 }
 
@@ -1241,6 +1243,8 @@ export function App() {
         <OpportunityTracker meta={meta} onOpenPlayer={openProfile} />
       ) : currentPage === "league-hub" ? (
         <LeagueHub />
+      ) : currentPage === "intelligence" ? (
+        <IntelligenceFeed />
       ) : (
       <main className="page-content player-database-page">
       <section className="filter-band" aria-label="Statistics filters">

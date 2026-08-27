@@ -1,0 +1,171 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-26T20:20:00-05:00",
+  "sources": [
+    {
+      "id": "xai-x-search",
+      "name": "xAI X Search",
+      "kind": "live_provider",
+      "url": "https://docs.x.ai/developers/tools/x-search",
+      "license": "Commercial API",
+      "automation": "supported_with_key",
+      "role": "Real-time X keyword, semantic, user, and thread search with citations.",
+      "adoption": "primary",
+      "notes": "Requires XAI_API_KEY. Social volume and sentiment never raise factual confidence on their own."
+    },
+    {
+      "id": "xai-web-search",
+      "name": "xAI Web Search",
+      "kind": "live_provider",
+      "url": "https://docs.x.ai/developers/tools/web-search",
+      "license": "Commercial API",
+      "automation": "supported_with_key",
+      "role": "Wide web discovery and corroboration with source URLs.",
+      "adoption": "primary",
+      "notes": "Runs with X Search so official reporting and social reporting can be compared."
+    },
+    {
+      "id": "twif-overall",
+      "name": "The Week in Fantasy — Overall",
+      "kind": "reference_surface",
+      "url": "https://www.theweekinfantasy.com/leaderboard/overall?days=7&position=All&player_filter=all",
+      "license": "Website terms apply",
+      "automation": "disabled_by_robots",
+      "role": "External comparison surface for overall player movement.",
+      "adoption": "reference_only",
+      "notes": "The site disallows automated access to /leaderboard/. Use only through a licensed API/export or manual comparison."
+    },
+    {
+      "id": "twif-adp-risers",
+      "name": "The Week in Fantasy — ADP Risers",
+      "kind": "reference_surface",
+      "url": "https://www.theweekinfantasy.com/leaderboard/adp_risers?days=7&position=All&player_filter=all",
+      "license": "Website terms apply",
+      "automation": "disabled_by_robots",
+      "role": "External comparison surface for seven-day ADP movement.",
+      "adoption": "reference_only",
+      "notes": "No automated scraping."
+    },
+    {
+      "id": "twif-positive-sentiment",
+      "name": "The Week in Fantasy — Positive Sentiment",
+      "kind": "reference_surface",
+      "url": "https://www.theweekinfantasy.com/leaderboard/sentiment_positive?days=7&position=All&player_filter=all",
+      "license": "Website terms apply",
+      "automation": "disabled_by_robots",
+      "role": "External comparison surface for positive fantasy sentiment.",
+      "adoption": "reference_only",
+      "notes": "No automated scraping."
+    },
+    {
+      "id": "twif-sentiment-risers",
+      "name": "The Week in Fantasy — Positive Sentiment Risers",
+      "kind": "reference_surface",
+      "url": "https://www.theweekinfantasy.com/leaderboard/pos_sentiment_risers?days=7&position=All&player_filter=all",
+      "license": "Website terms apply",
+      "automation": "disabled_by_robots",
+      "role": "External comparison surface for changes in positive sentiment.",
+      "adoption": "reference_only",
+      "notes": "No automated scraping."
+    },
+    {
+      "id": "twif-performance",
+      "name": "The Week in Fantasy — Performance Classification",
+      "kind": "reference_surface",
+      "url": "https://www.theweekinfantasy.com/leaderboard/classification_Performance?days=7&position=All&player_filter=all",
+      "license": "Website terms apply",
+      "automation": "disabled_by_robots",
+      "role": "External comparison surface for performance-classified discussion.",
+      "adoption": "reference_only",
+      "notes": "No automated scraping."
+    },
+    {
+      "id": "repo-comanager",
+      "name": "Fantasy-Football-AI-CoManager",
+      "kind": "repository",
+      "url": "https://github.com/JayMishra-source/Fantasy-Football-AI-CoManager",
+      "license": "No repository license file verified",
+      "automation": "reference_only",
+      "role": "Reference for provider abstraction, MCP surfaces, and graceful handling of missing news credentials.",
+      "adoption": "concept_only",
+      "notes": "No code copied because reusable rights are not granted by a repository license."
+    },
+    {
+      "id": "repo-nfl-mcp",
+      "name": "nfl_mcp",
+      "kind": "repository",
+      "url": "https://github.com/gtonic/nfl_mcp",
+      "license": "MIT",
+      "automation": "reference_only",
+      "role": "Reference for health checks, provider separation, caching, injury corroboration, and evaluation surfaces.",
+      "adoption": "architecture_reference",
+      "notes": "Bowser keeps its own contracts and does not embed this server."
+    },
+    {
+      "id": "repo-fantasy-forecasting",
+      "name": "fantasy-football-ai",
+      "kind": "repository",
+      "url": "https://github.com/cbratkovics/fantasy-football-ai",
+      "license": "MIT",
+      "automation": "reference_only",
+      "role": "Reference for feature provenance, model versioning, evaluation, and FastAPI-style service boundaries.",
+      "adoption": "architecture_reference",
+      "notes": "Forecasting logic is outside this news-intelligence slice."
+    },
+    {
+      "id": "repo-pick-ems",
+      "name": "pick-ems",
+      "kind": "repository",
+      "url": "https://github.com/stevekrenzel/pick-ems",
+      "license": "No repository license file verified",
+      "automation": "reference_only",
+      "role": "Reference for narrow analyst prompts that preserve teams, injuries, trades, and league classification.",
+      "adoption": "concept_only",
+      "notes": "No code copied."
+    },
+    {
+      "id": "repo-hike",
+      "name": "FantasyChatbot (HIKE)",
+      "kind": "repository",
+      "url": "https://github.com/AggieSportsAnalytics/FantasyChatbot",
+      "license": "No repository license file verified",
+      "automation": "reference_only",
+      "role": "Reference for RAG-backed injury/news context and time-series-aware fantasy analysis.",
+      "adoption": "concept_only",
+      "notes": "The football dataset and model stack are dated; no code copied."
+    },
+    {
+      "id": "repo-goalmine",
+      "name": "GoalMine",
+      "kind": "repository",
+      "url": "https://github.com/wiggapony0925/GoalMine",
+      "license": "Proprietary / no reusable license verified",
+      "automation": "reference_only",
+      "role": "Reference for parallel source roles, deterministic scoring around LLM output, run health, and graceful degradation.",
+      "adoption": "concept_only",
+      "notes": "Soccer betting code and prompts are not reused."
+    },
+    {
+      "id": "repo-news-summarizer",
+      "name": "ai-news-summarizer-sentiment-analysis",
+      "kind": "repository",
+      "url": "https://github.com/gungorefecetin/ai-news-summarizer-sentiment-analysis",
+      "license": "README claims MIT; no repository license file verified",
+      "automation": "reference_only",
+      "role": "Reference for a fetch → summarize → sentiment service boundary.",
+      "adoption": "concept_only",
+      "notes": "Generic sentiment is not used as fantasy sentiment and no code is copied."
+    },
+    {
+      "id": "repo-twitter-sentiment",
+      "name": "fantasy-football-twitter-analysis",
+      "kind": "repository",
+      "url": "https://github.com/bendominguez0111/fantasy-football-twitter-analysis",
+      "license": "No repository license file verified",
+      "automation": "reference_only",
+      "role": "Historical reference for analyst-account filtering and social-sentiment aggregation.",
+      "adoption": "concept_only",
+      "notes": "The Twitter API and VADER implementation is dated; Bowser separates social buzz from reporting confidence."
+    }
+  ]
+}

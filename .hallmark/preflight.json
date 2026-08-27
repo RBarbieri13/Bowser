@@ -1,0 +1,9 @@
+{
+  "scannedAt": "2026-08-26T20:20:00-05:00",
+  "framework": "React 19 + Vite 6",
+  "fontStack": ["Poppins", "JetBrains Mono", "Source Code Pro"],
+  "palette": "Bowser locked dark token system with emerald accent",
+  "motion": "motion-cut; CSS transitions and reduced-motion support",
+  "spacing": "existing compact analytical workspace scale",
+  "preserve": ["sidebar shell", "Poppins", "JetBrains Mono", "dark canvas", "emerald accent", "existing routes"]
+}

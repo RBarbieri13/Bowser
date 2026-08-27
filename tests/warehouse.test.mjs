@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test, { after } from "node:test";
 
 import { closeDatabase, getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "../server/stats-store.mjs";
+import { getIntelligenceRegistry, queryIntelligenceFeed, IntelligenceQueryError } from "../server/intelligence-store.mjs";
 
 after(() => closeDatabase());
 
@@ -12,6 +13,24 @@ test("warehouse metadata exposes complete 2025 scope", () => {
   assert.equal(meta.warehouse.player_stat_rows, 5630);
   assert.equal(meta.warehouse.stat_rows_with_snap_match, 5630);
   for (const position of ["QB", "RB", "WR", "TE"]) assert.ok(meta.positions.includes(position));
+});
+
+test("intelligence feed is filterable and publishes a transparent source registry", () => {
+  const all = queryIntelligenceFeed(new URLSearchParams("hours=168"));
+  assert.equal(all.events.length, 3);
+  assert.equal(all.meta.snapshotMode, "curated_bootstrap");
+  assert.equal(all.meta.provider.configured, false);
+  assert.match(all.meta.methodology.confidence, /social volume never increases/);
+  assert.ok(all.events.every((event) => event.sources.length && event.sourceQuality.confidence >= 90));
+
+  const receivers = queryIntelligenceFeed(new URLSearchParams("hours=168&position=WR&impact=LOW"));
+  assert.equal(receivers.events.length, 1);
+  assert.equal(receivers.events[0].player.name, "Noah Brown");
+  const registry = getIntelligenceRegistry();
+  assert.equal(registry.summary.total, 15);
+  assert.equal(registry.summary.primary, 2);
+  assert.ok(registry.sources.some((source) => source.id === "twif-overall" && source.automation === "disabled_by_robots"));
+  assert.throws(() => queryIntelligenceFeed(new URLSearchParams("position=K")), IntelligenceQueryError);
 });
 
 test("postseason round names are normalized and snap-backed", () => {
