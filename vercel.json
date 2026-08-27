@@ -5,7 +5,7 @@
   "functions": {
     "api/**/*.mjs": {
       "includeFiles": "data/*.{sqlite,json}",
-      "maxDuration": 60
+      "maxDuration": 180
     }
   }
 }

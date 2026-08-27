@@ -59,7 +59,7 @@ export async function scanWithXai(options = {}) {
       method: "POST",
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify(requestBody),
-      signal: AbortSignal.timeout(55_000),
+      signal: AbortSignal.timeout(165_000),
     });
   } catch (error) {
     throw new IntelligenceProviderError("provider_unreachable", error instanceof Error ? error.message : "xAI request failed");
