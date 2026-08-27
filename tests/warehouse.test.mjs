@@ -3,6 +3,7 @@ import test, { after } from "node:test";
 
 import { closeDatabase, getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "../server/stats-store.mjs";
 import { getIntelligenceRegistry, queryIntelligenceFeed, IntelligenceQueryError } from "../server/intelligence-store.mjs";
+import { buildXaiRequestBody } from "../server/intelligence-provider-xai.mjs";
 
 after(() => closeDatabase());
 
@@ -31,6 +32,17 @@ test("intelligence feed is filterable and publishes a transparent source registr
   assert.equal(registry.summary.primary, 2);
   assert.ok(registry.sources.some((source) => source.id === "twif-overall" && source.automation === "disabled_by_robots"));
   assert.throws(() => queryIntelligenceFeed(new URLSearchParams("position=K")), IntelligenceQueryError);
+});
+
+test("xAI Responses requests use the current text.format structured-output contract", () => {
+  const request = buildXaiRequestBody({ lookbackHours: 24 }, new Date("2026-08-26T18:00:00.000Z"));
+  assert.equal(Object.hasOwn(request, "response_format"), false);
+  assert.equal(request.text.format.type, "json_schema");
+  assert.equal(request.text.format.name, "bowser_fantasy_intelligence");
+  assert.equal(request.text.format.strict, true);
+  assert.equal(request.text.format.schema.type, "object");
+  assert.equal(request.tools[0].from_date, "2026-08-25");
+  assert.equal(request.tools[0].to_date, "2026-08-26");
 });
 
 test("postseason round names are normalized and snap-backed", () => {

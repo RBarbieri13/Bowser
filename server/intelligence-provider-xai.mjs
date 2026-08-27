@@ -29,13 +29,11 @@ export function xaiProviderStatus() {
   };
 }
 
-export async function scanWithXai(options = {}) {
-  const apiKey = process.env.XAI_API_KEY;
-  if (!apiKey) throw new IntelligenceProviderError("provider_not_configured", "XAI_API_KEY is not configured", 503);
+export function buildXaiRequestBody(options = {}, now = new Date()) {
   const lookbackHours = Math.max(1, Math.min(168, Number(options.lookbackHours) || 24));
-  const toDate = new Date();
+  const toDate = new Date(now);
   const fromDate = new Date(toDate.getTime() - lookbackHours * 60 * 60 * 1000);
-  const requestBody = {
+  return {
     model: process.env.XAI_MODEL || "grok-4.6",
     input: [{ role: "user", content: buildIntelligencePrompt({ ...options, lookbackHours }) }],
     tools: [
@@ -43,11 +41,17 @@ export async function scanWithXai(options = {}) {
       { type: "web_search" },
     ],
     include: ["no_inline_citations"],
-    response_format: {
-      type: "json_schema",
-      json_schema: { name: "bowser_fantasy_intelligence", strict: true, schema: INTELLIGENCE_RESPONSE_SCHEMA },
+    text: {
+      format: { type: "json_schema", name: "bowser_fantasy_intelligence", strict: true, schema: INTELLIGENCE_RESPONSE_SCHEMA },
     },
   };
+}
+
+export async function scanWithXai(options = {}) {
+  const apiKey = process.env.XAI_API_KEY;
+  if (!apiKey) throw new IntelligenceProviderError("provider_not_configured", "XAI_API_KEY is not configured", 503);
+  const lookbackHours = Math.max(1, Math.min(168, Number(options.lookbackHours) || 24));
+  const requestBody = buildXaiRequestBody({ ...options, lookbackHours });
   let response;
   try {
     response = await fetch("https://api.x.ai/v1/responses", {
