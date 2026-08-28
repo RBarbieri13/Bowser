@@ -17,6 +17,7 @@ import { TeamLogo } from "./teamLogos.jsx";
 import {
   clampPlayerTableWidth,
   DEFAULT_HIDDEN_PLAYER_COLUMNS,
+  DEFAULT_PLAYER_ROW_DENSITY,
   DEFAULT_PLAYER_GROUP_ORDER,
   DEFAULT_PLAYER_SORTS,
   DEFAULT_PLAYER_TREND_METRICS,
@@ -386,6 +387,7 @@ function CustomColumnsPanel({
   smartCompact,
   autoFit,
   trendGameCount,
+  rowDensity,
   trendMetrics,
   groupOrder,
   columnWidths,
@@ -406,6 +408,7 @@ function CustomColumnsPanel({
   const [draftSmartCompact, setDraftSmartCompact] = useState(smartCompact);
   const [draftAutoFit, setDraftAutoFit] = useState(autoFit);
   const [draftTrendGameCount, setDraftTrendGameCount] = useState(trendGameCount);
+  const [draftRowDensity, setDraftRowDensity] = useState(rowDensity);
   const [draftTrendMetrics, setDraftTrendMetrics] = useState(trendMetrics);
   const [draftOrder, setDraftOrder] = useState(groupOrder);
   const [draftColumnWidths, setDraftColumnWidths] = useState(columnWidths);
@@ -422,12 +425,13 @@ function CustomColumnsPanel({
     setDraftSmartCompact(smartCompact);
     setDraftAutoFit(autoFit);
     setDraftTrendGameCount(trendGameCount);
+    setDraftRowDensity(rowDensity);
     setDraftTrendMetrics(trendMetrics);
     setDraftOrder(groupOrder);
     setDraftColumnWidths(columnWidths);
     setDraftSorts(sorts);
     setDraftActiveViewId(activeViewId);
-  }, [hiddenColumns, collapsedGroups, showDraftMetrics, showYahooMetrics, showPlayerTrends, smartCompact, autoFit, trendGameCount, trendMetrics, groupOrder, columnWidths, sorts, activeViewId]);
+  }, [hiddenColumns, collapsedGroups, showDraftMetrics, showYahooMetrics, showPlayerTrends, smartCompact, autoFit, trendGameCount, rowDensity, trendMetrics, groupOrder, columnWidths, sorts, activeViewId]);
 
   useEffect(() => {
     if (open && !wasOpen.current) resetDraft();
@@ -511,6 +515,7 @@ function CustomColumnsPanel({
     smartCompact: draftSmartCompact,
     autoFit: draftAutoFit,
     trendGameCount: draftTrendGameCount,
+    rowDensity: draftRowDensity,
     trendMetrics: draftTrendMetrics,
     groupOrder: draftOrder,
     columnWidths: draftColumnWidths,
@@ -533,6 +538,7 @@ function CustomColumnsPanel({
     setDraftSmartCompact(config.smartCompact !== false);
     setDraftAutoFit(config.autoFit === true);
     setDraftTrendGameCount([5, 8, 10].includes(config.trendGameCount) ? config.trendGameCount : 10);
+    setDraftRowDensity(Math.round(Math.max(0, Math.min(100, Number.isFinite(Number(config.rowDensity)) ? Number(config.rowDensity) : DEFAULT_PLAYER_ROW_DENSITY)) / 5) * 5);
     setDraftTrendMetrics(sanitizePlayerTrendMetrics(config.trendMetrics));
     setDraftOrder(config.groupOrder || DEFAULT_PLAYER_GROUP_ORDER);
     setDraftColumnWidths(config.columnWidths && typeof config.columnWidths === "object"
@@ -622,6 +628,10 @@ function CustomColumnsPanel({
         </div>
 
         <section className="column-studio-bottom">
+          <div className="row-density-setting">
+            <span><b>Row density</b><output htmlFor="player-row-density">{draftRowDensity <= 25 ? "Compact" : draftRowDensity >= 75 ? "Comfortable" : "Balanced"}</output></span>
+            <div><small>Compact</small><input id="player-row-density" type="range" min="0" max="100" step="5" value={draftRowDensity} onChange={(event) => setDraftRowDensity(Number(event.target.value))} aria-label="Player table row density" aria-valuetext={`${draftRowDensity <= 25 ? "Compact" : draftRowDensity >= 75 ? "Comfortable" : "Balanced"}, ${draftRowDensity} percent`} /><small>Comfortable</small></div>
+          </div>
           <div className="trend-window-setting"><b>Trend window</b><div role="group" aria-label="Trend window">{[5, 8, 10].map((count) => <button type="button" key={count} aria-pressed={draftTrendGameCount === count} className={draftTrendGameCount === count ? "active" : ""} onClick={() => setDraftTrendGameCount(count)}>{count}</button>)}</div></div>
           <div className="column-studio-behaviors"><label><input type="checkbox" checked={draftSmartCompact} onChange={(event) => setDraftSmartCompact(event.target.checked)} /><span>Smart compact</span></label><label><input type="checkbox" checked={draftAutoFit} onChange={(event) => setDraftAutoFit(event.target.checked)} /><span>Auto Fit</span></label></div>
           <div className="column-studio-order"><b>Table order <small>(drag to reorder)</small></b><div>{draftOrder.map((key) => { const group = PLAYER_TABLE_GROUPS.find((item) => item.key === key); if (!group || !groupGate(group.key) || collapsedSet.has(key) || group.columns.every((column) => hiddenSet.has(column.key))) return null; return <span key={key} className={`tone-${group.tone}${draggingGroup === key ? " dragging" : ""}`} draggable onDragStart={() => setDraggingGroup(key)} onDragEnd={() => setDraggingGroup(null)} onDragOver={(event) => event.preventDefault()} onDrop={() => reorderGroup(draggingGroup, key)}><DotsSixVertical aria-hidden="true" />{group.shortName || group.name}<button type="button" aria-label={`Move ${group.name} left`} onClick={() => moveGroup(key, -1)}><ArrowLeft /></button><button type="button" aria-label={`Move ${group.name} right`} onClick={() => moveGroup(key, 1)}><ArrowRight /></button></span>; })}</div></div>
@@ -802,6 +812,7 @@ export function App() {
   const [autoFitPlayerTable, setAutoFitPlayerTable] = useState(initialTablePreferences.autoFit);
   const [smartCompactPlayerTable, setSmartCompactPlayerTable] = useState(initialTablePreferences.smartCompact);
   const [trendGameCount, setTrendGameCount] = useState(initialTablePreferences.trendGameCount);
+  const [playerRowDensity, setPlayerRowDensity] = useState(initialTablePreferences.rowDensity);
   const [trendMetrics, setTrendMetrics] = useState(initialTablePreferences.trendMetrics);
   const [hiddenPlayerColumns, setHiddenPlayerColumns] = useState(initialTablePreferences.hiddenColumns);
   const [collapsedPlayerGroups, setCollapsedPlayerGroups] = useState(initialTablePreferences.collapsedGroups);
@@ -833,13 +844,14 @@ export function App() {
 
   useEffect(() => {
     window.localStorage.setItem(PLAYER_TABLE_PREFERENCE_KEY, JSON.stringify({
-      version: 5,
+      version: 6,
       showDraftMetrics,
       showYahooMetrics,
       showPlayerTrends,
       autoFit: autoFitPlayerTable,
       smartCompact: smartCompactPlayerTable,
       trendGameCount,
+      rowDensity: playerRowDensity,
       trendMetrics,
       hiddenColumns: hiddenPlayerColumns,
       collapsedGroups: collapsedPlayerGroups,
@@ -848,7 +860,7 @@ export function App() {
       columnWidths: playerColumnWidths,
       sorts,
     }));
-  }, [showDraftMetrics, showYahooMetrics, showPlayerTrends, autoFitPlayerTable, smartCompactPlayerTable, trendGameCount, trendMetrics, hiddenPlayerColumns, collapsedPlayerGroups, playerGroupOrder, activePlayerViewId, playerColumnWidths, sorts]);
+  }, [showDraftMetrics, showYahooMetrics, showPlayerTrends, autoFitPlayerTable, smartCompactPlayerTable, trendGameCount, playerRowDensity, trendMetrics, hiddenPlayerColumns, collapsedPlayerGroups, playerGroupOrder, activePlayerViewId, playerColumnWidths, sorts]);
 
   useEffect(() => {
     window.localStorage.setItem(PLAYER_TABLE_SAVED_VIEWS_KEY, JSON.stringify(savedPlayerViews));
@@ -880,6 +892,7 @@ export function App() {
     setAutoFitPlayerTable(false);
     setSmartCompactPlayerTable(true);
     setTrendGameCount(10);
+    setPlayerRowDensity(DEFAULT_PLAYER_ROW_DENSITY);
     setTrendMetrics(DEFAULT_PLAYER_TREND_METRICS);
     setHiddenPlayerColumns(DEFAULT_HIDDEN_PLAYER_COLUMNS);
     setCollapsedPlayerGroups([]);
@@ -898,6 +911,7 @@ export function App() {
     setSmartCompactPlayerTable(configuration.smartCompact !== false);
     setAutoFitPlayerTable(configuration.autoFit === true);
     setTrendGameCount([5, 8, 10].includes(configuration.trendGameCount) ? configuration.trendGameCount : 10);
+    setPlayerRowDensity(Math.round(Math.max(0, Math.min(100, Number.isFinite(Number(configuration.rowDensity)) ? Number(configuration.rowDensity) : DEFAULT_PLAYER_ROW_DENSITY)) / 5) * 5);
     setTrendMetrics(sanitizePlayerTrendMetrics(configuration.trendMetrics));
     setPlayerGroupOrder(configuration.groupOrder || DEFAULT_PLAYER_GROUP_ORDER);
     if (configuration.columnWidths && typeof configuration.columnWidths === "object") {
@@ -1082,8 +1096,10 @@ export function App() {
       minWidth: `${playerTableWidth}px`,
       "--sticky-rank-left": `${selectWidth}px`,
       "--sticky-name-left": `${selectWidth + rankWidth}px`,
+      "--player-row-height": `${32 + (playerRowDensity * 0.16)}px`,
+      "--player-row-padding-y": `${playerRowDensity * 0.02}px`,
     };
-  }, [playerTableWidth, playerColumnWidths, visiblePlayerColumns]);
+  }, [playerTableWidth, playerColumnWidths, visiblePlayerColumns, playerRowDensity]);
 
   const selectedWeeks = useMemo(
     () => Array.from({ length: weekEnd - weekStart + 1 }, (_, index) => weekStart + index),
@@ -1512,6 +1528,7 @@ export function App() {
         smartCompact={smartCompactPlayerTable}
         autoFit={autoFitPlayerTable}
         trendGameCount={trendGameCount}
+        rowDensity={playerRowDensity}
         trendMetrics={trendMetrics}
         groupOrder={playerGroupOrder}
         columnWidths={playerColumnWidths}

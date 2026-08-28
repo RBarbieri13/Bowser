@@ -1,5 +1,6 @@
 export const PLAYER_TABLE_PREFERENCE_KEY = "bowser:player-table-preferences:v1";
 export const PLAYER_TABLE_SAVED_VIEWS_KEY = "bowser:player-table-saved-views:v1";
+export const DEFAULT_PLAYER_ROW_DENSITY = 50;
 
 export const PLAYER_TABLE_GROUPS = [
   {
@@ -164,13 +165,14 @@ export function sanitizePlayerTablePreferences(value) {
   const suppliedOrder = Array.isArray(raw.groupOrder) ? raw.groupOrder.filter((key) => GROUP_KEYS.has(key)) : [];
   const trendMetrics = sanitizePlayerTrendMetrics(raw.trendMetrics);
   return {
-    version: 5,
+    version: 6,
     showDraftMetrics: migratingToColumnStudio ? false : raw.showDraftMetrics !== false,
     showYahooMetrics: migratingToColumnStudio ? false : raw.showYahooMetrics === true,
     showPlayerTrends: raw.showPlayerTrends !== false,
     autoFit: raw.autoFit === true,
     smartCompact: raw.smartCompact !== false,
     trendGameCount: [5, 8, 10].includes(Number(raw.trendGameCount)) ? Number(raw.trendGameCount) : 10,
+    rowDensity: Math.round(Math.max(0, Math.min(100, Number.isFinite(Number(raw.rowDensity)) ? Number(raw.rowDensity) : DEFAULT_PLAYER_ROW_DENSITY)) / 5) * 5,
     trendMetrics,
     hiddenColumns: [...hiddenColumns],
     collapsedGroups: migratingToColumnStudio ? [] : Array.isArray(raw.collapsedGroups) ? [...new Set(raw.collapsedGroups.filter((key) => GROUP_KEYS.has(key) && key !== "player"))] : [],

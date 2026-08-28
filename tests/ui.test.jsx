@@ -710,6 +710,34 @@ describe("statistics table UI", () => {
       trend_targets: "targets",
       trend_fantasy_points: "fantasy_points",
     });
+    expect(savedView.config.rowDensity).toBe(50);
+  });
+
+  test("resizes Player Database row density and persists it across reloads", async () => {
+    const user = userEvent.setup();
+    const view = render(<App />);
+    await screen.findByRole("button", { name: "Test Player" });
+
+    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    const density = screen.getByRole("slider", { name: "Player table row density" });
+    expect(density).toHaveValue("50");
+    expect(density).toHaveAttribute("aria-valuetext", "Balanced, 50 percent");
+
+    fireEvent.change(density, { target: { value: "0" } });
+    expect(density).toHaveAttribute("aria-valuetext", "Compact, 0 percent");
+    await user.click(screen.getByRole("button", { name: "Apply changes" }));
+
+    let table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
+    expect(table.style.getPropertyValue("--player-row-height")).toBe("32px");
+    expect(JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1")).rowDensity).toBe(0);
+
+    view.unmount();
+    render(<App />);
+    await screen.findByRole("button", { name: "Test Player" });
+    table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
+    expect(table.style.getPropertyValue("--player-row-height")).toBe("32px");
+    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    expect(screen.getByRole("slider", { name: "Player table row density" })).toHaveValue("0");
   });
 
   test("reorders visible sections across hidden optional groups", async () => {
