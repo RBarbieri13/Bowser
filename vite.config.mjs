@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { fantasyStatsApiPlugin } from "./server/vite-api-plugin.mjs";
+import { marketPulsePlugin } from "./server/market-pulse.mjs";
 
 export default defineConfig({
   build: {
@@ -16,5 +17,5 @@ export default defineConfig({
       clientFiles: ["./src/main.jsx"],
     },
   },
-  plugins: [react(), fantasyStatsApiPlugin()],
+  plugins: [react(), marketPulsePlugin(), fantasyStatsApiPlugin()],
 });

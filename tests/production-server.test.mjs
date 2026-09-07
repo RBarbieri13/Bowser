@@ -30,7 +30,7 @@ test("production server serves the standalone application", async () => {
   assert.match(await response.text(), /Bowser Fantasy Football/);
 });
 
-test("production API serves the packaged SQLite warehouse", async () => {
+test("production API serves the packaged SQLite warehouse", async (t) => {
   const metaResponse = await fetch(`${origin}/api/v1/meta`);
   assert.equal(metaResponse.status, 200);
   const meta = await metaResponse.json();
@@ -70,15 +70,25 @@ test("production API serves the packaged SQLite warehouse", async () => {
   assert.deepEqual(game.data.teams.map((team) => team.team), ["NYG", "PHI"]);
   assert.equal(game.data.availability.scoringTimeline, true);
 
+  const clock = t.mock.method(Date, "now", () => Date.parse("2026-08-27T12:00:00Z"));
   const intelligenceResponse = await fetch(`${origin}/api/v1/intelligence-feed?hours=168`);
   assert.equal(intelligenceResponse.status, 200);
   const intelligence = await intelligenceResponse.json();
   assert.equal(intelligence.events.length, 3);
   assert.equal(intelligence.meta.snapshotMode, "curated_bootstrap");
+  clock.mock.mockImplementation(() => Date.parse("2026-09-07T12:00:00Z"));
+  const expired = await fetch(`${origin}/api/v1/intelligence-feed?hours=168`);
+  assert.equal((await expired.json()).events.length, 0);
 
   const sourceResponse = await fetch(`${origin}/api/v1/intelligence-sources`);
   assert.equal(sourceResponse.status, 200);
   assert.equal((await sourceResponse.json()).summary.total, 15);
+});
+
+test("Market Pulse research feed is not exposed in a Vercel environment", async () => {
+  const response = await fetch(`${origin}/api/v1/market-pulse`);
+  assert.equal(response.status, 403);
+  assert.match((await response.json()).error, /local personal-research/);
 });
 
 test("unknown API routes do not fall back to the app shell", async () => {
