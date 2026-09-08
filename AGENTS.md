@@ -10,6 +10,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Durable application rules
 
+- Market Pulse is a compact combined Sleeper/ESPN table, not separate provider tabs or summary KPI cards. Every leaf column is sortable. Keep source timestamps and measurement definitions distinct, missing values explicit, and only join unambiguous player identities; never combine provider populations into an invented popularity score.
+
 - The product name is Bowser. Use that name consistently in project metadata and product-level documentation.
 - nflverse source data is immutable input. Never hand-edit warehouse values or replace imported rows with mock statistics.
 - The app is read-only in this phase. Controls may query, filter, sort and select, but must not mutate player data.
