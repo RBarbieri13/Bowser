@@ -117,19 +117,22 @@ let instance;
 export async function marketPulseHandler(req,res) {
   res.setHeader('Cache-Control','no-store'); res.setHeader('Content-Type','application/json');
   const send=(status,data)=>{res.statusCode=status;res.end(JSON.stringify(data));};
-  // This research prototype must not become a public, unrestricted data proxy.
+  // Hosted requests use fixed provider endpoints; no caller-supplied upstream URL.
+  const hosted=!!process.env.VERCEL;
   const remote=req.socket?.remoteAddress;
-  if (process.env.VERCEL || !['127.0.0.1','::1','::ffff:127.0.0.1'].includes(remote)) return send(403,{error:'Market Pulse is a local personal-research prototype. Public feed distribution is not enabled.'});
+  if (!hosted && !['127.0.0.1','::1','::ffff:127.0.0.1'].includes(remote)) return send(403,{error:'Market Pulse is a local personal-research prototype. Public feed distribution is not enabled.'});
   if (!['GET','POST'].includes(req.method)) {res.setHeader('Allow','GET, POST');return send(405,{error:'Method not allowed.'});}
   try {
     const host = new URL(`http://${req.headers.host}`).hostname;
-    if (!['localhost','127.0.0.1','[::1]'].includes(host)) return send(403,{error:'Local host required.'});
+    if (!hosted && !['localhost','127.0.0.1','[::1]'].includes(host)) return send(403,{error:'Local host required.'});
     if (req.method==='POST' && (req.headers['x-bowser-refresh']!=='1' || (req.headers.origin && new URL(req.headers.origin).host!==req.headers.host))) return send(403,{error:'Same-origin refresh required.'});
     const params=new URL(req.originalUrl || req.url,'http://localhost').searchParams;
     const provider=params.get('provider') || 'sleeper', hours=Number(params.get('hours') || 24);
     if (!Object.hasOwn(PROVIDERS,provider) || ![6,24,72].includes(hours)) return send(400,{error:'Invalid provider or window.'});
-    instance ||= createMarketPulse();
-    return send(200,req.method==='POST' ? await instance.refresh(provider,hours) : instance.read(provider,hours));
+    instance ||= createMarketPulse({filename:hosted ? ':memory:' : undefined});
+    const data=req.method==='POST' ? await instance.refresh(provider,hours) : instance.read(provider,hours);
+    // Keep the function response bounded; browser storage owns hosted history.
+    return send(200,hosted ? {...data,storage:'browser',history:[]} : data);
   } catch { return send(500,{error:'Snapshot storage is unavailable. No previous data was replaced.'}); }
 }
 export function marketPulsePlugin() { return {name:'market-pulse-api',configureServer(server){server.middlewares.use('/api/v1/market-pulse',marketPulseHandler);}}; }

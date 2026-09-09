@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowClockwise, ArrowDown, ArrowUp, ChartLineUp, DownloadSimple, MagnifyingGlass, Star, X } from '@phosphor-icons/react';
 import { combineMarketRows, isWatched, sortMarketRows } from './marketPulseRows.js';
 import './MarketPulse.css';
+import { mergeSnapshot, readSnapshot, saveSnapshot } from './marketPulseStorage.js';
 
 const KEY='bowser:market-pulse:v1';
 const nf=new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
@@ -61,15 +62,26 @@ export function MarketPulse() {
     request.current.controller=controller;
     setBusy(true); setErrors({}); setNotice('');
     const results = await Promise.all(SOURCES.map(async provider=>{
+      const expectedWindow=provider==='espn'?'current':String(hours);
+      let savedSnapshot=snapshots[provider]?.window===expectedWindow?snapshots[provider]:null;
       try {
+        try {
+          const stored=await readSnapshot(provider,hours);
+          if(stored) savedSnapshot=mergeSnapshot(savedSnapshot,stored);
+        } catch { /* Live refresh still works when site storage is blocked. */ }
+        if(refresh && savedSnapshot?.capturedAt && Date.now()<savedSnapshot.nextRefreshAt && !savedSnapshot.error)
+          return {provider,body:{...savedSnapshot,cached:true}};
         const response=await fetch(`/api/v1/market-pulse?provider=${provider}&hours=${hours}`,{
           method:refresh?'POST':'GET',headers:refresh?{'x-bowser-refresh':'1'}:{},signal:controller.signal,
         });
         const body=await response.json();
         if (!response.ok) throw new Error(body.error || `Request failed (${response.status})`);
         if (body.provider!==provider || !Array.isArray(body.rows)) throw new Error('Unexpected provider response.');
-        return {provider,body};
-      } catch (error) { return {provider,error:error.message || 'Unable to load this source.'}; }
+        let merged=mergeSnapshot(savedSnapshot || snapshots[provider],body);
+        try { merged=await saveSnapshot(merged); }
+        catch { merged={...merged,storageError:'Browser history could not be saved. Enable site storage to keep snapshots after closing this page.'}; }
+        return {provider,body:merged};
+      } catch (error) { return {provider,body:savedSnapshot,error:error.message || 'Unable to load this source.'}; }
     }));
     if (id!==request.current.id) return;
     // Each source keeps its own last-good snapshot, timestamp and error.
@@ -78,9 +90,9 @@ export function MarketPulse() {
       results.forEach(({provider,body})=>{ if(body) next[provider]=body; });
       return next;
     });
-    setErrors(Object.fromEntries(results.filter(r=>r.error||r.body?.error).map(r=>[r.provider,r.error||r.body.error])));
+    setErrors(Object.fromEntries(results.filter(r=>r.error||r.body?.error||r.body?.storageError).map(r=>[r.provider,r.error||r.body.error||r.body.storageError])));
     if(refresh) {
-      const good=results.filter(r=>r.body&&!r.body.error);
+      const good=results.filter(r=>r.body&&!r.error&&!r.body.error);
       setNotice(good.length===2
         ? good.every(r=>r.body.cached) ? 'Both sources are within the 15-minute refresh cooldown.' : 'Both sources refreshed. Capture times are shown above.'
         : 'Refresh incomplete. Available source data remains visible; retry Refresh data.');
@@ -174,8 +186,8 @@ export function MarketPulse() {
       <p>Sleeper: returned trending-list counts. Net = adds − drops; add share = adds ÷ (adds + drops), only when both are reported. The labeled green/red bar shows adds versus drops, not ownership. A missing count is unknown, never zero.</p>
       <p>ESPN: reported roster/start percentages, not transaction counts. Δ Ros is percentage-point change since our previous ESPN snapshot ({stamp(snapshots.espn?.previousAt)}), not a standardized daily change. ESPN is an experimental public endpoint and may change without notice.</p>
       <p>Rows match on a shared provider ID when available, otherwise an unambiguous name + position + team (team for defenses). Unmatched or ambiguous players stay separate with unavailable metrics shown as —. Populations and observation windows are not interchangeable.</p>
-      <p>Refresh updates both sources with independent 15-minute caches and last-good snapshots. History retains up to 96 observations per source/window; overlapping windows cannot be added together. Watchlists and sorting stay in this browser. Snapshots stay on this machine. No background refresh job runs.</p>
-      <p>Local personal research only. No Yahoo credentials or private league data are accessed. Public redistribution requires separate provider review.</p>
+      <p>Refresh updates both sources with independent 15-minute caches and last-good snapshots. History retains up to 96 observations per source/window; overlapping windows cannot be added together. Watchlists and sorting stay in this browser. Saved history stays in this browser on this device; clearing site data removes it. Server caches may reset between requests. No background refresh job runs.</p>
+      <p>For personal fantasy research. No Yahoo credentials or private league data are accessed. Source coverage and availability may change.</p>
       <a href="https://docs.sleeper.com/" target="_blank" rel="noreferrer">Sleeper API documentation ↗</a> · <a href="https://fantasy.espn.com/football/players/add" target="_blank" rel="noreferrer">ESPN Fantasy ↗</a>
     </details></footer>
   </main>;

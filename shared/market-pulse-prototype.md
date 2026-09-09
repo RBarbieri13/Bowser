@@ -49,3 +49,14 @@ Tests: `npm run test:market`, `npm run check`. Verification evidence and limitat
 ## Known prototype limits
 
 MFL and paid providers are not connected. Conservative identity matching can leave duplicate-looking rows when names or teams disagree; these are not silently guessed. No composite popularity score is presented. Private Yahoo league availability and team ownership remain unavailable without an authorized Yahoo connection. The first snapshot contains no historical trend; history grows only on successful uncached manual refreshes. ESPN's undocumented endpoint can stop working independently of this app. The local preview is accessible on this computer, not from another phone or platform.
+
+## Hosted release — 2026-09-08
+
+Robert requested continuing this prototype and deploying it to the existing Bowser Vercel app. This supersedes the original local-only launch boundary above. The release retains the combined table and connects the fixed Sleeper/ESPN endpoints through `/api/v1/market-pulse` on Vercel.
+
+- Hosted functions use disposable in-memory SQLite caches. The browser stores up to 96 observations per provider/window in IndexedDB, merges observations by capture time, and computes ESPN changes against its own previous observation. History is specific to this browser, device and site origin; clearing site data removes it. This is not cross-device cloud storage.
+- Each warm function caches successful refreshes for 15 minutes, coalesces concurrent requests and cools down failed attempts for one minute. The browser also respects successful snapshot cooldowns. Caches can reset when Vercel starts a new instance; no global cross-instance rate limit is claimed. No automatic refresh, paid provider, scheduler or new database was added.
+- Hosted responses omit accumulated history, keeping payload size independent of retained history. The page retains newer data when the server starts empty, fails, or returns an older snapshot. Storage failures are visible and never prevent live refresh.
+- Provider counts remain sample counts, ESPN remains experimental, and missing values remain unknown. No MFL, Yahoo league integration, social sentiment or invented heat score was introduced.
+- Runtime references: [Vercel Node.js functions](https://vercel.com/docs/functions/runtimes/node-js), [browser IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API).
+- Release proof: `npm run check`, independent code verifier and permanent-URL browser refresh/reload. Full check log is saved in ignored `artifacts/market-pulse/hosted-check.log`.

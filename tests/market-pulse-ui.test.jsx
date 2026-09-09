@@ -1,5 +1,7 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest';
+import { IDBFactory, IDBObjectStore } from 'fake-indexeddb';
+import { readSnapshot, saveSnapshot, mergeSnapshot } from '../src/marketPulseStorage.js';
 import {cleanup,fireEvent,render,screen,waitFor,within} from '@testing-library/react';
 import {afterEach,beforeEach,expect,test,vi} from 'vitest';
 import {MarketPulse,csvFor} from '../src/MarketPulse.jsx';
@@ -18,6 +20,7 @@ const espn={...data,provider:'espn',window:'current',rows:espnRows,history:[{cap
 const reply=body=>({ok:true,json:async()=>body});
 beforeEach(()=>{
   localStorage.clear();
+  global.indexedDB=new IDBFactory();
   global.fetch=vi.fn(async url=>reply(url.includes('provider=espn')?espn:{...data,window:new URL(url,'http://localhost').searchParams.get('hours')}));
 });
 afterEach(()=>{cleanup();vi.restoreAllMocks();});
@@ -124,4 +127,71 @@ test('CSV exports both source timestamps and protects spreadsheet formulas witho
   expect(csv).toContain('"","30"');
   expect(csv).toContain('Sleeper captured at');expect(csv).toContain('ESPN captured at');
   expect(csv).toContain('"-20"');expect(csv).not.toContain("'-20");
+});
+
+
+test('browser history survives a cold server and full component remount',async()=>{
+  await saveSnapshot({...espn,storage:'browser'});
+  fetch.mockImplementation(async url=>reply(url.includes('espn')?{...espn,rows:[],history:[],capturedAt:null,storage:'browser'}:data));
+  const view=render(<MarketPulse/>);await ready();
+  expect(screen.getByText('78.4%')).toBeInTheDocument();
+  view.unmount();fetch.mockRejectedValue(new Error('Provider unavailable'));
+  render(<MarketPulse/>);await ready();
+  expect(screen.getByText('78.4%')).toBeInTheDocument();
+  expect((await readSnapshot('espn',24)).history).toHaveLength(1);
+});
+test('browser history deduplicates observations, calculates ESPN change and isolates windows',async()=>{
+  const first={...espn,storage:'browser'};
+  await saveSnapshot(first);await saveSnapshot(first);
+  const next={...first,capturedAt:first.capturedAt+900001,history:[],rows:espnRows.map(r=>({...r,rosterPct:r.rosterPct+0.5}))};
+  const saved=await saveSnapshot(next);
+  expect(saved.history).toHaveLength(2);expect(saved.rows[0].rosterDelta).toBe(0.5);
+  expect((await saveSnapshot(first)).capturedAt).toBe(next.capturedAt);
+  await saveSnapshot({...data,window:'6'});
+  expect(await readSnapshot('sleeper',24)).toBeNull();
+  expect((await readSnapshot('sleeper',6)).window).toBe('6');
+  const long={...first,history:Array.from({length:110},(_,i)=>({capturedAt:first.capturedAt+i,rows:espnRows}))};
+  expect(mergeSnapshot(null,long).history).toHaveLength(96);
+});
+
+test('unavailable browser storage does not prevent live provider refresh',async()=>{
+  global.indexedDB={open(){throw new Error('Site storage blocked');}};
+  render(<MarketPulse/>);await ready();
+  expect(screen.getByText('78.4%')).toBeInTheDocument();
+  expect(screen.getAllByRole('alert')[0]).toHaveTextContent('Browser history could not be saved');
+});
+
+test('failed refresh with saved snapshots reports failure rather than success',async()=>{
+  await saveSnapshot(espn);await saveSnapshot(data);
+  render(<MarketPulse/>);await ready();
+  fetch.mockRejectedValue(new Error('Network offline'));
+  fireEvent.click(screen.getByRole('button',{name:'Refresh data'}));
+  await waitFor(()=>expect(screen.getByRole('status')).toHaveTextContent('Refresh incomplete'));
+  expect(screen.getByText('78.4%')).toBeInTheDocument();
+});
+test('storage failure and empty server response preserve current rows',async()=>{
+  render(<MarketPulse/>);await ready();
+  global.indexedDB={open(){throw new Error('Site storage blocked');}};
+  fetch.mockImplementation(async url=>reply({... (url.includes('espn')?espn:data),capturedAt:null,rows:[],history:[]}));
+  fireEvent.click(screen.getByRole('button',{name:'Refresh data'}));
+  await waitFor(()=>expect(screen.getAllByRole('alert')[0]).toHaveTextContent('Browser history could not be saved'));
+  expect(screen.getByText('78.4%')).toBeInTheDocument();
+});
+
+test('readable but unwritable storage cannot roll newer in-memory data back',async()=>{
+  render(<MarketPulse/>);await ready();
+  vi.spyOn(IDBObjectStore.prototype,'put').mockImplementation(()=>{throw new DOMException('Full','QuotaExceededError');});
+  const newer={...espn,capturedAt:espn.capturedAt+900001,history:[],rows:espnRows.map(r=>({...r,rosterPct:80}))};
+  fetch.mockImplementation(async url=>reply(url.includes('espn')?newer:data));
+  fireEvent.click(screen.getByRole('button',{name:'Refresh data'}));
+  await waitFor(()=>expect(screen.getAllByRole('alert')[0]).toHaveTextContent('Browser history could not be saved'));
+  expect(screen.getAllByText('80.0%')).toHaveLength(2);
+  fetch.mockImplementation(async url=>reply({... (url.includes('espn')?espn:data),rows:[],history:[],capturedAt:null}));
+  fireEvent.click(screen.getByRole('button',{name:'Refresh data'}));
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Refresh data'})).toBeEnabled());
+  expect(screen.getAllByText('80.0%')).toHaveLength(2);
+  fetch.mockRejectedValue(new Error('Network offline'));
+  fireEvent.click(screen.getByRole('button',{name:'Refresh data'}));
+  await waitFor(()=>expect(screen.getByRole('status')).toHaveTextContent('Refresh incomplete'));
+  expect(screen.getAllByText('80.0%')).toHaveLength(2);
 });

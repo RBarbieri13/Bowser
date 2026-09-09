@@ -85,10 +85,13 @@ test("production API serves the packaged SQLite warehouse", async (t) => {
   assert.equal((await sourceResponse.json()).summary.total, 15);
 });
 
-test("Market Pulse research feed is not exposed in a Vercel environment", async () => {
+test("Market Pulse hosted route supports offline reads without writing the deployment filesystem", async () => {
   const response = await fetch(`${origin}/api/v1/market-pulse`);
-  assert.equal(response.status, 403);
-  assert.match((await response.json()).error, /local personal-research/);
+  assert.equal(response.status, 200);
+  const data=await response.json();
+  assert.equal(data.storage,'browser');
+  assert.deepEqual(data.rows,[]);
+  assert.deepEqual(data.history,[]);
 });
 
 test("unknown API routes do not fall back to the app shell", async () => {
