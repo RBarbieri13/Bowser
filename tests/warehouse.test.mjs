@@ -16,7 +16,10 @@ test("warehouse metadata exposes complete 2025 scope", () => {
   for (const position of ["QB", "RB", "WR", "TE"]) assert.ok(meta.positions.includes(position));
 });
 
-test("intelligence feed is filterable and publishes a transparent source registry", () => {
+test("intelligence feed is filterable and publishes a transparent source registry", (t) => {
+  // The committed bootstrap fixture is dated August 26. Test its filtering at
+  // that point in time, then explicitly verify it expires in September.
+  const clock = t.mock.method(Date, "now", () => Date.parse("2026-08-27T12:00:00Z"));
   const all = queryIntelligenceFeed(new URLSearchParams("hours=168"));
   assert.equal(all.events.length, 3);
   assert.equal(all.meta.snapshotMode, "curated_bootstrap");
@@ -32,6 +35,8 @@ test("intelligence feed is filterable and publishes a transparent source registr
   assert.equal(registry.summary.primary, 2);
   assert.ok(registry.sources.some((source) => source.id === "twif-overall" && source.automation === "disabled_by_robots"));
   assert.throws(() => queryIntelligenceFeed(new URLSearchParams("position=K")), IntelligenceQueryError);
+  clock.mock.mockImplementation(() => Date.parse("2026-09-07T12:00:00Z"));
+  assert.equal(queryIntelligenceFeed(new URLSearchParams("hours=168")).events.length, 0);
 });
 
 test("xAI Responses requests use the current text.format structured-output contract", () => {

@@ -13,6 +13,7 @@ import { GameBreakdown } from "./GameBreakdown.jsx";
 import { OpportunityTracker } from "./OpportunityTracker.jsx";
 import { LeagueHub } from "./LeagueHub.jsx";
 import { IntelligenceFeed } from "./IntelligenceFeed.jsx";
+import { MarketPulse } from "./MarketPulse.jsx";
 import { TeamLogo } from "./teamLogos.jsx";
 import {
   clampPlayerTableWidth,
@@ -766,6 +767,7 @@ function PlayerGroupResizeHandle({ group, width, enabled, onResize, onReset }) {
 }
 
 function routeFromHash() {
+  if (window.location.hash.includes("market-pulse")) return { page: "market-pulse", gameId: null };
   const gameMatch = window.location.hash.match(/^#\/game\/([^?]+)/);
   if (gameMatch) {
     const query = window.location.hash.split("?")[1] || "";
@@ -1261,6 +1263,8 @@ export function App() {
         <LeagueHub />
       ) : currentPage === "intelligence" ? (
         <IntelligenceFeed />
+      ) : currentPage === "market-pulse" ? (
+        <MarketPulse />
       ) : (
       <main className="page-content player-database-page">
       <section className="filter-band" aria-label="Statistics filters">

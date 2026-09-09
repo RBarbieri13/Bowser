@@ -1,4 +1,5 @@
 import express from "express";
+import { marketPulseHandler } from "./server/market-pulse.mjs";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -13,6 +14,7 @@ const indexPath = path.join(clientDirectory, "index.html");
 const indexHtml = readFileSync(indexPath, "utf8");
 
 const app = express();
+app.all('/api/v1/market-pulse', marketPulseHandler);
 app.disable("x-powered-by");
 
 app.use((_request, response, next) => {

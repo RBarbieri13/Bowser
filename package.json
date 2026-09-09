@@ -12,7 +12,8 @@
     "intelligence:refresh": "node scripts/refresh_intelligence.mjs",
     "test": "node --test tests/warehouse.test.mjs",
     "test:ui": "vitest run tests/ui.test.jsx",
-    "check": "npm run data:verify && npm test && npm run test:ui && npm run build && npm run test:production && npm run test:sites",
+    "test:market": "node --test tests/market-pulse.test.mjs && vitest run tests/market-pulse-ui.test.jsx",
+    "check": "npm run data:verify && npm test && npm run test:ui && npm run test:market && npm run build && npm run test:production && npm run test:sites",
     "build": "vite build && node scripts/prepare-sites-build.mjs",
     "vercel-build": "vite build",
     "serve": "node scripts/serve-production.mjs",
@@ -32,6 +33,7 @@
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
     "@testing-library/user-event": "14.6.3",
+    "fake-indexeddb": "6.2.5",
     "jsdom": "26.1.0",
     "vitest": "3.2.7"
   },
