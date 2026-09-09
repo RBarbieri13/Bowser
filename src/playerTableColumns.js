@@ -78,8 +78,8 @@ export const PLAYER_TABLE_GROUPS = [
   {
     name: "DFS", key: "dfs", tone: "gold", optional: true,
     columns: [
-      { key: "draft_kings_price", label: "$", studioLabel: "Salary", defaultWidth: 68, minWidth: 48, maxWidth: 150, align: "center", sortable: false },
-      { key: "draft_kings_projection", label: "FPTS", studioLabel: "Projection", defaultWidth: 68, minWidth: 52, maxWidth: 150, align: "center", sortable: false },
+      { key: "draft_kings_price", label: "$", studioLabel: "DraftKings salary", defaultWidth: 68, minWidth: 48, maxWidth: 150, align: "center", format: "currency" },
+      { key: "draft_kings_projection", label: "FPTS", studioLabel: "DraftKings projected points", defaultWidth: 68, minWidth: 52, maxWidth: 150, align: "center", format: "decimal" },
     ],
   },
   {

@@ -48,3 +48,9 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Robert authorized deploying Market Pulse to the existing Bowser Vercel app on 2026-09-08. Keep unrelated main-checkout work intact.
 - Hosted snapshot history belongs in browser IndexedDB (96 observations per provider/window). Vercel memory is a disposable cache, never durable storage. Keep response size independent of history length and retain browser snapshots on empty/older server responses or provider failures.
 - Release is complete only after `npm run check` exits 0, a second verifier pass returns PASS, the branch is merged through a PR, and the permanent production URL passes live refresh and reload checks. Stop after three correction passes for a repeated failure; never relax tests to obtain a pass.
+
+## Week 1 DFS layer
+
+- Player Database DFS fields use the separately sourced 2026 Week 1 Classic snapshot in `data/dfs-week1-2026.json`. Keep historical 2025 statistics and selectable scoring independent of DraftKings projections.
+- All-week and Sunday Main slates must remain distinct. Never substitute Showdown/Captain salaries or DraftKings historical AvgPointsPerGame for projections. Match stable player identities conservatively; unknown is null, not zero. Show the projection provider, capture timestamp, and current DFS team.
+- Refresh through `npm run data:dfs`, which validates pinned draft groups and date coverage before atomically replacing the snapshot. `npm run check` must pass before publication. The original warehouse is immutable.
