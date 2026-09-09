@@ -52,7 +52,8 @@ test('refresh updates both sources; selected window is applied only to Sleeper m
   fireEvent.change(screen.getByLabelText('Sleeper window'),{target:{value:'6'}});
   await waitFor(()=>expect(screen.getByText('Sleeper · 6h transactions')).toBeInTheDocument());
   await waitFor(()=>expect(fetch.mock.calls.some(([url])=>url.includes('provider=sleeper&hours=6'))).toBe(true));
-  expect(await screen.findByText('78.4%')).toBeInTheDocument();
+  await waitFor(()=>expect(screen.getByRole('button',{name:'Refresh data'})).toBeEnabled());
+  await waitFor(()=>expect(screen.getByText('78.4%')).toBeInTheDocument());
 });
 test('every leaf column sorts in both directions and keeps unknown values last',async()=>{
   render(<MarketPulse/>);await ready();
