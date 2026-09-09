@@ -94,6 +94,7 @@ function useDebouncedValue(value, delay) {
 
 function formatCell(value, format) {
   if (value === null || value === undefined || value === "") return "—";
+  if (format === "currency") return `$${numberFormatter.format(value)}`;
   if (format === "decimal") return decimalFormatter.format(value);
   if (format === "percent") return `${decimalFormatter.format(value)}%`;
   if (format === "wholePercent") return `${numberFormatter.format(value)}%`;
@@ -352,10 +353,6 @@ function autoFitPlayerWidth(column, rows) {
   if (column.group === "trends" || column.metric) return column.minWidth;
   const values = [column.label];
   for (const row of rows) {
-    if (column.key === "draft_kings_price" || column.key === "draft_kings_projection") {
-      values.push("—");
-      continue;
-    }
     const rawValue = row[column.field || column.key];
     if (column.key === "upcoming_matchup") values.push(...splitUpcomingMatchup(rawValue));
     else if (column.key === "yahoo_add_drop_ratio") values.push("Trend");
@@ -787,6 +784,8 @@ export function App() {
   const [meta, setMeta] = useState(null);
   const [rows, setRows] = useState([]);
   const [responseMeta, setResponseMeta] = useState(null);
+  const [dfsSlate,setDfsSlate] = useState(()=>{try {return localStorage.getItem('bowser:dfs-slate:v1')==='main'?'main':'week1';}catch{return 'week1';}});
+  useEffect(()=>{try{localStorage.setItem('bowser:dfs-slate:v1',dfsSlate);}catch{/* Optional preference. */}},[dfsSlate]);
   const [position, setPosition] = useState("ALL");
   const [scoring, setScoring] = useState("ppr");
   const [search, setSearch] = useState("");
@@ -1124,6 +1123,7 @@ export function App() {
     const querySorts = sorts.length ? sorts : [{ key: "name", direction: "asc" }];
     const params = new URLSearchParams({
       seasonType: "ALL",
+      dfsSlate,
       scoring,
       search: debouncedSearch,
       sort: querySorts.map((item) => item.key).join(","),
@@ -1158,7 +1158,7 @@ export function App() {
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [currentPage, scoring, debouncedSearch, sorts, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps, showPlayerTrends]);
+  }, [currentPage, dfsSlate, scoring, debouncedSearch, sorts, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps, showPlayerTrends]);
 
   const allVisibleSelected = rows.length > 0 && rows.every((row) => selected.has(row.player_id));
   const someVisibleSelected = rows.some((row) => selected.has(row.player_id)) && !allVisibleSelected;
@@ -1181,7 +1181,7 @@ export function App() {
   }, []);
 
   const handleSort = (key, shiftKey = false) => {
-    if (key === "select" || key === "draft_kings_price") return;
+    if (key === "select") return;
     const normalized = key === "rank" ? "fantasy_points" : key;
     const defaultDirection = ["name", "team", "position", "adp", "draft_position_rank"].includes(normalized) ? "asc" : "desc";
     setSorts((current) => {
@@ -1442,6 +1442,12 @@ export function App() {
           ) : null}
           <span>{filterSummary} · All matching</span>
         </header>
+        <div className="dfs-context" aria-label="DraftKings slate and sources">
+          <button type="button" onClick={()=>{setHiddenPlayerColumns(keys=>keys.filter(key=>!['draft_kings_price','draft_kings_projection'].includes(key)));setCollapsedPlayerGroups(keys=>keys.filter(key=>key!=='dfs'));}}>Show DFS fields</button>
+          <label>DFS slate <select aria-label="DFS slate" value={dfsSlate} onChange={event=>setDfsSlate(event.target.value)}><option value="week1">2026 W1 · Wed–Mon Classic</option><option value="main">2026 W1 · Sunday Main</option></select></label>
+          <span>DraftKings scoring · 2025 stats stay historical</span>
+          {responseMeta?.dfs ? <details><summary>Sources & coverage</summary><p><a href={responseMeta.dfs.salaryUrl} target="_blank" rel="noreferrer">DraftKings salaries</a> · <a href="https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings" target="_blank" rel="noreferrer">Fantasy Info Central projections</a> · <a href="https://sharksnip.com/picks/dfs/nfl" target="_blank" rel="noreferrer">Shark Snip supplemental projections</a></p><p>Captured {new Date(responseMeta.dfs.capturedAt).toLocaleString()}. {responseMeta.dfs.coverage.salaryPlayers} slate salaries; {responseMeta.dfs.coverage.projectedPlayers} published projections. Matched to the historical database: {responseMeta.dfs.coverage.databasePlayersWithSalary} salaries and {responseMeta.dfs.coverage.databasePlayersWithProjection} projections. Players without 2025 stats are not in this historical table. — means unavailable, never zero. Hover a DFS value for its source and current team. These are pregame estimates, not historical averages; scoring controls apply to historical stats only.</p></details> : null}
+        </div>
         <div className="table-scroller" ref={tableScroller} onScroll={onHorizontalScroll} tabIndex="0" aria-label="Scrollable player statistics table">
           <table style={playerTableStyle} className={smartCompactActive ? "smart-compact" : ""}>
             <caption>2025 NFL player fantasy statistics. {filterSummary}. {responseMeta?.totalCount ?? 0} matching players.</caption>
@@ -1454,7 +1460,7 @@ export function App() {
                   const groupLabel = group.shortName || ((autoFitPlayerTable || smartCompactActive) ? (COMPACT_GROUP_NAMES[group.groupKey] || group.name) : group.name);
                   return (
                     <th key={group.key} colSpan={group.columns.length} scope="colgroup" className={`group-${group.groupKey}${group.controlsGroup ? "" : " passive-group-segment"}${group.compactLabelHidden ? " compact-label-hidden" : ""}`}>
-                      <span title={group.name}>{groupLabel}</span>
+                      <span title={group.groupKey==='dfs'?responseMeta?.dfs?.label:group.name}>{group.groupKey==='dfs'?'DFS · 2026 W1':groupLabel}</span>
                       {group.controlsGroup ? <PlayerGroupResizeHandle group={sourceGroup} width={groupWidth} enabled={sectionResizeEnabled} onResize={resizePlayerGroup} onReset={resetPlayerGroup} /> : null}
                     </th>
                   );
@@ -1488,7 +1494,7 @@ export function App() {
                   {visiblePlayerColumns.map((column) => {
                     if (column.key === "select") return <td key={column.key} className="identity sticky-select"><Checkbox checked={selected.has(row.player_id)} label={`Select ${row.player_display_name}`} onChange={() => toggleRow(row.player_id)} /></td>;
                     const field = column.field || column.key;
-                    const value = column.key === "draft_kings_price" || column.key === "draft_kings_projection" ? null : row[field];
+                    const value = row[field];
                     const className = `${column.align === "center" ? "center " : ""}${column.align === "left" ? "left " : ""}${column.key === "rank" ? "identity sticky-rank " : ""}${column.key === "name" ? "identity sticky-name player-name " : ""}${column.key === "position" ? "position-cell " : ""}${column.group === "draft" ? "draft-metric " : ""}${column.group === "yahoo" ? "yahoo-metric " : ""}${column.key === "fantasy_points" ? "fantasy-cell " : ""}${playerGroupEndKeys.has(column.key) ? "group-end" : ""}`;
                     if (column.key === "name") {
                       return <td key={column.key} title={row.player_display_name} className={className}><span className="player-name-cell-content"><button type="button" className="player-name-button" onClick={(event) => openProfile(row, event.currentTarget)}>{row.player_display_name}</button><span className="player-name-team-logo" title={row.team}><TeamLogo team={row.team} decorative /><span className="sr-only">{row.team}</span></span><DepthChartCell row={row} depthChart={responseMeta?.depthCharts?.[row.current_depth_key]} compact /></span></td>;
@@ -1506,6 +1512,11 @@ export function App() {
                       const drops = Number(row.yahoo_drops) || 0;
                       const total = adds + drops;
                       return <td key={column.key} className={className}>{total > 0 ? <span className="yahoo-trend-bar" aria-label={`${adds} adds and ${drops} drops`}><i className="adds" style={{ width: `${100 * adds / total}%` }} /><i className="drops" style={{ width: `${100 * drops / total}%` }} /></span> : "—"}</td>;
+                    }
+                    if(column.group==='dfs') {
+                      const source=column.key==='draft_kings_price'?'DraftKings':row.dfs_projection_source;
+                      const detail=value==null ? (row.draft_kings_price==null?'Not listed or not matched on the selected slate':'No published projection matched') : `${responseMeta?.dfs?.label || '2026 Week 1'} · ${row.dfs_team} · ${row.dfs_game} · ${source}`;
+                      return <td key={column.key} className={className} title={detail}>{formatCell(value,column.format)}</td>;
                     }
                     return <td key={column.key} className={className}>{formatCell(value, column.format)}</td>;
                   })}

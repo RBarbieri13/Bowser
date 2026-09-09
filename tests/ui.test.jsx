@@ -9,6 +9,11 @@ import { App } from "../src/App.jsx";
 
 const samplePlayer = {
   player_id: "00-test",
+  draft_kings_price: 7000,
+  draft_kings_projection: 20.3,
+  dfs_projection_source: "Fixture projection source",
+  dfs_team: "BUF",
+  dfs_game: "BUF@HOU 09/13/2026",
   player_display_name: "Test Player",
   team: "BUF",
   position: "QB",
@@ -866,4 +871,20 @@ describe("statistics table UI", () => {
     await user.click(restoredNameButton);
     expect(restoredNameButton.closest("th")).toHaveAttribute("aria-sort", "none");
   });
+});
+
+
+test('DFS fields display real values, sort, and retain the explicitly selected 2026 slate',async()=>{
+  render(<App/>);
+  await screen.findByRole('button',{name:'Test Player',exact:true});
+  fireEvent.click(screen.getByRole('button',{name:'Show DFS fields'}));
+  const table=screen.getByRole('table');
+  expect(within(table).getByText('$7,000')).toBeInTheDocument();
+  expect(within(table).getByText('20.3')).toBeInTheDocument();
+  expect(within(table).getByText('DFS · 2026 W1')).toBeInTheDocument();
+  fireEvent.click(within(table).getByRole('button',{name:'$',exact:true}));
+  await waitFor(()=>expect(fetch.mock.calls.some(([url])=>String(url).includes('sort=draft_kings_price'))).toBe(true));
+  fireEvent.change(screen.getByLabelText('DFS slate'),{target:{value:'main'}});
+  await waitFor(()=>expect(fetch.mock.calls.some(([url])=>String(url).includes('dfsSlate=main'))).toBe(true));
+  expect(localStorage.getItem('bowser:dfs-slate:v1')).toBe('main');
 });

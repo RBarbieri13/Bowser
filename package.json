@@ -10,16 +10,18 @@
     "data:rankings": "python3 scripts/import_fantasypros_adp.py",
     "data:verify": "python3 scripts/verify_warehouse.py",
     "intelligence:refresh": "node scripts/refresh_intelligence.mjs",
-    "test": "node --test tests/warehouse.test.mjs",
+    "test": "node --test tests/warehouse.test.mjs tests/dfs.test.mjs",
     "test:ui": "vitest run tests/ui.test.jsx",
     "test:market": "node --test tests/market-pulse.test.mjs && vitest run tests/market-pulse-ui.test.jsx",
-    "check": "npm run data:verify && npm test && npm run test:ui && npm run test:market && npm run build && npm run test:production && npm run test:sites",
+    "check": "npm run data:verify && npm test && npm run test:dfs-import && npm run test:ui && npm run test:market && npm run build && npm run test:production && npm run test:sites",
     "build": "vite build && node scripts/prepare-sites-build.mjs",
     "vercel-build": "vite build",
     "serve": "node scripts/serve-production.mjs",
     "test:production": "node --test tests/production-server.test.mjs",
     "preview": "vite preview",
-    "test:sites": "node --test tests/sites-worker.test.mjs"
+    "test:sites": "node --test tests/sites-worker.test.mjs",
+    "data:dfs": "python3 scripts/import_dfs_week1.py",
+    "test:dfs-import": "python3 tests/test_dfs_import.py"
   },
   "dependencies": {
     "@phosphor-icons/react": "2.1.10",

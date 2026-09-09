@@ -1,3 +1,4 @@
+import { getDfsSlate } from "./dfs-store.mjs";
 import { DatabaseSync } from "node:sqlite";
 import { copyFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -13,6 +14,7 @@ const SORT_COLUMNS = new Map([
   ["rank", "fantasy_points"], ["name", "player_display_name"],
   ["team", "team"], ["position", "position"], ["games_played", "games_played"],
   ["adp", "adp"], ["draft_position_rank", "draft_position_rank"],
+  ["draft_kings_price", "draft_kings_price"], ["draft_kings_projection", "draft_kings_projection"],
   ["snaps", "snaps"], ["snap_pct", "snap_pct"],
   ["passing_attempts", "passing_attempts"], ["completions", "completions"],
   ["completion_pct", "completion_pct"], ["passing_yards", "passing_yards"],
@@ -305,7 +307,7 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
   const receptionBonus = scoring === "ppr" ? 1 : scoring === "half" ? 0.5 : 0;
   const sorts = sortTerms(searchParams.get("sort"), searchParams.get("direction"));
   const sortSql = sorts.map(({ key, column, sqlDirection }) =>
-    ["adp", "draft_position_rank"].includes(key)
+    ["adp", "draft_position_rank", "draft_kings_price", "draft_kings_projection"].includes(key)
       ? `${column} IS NULL ASC, ${column} ${sqlDirection}`
       : `${column} ${sqlDirection}`
   ).join(", ");
@@ -320,6 +322,8 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
   const includeTrends = binaryFlag(searchParams.get("includeTrends"), true, "includeTrends");
   const includeDepthCharts = binaryFlag(searchParams.get("includeDepthCharts"), false, "includeDepthCharts");
 
+  const dfs=getDfsSlate(searchParams.get("dfsSlate") || "week1");
+  if(!dfs) throw new QueryValidationError("dfsSlate", "Unknown DraftKings slate");
   const where = ["season = 2025"];
   const params = [];
   if (seasonType !== "ALL") {
@@ -345,7 +349,16 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
 
   const rankFilter = ranks.length ? `WHERE rank IN (${placeholders(ranks)})` : "";
   const sql = `
-    WITH aggregated AS (
+    WITH dfs AS MATERIALIZED (
+      SELECT json_extract(value,'$.playerId') AS player_id,
+        json_extract(value,'$.salary') AS salary,
+        json_extract(value,'$.projection') AS projection,
+        json_extract(value,'$.team') AS team,
+        json_extract(value,'$.game') AS game,
+        json_extract(value,'$.projectionSource') AS projection_source,
+        json_extract(value,'$.projectionUrl') AS projection_url
+      FROM json_each(?)
+    ), aggregated AS (
       SELECT
         player_id,
         MAX(player_display_name) AS player_display_name,
@@ -399,6 +412,12 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
     ), enriched AS (
       SELECT
         aggregated.*,
+        dfs.salary AS draft_kings_price,
+        dfs.projection AS draft_kings_projection,
+        dfs.team AS dfs_team,
+        dfs.game AS dfs_game,
+        dfs.projection_source AS dfs_projection_source,
+        dfs.projection_url AS dfs_projection_url,
         draft_rankings.adp,
         draft_rankings.position_rank AS draft_position_rank,
         CASE
@@ -415,6 +434,7 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
         upcoming.kickoff_utc AS upcoming_kickoff_utc,
         upcoming.espn_game_id AS upcoming_espn_game_id
       FROM aggregated
+      LEFT JOIN dfs ON dfs.player_id = aggregated.player_id
       LEFT JOIN draft_rankings
         ON draft_rankings.player_id = aggregated.player_id
         AND draft_rankings.season = 2026
@@ -443,7 +463,7 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
     ORDER BY rank ASC
     LIMIT ?
   `;
-  const baseRows = db.prepare(sql).all(receptionBonus, receptionBonus, ...params, minGames, minSnaps, ...ranks, limit).map(decorateUpcomingMatchup);
+  const baseRows = db.prepare(sql).all(JSON.stringify(dfs.records), receptionBonus, receptionBonus, ...params, minGames, minSnaps, ...ranks, limit).map(decorateUpcomingMatchup);
   const enrichment = enrichPlayerTrendsAndDepth(db, baseRows, receptionBonus, { includeTrends, includeDepthCharts });
   const rows = enrichment.rows;
   return {
@@ -454,7 +474,7 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
       queryMs: Number((performance.now() - started).toFixed(2)),
       season: 2025, seasonType, scoring, positions, teams, weeks, search,
       minGames, minSnaps, sorts: sorts.map(({ key, direction }) => ({ key, direction })), limit, ranks,
-      includeTrends, includeDepthCharts, depthCharts: enrichment.depthCharts,
+      includeTrends, includeDepthCharts, depthCharts: enrichment.depthCharts, dfs:dfs.meta,
     },
   };
 }
