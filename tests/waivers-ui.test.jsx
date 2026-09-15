@@ -138,6 +138,30 @@ test('source values convert only with explicit matching budget basis and preserv
   expect(within(screen.getByRole('button', { name: 'Fixture Receiver', exact: true }).closest('tr')).getAllByText('3–8%')[0]).toBeInTheDocument();
 });
 
+test('trend metric selections update real bars and sorting, survive reload, and reject unsupported saved metrics', async () => {
+  fetch.mockImplementation(async () => reply({ ...data, rows: [
+    { ...rows[0], stats: { ...rows[0].stats, trends: [{ week: 1, carries: 12, targets: 3, rushing_yards: 70, receptions: 2, receiving_tds: 0 }] } },
+    { ...rows[1], stats: { ...rows[1].stats, rushing_yards: 100, receiving_tds: 2, trends: [{ week: 1, rushing_yards: 100, receiving_tds: 2 }] } },
+    rows[2],
+  ] }));
+  const view = render(<Waivers />); await ready();
+  fireEvent.click(screen.getByRole('button', { name: 'Table', exact: true }));
+  fireEvent.change(screen.getByLabelText('Rushing trend metric'), { target: { value: 'rushing_yards' } });
+  fireEvent.change(screen.getByLabelText('Receiving trend metric'), { target: { value: 'receiving_tds' } });
+  const runner = (await ready()).closest('tr');
+  expect(within(runner).getByRole('img', { name: 'Fixture Runner rushing yards: Week 1: 70' }).querySelector('[data-value]')).toHaveAttribute('data-value', '70');
+  expect(within(runner).getByRole('img', { name: 'Fixture Runner receiving touchdowns: Week 1: 0' }).querySelector('[data-value]')).toHaveAttribute('data-value', '0');
+  fireEvent.click(screen.getByRole('button', { name: 'Sort Rushing YDS / game' }));
+  expect(playerRows()[0]).toHaveTextContent('Fixture Receiver');
+  expect(playerRows().at(-1)).toHaveTextContent('Unknown Quarterback');
+  expect(JSON.parse(localStorage.getItem(WAIVER_PREFS_KEY)).trendMetrics).toEqual({ rushing: 'rushing_yards', receiving: 'receiving_tds' });
+  view.unmount(); render(<Waivers />); await ready();
+  expect(screen.getByRole('button', { name: 'Sort Rushing YDS / game' })).toHaveAttribute('title', 'Sort YDS / game. Shift-click to add another sort.');
+  expect(screen.getByRole('button', { name: 'Sort Receiving TD / game' })).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: 'Fixture Runner receiving touchdowns: Week 1: 0' })).toBeInTheDocument();
+  expect(validatePreferences({ trendMetrics: { rushing: 'passing_yards', receiving: 'constructor' } }).trendMetrics).toEqual({ rushing: 'carries', receiving: 'targets' });
+});
+
 test('storage validation and null comparisons preserve unknowns and safe bounds', () => {
   expect(validatePreferences({ density: 'wild', widths: { name: Infinity, team: 500, position: 70 }, sorts: [{ key: '__proto__', desc: true }] })).toMatchObject({ density: 'compact', widths: { position: 70 }, sorts: [] });
   expect(validateFavorites([{ id: 'a', name: '<script>', bid: -2, notes: 'x'.repeat(1100) }, { id: 'a', bid: 99 }])).toHaveLength(1);

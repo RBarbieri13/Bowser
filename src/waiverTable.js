@@ -2,7 +2,11 @@ export const WAIVER_PREFS_KEY = 'bowser:waivers:table:v1';
 export const favoriteKey = (season, week) => `bowser:waivers:favorites:v1:${season}:${week}`;
 export const finite = value => typeof value === 'number' && Number.isFinite(value) ? value : null;
 const safeKey = key => typeof key === 'string' && /^[a-zA-Z0-9:_-]{1,100}$/.test(key) && !['__proto__', 'constructor', 'prototype'].includes(key);
-export const DEFAULT_PREFS = { hidden: [], collapsed: [], widths: {}, sorts: [{ key: 'fantasy_points', desc: true }], density: 'compact', autoFit: false, drawer: false };
+export const TREND_OPTIONS = {
+  rushing: [{ key: 'carries', label: 'ATT', description: 'rush attempts' }, { key: 'rushing_yards', label: 'YDS', description: 'rushing yards' }, { key: 'rushing_tds', label: 'TD', description: 'rushing touchdowns' }],
+  receiving: [{ key: 'targets', label: 'TGT', description: 'targets' }, { key: 'receptions', label: 'REC', description: 'receptions' }, { key: 'receiving_yards', label: 'YDS', description: 'receiving yards' }, { key: 'receiving_tds', label: 'TD', description: 'receiving touchdowns' }],
+};
+export const DEFAULT_PREFS = { hidden: [], collapsed: [], widths: {}, sorts: [{ key: 'fantasy_points', desc: true }], density: 'compact', autoFit: false, drawer: false, trendMetrics: { rushing: 'carries', receiving: 'targets' } };
 export function readJSON(key) { try { return JSON.parse(localStorage.getItem(key)); } catch { return null; } }
 export function saveJSON(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch { return false; } }
 export function validatePreferences(value) {
@@ -14,6 +18,7 @@ export function validatePreferences(value) {
     sorts: Array.isArray(p.sorts) ? p.sorts.filter(s => s && safeKey(s.key) && typeof s.desc === 'boolean').slice(0, 5) : DEFAULT_PREFS.sorts,
     density: ['compact', 'comfortable'].includes(p.density) ? p.density : 'compact',
     autoFit: p.autoFit === true, drawer: p.drawer === true,
+    trendMetrics: Object.fromEntries(Object.entries(TREND_OPTIONS).map(([group, options]) => [group, options.some(option => option.key === p.trendMetrics?.[group]) ? p.trendMetrics[group] : DEFAULT_PREFS.trendMetrics[group]])),
   };
 }
 export function validateFavorites(value) {
@@ -27,7 +32,9 @@ export function validateFavorites(value) {
 }
 export const playerKey = row => String(row.playerId || row.id);
 const stat = (key, label, group, extra = {}) => ({ key, label, group, width: 64, kind: 'stat', ...extra });
-export function waiverColumns(sources = []) {
+export function waiverColumns(sources = [], trendMetrics = DEFAULT_PREFS.trendMetrics) {
+  const rushingTrend = TREND_OPTIONS.rushing.find(option => option.key === trendMetrics.rushing) || TREND_OPTIONS.rushing[0];
+  const receivingTrend = TREND_OPTIONS.receiving.find(option => option.key === trendMetrics.receiving) || TREND_OPTIONS.receiving[0];
   return [
     { key: 'favorite', label: '★', group: 'identity', width: 44, kind: 'favorite', required: true },
     { key: 'name', label: 'Player', group: 'identity', width: 190, kind: 'identity', required: true },
@@ -40,9 +47,9 @@ export function waiverColumns(sources = []) {
     { key: 'snap_trend', label: 'Snaps / game', group: 'usage', width: 126, kind: 'trend', metric: 'snaps' },
     stat('passing_attempts', 'ATT', 'passing'), stat('completions', 'CMP', 'passing'), stat('passing_yards', 'YDS', 'passing'), stat('passing_tds', 'TD', 'passing'),
     stat('carries', 'ATT', 'rushing'), stat('rushing_yards', 'YDS', 'rushing'), stat('rushing_tds', 'TD', 'rushing'),
-    { key: 'rush_trend', label: 'ATT / game', group: 'rushing', width: 126, kind: 'trend', metric: 'carries' },
+    { key: 'rush_trend', label: `${rushingTrend.label} / game`, group: 'rushing', width: 126, kind: 'trend', metric: rushingTrend.key },
     stat('targets', 'TGT', 'receiving'), stat('receptions', 'REC', 'receiving'), stat('receiving_yards', 'YDS', 'receiving'), stat('receiving_tds', 'TD', 'receiving'),
-    { key: 'receiving_trend', label: 'TGT / game', group: 'receiving', width: 126, kind: 'trend', metric: 'targets' },
+    { key: 'receiving_trend', label: `${receivingTrend.label} / game`, group: 'receiving', width: 126, kind: 'trend', metric: receivingTrend.key },
     stat('fantasy_points', 'FPTS', 'fantasy', { width: 80, decimal: true }),
   ];
 }

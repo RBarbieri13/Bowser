@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowClockwise, CaretDown, CaretRight, MagnifyingGlass, SlidersHorizontal, Star, X } from '@phosphor-icons/react';
-import { DEFAULT_PREFS, GROUPS, WAIVER_PREFS_KEY, columnValue, faabValue, favoriteKey, filterWaiverRows, finite, formatFAAB, playerKey, readJSON, saveJSON, sortWaiverRows, validateFavorites, validatePreferences, waiverColumns } from './waiverTable.js';
+import { DEFAULT_PREFS, GROUPS, TREND_OPTIONS, WAIVER_PREFS_KEY, columnValue, faabValue, favoriteKey, filterWaiverRows, finite, formatFAAB, playerKey, readJSON, saveJSON, sortWaiverRows, validateFavorites, validatePreferences, waiverColumns } from './waiverTable.js';
 import './Waivers.css';
 
 const fmt = value => finite(value) === null ? '' : new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 }).format(value);
@@ -18,7 +18,7 @@ function GameBars({ row, metric }) {
   const points = games.map(game => ({ ...game, value: finite(game[metric]) }));
   if (!points.some(point => point.value !== null)) return <span className="wv-blank" title="No recorded game values for this selected range" />;
   const max = Math.max(1, ...points.map(point => point.value || 0));
-  const label = metric === 'carries' ? 'rush attempts' : metric === 'snaps' ? 'snaps' : 'targets';
+  const label = metric === 'snaps' ? 'snaps' : Object.values(TREND_OPTIONS).flat().find(option => option.key === metric)?.description || metric;
   return <span className="wv-bars" role="img" aria-label={`${row.name} ${label}: ${points.map(point => `Week ${point.week}: ${point.value === null ? 'unavailable' : point.value}`).join('; ')}`} title={`${label}; zero baseline, scaled within this player and metric. Only recorded games in the selected stats range.`}>
     {points.map((point, index) => <span key={`${point.week}-${index}`} data-week={point.week} data-value={point.value ?? ''} title={`Week ${point.week}${point.opponent ? ` vs ${point.opponent}` : ''}: ${point.value === null ? 'unavailable' : `${point.value} ${label}`}`}><b>{point.value === null ? '·' : point.value}</b><i style={{ height: point.value === null ? 0 : Math.max(2, point.value / max * 16) }} /></span>)}
   </span>;
@@ -73,7 +73,7 @@ export function Waivers({ season = 2026, onOpenPlayer }) {
     return () => { active = false; controller.abort(); };
   }, [season, week, weeks, scoring, refresh]);
   const sources = data?.meta?.sources || [];
-  const columns = useMemo(() => waiverColumns(sources), [sources]);
+  const columns = useMemo(() => waiverColumns(sources, prefs.trendMetrics), [sources, prefs.trendMetrics]);
   const allRows = data?.rows || [];
   const groups = GROUPS.map(([key, label]) => ({ key, label, columns: columns.filter(column => column.group === key && (column.required || !prefs.hidden.includes(column.key))) })).filter(group => group.columns.length);
   const visible = groups.flatMap(group => prefs.collapsed.includes(group.key) && group.key !== 'identity' ? [{ key: `collapsed:${group.key}`, group: group.key, width: 38, kind: 'collapsed', label: group.label }] : group.columns);
@@ -170,6 +170,7 @@ export function Waivers({ season = 2026, onOpenPlayer }) {
           <button onClick={() => { setRanges([blankRange('rank'), blankRange('faab')]); setSearch(''); setPosition('All'); setTeam('All'); setFavoriteOnly(false); }}>Clear filters</button><small>Each filter uses that publisher's reported value. Missing values are excluded when a range is active.</small>
         </section>}
         {settings && <section className="wv-settings" aria-label="Waiver table settings">
+          <div className="wv-trend-settings">{Object.entries(TREND_OPTIONS).map(([group, options]) => <label key={group}>{group === 'rushing' ? 'Rushing trend' : 'Receiving trend'}<select aria-label={`${group === 'rushing' ? 'Rushing' : 'Receiving'} trend metric`} value={prefs.trendMetrics[group]} onChange={event => setPref('trendMetrics', { ...prefs.trendMetrics, [group]: event.target.value })}>{options.map(option => <option key={option.key} value={option.key}>{option.label} · {option.description}</option>)}</select></label>)}<small>Bars show recorded games; trend-column sorting uses the selected metric's total.</small></div>
           <div className="wv-settings-toolbar"><label>Density<select aria-label="Waiver row density" value={prefs.density} onChange={event => setPref('density', event.target.value)}><option value="compact">Compact · 35 px</option><option value="comfortable">Comfortable · 44 px</option></select></label><button aria-pressed={prefs.autoFit} onClick={() => setPref('autoFit', !prefs.autoFit)}>Auto Fit</button><button onClick={() => setPrefs({ ...DEFAULT_PREFS })}>Reset table</button><small>Click headers to sort. Shift-click adds a sort; up to five. Drag column edges to resize.</small></div>
           <div className="wv-column-settings">{GROUPS.filter(([key]) => key !== 'identity').map(([key, label]) => <fieldset key={key}><legend>{label}</legend>{columns.filter(column => column.group === key).map(column => <label key={column.key}><input type="checkbox" checked={!prefs.hidden.includes(column.key)} onChange={event => setPref('hidden', event.target.checked ? prefs.hidden.filter(item => item !== column.key) : [...prefs.hidden, column.key])} />{column.label}</label>)}</fieldset>)}</div>
         </section>}
