@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test, { after } from "node:test";
 
-import { closeDatabase, getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "../server/stats-store.mjs";
+import { closeDatabase, getMeta, openDatabase, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "../server/stats-store.mjs";
 import { getIntelligenceRegistry, queryIntelligenceFeed, IntelligenceQueryError } from "../server/intelligence-store.mjs";
 import { buildXaiRequestBody } from "../server/intelligence-provider-xai.mjs";
 
@@ -273,7 +273,11 @@ test("FantasyPros PPR ADP and positional rank are joined and sortable", () => {
 test("player rows expose the next 2026 matchup and Yahoo-ready nullable fields", () => {
   const result = queryPlayers(new URLSearchParams("seasonType=ALL&weeks=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18&search=Jahmyr%20Gibbs&limit=all"));
   assert.equal(result.data.length, 1);
-  assert.match(result.data[0].upcoming_matchup, /^Sun \d{1,2}:\d{2} (am|pm) (vs|@) [A-Z]+$/);
+  assert.match(result.data[0].upcoming_matchup, /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) \d{1,2}:\d{2} (am|pm) (vs|@) [A-Z]+$/);
+  const next = openDatabase().prepare("SELECT * FROM team_schedule WHERE season = 2026 AND team = 'DET' AND gameday >= DATE('now') ORDER BY gameday LIMIT 1").get();
+  assert.equal(result.data[0].upcoming_opponent, next.opponent);
+  assert.equal(result.data[0].upcoming_kickoff_utc, next.kickoff_utc);
+  assert.ok(result.data[0].upcoming_matchup.startsWith(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'short' }).format(new Date(next.kickoff_utc))));
   assert.match(result.data[0].upcoming_game_url, /^https:\/\/www\.espn\.com\/nfl\/game\/_\/gameId\//);
   assert.equal(result.data[0].yahoo_roster_pct, null);
   assert.equal(result.data[0].yahoo_start_pct, null);

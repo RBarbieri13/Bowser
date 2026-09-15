@@ -17,7 +17,7 @@ export function fantasyStatsApiPlugin() {
         try {
           if (request.method !== "GET") return sendJson(response, 405, { error: { code: "read_only", message: "This API is read-only" } });
           const url = new URL(request.url || "/", "http://local");
-          if (url.pathname === "/meta") return sendJson(response, 200, getMeta());
+          if (url.pathname === "/meta") return sendJson(response, 200, getMeta(undefined, url.searchParams));
           if (url.pathname === "/player-stats") return sendJson(response, 200, queryPlayers(url.searchParams));
           if (url.pathname === "/player-profile") return sendJson(response, 200, queryPlayerProfile(url.searchParams));
           if (url.pathname === "/team-box-scores") return sendJson(response, 200, queryTeamBoxScores(url.searchParams));

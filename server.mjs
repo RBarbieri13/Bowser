@@ -60,7 +60,7 @@ function asyncApiHandler(handler) {
   };
 }
 
-app.get("/api/v1/meta", apiHandler(() => getMeta()));
+app.get("/api/v1/meta", apiHandler((params) => getMeta(undefined, params)));
 app.get("/api/v1/player-stats", apiHandler((params) => queryPlayers(params)));
 app.get("/api/v1/player-profile", apiHandler((params) => queryPlayerProfile(params)));
 app.get("/api/v1/team-box-scores", apiHandler((params) => queryTeamBoxScores(params)));

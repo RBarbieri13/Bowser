@@ -6,5 +6,6 @@ export default function handler(request, response) {
     sendJson(response, 405, { error: { code: "read_only", message: "This API is read-only" } });
     return;
   }
-  runQuery(response, () => getMeta());
+  const url = new URL(request.url, "https://local.invalid");
+  runQuery(response, () => getMeta(undefined, url.searchParams));
 }

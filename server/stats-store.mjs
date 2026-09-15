@@ -5,7 +5,8 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const DEFAULT_DB_PATH = fileURLToPath(new URL("../data/fantasy_football.sqlite", import.meta.url));
-const VERCEL_DB_PATH = path.join("/tmp", "fantasy_football_2025.sqlite");
+const CURRENT_DB_PATH = fileURLToPath(new URL("../data/fantasy_football_2026.sqlite", import.meta.url));
+const AVAILABLE_SEASONS = [2025, 2026];
 const CENTRAL_MATCHUP_FORMATTER = new Intl.DateTimeFormat("en-US", {
   timeZone: "America/Chicago", weekday: "short", hour: "numeric", minute: "2-digit",
 });
@@ -44,11 +45,23 @@ export class QueryValidationError extends Error {
   }
 }
 
-export function openDatabase(dbPath = process.env.FANTASY_DB_PATH || DEFAULT_DB_PATH) {
-  let resolved = path.resolve(dbPath);
-  if (!process.env.FANTASY_DB_PATH && process.env.VERCEL) {
-    resolved = VERCEL_DB_PATH;
-    if (!database || activePath !== resolved) copyFileSync(DEFAULT_DB_PATH, resolved);
+function querySeason(searchParams) {
+  const raw = searchParams.get("season");
+  const season = raw === null || raw === "" ? 2025 : Number(raw);
+  if (!AVAILABLE_SEASONS.includes(season)) throw new QueryValidationError("season", "Choose season 2025 or 2026");
+  return season;
+}
+
+function databaseSeason(db) {
+  return Number(db.prepare("SELECT value FROM warehouse_meta WHERE key = 'season'").get()?.value || 2025);
+}
+
+export function openDatabase(dbPath, season = 2025) {
+  const sourcePath = dbPath || process.env.FANTASY_DB_PATH || (season === 2026 ? CURRENT_DB_PATH : DEFAULT_DB_PATH);
+  let resolved = path.resolve(sourcePath);
+  if (!dbPath && !process.env.FANTASY_DB_PATH && process.env.VERCEL) {
+    resolved = path.join("/tmp", `fantasy_football_${season}.sqlite`);
+    if (!database || activePath !== resolved) copyFileSync(sourcePath, resolved);
   }
   if (!database || activePath !== resolved) {
     database?.close();
@@ -133,6 +146,7 @@ function decorateUpcomingMatchup(row) {
 }
 
 function enrichPlayerTrendsAndDepth(db, rows, receptionBonus, { includeTrends, includeDepthCharts }) {
+  const season = databaseSeason(db);
   const playerIds = rows.map((row) => row.player_id).filter(Boolean);
   if (!playerIds.length) return { rows, depthCharts: {} };
 
@@ -160,12 +174,12 @@ function enrichPlayerTrendsAndDepth(db, rows, receptionBonus, { includeTrends, i
         ROUND(stats.fantasy_points + stats.receptions * ?, 1) AS fantasy_points,
         ROW_NUMBER() OVER (
           PARTITION BY stats.player_id
-          ORDER BY COALESCE(games.gameday, printf('2025-%02d-01', stats.week)) DESC,
+          ORDER BY COALESCE(games.gameday, printf('${season}-%02d-01', stats.week)) DESC,
             stats.week DESC, stats.game_id DESC
         ) AS recent_rank
       FROM player_week_stats AS stats
       LEFT JOIN games ON games.game_id = stats.game_id
-      WHERE stats.season = 2025
+      WHERE stats.season = ${season}
         AND stats.season_type = 'REG'
         AND stats.played = 1
         AND stats.player_id IN (${placeholders(playerIds)})
@@ -174,7 +188,7 @@ function enrichPlayerTrendsAndDepth(db, rows, receptionBonus, { includeTrends, i
     FROM recent_games
     WHERE recent_rank <= 10
     ORDER BY player_id,
-      COALESCE(gameday, printf('2025-%02d-01', week)) ASC,
+      COALESCE(gameday, printf('${season}-%02d-01', week)) ASC,
       week ASC,
       game_id ASC
   `).all(receptionBonus, ...playerIds) : [];
@@ -183,6 +197,7 @@ function enrichPlayerTrendsAndDepth(db, rows, receptionBonus, { includeTrends, i
   for (const row of trendRows) {
     if (!trendsByPlayer.has(row.player_id)) trendsByPlayer.set(row.player_id, []);
     trendsByPlayer.get(row.player_id).push({
+      season,
       week: row.week,
       seasonType: row.season_type,
       gameId: row.game_id,
@@ -270,13 +285,17 @@ function enrichPlayerTrendsAndDepth(db, rows, receptionBonus, { includeTrends, i
   return { rows: enrichedRows, depthCharts };
 }
 
-export function getMeta(dbPath) {
-  const db = openDatabase(dbPath);
+export function getMeta(dbPath, searchParams = new URLSearchParams()) {
+  const season = querySeason(searchParams);
+  const db = openDatabase(dbPath, season);
   const summaryRow = db.prepare("SELECT value FROM warehouse_meta WHERE key = 'summary'").get();
   const draftSummaryRow = db.prepare("SELECT value FROM warehouse_meta WHERE key = 'fantasypros_adp_summary'").get();
   const summary = summaryRow ? JSON.parse(summaryRow.value) : {};
   return {
-    season: 2025,
+    season,
+    seasons: AVAILABLE_SEASONS,
+    currentSeason: 2026,
+    availableWeeks: db.prepare("SELECT DISTINCT week FROM player_week_stats ORDER BY week").all().map((row) => row.week),
     seasonTypes: [
       { value: "REG", label: "Regular Season" },
       { value: "POST", label: "Postseason" },
@@ -290,7 +309,7 @@ export function getMeta(dbPath) {
     positions: db.prepare("SELECT DISTINCT position FROM player_week_stats WHERE position <> '' ORDER BY position").all().map((row) => row.position),
     teams: db.prepare("SELECT DISTINCT team FROM player_week_stats WHERE team <> '' AND team <> 'UNK' ORDER BY team").all().map((row) => row.team),
     weeks: db.prepare("SELECT season_type, GROUP_CONCAT(week) AS weeks FROM (SELECT DISTINCT season_type, week FROM player_week_stats ORDER BY season_type, week) GROUP BY season_type ORDER BY season_type").all(),
-    weekOptions: db.prepare("SELECT DISTINCT season_type, week FROM player_week_stats WHERE season = 2025 ORDER BY week").all(),
+    weekOptions: db.prepare(`SELECT DISTINCT season_type, week FROM player_week_stats WHERE season = ${season} ORDER BY week`).all(),
     warehouse: summary,
     draftRankings: draftSummaryRow ? JSON.parse(draftSummaryRow.value) : null,
     attribution: { name: "nflverse", url: "https://github.com/nflverse/nflverse-data", license: "CC BY 4.0" },
@@ -298,7 +317,8 @@ export function getMeta(dbPath) {
 }
 
 export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
-  const db = openDatabase(dbPath);
+  const season = querySeason(searchParams);
+  const db = openDatabase(dbPath, season);
   const started = performance.now();
   const seasonType = searchParams.get("seasonType") || "REG";
   if (!["REG", "POST", "ALL"].includes(seasonType)) throw new QueryValidationError("seasonType", "Unknown season type");
@@ -322,9 +342,12 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
   const includeTrends = binaryFlag(searchParams.get("includeTrends"), true, "includeTrends");
   const includeDepthCharts = binaryFlag(searchParams.get("includeDepthCharts"), false, "includeDepthCharts");
 
+  const upcomingTeam = season === 2026
+    ? "COALESCE(NULLIF(players.latest_team, ''), draft_rankings.source_team)"
+    : "COALESCE(NULLIF(draft_rankings.source_team, ''), players.latest_team)";
   const dfs=getDfsSlate(searchParams.get("dfsSlate") || "week1");
   if(!dfs) throw new QueryValidationError("dfsSlate", "Unknown DraftKings slate");
-  const where = ["season = 2025"];
+  const where = [`season = ${season}`];
   const params = [];
   if (seasonType !== "ALL") {
     where.push("season_type = ?");
@@ -444,12 +467,12 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
       LEFT JOIN yahoo_player_metrics ON yahoo_player_metrics.player_id = aggregated.player_id
       LEFT JOIN team_schedule AS upcoming
         ON upcoming.season = 2026
-        AND upcoming.team = COALESCE(NULLIF(draft_rankings.source_team, ''), players.latest_team)
+        AND upcoming.team = ${upcomingTeam}
         AND upcoming.gameday = (
           SELECT MIN(next_game.gameday)
           FROM team_schedule AS next_game
           WHERE next_game.season = 2026
-            AND next_game.team = COALESCE(NULLIF(draft_rankings.source_team, ''), players.latest_team)
+            AND next_game.team = ${upcomingTeam}
             AND next_game.gameday >= DATE('now')
         )
     ), filtered AS (
@@ -472,7 +495,7 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
       totalCount: rows[0]?.total_count ?? 0,
       returnedCount: rows.length,
       queryMs: Number((performance.now() - started).toFixed(2)),
-      season: 2025, seasonType, scoring, positions, teams, weeks, search,
+      season, seasonType, scoring, positions, teams, weeks, search,
       minGames, minSnaps, sorts: sorts.map(({ key, direction }) => ({ key, direction })), limit, ranks,
       includeTrends, includeDepthCharts, depthCharts: enrichment.depthCharts, dfs:dfs.meta,
     },
@@ -517,6 +540,7 @@ function scheduleGame(row) {
 }
 
 function queryScheduleForTeam(db, team, seasonType = "ALL") {
+  const season = databaseSeason(db);
   const params = [team];
   const seasonTypeFilter = seasonType === "ALL" ? "" : "AND g.season_type = ?";
   if (seasonType !== "ALL") params.push(seasonType);
@@ -525,7 +549,7 @@ function queryScheduleForTeam(db, team, seasonType = "ALL") {
       summary.points_against, summary.result
     FROM game_team_summary summary
     INNER JOIN games g USING (game_id)
-    WHERE g.season = 2025 AND summary.team = ? ${seasonTypeFilter}
+    WHERE g.season = ${season} AND summary.team = ? ${seasonTypeFilter}
     ORDER BY g.week, g.gameday, g.gametime, g.game_id
   `).all(...params).map(scheduleGame);
 }
@@ -541,7 +565,7 @@ function rosterStatusLabel(status) {
 }
 
 function opportunityTrend(history, position) {
-  if (!history.length) return { direction: "new", delta: null, label: "No 2025 NFL game history" };
+  if (!history.length) return { direction: "new", delta: null, label: "No recorded NFL game history in the selected season" };
   if (history.length < 4) return { direction: "new", delta: null, label: `${history.length} recorded game${history.length === 1 ? "" : "s"}` };
   const current = history.slice(-3);
   const previous = history.slice(-6, -3);
@@ -557,7 +581,8 @@ function opportunityTrend(history, position) {
 }
 
 export function queryOpportunityTracker(searchParams = new URLSearchParams(), dbPath) {
-  const db = openDatabase(dbPath);
+  const season = querySeason(searchParams);
+  const db = openDatabase(dbPath, season);
   const started = performance.now();
   const team = String(searchParams.get("team") || "NYG").trim().toUpperCase();
   const gameLimit = boundedNumber(searchParams.get("games"), 10, 5, 10, "games");
@@ -580,15 +605,16 @@ export function queryOpportunityTracker(searchParams = new URLSearchParams(), db
       ROUND(stats.fantasy_points_ppr, 1) AS fantasy_points
     FROM player_week_stats stats
     LEFT JOIN games ON games.game_id = stats.game_id
-    WHERE stats.season = 2025 AND stats.player_id IN (${placeholders(playerIds)})
+    WHERE stats.season = ${season} AND stats.player_id IN (${placeholders(playerIds)})
       AND stats.position IN ('QB', 'RB', 'FB', 'HB', 'WR', 'TE')
-    ORDER BY stats.player_id, COALESCE(games.gameday, printf('2025-%02d-01', stats.week)), stats.week
+    ORDER BY stats.player_id, COALESCE(games.gameday, printf('${season}-%02d-01', stats.week)), stats.week
   `).all(...playerIds) : [];
 
   const histories = new Map();
   for (const row of historyRows) {
     if (!histories.has(row.player_id)) histories.set(row.player_id, []);
     histories.get(row.player_id).push({
+      season,
       week: row.week,
       seasonType: row.season_type,
       team: row.team,
@@ -647,7 +673,7 @@ export function queryOpportunityTracker(searchParams = new URLSearchParams(), db
     data: { team, groups },
     meta: {
       rosterSeason: 2026,
-      historySeason: 2025,
+      historySeason: season,
       gameWindow: gameLimit,
       playerCount: players.length,
       playersWithHistory: players.filter((player) => player.hasNFLHistory).length,
@@ -663,11 +689,12 @@ export function queryOpportunityTracker(searchParams = new URLSearchParams(), db
 }
 
 export function queryTeamBoxScores(searchParams = new URLSearchParams(), dbPath) {
-  const db = openDatabase(dbPath);
+  const season = querySeason(searchParams);
+  const db = openDatabase(dbPath, season);
   const started = performance.now();
   const team = String(searchParams.get("team") || "NYG").trim().toUpperCase();
-  const knownTeam = db.prepare("SELECT 1 FROM player_week_stats WHERE season = 2025 AND team = ? LIMIT 1").get(team);
-  if (!knownTeam) throw new QueryValidationError("team", "Choose a valid 2025 NFL team");
+  const knownTeam = db.prepare(`SELECT 1 FROM player_week_stats WHERE season = ${season} AND team = ? LIMIT 1`).get(team);
+  if (!knownTeam) throw new QueryValidationError("team", `Choose a valid ${season} NFL team`);
 
   const scoring = searchParams.get("scoring") || "ppr";
   const receptionBonus = scoringBonus(scoring);
@@ -681,7 +708,7 @@ export function queryTeamBoxScores(searchParams = new URLSearchParams(), dbPath)
   if (!weeks.length) throw new QueryValidationError("weeks", "Choose at least one week between 1 and 22");
 
   const where = [
-    "season = 2025",
+    `season = ${season}`,
     "team = ?",
     "source_player_stats = 1",
     "position IN ('QB', 'RB', 'FB', 'HB', 'WR', 'TE')",
@@ -732,7 +759,7 @@ export function queryTeamBoxScores(searchParams = new URLSearchParams(), dbPath)
   return {
     data: rows,
     meta: {
-      season: 2025,
+      season,
       team,
       scoring,
       seasonType,
@@ -755,17 +782,20 @@ export function queryTeamBoxScores(searchParams = new URLSearchParams(), dbPath)
 }
 
 export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath) {
-  const db = openDatabase(dbPath);
+  const season = querySeason(searchParams);
+  const db = openDatabase(dbPath, season);
   const started = performance.now();
   const gameId = String(searchParams.get("gameId") || "").trim().slice(0, 40);
   if (!gameId) throw new QueryValidationError("gameId", "A gameId is required");
   const scoring = searchParams.get("scoring") || "ppr";
   const receptionBonus = scoringBonus(scoring);
 
+  const summary = JSON.parse(db.prepare("SELECT value FROM warehouse_meta WHERE key = 'summary'").get()?.value || "{}");
+  const participationAvailable = summary.participation_available !== false;
   const game = db.prepare(`
-    SELECT * FROM games WHERE season = 2025 AND game_id = ?
+    SELECT * FROM games WHERE season = ${season} AND game_id = ?
   `).get(gameId);
-  if (!game) throw new QueryValidationError("gameId", "Choose a valid 2025 NFL game");
+  if (!game) throw new QueryValidationError("gameId", `Choose a valid ${season} NFL game`);
 
   const teamSummaries = db.prepare(`
     SELECT * FROM game_team_summary
@@ -819,7 +849,7 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
       carries, rushing_yards, rushing_tds, targets, receptions, receiving_yards, receiving_tds,
       ROUND(fantasy_points + receptions * ?, 1) AS fantasy_points
     FROM player_week_stats
-    WHERE season = 2025 AND game_id = ? AND source_player_stats = 1
+    WHERE season = ${season} AND game_id = ? AND source_player_stats = 1
       AND position IN ('QB', 'RB', 'FB', 'HB', 'WR', 'TE')
     ORDER BY team,
       CASE WHEN position = 'QB' THEN 1 WHEN position IN ('RB', 'FB', 'HB') THEN 2 WHEN position = 'WR' THEN 3 WHEN position = 'TE' THEN 4 ELSE 5 END,
@@ -844,7 +874,7 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
       CASE WHEN position IN ('RB', 'FB', 'HB') THEN 'RB' ELSE position END AS position_group,
       COALESCE(offense_snaps, 0) AS weekly_snaps
     FROM player_week_stats
-    WHERE season = 2025 AND game_id = ?
+    WHERE season = ${season} AND game_id = ?
       AND (source_player_stats = 1 OR source_snap_counts = 1)
       AND position IN ('QB', 'RB', 'FB', 'HB', 'WR', 'TE')
     ORDER BY team, weekly_snaps DESC, player_display_name COLLATE NOCASE
@@ -879,7 +909,7 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
     });
     groupedPlayers.get(key).segments.push({
       segment: row.segment,
-      snaps: row.snaps,
+      snaps: participationAvailable ? row.snaps : null,
       rushAttempts: row.rush_attempts,
       passAttempts: row.pass_attempts,
       targets: row.targets,
@@ -890,7 +920,7 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
     });
   }
   const sumMetrics = (segments) => segments.reduce((total, segment) => ({
-    snaps: total.snaps + segment.snaps,
+    snaps: participationAvailable ? total.snaps + segment.snaps : null,
     rushAttempts: total.rushAttempts + segment.rushAttempts,
     passAttempts: total.passAttempts + segment.passAttempts,
     targets: total.targets + segment.targets,
@@ -903,7 +933,7 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
   for (const row of participationRoster) {
     if (allSegmentPlayers.some((player) => player.team === row.team && player.playerId === row.player_id)) continue;
     const emptySegments = Array.from({ length: 6 }, (_, segment) => ({
-      segment, snaps: 0, rushAttempts: 0, passAttempts: 0, targets: 0,
+      segment, snaps: participationAvailable ? 0 : null, rushAttempts: 0, passAttempts: 0, targets: 0,
       yards: 0, touchdowns: 0, receptions: 0, fantasyPoints: 0,
     }));
     allSegmentPlayers.push({
@@ -935,6 +965,10 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
 
   const hasFlow = Boolean(game.play_by_play_available && timelineRows.length);
   const unavailable = [];
+  if (!participationAvailable) unavailable.push({
+    metric: "playerParticipation",
+    reason: "2026 play-level personnel participation is not published; segment snap counts are unknown. Weekly snap counts and play-by-play opportunities remain available.",
+  });
   if (!hasFlow) unavailable.push({
     metric: "gameFlow",
     reason: "nflverse play-by-play is unavailable for this game; schedule and player box-score fields remain available.",
@@ -1003,20 +1037,21 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
         driveWaterfall: hasFlow && drives.length > 0,
         timeInScoreState: hasFlow,
         playMix: teamSummaries.every((team) => team.rush_plays !== null && team.pass_plays !== null),
-        playerParticipation: playerSegments.length > 0,
+        playerParticipation: participationAvailable && playerSegments.length > 0,
+        playerOpportunities: Boolean(game.play_by_play_available && rawPlayerSegments.length),
         unavailable,
       },
     },
     meta: {
-      season: 2025,
+      season,
       scoring,
-      source: "nflverse schedules, weekly player stats, snap counts, play-by-play, and play participation",
+      source: participationAvailable ? "nflverse schedules, weekly player stats, snap counts, play-by-play, and play participation" : "nflverse schedules, weekly player stats, snap counts, and play-by-play; personnel participation unavailable",
       methodology: {
         timeInScoreState: "Integrated from each score change to the next score change or end of the game clock.",
         playMix: "Rush plays use nflverse rush_attempt; pass plays use pass_attempt plus sacks not already counted as attempts.",
         driveWaterfall: "Each drive is aggregated from nflverse play-by-play. Passing and rushing yardage are summed directly from yards_gained by play type; field position, time of possession, result, and score come from nflverse drive fields.",
         offensiveSnaps: "Team offensive scrimmage plays (rush plus pass), not the sum of individual-player personnel snaps.",
-        playerParticipation: "Player snaps use nflverse play-participation personnel. Opportunity and production are grouped into six elapsed-game segments; fantasy points use the selected reception bonus.",
+        playerParticipation: "When published, player snaps use nflverse play-participation personnel; unpublished segment snaps are null. Opportunity and production are grouped into six elapsed-game segments; fantasy points use the selected reception bonus.",
         metricScaling: "Each participation bar is normalized only against the same KPI in the active team and comparison scope; values are never normalized across unlike metrics.",
         gameTimeZone: "nflverse schedule kickoff times are represented in America/New_York.",
       },
@@ -1026,7 +1061,8 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
 }
 
 export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath) {
-  const db = openDatabase(dbPath);
+  const season = querySeason(searchParams);
+  const db = openDatabase(dbPath, season);
   const started = performance.now();
   const playerId = String(searchParams.get("playerId") || "").trim().slice(0, 40);
   if (!playerId) throw new QueryValidationError("playerId", "A playerId is required");
@@ -1043,7 +1079,7 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
         (
           SELECT stats.team
           FROM player_week_stats stats
-          WHERE stats.player_id = p.player_id AND stats.season = 2025 AND stats.team <> 'UNK'
+          WHERE stats.player_id = p.player_id AND stats.season = ${season} AND stats.team <> 'UNK'
           ORDER BY stats.week DESC
           LIMIT 1
         ),
@@ -1096,7 +1132,7 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
           ORDER BY (fantasy_points + receptions * ?) DESC, player_id ASC
         ) AS position_finish
       FROM player_week_stats
-      WHERE season = 2025 AND source_player_stats = 1
+      WHERE season = ${season} AND source_player_stats = 1
     )
     SELECT * FROM weekly WHERE player_id = ? ORDER BY week ASC
   `).all(receptionBonus, receptionBonus, playerId);
@@ -1151,13 +1187,13 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
         ROUND(SUM(fantasy_points + receptions * ?) / COUNT(DISTINCT season_type || '-' || week), 1) AS fantasy_points_per_game,
         COALESCE(SUM(offense_snaps), 0) AS snaps
       FROM player_week_stats
-      WHERE season = 2025
+      WHERE season = ${season}
       GROUP BY player_id
     ), ranked AS (
       SELECT *, DENSE_RANK() OVER (PARTITION BY position ORDER BY fantasy_points DESC, player_id ASC) AS position_rank
       FROM totals
     ), team_players AS (
-      SELECT DISTINCT player_id FROM player_week_stats WHERE season = 2025 AND team = ?
+      SELECT DISTINCT player_id FROM player_week_stats WHERE season = ${season} AND team = ?
     )
     SELECT ranked.*
     FROM ranked
@@ -1204,7 +1240,7 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
       depthChart: { team: playerRow.team, groups: groupedDepth },
     },
     meta: {
-      season: 2025,
+      season,
       scoring,
       queryMs: Number((performance.now() - started).toFixed(2)),
     },

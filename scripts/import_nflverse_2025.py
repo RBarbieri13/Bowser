@@ -19,6 +19,9 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 
+SEASON = 2025
+PARTICIPATION_AVAILABLE = True
+DRAFT_SNAPSHOT_DB = None
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
@@ -199,7 +202,7 @@ def sha256(path: Path) -> str:
 
 
 def relevant_offensive_row(row: dict[str, str]) -> bool:
-    return any(number(row.get(field)) != 0 for field in OFFENSIVE_SIGNALS)
+    return any(number(row.get(field)) != 0 for field in OFFENSIVE_SIGNALS) or (SEASON != 2025 and bool(fantasy_position(row.get("position"))))
 
 
 def source_value(row: dict[str, str], field: str) -> str | None:
@@ -298,7 +301,7 @@ def load_sources(refresh: bool):
     raw_totals = defaultdict(float)
     with paths["player_stats"].open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
-            if row.get("season") != "2025" or row.get("season_type") not in {"REG", "POST"}:
+            if row.get("season") != str(SEASON) or row.get("season_type") not in {"REG", "POST"}:
                 continue
             if not relevant_offensive_row(row):
                 continue
@@ -307,7 +310,10 @@ def load_sources(refresh: bool):
                 continue
             relevant_ids.add(player_id)
             team = row.get("team", "") or "UNK"
-            stats[(row["season_type"], player_id, integer(row["week"]), team)] = row
+            key = (row["season_type"], player_id, integer(row["week"]), team)
+            if SEASON != 2025 and key in stats:
+                raise RuntimeError(f"duplicate current-season source grain: {key}")
+            stats[key] = row
             name_key = (row.get("game_id", ""), team, row.get("player_display_name", ""))
             if all(name_key):
                 existing = player_id_by_game_team_name.get(name_key)
@@ -321,7 +327,7 @@ def load_sources(refresh: bool):
     with paths["snap_counts"].open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
             game_type = row.get("game_type", "")
-            if row.get("season") != "2025" or game_type not in {"REG", *POSTSEASON_GAME_TYPES}:
+            if row.get("season") != str(SEASON) or game_type not in {"REG", *POSTSEASON_GAME_TYPES}:
                 continue
             season_type = "REG" if game_type == "REG" else "POST"
             pfr_id = row.get("pfr_player_id", "")
@@ -339,7 +345,9 @@ def load_sources(refresh: bool):
                     unmatched_snap_ids.add(pfr_id)
                 continue
             if player_id not in relevant_ids:
-                continue
+                if SEASON == 2025 or not fantasy_position(row.get("position")) or integer(row.get("offense_snaps")) <= 0:
+                    continue
+                relevant_ids.add(player_id)
             team = row.get("team", "") or "UNK"
             row["_join_method"] = join_method
             snaps[(season_type, player_id, integer(row["week"]), team)] = row
@@ -351,7 +359,7 @@ def load_sources(refresh: bool):
         for row in csv.DictReader(handle):
             if row.get("season") == "2026" and row.get("game_type") == "REG":
                 upcoming_schedule.append(row)
-            if row.get("season") != "2025" or row.get("game_type") not in {"REG", *POSTSEASON_GAME_TYPES}:
+            if row.get("season") != str(SEASON) or row.get("game_type") not in {"REG", *POSTSEASON_GAME_TYPES}:
                 continue
             game_id = row.get("game_id", "")
             if game_id:
@@ -500,27 +508,28 @@ def load_sources(refresh: bool):
                     player_segments[fumbler_id][segment]["fantasy_points"] -= 2
 
     seen_participation_plays: set[tuple[str, int]] = set()
-    with paths["participation"].open(newline="", encoding="utf-8") as handle:
-        for row in csv.DictReader(handle):
-            game_id = row.get("nflverse_game_id", "")
-            play_id = integer(row.get("play_id"))
-            play_key = (game_id, play_id)
-            if play_key in seen_participation_plays or play_key not in play_context:
-                continue
-            seen_participation_plays.add(play_key)
-            possession, segment = play_context[play_key]
-            if possession != row.get("possession_team", ""):
-                continue
-            offense_ids = (row.get("offense_players", "") or "").split(";")
-            offense_names = (row.get("offense_names", "") or "").split(";")
-            for source_id, source_name in zip(offense_ids, offense_names, strict=False):
-                player_id = player_id_by_game_team_name.get((game_id, possession, source_name))
-                if not player_id and source_id in relevant_ids:
-                    registered_name = players_by_gsis.get(source_id, {}).get("display_name", "")
-                    if registered_name == source_name:
-                        player_id = source_id
-                if player_id in relevant_ids:
-                    flow_by_game[game_id]["player_segments"][player_id][segment]["snaps"] += 1
+    if "participation" in paths:
+        with paths["participation"].open(newline="", encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):
+                game_id = row.get("nflverse_game_id", "")
+                play_id = integer(row.get("play_id"))
+                play_key = (game_id, play_id)
+                if play_key in seen_participation_plays or play_key not in play_context:
+                    continue
+                seen_participation_plays.add(play_key)
+                possession, segment = play_context[play_key]
+                if possession != row.get("possession_team", ""):
+                    continue
+                offense_ids = (row.get("offense_players", "") or "").split(";")
+                offense_names = (row.get("offense_names", "") or "").split(";")
+                for source_id, source_name in zip(offense_ids, offense_names, strict=False):
+                    player_id = player_id_by_game_team_name.get((game_id, possession, source_name))
+                    if not player_id and source_id in relevant_ids:
+                        registered_name = players_by_gsis.get(source_id, {}).get("display_name", "")
+                        if registered_name == source_name:
+                            player_id = source_id
+                    if player_id in relevant_ids:
+                        flow_by_game[game_id]["player_segments"][player_id][segment]["snaps"] += 1
 
     return (
         paths, players_by_gsis, stats, snaps, relevant_ids, raw_totals,
@@ -825,16 +834,23 @@ def build_database(refresh: bool) -> dict:
     connection.executescript(SCHEMA)
 
     player_rows = []
-    for player_id in sorted(relevant_ids):
+    roster_identity = {}
+    roster_priority = {"ACT": 1, "INA": 2, "RES": 3, "DEV": 4, "DEPTH": 5, "CUT": 6}
+    for roster_row in current_roster:
+        existing = roster_identity.get(roster_row[2])
+        if existing is None or roster_priority.get(roster_row[7], 99) < roster_priority.get(existing[7], 99):
+            roster_identity[roster_row[2]] = roster_row
+    identity_ids = relevant_ids | set(roster_identity) if SEASON != 2025 else relevant_ids
+    for player_id in sorted(identity_ids):
         source = player_source.get(player_id, {})
         fallback = next((row for key, row in stats.items() if key[1] == player_id), {})
         player_rows.append((
             player_id, source.get("pfr_id", ""),
-            source.get("display_name") or fallback.get("player_display_name") or player_id,
+            source.get("display_name") or fallback.get("player_display_name") or (roster_identity.get(player_id) or [None, None, None, player_id])[3],
             source.get("first_name", ""), source.get("last_name", ""),
-            fallback.get("position") or source.get("position", ""),
+            fallback.get("position") or source.get("position") or (roster_identity.get(player_id) or [None] * 4 + [""])[4],
             fallback.get("position_group") or source.get("position_group", ""),
-            fallback.get("team") or source.get("latest_team", ""),
+            ((roster_identity.get(player_id) or [None, ""])[1] or fallback.get("team") or source.get("latest_team", "")) if SEASON != 2025 else (fallback.get("team") or source.get("latest_team", "")),
             fallback.get("headshot_url") or source.get("headshot", ""),
         ))
     connection.executemany("INSERT INTO players VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", player_rows)
@@ -848,7 +864,7 @@ def build_database(refresh: bool) -> dict:
         display_name = stat.get("player_display_name") or source.get("display_name") or snap.get("player") or player_id
         position = stat.get("position") or snap.get("position") or source.get("position", "")
         values = [
-            2025, season_type, week, player_id, team,
+            SEASON, season_type, week, player_id, team,
             snap.get("pfr_player_id") or source.get("pfr_id", ""), display_name,
             stat.get("player_name", ""), position,
             stat.get("position_group") or source.get("position_group", ""),
@@ -863,7 +879,7 @@ def build_database(refresh: bool) -> dict:
             number(snap.get("defense_pct")) if snap else None,
             integer(snap.get("st_snaps")) if snap else None,
             number(snap.get("st_pct")) if snap else None,
-            snap.get("game_id", ""), 1 if stat else 0, 1 if snap else 0,
+            snap.get("game_id") or stat.get("game_id", ""), 1 if stat else 0, 1 if snap else 0,
         ])
         rows.append(tuple(values))
 
@@ -891,7 +907,7 @@ def build_database(refresh: bool) -> dict:
         has_pbp = bool(flow["quarter_cumulative"])
         season_type = "REG" if game.get("game_type") == "REG" else "POST"
         game_rows.append((
-            game_id, 2025, season_type, game.get("game_type", ""), integer(game.get("week")),
+            game_id, SEASON, season_type, game.get("game_type", ""), integer(game.get("week")),
             game.get("gameday", ""), game.get("weekday", ""), game.get("gametime", ""),
             home_team, away_team, home_score, away_score, integer(game.get("overtime")),
             game.get("stadium", ""), game.get("roof", ""), game.get("surface", ""),
@@ -929,7 +945,7 @@ def build_database(refresh: bool) -> dict:
             ))
 
         for team in (away_team, home_team):
-            for segment in range(6):
+            for segment in (range(6) if has_pbp else []):
                 metric = flow["team_segments"][team][segment]
                 team_segment_rows.append((
                     game_id, team, segment, metric["rush"], metric["pass"], metric["plays"],
@@ -944,7 +960,7 @@ def build_database(refresh: bool) -> dict:
             for segment in range(6):
                 metric = segments[segment]
                 player_segment_rows.append((
-                    game_id, player_team, player_id, segment, metric["snaps"], metric["rush_attempts"],
+                    game_id, player_team, player_id, segment, metric["snaps"] if PARTICIPATION_AVAILABLE else None, metric["rush_attempts"],
                     metric["pass_attempts"], metric["targets"], round(metric["yards"], 1),
                     metric["touchdowns"], metric["receptions"], round(metric["fantasy_points"], 3),
                 ))
@@ -1006,6 +1022,20 @@ def build_database(refresh: bool) -> dict:
     connection.executemany("INSERT INTO game_team_segments VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", team_segment_rows)
     connection.executemany("INSERT INTO player_game_segments VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", player_segment_rows)
 
+    # Preserve the separately captured 2026 preseason ADP snapshot without refreshing
+    # or mutating the historical database. Current roster/team identity wins.
+    draft_snapshot_summary = None
+    if DRAFT_SNAPSHOT_DB is not None:
+        legacy = sqlite3.connect(f"file:{DRAFT_SNAPSHOT_DB}?mode=ro", uri=True)
+        draft_snapshot_summary = legacy.execute("SELECT value FROM warehouse_meta WHERE key = 'fantasypros_adp_summary'").fetchone()
+        for player in legacy.execute("SELECT p.* FROM players p JOIN draft_rankings d USING(player_id) WHERE d.season = 2026"):
+            connection.execute("INSERT OR IGNORE INTO players VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", player)
+        draft_rows = legacy.execute("SELECT * FROM draft_rankings WHERE season = 2026").fetchall()
+        connection.executemany("INSERT INTO draft_rankings VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", draft_rows)
+        if draft_snapshot_summary:
+            connection.execute("INSERT INTO warehouse_meta VALUES ('fantasypros_adp_summary', ?)", draft_snapshot_summary)
+        legacy.close()
+
     imported_at = datetime.now(timezone.utc).isoformat()
     source_metadata = {
         name: {
@@ -1023,7 +1053,7 @@ def build_database(refresh: bool) -> dict:
         for field in STAT_FIELDS if abs(raw_totals[field] - db_totals[field]) > 0.0001
     }
     summary = {
-        "season": 2025, "imported_at": imported_at,
+        "season": SEASON, "imported_at": imported_at,
         "database": str(DB_PATH.relative_to(ROOT)), "sources": source_metadata,
         "rows": connection.execute("SELECT COUNT(*) FROM player_week_stats").fetchone()[0],
         "players": connection.execute("SELECT COUNT(*) FROM players").fetchone()[0],
@@ -1060,13 +1090,31 @@ def build_database(refresh: bool) -> dict:
         key: {"expected": expected, "actual": summary[key]}
         for key, expected in expected_snapshot.items() if summary[key] != expected
     }
-    if (failed_snapshot_checks or len(summary["regular_season_weeks"]) != 18
+    if SEASON == 2025 and (failed_snapshot_checks or len(summary["regular_season_weeks"]) != 18
             or len(summary["postseason_weeks"]) != 4 or summary["current_roster_teams"] != 32
             or summary["current_roster_rows"] < 500):
         raise RuntimeError(f"pinned-snapshot completeness failed: {failed_snapshot_checks or summary}")
 
+    if SEASON != 2025:
+        source_weeks = sorted({key[2] for key in stats})
+        completed_games = {row.get("game_id") for row in stats.values() if row.get("game_id")}
+        if (not source_weeks or summary["regular_season_weeks"] != source_weeks
+                or summary["player_stat_rows"] != len(stats)
+                or summary["stat_rows_with_snap_match"] != len(stats)
+                or summary["current_roster_teams"] != 32
+                or not completed_games
+                or summary["games_with_play_by_play"] < len(completed_games)):
+            raise RuntimeError(f"current-season completeness failed: {summary}")
+        summary["participation_available"] = PARTICIPATION_AVAILABLE
+        summary["participation_note"] = "Play-level personnel participation is not published for 2026; segment snaps remain unknown."
+        summary["completed_games"] = len(completed_games)
+        summary["available_weeks"] = source_weeks
+        summary["snapshot_kind"] = "in_progress_season"
+        if draft_snapshot_summary:
+            summary["draft_rankings"] = json.loads(draft_snapshot_summary[0])
+
     metadata = {
-        "season": "2025", "imported_at": imported_at, "source": "nflverse",
+        "season": str(SEASON), "imported_at": imported_at, "source": "nflverse",
         "source_urls": json.dumps(SOURCES, sort_keys=True),
         "summary": json.dumps(summary, sort_keys=True),
     }
