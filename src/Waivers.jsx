@@ -10,7 +10,7 @@ const safeURL = value => { try { const url = new URL(value); return ['http:', 'h
 const blankRange = kind => ({ kind, source: '', min: '', max: '', unit: 'percent' });
 
 function sourceTitle(source, entry, kind) {
-  return [source.label, stamp(entry?.publishedAt || source.publishedAt), kind === 'faab' ? `${formatFAAB(faabValue(entry)) || 'Bid not reported'} · ${basis(entry?.budgetBasis)}${finite(entry?.referenceBudget) !== null ? ` · source reference $${entry.referenceBudget}` : ''}` : `Positional waiver rank · ${entry?.method || source.rankMethod || 'Publisher order'}`, ...(Array.isArray(entry?.alternatives) ? entry.alternatives.map(alternative => `${alternative.label || alternative.tier || 'Alternative'}: ${formatFAAB(faabValue(alternative))} · ${basis(alternative.budgetBasis || entry.budgetBasis)}`) : []), entry?.scoring || source.scoring ? `Scoring: ${entry?.scoring || source.scoring}` : 'Scoring not specified', kind === 'faab' ? entry?.url || source.faabUrl : entry?.url || source.rankUrl].filter(Boolean).join('\n');
+  return [source.label, stamp(entry?.publishedAt || source.publishedAt), kind === 'faab' ? `${formatFAAB(faabValue(entry)) || 'Bid not reported'} · ${basis(entry?.budgetBasis)}${finite(entry?.referenceBudget) !== null ? ` · source reference $${entry.referenceBudget}` : ''}` : `Positional waiver rank · ${entry?.method || source.rankMethod || 'Publisher order'}`, ...(Array.isArray(entry?.alternatives) ? entry.alternatives.map(alternative => `${alternative.label || alternative.tier || 'Alternative'}: ${formatFAAB(faabValue(alternative))} · ${basis(alternative.budgetBasis || entry.budgetBasis)}`) : []), entry?.overallRank ? `Original overall priority: ${entry.overallRank}` : '', source.coverageNote || '', entry?.scoring || source.scoring ? `Scoring: ${entry?.scoring || source.scoring}` : 'Scoring not specified', kind === 'faab' ? entry?.url || source.faabUrl : entry?.url || source.rankUrl].filter(Boolean).join('\n');
 }
 
 function GameBars({ row, metric }) {
@@ -66,7 +66,7 @@ export function Waivers({ season = 2026, onOpenPlayer }) {
     const controller = new AbortController(); let active = true;
     setBusy(true); setError(''); setData(null);
     fetch(`/api/v1/waivers?season=${season}&week=${week}&weeks=${weeks}&scoring=${scoring}`, { signal: controller.signal })
-      .then(async response => { const body = await response.json(); if (!response.ok || body.error) throw new Error(body.error || `Request failed (${response.status})`); if (!Array.isArray(body.rows) || !body.meta) throw new Error('Invalid waiver response'); return body; })
+      .then(async response => { const body = await response.json(); if (!response.ok || body.error) throw new Error(body.error?.message || (typeof body.error === 'string' ? body.error : `Request failed (${response.status})`)); if (!Array.isArray(body.rows) || !body.meta) throw new Error('Invalid waiver response'); return body; })
       .then(body => { if (active) setData(body); })
       .catch(cause => { if (active && cause.name !== 'AbortError') setError(cause.message); })
       .finally(() => { if (active) setBusy(false); });

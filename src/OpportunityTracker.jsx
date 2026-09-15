@@ -19,7 +19,7 @@ function MiniBars({ history, metric, label, tone }) {
   const slots = [...Array(Math.max(0, 10 - history.length)).fill(null), ...history];
   const summary = history.length
     ? `${label}: ${history.map((game) => `${game.team} Week ${game.week}, ${metricValue(game, metric)}`).join("; ")}`
-    : `${label}: no recorded 2025 games`;
+    : `${label}: no recorded games in this season`;
   return (
     <figure className={`opportunity-spark ${tone}`} aria-label={summary}>
       <figcaption>{label}</figcaption>
@@ -98,7 +98,7 @@ function PositionGroup({ group, onOpenPlayer }) {
   );
 }
 
-export function OpportunityTracker({ meta, onOpenPlayer }) {
+export function OpportunityTracker({ season = 2026, meta, onOpenPlayer }) {
   const teams = meta?.teams || [];
   const [team, setTeam] = useState("NYG");
   const [position, setPosition] = useState("ALL");
@@ -110,18 +110,19 @@ export function OpportunityTracker({ meta, onOpenPlayer }) {
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true);
+    setPayload(null);
     setError("");
-    fetch(`/api/v1/opportunity-tracker?${new URLSearchParams({ team, games: "10" })}`, { signal: controller.signal })
+    fetch(`/api/v1/opportunity-tracker?${new URLSearchParams({ season: String(season), team, games: "10" })}`, { signal: controller.signal })
       .then(async (response) => {
         const result = await response.json();
         if (!response.ok) throw new Error(result.error?.message || "The opportunity query failed.");
         return result;
       })
-      .then(setPayload)
+      .then((result) => { if (!controller.signal.aborted) setPayload(result); })
       .catch((requestError) => { if (requestError.name !== "AbortError") setError(requestError.message); })
       .finally(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => controller.abort();
-  }, [team]);
+  }, [team, season]);
 
   const visibleGroups = useMemo(() => (payload?.data?.groups || []).map((group) => ({
     ...group,
@@ -143,7 +144,7 @@ export function OpportunityTracker({ meta, onOpenPlayer }) {
           <h1 id="opportunity-title">Opportunity Tracker</h1>
           <p>See the full fantasy-position depth chart, who is earning playing time, and how each player’s opportunity is changing.</p>
         </div>
-        <div className="opportunity-team-lockup"><TeamLogo team={team} decorative /><div><span>2026 roster</span><strong>{team}</strong><small>2025 game history</small></div></div>
+        <div className="opportunity-team-lockup"><TeamLogo team={team} decorative /><div><span>2026 roster</span><strong>{team}</strong><small>{season} game history</small></div></div>
       </section>
 
       <section className="opportunity-controls" aria-label="Opportunity tracker filters">
@@ -158,7 +159,7 @@ export function OpportunityTracker({ meta, onOpenPlayer }) {
       {trackerMeta ? (
         <section className="opportunity-summary" aria-label="Team opportunity summary">
           <article><UsersThree weight="duotone" /><div><strong>{trackerMeta.playerCount}</strong><span>Fantasy-position players</span></div></article>
-          <article><ShieldCheck weight="duotone" /><div><strong>{trackerMeta.playersWithHistory}</strong><span>With 2025 game history</span></div></article>
+          <article><ShieldCheck weight="duotone" /><div><strong>{trackerMeta.playersWithHistory}</strong><span>With {season} game history</span></div></article>
           <article><Lightning weight="duotone" /><div><strong>{trackerMeta.rookies}</strong><span>2026 rookies</span></div></article>
           <article className="news-status"><FirstAid weight="duotone" /><div><strong>Roster status live</strong><span>{trackerMeta.injuryNewsMessage}</span></div></article>
         </section>

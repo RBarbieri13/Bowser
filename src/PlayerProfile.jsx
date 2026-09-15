@@ -340,7 +340,7 @@ function tabDomId(key) {
   return key === "logs" ? "game-logs" : key === "heat" ? "heat-map" : key === "season" ? "season-stats" : "depth-chart";
 }
 
-export function PlayerProfile({ player, scoring, initialTab = "logs", onClose, onSelectPlayer }) {
+export function PlayerProfile({ player, season = 2026, scoring, initialTab = "logs", onClose, onSelectPlayer }) {
   const safeInitialTab = PROFILE_TABS.some((tab) => tab.key === initialTab) ? initialTab : "logs";
   const [profile, setProfile] = useState(null);
   const [activeTab, setActiveTab] = useState(safeInitialTab);
@@ -355,7 +355,7 @@ export function PlayerProfile({ player, scoring, initialTab = "logs", onClose, o
     setError("");
     setHeadshotFailed(false);
     setActiveTab(safeInitialTab);
-    fetch(`/api/v1/player-profile?${new URLSearchParams({ playerId: player.playerId, scoring })}`, { signal: controller.signal })
+    fetch(`/api/v1/player-profile?${new URLSearchParams({ playerId: player.playerId, scoring, season: String(season) })}`, { signal: controller.signal })
       .then(async (response) => {
         const payload = await response.json();
         if (!response.ok) throw new Error(payload.error?.message || "The player profile could not be loaded.");
@@ -364,7 +364,7 @@ export function PlayerProfile({ player, scoring, initialTab = "logs", onClose, o
       .then((payload) => setProfile({ ...payload.data, meta: payload.meta }))
       .catch((requestError) => { if (requestError.name !== "AbortError") setError(requestError.message); });
     return () => controller.abort();
-  }, [player.playerId, scoring, safeInitialTab]);
+  }, [player.playerId, season, scoring, safeInitialTab]);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;

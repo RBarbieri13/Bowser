@@ -6,6 +6,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 import { App } from "../src/App.jsx";
+import { GameBreakdown } from "../src/GameBreakdown.jsx";
 
 const samplePlayer = {
   player_id: "00-test",
@@ -188,10 +189,12 @@ function latestBoxScoreUrl() {
 beforeEach(() => {
   window.location.hash = "";
   localStorage.clear();
+  // Existing interaction fixtures intentionally exercise the preserved 2025 view.
+  localStorage.setItem("bowser:data-season:v1", "2025");
   sessionStorage.clear();
   vi.stubGlobal("fetch", vi.fn(async (input) => {
     const url = String(input);
-    if (url === "/api/v1/meta") {
+    if (url.startsWith("/api/v1/meta?")) {
       return {
         ok: true,
         json: async () => ({ positions: ["QB", "RB", "WR", "TE"], teams: ["NYG", "BUF", "KC"], weekOptions: Array.from({ length: 22 }, (_, index) => ({ week: index + 1 })) }),
@@ -887,4 +890,37 @@ test('DFS fields display real values, sort, and retain the explicitly selected 2
   fireEvent.change(screen.getByLabelText('DFS slate'),{target:{value:'main'}});
   await waitFor(()=>expect(fetch.mock.calls.some(([url])=>String(url).includes('dfsSlate=main'))).toBe(true));
   expect(localStorage.getItem('bowser:dfs-slate:v1')).toBe('main');
+});
+
+
+test("data season defaults to 2026 and switching to history updates API scope", async () => {
+  localStorage.removeItem("bowser:data-season:v1");
+  const user = userEvent.setup();
+  render(<App />);
+  await screen.findByRole("table", { name: /2026 NFL player fantasy statistics/i });
+  await waitFor(() => expect(latestPlayerUrl().searchParams.get("season")).toBe("2026"));
+  expect(latestPlayerUrl().searchParams.get("weeks")).toBe("1");
+  await user.selectOptions(screen.getByRole("combobox", { name: "Data season" }), "2025");
+  await screen.findByRole("table", { name: /2025 NFL player fantasy statistics/i });
+  await waitFor(() => expect(latestPlayerUrl().searchParams.get("season")).toBe("2025"));
+  expect(localStorage.getItem("bowser:data-season:v1")).toBe("2025");
+});
+
+
+test("2026 game opportunities remain visible while unpublished participation snaps stay unknown", async () => {
+  const payload = structuredClone(sampleGameBreakdown);
+  payload.data.availability.playerParticipation = false;
+  payload.data.availability.playerOpportunities = true;
+  for (const player of payload.data.playerSegments) {
+    player.total.snaps = null;
+    player.segments.forEach(segment => { segment.snaps = null; });
+  }
+  fetch.mockResolvedValue({ ok: true, json: async () => payload });
+  render(<GameBreakdown season={2026} gameId="2026_01_KC_BUF" />);
+  await screen.findByRole("heading", { name: "Key player participation" });
+  expect(screen.getByText(/Segment-level participation snaps have not been published/)).toBeInTheDocument();
+  const lanes = document.querySelectorAll(".participation-table tbody td .kpi-stack")[0].querySelectorAll("strong");
+  expect([...lanes].map(lane => lane.textContent)).toEqual(["—", "0", "3", "0"]);
+  expect(document.querySelector(".segment-team-total span")).toHaveTextContent("—");
+  expect(fetch.mock.calls[0][0]).toContain("season=2026");
 });

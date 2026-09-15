@@ -14,6 +14,7 @@ import { OpportunityTracker } from "./OpportunityTracker.jsx";
 import { LeagueHub } from "./LeagueHub.jsx";
 import { IntelligenceFeed } from "./IntelligenceFeed.jsx";
 import { MarketPulse } from "./MarketPulse.jsx";
+import { Waivers } from "./Waivers.jsx";
 import { TeamLogo } from "./teamLogos.jsx";
 import {
   clampPlayerTableWidth,
@@ -764,12 +765,13 @@ function PlayerGroupResizeHandle({ group, width, enabled, onResize, onReset }) {
 }
 
 function routeFromHash() {
+  if (window.location.hash.includes("waivers")) return { page: "waivers", gameId: null };
   if (window.location.hash.includes("market-pulse")) return { page: "market-pulse", gameId: null };
   const gameMatch = window.location.hash.match(/^#\/game\/([^?]+)/);
   if (gameMatch) {
     const query = window.location.hash.split("?")[1] || "";
     const scoring = new URLSearchParams(query).get("scoring");
-    return { page: "game", gameId: decodeURIComponent(gameMatch[1]), scoring: ["ppr", "half", "standard"].includes(scoring) ? scoring : "ppr" };
+    return { page: "game", gameId: decodeURIComponent(gameMatch[1]), season: Number(gameMatch[1].slice(0, 4)) === 2025 ? 2025 : 2026, scoring: ["ppr", "half", "standard"].includes(scoring) ? scoring : "ppr" };
   }
   if (window.location.hash.includes("opportunity-tracker")) return { page: "opportunity-tracker", gameId: null };
   if (window.location.hash.includes("league-hub")) return { page: "league-hub", gameId: null };
@@ -781,6 +783,9 @@ export function App() {
   const initialTablePreferences = useMemo(() => readPlayerTablePreferences(), []);
   const [route, setRoute] = useState(routeFromHash);
   const currentPage = route.page;
+  const [season, setSeason] = useState(() => { try { return localStorage.getItem("bowser:data-season:v1") === "2025" ? 2025 : 2026; } catch { return 2026; } });
+  useEffect(() => { try { localStorage.setItem("bowser:data-season:v1", String(season)); } catch { /* Preferences remain usable in memory. */ } }, [season]);
+  const changeSeason = (value) => { const next = Number(value) === 2025 ? 2025 : 2026; setSeason(next); setRows([]); setResponseMeta(null); setError(""); setWeekStart(1); setWeekEnd(next === 2026 ? 1 : 18); setProfilePlayer(null); if (route.page === "game") window.location.hash = "#/team-box-scores"; };
   const [meta, setMeta] = useState(null);
   const [rows, setRows] = useState([]);
   const [responseMeta, setResponseMeta] = useState(null);
@@ -795,7 +800,7 @@ export function App() {
   const [appliedRanks, setAppliedRanks] = useState("");
   const [customError, setCustomError] = useState("");
   const [weekStart, setWeekStart] = useState(1);
-  const [weekEnd, setWeekEnd] = useState(18);
+  const [weekEnd, setWeekEnd] = useState(season === 2026 ? 1 : 18);
   const [team, setTeam] = useState("ALL");
   const [minGames, setMinGames] = useState("0");
   const [minSnaps, setMinSnaps] = useState("0");
@@ -1108,20 +1113,24 @@ export function App() {
   );
 
   useEffect(() => {
-    fetch("/api/v1/meta")
+    const controller = new AbortController();
+    setMeta(null);
+    fetch(`/api/v1/meta?season=${season}`, { signal: controller.signal })
       .then((response) => {
         if (!response.ok) throw new Error("The local warehouse could not be opened.");
         return response.json();
       })
-      .then(setMeta)
-      .catch((requestError) => setError(requestError.message));
-  }, []);
+      .then((payload) => { if (!controller.signal.aborted) setMeta(payload); })
+      .catch((requestError) => { if (requestError.name !== "AbortError") setError(requestError.message); });
+    return () => controller.abort();
+  }, [season]);
 
   useEffect(() => {
     if (currentPage !== "players") return undefined;
     const controller = new AbortController();
     const querySorts = sorts.length ? sorts : [{ key: "name", direction: "asc" }];
     const params = new URLSearchParams({
+      season: String(season),
       seasonType: "ALL",
       dfsSlate,
       scoring,
@@ -1148,6 +1157,7 @@ export function App() {
         return payload;
       })
       .then((payload) => {
+        if (controller.signal.aborted) return;
         setRows(payload.data);
         setResponseMeta(payload.meta);
       })
@@ -1158,7 +1168,7 @@ export function App() {
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [currentPage, dfsSlate, scoring, debouncedSearch, sorts, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps, showPlayerTrends]);
+  }, [currentPage, season, dfsSlate, scoring, debouncedSearch, sorts, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps, showPlayerTrends]);
 
   const allVisibleSelected = rows.length > 0 && rows.every((row) => selected.has(row.player_id));
   const someVisibleSelected = rows.some((row) => selected.has(row.player_id)) && !allVisibleSelected;
@@ -1235,6 +1245,7 @@ export function App() {
       playerId: row.player_id || row.playerId,
       name: row.player_display_name || row.name,
       scoring: profileScoring,
+      season: row.season || route.season || season,
     });
   };
 
@@ -1252,25 +1263,27 @@ export function App() {
 
   return (
     <div className={`app-shell${sidebarWidth < 112 ? " sidebar-icon-only" : ""}`} style={{ "--sidebar-width": `${sidebarWidth}px` }}>
-      <AppHeader currentPage={currentPage === "game" ? "team-box-scores" : currentPage} width={sidebarWidth} collapsed={sidebarWidth < 112} onResize={resizeSidebar} />
+      <AppHeader season={route.season || season} onSeasonChange={changeSeason} currentPage={currentPage === "game" ? "team-box-scores" : currentPage} width={sidebarWidth} collapsed={sidebarWidth < 112} onResize={resizeSidebar} />
       {currentPage === "game" ? (
-        <GameBreakdown gameId={route.gameId} scoring={route.scoring} onBack={() => { window.location.hash = "#/team-box-scores"; }} onOpenPlayer={(row, opener) => openProfile(row, opener, route.scoring)} />
+        <GameBreakdown season={route.season || season} gameId={route.gameId} scoring={route.scoring} onBack={() => { window.location.hash = "#/team-box-scores"; }} onOpenPlayer={(row, opener) => openProfile(row, opener, route.scoring)} />
       ) : currentPage === "team-box-scores" ? (
-        <TeamBoxScores meta={meta} onOpenPlayer={openProfile} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}`; }} />
+        <TeamBoxScores key={season} season={season} meta={meta} onOpenPlayer={openProfile} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}`; }} />
       ) : currentPage === "opportunity-tracker" ? (
-        <OpportunityTracker meta={meta} onOpenPlayer={openProfile} />
+        <OpportunityTracker season={season} meta={meta} onOpenPlayer={openProfile} />
       ) : currentPage === "league-hub" ? (
         <LeagueHub />
       ) : currentPage === "intelligence" ? (
         <IntelligenceFeed />
+      ) : currentPage === "waivers" ? (
+        <Waivers season={season} onOpenPlayer={openProfile} />
       ) : currentPage === "market-pulse" ? (
         <MarketPulse />
       ) : (
       <main className="page-content player-database-page">
       <section className="filter-band" aria-label="Statistics filters">
         <div className="filter-grid">
-          <SelectField className="season-field" label="Season" value="2025" onChange={() => {}} info="NFL season used for this table.">
-            <option value="2025">2025</option>
+          <SelectField className="season-field" label="Season" value={season} onChange={(event) => changeSeason(event.target.value)} info="NFL season used for this table.">
+            <option value="2026">2026</option><option value="2025">2025</option>
           </SelectField>
           <WeekRangePicker start={weekStart} end={weekEnd} onChange={(start, end) => { setWeekStart(start); setWeekEnd(end); }} />
           <SelectField className="position-field" label="Position(s)" value={position} onChange={(event) => setPosition(event.target.value)}>
@@ -1404,7 +1417,7 @@ export function App() {
         </div>
       </section>
 
-      <section className="table-panel" aria-label="2025 NFL player fantasy statistics">
+      <section className="table-panel" aria-label={`${season} NFL player fantasy statistics`}>
         {loading ? <div className="progress" role="progressbar" aria-label="Updating statistics"><span /></div> : null}
         {error ? <div className="error-banner" role="alert"><span>{error}</span><button onClick={() => window.location.reload()}>Retry</button></div> : null}
         {showSwipeHint ? <div className="swipe-hint">Swipe horizontally for more stats <button onClick={() => { setShowSwipeHint(false); localStorage.setItem("stats-scroll-hint-dismissed", "1"); }} aria-label="Dismiss horizontal scroll hint"><X /></button></div> : null}
@@ -1445,12 +1458,12 @@ export function App() {
         <div className="dfs-context" aria-label="DraftKings slate and sources">
           <button type="button" onClick={()=>{setHiddenPlayerColumns(keys=>keys.filter(key=>!['draft_kings_price','draft_kings_projection'].includes(key)));setCollapsedPlayerGroups(keys=>keys.filter(key=>key!=='dfs'));}}>Show DFS fields</button>
           <label>DFS slate <select aria-label="DFS slate" value={dfsSlate} onChange={event=>setDfsSlate(event.target.value)}><option value="week1">2026 W1 · Wed–Mon Classic</option><option value="main">2026 W1 · Sunday Main</option></select></label>
-          <span>DraftKings scoring · 2025 stats stay historical</span>
-          {responseMeta?.dfs ? <details><summary>Sources & coverage</summary><p><a href={responseMeta.dfs.salaryUrl} target="_blank" rel="noreferrer">DraftKings salaries</a> · <a href="https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings" target="_blank" rel="noreferrer">Fantasy Info Central projections</a> · <a href="https://sharksnip.com/picks/dfs/nfl" target="_blank" rel="noreferrer">Shark Snip supplemental projections</a></p><p>Captured {new Date(responseMeta.dfs.capturedAt).toLocaleString()}. {responseMeta.dfs.coverage.salaryPlayers} slate salaries; {responseMeta.dfs.coverage.projectedPlayers} published projections. Matched to the historical database: {responseMeta.dfs.coverage.databasePlayersWithSalary} salaries and {responseMeta.dfs.coverage.databasePlayersWithProjection} projections. Players without 2025 stats are not in this historical table. — means unavailable, never zero. Hover a DFS value for its source and current team. These are pregame estimates, not historical averages; scoring controls apply to historical stats only.</p></details> : null}
+          <span>DraftKings scoring · statistics: {season}</span>
+          {responseMeta?.dfs ? <details><summary>Sources & coverage</summary><p><a href={responseMeta.dfs.salaryUrl} target="_blank" rel="noreferrer">DraftKings salaries</a> · <a href="https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings" target="_blank" rel="noreferrer">Fantasy Info Central projections</a> · <a href="https://sharksnip.com/picks/dfs/nfl" target="_blank" rel="noreferrer">Shark Snip supplemental projections</a></p><p>Captured {new Date(responseMeta.dfs.capturedAt).toLocaleString()}. {responseMeta.dfs.coverage.salaryPlayers} slate salaries; {responseMeta.dfs.coverage.projectedPlayers} published projections. Matched in this statistics season: {responseMeta.dfs.coverage.databasePlayersWithSalary} salaries and {responseMeta.dfs.coverage.databasePlayersWithProjection} projections. Players without recorded statistics in the selected season are not in this table. — means unavailable, never zero. Hover a DFS value for its source and current team. These are pregame estimates, not historical averages; scoring controls apply to historical stats only.</p></details> : null}
         </div>
         <div className="table-scroller" ref={tableScroller} onScroll={onHorizontalScroll} tabIndex="0" aria-label="Scrollable player statistics table">
           <table style={playerTableStyle} className={smartCompactActive ? "smart-compact" : ""}>
-            <caption>2025 NFL player fantasy statistics. {filterSummary}. {responseMeta?.totalCount ?? 0} matching players.</caption>
+            <caption>{season} NFL player fantasy statistics. {filterSummary}. {responseMeta?.totalCount ?? 0} matching players.</caption>
             <colgroup>{visiblePlayerColumns.map((column) => <col key={column.key} data-column={column.key} style={{ width: `${column.width}px` }} />)}</colgroup>
             <thead>
               <tr className="group-row">
@@ -1562,9 +1575,10 @@ export function App() {
       {profilePlayer ? (
         <PlayerProfile
           player={profilePlayer}
+          season={profilePlayer.season || season}
           scoring={profilePlayer.scoring || scoring}
           onClose={closeProfile}
-          onSelectPlayer={(playerId, name) => setProfilePlayer({ playerId, name })}
+          onSelectPlayer={(playerId, name) => setProfilePlayer((current) => ({ ...current, playerId, name }))}
         />
       ) : null}
     </div>

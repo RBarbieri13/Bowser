@@ -114,6 +114,7 @@ export function createMarketPulse({ filename, fetcher = fetchJson, now = Date.no
 }
 
 let instance;
+export function getMarketPulse() { return instance ||= createMarketPulse({filename:process.env.VERCEL ? ":memory:" : undefined}); }
 export async function marketPulseHandler(req,res) {
   res.setHeader('Cache-Control','no-store'); res.setHeader('Content-Type','application/json');
   const send=(status,data)=>{res.statusCode=status;res.end(JSON.stringify(data));};
@@ -129,7 +130,7 @@ export async function marketPulseHandler(req,res) {
     const params=new URL(req.originalUrl || req.url,'http://localhost').searchParams;
     const provider=params.get('provider') || 'sleeper', hours=Number(params.get('hours') || 24);
     if (!Object.hasOwn(PROVIDERS,provider) || ![6,24,72].includes(hours)) return send(400,{error:'Invalid provider or window.'});
-    instance ||= createMarketPulse({filename:hosted ? ':memory:' : undefined});
+    instance = getMarketPulse();
     const data=req.method==='POST' ? await instance.refresh(provider,hours) : instance.read(provider,hours);
     // Keep the function response bounded; browser storage owns hosted history.
     return send(200,hosted ? {...data,storage:'browser',history:[]} : data);

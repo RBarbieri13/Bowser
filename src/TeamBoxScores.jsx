@@ -372,13 +372,13 @@ function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer, onOpenGame,
   );
 }
 
-export function TeamBoxScores({ meta, onOpenPlayer, onOpenGame }) {
-  const initialState = useRef(savedTeamBoxState()).current;
+export function TeamBoxScores({ season = 2026, meta, onOpenPlayer, onOpenGame }) {
+  const initialState = useRef((() => { const saved = savedTeamBoxState(); return Number(saved.season || 2025) === season ? saved : {}; })()).current;
   const initialPreferences = useRef(readTeamBoxPreferences()).current;
   const [team, setTeam] = useState(initialState.team || "NYG");
   const [scoring, setScoring] = useState(["ppr", "half", "standard"].includes(initialState.scoring) ? initialState.scoring : "ppr");
   const [weekStart, setWeekStart] = useState(Number(initialState.weekStart) || 1);
-  const [weekEnd, setWeekEnd] = useState(Number(initialState.weekEnd) || 18);
+  const [weekEnd, setWeekEnd] = useState(Number(initialState.weekEnd) || (season === 2026 ? 1 : 18));
   const [extraWeeks, setExtraWeeks] = useState(Array.isArray(initialState.extraWeeks) ? initialState.extraWeeks : []);
   const [positions, setPositions] = useState(Array.isArray(initialState.positions) && initialState.positions.length ? initialState.positions : POSITION_ORDER);
   const [dkMin, setDkMin] = useState(initialState.dkMin || "3000");
@@ -399,7 +399,7 @@ export function TeamBoxScores({ meta, onOpenPlayer, onOpenGame }) {
   const visibleExtraWeeks = useMemo(() => extraWeeks.filter((week) => week < weekStart || week > weekEnd).sort((a, b) => a - b), [extraWeeks, weekStart, weekEnd]);
   const changeRange = (start, end) => { setWeekStart(start); setWeekEnd(end); setExtraWeeks((current) => current.filter((week) => week < start || week > end)); };
 
-  useEffect(() => { window.sessionStorage.setItem(TEAM_BOX_STATE_KEY, JSON.stringify({ team, scoring, weekStart, weekEnd, extraWeeks, positions, dkMin, dkMax })); }, [team, scoring, weekStart, weekEnd, extraWeeks, positions, dkMin, dkMax]);
+  useEffect(() => { window.sessionStorage.setItem(TEAM_BOX_STATE_KEY, JSON.stringify({ season, team, scoring, weekStart, weekEnd, extraWeeks, positions, dkMin, dkMax })); }, [team, scoring, weekStart, weekEnd, extraWeeks, positions, dkMin, dkMax]);
   useEffect(() => { setPreferencesReady(true); }, []);
   useEffect(() => {
     if (preferencesReady) window.localStorage.setItem(TEAM_BOX_PREFERENCE_KEY, JSON.stringify({ version: 2, weekWidth, columnWidths, visibleStats, markers, selectedLeagues }));
@@ -409,7 +409,7 @@ export function TeamBoxScores({ meta, onOpenPlayer, onOpenGame }) {
 
   useEffect(() => {
     const controller = new AbortController();
-    const params = new URLSearchParams({ team, scoring: "ppr", seasonType: "ALL", weeks: Array.from({ length: 22 }, (_, index) => index + 1).join(",") });
+    const params = new URLSearchParams({ season: String(season), team, scoring: "ppr", seasonType: "ALL", weeks: Array.from({ length: 22 }, (_, index) => index + 1).join(",") });
     fetch(`/api/v1/team-box-scores?${params}`, { signal: controller.signal }).then((response) => response.ok ? response.json() : null).then((result) => {
       if (result?.meta?.schedule || result?.meta?.weeks) {
         const nextSchedule = result.meta.schedule || result.meta.weeks;
@@ -418,15 +418,15 @@ export function TeamBoxScores({ meta, onOpenPlayer, onOpenGame }) {
       }
     }).catch(() => undefined);
     return () => controller.abort();
-  }, [team]);
+  }, [team, season]);
 
   useEffect(() => {
     const controller = new AbortController();
-    const params = new URLSearchParams({ team, scoring, seasonType: "ALL", weeks: selectedWeeks.join(",") });
+    const params = new URLSearchParams({ season: String(season), team, scoring, seasonType: "ALL", weeks: selectedWeeks.join(",") });
     setLoading(true); setError("");
     fetch(`/api/v1/team-box-scores?${params}`, { signal: controller.signal }).then(async (response) => { const result = await response.json(); if (!response.ok) throw new Error(result.error?.message || "The team query failed."); return result; }).then(setPayload).catch((requestError) => { if (requestError.name !== "AbortError") setError(requestError.message); }).finally(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => controller.abort();
-  }, [team, scoring, selectedWeeks]);
+  }, [team, scoring, selectedWeeks, season]);
 
   const hasDraftKingsData = useMemo(() => payload.data.some((row) => Number.isFinite(draftKingsPrice(row))), [payload.data]);
   const groups = useMemo(() => {

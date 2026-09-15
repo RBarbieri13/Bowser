@@ -4,13 +4,14 @@ import bowserLogo from "./assets/bowser-logo.png";
 const NAV_ITEMS = [
   { key: "league-hub", label: "League Hub", href: "#/league-hub", icon: SquaresFour },
   { key: "players", label: "Player Database", href: "#/players", icon: Table },
+  { key: "waivers", label: "Waivers", href: "#/waivers", icon: Table },
   { key: "market-pulse", label: "Market Pulse", href: "#/market-pulse", icon: ChartLineUp },
   { key: "intelligence", label: "Fantasy Intelligence", href: "#/intelligence", icon: Broadcast },
   { key: "team-box-scores", label: "Team Box Scores", href: "#/team-box-scores", icon: Football },
   { key: "opportunity-tracker", label: "Opportunity Tracker", href: "#/opportunity-tracker", icon: ChartLineUp },
 ];
 
-export function AppHeader({ currentPage, width, collapsed, onResize }) {
+export function AppHeader({ season = 2026, onSeasonChange, currentPage, width, collapsed, onResize }) {
   const startResize = (event) => {
     event.preventDefault();
     const origin = event.clientX;
@@ -36,11 +37,12 @@ export function AppHeader({ currentPage, width, collapsed, onResize }) {
         <a className="brand-lockup" href="#/players" aria-label="Bowser home">
           <img src={bowserLogo} alt="Bowser" />
         </a>
-        <span className="brand-season">2025</span>
+        <span className="brand-season">{season}</span>
       </div>
       <button type="button" className="sidebar-collapse" onClick={() => onResize(collapsed ? 216 : 56)} aria-label={collapsed ? "Expand navigation sidebar" : "Collapse navigation sidebar"}>
         {collapsed ? <CaretRight weight="bold" /> : <CaretLeft weight="bold" />}
       </button>
+      <label className="nav-data-season"><span>Data season</span><select aria-label="Data season" value={season} onChange={(event) => onSeasonChange?.(event.target.value)}><option value="2026">2026</option><option value="2025">2025</option></select></label>
       <nav className="primary-nav" aria-label="Main navigation">
         {NAV_ITEMS.map(({ icon: Icon, ...item }) => (
           <a

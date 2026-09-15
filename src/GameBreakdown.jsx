@@ -36,8 +36,13 @@ function safeConsolePreferences() {
 }
 
 function formatMetric(key, value) {
-  const amount = Number(value || 0);
+  if (value == null || !Number.isFinite(Number(value))) return "—";
+  const amount = Number(value);
   return key === "fantasyPoints" ? amount.toFixed(1) : Number.isInteger(amount) ? String(amount) : amount.toFixed(1);
+}
+
+function totalMetric(values) {
+  return values.some(value => value == null) ? null : values.reduce((sum, value) => sum + Number(value), 0);
 }
 
 function PlayerAvatar({ player }) {
@@ -144,36 +149,38 @@ function ParticipationConsole({ game, segments = [], players = [], teamSegments 
                 {segments.map((segmentMeta) => {
                   const values = player.segments.find((item) => item.segment === segmentMeta.segment) || {};
                   return <td key={`${player.playerId}-${segmentMeta.segment}`}><div className="kpi-stack">{metrics.map((metric) => {
-                    const value = Number(values[metric.key] || 0);
-                    const width = Math.max(value === 0 ? 0 : 3, Math.min(100, value / maxima[metric.key] * 100));
+                    const value = values[metric.key] ?? null;
+                    const width = Math.max(value == null || value === 0 ? 0 : 3, Math.min(100, value / maxima[metric.key] * 100));
                     return <div className="kpi-lane" key={metric.key} title={`${player.playerDisplayName} · ${segmentMeta.label} · ${metric.label}: ${formatMetric(metric.key, value)}`}><span>{metric.short}</span><i><b style={{ width: `${width}%`, background: metric.color }} /></i><strong style={{ color: metric.color }}>{formatMetric(metric.key, value)}</strong></div>;
                   })}</div></td>;
                 })}
                 <td><div className="kpi-stack total">{metrics.map((metric) => {
-                  const value = Number(player.total[metric.key] || 0);
-                  const rosterTotal = activePlayers.reduce((sum, row) => sum + Number(row.total[metric.key] || 0), 0);
+                  const value = player.total[metric.key] ?? null;
+                  const rosterTotal = totalMetric(activePlayers.map(row => row.total[metric.key]));
                   return <div className="kpi-lane" key={metric.key}><span>{metric.short}</span><i><b style={{ width: `${Math.min(100, rosterTotal ? value / rosterTotal * 100 : 0)}%`, background: metric.color }} /></i><strong style={{ color: metric.color }}>{formatMetric(metric.key, value)}</strong></div>;
                 })}</div></td>
               </tr>
             ))}
           </tbody>
-          <tfoot><tr><th><span>Team total</span><small>{activeTeam} · {totalPlays} plays</small></th>{segments.map((segmentMeta) => <td key={`total-${segmentMeta.segment}`}><div className="segment-team-total">{metrics.map((metric) => <span key={metric.key} style={{ color: metric.color }}>{formatMetric(metric.key, activePlayers.reduce((sum, player) => sum + Number(player.segments.find((item) => item.segment === segmentMeta.segment)?.[metric.key] || 0), 0))}</span>)}</div></td>)}<td><div className="segment-team-total">{metrics.map((metric) => <span key={metric.key} style={{ color: metric.color }}>{formatMetric(metric.key, activePlayers.reduce((sum, player) => sum + Number(player.total[metric.key] || 0), 0))}</span>)}</div></td></tr></tfoot>
+          <tfoot><tr><th><span>Team total</span><small>{activeTeam} · {totalPlays} plays</small></th>{segments.map((segmentMeta) => <td key={`total-${segmentMeta.segment}`}><div className="segment-team-total">{metrics.map((metric) => <span key={metric.key} style={{ color: metric.color }}>{formatMetric(metric.key, totalMetric(activePlayers.map(player => player.segments.find((item) => item.segment === segmentMeta.segment)?.[metric.key])))}</span>)}</div></td>)}<td><div className="segment-team-total">{metrics.map((metric) => <span key={metric.key} style={{ color: metric.color }}>{formatMetric(metric.key, totalMetric(activePlayers.map(player => player.total[metric.key])))}</span>)}</div></td></tr></tfoot>
         </table>
       </div>
     </section>
   );
 }
 
-export function GameBreakdown({ gameId, scoring = "ppr", onBack, onOpenPlayer }) {
+export function GameBreakdown({ season = 2026, gameId, scoring = "ppr", onBack, onOpenPlayer }) {
   const [payload, setPayload] = useState(null);
   const [error, setError] = useState("");
   useEffect(() => {
     const controller = new AbortController();
-    fetch(`/api/v1/game-breakdown?${new URLSearchParams({ gameId, scoring })}`, { signal: controller.signal })
+    setPayload(null);
+    setError("");
+    fetch(`/api/v1/game-breakdown?${new URLSearchParams({ gameId, scoring, season: String(season) })}`, { signal: controller.signal })
       .then(async (response) => { const result = await response.json(); if (!response.ok) throw new Error(result.error?.message || "Game breakdown failed."); return result; })
-      .then(setPayload).catch((reason) => { if (reason.name !== "AbortError") setError(reason.message); });
+      .then((result) => { if (!controller.signal.aborted) setPayload(result); }).catch((reason) => { if (reason.name !== "AbortError") setError(reason.message); });
     return () => controller.abort();
-  }, [gameId, scoring]);
+  }, [gameId, scoring, season]);
   const data = payload?.data;
   const game = data?.game;
   if (error) return <main className="page-content game-breakdown-page"><button className="game-back" onClick={onBack}><ArrowLeft /> Back to team box scores</button><div className="error-banner" role="alert">{error}</div></main>;
@@ -186,7 +193,8 @@ export function GameBreakdown({ gameId, scoring = "ppr", onBack, onOpenPlayer })
         ? <DriveWaterfall drives={data.drives || []} awayTeam={game.awayTeam} homeTeam={game.homeTeam} awayColor="#E58080" homeColor="#3ECF8E" week={game.week} overtime={game.overtime} />
         : <div className="game-unavailable"><Football /> Drive-by-drive play-by-play is unavailable for this matchup.</div>}
       <div className="broadcast-main-analysis">
-        {data.availability.playerParticipation
+        {!data.availability.playerParticipation && data.availability.playerOpportunities && <div className="same-metric-note"><Info /> Play-by-play opportunities are available. Segment-level participation snaps have not been published and appear as —.</div>}
+        {(data.availability.playerParticipation || data.availability.playerOpportunities)
           ? <ParticipationConsole game={game} segments={data.segments || []} players={data.playerSegments || []} teamSegments={data.teamSegments || []} onOpenPlayer={onOpenPlayer} />
           : <div className="game-unavailable"><UsersThree /> Player participation is unavailable for this matchup.</div>}
       </div>

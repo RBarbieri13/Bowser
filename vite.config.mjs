@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import { waiversPlugin } from "./server/waivers-store.mjs";
 import react from "@vitejs/plugin-react";
 import { fantasyStatsApiPlugin } from "./server/vite-api-plugin.mjs";
 import { marketPulsePlugin } from "./server/market-pulse.mjs";
@@ -17,5 +18,5 @@ export default defineConfig({
       clientFiles: ["./src/main.jsx"],
     },
   },
-  plugins: [react(), marketPulsePlugin(), fantasyStatsApiPlugin()],
+  plugins: [react(), waiversPlugin(), marketPulsePlugin(), fantasyStatsApiPlugin()],
 });

@@ -147,3 +147,13 @@ test('storage validation and null comparisons preserve unknowns and safe bounds'
   expect(sortWaiverRows(rows, [{ key: 'fantasy_points', desc: true }], columns).map(row => row.playerId)).toEqual(['one', 'two', 'three']);
   expect(filterWaiverRows(rows, { ranges: [{ kind: 'faab', source: 'source-0', min: '0', max: '99', unit: 'dollars' }] })).toEqual([]);
 });
+
+
+test('an unavailable historical snapshot displays the API explanation without stale rows', async () => {
+  const view = render(<Waivers />); await ready();
+  fetch.mockResolvedValue({ ok: false, json: async () => ({ error: { message: 'No published waiver snapshot is available for 2025 Week 2.' } }) });
+  view.rerender(<Waivers season={2025} />);
+  await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('No published waiver snapshot is available for 2025 Week 2.'));
+  expect(screen.queryByRole('button', { name: 'Fixture Runner', exact: true })).not.toBeInTheDocument();
+  expect(screen.getByRole('alert')).not.toHaveTextContent('[object Object]');
+});

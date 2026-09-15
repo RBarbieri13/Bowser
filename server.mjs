@@ -1,4 +1,5 @@
 import express from "express";
+import { waiversHandler } from "./server/waivers-store.mjs";
 import { marketPulseHandler } from "./server/market-pulse.mjs";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -15,6 +16,7 @@ const indexHtml = readFileSync(indexPath, "utf8");
 
 const app = express();
 app.all('/api/v1/market-pulse', marketPulseHandler);
+app.all('/api/v1/waivers', waiversHandler);
 app.disable("x-powered-by");
 
 app.use((_request, response, next) => {
