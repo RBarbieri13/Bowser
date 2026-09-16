@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "date": "2026-09-16",
+  "fullCheck": "npm run check exit 0",
+  "independentVerifier": "release_audit_20260916",
+  "independentFocusedTests": 12,
+  "waivers": {
+    "players": 101,
+    "rankingSources": 5,
+    "expertFaabSources": 8,
+    "expertBidCells": 141,
+    "communitySources": 1
+  },
+  "statistics": {
+    "season": 2026,
+    "weeks": [
+      1
+    ],
+    "games": 16,
+    "rows": 410,
+    "aggregateMismatches": 0
+  },
+  "preservation": {
+    "originalMainFilesUnchanged": 36,
+    "warehouse2025Sha256": "d3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869"
+  },
+  "news": "Authenticated refresh and provider gates preserved; publishing code does not enable unconfigured storage or paid feeds.",
+  "github": "CLI credentials unavailable; connector write returned 403. Production deployment via authenticated Vercel CLI."
+}

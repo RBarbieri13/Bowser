@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getMeta, queryPlayers, QueryValidationError } from './stats-store.mjs';
@@ -25,13 +25,43 @@ function integer(params, key, fallback, min, max) {
 export function availableWaiverWeeks(season) {
   return readdirSync(dataDir).flatMap(name => { const match = name.match(/^waivers-(\d{4})-week(\d{1,2})\.json$/); return match && Number(match[1]) === season ? [Number(match[2])] : []; }).sort((a,b)=>a-b);
 }
+export function supplementWaiverSnapshot(snapshot, supplement) {
+  if (supplement.season !== snapshot.season || supplement.waiverWeek !== snapshot.waiverWeek || !Array.isArray(supplement.sources) || !Array.isArray(supplement.players)) throw new Error('Invalid waiver supplement scope.');
+  const merged = structuredClone(snapshot), sourceIds = new Set(merged.sources.map(source => source.id)), additions = new Set();
+  for (const source of supplement.sources) {
+    if (!source.id || sourceIds.has(source.id) || additions.has(source.id) || !['expert','community'].includes(source.type) || !source.faabUrl?.startsWith('https://')) throw new Error('Invalid supplementary source.');
+    additions.add(source.id);
+  }
+  const players = new Map(merged.players.map(player => [player.id, player])), seen = new Set(), counts = new Map();
+  function validateBid(bid) {
+    if (!bid || !Number.isFinite(bid.low) || bid.low < 0 || !Number.isFinite(bid.high) || bid.high < bid.low || bid.high > 100 || !['percent','dollars'].includes(bid.unit) || !['annual','remaining','unspecified'].includes(bid.budgetBasis) || (bid.unit === 'dollars' && bid.referenceBudget !== 100)) throw new Error('Invalid supplementary bid.');
+    for (const alternative of bid.alternatives || []) validateBid(alternative);
+  }
+  for (const addition of supplement.players) {
+    const player = players.get(addition.id);
+    if (!player || seen.has(addition.id) || player.name !== addition.name || player.position !== addition.position) throw new Error('Unmatched supplementary identity.');
+    seen.add(addition.id);
+    for (const [id,bid] of Object.entries(addition.faab || {})) {
+      if (!additions.has(id) || player.faab[id]) throw new Error('Invalid supplementary source mapping.');
+      validateBid(bid); player.faab[id] = structuredClone(bid); counts.set(id,(counts.get(id)||0)+1);
+    }
+  }
+  for (const source of supplement.sources) {
+    if (source.rankCount !== 0 || source.faabCount !== counts.get(source.id)) throw new Error('Supplementary coverage mismatch.');
+    merged.sources.push(structuredClone(source));
+  }
+  merged.supplementRecordedAt = supplement.recordedAt;
+  return merged;
+}
 export function readWaiverSnapshot(season, week) {
   const key = `${season}-${week}`;
   if (!availableWaiverWeeks(season).includes(week)) throw new QueryValidationError('week', `No published waiver snapshot is available for ${season} Week ${week}.`);
   if (!snapshots.has(key)) {
-    const snapshot = JSON.parse(readFileSync(resolve(dataDir,`waivers-${season}-week${week}.json`),'utf8'));
+    let snapshot = JSON.parse(readFileSync(resolve(dataDir,`waivers-${season}-week${week}.json`),'utf8'));
     if (snapshot.season !== season || snapshot.waiverWeek !== week || !Array.isArray(snapshot.players) || !Array.isArray(snapshot.sources)) throw new Error('Invalid waiver snapshot.');
     if (snapshot.sources.filter(s=>s.rankCount>0).length < 5 || snapshot.sources.filter(s=>s.faabCount>0).length < 5) throw new Error('Waiver source coverage is incomplete.');
+    const supplementPath = resolve(dataDir,`waivers-supplement-${season}-week${week}.json`);
+    if (existsSync(supplementPath)) snapshot = supplementWaiverSnapshot(snapshot,JSON.parse(readFileSync(supplementPath,'utf8')));
     snapshots.set(key,snapshot);
   }
   return snapshots.get(key);
@@ -80,7 +110,7 @@ export async function queryWaivers(params = new URLSearchParams(), deps = {}) {
       addsUrl:'https://docs.sleeper.com/#trending-players',ownershipUrl:'https://fantasy.espn.com/football/players/add',
     }};
   });
-  return {meta:{season,waiverWeek:week,capturedAt:snapshot.capturedAt,availableWeeks:knownWeeks,statsWeeks:completedWeeks,selectedStatsWeeks:selectedWeeks,statsSeason:season,scoring,sources:snapshot.sources,
+  return {meta:{season,waiverWeek:week,capturedAt:snapshot.capturedAt,supplementRecordedAt:snapshot.supplementRecordedAt || null,availableWeeks:knownWeeks,statsWeeks:completedWeeks,selectedStatsWeeks:selectedWeeks,statsSeason:season,scoring,sources:snapshot.sources,
     activity:providerData.map(({provider,capturedAt,error,stale,window})=>({provider,capturedAt,error:error||null,stale:!!stale,window})),
     totalPlayers:rows.length,statsMatched:rows.filter(r=>r.statsMatched).length,notes:['Rankings and FAAB are a dated source snapshot; scoring changes apply to historical statistics only.','Global roster percentages do not establish availability in your league.'],
   },rows};

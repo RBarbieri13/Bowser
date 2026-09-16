@@ -244,7 +244,7 @@ describe("statistics table UI", () => {
     render(<App />);
     expect(await screen.findByRole("heading", { name: "Fantasy Intelligence" })).toBeInTheDocument();
     expect(await screen.findByRole("heading", { name: "Test Player earns first-team work" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Scan now" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Refresh now" })).toBeDisabled();
     await user.click(screen.getByRole("tab", { name: "Source registry" }));
     expect(await screen.findByRole("heading", { name: "Source registry" })).toBeInTheDocument();
     expect(screen.getByText("xAI X Search")).toBeInTheDocument();

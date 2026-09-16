@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-30T18:00:00-05:00",
+  "handles": [
+    { "handle": "32BeatWriters", "name": "32 Beat Writers", "tier": "beat_writer_network", "sourceType": "BEAT_WRITER" },
+    { "handle": "UnderdogNFL", "name": "Underdog NFL", "tier": "fantasy_news", "sourceType": "NEWS_OUTLET" },
+    { "handle": "SleeperNFL", "name": "Sleeper NFL", "tier": "fantasy_news", "sourceType": "NEWS_OUTLET" },
+    { "handle": "FantasyProsNFL", "name": "FantasyPros NFL", "tier": "fantasy_news", "sourceType": "FANTASY_EXPERT" },
+    { "handle": "RotoWireNFL", "name": "RotoWire NFL", "tier": "fantasy_news", "sourceType": "NEWS_OUTLET" },
+    { "handle": "SportMDAnalysis", "name": "Deepak Chona", "tier": "medical_analysis", "sourceType": "FANTASY_EXPERT" },
+    { "handle": "ProFootballDoc", "name": "ProFootballDoc", "tier": "medical_analysis", "sourceType": "FANTASY_EXPERT" },
+    { "handle": "dwainmcfarland", "name": "Dwain McFarland", "tier": "utilization_analysis", "sourceType": "FANTASY_EXPERT" },
+    { "handle": "AdamSchefter", "name": "Adam Schefter", "tier": "national_insider", "sourceType": "INSIDER" },
+    { "handle": "RapSheet", "name": "Ian Rapoport", "tier": "national_insider", "sourceType": "INSIDER" },
+    { "handle": "FantasyFFData", "name": "Fantasy Football Data", "tier": "data_analysis", "sourceType": "FANTASY_EXPERT" }
+  ]
+}

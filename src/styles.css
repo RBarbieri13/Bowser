@@ -3352,6 +3352,8 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
 .source-adoption { padding: 3px 6px; border-radius: 4px; background: rgba(112,112,112,.14); color: var(--text-label); font: 800 8px var(--font-data); text-transform: uppercase; }
 .source-adoption.primary { background: rgba(62,207,142,.13); color: var(--accent); }
 .source-adoption.architecture_reference { background: rgba(121,185,255,.13); color: var(--group-passing); }
+.source-adoption.connector_ready { background: rgba(121,185,255,.13); color: var(--group-passing); }
+.source-adoption.supplementary { background: rgba(244,185,66,.13); color: var(--group-rushing); }
 .intel-source-grid small { color: var(--text-muted); font: 650 8px var(--font-data); text-transform: uppercase; }
 .intel-source-grid h3 { margin: 12px 0 4px; font: 800 13px var(--font-ui); }
 .intel-source-grid p { margin: 0; color: var(--text-secondary); font: 500 9px/1.5 var(--font-ui); }

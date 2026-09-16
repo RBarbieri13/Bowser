@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "players": 86,
+  "csvColumns": 94,
+  "browserChecks": 22,
+  "embeddedDataMatches": true,
+  "files": [
+    {
+      "name": "browser-verification.json",
+      "bytes": 2394,
+      "sha256": "aa6db0eaef869f4332164b527c8b36aa9cefcff8abf3a84088fa727b3dad3b0e"
+    },
+    {
+      "name": "week1-waiver-desk.html",
+      "bytes": 388781,
+      "sha256": "76b1028cfaa4ac31aae9be35cde47763fa50f3a8395a12e3702ab5fbf0907894"
+    },
+    {
+      "name": "README.md",
+      "bytes": 30096,
+      "sha256": "70106f6f743314afa301008a289eb3dffd00073c7512869ad2ceb61b84578214"
+    },
+    {
+      "name": "week1-waiver-table.csv",
+      "bytes": 48414,
+      "sha256": "14be8c4d286e54305038bd56320eb6ce9baecdff00dc0055afb956bff68023a0"
+    },
+    {
+      "name": "data-verification.json",
+      "bytes": 592,
+      "sha256": "3ee75546f6afb89cfb704209c391b24cadc5c45b5c34a676707ca501ad864ac8"
+    },
+    {
+      "name": "waiver-desk-data.json",
+      "bytes": 515731,
+      "sha256": "c2bf94c6b92f99172030902cf8c8dffe4507ae143656f72fbfeb44bc48bf83e7"
+    }
+  ]
+}

@@ -95,7 +95,7 @@ export function IntelligenceFeed() {
     const timeout = window.setTimeout(async () => {
       setLoading(true); setError("");
       try {
-        const response = await fetch(`/api/v1/intelligence-feed?${query}`, { signal: controller.signal });
+        const response = await fetch(`/api/v1/intelligence-feed?${query}`, { signal: controller.signal, cache: "no-store" });
         const payload = await response.json();
         if (!response.ok) throw new Error(payload.error?.message || "Unable to load intelligence feed");
         setFeed(payload);
@@ -111,18 +111,31 @@ export function IntelligenceFeed() {
   }, []);
 
   const runLiveScan = async () => {
-    if (!feed?.meta?.provider?.configured) return;
+    if (!feed?.meta?.provider?.configured || !feed?.meta?.provider?.storage?.ready) return;
+    const token = window.prompt("Enter the Bowser operator refresh token")?.trim();
+    if (!token) return;
     setRefreshing(true); setError("");
     try {
-      const response = await fetch(`/api/v1/intelligence-feed?${query}&live=1`);
+      const response = await fetch("/api/v1/intelligence-runs", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Idempotency-Key": crypto.randomUUID(), "Content-Type": "application/json" },
+        body: JSON.stringify({ source: "all", lookbackHours: Number(hours), positions: position === "ALL" ? POSITIONS : [position], query: search.trim() }),
+      });
       const payload = await response.json();
-      if (!response.ok) throw new Error(payload.error?.message || "Live scan failed");
-      setFeed(payload);
+      if (!response.ok) {
+        throw new Error(payload.error?.message || "Live refresh failed");
+      }
+      const refreshed = await fetch(`/api/v1/intelligence-feed?${query}`, { cache: "no-store" });
+      const refreshedPayload = await refreshed.json();
+      if (!refreshed.ok) throw new Error(refreshedPayload.error?.message || "Refresh completed but the feed could not be reloaded");
+      setFeed(refreshedPayload);
     } catch (requestError) { setError(requestError.message); }
     finally { setRefreshing(false); }
   };
 
   const configured = Boolean(feed?.meta?.provider?.configured);
+  const storageReady = Boolean(feed?.meta?.provider?.storage?.ready);
+  const refreshReady = configured && storageReady;
   return (
     <main className="intelligence-page">
       <section className="intelligence-hero">
@@ -133,7 +146,7 @@ export function IntelligenceFeed() {
         </div>
         <div className={`intel-engine-status ${configured ? "ready" : "setup"}`}>
           {configured ? <Pulse weight="bold" /> : <WarningCircle weight="bold" />}
-          <div><span>Live engine</span><strong>{configured ? "Ready" : "Needs xAI key"}</strong><small>{configured ? feed.meta.provider.model : "Verified snapshot mode"}</small></div>
+          <div><span>Live engine</span><strong>{refreshReady ? "Ready" : configured ? "Needs storage" : "Needs source access"}</strong><small>{refreshReady ? feed.meta.provider.model : "Verified snapshot mode"}</small></div>
         </div>
       </section>
 
@@ -147,7 +160,7 @@ export function IntelligenceFeed() {
           <label><span>Freshness</span><select value={hours} onChange={(event) => setHours(event.target.value)}><option value="6">Last 6 hours</option><option value="12">Last 12 hours</option><option value="24">Last 24 hours</option><option value="72">Last 3 days</option><option value="168">Last 7 days</option></select></label>
           <label><span>Position</span><select value={position} onChange={(event) => setPosition(event.target.value)}><option value="ALL">All positions</option>{POSITIONS.map((value) => <option key={value}>{value}</option>)}</select></label>
           <label><span>Impact</span><select value={impact} onChange={(event) => setImpact(event.target.value)}><option value="ALL">All impact levels</option>{IMPACTS.map((value) => <option key={value}>{value}</option>)}</select></label>
-          <button className="intel-live-button" disabled={!configured || refreshing} onClick={runLiveScan} title={configured ? "Run a fresh X and web scan" : "Add XAI_API_KEY to enable live scans"}><ArrowClockwise className={refreshing ? "spinning" : ""} />{refreshing ? "Scanning" : "Scan now"}</button>
+          <button className="intel-live-button" disabled={!refreshReady || refreshing} onClick={runLiveScan} title={refreshReady ? "Run an authenticated multi-source refresh" : configured ? "Add durable intelligence storage to enable refreshes" : "Configure a core source to enable refreshes"}><ArrowClockwise className={refreshing ? "spinning" : ""} />{refreshing ? "Refreshing" : "Refresh now"}</button>
         </div>}
       </section>
 
@@ -172,6 +185,10 @@ export function IntelligenceFeed() {
               <dl><div><dt>License</dt><dd>{source.license}</dd></div><div><dt>Automation</dt><dd>{source.automation.replaceAll("_", " ")}</dd></div></dl>
               <a href={source.url} target="_blank" rel="noreferrer">Inspect source<ArrowSquareOut /></a>
             </article>)}
+          </div>
+          <header><div><h2>Priority X accounts</h2><p>The deterministic account pass runs separately from broad X and web discovery.</p></div><strong>{sources?.xAccounts?.length ?? 0} active priorities</strong></header>
+          <div className="intel-source-grid">
+            {sources?.xAccounts?.map((account) => <article key={account.handle}><div><span className="source-adoption primary">priority</span><small>{account.tier.replaceAll("_", " ")}</small></div><h3>{account.handle}</h3><p>{account.name} · {account.sourceType.replaceAll("_", " ")}</p><a href={`https://x.com/${account.handle.slice(1)}`} target="_blank" rel="noreferrer">Inspect account<ArrowSquareOut /></a></article>)}
           </div>
         </section>
       )}

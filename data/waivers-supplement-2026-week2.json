@@ -1,0 +1,296 @@
+{
+  "season": 2026,
+  "waiverWeek": 2,
+  "recordedAt": "2026-09-16T03:33:12.701062+00:00",
+  "sources": [
+    {
+      "id": "ftn",
+      "label": "FTN",
+      "type": "expert",
+      "faabUrl": "https://ftnfantasy.com/fantasy-football-waiver-wire-claims-to-make-heading-into-week-2",
+      "publishedAt": "2026-09-15",
+      "coverageNote": "Daniel Kelley public five-player article, citing the FTN waiver tool. Budget basis unspecified. Heading order is not imported as a ranking.",
+      "recordedAt": "2026-09-16T03:33:12.681491+00:00",
+      "captureNote": "Public web tool inspected during the September 16 UTC report session; exact fetch time not exposed. recordedAt is the local fact-recording time.",
+      "rankCount": 0,
+      "faabCount": 5,
+      "scoring": "unspecified",
+      "evidence": [
+        {
+          "url": "https://ftnfantasy.com/fantasy-football-waiver-wire-claims-to-make-heading-into-week-2",
+          "sha256": "582d61402a733e9218a0dac422c1070abbaa6b10830ba046c7cd1d030b19b58e",
+          "kind": "structured public facts recorded in research desk",
+          "datePublished": "2026-09-15"
+        }
+      ]
+    },
+    {
+      "id": "fantasylife",
+      "label": "Fantasy Life",
+      "type": "expert",
+      "faabUrl": "https://www.fantasylife.com/articles/fantasy/waiver-wire-pickups-faab-advice-week-2-add-jalen-coker",
+      "publishedAt": "2026-09-15",
+      "capturedAt": "2026-09-16T03:23:13.193454+00:00",
+      "coverageNote": "Alex Cupps public Tyler Shough preview only. Main column is 10–12-team 1-QB; superflex and larger-league values remain separate. No gated player data imported.",
+      "rankCount": 0,
+      "faabCount": 1,
+      "scoring": "unspecified",
+      "evidence": [
+        {
+          "url": "https://www.fantasylife.com/articles/fantasy/waiver-wire-pickups-faab-advice-week-2-add-jalen-coker",
+          "sha256": "d9548f39979f826389150b3c8219388e0f13ad2b6ecbca6f0e3e7ca1b8a1fcd3",
+          "kind": "structured public facts recorded in research desk",
+          "datePublished": "2026-09-15"
+        }
+      ]
+    },
+    {
+      "id": "moves",
+      "label": "MOVES community",
+      "type": "community",
+      "faabUrl": "https://www.reddit.com/r/fantasyfootball/comments/1wh5wf4/10_players_to_add_for_week_2_faab_recs/",
+      "publishedAt": "2026-09-15",
+      "coverageNote": "u/movesfantasy public write-up. Author reports ranges based on FAABLab; not an independently accessed FAABLab feed or an expert consensus. Advanced usage is third-party reported.",
+      "recordedAt": "2026-09-16T03:33:12.681491+00:00",
+      "captureNote": "Public web tool inspected during the September 16 UTC report session; exact fetch time not exposed. recordedAt is the local fact-recording time.",
+      "rankCount": 0,
+      "faabCount": 10,
+      "scoring": "unspecified",
+      "evidence": [
+        {
+          "url": "https://www.reddit.com/r/fantasyfootball/comments/1wh5wf4/10_players_to_add_for_week_2_faab_recs/",
+          "sha256": "5ab391cb4ce0d9035e40590d9d8e94590511c66af06a27242868a2747fa8abbc",
+          "kind": "structured public facts recorded in research desk",
+          "datePublished": "2026-09-15"
+        }
+      ]
+    }
+  ],
+  "players": [
+    {
+      "id": "00-0040743",
+      "name": "Tyler Shough",
+      "position": "QB",
+      "faab": {
+        "ftn": {
+          "low": 5,
+          "high": 10,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        },
+        "fantasylife": {
+          "low": 17.5,
+          "high": 17.5,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "10–12 teams / 1-QB",
+          "alternatives": [
+            {
+              "low": 60,
+              "high": 60,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "10–12 teams / superflex"
+            },
+            {
+              "low": 20,
+              "high": 20,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "14–16 teams / 1-QB"
+            },
+            {
+              "low": 75,
+              "high": 75,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "14–16 teams / superflex"
+            },
+            {
+              "low": 12.5,
+              "high": 12.5,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Guillotine / 1-QB"
+            },
+            {
+              "low": 17.5,
+              "high": 17.5,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Guillotine / superflex"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "00-0041013",
+      "name": "Emmett Johnson",
+      "position": "RB",
+      "faab": {
+        "moves": {
+          "low": 4,
+          "high": 6,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        }
+      }
+    },
+    {
+      "id": "00-0041052",
+      "name": "Kaelon Black",
+      "position": "RB",
+      "faab": {
+        "ftn": {
+          "low": 5,
+          "high": 10,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        },
+        "moves": {
+          "low": 9,
+          "high": 11,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        }
+      }
+    },
+    {
+      "id": "00-0040583",
+      "name": "Woody Marks",
+      "position": "RB",
+      "faab": {
+        "ftn": {
+          "low": 5,
+          "high": 10,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        }
+      }
+    },
+    {
+      "id": "00-0041032",
+      "name": "Kenyon Sadiq",
+      "position": "TE",
+      "faab": {
+        "moves": {
+          "low": 4,
+          "high": 6,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        }
+      }
+    },
+    {
+      "id": "00-0034829",
+      "name": "Mike Gesicki",
+      "position": "TE",
+      "faab": {
+        "moves": {
+          "low": 3,
+          "high": 5,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        }
+      }
+    },
+    {
+      "id": "00-0041040",
+      "name": "Antonio Williams",
+      "position": "WR",
+      "faab": {
+        "moves": {
+          "low": 5,
+          "high": 6,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        }
+      }
+    },
+    {
+      "id": "00-0041523",
+      "name": "Caleb Douglas",
+      "position": "WR",
+      "faab": {
+        "ftn": {
+          "low": 5,
+          "high": 10,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        },
+        "moves": {
+          "low": 7,
+          "high": 10,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        }
+      }
+    },
+    {
+      "id": "00-0041037",
+      "name": "Denzel Boston",
+      "position": "WR",
+      "faab": {
+        "moves": {
+          "low": 4,
+          "high": 6,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        }
+      }
+    },
+    {
+      "id": "00-0039424",
+      "name": "Devaughn Vele",
+      "position": "WR",
+      "faab": {
+        "moves": {
+          "low": 10,
+          "high": 15,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        }
+      }
+    },
+    {
+      "id": "00-0039491",
+      "name": "Jalen Coker",
+      "position": "WR",
+      "faab": {
+        "ftn": {
+          "low": 10,
+          "high": 20,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        }
+      }
+    },
+    {
+      "id": "00-0032464",
+      "name": "Kalif Raymond",
+      "position": "WR",
+      "faab": {
+        "moves": {
+          "low": 5,
+          "high": 6,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        }
+      }
+    },
+    {
+      "id": "00-0040134",
+      "name": "Pat Bryant",
+      "position": "WR",
+      "faab": {
+        "moves": {
+          "low": 3,
+          "high": 5,
+          "unit": "percent",
+          "budgetBasis": "unspecified"
+        }
+      }
+    }
+  ]
+}

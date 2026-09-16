@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "players": 86,
+  "positions": {
+    "QB": 15,
+    "RB": 23,
+    "TE": 15,
+    "WR": 33
+  },
+  "statsMatched": 84,
+  "rankSources": 5,
+  "expertFaabSources": 8,
+  "communityFaabSources": 1,
+  "rankingCells": 152,
+  "expertFaabCells": 135,
+  "communityFaabCells": 10,
+  "checks": [
+    "86 unique offensive players",
+    "5 actual rank publishers",
+    "8 actual expert FAAB publishers",
+    "community separate",
+    "open-ended bid operators preserved",
+    "1-QB and superflex separate",
+    "unknown add/drop sides remain null",
+    "source budgets preserved"
+  ]
+}

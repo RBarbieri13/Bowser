@@ -22,7 +22,8 @@ const playerRows = () => within(screen.getByRole('table')).getAllByRole('row').s
 
 test('renders five independent rank and five FAAB sources, real usage, and exactly one point per recorded game', async () => {
   const open = vi.fn(); render(<Waivers onOpenPlayer={open} />); await ready();
-  expect(screen.getByText('5 rank sources · 5 FAAB sources')).toBeInTheDocument();
+  expect(screen.getByText('5 rank sources · 5 expert FAAB sources')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /Research desk/ })).toHaveAttribute('href', '/research/waiver-desk-2026-week1/week1-waiver-desk.html');
   for (const source of sources) {
     expect(screen.getByRole('button', { name: `Sort Positional waiver ranks ${source.label}` })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: `Sort Source FAAB bids ${source.label}` })).toBeInTheDocument();

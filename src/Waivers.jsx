@@ -81,7 +81,7 @@ export function Waivers({ season = 2026, onOpenPlayer }) {
   const teams = [...new Set(allRows.map(row => row.team).filter(Boolean))].sort();
   const publishedWeeks = [...new Set([week, ...(data?.meta?.availableWeeks || [])])].sort((a, b) => a - b);
   const availableStatsWeeks = [...new Set([startWeek, endWeek, ...(data?.meta?.statsWeeks || Array.from({ length: 22 }, (_, index) => index + 1))])].sort((a, b) => a - b);
-  const rankCount = sources.filter(source => source.rankCount > 0).length, faabCount = sources.filter(source => source.faabCount > 0).length;
+  const rankCount = sources.filter(source => source.rankCount > 0).length, faabCount = sources.filter(source => source.faabCount > 0 && source.type !== 'community').length, communityCount = sources.filter(source => source.faabCount > 0 && source.type === 'community').length;
   function updateFavorites(next) { setSaved({ key: favoritesKey, items: next }); setStorageError(!saveJSON(favoritesKey, next)); }
   function toggleFavorite(row) {
     const id = playerKey(row);
@@ -141,7 +141,7 @@ export function Waivers({ season = 2026, onOpenPlayer }) {
   }
 
   return <main className={`page-content waivers wv-${prefs.density}`}>
-    <header className="wv-heading"><div><h1>Waivers</h1><p>Source-by-source research · {season} season</p></div><div className="wv-actions"><button onClick={() => setRefresh(value => value + 1)} disabled={busy}><ArrowClockwise />{busy ? 'Loading…' : 'Refresh'}</button><button aria-expanded={prefs.drawer} aria-controls="wv-favorites" onClick={() => setPref('drawer', !prefs.drawer)}><Star /> Favorites <b>{favorites.length}</b></button></div></header>
+    <header className="wv-heading"><div><h1>Waivers</h1><p>Source-by-source research · {season} season</p></div><div className="wv-actions"><a className="wv-research-link" href="/research/waiver-desk-2026-week1/week1-waiver-desk.html" target="_blank" rel="noreferrer">Research desk ↗</a><button onClick={() => setRefresh(value => value + 1)} disabled={busy}><ArrowClockwise />{busy ? 'Loading…' : 'Refresh'}</button><button aria-expanded={prefs.drawer} aria-controls="wv-favorites" onClick={() => setPref('drawer', !prefs.drawer)}><Star /> Favorites <b>{favorites.length}</b></button></div></header>
     <section className="wv-controls" aria-label="Waiver and statistics selection">
       <label>Waiver week<select aria-label="Waiver week" value={week} onChange={event => setWeek(Number(event.target.value))}>{publishedWeeks.map(value => <option key={value} value={value}>Week {value}</option>)}</select></label>
       <span className="wv-control-divider" />
@@ -151,7 +151,7 @@ export function Waivers({ season = 2026, onOpenPlayer }) {
       <label>Scoring<select aria-label="Waiver scoring" value={scoring} onChange={event => setScoring(event.target.value)}><option value="ppr">PPR</option><option value="half">Half PPR</option><option value="standard">Standard</option></select></label>
       <span className="wv-capture">Captured {stamp(data?.meta?.capturedAt)}</span>
     </section>
-    <div className="wv-provenance"><span>{rankCount} rank sources · {faabCount} FAAB sources</span><span>Blank = not reported / unmatched · FPTS = selected-week total · Ranks within position</span></div>
+    <div className="wv-provenance"><span>{rankCount} rank sources · {faabCount} expert FAAB sources{communityCount > 0 ? ` · ${communityCount} community source` : ''}{data?.meta?.supplementRecordedAt ? ` · additional research ${stamp(data.meta.supplementRecordedAt)}` : ''}</span><span>Blank = not reported / unmatched · FPTS = selected-week total · Ranks within position</span></div>
     {error && <div className="wv-alert" role="alert">Waiver data unavailable: {error}. Use Refresh to retry.</div>}
     {storageError && <div className="wv-alert" role="alert">Browser storage unavailable. Your latest preferences and Favorites may not survive closing this page.</div>}
     <div className={`wv-layout${prefs.drawer ? ' with-favorites' : ''}`}>

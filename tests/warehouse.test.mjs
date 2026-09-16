@@ -23,7 +23,11 @@ test("intelligence feed is filterable and publishes a transparent source registr
   const all = queryIntelligenceFeed(new URLSearchParams("hours=168"));
   assert.equal(all.events.length, 3);
   assert.equal(all.meta.snapshotMode, "curated_bootstrap");
-  assert.equal(all.meta.provider.configured, false);
+  assert.equal(all.meta.provider.configured, true);
+  assert.equal(all.meta.provider.storage.ready, false);
+  assert.equal(all.meta.provider.sources.sleeper.ready, true);
+  assert.equal(all.meta.provider.sources.rotowire.ready, false);
+  assert.equal(all.meta.provider.sources["32bw"].ready, false);
   assert.match(all.meta.methodology.confidence, /social volume never increases/);
   assert.ok(all.events.every((event) => event.sources.length && event.sourceQuality.confidence >= 90));
 
@@ -31,8 +35,11 @@ test("intelligence feed is filterable and publishes a transparent source registr
   assert.equal(receivers.events.length, 1);
   assert.equal(receivers.events[0].player.name, "Noah Brown");
   const registry = getIntelligenceRegistry();
-  assert.equal(registry.summary.total, 15);
-  assert.equal(registry.summary.primary, 2);
+  assert.equal(registry.summary.total, 23);
+  assert.equal(registry.summary.primary, 3);
+  assert.equal(registry.summary.connector_ready, 4);
+  assert.equal(registry.summary.supplementary, 1);
+  assert.equal(registry.xAccounts.length, 11);
   assert.ok(registry.sources.some((source) => source.id === "twif-overall" && source.automation === "disabled_by_robots"));
   assert.throws(() => queryIntelligenceFeed(new URLSearchParams("position=K")), IntelligenceQueryError);
   clock.mock.mockImplementation(() => Date.parse("2026-09-07T12:00:00Z"));
@@ -49,6 +56,8 @@ test("xAI Responses requests use the current text.format structured-output contr
   assert.equal(request.max_turns, 2);
   assert.equal(request.tools[0].from_date, "2026-08-25");
   assert.equal(request.tools[0].to_date, "2026-08-26");
+  const priority = buildXaiRequestBody({ lookbackHours: 24, searchMode: "priority" }, new Date("2026-08-26T18:00:00.000Z"));
+  assert.equal(priority.tools[0].allowed_x_handles.length, 11);
 });
 
 test("postseason round names are normalized and snap-backed", () => {
