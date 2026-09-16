@@ -7,3 +7,7 @@ Validation: full npm run check and independent verifier PASS. Original main chec
 News code preserves provider credential/access gates and requires configured durable storage before live refresh. No paid provider ingestion was triggered for this release.
 
 GitHub sync is blocked by unavailable CLI credentials and connector write permissions; Vercel deployment is performed directly from this isolated release worktree.
+
+Production verified: https://fantasy-football-stats-preview.vercel.app/#/waivers
+
+Deployment: dpl_CX6v6FRhJvQXtGNPet8N1FPgAS5W (READY), application commit 316deea5014f53457e1c525ca6e5ff8e27d8e306. Full public API readbacks, live Sleeper/ESPN refresh, research artifact hashes, waiver filters, favorite bid/note persistence, reloads, Player Database 2026 selection and News source registry all PASS. See production-verification.json.
