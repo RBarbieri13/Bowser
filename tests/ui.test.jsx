@@ -57,7 +57,7 @@ const samplePlayer = {
   current_depth_rank: 2,
   current_depth_position: "QB",
   player_trends: Array.from({ length: 10 }, (_, index) => ({
-    week: index + 1,
+    season: 2025, week: index + 1,
     seasonType: "REG",
     gameId: `2025_${String(index + 1).padStart(2, "0")}_BUF_TEST`,
     team: "BUF",
@@ -162,7 +162,7 @@ const sampleOpportunityTracker = {
         hasNFLHistory: true, opportunityMetric: "passAttempts",
         averages: { snaps: 68, snapPct: 98, opportunity: 31, fantasyPoints: 24.2 },
         trend: { direction: "up", delta: 9, label: "Snap share up 9 pts over prior 3" },
-        history: Array.from({ length: 10 }, (_, index) => ({ gameId: `game-${index}`, week: index + 1, team: "NYG", opponent: "DAL", snaps: 59 + index, snapPct: 90 + index, passAttempts: 22 + index, carries: 4, targets: 0, fantasyPoints: 15 + index })),
+        history: Array.from({ length: 10 }, (_, index) => ({ gameId: `game-${index}`, season: 2025, week: index + 1, team: "NYG", opponent: "DAL", snaps: 59 + index, snapPct: 90 + index, passAttempts: 22 + index, carries: 4, targets: 0, fantasyPoints: 15 + index })),
       }] },
       { position: "RB", players: [{
         playerId: "rookie-test", name: "Rookie Runner", team: "NYG", position: "RB", depthPosition: "RB", depthRank: 4,
@@ -214,6 +214,7 @@ beforeEach(() => {
       json: async () => ({
         data: [samplePlayer],
         meta: {
+          dfs: { season:2026, week:1, coverage:{salaryPlayers:100, projectedPlayers:90}, options:[{key:"current",label:"Current Week 1"},{key:"main",label:"Week 1 Main"}] },
           returnedCount: 1,
           totalCount: 609,
           queryMs: 4.2,
@@ -285,10 +286,10 @@ describe("statistics table UI", () => {
     expect(screen.getByRole("link", { name: "Opportunity Tracker" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("heading", { name: "Quarterbacks" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Running backs" })).toBeInTheDocument();
-    expect(screen.getByLabelText(/Snaps: NYG Week 1, 59/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Pass att: NYG Week 1, 22/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/PPR pts: NYG Week 1, 15/)).toBeInTheDocument();
-    expect(screen.getByText("Awaiting NFL debut")).toBeInTheDocument();
+    expect(screen.getByLabelText(/Snaps trend for Test Player: 2025 Week 1: 59/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Pass attempts trend for Test Player: 2025 Week 1: 22/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Fantasy points trend for Test Player: 2025 Week 1: 15/)).toBeInTheDocument();
+    expect(screen.getByText("No recorded games in this window")).toBeInTheDocument();
     expect(screen.getByText(/injury feed is not published yet/i)).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "RB" }));
     expect(screen.queryByRole("heading", { name: "Quarterbacks" })).not.toBeInTheDocument();
@@ -488,10 +489,10 @@ describe("statistics table UI", () => {
     expect(screen.getByRole("columnheader", { name: "Passing" })).toHaveAttribute("colspan", "4");
     expect(screen.getByRole("columnheader", { name: "Rushing" })).toHaveAttribute("colspan", "4");
     expect(screen.getByRole("columnheader", { name: "Receiving" })).toHaveAttribute("colspan", "5");
-    expect(screen.getByRole("columnheader", { name: "Fantasy" })).toHaveAttribute("colspan", "2");
+    expect(screen.getByRole("columnheader", { name: "Fantasy" })).toHaveAttribute("colspan", "3");
     expect(screen.getByRole("link", { name: "Sun 12:00 pm vs KC" })).toHaveAttribute("href", expect.stringContaining("401-test"));
-    expect(table.querySelector('col[data-column="draft_kings_price"]')).not.toBeInTheDocument();
-    expect(table.querySelector('col[data-column="draft_kings_projection"]')).not.toBeInTheDocument();
+    expect(table.querySelector('col[data-column="draft_kings_price"]')).toBeInTheDocument();
+    expect(table.querySelector('col[data-column="draft_kings_projection"]')).toBeInTheDocument();
     expect(table.querySelector('col[data-column="snap_pct"]')).toBeInTheDocument();
     expect(screen.getByText("90%")).toBeInTheDocument();
 
@@ -538,33 +539,32 @@ describe("statistics table UI", () => {
     expect(columnOrder.indexOf("trend_snaps")).toBe(columnOrder.indexOf("snaps") + 1);
     expect(columnOrder.indexOf("trend_rush_attempts")).toBe(columnOrder.indexOf("rushing_tds") + 1);
     expect(columnOrder.indexOf("trend_targets")).toBe(columnOrder.indexOf("receiving_tds") + 1);
-    expect(columnOrder.indexOf("trend_fantasy_points")).toBe(columnOrder.indexOf("fantasy_points") + 1);
+    expect(columnOrder.indexOf("trend_fantasy_points")).toBe(columnOrder.indexOf("position_finish") + 1);
     expect(columnOrder).not.toContain("depth_rank");
     expect(columnOrder).not.toContain("team");
     const playerNameCell = screen.getByRole("button", { name: "Test Player" }).closest("td");
     expect(playerNameCell.querySelector(".player-name-team-logo img")).toHaveAttribute("src", expect.stringContaining("/buf.png"));
     expect(within(table).queryByRole("button", { name: "Team" })).not.toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Snaps trend for Test Player: Week 1: 58;.*Week 10: 96/ })).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Attempts trend for Test Player/ })).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Targets trend for Test Player: Week 1: 2/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Snaps trend for Test Player: 2025 Week 1: 58;.*Week 10: 96/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Rush attempts trend for Test Player/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Targets trend for Test Player: 2025 Week 1: 2/ })).toBeInTheDocument();
     expect(table.querySelector('.trend-rushing .trend-bar-item[title*="rush attempts"]')).toBeInTheDocument();
     const snapTrend = screen.getByRole("img", { name: /Snaps trend for Test Player/ });
     const targetTrend = screen.getByRole("img", { name: /Targets trend for Test Player/ });
-    expect(snapTrend).toHaveAttribute("data-scale-mode", "focus");
-    expect(snapTrend).toHaveAttribute("title", expect.stringContaining("focused row scale"));
-    expect(targetTrend).toHaveAttribute("data-scale-mode", "zero");
+    expect(snapTrend).toHaveAttribute("data-scale-mode", "shared");
+    expect(snapTrend).toHaveAttribute("title", expect.stringContaining("shared NFL scale"));
+    expect(targetTrend).toHaveAttribute("data-scale-mode", "shared");
     expect(targetTrend.querySelector('.trend-bar-item[data-week="1"]')).not.toHaveClass("zero");
-    expect(Number.parseFloat(targetTrend.querySelector('.trend-bar-item[data-week="3"] i').style.getPropertyValue("--trend-height"))).toBeGreaterThan(20);
-    expect(screen.getByText(/Last 10 · Focus scale/)).toBeInTheDocument();
-    expect(screen.getAllByText(/Last 10 · 0 baseline/).length).toBeGreaterThan(0);
+    expect(Number.parseFloat(targetTrend.querySelector('.trend-bar-item[data-week="3"] i').style.height)).toBe(16);
+    expect(screen.getAllByText(/10 NFL weeks · shared scale/)).toHaveLength(4);
     expect(latestPlayerUrl().searchParams.get("includeTrends")).toBe("1");
 
     await user.selectOptions(screen.getByRole("combobox", { name: "Usage trend metric" }), "snap_pct");
-    expect(screen.getByRole("img", { name: /Snap % trend for Test Player: Week 1: 72/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Snap % trend for Test Player: 2025 Week 1: 72/ })).toBeInTheDocument();
     await user.selectOptions(screen.getByRole("combobox", { name: "Rushing trend metric" }), "rushing_yards");
-    expect(screen.getByRole("img", { name: /Yards trend for Test Player: Week 1: 18/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Rushing yards trend for Test Player: 2025 Week 1: 18/ })).toBeInTheDocument();
     await user.selectOptions(screen.getByRole("combobox", { name: "Receiving trend metric" }), "receptions");
-    expect(screen.getByRole("img", { name: /Receptions trend for Test Player: Week 1: 0/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Receptions trend for Test Player: 2025 Week 1: 0/ })).toBeInTheDocument();
     let stored = JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1"));
     expect(stored.trendMetrics).toMatchObject({ trend_snaps: "snap_pct", trend_rush_attempts: "rushing_yards", trend_targets: "receptions" });
 
@@ -596,7 +596,7 @@ describe("statistics table UI", () => {
     await user.click(within(screen.getByRole("group", { name: "Trend window" })).getByRole("button", { name: "5" }));
     await user.click(screen.getByRole("button", { name: "Apply changes" }));
     expect(table.querySelectorAll(".trend-snaps .trend-bar-item")).toHaveLength(5);
-    expect(screen.getAllByText(/Last 5 ·/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/5 NFL weeks ·/).length).toBeGreaterThan(0);
 
     await user.click(screen.getByRole("button", { name: "Hide player trends" }));
     await waitFor(() => expect(latestPlayerUrl().searchParams.get("includeTrends")).toBe("0"));
@@ -756,10 +756,10 @@ describe("statistics table UI", () => {
 
     const visibleOrder = () => [...document.querySelectorAll(".column-studio-order > div > span")]
       .map((chip) => chip.childNodes[1]?.textContent?.trim() || "");
-    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Receiving", "Fantasy"]);
+    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Receiving", "DFS", "Fantasy"]);
 
     await user.click(screen.getByRole("button", { name: "Move Fantasy left" }));
-    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Fantasy", "Receiving"]);
+    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Receiving", "Fantasy", "DFS"]);
 
     const receivingChip = [...document.querySelectorAll(".column-studio-order > div > span")]
       .find((chip) => chip.textContent.includes("Receiving"));
@@ -769,7 +769,7 @@ describe("statistics table UI", () => {
     await waitFor(() => expect(receivingChip).toHaveClass("dragging"));
     fireEvent.dragOver(fantasyChip);
     fireEvent.drop(fantasyChip);
-    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Receiving", "Fantasy"]);
+    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Fantasy", "Receiving", "DFS"]);
   });
 
   test("stages saved-view selection until Apply and lets Current layout clear the selection", async () => {
@@ -889,7 +889,7 @@ test('DFS fields display real values, sort, and retain the explicitly selected 2
   await waitFor(()=>expect(fetch.mock.calls.some(([url])=>String(url).includes('sort=draft_kings_price'))).toBe(true));
   fireEvent.change(screen.getByLabelText('DFS slate'),{target:{value:'main'}});
   await waitFor(()=>expect(fetch.mock.calls.some(([url])=>String(url).includes('dfsSlate=main'))).toBe(true));
-  expect(localStorage.getItem('bowser:dfs-slate:v1')).toBe('main');
+  expect(localStorage.getItem('bowser:dfs-slate:v2')).toBe('main');
 });
 
 

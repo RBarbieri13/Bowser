@@ -28,6 +28,7 @@ function matchupDate(item) {
 
 export function ScheduleWeekSelector({
   team,
+  season = 2025,
   schedule = [],
   start,
   end,
@@ -98,12 +99,11 @@ export function ScheduleWeekSelector({
 
   const toggleExtra = (week) => {
     if (week >= start && week <= end) return;
-    onExtrasChange(cleanExtras.includes(week) ? cleanExtras.filter((value) => value !== week) : [...cleanExtras, week]);
+    onExtrasChange(extras.includes(week) ? extras.filter((value) => value !== week) : [...extras, week]);
   };
 
   const setRange = (nextStart, nextEnd) => {
     onRangeChange(nextStart, nextEnd);
-    onExtrasChange(cleanExtras.filter((week) => week < nextStart || week > nextEnd));
   };
 
   return (
@@ -128,7 +128,7 @@ export function ScheduleWeekSelector({
         <div id="schedule-week-filmstrip" className="schedule-selector-body">
           <div className="schedule-selector-heading">
             <div>
-              <strong>{team} 2025 schedule</strong>
+              <strong>{team} {season} schedule</strong>
               <span>Drag the mint selection to move it, or resize either edge.</span>
             </div>
             <div className="schedule-mode-actions">

@@ -1,0 +1,272 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-09-16T20:12:45.515371+00:00",
+  "scope": "Fresh-context source and importer/store verification only; no application, data, deployment, or schedule edits. Focused tests only.",
+  "checks": [
+    {
+      "name": "saved_snapshot_counts",
+      "status": "PASS",
+      "evidence": {
+        "season": 2026,
+        "week": 2,
+        "capture": "2026-09-16T20:03:49.929260Z",
+        "slates": 6,
+        "allWeekSalaries": 812,
+        "allWeekProjections": 192
+      }
+    },
+    {
+      "name": "official_live_salary_csv_readbacks",
+      "status": "PASS",
+      "evidence": {
+        "slates": [
+          {
+            "id": 153427,
+            "salaryPlayers": 812,
+            "projectedPlayers": 192
+          },
+          {
+            "id": 153430,
+            "salaryPlayers": 765,
+            "projectedPlayers": 180
+          },
+          {
+            "id": 153428,
+            "salaryPlayers": 664,
+            "projectedPlayers": 156
+          },
+          {
+            "id": 153429,
+            "salaryPlayers": 406,
+            "projectedPlayers": 96
+          },
+          {
+            "id": 153431,
+            "salaryPlayers": 256,
+            "projectedPlayers": 60
+          },
+          {
+            "id": 153432,
+            "salaryPlayers": 153,
+            "projectedPlayers": 36
+          }
+        ],
+        "comparison": "Every official row ID, salary, game string; zero mismatches across all six slates."
+      },
+      "code": "scripts/import_dfs_weekly.py:222-266"
+    },
+    {
+      "name": "official_lobby_classic_slate_games",
+      "status": "PASS",
+      "evidence": {
+        "verifiedIds": [
+          153427,
+          153428,
+          153429,
+          153430,
+          153431,
+          153432
+        ],
+        "mismatches": [],
+        "types": {
+          "ContestTypeId": 21,
+          "GameTypeId": 1
+        }
+      },
+      "code": "scripts/import_dfs_weekly.py:117-158"
+    },
+    {
+      "name": "current_nflverse_schedule",
+      "status": "PASS",
+      "evidence": {
+        "week2Games": 16,
+        "mismatches": []
+      },
+      "code": "scripts/import_dfs_weekly.py:92-114"
+    },
+    {
+      "name": "independent_live_fic_projection_parse",
+      "status": "PASS",
+      "evidence": {
+        "sourceOffensiveRows": 192,
+        "projectionMismatches": [],
+        "lastModified": "Wed, 16 Sep 2026 07:41:01 GMT",
+        "samples": [
+          {
+            "name": "Jahmyr Gibbs",
+            "salary": 8500,
+            "projection": 23.1,
+            "projectionSourceSalary": 8500,
+            "gameId": "2026_02_DET_BUF"
+          },
+          {
+            "name": "Puka Nacua",
+            "salary": 7900,
+            "projection": 21.1,
+            "projectionSourceSalary": 7900,
+            "gameId": "2026_02_NYG_LA"
+          }
+        ]
+      },
+      "code": "scripts/import_dfs_weekly.py:161-198"
+    },
+    {
+      "name": "live_current_stable_roster_identities",
+      "status": "PASS",
+      "evidence": {
+        "joinedPlayers": 752,
+        "teamPositionMismatches": [],
+        "rookies": [
+          {
+            "name": "Fernando Mendoza",
+            "playerId": "00-0041562",
+            "team": "LV",
+            "salary": 4500,
+            "projection": null,
+            "currentRosterName": "Fernando Mendoza"
+          },
+          {
+            "name": "Jeremiyah Love",
+            "playerId": "00-0041027",
+            "team": "ARI",
+            "salary": 5900,
+            "projection": 11.2,
+            "currentRosterName": "Jeremiyah Love"
+          },
+          {
+            "name": "Carnell Tate",
+            "playerId": "00-0041438",
+            "team": "TEN",
+            "salary": 5100,
+            "projection": 8.7,
+            "currentRosterName": "Carnell Tate"
+          },
+          {
+            "name": "Makai Lemon",
+            "playerId": "00-0040867",
+            "team": "PHI",
+            "salary": 4600,
+            "projection": 7.3,
+            "currentRosterName": "Makai Lemon"
+          }
+        ]
+      },
+      "code": "scripts/import_dfs_weekly.py:201-219,245-259"
+    },
+    {
+      "name": "missing_values_are_explicit",
+      "status": "PASS",
+      "evidence": {
+        "missingProjections": 620,
+        "unmatchedSalaries": 60,
+        "unmatchedDefenseRows": 32,
+        "explanation": "FIC publishes 192 offensive projections for this week. Other salary rows correctly remain null; no historical average or zero substitution. All 192 source rows join, and each scheduled team has QB/RB/WR/TE coverage. Server serves 752 safely matched player identities, not all 812 raw salary rows."
+      },
+      "code": "scripts/import_dfs_weekly.py:253-276; server/dfs-store.mjs:41"
+    },
+    {
+      "name": "source_date_week_and_wrong_slate_guards",
+      "status": "PASS",
+      "evidence": {
+        "review": "Schedule selects a current/upcoming dated regular-season week; official lobby checks matchups, exact kickoff, Classic type and unlocked groups. FIC title, Last-Modified <=72h, opponent and kickoff are checked; salary dates are exact and projection joins retain matching season/week/game.",
+        "targetedTests": "11 Python importer tests passed, including wrong-week, stale-source, mixed-matchup, wrong kickoff, ambiguous identity, and changed salary date rejection."
+      },
+      "code": "scripts/import_dfs_weekly.py:104-142,161-197,237-265,288-314"
+    },
+    {
+      "name": "atomic_last_good_no_data_guards",
+      "status": "PASS",
+      "evidence": {
+        "review": "Exclusive target lock; prior snapshot validation; assemble all groups before validation and same-directory fsynced temporary replace; no-data/partial/transport failures are non-publishable. Preserve older slate entries and pinned Week 1 archive. Server falls back to dated Week 1 on missing/malformed/unverified weekly JSON and labels ended current data last-good.",
+        "tests": "11 Python and 5 Node targeted tests passed; includes injected replacement failure, interrupted second-slate build, CLI exit codes, missing/corrupt/partial weekly JSON and explicit Week 1 fallback."
+      },
+      "code": "scripts/import_dfs_weekly.py:317-345,368-398,417-424; server/dfs-store.mjs:6-16,19-41"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
+      "status": 200,
+      "bytes": 5975339,
+      "sha256": "5a52147507c225e83c7119ff68943c81d00aae0aa974f63ffc3f260d802bd21b",
+      "lastModified": null,
+      "httpDate": "Wed, 16 Sep 2026 20:10:32 GMT"
+    },
+    {
+      "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
+      "status": 200,
+      "bytes": 881153,
+      "sha256": "6bd925988711fb3f0775daec3ea3f367aeca4a03c9653ff6d485a5c70abfa06d",
+      "lastModified": "Wed, 16 Sep 2026 07:41:01 GMT",
+      "httpDate": "Wed, 16 Sep 2026 20:10:31 GMT"
+    },
+    {
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
+      "status": 200,
+      "bytes": 940136,
+      "sha256": "c29e341ff226b1f08e19ea45db656cb78ffc590437167001df242ceb976c770e",
+      "lastModified": "Wed, 16 Sep 2026 12:35:59 GMT",
+      "httpDate": "Wed, 16 Sep 2026 20:10:31 GMT"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
+      "status": 200,
+      "bytes": 2178322,
+      "sha256": "665504505bc5f64ce48e86a1e815f694fdbb1e6d07fdb4d574bcaa6928625a8e",
+      "lastModified": null,
+      "httpDate": "Wed, 16 Sep 2026 20:10:31 GMT"
+    },
+    {
+      "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=153427",
+      "status": 200,
+      "bytes": 82302,
+      "sha256": "d45a2490ffa566ac4b83a8e12394518fabf829b286df3eff1c832bee259462c6",
+      "lastModified": null,
+      "httpDate": "Wed, 16 Sep 2026 20:10:31 GMT"
+    },
+    {
+      "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=153430",
+      "status": 200,
+      "bytes": 77588,
+      "sha256": "aff8ffa1b0a99f459088412e0d81ead7795d3e0269df01515e11f94cf14a9d28",
+      "lastModified": null,
+      "httpDate": "Wed, 16 Sep 2026 20:10:31 GMT"
+    },
+    {
+      "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=153428",
+      "status": 200,
+      "bytes": 67329,
+      "sha256": "947aa0adbb0b2aa494f25949677dc7f820ca0061f2ac3342383cb9a6cfa41f83",
+      "lastModified": null,
+      "httpDate": "Wed, 16 Sep 2026 20:10:31 GMT"
+    },
+    {
+      "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=153429",
+      "status": 200,
+      "bytes": 41047,
+      "sha256": "326483596f596e2df5a672f8a7a1dfabbf2825056ea41010c6679c1907e70969",
+      "lastModified": null,
+      "httpDate": "Wed, 16 Sep 2026 20:10:31 GMT"
+    },
+    {
+      "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=153431",
+      "status": 200,
+      "bytes": 26154,
+      "sha256": "c45baff001573b483cc50830e712862fd2f120baa3d0e0bff31688621779c454",
+      "lastModified": null,
+      "httpDate": "Wed, 16 Sep 2026 20:10:31 GMT"
+    },
+    {
+      "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=153432",
+      "status": 200,
+      "bytes": 15706,
+      "sha256": "018797dc9afbd1c92686c3fe776efb4fadbe0a711edad900ea6dfeaf5468e5de",
+      "lastModified": null,
+      "httpDate": "Wed, 16 Sep 2026 20:10:31 GMT"
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    "Verification covers current fetched source values and the supported importer path, not future provider schema changes. Runtime weekly loader trusts importer verified status rather than duplicating full snapshot validation."
+  ]
+}

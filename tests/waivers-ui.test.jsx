@@ -9,7 +9,7 @@ const sources = Array.from({ length: 5 }, (_, index) => ({ id: `source-${index}`
 const rankings = rank => Object.fromEntries(sources.map(source => [source.id, { rank, scope: 'position', method: 'Within-position article order' }]));
 const bids = (low, budgetBasis = 'annual') => Object.fromEntries(sources.map(source => [source.id, { low, high: low + 5, unit: 'percent', budgetBasis }]));
 const rows = [
-  { id: 'player-1', playerId: 'one', name: 'Fixture Runner', position: 'RB', team: 'BUF', rankings: rankings(1), faab: bids(15), stats: { games_played: 1, snaps: 44, snap_pct: 72.3, carries: 12, rushing_yards: 70, rushing_tds: 1, targets: 3, receptions: 2, receiving_yards: 14, receiving_tds: 0, fantasy_points: 16.4, trends: [{ week: 1, snaps: 44, carries: 12, targets: 3 }] }, activity: { adds: 300, drops: 0, rosterPct: 30, startPct: 5, addsSource: 'Sleeper', ownershipSource: 'ESPN', addsCapturedAt: '2026-09-15T14:00:00Z', ownershipCapturedAt: '2026-09-15T13:00:00Z', windowHours: 24 } },
+  { id: 'player-1', playerId: 'one', name: 'Fixture Runner', position: 'RB', team: 'BUF', rankings: rankings(1), faab: bids(15), stats: { games_played: 1, snaps: 44, snap_pct: 72.3, carries: 12, rushing_yards: 70, rushing_tds: 1, targets: 3, receptions: 2, receiving_yards: 14, receiving_tds: 0, fantasy_points: 16.4, trends: [{ season: 2026, week: 1, snaps: 44, carries: 12, targets: 3 }] }, activity: { adds: 300, drops: 0, rosterPct: 30, startPct: 5, addsSource: 'Sleeper', ownershipSource: 'ESPN', addsCapturedAt: '2026-09-15T14:00:00Z', ownershipCapturedAt: '2026-09-15T13:00:00Z', windowHours: 24 } },
   { id: 'player-2', playerId: 'two', name: 'Fixture Receiver', position: 'WR', team: 'NYG', rankings: rankings(2), faab: bids(3, 'unspecified'), stats: { fantasy_points: 4 }, activity: {} },
   { id: 'player-3', playerId: 'three', name: 'Unknown Quarterback', position: 'QB', team: 'KC', rankings: {}, faab: {}, stats: {}, activity: {} },
 ];
@@ -31,8 +31,8 @@ test('renders five independent rank and five FAAB sources, real usage, and exact
   const runner = (await ready()).closest('tr');
   expect(within(runner).getByText('72%')).toBeInTheDocument();
   expect(within(runner).getByText('16.4')).toBeInTheDocument();
-  for (const metric of ['snaps', 'rush attempts', 'targets']) {
-    const chart = within(runner).getByRole('img', { name: new RegExp(`Fixture Runner ${metric}: Week 1`) });
+  for (const metric of ['Snaps', 'Rush attempts', 'Targets']) {
+    const chart = within(runner).getByRole('img', { name: new RegExp(`${metric} trend for Fixture Runner: 2026 Week 1`) });
     expect(chart.querySelectorAll('[data-week]')).toHaveLength(1);
   }
   expect(within(runner).getByText('300').title).toContain('Sleeper');
@@ -141,8 +141,8 @@ test('source values convert only with explicit matching budget basis and preserv
 
 test('trend metric selections update real bars and sorting, survive reload, and reject unsupported saved metrics', async () => {
   fetch.mockImplementation(async () => reply({ ...data, rows: [
-    { ...rows[0], stats: { ...rows[0].stats, trends: [{ week: 1, carries: 12, targets: 3, rushing_yards: 70, receptions: 2, receiving_tds: 0 }] } },
-    { ...rows[1], stats: { ...rows[1].stats, rushing_yards: 100, receiving_tds: 2, trends: [{ week: 1, rushing_yards: 100, receiving_tds: 2 }] } },
+    { ...rows[0], stats: { ...rows[0].stats, trends: [{ season: 2026, week: 1, carries: 12, targets: 3, rushing_yards: 70, receptions: 2, receiving_tds: 0 }] } },
+    { ...rows[1], stats: { ...rows[1].stats, rushing_yards: 100, receiving_tds: 2, trends: [{ season: 2026, week: 1, rushing_yards: 100, receiving_tds: 2 }] } },
     rows[2],
   ] }));
   const view = render(<Waivers />); await ready();
@@ -150,17 +150,17 @@ test('trend metric selections update real bars and sorting, survive reload, and 
   fireEvent.change(screen.getByLabelText('Rushing trend metric'), { target: { value: 'rushing_yards' } });
   fireEvent.change(screen.getByLabelText('Receiving trend metric'), { target: { value: 'receiving_tds' } });
   const runner = (await ready()).closest('tr');
-  expect(within(runner).getByRole('img', { name: 'Fixture Runner rushing yards: Week 1: 70' }).querySelector('[data-value]')).toHaveAttribute('data-value', '70');
-  expect(within(runner).getByRole('img', { name: 'Fixture Runner receiving touchdowns: Week 1: 0' }).querySelector('[data-value]')).toHaveAttribute('data-value', '0');
-  fireEvent.click(screen.getByRole('button', { name: 'Sort Rushing YDS / game' }));
+  expect(within(runner).getByRole('img', { name: 'Rushing yards trend for Fixture Runner: 2026 Week 1: 70' }).querySelector('[data-value]')).toHaveAttribute('data-value', '70');
+  expect(within(runner).getByRole('img', { name: 'Receiving TDs trend for Fixture Runner: 2026 Week 1: 0' }).querySelector('[data-value]')).toHaveAttribute('data-value', '0');
+  fireEvent.click(screen.getByRole('button', { name: 'Sort Rushing Rushing yards / week' }));
   expect(playerRows()[0]).toHaveTextContent('Fixture Receiver');
   expect(playerRows().at(-1)).toHaveTextContent('Unknown Quarterback');
-  expect(JSON.parse(localStorage.getItem(WAIVER_PREFS_KEY)).trendMetrics).toEqual({ rushing: 'rushing_yards', receiving: 'receiving_tds' });
+  expect(JSON.parse(localStorage.getItem(WAIVER_PREFS_KEY)).trendMetrics).toEqual({ usage: 'snaps', rushing: 'rushing_yards', receiving: 'receiving_tds' });
   view.unmount(); render(<Waivers />); await ready();
-  expect(screen.getByRole('button', { name: 'Sort Rushing YDS / game' })).toHaveAttribute('title', 'Sort YDS / game. Shift-click to add another sort.');
-  expect(screen.getByRole('button', { name: 'Sort Receiving TD / game' })).toBeInTheDocument();
-  expect(screen.getByRole('img', { name: 'Fixture Runner receiving touchdowns: Week 1: 0' })).toBeInTheDocument();
-  expect(validatePreferences({ trendMetrics: { rushing: 'passing_yards', receiving: 'constructor' } }).trendMetrics).toEqual({ rushing: 'carries', receiving: 'targets' });
+  expect(screen.getByRole('button', { name: 'Sort Rushing Rushing yards / week' })).toHaveAttribute('title', 'Sort Rushing yards / week. Shift-click to add another sort.');
+  expect(screen.getByRole('button', { name: 'Sort Receiving Receiving TDs / week' })).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: 'Receiving TDs trend for Fixture Runner: 2026 Week 1: 0' })).toBeInTheDocument();
+  expect(validatePreferences({ trendMetrics: { rushing: 'passing_yards', receiving: 'constructor' } }).trendMetrics).toEqual({ usage: 'snaps', rushing: 'passing_yards', receiving: 'targets' });
 });
 
 test('storage validation and null comparisons preserve unknowns and safe bounds', () => {

@@ -6,13 +6,13 @@ const snapshot={season:2026,waiverWeek:2,capturedAt:'2026-09-15T12:00:00Z',sourc
  {id:'new',playerId:'00-2',name:'New Player',position:'WR',team:'BUF',rankings:{a:{rank:2}},faab:{}},
  {id:'collision',playerId:'00-wrong',name:'First Player',position:'RB',team:'JAX',rankings:{},faab:{}},
 ]};
-const stats=[{player_id:'00-1',player_display_name:'First Player',position:'RB',team:'JAX',games_played:1,snaps:20,carries:7,fantasy_points:12,player_trends:[{week:1,gameId:'2026_01_A_B',rushAttempts:7,targets:2,fantasyPoints:12},{week:2,rushAttempts:90}]}];
+const stats=[{player_id:'00-1',player_display_name:'First Player',position:'RB',team:'JAX',games_played:1,snaps:20,carries:7,fantasy_points:12,player_trends:[{season:2025,week:18,rushAttempts:90},{season:2026,week:1,gameId:'2026_01_A_B',rushAttempts:7,targets:2,fantasyPoints:12}]}];
 const market={refresh:async(provider)=>({provider,capturedAt:123,window:'24',rows:provider==='sleeper'?[{id:'sleeper:1',gsisId:'00-1',name:'First Player',position:'RB',team:'JAX',adds:100,drops:null}]:[{name:'First Player',position:'RB',team:'JAX',rosterPct:25,startPct:3}]})};
 const deps={snapshot,availableWeeks:[2],readMeta:()=>({weekOptions:[{week:1}]}),queryStats:params=>{assert.equal(params.get('season'),'2026');assert.equal(params.get('scoring'),'half');return {data:stats};},market};
-test('waivers joins stable identities, retains no-stat targets, preserves explicit zero and selected trend scope',async()=>{
+test('waivers joins stable identities, retains no-stat targets, preserves explicit zero and cross-season aligned history',async()=>{
  const result=await queryWaivers(new URLSearchParams('season=2026&week=2&weeks=1&scoring=half'),deps);
  assert.equal(result.rows.length,3);assert.equal(result.rows[0].stats.carries,7);assert.equal(result.rows[0].faab.a.low,0);
- assert.equal(result.rows[0].stats.trends.length,1);assert.equal(result.rows[0].stats.trends[0].carries,7);
+ assert.equal(result.rows[0].stats.trends.length,2);assert.equal(result.rows[0].stats.trends[1].carries,7);
  assert.equal(result.rows[1].stats.fantasy_points,null);assert.equal(result.rows[2].stats.fantasy_points,null);
  assert.equal(result.rows[0].activity.adds,100);assert.equal(result.rows[0].activity.drops,null);assert.equal(result.rows[0].activity.rosterPct,25);
  assert.equal(result.rows[0].stats.draft_kings_price,undefined);assert.equal(result.rows[0].stats.adp,undefined);
@@ -20,6 +20,17 @@ test('waivers joins stable identities, retains no-stat targets, preserves explic
 test('failed popularity feeds retain rankings and statistics with explicit source errors',async()=>{
  const result=await queryWaivers(new URLSearchParams('scoring=half'),{...deps,market:{refresh:async()=>{throw new Error('offline');}}});
  assert.equal(result.rows[0].rankings.a.rank,1);assert.equal(result.rows[0].stats.fantasy_points,12);assert.equal(result.rows[0].activity.adds,null);assert.ok(result.meta.activity.every(p=>p.error));
+});
+test('players without selected-week stats retain independent prior-season calendar history',async()=>{
+ const result=await queryWaivers(new URLSearchParams('season=2026&week=2&weeks=1'),{market:{refresh:async provider=>({provider,rows:[]})}});
+ const penix=result.rows.find(row=>row.playerId==='00-0039917');
+ assert.equal(penix.stats.fantasy_points,null);
+ assert.equal(penix.stats.trends.length,10);
+ assert.equal(penix.stats.trends[0].season,2025);
+ assert.equal(penix.stats.trends[0].passAttempts,28);
+ assert.equal(penix.stats.trends.at(-1).season,2026);
+ assert.equal(penix.stats.trends.at(-1).passAttempts,null);
+ assert.ok(result.rows.filter(row=>row.playerId).every(row=>row.stats.trends.length===10));
 });
 test('rejects unsupported seasons, malformed weeks and activity windows',async()=>{
  for(const query of ['season=2024','weeks=0','weeks=1,no','hours=7','scoring=dk'])await assert.rejects(queryWaivers(new URLSearchParams(query),deps));

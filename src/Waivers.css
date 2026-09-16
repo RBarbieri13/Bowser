@@ -14,3 +14,6 @@
 .wv-trend-settings{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin-bottom:9px}.wv-trend-settings label{display:inline-flex;align-items:center;gap:6px;color:var(--text-secondary);font-size:10px}.wv-trend-settings small{color:var(--text-secondary);font-size:10px}
 
 .wv-research-link{display:inline-flex;align-items:center;border:1px solid var(--border-strong);border-radius:5px;padding:6px 10px;color:var(--accent);font-size:11px;text-decoration:none;white-space:nowrap}.wv-research-link:hover{background:var(--bg-hover)}
+.waivers .shared-trend {min-width:165px;}
+.waivers .shared-trend .trend-bar-item {max-width:none;}
+.wv-trend-settings .trend-metric-select {max-width:170px;}

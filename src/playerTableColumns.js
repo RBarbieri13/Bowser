@@ -1,3 +1,4 @@
+import { TREND_METRIC_KEYS } from "./trendMetrics.js";
 export const PLAYER_TABLE_PREFERENCE_KEY = "bowser:player-table-preferences:v1";
 export const PLAYER_TABLE_SAVED_VIEWS_KEY = "bowser:player-table-saved-views:v1";
 export const DEFAULT_PLAYER_ROW_DENSITY = 50;
@@ -54,6 +55,7 @@ export const PLAYER_TABLE_GROUPS = [
     name: "Fantasy", key: "fantasy", tone: "green",
     columns: [
       { key: "fantasy_points", label: "FPTS", studioLabel: "Fantasy points", defaultWidth: 78, minWidth: 62, maxWidth: 155, format: "decimal" },
+      { key: "position_finish", label: "POS FIN", studioLabel: "Weekly NFL position finish", defaultWidth: 84, minWidth: 72, maxWidth: 155 },
       { key: "trend_fantasy_points", label: "FPTS trend", metric: "fantasy_points", defaultWidth: 148, minWidth: 116, maxWidth: 240, sortable: false },
     ],
   },
@@ -76,7 +78,7 @@ export const PLAYER_TABLE_GROUPS = [
     ],
   },
   {
-    name: "DFS", key: "dfs", tone: "gold", optional: true,
+    name: "DFS", key: "dfs", tone: "gold",
     columns: [
       { key: "draft_kings_price", label: "$", studioLabel: "DraftKings salary", defaultWidth: 68, minWidth: 48, maxWidth: 150, align: "center", format: "currency" },
       { key: "draft_kings_projection", label: "FPTS", studioLabel: "DraftKings projected points", defaultWidth: 68, minWidth: 52, maxWidth: 150, align: "center", format: "decimal" },
@@ -113,12 +115,7 @@ export const DEFAULT_PLAYER_TREND_METRICS = {
   trend_targets: "targets",
   trend_fantasy_points: "fantasy_points",
 };
-export const PLAYER_TREND_METRIC_OPTIONS = {
-  trend_snaps: ["snaps", "snap_pct"],
-  trend_rush_attempts: ["rush_attempts", "rushing_yards", "rushing_tds"],
-  trend_targets: ["targets", "receptions", "receiving_yards", "receiving_tds"],
-  trend_fantasy_points: ["fantasy_points"],
-};
+export const PLAYER_TREND_METRIC_OPTIONS = Object.fromEntries(Object.keys(DEFAULT_PLAYER_TREND_METRICS).map(key=>[key,TREND_METRIC_KEYS]));
 
 export function sanitizePlayerTrendMetrics(value) {
   const raw = value && typeof value === "object" ? value : {};

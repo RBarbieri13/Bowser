@@ -1,0 +1,404 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-09-16T20:09:37.879Z",
+  "checks": [
+    {
+      "name": "Independent oracle can use actual warehouse player-week grain without duplicate assumptions",
+      "status": "PASS",
+      "detail": "Both immutable warehouses have no duplicate player-week records among played regular-season games."
+    },
+    {
+      "name": "Every current player has identical cross-season slots and no postseason slots",
+      "status": "PASS",
+      "players": 410,
+      "slots": [
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2025-13",
+        "2025-14",
+        "2025-15",
+        "2025-16",
+        "2025-17",
+        "2025-18",
+        "2026-1"
+      ]
+    },
+    {
+      "name": "NFL schedule gaps remain null; history never backfills older appearances",
+      "status": "PASS",
+      "skatteboOlderAppearancesNotShiftedIntoWindow": 8,
+      "tracyBye": "2025-14",
+      "rookie": "Grant Finley"
+    },
+    {
+      "name": "Historical 2025 remains selectable; 5/8/10 windows share selected calendar anchors",
+      "status": "PASS",
+      "historicPlayers": 542,
+      "historicAnchor": "2025-13"
+    },
+    {
+      "name": "All weekly values and all 19 NFL-wide domains match independent raw SQL",
+      "status": "PASS",
+      "weeklyValuesCompared": 233700,
+      "weeklyRanksCompared": 8250
+    },
+    {
+      "name": "Scalar totals remain exact selected-week totals independent of trend history length",
+      "status": "PASS",
+      "selectedPlayerTotalsCompared": 2856
+    },
+    {
+      "name": "Weekly positional finish ranks NFL peers before filtering and pagination, preserving competition ties",
+      "status": "PASS",
+      "scalarRanksCompared": 2856,
+      "tiedPlayerRanks": 1391
+    },
+    {
+      "name": "Cam Skattebo 42 and Tyrone Tracy 2 agree in warehouse, Player Database and Opportunity Tracker",
+      "status": "PASS",
+      "players": [
+        {
+          "name": "Cam Skattebo",
+          "playerId": "00-0040715",
+          "season": 2026,
+          "week": 1,
+          "snaps": 42,
+          "pprPoints": 14.1,
+          "positionFinish": 18,
+          "domain": {
+            "min": 0,
+            "max": 96
+          }
+        },
+        {
+          "name": "Tyrone Tracy Jr.",
+          "playerId": "00-0039384",
+          "season": 2026,
+          "week": 1,
+          "snaps": 2,
+          "pprPoints": -0.6,
+          "positionFinish": 103,
+          "domain": {
+            "min": 0,
+            "max": 96
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rendered bars retain calendar labels, exact values, shared 21:1 snap geometry and negative baseline",
+      "status": "PASS",
+      "snapBarHeightRatio": 21.000000000000004,
+      "skatteboPercent": "43.75%",
+      "tracyPercent": "2.083333333333333%",
+      "negativeStartPercent": "94.70085470085469%",
+      "negativeHeightPercent": "1.0256410256410255%",
+      "sharedMetricCount": 19
+    },
+    {
+      "name": "Both source warehouses remain byte-identical to committed inputs after verification",
+      "status": "PASS",
+      "warehouses": [
+        {
+          "path": "data/fantasy_football.sqlite",
+          "before": "d3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869",
+          "after": "d3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869",
+          "committed": "d3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869"
+        },
+        {
+          "path": "data/fantasy_football_2026.sqlite",
+          "before": "d8c14174fbc5d25731eab1bda6c552138e805a0df8a345ac2632c164cb7f65f2",
+          "after": "d8c14174fbc5d25731eab1bda6c552138e805a0df8a345ac2632c164cb7f65f2",
+          "committed": "d8c14174fbc5d25731eab1bda6c552138e805a0df8a345ac2632c164cb7f65f2"
+        }
+      ]
+    }
+  ],
+  "evidence": {
+    "pprDomains": {
+      "snaps": {
+        "min": 0,
+        "max": 96
+      },
+      "snap_pct": {
+        "min": 0,
+        "max": 100
+      },
+      "pass_attempts": {
+        "min": 0,
+        "max": 57
+      },
+      "completions": {
+        "min": 0,
+        "max": 47
+      },
+      "completion_pct": {
+        "min": 0,
+        "max": 100
+      },
+      "passing_yards": {
+        "min": -2,
+        "max": 457
+      },
+      "passing_tds": {
+        "min": 0,
+        "max": 5
+      },
+      "interceptions": {
+        "min": 0,
+        "max": 4
+      },
+      "rush_attempts": {
+        "min": 0,
+        "max": 36
+      },
+      "rushing_yards": {
+        "min": -13,
+        "max": 244
+      },
+      "rushing_tds": {
+        "min": 0,
+        "max": 4
+      },
+      "targets": {
+        "min": 0,
+        "max": 18
+      },
+      "receptions": {
+        "min": 0,
+        "max": 15
+      },
+      "catch_pct": {
+        "min": 0,
+        "max": 100
+      },
+      "receiving_yards": {
+        "min": -10,
+        "max": 225
+      },
+      "receiving_tds": {
+        "min": 0,
+        "max": 3
+      },
+      "touches": {
+        "min": 0,
+        "max": 36
+      },
+      "fantasy_points": {
+        "min": -3.1,
+        "max": 55.4
+      },
+      "position_finish": {
+        "min": 0,
+        "max": 163
+      }
+    },
+    "halfDomains": {
+      "snaps": {
+        "min": 0,
+        "max": 96
+      },
+      "snap_pct": {
+        "min": 0,
+        "max": 100
+      },
+      "pass_attempts": {
+        "min": 0,
+        "max": 57
+      },
+      "completions": {
+        "min": 0,
+        "max": 47
+      },
+      "completion_pct": {
+        "min": 0,
+        "max": 100
+      },
+      "passing_yards": {
+        "min": -2,
+        "max": 457
+      },
+      "passing_tds": {
+        "min": 0,
+        "max": 5
+      },
+      "interceptions": {
+        "min": 0,
+        "max": 4
+      },
+      "rush_attempts": {
+        "min": 0,
+        "max": 36
+      },
+      "rushing_yards": {
+        "min": -13,
+        "max": 244
+      },
+      "rushing_tds": {
+        "min": 0,
+        "max": 4
+      },
+      "targets": {
+        "min": 0,
+        "max": 18
+      },
+      "receptions": {
+        "min": 0,
+        "max": 15
+      },
+      "catch_pct": {
+        "min": 0,
+        "max": 100
+      },
+      "receiving_yards": {
+        "min": -10,
+        "max": 225
+      },
+      "receiving_tds": {
+        "min": 0,
+        "max": 3
+      },
+      "touches": {
+        "min": 0,
+        "max": 36
+      },
+      "fantasy_points": {
+        "min": -3.1,
+        "max": 49.9
+      },
+      "position_finish": {
+        "min": 0,
+        "max": 163
+      }
+    },
+    "standardDomains": {
+      "snaps": {
+        "min": 0,
+        "max": 96
+      },
+      "snap_pct": {
+        "min": 0,
+        "max": 100
+      },
+      "pass_attempts": {
+        "min": 0,
+        "max": 57
+      },
+      "completions": {
+        "min": 0,
+        "max": 47
+      },
+      "completion_pct": {
+        "min": 0,
+        "max": 100
+      },
+      "passing_yards": {
+        "min": -2,
+        "max": 457
+      },
+      "passing_tds": {
+        "min": 0,
+        "max": 5
+      },
+      "interceptions": {
+        "min": 0,
+        "max": 4
+      },
+      "rush_attempts": {
+        "min": 0,
+        "max": 36
+      },
+      "rushing_yards": {
+        "min": -13,
+        "max": 244
+      },
+      "rushing_tds": {
+        "min": 0,
+        "max": 4
+      },
+      "targets": {
+        "min": 0,
+        "max": 18
+      },
+      "receptions": {
+        "min": 0,
+        "max": 15
+      },
+      "catch_pct": {
+        "min": 0,
+        "max": 100
+      },
+      "receiving_yards": {
+        "min": -10,
+        "max": 225
+      },
+      "receiving_tds": {
+        "min": 0,
+        "max": 3
+      },
+      "touches": {
+        "min": 0,
+        "max": 36
+      },
+      "fantasy_points": {
+        "min": -3.1,
+        "max": 46.6
+      },
+      "position_finish": {
+        "min": 0,
+        "max": 163
+      }
+    },
+    "nygComparison": [
+      {
+        "name": "Cam Skattebo",
+        "playerId": "00-0040715",
+        "season": 2026,
+        "week": 1,
+        "snaps": 42,
+        "pprPoints": 14.1,
+        "positionFinish": 18,
+        "domain": {
+          "min": 0,
+          "max": 96
+        }
+      },
+      {
+        "name": "Tyrone Tracy Jr.",
+        "playerId": "00-0039384",
+        "season": 2026,
+        "week": 1,
+        "snaps": 2,
+        "pprPoints": -0.6,
+        "positionFinish": 103,
+        "domain": {
+          "min": 0,
+          "max": 96
+        }
+      }
+    ],
+    "warehouses": [
+      {
+        "path": "data/fantasy_football.sqlite",
+        "before": "d3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869",
+        "after": "d3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869",
+        "committed": "d3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869"
+      },
+      {
+        "path": "data/fantasy_football_2026.sqlite",
+        "before": "d8c14174fbc5d25731eab1bda6c552138e805a0df8a345ac2632c164cb7f65f2",
+        "after": "d8c14174fbc5d25731eab1bda6c552138e805a0df8a345ac2632c164cb7f65f2",
+        "committed": "d8c14174fbc5d25731eab1bda6c552138e805a0df8a345ac2632c164cb7f65f2"
+      }
+    ],
+    "method": "Read-only direct SQL over immutable real warehouses. Independent ranks count strictly higher-scoring same-position NFL peers, rather than reuse implementation SQL RANK. API service functions called directly. JSX server-rendered and inspected in JSDOM. No implementation or existing tests edited; no deployment or full suite invoked.",
+    "reviewedFiles": [
+      "server/trend-history.mjs",
+      "server/stats-store.mjs",
+      "src/TrendChart.jsx",
+      "src/trendMetrics.js"
+    ]
+  },
+  "findings": []
+}

@@ -16,6 +16,8 @@ import { IntelligenceFeed } from "./IntelligenceFeed.jsx";
 import { MarketPulse } from "./MarketPulse.jsx";
 import { Waivers } from "./Waivers.jsx";
 import { TeamLogo } from "./teamLogos.jsx";
+import { TrendChart, TrendMetricSelect } from "./TrendChart.jsx";
+import { TREND_METRICS } from "./trendMetrics.js";
 import {
   clampPlayerTableWidth,
   DEFAULT_HIDDEN_PLAYER_COLUMNS,
@@ -42,7 +44,7 @@ const COMPACT_GROUP_NAMES = { player: "Details", draft: "Draft", yahoo: "Yahoo",
 const REQUIRED_PLAYER_COLUMNS = new Set(["name"]);
 const TREND_COLUMN_KEYS = Object.keys(DEFAULT_PLAYER_TREND_METRICS);
 const PLAYER_VIEW_PRESETS = [
-  { key: "balanced", name: "Balanced", description: "All the key stats in a balanced view.", icon: SlidersHorizontal, groups: ["player", "usage", "passing", "rushing", "receiving", "fantasy"] },
+  { key: "balanced", name: "Balanced", description: "All the key stats in a balanced view.", icon: SlidersHorizontal, groups: ["player", "usage", "passing", "rushing", "receiving", "dfs", "fantasy"] },
   { key: "opportunity", name: "Opportunity", description: "Focus on usage and opportunities.", icon: Target, columns: ["select", "rank", "name", "position", "upcoming_matchup", "games_played", "snaps", "trend_snaps", "snap_pct", "passing_attempts", "carries", "trend_rush_attempts", "targets", "trend_targets", "fantasy_points", "trend_fantasy_points"] },
   { key: "passing", name: "Passing", description: "Deep dive into passing performance.", icon: Football, groups: ["player", "usage", "passing", "fantasy"] },
   { key: "rushing", name: "Rushing", description: "Focus on rushing performance.", icon: PersonSimpleRun, groups: ["player", "usage", "rushing", "fantasy"] },
@@ -50,18 +52,6 @@ const PLAYER_VIEW_PRESETS = [
   { key: "fantasy", name: "Fantasy", description: "Optimize for fantasy scoring.", icon: Trophy, groups: ["player", "usage", "fantasy", "dfs"] },
   { key: "all", name: "All Data", description: "Show everything available.", icon: Database, groups: PLAYER_TABLE_GROUPS.map((group) => group.key) },
 ];
-const TREND_METRICS = {
-  snaps: { label: "Snaps", heading: "Snap Trend", unit: "snaps", className: "snaps", decimals: 0, focusScale: true },
-  snap_pct: { label: "Snap %", heading: "Snap % Trend", unit: "snap percentage", className: "snaps", decimals: 0, focusScale: true },
-  rush_attempts: { label: "Attempts", heading: "Attempt Trend", unit: "rush attempts", className: "rushing", decimals: 0 },
-  rushing_yards: { label: "Yards", heading: "Yardage Trend", unit: "rushing yards", className: "rushing", decimals: 0 },
-  rushing_tds: { label: "Touchdowns", heading: "TD Trend", unit: "rushing touchdowns", className: "rushing", decimals: 0 },
-  targets: { label: "Targets", heading: "Target Trend", unit: "targets", className: "targets", decimals: 0 },
-  receptions: { label: "Receptions", heading: "Reception Trend", unit: "receptions", className: "targets", decimals: 0 },
-  receiving_yards: { label: "Yards", heading: "Yardage Trend", unit: "receiving yards", className: "targets", decimals: 0 },
-  receiving_tds: { label: "Touchdowns", heading: "TD Trend", unit: "receiving touchdowns", className: "targets", decimals: 0 },
-  fantasy_points: { label: "Fantasy Points", heading: "FPTS Trend", unit: "fantasy points", className: "fantasy", decimals: 1 },
-};
 
 const TREND_COLUMN_LABELS = {
   trend_snaps: "Usage",
@@ -114,142 +104,16 @@ function trendGamesFor(row) {
   return Array.isArray(games) ? games.slice(-10) : [];
 }
 
-function trendMetricValue(game, metric) {
-  if (metric === "fantasy_points") {
-    const value = game.fantasyPoints ?? game.fantasy_points;
-    return value === null || value === undefined ? null : Number(value);
-  }
-  if (metric === "pass_attempts") return Number.isFinite(Number(game.passAttempts ?? game.passing_attempts)) ? Number(game.passAttempts ?? game.passing_attempts) : null;
-  if (metric === "rush_attempts") return Number.isFinite(Number(game.rushAttempts ?? game.rush_attempts ?? game.carries)) ? Number(game.rushAttempts ?? game.rush_attempts ?? game.carries) : null;
-  const aliases = {
-    snap_pct: game.snapPct,
-    rushing_yards: game.rushingYards,
-    rushing_tds: game.rushingTds,
-    receiving_yards: game.receivingYards,
-    receiving_tds: game.receivingTds,
-  };
-  const value = aliases[metric] ?? game[metric];
-  return value === null || value === undefined ? null : Number(value);
-}
-
-function percentile(values, proportion) {
-  if (!values.length) return 1;
-  const ordered = [...values].sort((a, b) => a - b);
-  const position = (ordered.length - 1) * proportion;
-  const lower = Math.floor(position);
-  const upper = Math.ceil(position);
-  if (lower === upper) return ordered[lower];
-  return ordered[lower] + (ordered[upper] - ordered[lower]) * (position - lower);
-}
-
-function trendScaleFor(values, metric) {
-  const clean = values.filter(Number.isFinite);
-  if (!clean.length) return { lower: 0, upper: 1, mode: "zero" };
-  if (TREND_METRICS[metric]?.focusScale) {
-    const lowerBand = percentile(clean, .1);
-    const upperBand = percentile(clean, .9);
-    const spread = Math.max(1, upperBand - lowerBand);
-    const lower = Math.max(0, Math.floor(lowerBand - Math.max(1, spread * .22)));
-    const upper = Math.max(lower + 1, Math.ceil(upperBand + spread * .08));
-    return { lower, upper, mode: "focus" };
-  }
-  const nonNegative = clean.map((value) => Math.max(0, value));
-  return { lower: 0, upper: Math.max(1, Math.ceil(percentile(nonNegative, .9))), mode: "zero" };
-}
-
-function compactTrendValue(value, definition) {
-  if (!Number.isFinite(value)) return "—";
-  if (!definition.decimals || Math.abs(value) >= 10) return numberFormatter.format(value);
-  return decimalFormatter.format(value);
-}
-
-function InlinePlayerTrend({ row, metric, gameCount = 10 }) {
-  const definition = TREND_METRICS[metric];
-  const games = trendGamesFor(row).slice(-gameCount);
-  const points = games.map((game) => ({
-    game,
-    value: trendMetricValue(game, metric),
-  }));
-  const slots = [
-    ...Array.from({ length: Math.max(0, gameCount - points.length) }, () => ({ game: null, value: null })),
-    ...points,
-  ];
-  const availableValues = points.map((point) => point.value).filter((value) => Number.isFinite(value));
-  if (!games.length) {
-    return <span className="player-trend-empty" aria-label={`No regular-season ${definition.label.toLowerCase()} trend available`}>No games</span>;
-  }
-  if (!availableValues.length) {
-    return <span className="player-trend-empty" aria-label={`Regular-season games exist, but ${definition.label.toLowerCase()} data is unavailable`}>No data</span>;
-  }
-  const scale = trendScaleFor(availableValues, metric);
-  const playerName = row.player_display_name || row.name || "Player";
-  const summary = points.map(({ game, value }) => `Week ${game.week}: ${Number.isFinite(value) ? (definition.decimals ? decimalFormatter.format(value) : numberFormatter.format(value)) : "no data"}`).join("; ");
-  const scaleDescription = scale.mode === "focus"
-    ? `focused row scale ${scale.lower} to ${scale.upper}`
-    : `zero baseline with a robust upper scale of ${scale.upper}`;
-  return (
-    <span
-      className={`inline-player-trend trend-${definition.className} scale-${scale.mode}`}
-      role="img"
-      aria-label={`${definition.label} trend for ${playerName}: ${summary}`}
-      title={`${definition.label} uses a ${scaleDescription}. Exact values appear above each game; hover a bar for matchup context.`}
-      data-scale-mode={scale.mode}
-      data-scale-min={scale.lower}
-      data-scale-max={scale.upper}
-    >
-      {slots.map(({ game, value }, index) => {
-        const emptySlot = !game;
-        const missing = !Number.isFinite(value);
-        const displayValue = missing ? "—" : definition.decimals ? decimalFormatter.format(value) : numberFormatter.format(value);
-        const compactValue = compactTrendValue(value, definition);
-        const capped = !missing && value > scale.upper;
-        const negative = !missing && value < 0;
-        const zero = !missing && value === 0;
-        const normalized = missing || value <= scale.lower ? 0 : (Math.min(value, scale.upper) - scale.lower) / (scale.upper - scale.lower);
-        const height = missing ? 0 : negative || zero ? 2 : Math.max(5, Math.min(24, normalized * 24));
-        const gameLabel = emptySlot ? "No earlier recorded game" : `Week ${game.week}: ${missing ? "no data" : `${displayValue} ${definition.unit}`}${game.opponent ? ` vs ${game.opponent}` : ""}`;
-        return (
-          <span
-            className={`trend-bar-item${missing ? " missing" : ""}${emptySlot ? " empty-slot" : ""}${capped ? " capped" : ""}${negative ? " negative" : ""}${zero ? " zero" : ""}`}
-            key={game?.gameId ?? game?.game_id ?? `${game?.week ?? "empty"}-${index}`}
-            title={gameLabel}
-            data-week={game?.week ?? ""}
-            data-value={missing ? "" : value}
-            aria-hidden="true"
-          >
-            <b>{compactValue}</b>
-            {missing ? <i /> : <i style={{ "--trend-height": `${height}px` }} />}
-          </span>
-        );
-      })}
-    </span>
-  );
+function InlinePlayerTrend({ row, metric, gameCount = 10, domains }) {
+  return <TrendChart history={trendGamesFor(row).slice(-gameCount)} metric={metric} domain={domains?.[metric]} playerName={row.player_display_name || row.name} height="max(10px, calc(var(--player-row-height, 40px) - 27px))" />;
 }
 
 function TrendColumnHeader({ columnKey, metric, gameCount, onMetricChange, onMinimize }) {
-  const definition = TREND_METRICS[metric];
-  const options = PLAYER_TREND_METRIC_OPTIONS[columnKey] || [metric];
-  const selectable = options.length > 1;
-  const scaleLabel = definition.focusScale ? "Focus scale" : "0 baseline";
-  return (
-    <span className="trend-column-heading" title={definition.focusScale ? "Focused row scale magnifies changes in usage. Exact values remain above every bar." : "Zero-baseline row scale uses a robust upper bound so one outlier does not flatten the other games."}>
-      <span className="trend-heading-control">
-        {selectable ? (
-          <label>
-            <span className="sr-only">{TREND_COLUMN_LABELS[columnKey]} trend metric</span>
-            <select aria-label={`${TREND_COLUMN_LABELS[columnKey]} trend metric`} value={metric} onChange={(event) => onMetricChange(columnKey, event.target.value)}>
-              {options.map((option) => <option key={option} value={option}>{TREND_METRICS[option].heading}</option>)}
-            </select>
-            <CaretDown weight="bold" aria-hidden="true" />
-          </label>
-        ) : <b>{definition.heading}</b>}
-        <button type="button" className="trend-minimize" aria-label={`Hide ${TREND_COLUMN_LABELS[columnKey]} trend chart`} title={`Hide ${TREND_COLUMN_LABELS[columnKey]} trend chart`} onClick={() => onMinimize(columnKey)}>
-          <Minus weight="bold" aria-hidden="true" />
-        </button>
-      </span>
-      <small>Last {gameCount} · {scaleLabel}</small>
-    </span>
-  );
+  return <span className="trend-column-heading" title="Shared scale and aligned regular-season weeks across all players. Missing games remain gaps.">
+    <span className="trend-heading-control"><TrendMetricSelect label={`${TREND_COLUMN_LABELS[columnKey]} trend metric`} metric={metric} onChange={value=>onMetricChange(columnKey,value)} />
+      <button type="button" className="trend-minimize" aria-label={`Hide ${TREND_COLUMN_LABELS[columnKey]} trend chart`} onClick={()=>onMinimize(columnKey)}><Minus weight="bold" /></button>
+    </span><small>{gameCount} NFL weeks · shared scale</small>
+  </span>;
 }
 
 function DepthChartCell({ row, depthChart, compact = false }) {
@@ -617,7 +481,7 @@ function CustomColumnsPanel({
                     const required = REQUIRED_PLAYER_COLUMNS.has(column.key);
                     const visible = gateVisible && !hiddenSet.has(column.key);
                     const trendMetric = column.metric ? (draftTrendMetrics[column.key] || column.metric) : null;
-                    return <div className="column-settings-column" key={column.key}><Checkbox checked={visible} label={`${visible ? "Hide" : "Show"} ${column.studioLabel || column.label || "selection"} column`} disabled={required} onChange={() => setColumnVisible(group, column, !visible)} /><span><b>{column.studioLabel || column.label || "Player selection"}</b>{trendMetric ? <small>{TREND_METRICS[trendMetric]?.heading} · last {draftTrendGameCount} games</small> : required ? <small>Always shown</small> : null}</span></div>;
+                    return <div className="column-settings-column" key={column.key}><Checkbox checked={visible} label={`${visible ? "Hide" : "Show"} ${column.studioLabel || column.label || "selection"} column`} disabled={required} onChange={() => setColumnVisible(group, column, !visible)} /><span><b>{column.studioLabel || column.label || "Player selection"}</b>{trendMetric ? <small>{TREND_METRICS[trendMetric]?.heading} · last {draftTrendGameCount} NFL weeks</small> : required ? <small>Always shown</small> : null}</span></div>;
                   })}
                 </div> : null}
               </section>
@@ -789,8 +653,8 @@ export function App() {
   const [meta, setMeta] = useState(null);
   const [rows, setRows] = useState([]);
   const [responseMeta, setResponseMeta] = useState(null);
-  const [dfsSlate,setDfsSlate] = useState(()=>{try {return localStorage.getItem('bowser:dfs-slate:v1')==='main'?'main':'week1';}catch{return 'week1';}});
-  useEffect(()=>{try{localStorage.setItem('bowser:dfs-slate:v1',dfsSlate);}catch{/* Optional preference. */}},[dfsSlate]);
+  const [dfsSlate,setDfsSlate] = useState(()=>{try {return localStorage.getItem('bowser:dfs-slate:v2') || 'current';}catch{return 'current';}});
+  useEffect(()=>{try{localStorage.setItem('bowser:dfs-slate:v2',dfsSlate);}catch{/* Optional preference. */}},[dfsSlate]);
   const [position, setPosition] = useState("ALL");
   const [scoring, setScoring] = useState("ppr");
   const [search, setSearch] = useState("");
@@ -1142,6 +1006,7 @@ export function App() {
       minSnaps,
       weeks: selectedWeeks.join(","),
       includeTrends: showPlayerTrends ? "1" : "0",
+      trendWeeks: String(trendGameCount),
     });
     if (position === "ALL") params.set("positions", "QB,RB,WR,TE");
     else if (position === "FLEX") params.set("positions", "RB,WR,TE");
@@ -1168,7 +1033,7 @@ export function App() {
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [currentPage, season, dfsSlate, scoring, debouncedSearch, sorts, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps, showPlayerTrends]);
+  }, [currentPage, season, dfsSlate, scoring, debouncedSearch, sorts, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps, showPlayerTrends, trendGameCount]);
 
   const allVisibleSelected = rows.length > 0 && rows.every((row) => selected.has(row.player_id));
   const someVisibleSelected = rows.some((row) => selected.has(row.player_id)) && !allVisibleSelected;
@@ -1269,7 +1134,7 @@ export function App() {
       ) : currentPage === "team-box-scores" ? (
         <TeamBoxScores key={season} season={season} meta={meta} onOpenPlayer={openProfile} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}`; }} />
       ) : currentPage === "opportunity-tracker" ? (
-        <OpportunityTracker season={season} meta={meta} onOpenPlayer={openProfile} />
+        <OpportunityTracker key={season} season={season} meta={meta} onOpenPlayer={openProfile} onSeasonChange={changeSeason} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}&season=${season}`; }} />
       ) : currentPage === "league-hub" ? (
         <LeagueHub />
       ) : currentPage === "intelligence" ? (
@@ -1345,7 +1210,7 @@ export function App() {
               aria-pressed={showPlayerTrends}
               aria-label={showPlayerTrends ? "Hide player trends" : "Show player trends"}
               onClick={() => setShowPlayerTrends((current) => !current)}
-              title={`Show or hide each player's last ${trendGameCount} played regular-season games`}
+              title={`Show or hide each player's last ${trendGameCount} aligned regular-season weeks`}
             >
               {showPlayerTrends ? <Eye weight="bold" aria-hidden="true" /> : <EyeSlash weight="bold" aria-hidden="true" />}
               <span>{showPlayerTrends ? "Shown" : "Hidden"}</span>
@@ -1422,7 +1287,7 @@ export function App() {
         {error ? <div className="error-banner" role="alert"><span>{error}</span><button onClick={() => window.location.reload()}>Retry</button></div> : null}
         {showSwipeHint ? <div className="swipe-hint">Swipe horizontally for more stats <button onClick={() => { setShowSwipeHint(false); localStorage.setItem("stats-scroll-hint-dismissed", "1"); }} aria-label="Dismiss horizontal scroll hint"><X /></button></div> : null}
         <header className="table-panel-heading">
-          <h1>Player Database</h1>
+          <h1>Player Database</h1><button type="button" className="player-columns-trigger" onClick={()=>setCustomColumnsOpen(true)} aria-haspopup="dialog" aria-expanded={customColumnsOpen}><Columns />Column options</button>
           {hiddenTrendColumns.length === 1 ? (
             <button type="button" className="hidden-trend-restore" onClick={() => setTrendColumnVisible(hiddenTrendColumns[0], true)}>
               <Plus weight="bold" aria-hidden="true" />Restore {TREND_COLUMN_LABELS[hiddenTrendColumns[0]]} trend
@@ -1457,10 +1322,12 @@ export function App() {
         </header>
         <div className="dfs-context" aria-label="DraftKings slate and sources">
           <button type="button" onClick={()=>{setHiddenPlayerColumns(keys=>keys.filter(key=>!['draft_kings_price','draft_kings_projection'].includes(key)));setCollapsedPlayerGroups(keys=>keys.filter(key=>key!=='dfs'));}}>Show DFS fields</button>
-          <label>DFS slate <select aria-label="DFS slate" value={dfsSlate} onChange={event=>setDfsSlate(event.target.value)}><option value="week1">2026 W1 · Wed–Mon Classic</option><option value="main">2026 W1 · Sunday Main</option></select></label>
-          <span>DraftKings scoring · statistics: {season}</span>
-          {responseMeta?.dfs ? <details><summary>Sources & coverage</summary><p><a href={responseMeta.dfs.salaryUrl} target="_blank" rel="noreferrer">DraftKings salaries</a> · <a href="https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings" target="_blank" rel="noreferrer">Fantasy Info Central projections</a> · <a href="https://sharksnip.com/picks/dfs/nfl" target="_blank" rel="noreferrer">Shark Snip supplemental projections</a></p><p>Captured {new Date(responseMeta.dfs.capturedAt).toLocaleString()}. {responseMeta.dfs.coverage.salaryPlayers} slate salaries; {responseMeta.dfs.coverage.projectedPlayers} published projections. Matched in this statistics season: {responseMeta.dfs.coverage.databasePlayersWithSalary} salaries and {responseMeta.dfs.coverage.databasePlayersWithProjection} projections. Players without recorded statistics in the selected season are not in this table. — means unavailable, never zero. Hover a DFS value for its source and current team. These are pregame estimates, not historical averages; scoring controls apply to historical stats only.</p></details> : null}
+          <label>DFS slate <select aria-label="DFS slate" value={dfsSlate} onChange={event=>setDfsSlate(event.target.value)}>{(responseMeta?.dfs?.options || [{key:'current',label:'Current NFL week · Classic'}]).map(option=><option key={option.key} value={option.key}>{option.label}</option>)}</select></label>
+          <span>DraftKings scoring · {responseMeta?.dfs ? `salary week: ${responseMeta.dfs.season} W${responseMeta.dfs.week}` : "Loading salaries…"} · statistics: {season}</span>
+          {responseMeta?.dfs ? <details><summary>Sources & coverage</summary><p><a href={responseMeta.dfs.salaryUrl} target="_blank" rel="noreferrer">DraftKings salaries</a> · <a href="https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings" target="_blank" rel="noreferrer">Fantasy Info Central projections</a> · {!responseMeta.dfs.projectionProvider && <a href="https://sharksnip.com/picks/dfs/nfl" target="_blank" rel="noreferrer">Shark Snip supplemental projections</a>}</p><p>Captured {new Date(responseMeta.dfs.capturedAt).toLocaleString()}. {responseMeta.dfs.coverage.salaryPlayers} slate salaries; {responseMeta.dfs.coverage.projectedPlayers} published projections. Identity matches{responseMeta.dfs.rosterSeason ? ` in the ${responseMeta.dfs.rosterSeason} roster` : " in the source archive"}: {responseMeta.dfs.coverage.databasePlayersWithSalary} salaries and {responseMeta.dfs.coverage.databasePlayersWithProjection} projections. Players without recorded statistics in the selected season are not in this table. — means unavailable, never zero. Hover a DFS value for its source and current team. These are pregame estimates, not historical averages; scoring controls apply to historical stats only.</p></details> : null}
         </div>
+        {responseMeta?.dfs?.availabilityMessage && <p className="trend-context" role="status">{responseMeta.dfs.availabilityMessage}</p>}
+        <div className="trend-context" role="note">Trends: {responseMeta?.trendSlots?.length ? `${responseMeta.trendSlots[0].season} W${responseMeta.trendSlots[0].week} → ${responseMeta.trendSlots.at(-1).season} W${responseMeta.trendSlots.at(-1).week}` : "regular-season weeks"} · common weeks and metric scales for every player · gaps = bye / DNP / unavailable. Table totals use the selected weeks.{responseMeta?.positionFinish?.week ? ` Position finish: ${season} W${responseMeta.positionFinish.week}.` : ""}</div>
         <div className="table-scroller" ref={tableScroller} onScroll={onHorizontalScroll} tabIndex="0" aria-label="Scrollable player statistics table">
           <table style={playerTableStyle} className={smartCompactActive ? "smart-compact" : ""}>
             <caption>{season} NFL player fantasy statistics. {filterSummary}. {responseMeta?.totalCount ?? 0} matching players.</caption>
@@ -1473,7 +1340,7 @@ export function App() {
                   const groupLabel = group.shortName || ((autoFitPlayerTable || smartCompactActive) ? (COMPACT_GROUP_NAMES[group.groupKey] || group.name) : group.name);
                   return (
                     <th key={group.key} colSpan={group.columns.length} scope="colgroup" className={`group-${group.groupKey}${group.controlsGroup ? "" : " passive-group-segment"}${group.compactLabelHidden ? " compact-label-hidden" : ""}`}>
-                      <span title={group.groupKey==='dfs'?responseMeta?.dfs?.label:group.name}>{group.groupKey==='dfs'?'DFS · 2026 W1':groupLabel}</span>
+                      <span title={group.groupKey==='dfs'?responseMeta?.dfs?.label:group.name}>{group.groupKey==='dfs'?`DFS · ${responseMeta?.dfs?.season ?? '—'} W${responseMeta?.dfs?.week ?? '—'}`:groupLabel}</span>
                       {group.controlsGroup ? <PlayerGroupResizeHandle group={sourceGroup} width={groupWidth} enabled={sectionResizeEnabled} onResize={resizePlayerGroup} onReset={resetPlayerGroup} /> : null}
                     </th>
                   );
@@ -1517,8 +1384,9 @@ export function App() {
                       const content = matchupLines.map((line, index) => <span key={`${line}-${index}`}>{line}</span>);
                       return <td key={column.key} className={`${className} upcoming-matchup-cell`}>{row.upcoming_game_url ? <a href={row.upcoming_game_url} target="_blank" rel="noreferrer" aria-label={value || "No upcoming matchup"}>{content}</a> : <span className="upcoming-matchup-copy">{content}</span>}</td>;
                     }
+                    if (column.key === "position_finish") return <td key={column.key} className={className} title={`${row.position_finish_season || season} W${row.position_finish_week || "—"} · NFL ${row.position} fantasy points rank · ${scoring} · tied ranks share a place`}>{row.position_finish == null ? "—" : `${row.position}${row.position_finish}`}</td>;
                     if (column.metric) {
-                      return <td key={column.key} className={`${className} player-trend-cell`}><InlinePlayerTrend row={row} metric={trendMetrics[column.key] || column.metric} gameCount={trendGameCount} /></td>;
+                      return <td key={column.key} className={`${className} player-trend-cell`}><InlinePlayerTrend row={row} metric={trendMetrics[column.key] || column.metric} gameCount={trendGameCount} domains={responseMeta?.trendDomains} /></td>;
                     }
                     if (column.key === "yahoo_add_drop_ratio") {
                       const adds = Number(row.yahoo_adds) || 0;

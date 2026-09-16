@@ -1,0 +1,15 @@
+.shared-trend.inline-player-trend {display:flex;align-items:stretch;gap:3px;width:100%;height:auto;min-height:0;padding:3px 1px;overflow:visible;}
+.shared-trend .trend-bar-item {display:flex;position:relative;flex:1;min-width:0;flex-direction:column;align-items:stretch;height:auto;gap:2px;}
+.shared-trend .trend-bar-item b {position:static;display:block;height:10px;line-height:10px;text-align:center;font:600 8px/10px var(--font-data,monospace);color:var(--text-secondary,#b9bfbd);white-space:nowrap;}
+.shared-trend .trend-plot {height:var(--plot-height);position:relative;display:block;flex:none;}
+.shared-trend .trend-plot > i {display:block;position:absolute;left:12%;right:12%;bottom:auto;width:auto;min-height:0;border:0;border-radius:2px 2px 0 0;background:var(--accent,#3ecf8e);}
+.shared-trend.trend-rushing .trend-plot > i {background:#e0a762;}
+.shared-trend.trend-targets .trend-plot > i {background:#9486e8;}
+.shared-trend.trend-fantasy .trend-plot > i {background:#d8bd67;}
+.shared-trend .trend-bar-item.negative .trend-plot > i {background:#e57979;border-radius:0 0 2px 2px;}
+.shared-trend .trend-baseline {position:absolute;left:0;right:0;height:1px;background:#69716d;opacity:.65;}
+.shared-trend .trend-gap {position:absolute;inset:0;display:grid;place-items:center;color:#666e6a;}
+.shared-trend .trend-zero {position:absolute;left:25%;right:25%;height:1px;background:var(--accent,#3ecf8e);}
+.shared-trend .trend-bar-item small {font:500 7px/9px var(--font-data,monospace);text-align:center;color:var(--text-muted,#9aaba2);white-space:nowrap;}
+.trend-metric-select {max-width:100%;min-width:0;border:1px solid var(--border-strong,#404743);border-radius:4px;padding:3px 16px 3px 4px;color:var(--text,#e6eee9);background:var(--bg-surface,#151817);font:600 10px var(--font-ui,sans-serif);}
+

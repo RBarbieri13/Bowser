@@ -15,7 +15,8 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 import import_dfs_weekly as module
 
 SNAPSHOT = json.loads((ROOT / 'data/dfs-weekly.json').read_text())
-SLATE = SNAPSHOT['slates'][SNAPSHOT['defaultSlate']]
+# Parser regressions pin a retained archive; the current default advances weekly.
+SLATE = SNAPSHOT['slates']['2026-w2-dk-153427']
 NOW = datetime(2026, 9, 16, 20, tzinfo=timezone.utc)
 
 
@@ -55,7 +56,9 @@ def projection_html(games, wrong_week=False, missing_position=None):
 class WeeklyDfsTests(unittest.TestCase):
     def test_shipped_snapshot_is_verified_and_includes_current_rookies(self):
         module.validate_snapshot(SNAPSHOT)
-        self.assertEqual((SNAPSHOT['season'], SNAPSHOT['week']), (2026, 2))
+        self.assertEqual((SLATE['season'], SLATE['week']), (2026, 2))
+        current = SNAPSHOT['slates'][SNAPSHOT['defaultSlate']]
+        self.assertEqual((current['season'], current['week']), (SNAPSHOT['season'], SNAPSHOT['week']))
         names = {r['name']: r for r in SLATE['records']}
         self.assertEqual(names['Jahmyr Gibbs']['salary'], 8500)
         self.assertEqual(names['Jahmyr Gibbs']['projection'], 23.1)
@@ -122,7 +125,7 @@ class WeeklyDfsTests(unittest.TestCase):
 
     def test_validation_detects_mixed_week_and_missing_team_and_tampering(self):
         for change in [lambda s: s['slates'][s['defaultSlate']]['records'][0].update(salary=1),
-                       lambda s: next(r for r in s['slates'][s['defaultSlate']]['records'] if r['projection'] is not None).update(projectionWeek=1),
+                       lambda s: next(r for r in s['slates'][s['defaultSlate']]['records'] if r['projection'] is not None).update(projectionWeek=s['slates'][s['defaultSlate']]['week'] + 1),
                        lambda s: s['slates'][s['defaultSlate']]['records'].pop()]:
             broken = copy.deepcopy(SNAPSHOT)
             change(broken)
@@ -157,7 +160,7 @@ class WeeklyDfsTests(unittest.TestCase):
             target = Path(temp) / 'dfs.json'
             target.write_text(json.dumps(SNAPSHOT))
             before = target.read_bytes()
-            discovered = [{**copy.deepcopy(slate), 'key': key} for key, slate in list(SNAPSHOT['slates'].items())[:2]]
+            discovered = [{**copy.deepcopy(slate), 'key': key} for key, slate in [(k,v) for k,v in SNAPSHOT['slates'].items() if v['season']==2026 and v['week']==2][:2]]
             class FakeFetcher:
                 def __init__(self, *_):
                     self.sources = {'projections.html': {'lastModified': 'Wed, 16 Sep 2026 07:41:01 GMT'}}

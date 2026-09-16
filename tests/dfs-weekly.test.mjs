@@ -10,11 +10,11 @@ const weekly = JSON.parse(readFileSync(new URL('../data/dfs-weekly.json', import
 const pinnedPath = new URL('../data/dfs-week1-2026.json', import.meta.url);
 const pinned = JSON.parse(readFileSync(pinnedPath));
 
-test('current chooses verified Week 2; every archived and current slate has dated options', () => {
+test('current chooses the verified weekly default; every archived and current slate has dated options', () => {
   const current = getDfsSlate();
   assert.equal(current.meta.key, weekly.defaultSlate);
-  assert.equal(current.meta.week, 2);
-  assert.equal(current.meta.season, 2026);
+  assert.equal(current.meta.week, weekly.slates[weekly.defaultSlate].week);
+  assert.equal(current.meta.season, weekly.slates[weekly.defaultSlate].season);
   assert.equal(current.meta.scoring, 'DraftKings Classic');
   assert.equal(current.meta.options.length, Object.keys(weekly.slates).length + 3);
   for (const option of current.meta.options) {
@@ -36,7 +36,7 @@ test('week1 and main are immutable historical aliases', () => {
 });
 
 test('Week 2 sample prices/projections and rookies join stable current identities', () => {
-  const byName = new Map(getDfsSlate('current').records.map(r => [r.name, r]));
+  const byName = new Map(getDfsSlate('2026-w2-dk-153427').records.map(r => [r.name, r]));
   assert.equal(byName.get('Jahmyr Gibbs').salary, 8500);
   assert.equal(byName.get('Jahmyr Gibbs').projection, 23.1);
   for (const name of ['Carnell Tate', 'Makai Lemon']) {
@@ -58,7 +58,7 @@ test('Main excludes Thursday and Monday while preserving the official all-week p
   const main = getDfsSlate('2026-w2-dk-153428');
   assert.equal(main.meta.gameCount, 13);
   assert.ok(!main.records.some(r => ['DET', 'BUF', 'NYG', 'LAR'].includes(r.team)));
-  assert.ok(getDfsSlate('current').records.some(r => r.name === 'Puka Nacua' && r.salary === 7900));
+  assert.ok(getDfsSlate('2026-w2-dk-153427').records.some(r => r.name === 'Puka Nacua' && r.salary === 7900));
 });
 
 test('missing and invalid weekly data transparently fall back to dated last-good archive', async () => {

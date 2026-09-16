@@ -1,12 +1,12 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getMeta, queryPlayers, QueryValidationError } from './stats-store.mjs';
+import { getMeta, queryPlayers, queryPlayerHistories, QueryValidationError } from './stats-store.mjs';
 import { getMarketPulse } from './market-pulse.mjs';
 
 const dataDir = resolve(dirname(fileURLToPath(import.meta.url)), '../data');
 const snapshots = new Map();
-const STAT_FIELDS = ['games_played','snaps','snap_pct','passing_attempts','completions','passing_yards','passing_tds','interceptions','carries','rushing_yards','rushing_tds','targets','receptions','receiving_yards','receiving_tds','fantasy_points'];
+const STAT_FIELDS = ['games_played','snaps','snap_pct','passing_attempts','completions','passing_yards','passing_tds','interceptions','carries','rushing_yards','rushing_tds','targets','receptions','receiving_yards','receiving_tds','fantasy_points','position_finish','position_finish_week','position_finish_season'];
 const normalizeName = value => String(value || '').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z0-9]/g,'');
 const teamCode = value => ({JAC:'JAX',LA:'LAR',WSH:'WAS'}[value] || value);
 const positionCode = value => ['DST','D/ST','DEF'].includes(value) ? 'DEF' : value;
@@ -85,6 +85,8 @@ export async function queryWaivers(params = new URLSearchParams(), deps = {}) {
   const statsPayload = (deps.queryStats || queryPlayers)(statsParams);
   const statsById = uniqueIndex(statsPayload.data,row=>row.player_id);
   const statsByIdentity = uniqueIndex(statsPayload.data,identity);
+  const missingIds = snapshot.players.filter(player=>player.playerId && !statsById.has(player.playerId)).map(player=>player.playerId);
+  const extraHistory = missingIds.length ? (deps.queryHistory || queryPlayerHistories)(statsParams, missingIds) : new Map();
   const market = deps.market || getMarketPulse();
   // A provider outage must not hide the imported rankings or recorded statistics.
   const activity = await Promise.allSettled(['sleeper','espn'].map(provider=>market.refresh(provider,hours)));
@@ -100,9 +102,9 @@ export async function queryWaivers(params = new URLSearchParams(), deps = {}) {
     const add = (canonicalId && sleeperById.get(canonicalId)) || sleeperByIdentity.get(identity(matchedIdentity));
     const ownership = espnByIdentity.get(identity(matchedIdentity));
     const statistics = Object.fromEntries(STAT_FIELDS.map(field=>[field,stat?.[field] ?? null]));
-    statistics.trends = (stat?.player_trends || []).filter(game=>selectedWeeks.includes(game.week)).map(game=>({
-      week:game.week,opponent:game.opponent,gameId:game.gameId,snaps:game.snaps, carries:game.rushAttempts, targets:game.targets, fantasy_points:game.fantasyPoints,
-      rushing_yards:game.rushingYards,rushing_tds:game.rushingTds,receptions:game.receptions,receiving_yards:game.receivingYards,receiving_tds:game.receivingTds,
+    statistics.trends = (stat?.player_trends || extraHistory.get(canonicalId) || []).map(game=>({...game,
+      carries:game.rushAttempts, fantasy_points:game.fantasyPoints,
+      rushing_yards:game.rushingYards,rushing_tds:game.rushingTds,receiving_yards:game.receivingYards,receiving_tds:game.receivingTds,
     }));
     return {...player,playerId:canonicalId,season,stats:statistics,statsMatched:!!stat,activity:{
       adds:add?.adds ?? null,drops:add?.drops ?? null,net:add?.net ?? null,rosterPct:ownership?.rosterPct ?? null,startPct:ownership?.startPct ?? null,
@@ -110,7 +112,7 @@ export async function queryWaivers(params = new URLSearchParams(), deps = {}) {
       addsUrl:'https://docs.sleeper.com/#trending-players',ownershipUrl:'https://fantasy.espn.com/football/players/add',
     }};
   });
-  return {meta:{season,waiverWeek:week,capturedAt:snapshot.capturedAt,supplementRecordedAt:snapshot.supplementRecordedAt || null,availableWeeks:knownWeeks,statsWeeks:completedWeeks,selectedStatsWeeks:selectedWeeks,statsSeason:season,scoring,sources:snapshot.sources,
+  return {meta:{season,waiverWeek:week,capturedAt:snapshot.capturedAt,supplementRecordedAt:snapshot.supplementRecordedAt || null,availableWeeks:knownWeeks,statsWeeks:completedWeeks,selectedStatsWeeks:selectedWeeks,statsSeason:season,scoring,sources:snapshot.sources,trendSlots:statsPayload.meta?.trendSlots || [],trendDomains:statsPayload.meta?.trendDomains || {},positionFinish:statsPayload.meta?.positionFinish,
     activity:providerData.map(({provider,capturedAt,error,stale,window})=>({provider,capturedAt,error:error||null,stale:!!stale,window})),
     totalPlayers:rows.length,statsMatched:rows.filter(r=>r.statsMatched).length,notes:['Rankings and FAAB are a dated source snapshot; scoring changes apply to historical statistics only.','Global roster percentages do not establish availability in your league.'],
   },rows};

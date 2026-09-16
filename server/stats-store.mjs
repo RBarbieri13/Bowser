@@ -197,6 +197,18 @@ function historyMetadata(history, scoring) {
   };
 }
 
+// Historical charts are independent of whether a player recorded selected-week totals.
+export function queryPlayerHistories(searchParams, playerIds) {
+  const season = querySeason(searchParams);
+  const scoring = searchParams.get('scoring') || 'ppr';
+  if (!['standard', 'half', 'ppr'].includes(scoring)) throw new QueryValidationError('scoring', 'Unknown scoring system');
+  const history = queryAlignedHistory(openDatabase(undefined, season), {
+    season, weeks: selectedWeeks(searchParams), count: trendWindow(searchParams.get('trendWeeks'), 'trendWeeks'),
+    receptionBonus: scoring === 'ppr' ? 1 : scoring === 'half' ? 0.5 : 0,
+  });
+  return new Map([...new Set(playerIds)].map(id => [id, history.forPlayer(id)]));
+}
+
 function enrichPlayerTrendsAndDepth(db, rows, history, { includeTrends, includeDepthCharts }) {
   const rosterRows = db.prepare(`
     SELECT season, team, player_id, full_name, position, depth_position, depth_rank,

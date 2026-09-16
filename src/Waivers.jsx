@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowClockwise, CaretDown, CaretRight, MagnifyingGlass, SlidersHorizontal, Star, X } from '@phosphor-icons/react';
 import { DEFAULT_PREFS, GROUPS, TREND_OPTIONS, WAIVER_PREFS_KEY, columnValue, faabValue, favoriteKey, filterWaiverRows, finite, formatFAAB, playerKey, readJSON, saveJSON, sortWaiverRows, validateFavorites, validatePreferences, waiverColumns } from './waiverTable.js';
 import './Waivers.css';
+import { TrendChart, TrendMetricSelect } from './TrendChart.jsx';
 
 const fmt = value => finite(value) === null ? '' : new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 }).format(value);
 const stamp = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : value && !Number.isNaN(new Date(value).getTime()) ? new Date(value).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Date not supplied';
@@ -13,16 +14,6 @@ function sourceTitle(source, entry, kind) {
   return [source.label, stamp(entry?.publishedAt || source.publishedAt), kind === 'faab' ? `${formatFAAB(faabValue(entry)) || 'Bid not reported'} · ${basis(entry?.budgetBasis)}${finite(entry?.referenceBudget) !== null ? ` · source reference $${entry.referenceBudget}` : ''}` : `Positional waiver rank · ${entry?.method || source.rankMethod || 'Publisher order'}`, ...(Array.isArray(entry?.alternatives) ? entry.alternatives.map(alternative => `${alternative.label || alternative.tier || 'Alternative'}: ${formatFAAB(faabValue(alternative))} · ${basis(alternative.budgetBasis || entry.budgetBasis)}`) : []), entry?.overallRank ? `Original overall priority: ${entry.overallRank}` : '', source.coverageNote || '', entry?.scoring || source.scoring ? `Scoring: ${entry?.scoring || source.scoring}` : 'Scoring not specified', kind === 'faab' ? entry?.url || source.faabUrl : entry?.url || source.rankUrl].filter(Boolean).join('\n');
 }
 
-function GameBars({ row, metric }) {
-  const games = Array.isArray(row.stats?.trends) ? row.stats.trends : [];
-  const points = games.map(game => ({ ...game, value: finite(game[metric]) }));
-  if (!points.some(point => point.value !== null)) return <span className="wv-blank" title="No recorded game values for this selected range" />;
-  const max = Math.max(1, ...points.map(point => point.value || 0));
-  const label = metric === 'snaps' ? 'snaps' : Object.values(TREND_OPTIONS).flat().find(option => option.key === metric)?.description || metric;
-  return <span className="wv-bars" role="img" aria-label={`${row.name} ${label}: ${points.map(point => `Week ${point.week}: ${point.value === null ? 'unavailable' : point.value}`).join('; ')}`} title={`${label}; zero baseline, scaled within this player and metric. Only recorded games in the selected stats range.`}>
-    {points.map((point, index) => <span key={`${point.week}-${index}`} data-week={point.week} data-value={point.value ?? ''} title={`Week ${point.week}${point.opponent ? ` vs ${point.opponent}` : ''}: ${point.value === null ? 'unavailable' : `${point.value} ${label}`}`}><b>{point.value === null ? '·' : point.value}</b><i style={{ height: point.value === null ? 0 : Math.max(2, point.value / max * 16) }} /></span>)}
-  </span>;
-}
 
 function FavoriteCard({ item, onChange, onRemove, onOpen }) {
   const [bid, setBid] = useState(item.bid === null ? '' : String(item.bid));
@@ -125,7 +116,7 @@ export function Waivers({ season = 2026, onOpenPlayer }) {
     if (column.kind === 'collapsed') return null;
     if (column.kind === 'favorite') return <button className="wv-star" aria-label={`${favoriteIds.includes(playerKey(row)) ? 'Unfavorite' : 'Favorite'} ${row.name}`} aria-pressed={favoriteIds.includes(playerKey(row))} onClick={() => toggleFavorite(row)}><Star weight={favoriteIds.includes(playerKey(row)) ? 'fill' : 'regular'} /></button>;
     if (column.key === 'name') return <button className="wv-player" onClick={event => row.playerId && onOpenPlayer?.({ player_id: row.playerId, player_display_name: row.name }, event.currentTarget, scoring)} title={row.playerId ? `Open ${row.name} player details` : 'Publisher identity has not been matched to a warehouse profile'}>{row.name}</button>;
-    if (column.kind === 'trend') return <GameBars row={row} metric={column.metric} />;
+    if (column.kind === 'trend') return <TrendChart history={row.stats?.trends || []} metric={column.metric} domain={data?.meta?.trendDomains?.[column.metric]} playerName={row.name} height={20} />;
     if (column.kind === 'rank' || column.kind === 'faab') {
       const entry = row[column.kind === 'rank' ? 'rankings' : 'faab']?.[column.source.id];
       const url = safeURL(entry?.url || (column.kind === 'rank' ? column.source.rankUrl : column.source.faabUrl));
@@ -135,6 +126,7 @@ export function Waivers({ season = 2026, onOpenPlayer }) {
       const content = <>{text}{column.kind === 'faab' && text && <small>{value?.converted ? 'converted · ' : ''}{entry.budgetBasis === 'annual' ? 'annual' : entry.budgetBasis === 'remaining' ? 'remaining' : 'basis unknown'}</small>}</>;
       return text ? url ? <a className="wv-source-value" title={title} href={url} target="_blank" rel="noreferrer">{content}</a> : <span className="wv-source-value" title={title}>{content}</span> : <span className="wv-blank" title={`${title}\nNot reported or not confidently matched`} />;
     }
+    if (column.key === 'position_finish') return <span title={`${row.stats?.position_finish_season || season} Week ${row.stats?.position_finish_week ?? 'unavailable'} · ${scoring.toUpperCase()} fantasy finish among all NFL ${row.position} peers; ties share rank`}>{row.stats?.position_finish == null ? '—' : `${row.position}${row.stats.position_finish}`}</span>;
     const activity = row.activity;
     const title = column.kind === 'activity' ? `${['adds', 'drops'].includes(column.key) ? activity?.addsSource || activity?.source || 'Transaction source not supplied' : activity?.ownershipSource || activity?.source || 'Ownership source not supplied'} · ${stamp((['adds', 'drops'].includes(column.key) ? activity?.addsCapturedAt : activity?.ownershipCapturedAt) || activity?.capturedAt)}${activity?.windowHours && ['adds', 'drops'].includes(column.key) ? ` · rolling ${activity.windowHours} hours` : ''}` : `${column.label} · ${data?.meta?.statsSeason || season} weeks ${startWeek}–${endWeek}${column.key === 'fantasy_points' ? ` · cumulative ${scoring.toUpperCase()}` : ''}`;
     return <span title={title}>{textValue(row, column)}</span>;
@@ -151,7 +143,7 @@ export function Waivers({ season = 2026, onOpenPlayer }) {
       <label>Scoring<select aria-label="Waiver scoring" value={scoring} onChange={event => setScoring(event.target.value)}><option value="ppr">PPR</option><option value="half">Half PPR</option><option value="standard">Standard</option></select></label>
       <span className="wv-capture">Captured {stamp(data?.meta?.capturedAt)}</span>
     </section>
-    <div className="wv-provenance"><span>{rankCount} rank sources · {faabCount} expert FAAB sources{communityCount > 0 ? ` · ${communityCount} community source` : ''}{data?.meta?.supplementRecordedAt ? ` · additional research ${stamp(data.meta.supplementRecordedAt)}` : ''}</span><span>Blank = not reported / unmatched · FPTS = selected-week total · Ranks within position</span></div>
+    <div className="wv-provenance"><span>{rankCount} rank sources · {faabCount} expert FAAB sources{communityCount > 0 ? ` · ${communityCount} community source` : ''}{data?.meta?.supplementRecordedAt ? ` · additional research ${stamp(data.meta.supplementRecordedAt)}` : ''}</span><span>Blank = not reported / unmatched · FPTS = selected-week total · Trend bars = aligned regular-season weeks · Expert ranks within position{data?.meta?.positionFinish?.week ? ` · POS FIN = ${data.meta.positionFinish.season} W${data.meta.positionFinish.week} ${scoring.toUpperCase()} NFL finish` : ""}</span></div>
     {error && <div className="wv-alert" role="alert">Waiver data unavailable: {error}. Use Refresh to retry.</div>}
     {storageError && <div className="wv-alert" role="alert">Browser storage unavailable. Your latest preferences and Favorites may not survive closing this page.</div>}
     <div className={`wv-layout${prefs.drawer ? ' with-favorites' : ''}`}>
@@ -170,7 +162,7 @@ export function Waivers({ season = 2026, onOpenPlayer }) {
           <button onClick={() => { setRanges([blankRange('rank'), blankRange('faab')]); setSearch(''); setPosition('All'); setTeam('All'); setFavoriteOnly(false); }}>Clear filters</button><small>Each filter uses that publisher's reported value. Missing values are excluded when a range is active.</small>
         </section>}
         {settings && <section className="wv-settings" aria-label="Waiver table settings">
-          <div className="wv-trend-settings">{Object.entries(TREND_OPTIONS).map(([group, options]) => <label key={group}>{group === 'rushing' ? 'Rushing trend' : 'Receiving trend'}<select aria-label={`${group === 'rushing' ? 'Rushing' : 'Receiving'} trend metric`} value={prefs.trendMetrics[group]} onChange={event => setPref('trendMetrics', { ...prefs.trendMetrics, [group]: event.target.value })}>{options.map(option => <option key={option.key} value={option.key}>{option.label} · {option.description}</option>)}</select></label>)}<small>Bars show recorded games; trend-column sorting uses the selected metric's total.</small></div>
+          <div className="wv-trend-settings">{Object.keys(TREND_OPTIONS).map(group=><label key={group}>{group[0].toUpperCase()+group.slice(1)} trend<TrendMetricSelect label={`${group[0].toUpperCase()+group.slice(1)} trend metric`} metric={prefs.trendMetrics[group]} onChange={value=>setPref('trendMetrics',{...prefs.trendMetrics,[group]:value})} /></label>)}<small>Shared regular-season weeks and NFL metric scales; missing games remain gaps.</small></div>
           <div className="wv-settings-toolbar"><label>Density<select aria-label="Waiver row density" value={prefs.density} onChange={event => setPref('density', event.target.value)}><option value="compact">Compact · 35 px</option><option value="comfortable">Comfortable · 44 px</option></select></label><button aria-pressed={prefs.autoFit} onClick={() => setPref('autoFit', !prefs.autoFit)}>Auto Fit</button><button onClick={() => setPrefs({ ...DEFAULT_PREFS })}>Reset table</button><small>Click headers to sort. Shift-click adds a sort; up to five. Drag column edges to resize.</small></div>
           <div className="wv-column-settings">{GROUPS.filter(([key]) => key !== 'identity').map(([key, label]) => <fieldset key={key}><legend>{label}</legend>{columns.filter(column => column.group === key).map(column => <label key={column.key}><input type="checkbox" checked={!prefs.hidden.includes(column.key)} onChange={event => setPref('hidden', event.target.checked ? prefs.hidden.filter(item => item !== column.key) : [...prefs.hidden, column.key])} />{column.label}</label>)}</fieldset>)}</div>
         </section>}
