@@ -67,7 +67,7 @@ test("postseason round names are normalized and snap-backed", () => {
   assert.equal(getMeta().warehouse.postseason_weeks.length, 4);
 });
 
-test("opportunity tracker joins the current full roster to honest recent-game history", () => {
+test("opportunity tracker joins the current full roster to aligned calendar history", () => {
   const result = queryOpportunityTracker(new URLSearchParams("team=NYG&games=10"));
   assert.equal(result.data.team, "NYG");
   assert.deepEqual(result.data.groups.map((group) => group.position), ["QB", "RB", "WR", "TE"]);
@@ -77,10 +77,13 @@ test("opportunity tracker joins the current full roster to honest recent-game hi
   assert.equal(result.meta.injuryNewsAvailable, false);
   assert.match(result.meta.ordering, /Official nflverse depth rank/);
   const players = result.data.groups.flatMap((group) => group.players);
-  assert.ok(players.some((player) => player.rookie && player.history.length === 0));
+  assert.ok(players.some((player) => player.rookie && !player.hasNFLHistory));
   assert.ok(players.some((player) => player.history.length === 10));
   assert.ok(players.every((player) => player.history.length <= 10));
-  assert.ok(players.filter((player) => player.hasNFLHistory).every((player) => player.history.every((game) => Number.isFinite(game.snaps) && Number.isFinite(game.fantasyPoints))));
+  assert.ok(players.every((player) => player.history.every((game) => game.available
+    ? Number.isFinite(game.snaps) && Number.isFinite(game.fantasyPoints)
+    : game.snaps === null && game.fantasyPoints === null)));
+  assert.ok(players.every((player) => player.history.map((game) => game.key).join() === result.meta.trendSlots.map((slot) => slot.key).join()));
   assert.throws(() => queryOpportunityTracker(new URLSearchParams("team=INVALID")), QueryValidationError);
 });
 
@@ -93,31 +96,29 @@ test("default request returns ranked PPR leaders quickly", () => {
   assert.ok(result.meta.queryMs < 250);
 });
 
-test("player rows expose chronological ten-game REG trends with touches and selected scoring", () => {
+test("player rows expose chronological ten-week REG trends with explicit byes and selected scoring", () => {
   const common = "seasonType=REG&search=Christian%20McCaffrey&limit=1";
   const ppr = queryPlayers(new URLSearchParams(`${common}&scoring=ppr`)).data[0];
   const standard = queryPlayers(new URLSearchParams(`${common}&scoring=standard`)).data[0];
 
   assert.equal(ppr.player_trends.length, 10);
-  assert.deepEqual(ppr.player_trends.map((game) => game.week), [8, 9, 10, 11, 12, 13, 15, 16, 17, 18]);
+  assert.deepEqual(ppr.player_trends.map((game) => game.week), [9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
   assert.ok(ppr.player_trends.every((game) => game.seasonType === "REG"));
   assert.deepEqual(
-    ppr.player_trends.map((game) => game.gameday),
-    [...ppr.player_trends.map((game) => game.gameday)].sort(),
+    ppr.player_trends.filter((game) => game.available).map((game) => game.gameday),
+    [...ppr.player_trends.filter((game) => game.available).map((game) => game.gameday)].sort(),
   );
 
-  const weekEight = ppr.player_trends[0];
-  assert.equal(weekEight.rushAttempts, 8);
-  assert.equal(weekEight.rushingYards, 25);
-  assert.equal(weekEight.rushingTds, 0);
-  assert.equal(weekEight.receptions, 3);
-  assert.equal(weekEight.receivingYards, 43);
-  assert.equal(weekEight.receivingTds, 0);
-  assert.ok(Number.isFinite(weekEight.snapPct));
-  assert.equal(weekEight.touches, weekEight.rushAttempts + weekEight.receptions);
-  assert.equal(weekEight.touches, 11);
-  assert.equal(weekEight.fantasyPoints, 9.8);
-  assert.equal(standard.player_trends[0].fantasyPoints, 6.8);
+  const weekFourteen = ppr.player_trends.find((game) => game.week === 14);
+  assert.equal(weekFourteen.available, false);
+  assert.equal(weekFourteen.snaps, null);
+  assert.equal(weekFourteen.fantasyPoints, null);
+  const recorded = ppr.player_trends.filter((game) => game.available);
+  assert.ok(recorded.every((game) => game.touches === game.rushAttempts + game.receptions));
+  for (const game of recorded) {
+    const standardGame = standard.player_trends.find((candidate) => candidate.key === game.key);
+    assert.equal(Number((game.fantasyPoints - standardGame.fantasyPoints).toFixed(1)), game.receptions);
+  }
 });
 
 test("player rows expose current nflverse depth rank and same-position teammates", () => {
