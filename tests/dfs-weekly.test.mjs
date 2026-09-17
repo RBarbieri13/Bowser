@@ -16,7 +16,7 @@ test('current chooses the verified weekly default; every archived and current sl
   assert.equal(current.meta.week, weekly.slates[weekly.defaultSlate].week);
   assert.equal(current.meta.season, weekly.slates[weekly.defaultSlate].season);
   assert.equal(current.meta.scoring, 'DraftKings Classic');
-  assert.equal(current.meta.options.length, Object.keys(weekly.slates).length + 3);
+  assert.equal(current.meta.options.length, Object.values(weekly.slates).reduce((n,s)=>n+(s.contestTypeId===96?2:1),0) + 3);
   for (const option of current.meta.options) {
     assert.ok(option.label.includes(String(option.season)));
     assert.ok(option.label.includes(`W${option.week}`));
@@ -38,7 +38,10 @@ test('week1 and main are immutable historical aliases', () => {
 test('Week 2 sample prices/projections and rookies join stable current identities', () => {
   const byName = new Map(getDfsSlate('2026-w2-dk-153427').records.map(r => [r.name, r]));
   assert.equal(byName.get('Jahmyr Gibbs').salary, 8500);
-  assert.equal(byName.get('Jahmyr Gibbs').projection, 23.1);
+  const captured = weekly.slates['2026-w2-dk-153427'].records.find(r=>r.name==='Jahmyr Gibbs');
+  assert.equal(byName.get('Jahmyr Gibbs').projection,captured.projection);
+  assert.equal(captured.projectionSource,'Fantasy Info Central');
+  assert.ok(Number.isFinite(captured.projection) && captured.projection > 0);
   for (const name of ['Carnell Tate', 'Makai Lemon']) {
     assert.match(byName.get(name).playerId, /^00-/);
     assert.ok(byName.get(name).projection > 0);
@@ -78,4 +81,36 @@ test('missing and invalid weekly data transparently fall back to dated last-good
       assert.ok(result.records.length > 350);
     }
   } finally { rmSync(temp, {recursive:true, force:true}); }
+});
+
+
+test('Thursday full-game Showdown selection isolates official FLEX and CPT values', () => {
+  const flex=getDfsSlate('2026-w2-dk-153434');
+  const captain=getDfsSlate('2026-w2-dk-153434:cpt');
+  assert.equal(flex.meta.scoring,'DraftKings Showdown Captain Mode');
+  assert.equal(flex.meta.rosterPosition,'FLEX');assert.equal(captain.meta.rosterPosition,'CPT');
+  assert.match(flex.meta.label,/Thursday Only.*DET @ BUF.*09-17.*FLEX/);
+  assert.equal(flex.meta.gameCount,1);
+  assert.equal(flex.meta.coverage.salaryPlayers,47);
+  assert.equal(flex.meta.coverage.salaryEntries,94);
+  assert.equal(new Set(flex.records.map(r=>r.playerId)).size,flex.records.length);
+  assert.equal(new Set(captain.records.map(r=>r.playerId)).size,captain.records.length);
+  assert.deepEqual(new Set(flex.records.map(r=>r.playerId)),new Set(captain.records.map(r=>r.playerId)));
+  for(const row of flex.records){
+    const cpt=captain.records.find(r=>r.playerId===row.playerId);
+    assert.equal(row.rosterPosition,'FLEX');assert.equal(cpt.rosterPosition,'CPT');
+    assert.equal(cpt.salary,row.salary*1.5);
+    assert.notEqual(cpt.draftKingsId,row.draftKingsId);
+    if(row.projection!==null){
+      assert.equal(cpt.projection,Number((row.projection*1.5).toFixed(4)));
+      assert.equal(cpt.projectionBase,row.projectionBase);
+      assert.equal(cpt.projectionMultiplier,1.5);
+      assert.match(cpt.projectionBasis,/1.5 Captain/);
+    }else assert.equal(cpt.projection,null);
+  }
+  const gibbs=flex.records.find(r=>r.name==='Jahmyr Gibbs');
+  assert.equal(gibbs.salary,12000);
+  assert.equal(captain.records.find(r=>r.playerId===gibbs.playerId).salary,18000);
+  assert.equal(getDfsSlate('2026-w2-dk-153427:cpt'),null);
+  assert.equal(getDfsSlate('current').meta.scoring,'DraftKings Classic');
 });

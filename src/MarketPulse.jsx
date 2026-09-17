@@ -1,3 +1,4 @@
+import { PageControls } from './PageControls.jsx';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowClockwise, ArrowDown, ArrowUp, ChartLineUp, DownloadSimple, MagnifyingGlass, Star, X } from '@phosphor-icons/react';
 import { combineMarketRows, isWatched } from './marketPulseRows.js';
@@ -154,11 +155,17 @@ export function MarketPulse({season=2026,onOpenPlayer}) {
     const a=document.createElement('a');a.href=url;a.download=`bowser-market-combined-${hours}h.csv`;a.click();URL.revokeObjectURL(url);
   }
   return <main className="page-content market-pulse">
-    <header className="mp-heading">
-      <div><h1>Market Pulse</h1><p>Sleeper transactions + ESPN ownership, side by side.</p></div>
-      <div className="mp-actions"><button onClick={download} disabled={!rows.length}><DownloadSimple/> Export CSV</button>
-        <button className="mp-primary" onClick={()=>load(true)} disabled={busy}><ArrowClockwise className={busy?'mp-spin':''}/>{busy?'Loading…':'Refresh data'}</button></div>
-    </header>
+    <PageControls title="Market Pulse" summary={<><span>{hours}h transactions · ESPN ownership</span><span>{rows.length} players</span>{position!=='All'&&<span>{position}</span>}{team!=='All'&&<span>{team}</span>}{watchOnly&&<span>Watchlist</span>}{search&&<span>Search: {search}</span>}</>} actions={<><button onClick={download} disabled={!rows.length}><DownloadSimple/>Export CSV</button><button className="mp-primary" onClick={()=>load(true)} disabled={busy}><ArrowClockwise className={busy?'mp-spin':''}/>{busy?'Loading…':'Refresh data'}</button></>} notices={<>{SOURCES.filter(source=>errors[source]).map(source=><div className="mp-alert" role="alert" key={source}>
+      <strong>{source==='sleeper'?'Sleeper':'ESPN'}:</strong> {errors[source]} {snapshots[source]?.capturedAt?'Last successful snapshot retained.':'No values substituted.'} Use Refresh data to retry.
+    </div>)}</>}>
+      <div className="mp-toolbar">
+        <label className="mp-search"><MagnifyingGlass/><span className="sr-only">Find player or team</span><input placeholder="Find player or team…" value={search} onChange={e=>setSearch(e.target.value)}/></label>
+        <label>Position<select value={position} onChange={e=>setPosition(e.target.value)}>{['All','QB','RB','WR','TE','K','DEF'].map(p=><option key={p}>{p}</option>)}</select></label>
+        <label>Team<select value={team} onChange={e=>setTeam(e.target.value)}><option>All</option>{teams.map(t=><option key={t}>{t}</option>)}</select></label>
+        <button aria-pressed={watchOnly} onClick={()=>setWatchOnly(v=>!v)}><Star weight={watchOnly?'fill':'regular'}/> Watchlist</button>
+        <span className="mp-matching">{rows.length} matching</span>
+      </div>
+
     <section className="mp-source-band" aria-label="Source snapshots">
       <label className="mp-window" htmlFor="mp-window">Sleeper window<select id="mp-window" value={hours} onChange={e=>setHours(Number(e.target.value))}>
         <option value={6}>Past 6 hours</option><option value={24}>Past 24 hours</option><option value={72}>Past 72 hours</option>
@@ -168,18 +175,17 @@ export function MarketPulse({season=2026,onOpenPlayer}) {
         <span>{stamp(snapshots[source]?.capturedAt)}{snapshots[source]?.stale?' · refresh available':''}{source==='espn'?' · experimental':''}</span>
       </div>)}
     </section>
-    {SOURCES.filter(source=>errors[source]).map(source=><div className="mp-alert" role="alert" key={source}>
-      <strong>{source==='sleeper'?'Sleeper':'ESPN'}:</strong> {errors[source]} {snapshots[source]?.capturedAt?'Last successful snapshot retained.':'No values substituted.'} Use Refresh data to retry.
-    </div>)}
     <p className="mp-status" role="status">{notice||'— = not reported or not confidently matched. Counts and percentages describe different provider populations.'}</p>
+    <div className="mp-method"><details><summary>Sources, matching & refresh limits</summary>
+      <p>Sleeper: returned trending-list counts. Net = adds − drops; add share = adds ÷ (adds + drops), only when both are reported. The labeled green/red bar shows adds versus drops, not ownership. A missing count is unknown, never zero.</p>
+      <p>ESPN: reported roster/start percentages, not transaction counts. Δ Ros is percentage-point change since our previous ESPN snapshot ({stamp(snapshots.espn?.previousAt)}), not a standardized daily change. ESPN is an experimental public endpoint and may change without notice.</p>
+      <p>Rows match on a shared provider ID when available, otherwise an unambiguous name + position + team (team for defenses). Unmatched or ambiguous players stay separate with unavailable metrics shown as —. Populations and observation windows are not interchangeable.</p>
+      <p>Refresh updates both sources with independent 15-minute caches and last-good snapshots. History retains up to 96 observations per source/window; overlapping windows cannot be added together. Watchlists and sorting stay in this browser. Saved history stays in this browser on this device; clearing site data removes it. Server caches may reset between requests. No background refresh job runs.</p>
+      <p>For personal fantasy research. No Yahoo credentials or private league data are accessed. Source coverage and availability may change.</p>
+      <a href="https://docs.sleeper.com/" target="_blank" rel="noreferrer">Sleeper API documentation ↗</a> · <a href="https://fantasy.espn.com/football/players/add" target="_blank" rel="noreferrer">ESPN Fantasy ↗</a>
+    </details></div>
+    </PageControls>
     <section className="mp-workspace">
-      <div className="mp-toolbar">
-        <label className="mp-search"><MagnifyingGlass/><span className="sr-only">Find player or team</span><input placeholder="Find player or team…" value={search} onChange={e=>setSearch(e.target.value)}/></label>
-        <label>Position<select value={position} onChange={e=>setPosition(e.target.value)}>{['All','QB','RB','WR','TE','K','DEF'].map(p=><option key={p}>{p}</option>)}</select></label>
-        <label>Team<select value={team} onChange={e=>setTeam(e.target.value)}><option>All</option>{teams.map(t=><option key={t}>{t}</option>)}</select></label>
-        <button aria-pressed={watchOnly} onClick={()=>setWatchOnly(v=>!v)}><Star weight={watchOnly?'fill':'regular'}/> Watchlist</button>
-        <span className="mp-matching">{rows.length} matching</span>
-      </div>
       <div className="mp-table-scroll" role="region" aria-label="Combined player trends" tabIndex={0}>
         <table style={{width:`max(100%, ${RESIZABLE_COLUMNS.reduce((total,column)=>total+tableColumnWidth(column,tablePrefs),0)}px)`}}><caption className="sr-only">Sleeper and ESPN player popularity metrics. Click any column header to sort.</caption>
           <colgroup>{RESIZABLE_COLUMNS.map(column=><col key={column.key} style={{width:tableColumnWidth(column,tablePrefs)}}/>)}</colgroup>
@@ -204,13 +210,6 @@ export function MarketPulse({season=2026,onOpenPlayer}) {
           :<p key={source}>No confidently matched {source==='sleeper'?'Sleeper':'ESPN'} observation for this player.</p>)}</div>
       </aside>}
     </section>
-    <footer className="mp-method"><details><summary>Sources, matching & refresh limits</summary>
-      <p>Sleeper: returned trending-list counts. Net = adds − drops; add share = adds ÷ (adds + drops), only when both are reported. The labeled green/red bar shows adds versus drops, not ownership. A missing count is unknown, never zero.</p>
-      <p>ESPN: reported roster/start percentages, not transaction counts. Δ Ros is percentage-point change since our previous ESPN snapshot ({stamp(snapshots.espn?.previousAt)}), not a standardized daily change. ESPN is an experimental public endpoint and may change without notice.</p>
-      <p>Rows match on a shared provider ID when available, otherwise an unambiguous name + position + team (team for defenses). Unmatched or ambiguous players stay separate with unavailable metrics shown as —. Populations and observation windows are not interchangeable.</p>
-      <p>Refresh updates both sources with independent 15-minute caches and last-good snapshots. History retains up to 96 observations per source/window; overlapping windows cannot be added together. Watchlists and sorting stay in this browser. Saved history stays in this browser on this device; clearing site data removes it. Server caches may reset between requests. No background refresh job runs.</p>
-      <p>For personal fantasy research. No Yahoo credentials or private league data are accessed. Source coverage and availability may change.</p>
-      <a href="https://docs.sleeper.com/" target="_blank" rel="noreferrer">Sleeper API documentation ↗</a> · <a href="https://fantasy.espn.com/football/players/add" target="_blank" rel="noreferrer">ESPN Fantasy ↗</a>
-    </details></footer>
+
   </main>;
 }

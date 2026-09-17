@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest';
 import {IDBFactory} from 'fake-indexeddb';
-import {cleanup,fireEvent,render,screen,waitFor,within} from '@testing-library/react';
+import {cleanup,fireEvent,render as renderView,screen,waitFor,within} from '@testing-library/react';
 import {afterEach,beforeEach,expect,test,vi} from 'vitest';
 import {MarketPulse} from '../src/MarketPulse.jsx';
 const rows=[{id:'sleeper:1',name:'Fixture Runner',position:'RB',team:'BUF',adds:120,drops:30,net:90,addShare:80},{id:'sleeper:2',name:'Fixture Receiver',position:'WR',team:'NYG',adds:10,drops:null,net:null,addShare:null}];
@@ -9,6 +9,8 @@ const espnRows=[{id:'espn:11',name:'Fixture Runner',position:'RB',team:'BUF',ros
 const snapshot=(provider)=>({provider,window:provider==='sleeper'?'24':'current',rows:provider==='sleeper'?rows:espnRows,capturedAt:1800000000000,history:[{capturedAt:1799999999000,rows:(provider==='sleeper'?rows:espnRows).map(row=>({...row,net:-5}))},{capturedAt:1800000000000,rows:provider==='sleeper'?rows:espnRows}]});
 beforeEach(()=>{localStorage.clear();global.indexedDB=new IDBFactory();global.fetch=vi.fn(async url=>({ok:true,json:async()=>snapshot(url.includes('espn')?'espn':'sleeper')}));});
 afterEach(()=>{cleanup();vi.restoreAllMocks();});
+// These existing behavior scenarios exercise the controls after expansion.
+const render=(ui)=>{const view=renderView(ui);fireEvent.click(screen.getByRole('button',{name:'Filters & settings'}));return view;};
 const ready=()=>screen.findByRole('button',{name:'Fixture Runner',exact:true});
 const bodyRows=()=>within(screen.getByRole('table')).getAllByRole('row').slice(2);
 test('player profile navigation and provider history are separate actions',async()=>{

@@ -48,3 +48,42 @@
   .opportunity-tracker-page .opportunity-summary { grid-template-columns: minmax(0, 1fr); }
   .opportunity-tracker-page .opportunity-position-card > header { padding: 12px; gap: 8px; }
 }
+
+/* A single compact disclosure owns all query, schedule, and chart controls. */
+.opportunity-tracker-page .page-controls .opportunity-controls { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 12px; }
+.opportunity-tracker-page .page-controls .opportunity-select select,
+.opportunity-tracker-page .page-controls .week-range-trigger,
+.opportunity-tracker-page .page-controls .opportunity-reset { height: 32px; }
+.opportunity-tracker-page .opportunity-dfs-select { grid-column: span 2; }
+.opportunity-tracker-page .opportunity-dfs-context { max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.opportunity-tracker-page .opportunity-chart-settings { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; }
+.opportunity-tracker-page .opportunity-chart-settings fieldset { min-width: 0; margin: 0; padding: 7px 0 0; border: 0; border-top: 1px solid var(--border); }
+.opportunity-tracker-page .opportunity-chart-settings legend { color: var(--text-secondary); font: 600 11px var(--font-ui); padding-right: 8px; }
+.opportunity-tracker-page .opportunity-chart-settings fieldset > div { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.opportunity-tracker-page .opportunity-chart-settings label { display: grid; min-width: 0; gap: 4px; font: 500 10px var(--font-ui); color: var(--text-secondary); }
+.opportunity-tracker-page .opportunity-chart-settings select { width: 100%; min-width: 0; }
+.opportunity-tracker-page .opportunity-calendar-note { margin: 0; }
+.opportunity-tracker-page .opportunity-coverage { display: grid; gap: 5px; color: var(--text-secondary); font: 10px/1.5 var(--font-ui); }
+.opportunity-tracker-page .opportunity-grid { margin-top: 0; gap: 10px; }
+.opportunity-tracker-page .opportunity-position-card > header { min-height: 40px; padding: 6px 12px; }
+.opportunity-tracker-page .opportunity-position-card > header > div { gap: 8px; }
+.opportunity-tracker-page .opportunity-position-card > header > div > span { width: 26px; height: 26px; border-radius: 5px; font-size: 10px; }
+.opportunity-tracker-page .opportunity-position-card h2 { font-size: 12px; }
+.opportunity-tracker-page .opportunity-position-columns { min-height: 34px; }
+.opportunity-tracker-page .opportunity-chart-labels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; gap: 16px; padding: 5px 12px; }
+.opportunity-tracker-page .opportunity-chart-labels > span { padding: 0; }
+.opportunity-tracker-page .opportunity-player-row { min-height: 96px; }
+.opportunity-tracker-page .opportunity-player-row > * { padding: 7px 12px; }
+@media (max-width: 900px) {
+  .opportunity-tracker-page .page-controls .opportunity-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .opportunity-tracker-page .opportunity-chart-settings { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .opportunity-tracker-page .opportunity-dfs-context { max-width: 100%; white-space: normal; }
+  .opportunity-tracker-page .opportunity-chart-settings fieldset > div { grid-template-columns: minmax(0, 1fr); }
+}
+@media (pointer: coarse) {
+  .opportunity-tracker-page .page-controls .opportunity-select select,
+  .opportunity-tracker-page .page-controls .week-range-trigger,
+  .opportunity-tracker-page .page-controls .opportunity-reset { height: 44px; }
+}

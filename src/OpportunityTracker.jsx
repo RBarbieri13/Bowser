@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  ArrowDownRight, ArrowRight, ArrowUpRight, CaretDown, ChartBar, FirstAid,
-  Gauge, Info, Lightning, ShieldCheck, UsersThree,
+  ArrowDownRight, ArrowRight, ArrowUpRight, CaretDown, ChartBar, Info, Lightning,
 } from "@phosphor-icons/react";
-import { TeamLogo } from "./teamLogos.jsx";
+import { PageControls } from "./PageControls.jsx";
 import { ScheduleWeekSelector } from "./ScheduleWeekSelector.jsx";
 import { WeekRangePicker } from "./WeekRangePicker.jsx";
 import { TrendChart, TrendMetricSelect } from "./TrendChart.jsx";
@@ -112,8 +111,8 @@ function PlayerRow({ player, metrics, slots, domains, season, scoring, onOpenPla
           <small title={player.statusDetail || player.rosterStatusLabel}>{player.rookie ? `${player.rookieYear || 2026} rookie` : `${player.yearsExperience ?? "—"} yrs exp`} · {player.rosterStatusLabel}</small>
           <small className="opportunity-weekly-values" aria-label={`${player.name} fantasy and DFS values`}>
             <span title={`NFL position finish · ${player.position_finish_season || season} W${player.position_finish_week || "—"}`}>FIN {player.position_finish == null ? "—" : `${player.position}${player.position_finish}`}</span>
-            {" · "}<span>DK {player.draft_kings_price == null ? "—" : `$${Number(player.draft_kings_price).toLocaleString("en-US")}`}</span>
-            {" · "}<span>PROJ {player.draft_kings_projection == null ? "—" : Number(player.draft_kings_projection).toFixed(2)}</span>
+            {" · "}<span title={[player.dfs_meta?.label, player.dfs_meta?.rosterPosition, player.dfs_meta?.scoring].filter(Boolean).join(" · ")}>DK {player.draft_kings_price == null ? "—" : `$${Number(player.draft_kings_price).toLocaleString("en-US")}`}</span>
+            {" · "}<span title={[player.dfs_meta?.projectionSource, player.dfs_meta?.rosterPosition, player.dfs_meta?.scoring, player.dfs_meta?.projectionBasis].filter(Boolean).join(" · ")}>PROJ {player.draft_kings_projection == null ? "—" : Number(player.draft_kings_projection).toFixed(2)}</span>
           </small>
         </div>
       </div>
@@ -139,19 +138,17 @@ function PlayerRow({ player, metrics, slots, domains, season, scoring, onOpenPla
   );
 }
 
-function PositionGroup({ group, metrics, onMetricChange, games, ...chartProps }) {
+function PositionGroup({ group, metrics, games, ...chartProps }) {
   return (
     <section className={`opportunity-position-card position-${group.position.toLowerCase()}`} aria-labelledby={`opportunity-${group.position}`}>
       <header>
-        <div><span>{group.position}</span><div><h2 id={`opportunity-${group.position}`}>{POSITION_LABELS[group.position]}</h2><p>Official depth rank · recent opportunity order</p></div></div>
+        <div><span>{group.position}</span><h2 id={`opportunity-${group.position}`}>{POSITION_LABELS[group.position]}</h2></div>
         <strong>{group.players.length} players</strong>
       </header>
       <div className="opportunity-position-table" tabIndex="0" aria-label={`${POSITION_LABELS[group.position]} scrollable trends`}>
         <div className="opportunity-position-columns">
           <span>Player / roster status</span><span>Chart 2 · last 3 vs prior 3</span>
-          <div className="opportunity-chart-selectors">
-            {metrics.map((metric, index) => <div key={index}><span>Chart {index + 1} · {games} calendar weeks</span><TrendMetricSelect metric={metric} onChange={(value) => onMetricChange(group.position, index, value)} label={`${group.position} chart ${index + 1} metric`} /></div>)}
-          </div>
+          <div className="opportunity-chart-labels">{metrics.map((metric, index) => <span key={index}>{metricLabel(metric, chartProps.scoring)} · {games} weeks</span>)}</div>
           <span>Last 3 calendar weeks avg</span>
         </div>
         <div className="opportunity-position-roster">
@@ -223,19 +220,15 @@ export function OpportunityTracker({ season = 2026, meta, onOpenPlayer, onSeason
   const slots = trackerMeta?.trendSlots || [];
   const source = trackerMeta?.source;
   const rosterSeason = trackerMeta?.rosterSeason || 2026;
+  const dfsOptions = trackerMeta?.dfs?.options || [{ key: 'current', label: 'Current upcoming slate · Classic' }];
+  const dfsChoices = [...new Map([{ key: 'current', label: 'Current upcoming slate · Classic' }, ...dfsOptions, { key: 'selected-week', label: 'Selected historical week · Classic' }].map(option => [option.key, option])).values()];
+  // Keep the selected date/role visible while a fresh request is loading.
+  if (!dfsChoices.some(option => option.key === dfsSlate)) dfsChoices.push({ key: dfsSlate, label: 'Selected slate · loading…' });
+  const dfsContext = trackerMeta?.dfs ? [trackerMeta.dfs.label || `${trackerMeta.dfs.season || season} W${trackerMeta.dfs.week || '—'}`, trackerMeta.dfs.rosterPosition, trackerMeta.dfs.scoring].filter(Boolean).join(' · ') : 'Loading slate…';
 
   return (
     <main className="page-content opportunity-tracker-page">
-      <div className="opportunity-filter-bar"><label>DFS slate<select aria-label="Opportunity DFS slate" value={dfsSlate} onChange={event=>setDfsSlate(event.target.value)}><option value="current">Current upcoming slate</option><option value="selected-week">Selected historical week</option></select></label><span>Fantasy finish: selected statistical week · DFS: {trackerMeta?.dfs?.season || season} W{trackerMeta?.dfs?.week || (dfsSlate === "selected-week" ? end : "—")} · Missing source records appear as —.</span></div>
-      <section className="opportunity-hero" aria-labelledby="opportunity-title">
-        <div className="opportunity-title-block">
-          <span className="page-eyebrow"><Gauge weight="bold" /> Team participation</span>
-          <h1 id="opportunity-title">Opportunity Tracker</h1>
-          <p>Compare the full fantasy-position roster across the same NFL calendar weeks. Choose any metric for each chart.</p>
-        </div>
-        <div className="opportunity-team-lockup"><TeamLogo team={team} decorative /><div><span>{rosterSeason} roster</span><strong>{team}</strong><small>{season} statistics selection</small></div></div>
-      </section>
-
+      <PageControls title="Opportunity Tracker" summary={<><span>{team} · {season} · W{start}{end !== start ? `–${end}` : ''}{extras.length ? ` + W${extras.join(',')}` : ''} · {SCORING_LABELS[scoring]}</span><span>{games} history weeks · {visibleGroups.reduce((sum, group) => sum + group.players.length, 0)} players</span><span className="opportunity-dfs-context" title={dfsContext}>DFS: {dfsContext}</span>{position !== "ALL" && <span>{position}</span>}{rosterFilter !== "ALL" && <span>{({ ACTIVE: 'Active roster', ROOKIES: 'Rookies', NO_HISTORY: 'No window history' })[rosterFilter]}</span>}</>} notices={error ? <div className="opportunity-state error" role="alert"><strong>Opportunity data unavailable</strong><span>{error}</span></div> : null}>
       <section className="opportunity-controls" aria-label="Opportunity tracker filters">
         <label><span>Statistics year</span><div className="opportunity-select"><select aria-label="Opportunity statistics year" value={season} onChange={(event) => onSeasonChange?.(Number(event.target.value))}>{seasons.map((year) => <option key={year} value={year}>{year}</option>)}</select><CaretDown weight="bold" /></div></label>
         <label><span>Team</span><div className="opportunity-select"><select aria-label="Opportunity team" value={team} onChange={(event) => setTeam(event.target.value)}>{teams.map((item) => <option key={item} value={item}>{item}</option>)}</select><CaretDown weight="bold" /></div></label>
@@ -247,22 +240,18 @@ export function OpportunityTracker({ season = 2026, meta, onOpenPlayer, onSeason
         </div>
         <label><span>Roster view</span><div className="opportunity-select"><select aria-label="Opportunity roster view" value={rosterFilter} onChange={(event) => setRosterFilter(event.target.value)}><option value="ALL">Full roster</option><option value="ACTIVE">Active roster</option><option value="ROOKIES">{rosterSeason} rookies</option><option value="NO_HISTORY">No window history</option></select><CaretDown weight="bold" /></div></label>
         <button type="button" className="opportunity-reset" onClick={() => setPreferences(validateOpportunityPreferences(null))}>Reset chart preferences</button>
+        <label className="opportunity-dfs-select"><span>DFS slate</span><div className="opportunity-select"><select aria-label="Opportunity DFS slate" value={dfsSlate} onChange={event=>setDfsSlate(event.target.value)}>{dfsChoices.map(option => <option key={option.key} value={option.key}>{option.label}</option>)}</select><CaretDown weight="bold" /></div></label>
       </section>
       <ScheduleWeekSelector team={team} season={season} schedule={trackerMeta?.schedule || []} start={start} end={end} extras={extras} onRangeChange={changeRange} onExtrasChange={(nextExtras) => changeSelection({ extras: nextExtras })} onOpenGame={(game) => onOpenGame?.(game, scoring)} />
+      <section className="opportunity-chart-settings" aria-label="Trend chart settings">
+        {Object.entries(POSITION_LABELS).map(([pos, label]) => <fieldset key={pos}><legend>{label}</legend><div>{metrics[pos].map((metric, index) => <label key={index}>Chart {index + 1}<TrendMetricSelect metric={metric} onChange={(value) => changeMetric(pos, index, value)} label={`${pos} chart ${index + 1} metric`} /></label>)}</div></fieldset>)}
+      </section>
       <div className="opportunity-source-note opportunity-calendar-note"><Info weight="fill" aria-hidden="true" /><span><strong>{games} regular-season calendar weeks · {calendarLabel(slots)} · {SCORING_LABELS[scoring]}</strong>Latest completed regular week at or before your last selected week anchors history. The window can continue into the prior season. Same metric, same scale across players; bye, DNP and unavailable values stay gaps. Averages exclude unavailable values.</span></div>
 
-      {trackerMeta ? (
-        <section className="opportunity-summary" aria-label="Team opportunity summary">
-          <article><UsersThree weight="duotone" /><div><strong>{trackerMeta.playerCount}</strong><span>Fantasy-position players</span></div></article>
-          <article><ShieldCheck weight="duotone" /><div><strong>{trackerMeta.playersWithHistory}</strong><span>With history in this window</span></div></article>
-          <article><Lightning weight="duotone" /><div><strong>{trackerMeta.rookies}</strong><span>{rosterSeason} rookies</span></div></article>
-          <article className="news-status"><FirstAid weight="duotone" /><div><strong>Roster status snapshot</strong><span>{trackerMeta.injuryNewsMessage || "Practice-report injury news is unavailable. Sourced roster status is shown instead."}</span></div></article>
-        </section>
-      ) : null}
-
-      {error ? <div className="opportunity-state error" role="alert"><strong>Opportunity data unavailable</strong><span>{error}</span></div> : null}
+      {trackerMeta && <div className="opportunity-coverage" aria-label="Team opportunity summary"><span>{trackerMeta.playerCount} fantasy-position players · {trackerMeta.playersWithHistory} with history · {trackerMeta.rookies} rookies · {rosterSeason} roster</span><span><strong>Roster status snapshot:</strong> {trackerMeta.injuryNewsMessage || "Practice-report injury news is unavailable. Sourced roster status is shown instead."}</span><span>Official depth rank · recent opportunity order. Fantasy finish: selected statistical week · DFS: {dfsContext} · Missing source records appear as —.</span>{trackerMeta.dfs?.projectionBasis && <span>Projection basis: {trackerMeta.dfs.projectionBasis}</span>}</div>}
+      </PageControls>
       {loading ? <div className="opportunity-state" role="status"><ChartBar className="spin" /><strong>Building the team opportunity grid…</strong></div> : null}
-      {!loading && !error ? <div className="opportunity-grid">{visibleGroups.map((group) => <PositionGroup key={group.position} group={group} metrics={metrics[group.position]} onMetricChange={changeMetric} games={games} slots={slots} domains={trackerMeta?.trendDomains} season={season} scoring={scoring} onOpenPlayer={onOpenPlayer} />)}</div> : null}
+      {!loading && !error ? <div className="opportunity-grid">{visibleGroups.map((group) => <PositionGroup key={group.position} group={group} metrics={metrics[group.position]} games={games} slots={slots} domains={trackerMeta?.trendDomains} season={season} scoring={scoring} onOpenPlayer={onOpenPlayer} />)}</div> : null}
       {!loading && !error && !visibleGroups.length ? <div className="opportunity-state"><strong>No players match this view.</strong><button type="button" onClick={() => { setPosition("ALL"); setRosterFilter("ALL"); }}>Show full roster</button></div> : null}
 
       {trackerMeta ? <footer className="data-status"><span><strong>{rosterSeason} depth chart:</strong> official nflverse snapshot {trackerMeta.depthUpdatedAt ? new Date(trackerMeta.depthUpdatedAt).toLocaleDateString() : "unavailable"}</span><span><strong>Statistics:</strong> {calendarLabel(slots)}</span><span>{trackerMeta.ordering}</span><span>{trackerMeta.queryMs} ms query</span>{source?.url ? <a href={source.url} target="_blank" rel="noreferrer">Data: {source.name || "nflverse"} · {source.license}</a> : null}</footer> : null}

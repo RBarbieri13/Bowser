@@ -24,3 +24,64 @@
 .team-boxscore-page .stat-draft_kings_price,.team-boxscore-page .stat-draft_kings_projection,.team-boxscore-page .stat-position_finish { color:var(--accent) !important; }
 .team-boxscore-page .box-trend-sort { border:0; background:transparent; color:var(--text-label); margin:0 0 5px; cursor:pointer; font:600 10px var(--font-data); }
 .team-boxscore-page .box-trend-cell .trend-bar-item b,.team-boxscore-page .box-trend-cell .trend-bar-item small { overflow:hidden; text-overflow:clip; }
+
+/* One compact control surface; preserve the detailed tools behind its disclosure. */
+main.team-boxscore-page { gap:0; }
+.team-boxscore-page .team-box-controls { position:relative; z-index:100; }
+.team-boxscore-page .team-box-controls .boxscore-filters { min-height:0; padding:0; gap:12px; border:0; border-radius:0; background:transparent; box-shadow:none; }
+.team-boxscore-page .team-box-controls .boxscore-filters > .week-width-field { margin-left:0; }
+.team-boxscore-page .team-box-controls .box-trend-controls { padding:0; margin:0; border:0; }
+.team-boxscore-page .team-box-controls .box-trend-explainer { margin:0; }
+.team-boxscore-page .team-box-controls .schedule-selector { box-shadow:none; }
+.team-boxscore-page .team-box-controls .schedule-selector:not(.open) { height:36px; }
+.team-boxscore-page .team-box-controls .schedule-selector-trigger { min-height:36px; padding:5px 8px; }
+.team-boxscore-page .team-box-controls .schedule-trigger-action { min-height:26px; font-size:10px; }
+.team-boxscore-page .box-active-team { display:inline-flex; align-items:center; gap:4px; color:var(--accent); font-weight:700; }
+.team-boxscore-page .box-active-team img { width:19px; height:19px; object-fit:contain; }
+.team-boxscore-page .team-box-controls .box-scroll-buttons { display:flex; gap:4px; margin:0; }
+.team-boxscore-page .team-box-controls .box-scroll-buttons button { border-radius:5px; }
+.team-boxscore-page .box-data-details { display:flex; align-items:center; flex-wrap:wrap; gap:8px 14px; color:var(--text-muted); font:500 10px/1.5 var(--font-data); }
+.team-boxscore-page .box-data-details .dk-status { display:inline-flex; align-items:center; }
+.team-boxscore-page .box-data-details a { color:inherit; }
+.team-boxscore-page .box-data-details .performance-legend { width:100%; gap:14px; font-size:10px; flex-wrap:wrap; }
+.team-boxscore-page .box-data-details .performance-legend i { width:8px; height:8px; }
+.team-boxscore-page .boxscore-panel .box-position-section { margin-bottom:6px; border-radius:5px; box-shadow:none; }
+.team-boxscore-page .boxscore-panel .box-week-row th { height:49px; }
+.team-boxscore-page .boxscore-panel .box-game-link { height:48px; padding:3px 5px; }
+.team-boxscore-page .boxscore-panel .box-game-link strong { margin-top:1px; }
+.team-boxscore-page .boxscore-panel .box-game-link small { margin-top:1px; font-size:10px; }
+.team-boxscore-page .boxscore-panel .box-week-row-compact th:not(.box-trend-header) { height:22px; }
+.team-boxscore-page .boxscore-panel .box-week-number { color:var(--text-secondary); font:700 10px var(--font-data); letter-spacing:0; text-transform:none; }
+.team-boxscore-page .boxscore-panel .box-subgroup-row th { height:22px; font-size:10px; }
+.team-boxscore-page .boxscore-panel .box-column-row th { height:24px; }
+.team-boxscore-page .boxscore-panel .boxscore-table tbody th,
+.team-boxscore-page .boxscore-panel .boxscore-table tbody td { height:32px; font-size:12px; }
+.team-boxscore-page .boxscore-panel .box-player-cell { padding:0 8px !important; }
+.team-boxscore-page .boxscore-panel .box-player-cell button { height:30px; font-size:12px; }
+.team-boxscore-page .boxscore-panel .box-trend-header { padding:4px 7px; }
+.team-boxscore-page .boxscore-panel .box-trend-header .trend-metric-select { height:25px; margin:3px 0; padding:3px; font-size:10px; }
+.team-boxscore-page .boxscore-panel .box-trend-header > small { margin:2px 0; font-size:9px; line-height:1.2; }
+.team-boxscore-page .boxscore-panel .box-trend-heading button,
+.team-boxscore-page .boxscore-panel .box-trend-move button { min-height:22px; font-size:10px; }
+.team-boxscore-page .boxscore-panel .box-trend-move .box-trend-sort { margin:0; border:0; }
+.team-boxscore-page .boxscore-panel .box-trend-cell { padding:3px 6px; }
+.team-boxscore-page .boxscore-panel .box-trend-cell .trend-bar-item b,
+.team-boxscore-page .boxscore-panel .box-trend-cell .trend-bar-item small { font-size:8px; line-height:10px; }
+.team-boxscore-page .boxscore-panel .data-status { min-height:24px; padding:2px 4px; font-size:10px; }
+.team-boxscore-page .boxscore-panel .data-status > span:first-of-type { margin-left:0; }
+@media (max-width:760px) {
+  .team-boxscore-page .team-box-controls .boxscore-filters { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .team-boxscore-page .team-box-controls .boxscore-filters > .field { width:auto !important; min-width:0; }
+  .team-boxscore-page .team-box-controls .filter-popover { max-width:calc(100vw - 40px); }
+  .team-boxscore-page .team-box-controls .statistics-filter-field .filter-popover { left:0; }
+}
+@media (pointer:coarse) {
+  .team-boxscore-page .team-box-controls .schedule-selector:not(.open) { height:auto; }
+  .team-boxscore-page .team-box-controls .schedule-selector-trigger,
+  .team-boxscore-page .team-box-controls .box-scroll-buttons button,
+  .team-boxscore-page .boxscore-panel .box-player-cell button,
+  .team-boxscore-page .boxscore-panel .marker-trigger { min-height:44px; }
+  .team-boxscore-page .boxscore-panel .marker-trigger { min-width:44px; }
+  .team-boxscore-page .boxscore-panel .boxscore-table tbody th,
+  .team-boxscore-page .boxscore-panel .boxscore-table tbody td { height:46px; }
+}

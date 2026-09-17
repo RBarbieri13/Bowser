@@ -19,9 +19,12 @@ beforeEach(() => { localStorage.clear(); global.fetch = vi.fn(async () => reply(
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 const ready = () => screen.findByRole('button', { name: 'Fixture Runner', exact: true });
 const playerRows = () => within(screen.getByRole('table')).getAllByRole('row').slice(2);
+const openControls = () => { const toggle = screen.getByRole('button', { name: 'Filters & settings' }); if (toggle.getAttribute('aria-expanded') === 'false') fireEvent.click(toggle); };
+const openTableSettings = () => { openControls(); const summary = screen.getByText('Table columns & density'); if (!summary.closest('details').open) fireEvent.click(summary); };
+
 
 test('renders five independent rank and five FAAB sources, real usage, and exactly one point per recorded game', async () => {
-  const open = vi.fn(); render(<Waivers onOpenPlayer={open} />); await ready();
+  const open = vi.fn(); render(<Waivers onOpenPlayer={open} />); await ready(); openControls();
   expect(screen.getByText('5 rank sources · 5 expert FAAB sources')).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /Research desk/ })).toHaveAttribute('href', '/research/waiver-desk-2026-week1/week1-waiver-desk.html');
   for (const source of sources) {
@@ -43,7 +46,7 @@ test('renders five independent rank and five FAAB sources, real usage, and exact
 });
 
 test('sort keeps unknowns last both ways and adds secondary sorts without altering source data', async () => {
-  render(<Waivers />); await ready();
+  render(<Waivers />); await ready(); openControls();
   const sort = screen.getByRole('button', { name: 'Sort Fantasy FPTS' });
   expect(playerRows()[0]).toHaveTextContent('Fixture Runner');
   fireEvent.click(sort);
@@ -57,7 +60,7 @@ test('sort keeps unknowns last both ways and adds secondary sorts without alteri
 });
 
 test('search, position, team, and source ranges combine and exclude unknown source values', async () => {
-  render(<Waivers />); await ready();
+  render(<Waivers />); await ready(); openControls();
   fireEvent.change(screen.getByLabelText('Search waiver players'), { target: { value: 'fixture buf' } });
   expect(playerRows()).toHaveLength(1);
   fireEvent.change(screen.getByLabelText('Search waiver players'), { target: { value: '' } });
@@ -65,7 +68,6 @@ test('search, position, team, and source ranges combine and exclude unknown sour
   expect(playerRows()).toHaveLength(2);
   fireEvent.change(screen.getByLabelText('Waiver team'), { target: { value: 'BUF' } });
   expect(playerRows()).toHaveLength(1);
-  fireEvent.click(screen.getByRole('button', { name: 'Source filters' }));
   fireEvent.click(screen.getByRole('button', { name: 'Clear filters' }));
   fireEvent.change(screen.getByLabelText('rank filter source'), { target: { value: 'source-0' } });
   fireEvent.change(screen.getByLabelText('rank max'), { target: { value: '1' } });
@@ -79,7 +81,7 @@ test('search, position, team, and source ranges combine and exclude unknown sour
 });
 
 test('Favorites persist zero bids and notes, reject invalid bids, and isolate season and waiver week', async () => {
-  const view = render(<Waivers />); await ready();
+  const view = render(<Waivers />); await ready(); openControls();
   fireEvent.click(screen.getByRole('button', { name: 'Favorite Fixture Runner' }));
   fireEvent.click(screen.getByRole('button', { name: 'Favorites 1' }));
   fireEvent.change(screen.getByLabelText('Personal bid for Fixture Runner'), { target: { value: '0' } });
@@ -98,11 +100,11 @@ test('Favorites persist zero bids and notes, reject invalid bids, and isolate se
 
 test('saved table controls stay isolated, preserve collapsed groups, and support keyboard resize', async () => {
   localStorage.setItem('bowser:player-table:v1', 'untouched');
-  const view = render(<Waivers />); await ready();
+  const view = render(<Waivers />); await ready(); openControls();
   fireEvent.click(screen.getByRole('button', { name: 'Collapse Passing', exact: true }));
   expect(screen.queryByRole('button', { name: 'Sort Passing ATT' })).not.toBeInTheDocument();
   fireEvent.keyDown(screen.getByRole('separator', { name: 'Resize Player column' }), { key: 'ArrowRight' });
-  fireEvent.click(screen.getByRole('button', { name: 'Table', exact: true }));
+  openTableSettings();
   fireEvent.change(screen.getByLabelText('Waiver row density'), { target: { value: 'comfortable' } });
   fireEvent.click(screen.getByRole('checkbox', { name: 'GP', exact: true }));
   expect(screen.queryByRole('dialog', {name:'Waiver table settings'})).not.toBeInTheDocument();
@@ -111,7 +113,7 @@ test('saved table controls stay isolated, preserve collapsed groups, and support
   const saved = JSON.parse(localStorage.getItem(WAIVER_PREFS_KEY));
   expect(saved).toMatchObject({ density: 'comfortable', widths: { name: 200 }, collapsed: ['passing'], hidden: ['games_played'] });
   expect(localStorage.getItem('bowser:player-table:v1')).toBe('untouched');
-  view.unmount(); render(<Waivers />); await ready();
+  view.unmount(); render(<Waivers />); await ready(); openControls();
   expect(screen.queryByRole('button', { name: 'Sort Usage GP' })).not.toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Expand Passing', exact: true })).toBeInTheDocument();
 });
@@ -119,9 +121,9 @@ test('saved table controls stay isolated, preserve collapsed groups, and support
 test('waiver week and stats week selectors are independent; stale requests cannot replace current results', async () => {
   let resolveInitial;
   fetch.mockImplementationOnce(() => new Promise(resolve => { resolveInitial = resolve; }));
-  render(<Waivers />);
+  render(<Waivers />); openControls();
   fireEvent.change(screen.getByLabelText('Statistics end week'), { target: { value: '2' } });
-  await ready();
+  await ready(); openControls();
   expect(fetch.mock.calls.at(-1)[0]).toContain('week=2&weeks=1,2&scoring=ppr');
   fireEvent.change(screen.getByLabelText('Waiver week'), { target: { value: '3' } });
   await waitFor(() => expect(fetch.mock.calls.at(-1)[0]).toContain('week=3&weeks=1,2'));
@@ -135,7 +137,7 @@ test('source values convert only with explicit matching budget basis and preserv
   expect(faabValue({ low: 10, high: null, unit: 'percent', budgetBasis: 'annual' }, 'dollars', { annual: 200 })).toMatchObject({ low: 20, high: null, unit: 'dollars', converted: true });
   expect(faabValue({ low: 20, high: null, unit: 'dollars', budgetBasis: 'annual', referenceBudget: 200 }, 'percent')).toMatchObject({ low: 10, unit: 'percent' });
   expect(formatFAAB({ low: 5, high: null, unit: 'percent', operator: 'at-most' })).toBe('≤5%');
-  render(<Waivers />); await ready();
+  render(<Waivers />); await ready(); openControls();
   fireEvent.change(screen.getByLabelText('FAAB display'), { target: { value: 'dollars' } });
   fireEvent.change(screen.getByLabelText('Annual FAAB budget'), { target: { value: '200' } });
   expect(within((await ready()).closest('tr')).getAllByText('$30–$40')[0]).toBeInTheDocument();
@@ -148,8 +150,8 @@ test('trend metric selections update real bars and sorting, survive reload, and 
     { ...rows[1], stats: { ...rows[1].stats, rushing_yards: 100, receiving_tds: 2, trends: [{ season: 2026, week: 1, rushing_yards: 100, receiving_tds: 2 }] } },
     rows[2],
   ] }));
-  const view = render(<Waivers />); await ready();
-  fireEvent.click(screen.getByRole('button', { name: 'Table', exact: true }));
+  const view = render(<Waivers />); await ready(); openControls();
+  openTableSettings();
   fireEvent.change(screen.getByLabelText('Rushing trend metric'), { target: { value: 'rushing_yards' } });
   fireEvent.change(screen.getByLabelText('Receiving trend metric'), { target: { value: 'receiving_tds' } });
   const runner = (await ready()).closest('tr');
@@ -159,7 +161,7 @@ test('trend metric selections update real bars and sorting, survive reload, and 
   expect(playerRows()[0]).toHaveTextContent('Fixture Receiver');
   expect(playerRows().at(-1)).toHaveTextContent('Unknown Quarterback');
   expect(JSON.parse(localStorage.getItem(WAIVER_PREFS_KEY)).trendMetrics).toEqual({ usage: 'snaps', rushing: 'rushing_yards', receiving: 'receiving_tds' });
-  view.unmount(); render(<Waivers />); await ready();
+  view.unmount(); render(<Waivers />); await ready(); openControls();
   expect(screen.getByRole('button', { name: 'Sort Rushing Rushing yards / week' })).toHaveAttribute('title', 'Sort Rushing yards / week. Shift-click to add another sort.');
   expect(screen.getByRole('button', { name: 'Sort Receiving Receiving TDs / week' })).toBeInTheDocument();
   expect(screen.getByRole('img', { name: 'Receiving TDs trend for Fixture Runner: 2026 Week 1: 0' })).toBeInTheDocument();
@@ -178,7 +180,7 @@ test('storage validation and null comparisons preserve unknowns and safe bounds'
 
 
 test('an unavailable historical snapshot displays the API explanation without stale rows', async () => {
-  const view = render(<Waivers />); await ready();
+  const view = render(<Waivers />); await ready(); openControls();
   fetch.mockResolvedValue({ ok: false, json: async () => ({ error: { message: 'No published waiver snapshot is available for 2025 Week 2.' } }) });
   view.rerender(<Waivers season={2025} />);
   await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('No published waiver snapshot is available for 2025 Week 2.'));
@@ -189,7 +191,7 @@ test('an unavailable historical snapshot displays the API explanation without st
 
 test('native waiver settings discard removed dialog formatting but retain trend history', async () => {
   localStorage.setItem(WAIVER_PREFS_KEY, JSON.stringify({ order: ['fantasy_points'], numberFormat: 'integer', savedViews: [{ name: 'Old layout' }], trendWeeks: 5 }));
-  render(<Waivers />); await ready();
+  render(<Waivers />); await ready(); openControls();
   expect(screen.getByLabelText('Waiver trend history')).toHaveValue('5');
   expect(fetch.mock.calls.at(-1)[0]).toContain('trendWeeks=5');
   expect(within((await ready()).closest('tr')).getByText('16.4')).toBeInTheDocument();
@@ -197,7 +199,39 @@ test('native waiver settings discard removed dialog formatting but retain trend 
   expect(saved).not.toHaveProperty('numberFormat');
   expect(saved).not.toHaveProperty('order');
   expect(saved).not.toHaveProperty('savedViews');
-  fireEvent.click(screen.getByRole('button', { name: 'Table', exact: true }));
+  openTableSettings();
   expect(screen.getByLabelText('Waiver row density')).toHaveValue('compact');
   expect(screen.queryByLabelText('Number format')).not.toBeInTheDocument();
+});
+
+
+test('one collapsed header preserves the complete query and table state when opened and closed', async () => {
+  render(<Waivers />); await ready();
+  const toggle = screen.getByRole('button', { name: 'Filters & settings' });
+  expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+  expect(screen.queryByRole('combobox', { name: 'Waiver week' })).not.toBeInTheDocument();
+  expect(screen.getByRole('region', { name: 'Waiver research table' })).toBeVisible();
+  expect(screen.queryByRole('button', { name: 'Source filters' })).not.toBeInTheDocument();
+  openControls();
+  fireEvent.change(screen.getByLabelText('Waiver position'), { target: { value: 'RB' } });
+  fireEvent.change(screen.getByLabelText('FAAB display'), { target: { value: 'dollars' } });
+  fireEvent.change(screen.getByLabelText('Annual FAAB budget'), { target: { value: '200' } });
+  fireEvent.change(screen.getByLabelText('rank filter source'), { target: { value: 'source-0' } });
+  fireEvent.change(screen.getByLabelText('rank max'), { target: { value: '1' } });
+  fireEvent.change(screen.getByLabelText('Usage trend metric'), { target: { value: 'rush_attempts' } });
+  openTableSettings();
+  fireEvent.change(screen.getByLabelText('Waiver row density'), { target: { value: 'comfortable' } });
+  fireEvent.click(toggle);
+  expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  expect(screen.getByLabelText('Waiver position')).not.toBeVisible();
+  expect(playerRows()).toHaveLength(1);
+  expect(within(playerRows()[0]).getAllByText('$30–$40')[0]).toBeVisible();
+  expect(screen.getByRole('status')).toHaveTextContent('1 / 3 players');
+  expect(toggle.closest('header')).toHaveTextContent('RB · Source ranges');
+  openControls();
+  expect(screen.getByLabelText('rank max')).toHaveValue(1);
+  expect(screen.getByLabelText('Annual FAAB budget')).toHaveValue(200);
+  expect(screen.getByLabelText('Usage trend metric')).toHaveValue('rush_attempts');
+  expect(screen.getByLabelText('Waiver row density')).toHaveValue('comfortable');
 });

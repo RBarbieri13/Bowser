@@ -41,6 +41,7 @@ export function getDfsArchiveIndex() {
   if (archiveCache.index) return archiveCache.index;
   const index = withArchive(db => db.prepare(`SELECT season,week,slate_id AS slateId,slate_key AS key,
     capture_id AS captureId,captured_at AS capturedAt,game_count AS gameCount,
+    json_extract(metadata_json,'$.scoring') AS scoring,
     (SELECT COUNT(*) FROM dfs_prices p WHERE p.capture_id=c.capture_id) AS salaryPlayers,
     (SELECT COUNT(*) FROM dfs_prices p WHERE p.capture_id=c.capture_id AND projection IS NOT NULL) AS projectedPlayers
     FROM dfs_captures c ORDER BY season DESC,week DESC,captured_at DESC,game_count DESC`).all()) || [];
@@ -61,43 +62,65 @@ function readWeekly() {
   }
 }
 
+function selectRosterRole(slate, requestedRole) {
+  const showdown = slate.meta.contestTypeId === 96;
+  if (!showdown) return slate;
+  const role = requestedRole || 'FLEX';
+  if (!['FLEX','CPT'].includes(role)) return null;
+  const records = slate.records.filter(row => row.rosterPosition === role);
+  return { records, meta: {...slate.meta, rosterPosition:role, label:`${slate.meta.label} · ${role}`,
+    rosterPositions:['FLEX','CPT'], projectionMultiplier:role === 'CPT' ? 1.5 : 1,
+    projectionBasis:`Full-game DraftKings source projection${role === 'CPT' ? ' × 1.5 Captain multiplier' : '; unscaled FLEX scoring'}. Official ${role} salary.`,
+    coverage:{...slate.meta.coverage,salaryEntries:slate.meta.coverage.salaryPlayers,
+      salaryPlayers:slate.meta.coverage.distinctSalaryPlayers,
+      projectedPlayers:slate.meta.coverage.projectedPlayers/2,
+      databasePlayersWithSalary:slate.meta.coverage.databasePlayersWithSalary/2,
+      databasePlayersWithProjection:slate.meta.coverage.databasePlayersWithProjection/2,
+      rosterPlayersWithSalary:slate.meta.coverage.rosterPlayersWithSalary/2,
+      unmatchedSalaryPlayers:slate.meta.coverage.unmatchedSalaryPlayers/2} } };
+}
+
 export function getDfsSlate(key = 'current') {
   const weekly = readWeekly();
   const slates = { ...historical.slates, ...(weekly?.slates || {}), ...archiveSlates() };
   const defaultKey = weekly?.defaultSlate || historical.defaultSlate;
   const requestedKey = key || 'current';
-  const resolvedKey = requestedKey === 'current' ? defaultKey : requestedKey;
+  const isCaptain = requestedKey.endsWith(':cpt');
+  const resolvedKey = requestedKey === 'current' ? defaultKey : isCaptain ? requestedKey.slice(0,-4) : requestedKey;
   if (!Object.hasOwn(slates, resolvedKey)) return null;
   const { records, ...meta } = slates[resolvedKey];
+  if (isCaptain && meta.contestTypeId !== 96) return null;
   const now = Date.now();
   const ended = new Date(meta.endsAt).getTime() + 4 * 60 * 60 * 1000 < now;
   const fallback = requestedKey === 'current' && (!weekly || ended);
   const options = [
     { key: 'current', label: `Current · ${slates[defaultKey].label}`, season: slates[defaultKey].season,
-      week: slates[defaultKey].week, startsAt: slates[defaultKey].startsAt, endsAt: slates[defaultKey].endsAt },
-    ...Object.entries(slates).sort(([, a], [, b]) => b.season - a.season || b.week - a.week || b.gameCount - a.gameCount)
-      .map(([key, s]) => ({ key, label: s.label, season: s.season, week: s.week, startsAt: s.startsAt, endsAt: s.endsAt })),
+      week: slates[defaultKey].week, startsAt: slates[defaultKey].startsAt, endsAt: slates[defaultKey].endsAt, scoring:slates[defaultKey].scoring },
+    ...Object.entries(slates).sort(([, a], [, b]) => b.season - a.season || b.week - a.week || b.gameCount - a.gameCount || a.startsAt.localeCompare(b.startsAt))
+      .flatMap(([key, s]) => (s.contestTypeId === 96 ? ['FLEX','CPT'] : [null]).map(role => ({key:role === 'CPT' ? `${key}:cpt` : key,
+        label:s.label + (role ? ` · ${role}` : ''), season:s.season,week:s.week,startsAt:s.startsAt,endsAt:s.endsAt,
+        scoring:s.scoring,rosterPosition:role,contestTypeId:s.contestTypeId}))),
   ];
-  return {
+  return selectRosterRole({
     meta: { ...meta, key: resolvedKey, requestedKey, defaultSlate: defaultKey, options,
       availability: fallback ? 'last-good' : ended ? 'archived' : 'available',
       currentSnapshotAvailable: Boolean(weekly) && !ended,
       availabilityMessage: fallback ? `Showing last verified ${meta.season} Week ${meta.week} data; a newer verified slate is not available.` : null },
     records: records.filter(row => row.playerId),
-  };
+  }, isCaptain ? 'CPT' : 'FLEX');
 }
 
 // Exact historical lookup: a missing week is never substituted with the current slate.
-export function getDfsWeek(season, week, { slateId, captureId } = {}) {
+export function getDfsWeek(season, week, { slateId, captureId, rosterPosition = 'FLEX' } = {}) {
   const active = archiveSlates();
   const index = getDfsArchiveIndex().filter(s => (captureId || active[s.key]?.captureId === s.captureId) && s.season === season && s.week === week
-    && (!slateId || s.slateId === Number(slateId)) && (!captureId || s.captureId === captureId));
+    && (slateId || captureId || s.scoring === 'DraftKings Classic') && (!slateId || s.slateId === Number(slateId)) && (!captureId || s.captureId === captureId));
   const choice = index.toSorted((a,b) => b.gameCount-a.gameCount || b.capturedAt.localeCompare(a.capturedAt) || a.slateId-b.slateId)[0];
   if (choice) {
     const cached = archiveCache.slates[choice.key];
     if (cached?.captureId === choice.captureId) {
       const { records,...meta } = cached;
-      return {records:records.filter(r => r.playerId),meta:{...meta,key:choice.key,availability:'archived',selection:'exact-week',referenceSeason:season,referenceWeek:week,available:true,reason:null}};
+      return selectRosterRole({records:records.filter(r => r.playerId),meta:{...meta,key:choice.key,availability:'archived',selection:'exact-week',referenceSeason:season,referenceWeek:week,available:true,reason:null}},rosterPosition);
     }
     const result = withArchive(db => {
     const capture = db.prepare('SELECT metadata_json FROM dfs_captures WHERE capture_id=?').get(choice.captureId);
@@ -105,15 +128,15 @@ export function getDfsWeek(season, week, { slateId, captureId } = {}) {
     return { records, meta: { ...JSON.parse(capture.metadata_json), key: choice.key, availability: 'archived',
       selection: 'exact-week', referenceSeason: season, referenceWeek: week, available: true, reason: null } };
     });
-    if (result) return result;
+    if (result) return selectRosterRole(result,rosterPosition);
   }
   if (!captureId) {
     const slates = { ...historical.slates, ...(readWeekly()?.slates || {}) };
-    const entry = Object.entries(slates).filter(([,s]) => s.season === season && s.week === week && (!slateId || s.id === Number(slateId)))
+    const entry = Object.entries(slates).filter(([,s]) => s.season === season && s.week === week && (slateId || s.scoring === 'DraftKings Classic') && (!slateId || s.id === Number(slateId)))
       .sort(([,a],[,b]) => b.gameCount-a.gameCount || b.capturedAt.localeCompare(a.capturedAt) || a.id-b.id)[0];
     if (entry) {
       const { records,...meta } = entry[1];
-      return { records: records.filter(r => r.playerId), meta: { ...meta,key:entry[0],availability:'archived',selection:'exact-week',referenceSeason:season,referenceWeek:week,available:true,reason:null } };
+      return selectRosterRole({ records: records.filter(r => r.playerId), meta: { ...meta,key:entry[0],availability:'archived',selection:'exact-week',referenceSeason:season,referenceWeek:week,available:true,reason:null } },rosterPosition);
     }
   }
   return { records: [], meta: { season, week, referenceSeason:season,referenceWeek:week,selection:'exact-week',
@@ -127,6 +150,9 @@ export function dfsPlayerFields(slate, playerId) {
     dfs_meta: { season: slate.meta.season, week: slate.meta.week, slateId: slate.meta.id ?? null,
       slateKey: slate.meta.key ?? null, label: slate.meta.label ?? null, captureId: slate.meta.captureId ?? null,
       capturedAt: slate.meta.capturedAt ?? null, salarySource: slate.meta.salarySource ?? null, salaryUrl: slate.meta.salaryUrl ?? null,
+      rosterPosition:row?.rosterPosition ?? null, scoring:slate.meta.scoring ?? null,
+      projectionBase:row?.projectionBase ?? null, projectionMultiplier:row?.projectionMultiplier ?? 1,
+      projectionBasis:row?.projectionBasis ?? null, projectionRulesUrl:row?.projectionRulesUrl ?? null,
       projectionSource: row?.projectionSource ?? null, projectionUrl: row?.projectionUrl ?? null,
       projectionSourceDate: row?.projectionSourceDate ?? null, game: row?.game ?? null,
       projectionCapturedAt: row?.projectionCapturedAt ?? slate.meta.capturedAt ?? null,

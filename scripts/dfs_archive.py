@@ -41,19 +41,34 @@ def canonical(value):
 
 
 def validate_slate(key, slate):
-    assert slate['scoring'] == 'DraftKings Classic', 'Only verified Classic slates may be archived'
+    showdown = slate.get('contestTypeId') == 96 and slate['scoring'] == 'DraftKings Showdown Captain Mode'
+    assert showdown or slate['scoring'] == 'DraftKings Classic', 'Only supported verified formats may be archived'
+    if showdown:
+        assert slate['gameCount'] == 1 and slate.get('rosterPositions') == ['FLEX','CPT']
+        by_role = {role:{(r['name'],r['position'],r['team']):r for r in slate['records'] if r.get('rosterPosition') == role} for role in ('FLEX','CPT')}
+        assert set(by_role['FLEX']) == set(by_role['CPT']) and len(by_role['FLEX']) >= 40
+        assert len(slate['records']) == 2*len(by_role['FLEX'])
+        for identity, flex in by_role['FLEX'].items():
+            captain=by_role['CPT'][identity]
+            assert captain['salary'] == flex['salary']*1.5 and captain['playerId'] == flex['playerId']
+            assert (captain['projection'] is None) == (flex['projection'] is None)
+            if flex['projection'] is not None:
+                assert flex['projection'] == flex['projectionBase'] == captain['projectionBase']
+                assert captain['projection'] == round(flex['projection']*1.5,4)
+                assert flex['projectionMultiplier'] == 1 and captain['projectionMultiplier'] == 1.5
     assert 2010 <= slate['season'] <= 2100 and 1 <= slate['week'] <= 18
     assert slate['capturedAt'] and slate['salaryUrl'].startswith('https://www.draftkings.com/')
     records = slate['records']
     assert len(records) >= slate['gameCount'] * 40, 'Incomplete salary coverage'
     assert len(records) == len({str(r['draftKingsId']) for r in records}), 'Duplicate salary ID'
-    ids = [r['playerId'] for r in records if r.get('playerId')]
+    ids = [(r['playerId'],r.get('rosterPosition') if showdown else None) for r in records if r.get('playerId')]
     assert len(ids) == len(set(ids)), 'Ambiguous player identities'
+    if not showdown: assert all(not row.get('rosterPosition') for row in records), 'Classic captures cannot contain Showdown roles'
     for row in records:
-        assert isinstance(row['salary'], int) and 2000 <= row['salary'] <= 15000
+        assert isinstance(row['salary'], int) and (200 if showdown else 2000) <= row['salary'] <= (30000 if showdown else 15000)
         value = row.get('projection')
         if value is not None:
-            assert math.isfinite(value) and 0 <= value <= 70
+            assert math.isfinite(value) and 0 <= value <= (105 if showdown else 70)
             assert row.get('projectionSource') and row.get('projectionUrl', '').startswith('https://')
             assert row.get('projectionSeason', slate['season']) == slate['season']
             assert row.get('projectionWeek', slate['week']) == slate['week']

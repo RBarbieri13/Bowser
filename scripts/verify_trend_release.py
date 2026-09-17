@@ -65,10 +65,27 @@ try:
     archive = get('/api/v1/dfs-archive?season=2026&week=2')
     check(len(archive['meta']['captures']) >= 12, 'Dated slate capture versions available')
     wentz = next(p for p in archive['data'] if p['name'] == 'Carson Wentz')
-    check(wentz['projection'] == 14.95 and wentz['projectionSource'] == 'Fantasy Sports Central', 'Expanded source projection preserved with provenance')
+    expected_week2 = weekly['slates']['2026-w2-dk-153427']
+    expected_wentz = next(p for p in expected_week2['records'] if p['name'] == 'Carson Wentz')
+    check(wentz['projection'] == expected_wentz['projection'] and wentz['projectionSource'] == expected_wentz['projectionSource'], 'Latest source projection matches verified candidate with provenance')
     old_capture = next(s for s in archive['meta']['captures'] if s['slateId'] == 153427 and s['projectedPlayers'] == 192)
     old = get('/api/v1/dfs-archive?season=2026&week=2&captureId=' + old_capture['captureId'])
     check(next(p for p in old['data'] if p['name'] == 'Carson Wentz')['projection'] is None, 'Historical pre-enrichment values reproducible')
+    check(next(p for p in old['data'] if p['name'] == 'Jahmyr Gibbs')['projection'] == 23.1, 'Immutable prior Gibbs projection remains 23.1')
+    thursday_key = '2026-w2-dk-153434'
+    for role, suffix in [('FLEX',''),('CPT',':cpt')]:
+        thursday = get('/api/v1/player-stats?season=2026&weeks=1&limit=all&includeTrends=0&dfsSlate=' + thursday_key + suffix)
+        option = next(o for o in thursday['meta']['dfs']['options'] if o['key'] == thursday_key + suffix)
+        check(option['rosterPosition'] == role and 'Thursday Only' in option['label'] and '09-17' in option['label'], 'Official dated Thursday ' + role + ' option available')
+        check(thursday['meta']['dfs']['id'] == 153434 and thursday['meta']['dfs']['rosterPosition'] == role, 'Thursday selection retains exact official group and role ' + role)
+        check(len(thursday['data']) == len({p['player_id'] for p in thursday['data']}), 'Showdown roles cannot duplicate player table rows ' + role)
+        matched = {p['player_id']:p for p in thursday['data']}
+        for record in weekly['slates'][thursday_key]['records']:
+            if record['rosterPosition'] != role or record['playerId'] not in matched:continue
+            row = matched[record['playerId']]
+            check(row['draft_kings_price'] == record['salary'] and row['draft_kings_projection'] == record['projection'], 'Thursday official ' + role + ' salary/projection ' + record['name'])
+        archived_role = get('/api/v1/dfs-archive?season=2026&week=2&slateId=153434&rosterPosition=' + role)
+        check(archived_role['meta']['rosterPosition'] == role and all(r['rosterPosition'] == role for r in archived_role['data']), 'Archived Showdown role lookup ' + role)
     identity = get('/api/v1/player-identity?season=2026&name=Cam%20Skattebo&team=NYG&position=RB')
     check(identity['match']['player_id'] == cam['player_id'], 'Global player identity route resolves to warehouse profile')
     profile = get('/api/v1/player-profile?season=2026&playerId=' + cam['player_id'] + '&trendWeeks=5')

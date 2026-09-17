@@ -1,3 +1,5 @@
+import { createPortal } from "react-dom";
+import { PageControls } from "./PageControls.jsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft, ArrowsOutLineVertical, CaretDown, Football,
@@ -52,7 +54,7 @@ function PlayerAvatar({ player }) {
     : <span aria-hidden="true">{initials}</span>;
 }
 
-function ParticipationConsole({ game, segments = [], players = [], teamSegments = [], onOpenPlayer }) {
+function ParticipationConsole({ game, segments = [], players = [], teamSegments = [], onOpenPlayer, controlsHost }) {
   const initial = useMemo(safeConsolePreferences, []);
   const [activeTeam, setActiveTeam] = useState(game.homeTeam);
   const [mode, setMode] = useState(initial.mode);
@@ -110,6 +112,7 @@ function ParticipationConsole({ game, segments = [], players = [], teamSegments 
 
   return (
     <section className={`participation-console ${density}`} style={{ height }} aria-labelledby="participation-title">
+      {controlsHost && createPortal(<>
       <div
         className="console-resizer"
         role="separator"
@@ -139,6 +142,7 @@ function ParticipationConsole({ game, segments = [], players = [], teamSegments 
         <div className="density-toggle" role="group" aria-label="Participation density"><button className={density === "compact" ? "active" : ""} onClick={() => setDensity("compact")}>Compact</button><button className={density === "comfortable" ? "active" : ""} onClick={() => setDensity("comfortable")}>Comfortable</button></div>
       </div>
       <div className="same-metric-note"><Info weight="fill" /> Every bar is compared only with the same KPI across {scale === "game-segments" ? "the selected team’s game segments" : "the selected team’s roster totals"}. Metrics never share a scale.</div>
+      </>, controlsHost)}
       <div className="participation-table-wrap">
         <table className="participation-table" aria-label={`${activeTeam} ${mode} by game segment`}>
           <thead><tr><th><span>Player</span><small>{activePlayers.length} selected · scroll for all</small></th>{segments.map((segment) => <th key={segment.segment}><span>{segment.label}</span><small>{segment.phase}</small></th>)}<th><span>Total</span><small>Share of team</small></th></tr></thead>
@@ -170,6 +174,7 @@ function ParticipationConsole({ game, segments = [], players = [], teamSegments 
 }
 
 export function GameBreakdown({ season = 2026, gameId, scoring = "ppr", onBack, onOpenPlayer }) {
+  const [controlsHost,setControlsHost]=useState(null);
   const [payload, setPayload] = useState(null);
   const [error, setError] = useState("");
   useEffect(() => {
@@ -187,15 +192,14 @@ export function GameBreakdown({ season = 2026, gameId, scoring = "ppr", onBack, 
   if (!game) return <main className="page-content game-breakdown-page"><div className="progress" role="progressbar" aria-label="Loading game breakdown"><span /></div></main>;
   return (
     <main className="page-content game-breakdown-page broadcast-game-page">
-      <div className="broadcast-toolbar"><button className="game-back" onClick={onBack}><ArrowLeft /> Back to team box scores</button><span><Gauge weight="bold" /> Broadcast analytics timeline</span><small>Week {game.week} · {scoring.toUpperCase()}</small></div>
-      <h1 className="sr-only">{game.awayTeam} {game.awayScore} — {game.homeScore} {game.homeTeam}</h1>
+      <PageControls title={`${game.awayTeam} ${game.awayScore} — ${game.homeScore} ${game.homeTeam}`} summary={<span>{season} · Week {game.week} · {scoring.toUpperCase()}</span>} actions={<button className="game-back" onClick={onBack}><ArrowLeft/>Back to team box scores</button>}>{(data.availability.playerParticipation || data.availability.playerOpportunities) ? <div ref={setControlsHost} className="game-controls-slot"/> : null}</PageControls>
       {data.availability.driveWaterfall
         ? <DriveWaterfall drives={data.drives || []} awayTeam={game.awayTeam} homeTeam={game.homeTeam} awayColor="#E58080" homeColor="#3ECF8E" week={game.week} overtime={game.overtime} />
         : <div className="game-unavailable"><Football /> Drive-by-drive play-by-play is unavailable for this matchup.</div>}
       <div className="broadcast-main-analysis">
         {!data.availability.playerParticipation && data.availability.playerOpportunities && <div className="same-metric-note"><Info /> Play-by-play opportunities are available. Segment-level participation snaps have not been published and appear as —.</div>}
         {(data.availability.playerParticipation || data.availability.playerOpportunities)
-          ? <ParticipationConsole game={game} segments={data.segments || []} players={data.playerSegments || []} teamSegments={data.teamSegments || []} onOpenPlayer={onOpenPlayer} />
+          ? <ParticipationConsole game={game} segments={data.segments || []} players={data.playerSegments || []} teamSegments={data.teamSegments || []} onOpenPlayer={onOpenPlayer} controlsHost={controlsHost} />
           : <div className="game-unavailable"><UsersThree /> Player participation is unavailable for this matchup.</div>}
       </div>
       <footer className="data-status"><span>{payload.meta.methodology.driveWaterfall} {payload.meta.methodology.playerParticipation}</span><a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noreferrer">Data: nflverse · CC BY 4.0</a></footer>

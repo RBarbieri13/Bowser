@@ -27,7 +27,7 @@ def salary_csv(records):
     for row in records:
         pos = 'DST' if row['position'] == 'DEF' else row['position']
         writer.writerow({'Position': pos, 'Name': row['name'], 'ID': row['draftKingsId'], 'Salary': row['salary'],
-                         'Game Info': row['game'], 'TeamAbbrev': row['team'], 'Roster Position': pos if pos in ('QB', 'DST') else pos + '/FLEX',
+                         'Game Info': row['game'], 'TeamAbbrev': row['team'], 'Roster Position': row.get('rosterPosition') or (pos if pos in ('QB', 'DST') else pos + '/FLEX'),
                          'AvgPointsPerGame': '9999'})
     return stream.getvalue()
 
@@ -61,9 +61,32 @@ class WeeklyDfsTests(unittest.TestCase):
         self.assertEqual((current['season'], current['week']), (SNAPSHOT['season'], SNAPSHOT['week']))
         names = {r['name']: r for r in SLATE['records']}
         self.assertEqual(names['Jahmyr Gibbs']['salary'], 8500)
-        self.assertEqual(names['Jahmyr Gibbs']['projection'], 23.1)
+        self.assertGreater(names['Jahmyr Gibbs']['projection'], 0)
+        self.assertEqual(names['Jahmyr Gibbs']['projectionSource'], 'Fantasy Info Central')
         self.assertTrue(names['Carnell Tate']['playerId'])
         self.assertTrue(names['Makai Lemon']['playerId'])
+
+    def test_showdown_official_roles_and_projection_math_are_preserved(self):
+        slate = SNAPSHOT['slates']['2026-w2-dk-153434']
+        projections = source_projections()
+        primary = {key:value for key,value in projections.items() if value['projectionSource'] == 'Fantasy Info Central'}
+        identities = {(module.name_key(r['name']),r['position'],r['team']):{r['playerId']} for r in slate['records'] if r['playerId']}
+        rows = module.build_records(salary_csv(slate['records']),slate,primary,identities,{},projections)
+        self.assertEqual(len(rows),94)
+        gibbs = {r['rosterPosition']:r for r in rows if r['name'] == 'Jahmyr Gibbs'}
+        self.assertEqual(gibbs['FLEX']['salary'],12000)
+        self.assertEqual(gibbs['CPT']['salary'],18000)
+        self.assertEqual(gibbs['CPT']['projection'],round(gibbs['FLEX']['projection']*1.5,4))
+        self.assertEqual(gibbs['CPT']['projectionBase'],gibbs['FLEX']['projection'])
+        self.assertEqual(gibbs['FLEX']['playerId'],gibbs['CPT']['playerId'])
+        self.assertTrue(all(r['projection'] is None for r in rows if r['position'] in ('K','DEF')))
+        self.assertTrue(all(r['projection'] is None or r['projection'] != 9999 for r in rows))
+        for mutate in [lambda records:records.pop(),
+                       lambda records:next(r for r in records if r['rosterPosition']=='CPT').update(salary=12345),
+                       lambda records:next(r for r in records if r['rosterPosition']=='CPT' and r['projection'] is not None).update(projection=1),
+                       lambda records:records[0].update(rosterPosition='QB')]:
+            damaged = copy.deepcopy(rows);mutate(damaged)
+            with self.assertRaises(module.PartialData):module.validate_showdown_roles(damaged,{'DET','BUF'})
 
     def test_calendar_selects_real_week_including_january_and_no_offseason_guess(self):
         games = SLATE['games']
@@ -73,7 +96,7 @@ class WeeklyDfsTests(unittest.TestCase):
         with self.assertRaises(module.NoData):
             module.target_week(games, datetime(2027, 6, 1, tzinfo=timezone.utc))
 
-    def test_discovery_rejects_showdown_and_mixed_week_metadata(self):
+    def test_discovery_requires_correct_showdown_format_and_rejects_mixed_week_metadata(self):
         games = SLATE['games'][:1]
         game = games[0]
         group = {'DraftGroupId': 123, 'Sport': 'NFL', 'ContestTypeId': 21, 'GameTypeId': 1,
@@ -85,7 +108,12 @@ class WeeklyDfsTests(unittest.TestCase):
         group['ContestTypeId'] = 96
         with self.assertRaises(module.NoData):
             module.discover_slates(lobby, games, NOW)
+        group['GameTypeId'] = 96
+        showdown = module.discover_slates(lobby,games,NOW)[0]
+        self.assertEqual(showdown['rosterPositions'],['FLEX','CPT'])
+        self.assertIn('Thursday Only',showdown['label'])
         group['ContestTypeId'] = 21
+        group['GameTypeId'] = 1
         lobby['GameSets'][0]['Competitions'][0]['Description'] = 'DET @ TEN'
         with self.assertRaisesRegex(module.PartialData, 'different week/date/matchup'):
             module.discover_slates(lobby, games, NOW)
@@ -126,7 +154,8 @@ class WeeklyDfsTests(unittest.TestCase):
     def test_validation_detects_mixed_week_and_missing_team_and_tampering(self):
         for change in [lambda s: s['slates'][s['defaultSlate']]['records'][0].update(salary=1),
                        lambda s: next(r for r in s['slates'][s['defaultSlate']]['records'] if r['projection'] is not None).update(projectionWeek=s['slates'][s['defaultSlate']]['week'] + 1),
-                       lambda s: s['slates'][s['defaultSlate']]['records'].pop()]:
+                       lambda s: s['slates'][s['defaultSlate']]['records'].pop(),
+                       lambda s: s.update(defaultSlate='2026-w2-dk-153434')]:
             broken = copy.deepcopy(SNAPSHOT)
             change(broken)
             with self.assertRaises(module.PartialData):

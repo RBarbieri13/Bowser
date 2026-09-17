@@ -27,7 +27,7 @@ class ArchiveTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             path=Path(temp)/'archive.sqlite'
             first=archive.archive_snapshots(path,[SNAPSHOT]); before=path.read_bytes()
-            self.assertEqual(first['insertedCaptures'],6)
+            self.assertEqual(first['insertedCaptures'],len(SNAPSHOT['slates']))
             repeat=archive.archive_snapshots(path,[SNAPSHOT])
             self.assertFalse(repeat['changed']);self.assertEqual(path.read_bytes(),before)
             changed=copy.deepcopy(SNAPSHOT)
@@ -35,7 +35,7 @@ class ArchiveTests(unittest.TestCase):
             changed['slates'][changed['defaultSlate']]['capturedAt']='2026-09-17T02:00:00Z'
             newer=archive.archive_snapshots(path,[changed])
             self.assertEqual(newer['insertedCaptures'],1)
-            self.assertEqual(newer['captures'],7)
+            self.assertEqual(newer['captures'],len(SNAPSHOT['slates'])+1)
             with closing(sqlite3.connect(path)) as db:
                 captures=db.execute('SELECT COUNT(*) FROM dfs_captures WHERE slate_id=153427').fetchone()[0]
                 self.assertEqual(captures,2)
@@ -69,7 +69,7 @@ class ArchiveTests(unittest.TestCase):
             with closing(sqlite3.connect(path)) as db:
                 head=db.execute('SELECT capture_id FROM dfs_slate_heads WHERE slate_key=?',(key,)).fetchone()[0]
                 self.assertEqual(head,original_id)
-                self.assertEqual(db.execute("SELECT projection FROM dfs_prices WHERE capture_id=? AND json_extract(record_json,'$.name')='Carson Wentz'",(head,)).fetchone()[0],14.95)
+                self.assertEqual(db.execute("SELECT projection FROM dfs_prices WHERE capture_id=? AND json_extract(record_json,'$.name')='Carson Wentz'",(head,)).fetchone()[0], next(r['projection'] for r in SNAPSHOT['slates'][key]['records'] if r['name']=='Carson Wentz'))
             repeat=archive.archive_snapshots(path,[recovered]);self.assertFalse(repeat['changed'])
 
     def test_publication_failures_preserve_both_outputs(self):

@@ -1,0 +1,11 @@
+{
+  "status": "verified",
+  "changed": false,
+  "publishable": true,
+  "snapshot": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-compact-controls-20260917/data/dfs-weekly.json",
+  "archive": {
+    "status": "verified",
+    "captures": 86,
+    "rows": 25108
+  }
+}

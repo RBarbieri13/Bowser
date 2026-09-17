@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Refresh dated DraftKings Classic slates; never modify the pinned Week 1 archive.
+"""Refresh dated DraftKings Classic and full-game Showdown slates; never modify the pinned Week 1 archive.
 
 Exit 0: verified updated/unchanged (inspect JSON `changed` before publishing).
 Exit 3: incomplete/unsafe source data, last good snapshot preserved.
-Exit 4: no upcoming NFL week or no Classic slates available; last good preserved.
+Exit 4: no upcoming NFL week or no supported slates available; last good preserved.
 Exit 1: transport/unexpected failure; last good preserved. No partial publication.
 """
 import argparse
@@ -37,6 +37,11 @@ FSC = 'https://fantasysportscentral.com/football/dfscheat.php'
 ET = ZoneInfo('America/New_York')
 TEAM_ALIASES = {'LA': 'LAR', 'JAC': 'JAX', 'WSH': 'WAS', 'OAK': 'LV', 'SD': 'LAC'}
 POSITIONS = {'QB', 'RB', 'WR', 'TE', 'DEF'}
+SHOWDOWN_RULES = 'https://help.draftkings.com/hc/en-us/articles/24808583978003-Game-Style-Showdowns-Overview-US'
+
+def is_showdown(slate):
+    return slate.get('contestTypeId') == 96 and slate.get('scoring') == 'DraftKings Showdown Captain Mode'
+
 
 
 class PartialData(ValueError):
@@ -123,8 +128,10 @@ def discover_slates(lobby, games, now):
     expected = {(g['away'], g['home'], instant(g['startsAt'])): g for g in games}
     slates = []
     for group in lobby.get('DraftGroups', []):
-        if group.get('Sport') != 'NFL' or group.get('ContestTypeId') != 21 or group.get('GameTypeId') != 1:
+        format_ids = (group.get('ContestTypeId'), group.get('GameTypeId'))
+        if group.get('Sport') != 'NFL' or format_ids not in ((21, 1), (96, 96)):
             continue
+        showdown = format_ids == (96, 96)
         competitions = game_sets.get(group['GameSetKey'], {}).get('Competitions', [])
         if not competitions:
             raise PartialData(f"Classic group {group['DraftGroupId']} has no game metadata")
@@ -147,16 +154,24 @@ def discover_slates(lobby, games, now):
         is_main = all(instant(g['startsAt']).astimezone(ET).weekday() == 6 and
                       12 <= instant(g['startsAt']).astimezone(ET).hour < 18 for g in selected)
         kind = 'All-week Classic' if len(selected) == len(games) else ('Sunday Main' if not suffix and is_main else suffix or 'Classic')
+        if showdown:
+            require(len(selected) == 1, 'Full-game Showdown must contain exactly one game')
+            game = selected[0]
+            day = instant(game['startsAt']).astimezone(ET).strftime('%A')
+            kind = f"{day} Only · {game['away']} @ {game['home']} · Showdown"
         dates = sorted({instant(g['startsAt']).astimezone(ET).date().isoformat() for g in selected})
         season, week = selected[0]['season'], selected[0]['week']
         key = f"{season}-w{week}-dk-{group['DraftGroupId']}"
         slates.append({'key': key, 'id': group['DraftGroupId'], 'season': season, 'week': week,
                        'label': f"{season} W{week} · {kind} · {dates[0][5:]}" + (f"–{dates[-1][5:]}" if len(dates) > 1 else ''),
-                       'kind': kind, 'scoring': 'DraftKings Classic', 'contestTypeId': 21,
+                       'kind': kind, 'scoring': 'DraftKings Showdown Captain Mode' if showdown else 'DraftKings Classic',
+                       'contestTypeId': group['ContestTypeId'],
+                       **({'gameTypeId':96,'rosterPositions':['FLEX','CPT'],'defaultRosterPosition':'FLEX','scoringRulesUrl':SHOWDOWN_RULES,
+                           'projectionBasis':'Full-game DraftKings source projection. FLEX uses 1×; CPT uses the official 1.5× multiplier. Salaries are official role-specific values.'} if showdown else {}),
                        'startsAt': min(g['startsAt'] for g in selected), 'endsAt': max(g['startsAt'] for g in selected),
                        'gameCount': len(selected), 'games': sorted(selected, key=lambda g: (g['startsAt'], g['gameId']))})
     if not slates:
-        raise NoData('No unlocked DraftKings Classic slates for the scheduled week')
+        raise NoData('No unlocked DraftKings Classic or full-game Showdown slates for the scheduled week')
     require(len(slates) == len({s['key'] for s in slates}), 'Duplicate DraftKings draft group')
     return sorted(slates, key=lambda s: (-s['gameCount'], s['id']))
 
@@ -263,19 +278,21 @@ def parse_supplemental_projections(html, season, week, games, source, now):
     return result
 
 
-def build_records(text, slate, projections, identities, supplemental=None):
+def build_records(text, slate, projections, identities, supplemental=None, verified_classic_projections=None):
     reader = csv.DictReader(io.StringIO(text))
     require({'Position', 'Name', 'ID', 'Salary', 'Game Info', 'TeamAbbrev', 'Roster Position'} <= set(reader.fieldnames or []), 'Salary CSV columns changed')
     rows = list(reader)
+    showdown = is_showdown(slate)
     # Existing 40 players/game floor retained, plus team/position/game checks below.
     require(len(rows) >= slate['gameCount'] * 40, 'Official salary coverage below 40 players per game')
     by_team = {t: g for g in slate['games'] for t in (g['away'], g['home'])}
-    counts = Counter((name_key(r['Name']), position_key(r['Position']), team_key(r['TeamAbbrev'])) for r in rows)
+    counts = Counter((name_key(r['Name']), position_key(r['Position']), team_key(r['TeamAbbrev']), r['Roster Position'] if showdown else None) for r in rows)
     records = []
     for row in rows:
         team, position = team_key(row['TeamAbbrev']), position_key(row['Position'])
-        require(team in by_team and position in POSITIONS, 'Salary team/position outside Classic slate')
-        require(row['Roster Position'] in ('QB', 'RB/FLEX', 'WR/FLEX', 'TE/FLEX', 'DST'), 'Non-Classic roster salary')
+        role = row['Roster Position'] if showdown else None
+        require(team in by_team and position in (POSITIONS | {'K'} if showdown else POSITIONS), 'Salary team/position outside slate')
+        require(row['Roster Position'] in (('FLEX', 'CPT') if showdown else ('QB', 'RB/FLEX', 'WR/FLEX', 'TE/FLEX', 'DST')), 'Invalid roster role for slate format')
         game = by_team[team]
         local = instant(game['startsAt']).astimezone(ET)
         match = re.fullmatch(r'([A-Z]{2,3})@([A-Z]{2,3}) (\d{2}/\d{2}/\d{4}) (\d{2}:\d{2}[AP]M) ET', row['Game Info'])
@@ -284,18 +301,26 @@ def build_records(text, slate, projections, identities, supplemental=None):
                 (game['away'], game['home'], local.strftime('%m/%d/%Y'), local.strftime('%I:%M%p')),
                 f"Salary game/week/date mismatch: {row['Name']}")
         salary = int(row['Salary'])
-        require(2000 <= salary <= 15000, 'Salary outside Classic range')
+        require((200 if showdown else 2000) <= salary <= (30000 if showdown else 15000), 'Salary outside supported format range')
         require(row['ID'].isdigit(), 'Invalid DraftKings player ID')
         identity = (name_key(row['Name']), position, team)
         candidates = identities.get(identity, set())
-        player_id = next(iter(candidates)) if len(candidates) == 1 and counts[identity] == 1 else None
+        player_id = next(iter(candidates)) if len(candidates) == 1 and counts[(*identity, role)] == 1 else None
         projection = projections.get(identity)
-        if not projection:
+        if not projection and showdown:
+            projection = (verified_classic_projections or {}).get(identity)
+        if not projection and not showdown:
             candidate = (supplemental or {}).get(identity)
             if candidate and candidate['projectionSourceSalary'] == salary:
                 projection = candidate
+        if projection and showdown:
+            projection = {**projection, 'projectionBase':projection['projection'],
+                'projectionMultiplier':1.5 if role == 'CPT' else 1,
+                'projection':round(projection['projection'] * (1.5 if role == 'CPT' else 1), 4),
+                'projectionBasis':'Sourced full-game DraftKings projection' + (' × 1.5 Captain scoring multiplier' if role == 'CPT' else '; unscaled FLEX scoring'),
+                'projectionRulesUrl':SHOWDOWN_RULES}
         records.append({'playerId': player_id, 'name': row['Name'], 'position': position, 'team': team,
-                        'draftKingsId': row['ID'], 'salary': salary, 'game': row['Game Info'], 'gameId': game['gameId'],
+                        'draftKingsId': row['ID'], **({'rosterPosition':role} if showdown else {}), 'salary': salary, 'game': row['Game Info'], 'gameId': game['gameId'],
                         'status': row.get('Status') or None,
                         'matchMethod': 'unique current nflverse roster name, position and team' if player_id else 'unmatched',
                         **(projection if projection else {'projection': None, 'projectionSource': None, 'projectionUrl': None,
@@ -303,26 +328,52 @@ def build_records(text, slate, projections, identities, supplemental=None):
                            'projectionSourceSalary': None}),
                         'projectionUnavailableReason': None if projection else 'No matching source projection for this player/team/week'})
     require(len({r['draftKingsId'] for r in records}) == len(records), 'Duplicate DraftKings player ID')
-    matched = [r['playerId'] for r in records if r['playerId']]
+    matched = [(r['playerId'],r.get('rosterPosition')) for r in records if r['playerId']]
     require(len(set(matched)) == len(matched), 'Ambiguous stable player identity')
     covered = {(r['team'], r['position']) for r in records}
-    require(all((t, p) in covered for t in by_team for p in POSITIONS), 'Salary feed misses team/position coverage')
+    require(all((t, p) in covered for t in by_team for p in (POSITIONS | {'K'} if showdown else POSITIONS)), 'Salary feed misses team/position coverage')
     # Every source projection for a slate team must join the official salary list.
     eligible = {k for k in projections if k[2] in by_team}
     joined = {(name_key(r['name']), r['position'], r['team']) for r in records if r['projection'] is not None and
               (name_key(r['name']), r['position'], r['team']) in projections}
     require(eligible == joined, f'Projection-to-salary identity coverage mismatch: {sorted(eligible - joined)}')
+    if showdown:
+        validate_showdown_roles(records, by_team)
     return sorted(records, key=lambda r: (int(r['draftKingsId']), r['name']))
 
 
+def validate_showdown_roles(records, teams):
+    roles = {role:{(name_key(r['name']),r['position'],r['team']):r for r in records if r.get('rosterPosition') == role} for role in ('FLEX','CPT')}
+    require(set(roles['FLEX']) == set(roles['CPT']) and len(roles['FLEX']) >= 40, 'Showdown requires matching complete FLEX/CPT populations of at least 40 players')
+    require(len(records) == 2 * len(roles['FLEX']), 'Showdown has duplicate identity or invalid roster role')
+    for identity, flex in roles['FLEX'].items():
+        captain = roles['CPT'][identity]
+        require(captain['salary'] == flex['salary'] * 1.5, 'Official Captain salary must equal 1.5× matching FLEX salary')
+        require(captain['playerId'] == flex['playerId'], 'Showdown roles must resolve to the same stable identity')
+        for role, row in [('FLEX', flex),('CPT', captain)]:
+            if row['projection'] is not None:
+                multiplier = 1.5 if role == 'CPT' else 1
+                require(row.get('projectionMultiplier') == multiplier and row.get('projectionBase') is not None and
+                    row['projection'] == round(row['projectionBase'] * multiplier, 4) and row.get('projectionRulesUrl') == SHOWDOWN_RULES,
+                    'Showdown projection must preserve source base and correct role multiplier')
+        require((flex['projection'] is None) == (captain['projection'] is None), 'Showdown projection availability differs by role')
+        if flex['projection'] is not None:
+            require(captain['projectionBase'] == flex['projectionBase'], 'Showdown roles must preserve the same source projection')
+    for role in roles:
+        require(all(any(r['team']==team and r['position']==position for r in roles[role].values()) for team in teams for position in POSITIONS | {'K'}),
+                'Showdown role misses team/position salary coverage')
+
+
 def coverage(records, projections, database_ids):
-    return {'salaryPlayers': len(records), 'projectedPlayers': sum(r['projection'] is not None for r in records),
+    return {'salaryPlayers': len(records),
+            **({'salaryEntries':len(records),'distinctSalaryPlayers':len(records)//2,'rosterPositions':['FLEX','CPT']} if records and records[0].get('rosterPosition') else {}),
+            'projectedPlayers': sum(r['projection'] is not None for r in records),
             'databasePlayersWithSalary': sum(r['playerId'] in database_ids for r in records),
             'databasePlayersWithProjection': sum(r['playerId'] in database_ids and r['projection'] is not None for r in records),
             'rosterPlayersWithSalary': sum(bool(r['playerId']) for r in records),
             'unmatchedSalaryPlayers': sum(not r['playerId'] for r in records),
             'sourceProjectionRows': len(projections),
-            'projectionCoverageDefinition': 'All primary FIC rows for slate teams must join; every scheduled team has QB/RB/WR/TE coverage. Supplemental FSC values require exact name, position, team, game and official salary matches. Other players remain null.'}
+            'projectionCoverageDefinition': ('Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base × 1.5; missing projections remain null.' if records and records[0].get('rosterPosition') else 'All primary FIC rows for slate teams must join; every scheduled team has QB/RB/WR/TE coverage. Supplemental FSC values require exact name, position, team, game and official salary matches. Other players remain null.')}
 
 
 def content_fingerprint(snapshot):
@@ -337,22 +388,28 @@ def content_fingerprint(snapshot):
 def validate_snapshot(snapshot):
     require(snapshot.get('schemaVersion') == 2 and snapshot.get('validation', {}).get('status') == 'verified', 'Unverified weekly snapshot')
     require(snapshot.get('defaultSlate') in snapshot.get('slates', {}), 'Missing default slate')
+    require(snapshot['slates'][snapshot['defaultSlate']]['scoring'] == 'DraftKings Classic', 'Weekly default must remain Classic')
     for key, slate in snapshot['slates'].items():
         require(key == f"{slate['season']}-w{slate['week']}-dk-{slate['id']}", 'Dated slate key mismatch')
-        require(slate['scoring'] == 'DraftKings Classic' and slate['contestTypeId'] == 21, 'Non-Classic snapshot')
+        showdown = is_showdown(slate)
+        require(showdown or (slate['scoring'] == 'DraftKings Classic' and slate['contestTypeId'] == 21), 'Unsupported snapshot format')
+        if showdown:
+            require(slate['gameCount'] == 1 and slate.get('rosterPositions') == ['FLEX','CPT'], 'Invalid Showdown game or role metadata')
         games, records = slate['games'], slate['records']
         require(len(games) == slate['gameCount'], 'Snapshot game count mismatch')
         require(all(g['season'] == slate['season'] and g['week'] == slate['week'] for g in games), 'Mixed-week snapshot games')
         require(all(r['gameId'] in {g['gameId'] for g in games} for r in records), 'Snapshot salary game mismatch')
         require(len(records) >= len(games) * 40, 'Snapshot salary coverage is incomplete')
         require(len({r['draftKingsId'] for r in records}) == len(records), 'Snapshot duplicate DraftKings ID')
-        ids = [r['playerId'] for r in records if r['playerId']]
+        ids = [(r['playerId'], r.get('rosterPosition') if showdown else None) for r in records if r['playerId']]
         require(len(ids) == len(set(ids)), 'Snapshot duplicate stable identity')
-        require(all(isinstance(r['salary'], int) and 2000 <= r['salary'] <= 15000 for r in records), 'Invalid snapshot salary')
+        require(all(isinstance(r['salary'], int) and (200 if showdown else 2000) <= r['salary'] <= (30000 if showdown else 15000) for r in records), 'Invalid snapshot salary')
         teams = {t for g in games for t in (g['away'], g['home'])}
         require({r['team'] for r in records} == teams, 'Snapshot team coverage mismatch')
+        if showdown: validate_showdown_roles(records,teams)
+        else: require(all(not r.get('rosterPosition') for r in records), 'Classic capture cannot contain Showdown roles')
         projected = [r for r in records if r['projection'] is not None]
-        require(all(isinstance(r['projection'], (float, int)) and math.isfinite(r['projection']) and 0 <= r['projection'] <= 70 and
+        require(all(isinstance(r['projection'], (float, int)) and math.isfinite(r['projection']) and 0 <= r['projection'] <= (105 if showdown else 70) and
                     r['projectionSeason'] == slate['season'] and r['projectionWeek'] == slate['week'] and
                     r['projectionGameId'] == r['gameId'] and r['projectionSource'] and (r['projectionSourceDate'] or r.get('projectionCapturedAt')) and
                     r['projectionUrl'].startswith('https://') for r in projected), 'Invalid/mismatched snapshot projection')
@@ -459,10 +516,20 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None):
             database_ids = {r[0] for r in database.execute('SELECT player_id FROM players')}
     combined = dict(previous['slates']) if previous else {}
     updated_keys = []
+    verified_classic_projections = {}
     for slate in slates:
         filename = f"dk-{slate['id']}.csv"
         url = f"https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId={slate['id']}"
-        records = build_records(fetch.get(url, filename), slate, projections, matches, supplemental)
+        records = build_records(fetch.get(url, filename), slate, projections, matches, supplemental, verified_classic_projections)
+        if not is_showdown(slate):
+            for record in records:
+                if record['projection'] is not None:
+                    identity = (name_key(record['name']),record['position'],record['team'])
+                    verified_classic_projections.setdefault(identity,{
+                        **{k:v for k,v in record.items() if k.startswith('projection') and k != 'projectionUnavailableReason'},
+                        'projectionSalaryValidationSlateId':slate['id'],
+                        'projectionSalaryValidationUrl':url,
+                        'projectionSalaryValidationSha256':fetch.sources[filename]['sha256']})
         old = combined.get(slate['key'])
         if old:
             require({r['draftKingsId'] for r in old['records']} <= {r['draftKingsId'] for r in records},
@@ -476,11 +543,12 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None):
                          'coverage': coverage(records, projections, database_ids), 'sources': {**shared_sources, filename: fetch.sources[filename]},
                          'identityAliasSource': fetch.sources['identity-aliases'], 'validation': {'status': 'verified'}}
         updated_keys.append(key)
-    current = [(key, s) for key, s in combined.items() if s['season'] == season and s['week'] == week]
+    current = [(key, s) for key, s in combined.items() if s['season'] == season and s['week'] == week and not is_showdown(s)]
+    require(bool(current), 'No verified Classic default for scheduled week; Showdown cannot replace weekly Classic context')
     default = min(current, key=lambda item: (-item[1]['gameCount'], item[1]['id']))[0]
     snapshot = {'schemaVersion': 2, 'capturedAt': iso(now), 'defaultSlate': default, 'season': season, 'week': week,
                 'slates': combined, 'validation': {'status': 'verified', 'verifiedAt': iso(now)},
-                'notes': 'Official DraftKings Classic salaries. FIC pregame DraftKings points for matching week/game. Missing projections are null; AvgPointsPerGame is never a projection. Historical Week 1 file is untouched.'}
+                'notes': 'Official DraftKings Classic and full-game Showdown salaries, with FLEX/CPT roles kept separate. FIC pregame DraftKings points for matching week/game; verified FSC supplements. Showdown projects the same full game and explicitly applies 1.5× only to CPT. Missing projections are null; AvgPointsPerGame is never a projection. Historical Week 1 file is untouched.'}
     snapshot['contentFingerprint'] = content_fingerprint(snapshot)
     validate_snapshot(snapshot)
     changed = previous is None or previous['contentFingerprint'] != snapshot['contentFingerprint']

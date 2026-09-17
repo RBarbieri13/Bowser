@@ -73,3 +73,7 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 - Robert requested reverting the September 16 shared table-settings and expanded filter rollout. Restore the page-specific controls and layouts from before that rollout; retain the Player Database's existing column studio and the native Waivers/Team Box controls. Do not reintroduce the removed universal settings dialogs or numeric/source/identity filter panels without a new request.
 - This rollback preserves sourced DFS data and archives, weekly position finishes, shared player profiles, aligned trend scales/calendars, metric/history selectors, and anchored Team Box trend columns.
+
+## Compact page controls (September 17, 2026)
+
+Robert's latest request supersedes the earlier filter-layout rollback: all active pages use one compact, consistent PageControls header with a single collapsed-by-default Filters & settings area. Preserve every unique filter/setting, selected values and provenance; remove only duplicates. Keep the main data near the top, visible active context, keyboard access, and 44px coarse-pointer targets. Do not reinstate the removed universal column-settings replacement. Hide League Hub and Fantasy Intelligence navigation. Team Box repeats matchup labels only once and keeps shorter readable rows. Thursday-only DraftKings Showdown must preserve separate FLEX/CPT prices and explicit scoring/projection derivation.

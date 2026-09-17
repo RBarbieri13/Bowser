@@ -17,6 +17,7 @@ test('archive keeps both 2026 weeks and immutable pre-enrichment capture version
   const oldData = getDfsWeek(2026,2,{captureId:old.captureId});
   const newData = getDfsWeek(2026,2,{captureId:expanded.captureId});
   assert.equal(oldData.records.find(r=>r.name==='Carson Wentz').projection,null);
+  assert.equal(oldData.records.find(r=>r.name==='Jahmyr Gibbs').projection,23.1);
   assert.equal(newData.records.find(r=>r.name==='Carson Wentz').projection,14.95);
   assert.equal(newData.records.find(r=>r.name==='Carson Wentz').projectionSource,'Fantasy Sports Central');
 });
@@ -50,7 +51,7 @@ test('upcoming Team Box rows contain verified DFS and null actual statistics', (
   const gibbs=result.data.find(r=>r.player_display_name==='Jahmyr Gibbs');
   assert.equal(gibbs.played,false); assert.equal(gibbs.stats_available,false);
   for(const key of ['snaps','fantasy_points','position_finish','carries','rushing_yards']) assert.equal(gibbs[key],null);
-  assert.equal(gibbs.draft_kings_price,8500);assert.equal(gibbs.draft_kings_projection,23.1);
+  assert.equal(gibbs.draft_kings_price,8500);assert.equal(gibbs.draft_kings_projection,getDfsWeek(2026,2).records.find(r=>r.name==='Jahmyr Gibbs').projection);
   assert.equal(result.meta.trendsByAnchor['2'].week,1);
   assert.equal(gibbs.trendsByAnchor['2'].at(-1).week,1);
 });
@@ -110,4 +111,26 @@ test('Vercel shared player research function preserves all public route query pa
  assert.equal(invoke('/api/v1/player-profile?resource=identity&season=2026&name=Cam%20Skattebo&team=NYG&position=RB').match.player_display_name,'Cam Skattebo');
  assert.equal(invoke('/api/v1/dfs-archive?season=2026&week=2').meta.week,2);
  assert.equal(invoke('/api/v1/player-profile?resource=archive&season=2026&week=1').meta.week,1);
+});
+
+
+test('Showdown player/Opportunity joins and exact archived role selection never mix Captain with FLEX',()=>{
+ for(const [suffix,role,price] of [['','FLEX',12000],[':cpt','CPT',18000]]){
+  const key='2026-w2-dk-153434'+suffix;
+  const players=queryPlayers(params({season:'2026',weeks:'1',search:'Jahmyr Gibbs',dfsSlate:key,includeTrends:'0'}));
+  assert.equal(players.data.length,1);assert.equal(players.data[0].draft_kings_price,price);
+  assert.equal(players.data[0].position_finish,3);assert.equal(players.meta.dfs.rosterPosition,role);
+  const opportunity=queryOpportunityTracker(params({season:'2026',team:'DET',weeks:'1',dfsSlate:key}));
+  const gibbs=opportunity.data.groups.flatMap(g=>g.players).find(r=>r.name==='Jahmyr Gibbs');
+  assert.equal(gibbs.draft_kings_price,price);assert.equal(gibbs.position_finish,3);
+  assert.equal(gibbs.dfs_meta.rosterPosition,role);
+  assert.ok(opportunity.meta.dfs.options.some(option=>option.key===key));
+  const archived=queryDfsArchive(params({season:'2026',week:'2',slateId:'153434',rosterPosition:role,playerId:gibbs.playerId}));
+  assert.equal(archived.data.length,1);assert.equal(archived.data[0].salary,price);
+  assert.equal(archived.meta.rosterPosition,role);
+  const capture=getDfsWeek(2026,2,{captureId:archived.meta.captureId,rosterPosition:role});
+  assert.ok(capture.records.every(record=>record.rosterPosition===role));
+ }
+ assert.throws(()=>queryDfsArchive(params({season:'2026',week:'2',slateId:'153434',rosterPosition:'invalid'})),/FLEX or CPT/);
+ assert.equal(getDfsWeek(2026,2).meta.scoring,'DraftKings Classic');
 });

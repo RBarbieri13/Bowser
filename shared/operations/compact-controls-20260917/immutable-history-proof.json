@@ -1,0 +1,13 @@
+{
+  "dfs_captures": {
+    "priorRows": 20,
+    "currentRows": 86,
+    "allPriorRowsUnchanged": true
+  },
+  "dfs_prices": {
+    "priorRows": 10735,
+    "currentRows": 25108,
+    "allPriorRowsUnchanged": true
+  },
+  "pinnedWeek1Unchanged": true
+}

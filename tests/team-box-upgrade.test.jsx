@@ -62,6 +62,7 @@ test('restores the native statistic picker and ignores removed shared-table form
   expect(table().querySelector('.metric-heat')).not.toBeNull();
   expect(table().querySelector('col[data-column="player"]')).toHaveStyle({width:'190px'});
   expect([...table().querySelectorAll('col[data-week="1"]')][0]).toHaveAttribute('data-column','snaps');
+  fireEvent.click(screen.getByRole('button',{name:'Filters & settings'}));
   fireEvent.click(screen.getByRole('button',{name:'All defaults'}));
   const picker=screen.getByRole('group',{name:'Statistical categories'});
   fireEvent.click(within(picker).getByRole('checkbox',{name:'DraftKings projection'}));
@@ -73,6 +74,7 @@ test('restores the native statistic picker and ignores removed shared-table form
 
 test('inserts anchored calendar trends, switches all metrics, moves via keyboard controls and drag/drop, and persists window',async()=>{
   const view=renderPage();await screen.findByRole('button',{name:'Alpha Runner',exact:true});
+  fireEvent.click(screen.getByRole('button',{name:'Filters & settings'}));
   fireEvent.change(screen.getByLabelText('Insert trend after'),{target:{value:'2'}});fireEvent.click(screen.getByRole('button',{name:'Add trend column'}));
   await waitFor(()=>expect(getQuery().get('trendAnchors')).toBe('2'));
   await screen.findByRole('img',{name:/Snaps trend for Alpha Runner:.*2026 Week 2: 42/});
@@ -100,6 +102,7 @@ test('retains the original team, position, scoring, salary and matchup filters w
   for(const label of ['Player search','Research markers','Minimum weekly projection','Minimum weekly FPTS','Team box score year']) {
     expect(screen.queryByLabelText(label)).not.toBeInTheDocument();
   }
+  fireEvent.click(screen.getByRole('button',{name:'Filters & settings'}));
   expect(screen.getByRole('combobox',{name:'Scoring'})).toBeEnabled();
   expect(screen.getByRole('button',{name:'QB, RB, WR, TE'})).toBeEnabled();
   expect(screen.getByLabelText('Week column width')).toBeEnabled();
@@ -113,4 +116,39 @@ test('validates persisted block preferences and reanchors to the visible left-ha
   expect(sanitizeTrendBlocks([{id:'bad',afterWeek:99},{id:'a',afterWeek:3,metric:'constructor'},{id:'a',afterWeek:1}])).toEqual([{id:'a',afterWeek:3,metric:'snaps'}]);
   expect(resolveTrendBlocks([{id:'a',afterWeek:3,metric:'snaps'}],[1,2,4])[0].anchor).toBe(2);
   expect(resolveTrendBlocks([{id:'a',afterWeek:1,metric:'snaps'}],[3,4])[0].anchor).toBe(3);
+});
+
+
+test('consolidates every filter in one closed panel and preserves values when closing',async()=>{
+  renderPage();await screen.findByRole('button',{name:'Alpha Runner',exact:true});
+  const toggle=screen.getByRole('button',{name:'Filters & settings'});
+  expect(toggle).toHaveAttribute('aria-expanded','false');
+  expect(screen.getByLabelText('Minimum DraftKings price')).not.toBeVisible();
+  expect(screen.queryByRole('combobox',{name:'Team',exact:true})).not.toBeInTheDocument();
+  expect(screen.getByRole('table',{name:'RB week-by-week player statistics'})).toBeVisible();
+  expect(screen.getByRole('heading',{name:'Team Box Scores'})).toBeVisible();
+  fireEvent.click(toggle);
+  expect(toggle).toHaveAttribute('aria-expanded','true');
+  for(const name of ['Team','Scoring','Trend history','Insert trend after']) expect(screen.getByRole('combobox',{name,exact:true})).toBeVisible();
+  for(const name of ['Minimum DraftKings price','Maximum DraftKings price','Week column width']) expect(screen.getByLabelText(name)).toBeVisible();
+  fireEvent.change(screen.getByRole('combobox',{name:'Scoring'}),{target:{value:'half'}});
+  fireEvent.change(screen.getByLabelText('Minimum DraftKings price'),{target:{value:'5000'}});
+  await waitFor(()=>expect(getQuery().get('scoring')).toBe('half'));
+  fireEvent.click(toggle);
+  expect(bodyOrder()).toEqual(['a']);
+  expect(document.querySelector('.page-controls-summary')).toHaveTextContent('Half PPR');
+  expect(document.querySelector('.page-controls-summary')).toHaveTextContent('DK $5000');
+  fireEvent.click(toggle);
+  expect(screen.getByRole('combobox',{name:'Scoring'})).toHaveValue('half');
+  expect(screen.getByLabelText('Minimum DraftKings price')).toHaveValue(5000);
+});
+
+test('shows matchup details once while each later position retains week and stat labels',async()=>{
+  global.fetch=vi.fn(async input=>{const data=response(String(input));data.data.push(...data.data.filter(row=>row.player_id==='a').map(row=>({...row,player_id:'c',player_display_name:'Gamma Receiver',position_group:'WR',position:'WR'})));return {ok:true,json:async()=>data};});
+  renderPage();await screen.findByRole('button',{name:'Gamma Receiver',exact:true});
+  expect(screen.getAllByRole('button',{name:'Open Week 1 game breakdown',exact:true})).toHaveLength(1);
+  const receiver=screen.getByRole('table',{name:'WR week-by-week player statistics'});
+  expect(receiver.querySelectorAll('.box-game-link')).toHaveLength(0);
+  expect(receiver.querySelectorAll('.box-week-number')).toHaveLength(4);
+  expect(within(receiver).getByRole('button',{name:'Sort Week 1 Receiving yards',exact:true})).toBeVisible();
 });

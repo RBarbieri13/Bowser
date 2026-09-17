@@ -47,6 +47,8 @@ const ready = () => screen.findByRole('button', { name: 'Known Runner', exact: t
 const row = name => screen.getByRole('article', { name: `${name} opportunity` });
 const chart = (name, metric) => within(row(name)).getByRole('img', { name: new RegExp(`^${metric} trend for ${name}:`) });
 const latestQuery = () => new URL(fetch.mock.calls.at(-1)[0], 'http://local').searchParams;
+const openControls = () => { const toggle = screen.getByRole('button', { name: 'Filters & settings' }); if (toggle.getAttribute('aria-expanded') === 'false') fireEvent.click(toggle); };
+
 beforeEach(() => {
   localStorage.clear();
   global.fetch = vi.fn(async input => response(fixture(input)));
@@ -54,7 +56,7 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 test('uses one metric domain and calendar axis for all players, leaving rookie and missing slots empty', async () => {
-  render(<OpportunityTracker meta={meta} />); await ready();
+  render(<OpportunityTracker meta={meta} />); await ready(); openControls();
   const known = chart('Known Runner', 'Snaps');
   const other = chart('Other Runner', 'Snaps');
   const rookie = chart('Rookie Runner', 'Snaps');
@@ -78,7 +80,7 @@ test('uses one metric domain and calendar axis for all players, leaving rookie a
 });
 
 test('all three charts use the same complete menu and save choices by position and calendar window', async () => {
-  const view = render(<OpportunityTracker meta={meta} />); await ready();
+  const view = render(<OpportunityTracker meta={meta} />); await ready(); openControls();
   for (const pos of ['RB', 'WR']) {
     for (const index of [1, 2, 3]) {
       expect(within(screen.getByLabelText(`${pos} chart ${index} metric`)).getAllByRole('option').map(option => option.value)).toEqual(Object.keys(TREND_METRICS));
@@ -94,37 +96,37 @@ test('all three charts use the same complete menu and save choices by position a
   expect(average).toHaveTextContent('2/3 values');
   expect(average.title).toContain('2025 W17–2026 W1');
   fireEvent.change(screen.getByLabelText('Opportunity history window'), { target: { value: '5' } });
-  await ready();
+  await ready(); openControls();
   expect(latestQuery().get('games')).toBe('5');
   expect(chart('Known Runner', 'Rushing yards').querySelectorAll('[data-week]')).toHaveLength(5);
   const stored = JSON.parse(localStorage.getItem(OPPORTUNITY_PREFS_KEY));
   expect(stored.metrics.RB).toEqual(['snaps', 'rushing_yards', 'fantasy_points']);
   expect(stored.metrics.WR).toEqual(['snaps', 'targets', 'fantasy_points']);
   expect(stored.games).toBe(5);
-  view.unmount(); render(<OpportunityTracker meta={meta} />); await ready();
+  view.unmount(); render(<OpportunityTracker meta={meta} />); await ready(); openControls();
   expect(screen.getByLabelText('RB chart 2 metric')).toHaveValue('rushing_yards');
   expect(screen.getByLabelText('Opportunity history window')).toHaveValue('5');
 });
 
 test('keeps continuous ranges separate from matchup extras and opening games, including after reload', async () => {
   const openGame = vi.fn();
-  const view = render(<OpportunityTracker meta={meta} onOpenGame={openGame} />); await ready();
+  const view = render(<OpportunityTracker meta={meta} onOpenGame={openGame} />); await ready(); openControls();
   const schedule = screen.getByRole('button', { name: /NYG schedule/ });
   expect(schedule).toHaveAttribute('aria-expanded', 'false');
   fireEvent.click(schedule);
   fireEvent.click(screen.getByRole('button', { name: 'Add individual weeks' }));
   fireEvent.click(screen.getByRole('button', { name: 'Select week 8 against DAL' }));
   await waitFor(() => expect(latestQuery().get('weeks')).toBe('1,8'));
-  await ready();
+  await ready(); openControls();
   fireEvent.click(screen.getByRole('button', { name: 'Open Week 8 against DAL game breakdown' }));
   expect(openGame).toHaveBeenCalledWith(expect.objectContaining({ week: 8, gameId: 'game-8' }), 'ppr');
   expect(latestQuery().get('weeks')).toBe('1,8');
   fireEvent.click(screen.getByRole('button', { name: 'Week 1', exact: true }));
   fireEvent.change(screen.getByRole('combobox', { name: 'To', exact: true }), { target: { value: '3' } });
   await waitFor(() => expect(latestQuery().get('weeks')).toBe('1,2,3,8'));
-  await ready();
+  await ready(); openControls();
   expect(screen.getByRole('button', { name: /NYG schedule/ })).toHaveTextContent('W1–3 + W8');
-  view.unmount(); render(<OpportunityTracker meta={meta} />); await ready();
+  view.unmount(); render(<OpportunityTracker meta={meta} />); await ready(); openControls();
   expect(latestQuery().get('weeks')).toBe('1,2,3,8');
   expect(screen.getByRole('button', { name: /NYG schedule/ })).toHaveAttribute('aria-expanded', 'false');
 });
@@ -132,16 +134,16 @@ test('keeps continuous ranges separate from matchup extras and opening games, in
 test('year, scoring and team reach the API; roster and position filters do not change domain scope', async () => {
   const openPlayer = vi.fn();
   function Harness() { const [season, setSeason] = useState(2026); return <OpportunityTracker meta={meta} season={season} onSeasonChange={setSeason} onOpenPlayer={openPlayer} />; }
-  render(<Harness />); await ready();
-  fireEvent.change(screen.getByLabelText('Opportunity scoring'), { target: { value: 'half' } }); await ready();
+  render(<Harness />); await ready(); openControls();
+  fireEvent.change(screen.getByLabelText('Opportunity scoring'), { target: { value: 'half' } }); await ready(); openControls();
   expect(latestQuery().get('scoring')).toBe('half');
   fireEvent.click(await ready());
   expect(openPlayer).toHaveBeenCalledWith(expect.objectContaining({ player_id: 'runner', name: 'Known Runner', season:2026 }), expect.any(HTMLElement), 'half');
   expect(within(row('Known Runner')).getAllByText('Half PPR points')).toHaveLength(2);
-  fireEvent.change(screen.getByLabelText('Opportunity statistics year'), { target: { value: '2025' } }); await ready();
+  fireEvent.change(screen.getByLabelText('Opportunity statistics year'), { target: { value: '2025' } }); await ready(); openControls();
   expect(latestQuery().get('season')).toBe('2025');
   expect(latestQuery().get('weeks')).toBe(Array.from({ length: 18 }, (_, index) => index + 1).join(','));
-  fireEvent.change(screen.getByLabelText('Opportunity team'), { target: { value: 'BUF' } }); await ready();
+  fireEvent.change(screen.getByLabelText('Opportunity team'), { target: { value: 'BUF' } }); await ready(); openControls();
   expect(latestQuery().get('team')).toBe('BUF');
   const countBefore = fetch.mock.calls.length;
   fireEvent.click(screen.getByRole('button', { name: 'RB', exact: true }));
@@ -155,7 +157,7 @@ test('year, scoring and team reach the API; roster and position filters do not c
 
 test('rejects corrupt preferences and resets valid custom selections to immutable defaults', async () => {
   localStorage.setItem(OPPORTUNITY_PREFS_KEY, JSON.stringify({ version: 1, games: 999, scoring: 'mock', metrics: { RB: ['not_real', 'targets', '__proto__'] }, weekSelections: { 2026: { start: -1, end: 99, extras: [999] } } }));
-  render(<OpportunityTracker meta={meta} />); await ready();
+  render(<OpportunityTracker meta={meta} />); await ready(); openControls();
   expect(screen.getByLabelText('RB chart 1 metric')).toHaveValue('snaps');
   expect(screen.getByLabelText('RB chart 2 metric')).toHaveValue('targets');
   expect(screen.getByLabelText('RB chart 3 metric')).toHaveValue('fantasy_points');
@@ -170,9 +172,9 @@ test('rejects corrupt preferences and resets valid custom selections to immutabl
 test('old requests cannot replace a newer scoring result', async () => {
   let resolveInitial;
   fetch.mockImplementationOnce(() => new Promise(resolve => { resolveInitial = resolve; }));
-  render(<OpportunityTracker meta={meta} />);
+  render(<OpportunityTracker meta={meta} />); openControls();
   fireEvent.change(screen.getByLabelText('Opportunity scoring'), { target: { value: 'standard' } });
-  await ready();
+  await ready(); openControls();
   const stale = fixture();
   stale.data.groups[0].players = [player('stale', 'Stale Player', [])];
   resolveInitial(response(stale));
@@ -190,7 +192,7 @@ test('restores the original opportunity grid without new table controls while re
     return response(result);
   });
   render(<OpportunityTracker meta={meta} onOpenPlayer={openPlayer} />);
-  await ready();
+  await ready(); openControls();
   expect(row('Known Runner')).toHaveClass('opportunity-player-row');
   expect(screen.queryByRole('button', { name: 'Table settings' })).not.toBeInTheDocument();
   expect(screen.queryByRole('table')).not.toBeInTheDocument();
@@ -201,6 +203,58 @@ test('restores the original opportunity grid without new table controls while re
   fireEvent.click(screen.getByRole('button', { name: 'Rookie Runner', exact: true }));
   expect(openPlayer).toHaveBeenCalledWith(expect.objectContaining({ player_id: 'rookie', season: 2026 }), expect.any(HTMLElement), 'ppr');
   fireEvent.change(screen.getByLabelText('Opportunity DFS slate'), { target: { value: 'selected-week' } });
-  await ready();
+  await ready(); openControls();
   expect(latestQuery().get('dfsSlate')).toBe('selected-week');
+});
+
+
+test('one collapsed header retains week, roster, metric and history choices without hiding errors', async () => {
+  render(<OpportunityTracker meta={meta} />); await ready();
+  const toggle = screen.getByRole('button', { name: 'Filters & settings' });
+  expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+  expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
+  expect(screen.getByText(/practice-report injury feed is not published yet/)).not.toBeVisible();
+  expect(row('Known Runner')).toBeVisible();
+  openControls();
+  fireEvent.change(screen.getByLabelText('RB chart 2 metric'), { target: { value: 'rushing_yards' } });
+  fireEvent.change(screen.getByLabelText('Opportunity history window'), { target: { value: '5' } });
+  await ready();
+  fireEvent.click(screen.getByRole('button', { name: 'RB', exact: true }));
+  fireEvent.click(toggle);
+  expect(chart('Known Runner', 'Rushing yards').querySelectorAll('[data-week]')).toHaveLength(5);
+  expect(screen.queryByRole('heading', { name: 'Wide receivers' })).not.toBeInTheDocument();
+  expect(toggle.closest('header')).toHaveTextContent('5 history weeks · 3 players');
+  openControls();
+  expect(screen.getByLabelText('RB chart 2 metric')).toHaveValue('rushing_yards');
+  expect(screen.getByLabelText('Opportunity history window')).toHaveValue('5');
+  fetch.mockResolvedValueOnce({ ok: false, json: async () => ({ error: { message: 'Source temporarily unavailable' } }) });
+  fireEvent.change(screen.getByLabelText('Opportunity team'), { target: { value: 'BUF' } });
+  fireEvent.click(toggle);
+  expect(await screen.findByRole('alert')).toBeVisible();
+  expect(screen.getByRole('alert')).toHaveTextContent('Source temporarily unavailable');
+});
+
+test('dated Thursday Showdown FLEX and Captain selections retain explicit source role and independent actual weeks', async () => {
+  const flex = { key: '2026-w2-dk-153434', label: 'Thu Sep 17 DET @ BUF · Showdown FLEX', rosterPosition: 'FLEX', scoring: 'DraftKings Showdown' };
+  const captain = { ...flex, key: `${flex.key}:cpt`, label: 'Thu Sep 17 DET @ BUF · Showdown Captain', rosterPosition: 'CPT' };
+  fetch.mockImplementation(async input => {
+    const result = fixture(input);
+    const selected = new URL(input, 'http://local').searchParams.get('dfsSlate') === captain.key ? captain : flex;
+    result.meta.dfs = { ...selected, season: 2026, week: 2, options: [flex, captain] };
+    return response(result);
+  });
+  render(<OpportunityTracker meta={meta} />); await ready(); openControls();
+  const select = screen.getByRole('combobox', { name: 'Opportunity DFS slate' });
+  expect(within(select).getByRole('option', { name: flex.label })).toBeInTheDocument();
+  expect(within(select).getByRole('option', { name: captain.label })).toBeInTheDocument();
+  fireEvent.change(select, { target: { value: captain.key } });
+  await ready();
+  expect(latestQuery().get('dfsSlate')).toBe(captain.key);
+  expect(latestQuery().get('weeks')).toBe('1');
+  fireEvent.click(screen.getByRole('button', { name: 'Filters & settings' }));
+  const header = screen.getByRole('button', { name: 'Filters & settings' }).closest('header');
+  expect(header).toHaveTextContent('Thu Sep 17 DET @ BUF · Showdown Captain');
+  expect(header).toHaveTextContent('CPT');
+  expect(chart('Known Runner', 'Snaps').querySelector('[data-season="2026"]')).toHaveAttribute('data-week', '1');
 });

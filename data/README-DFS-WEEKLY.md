@@ -1,6 +1,6 @@
-# Weekly DraftKings Classic data
+# Weekly DraftKings data
 
-`data/dfs-weekly.json` is the atomic, verified collection of dated weekly Classic slates. `data/dfs-week1-2026.json` and the pinned `scripts/import_dfs_week1.py` remain historical and unchanged. The application resolves `current` to the verified weekly default and keeps the `week1` and `main` aliases attached to the original Week 1 slates.
+`data/dfs-weekly.json` is the atomic, verified collection of dated weekly Classic and full-game Showdown slates. `data/dfs-week1-2026.json` and the pinned `scripts/import_dfs_week1.py` remain historical and unchanged. The application resolves `current` to the verified weekly default and keeps the `week1` and `main` aliases attached to the original Week 1 slates.
 
 ## Refresh and verify
 
@@ -28,8 +28,8 @@ A scheduler should require all three `changed`, `written`, and `publishable` fla
 ## Discovery and source boundaries
 
 - **NFL calendar:** [nflverse schedule](https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv). The season/week comes from schedule rows, including January games in the prior NFL season. Choose the first week whose final kickoff plus four hours has not elapsed and whose first kickoff is at most eight days away. No calendar-year or ISO-week guesses.
-- **Official slate discovery:** [DraftKings NFL public lobby](https://www.draftkings.com/lobby/getcontests?sport=NFL). Require NFL, `ContestTypeId=21`, `GameTypeId=1`, complete game-set metadata, matching game count, kickoff, opponents and NFL calendar week. The alternate `api.draftkings.com/draftgroups/v1/` endpoint returned 403 on September 16, 2026; the importer uses the accessible official lobby instead.
-- **Official salaries:** `https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=<discovered ID>`. Validate every salary row's teams, date, time and Classic roster position against its discovered game. Require every team/position and the established minimum 40 rows per game. Same-group salary population shrinkage is rejected for review. No Showdown/Captain salary substitution.
+- **Official slate discovery:** [DraftKings NFL public lobby](https://www.draftkings.com/lobby/getcontests?sport=NFL). Require NFL and either Classic (`ContestTypeId=21`, `GameTypeId=1`) or full-game Showdown (`ContestTypeId=96`, `GameTypeId=96`), plus complete game-set metadata, matching game count, kickoff, opponents and NFL calendar week. The alternate `api.draftkings.com/draftgroups/v1/` endpoint returned 403 on September 16, 2026; the importer uses the accessible official lobby instead.
+- **Official salaries:** `https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=<discovered ID>`. Validate every salary row's teams, date, time and Classic roster position against its discovered game. Require every team/position and the established minimum 40 rows per game. Same-group salary population shrinkage is rejected for review. Showdown retains both official FLEX and CPT records with distinct DraftKings IDs; validates identical player populations, both teams and all positions including K/DEF, and checks CPT salary equals 1.5× FLEX. At least 40 distinct players per full-game Showdown must be present. No role or format salary substitution.
 - **Projections:** [Fantasy Info Central DraftKings](https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings). Require its explicit season/week title and projected DraftKings points column, a Last-Modified date inside the pregame week and no more than 72 hours old, and the exact scheduled opponent/day/kickoff for every row. Never use DraftKings `AvgPointsPerGame` or historical production as a projection.
 - **Identity:** [nflverse season roster](https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv) (the year is discovered). Require all 32 teams and a current/previous week roster. Join only a unique normalized name, position and current team to a GSIS ID, including rookies. Bundled nflverse name aliases can only resolve to an ID already present on that current roster/team. Ambiguous and unmatched identities remain null; they are retained in the snapshot but excluded from warehouse joins.
 
@@ -41,7 +41,7 @@ On September 16, 2026 FIC published 192 offensive Week 2 rows: six per NFL team.
 
 Shark Snip was inspected as a possible supplement. Its September 16 page identified Main draft group 153428 correctly, but served only 26 defense projections out of its stated 524-player pool. It is not used in the new importer; historical Week 1 projections retain their original provenance.
 
-Verified Week 2 capture:
+Historical September 16 Week 2 capture (retained):
 
 | Draft group | Slate | Games | Official salaries | Current roster matches | Projections |
 | --- | --- | ---: | ---: | ---: | ---: |
@@ -52,6 +52,17 @@ Verified Week 2 capture:
 | 153431 | Afternoon Only, Sep 20 | 5 | 256 | 242 | 60 |
 | 153432 | Afternoon Turbo, Sep 20 | 3 | 153 | 144 | 36 |
 
-Current default is the largest verified slate in the scheduled week. Locked contests are not refreshed with later projections; their prior verified snapshots remain selectable. All prior dated slates are retained. If a newer week is incomplete, source requests fail, or no unlocked Classic slate is available, the previous file is unchanged. The app clearly dates the last-good fallback rather than relabeling old data as the new week.
+Current default is the largest verified slate in the scheduled week. Locked contests are not refreshed with later projections; their prior verified snapshots remain selectable. All prior dated slates are retained. If a newer week is incomplete, source requests fail, or no unlocked supported slate is available, the previous file is unchanged. The app clearly dates the last-good fallback rather than relabeling old data as the new week.
 
 The runtime serves only snapshots marked verified. A missing or malformed weekly file falls back to the original dated Week 1 archive. A real source transition requires a parser update and validation, not weaker coverage thresholds.
+
+
+## September 17 Thursday-only support
+
+Official group [153434 salary CSV](https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=153434) is **DET at BUF, September 17, 2026, 8:15 PM ET**, full-game Showdown Captain Mode. It is not a one-game Classic slate. The snapshot contains 94 entries: 47 FLEX players and the matching 47 CPT entries. Twenty-two players have sourced projections, stored for each role; missing player, kicker and defense projections remain null.
+
+Select `2026-w2-dk-153434` for FLEX, or `2026-w2-dk-153434:cpt` for Captain. The runtime filters the role before joining player identities, preventing duplicate player rows. Archived exact lookup accepts `slateId=153434&rosterPosition=FLEX` or `CPT`. Weekly default and exact-week lookups without a specific slate remain Classic.
+
+Full-game offensive DraftKings point projections are sourced from FIC, then supplemented only by FSC rows that first match a verified official same-week Classic salary. The supplemental validation slate ID, CSV URL and response hash are retained. These are sourced full-game projections, not independent Showdown-specific models. FLEX uses the source value; CPT explicitly derives source points × 1.5 under [DraftKings Captain scoring rules](https://help.draftkings.com/hc/en-us/articles/24808583978003-Game-Style-Showdowns-Overview-US). Base value, multiplier, provider and rules URL remain inspectable. Official role salaries come directly from the Showdown CSV, not from scaled Classic prices.
+
+This refresh imports all 16 published full-game Showdown groups for Week 2 alongside the six Classic groups. In-game, second-half, fourth-quarter, snake, Madden, and single-stat contests remain excluded because their scoring periods or roster semantics differ. All-week current coverage is 818 salaries and 393 projections; the September 16 812/398 capture remains available by ID. Removed provider rows become explicitly unavailable in the newest capture instead of retaining stale values under a new timestamp.

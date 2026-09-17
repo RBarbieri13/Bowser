@@ -17,3 +17,22 @@
 .waivers .shared-trend {min-width:165px;}
 .waivers .shared-trend .trend-bar-item {max-width:none;}
 .wv-trend-settings .trend-metric-select {max-width:170px;}
+
+/* Keep all setup above the table in the shared, initially collapsed panel. */
+.waivers .page-controls-panel .wv-toolbar,
+.waivers .page-controls-panel .wv-table-meta,
+.waivers .page-controls-panel .wv-trend-settings { padding: 0; margin: 0; border: 0; }
+.waivers .page-controls-panel .wv-settings { margin: 0; padding: 0; border: 0; background: transparent; }
+.waivers .wv-settings > summary { cursor: pointer; color: var(--text-secondary); font-size: 11px; padding: 4px 0; }
+.waivers .wv-settings > section { padding-top: 8px; }
+.waivers .page-controls-panel .wv-provenance { padding: 0; }
+.waivers .page-controls-panel .wv-source-notes { margin: 0; }
+.waivers .wv-active-filters { color: var(--accent); }
+.waivers .page-controls-summary { overflow-wrap: anywhere; }
+.waivers .wv-table-scroll { max-height: calc(100dvh - 190px); }
+.waivers .wv-favorite-list { max-height: calc(100dvh - 235px); }
+@media(max-width:760px) {
+  .waivers .page-controls-panel .wv-filter-panel select { max-width: 100%; }
+  .waivers .wv-table-scroll { max-height: 72dvh; }
+  .waivers .wv-favorite-list { max-height: 220px; }
+}

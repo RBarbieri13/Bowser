@@ -1133,7 +1133,9 @@ export function queryDfsArchive(searchParams = new URLSearchParams()) {
   const week = Number(searchParams.get('week'));
   if (!Number.isInteger(season) || season < 2010 || season > 2100) throw new QueryValidationError('season','Invalid season');
   if (!Number.isInteger(week) || week < 1 || week > 18) throw new QueryValidationError('week','Choose a regular-season week between 1 and 18');
-  const slate = getDfsWeek(season,week,{slateId:searchParams.get('slateId'),captureId:searchParams.get('captureId')});
+  const rosterPosition = searchParams.get('rosterPosition') || 'FLEX';
+  if (!['FLEX','CPT'].includes(rosterPosition)) throw new QueryValidationError('rosterPosition','Choose FLEX or CPT');
+  const slate = getDfsWeek(season,week,{slateId:searchParams.get('slateId'),captureId:searchParams.get('captureId'),rosterPosition});
   const playerId = searchParams.get('playerId');
   return {data:playerId ? slate.records.filter(r => r.playerId === playerId) : slate.records,
     meta:{...slate.meta,captures:getDfsArchiveIndex().filter(s => s.season === season && s.week === week)}};

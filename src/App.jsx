@@ -5,6 +5,7 @@ import {
   Copy, Database, DotsSixVertical, Eye, EyeSlash, Football, Info, MagnifyingGlass, Minus, PencilSimple,
   Person, PersonSimpleRun, Plus, SlidersHorizontal, Sparkle, Target, Trophy, X,
 } from "@phosphor-icons/react";
+import { PageControls } from "./PageControls.jsx";
 import { PlayerProfile } from "./PlayerProfile.jsx";
 import { WeekRangePicker } from "./WeekRangePicker.jsx";
 import { AppHeader } from "./AppHeader.jsx";
@@ -638,8 +639,8 @@ function routeFromHash() {
     return { page: "game", gameId: decodeURIComponent(gameMatch[1]), season: Number(gameMatch[1].slice(0, 4)) === 2025 ? 2025 : 2026, scoring: ["ppr", "half", "standard"].includes(scoring) ? scoring : "ppr" };
   }
   if (window.location.hash.includes("opportunity-tracker")) return { page: "opportunity-tracker", gameId: null };
-  if (window.location.hash.includes("league-hub")) return { page: "league-hub", gameId: null };
-  if (window.location.hash.includes("intelligence")) return { page: "intelligence", gameId: null };
+  if (window.location.hash.includes("league-hub")) return { page: "players", gameId: null };
+  if (window.location.hash.includes("intelligence")) return { page: "players", gameId: null };
   return { page: window.location.hash.includes("team-box-scores") ? "team-box-scores" : "players", gameId: null };
 }
 
@@ -1158,6 +1159,7 @@ export function App() {
         <MarketPulse season={season} onOpenPlayer={openProfile} />
       ) : (
       <main className="page-content player-database-page">
+      <PageControls title="Player Database" summary={<><span>{filterSummary}</span><span>{responseMeta?.totalCount ?? rows.length} players</span>{search && <span>Search: {search}</span>}{(Number(minGames)>0 || Number(minSnaps)>0 || customEnabled) && <span>Advanced filters active</span>}<span>{responseMeta?.dfs ? `DFS: ${responseMeta.dfs.label || `${responseMeta.dfs.season} W${responseMeta.dfs.week}`}` : "DFS loading…"}</span></>} actions={<button ref={customColumnsOpener} type="button" onClick={()=>setCustomColumnsOpen(true)} aria-haspopup="dialog" aria-expanded={customColumnsOpen}><Columns aria-hidden="true"/>Column options</button>}>
       <section className="filter-band" aria-label="Statistics filters">
         <div className="filter-grid">
           <SelectField className="season-field" label="Season" value={season} onChange={(event) => changeSeason(event.target.value)} info="NFL season used for this table.">
@@ -1260,18 +1262,7 @@ export function App() {
         </div>
 
         <div className="player-table-tools" aria-label="Player table view controls">
-          <button
-            ref={customColumnsOpener}
-            type="button"
-            className={customColumnsOpen ? "active" : ""}
-            aria-haspopup="dialog"
-            aria-expanded={customColumnsOpen}
-            onClick={() => setCustomColumnsOpen(true)}
-            title="Choose columns, section visibility, trend range, and compact behavior"
-          >
-            <Columns weight="duotone" aria-hidden="true" />
-            <span>Table Settings</span>
-          </button>
+
           <button
             type="button"
             className={sectionResizeEnabled ? "active" : ""}
@@ -1295,12 +1286,8 @@ export function App() {
         </div>
       </section>
 
-      <section className="table-panel" aria-label={`${season} NFL player fantasy statistics`}>
-        {loading ? <div className="progress" role="progressbar" aria-label="Updating statistics"><span /></div> : null}
-        {error ? <div className="error-banner" role="alert"><span>{error}</span><button onClick={() => window.location.reload()}>Retry</button></div> : null}
-        {showSwipeHint ? <div className="swipe-hint">Swipe horizontally for more stats <button onClick={() => { setShowSwipeHint(false); localStorage.setItem("stats-scroll-hint-dismissed", "1"); }} aria-label="Dismiss horizontal scroll hint"><X /></button></div> : null}
-        <header className="table-panel-heading">
-          <h1>Player Database</h1><button type="button" className="player-columns-trigger" onClick={()=>setCustomColumnsOpen(true)} aria-haspopup="dialog" aria-expanded={customColumnsOpen}><Columns />Column options</button>
+        <div className="player-restoration-controls">
+
           {hiddenTrendColumns.length === 1 ? (
             <button type="button" className="hidden-trend-restore" onClick={() => setTrendColumnVisible(hiddenTrendColumns[0], true)}>
               <Plus weight="bold" aria-hidden="true" />Restore {TREND_COLUMN_LABELS[hiddenTrendColumns[0]]} trend
@@ -1331,16 +1318,21 @@ export function App() {
               </div> : null}
             </div>
           ) : null}
-          <span>{filterSummary} · All matching</span>
-        </header>
+
+        </div>
         <div className="dfs-context" aria-label="DraftKings slate and sources">
           <button type="button" onClick={()=>{setHiddenPlayerColumns(keys=>keys.filter(key=>!['draft_kings_price','draft_kings_projection'].includes(key)));setCollapsedPlayerGroups(keys=>keys.filter(key=>key!=='dfs'));}}>Show DFS fields</button>
           <label>DFS slate <select aria-label="DFS slate" value={dfsSlate} onChange={event=>setDfsSlate(event.target.value)}>{(responseMeta?.dfs?.options || [{key:'current',label:'Current NFL week · Classic'}]).concat([{key:'selected-week',label:'Selected statistical week · Classic'}]).map(option=><option key={option.key} value={option.key}>{option.label}</option>)}</select></label>
-          <span>DraftKings scoring · {responseMeta?.dfs ? `salary week: ${responseMeta.dfs.season} W${responseMeta.dfs.week}` : "Loading salaries…"} · statistics: {season}</span>
-          {responseMeta?.dfs ? <details><summary>Sources & coverage</summary><p><a href={responseMeta.dfs.salaryUrl} target="_blank" rel="noreferrer">DraftKings salaries</a> · <a href="https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings" target="_blank" rel="noreferrer">Fantasy Info Central projections</a> · {!responseMeta.dfs.projectionProvider && <a href="https://sharksnip.com/picks/dfs/nfl" target="_blank" rel="noreferrer">Shark Snip supplemental projections</a>}</p><p>Captured {new Date(responseMeta.dfs.capturedAt).toLocaleString()}. {responseMeta.dfs.coverage.salaryPlayers} slate salaries; {responseMeta.dfs.coverage.projectedPlayers} published projections. Identity matches{responseMeta.dfs.rosterSeason ? ` in the ${responseMeta.dfs.rosterSeason} roster` : " in the source archive"}: {responseMeta.dfs.coverage.databasePlayersWithSalary} salaries and {responseMeta.dfs.coverage.databasePlayersWithProjection} projections. Players without recorded statistics in the selected season are not in this table. — means unavailable, never zero. Hover a DFS value for its source and current team. These are pregame estimates, not historical averages; scoring controls apply to historical stats only.</p></details> : null}
+          <span>{responseMeta?.dfs?.scoring || "DraftKings scoring"} · {responseMeta?.dfs ? `salary week: ${responseMeta.dfs.season} W${responseMeta.dfs.week}` : "Loading salaries…"} · statistics: {season}</span>
+          {responseMeta?.dfs ? <details><summary>Sources & coverage</summary><p><a href={responseMeta.dfs.salaryUrl} target="_blank" rel="noreferrer">DraftKings salaries</a> · <a href="https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings" target="_blank" rel="noreferrer">Fantasy Info Central projections</a>{responseMeta.dfs.supplementalProjectionStatus?.status === "verified" && <> · <a href="https://fantasysportscentral.com/football/dfscheat.php" target="_blank" rel="noreferrer">Fantasy Sports Central projections</a></>}{!responseMeta.dfs.projectionProvider && <> · <a href="https://sharksnip.com/picks/dfs/nfl" target="_blank" rel="noreferrer">Shark Snip supplemental projections</a></>}</p><p>{responseMeta.dfs.projectionBasis || responseMeta.dfs.projectionDerivation || ""}</p><p>Captured {new Date(responseMeta.dfs.capturedAt).toLocaleString()}. {responseMeta.dfs.coverage.salaryPlayers} slate salaries; {responseMeta.dfs.coverage.projectedPlayers} published projections. Identity matches{responseMeta.dfs.rosterSeason ? ` in the ${responseMeta.dfs.rosterSeason} roster` : " in the source archive"}: {responseMeta.dfs.coverage.databasePlayersWithSalary} salaries and {responseMeta.dfs.coverage.databasePlayersWithProjection} projections. Players without recorded statistics in the selected season are not in this table. — means unavailable, never zero. Hover a DFS value for its source and current team. These are pregame estimates, not historical averages; scoring controls apply to historical stats only.</p></details> : null}
         </div>
         {responseMeta?.dfs?.availabilityMessage && <p className="trend-context" role="status">{responseMeta.dfs.availabilityMessage}</p>}
         <div className="trend-context" role="note">Trends: {responseMeta?.trendSlots?.length ? `${responseMeta.trendSlots[0].season} W${responseMeta.trendSlots[0].week} → ${responseMeta.trendSlots.at(-1).season} W${responseMeta.trendSlots.at(-1).week}` : "regular-season weeks"} · common weeks and metric scales for every player · gaps = bye / DNP / unavailable. Table totals use the selected weeks.{responseMeta?.positionFinish?.week ? ` Position finish: ${season} W${responseMeta.positionFinish.week}.` : ""}</div>
+      </PageControls>
+      <section className="table-panel" aria-label={`${season} NFL player fantasy statistics`}>
+        {loading ? <div className="progress" role="progressbar" aria-label="Updating statistics"><span /></div> : null}
+        {error ? <div className="error-banner" role="alert"><span>{error}</span><button onClick={() => window.location.reload()}>Retry</button></div> : null}
+        {showSwipeHint ? <div className="swipe-hint">Swipe horizontally for more stats <button onClick={() => { setShowSwipeHint(false); localStorage.setItem("stats-scroll-hint-dismissed", "1"); }} aria-label="Dismiss horizontal scroll hint"><X /></button></div> : null}
         <div className="table-scroller" ref={tableScroller} onScroll={onHorizontalScroll} tabIndex="0" aria-label="Scrollable player statistics table">
           <table style={playerTableStyle} className={smartCompactActive ? "smart-compact" : ""}>
             <caption>{season} NFL player fantasy statistics. {filterSummary}. {responseMeta?.totalCount ?? 0} matching players.</caption>
