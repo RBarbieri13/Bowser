@@ -1,4 +1,3 @@
-import { DataTable } from './DataTable.jsx';
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft, ArrowsOutLineVertical, CaretDown, Football,
@@ -140,8 +139,32 @@ function ParticipationConsole({ game, segments = [], players = [], teamSegments 
         <div className="density-toggle" role="group" aria-label="Participation density"><button className={density === "compact" ? "active" : ""} onClick={() => setDensity("compact")}>Compact</button><button className={density === "comfortable" ? "active" : ""} onClick={() => setDensity("comfortable")}>Comfortable</button></div>
       </div>
       <div className="same-metric-note"><Info weight="fill" /> Every bar is compared only with the same KPI across {scale === "game-segments" ? "the selected team’s game segments" : "the selected team’s roster totals"}. Metrics never share a scale.</div>
-      <DataTable tableClassName="participation-table" id={`game-participation-${mode}`} title={`${activeTeam} ${mode} by game segment`} columns={[{key:'player',label:'Player',group:'Player',width:220,minWidth:160,required:true},...segments.map(segment=>({key:`segment:${segment.segment}`,type:'number',label:segment.label,group:'Game segments',width:190,minWidth:130})),{key:'total',type:'number',label:'Total',group:'Game',width:200}]} footer={(visible)=> <tfoot><tr>{visible.map(column=><td key={column.key}>{column.key==='player'?<><strong>Team total</strong><small>{activeTeam} · {totalPlays} plays</small></>:<div className="segment-team-total">{metrics.map(metric=><span key={metric.key} style={{color:metric.color}}>{formatMetric(metric.key,totalMetric(activePlayers.map(player=>column.key==='total'?player.total[metric.key]:player.segments.find(segment=>String(segment.segment)===column.key.split(':')[1])?.[metric.key])))}</span>)}</div>}</td>)}</tr></tfoot>} rows={activePlayers} rowKey={player=>player.playerId} getValue={(player,key)=>key==='player'?`${player.playerDisplayName} ${player.position}`:key==='total'?player.total[sort]:player.segments.find(segment=>String(segment.segment)===key.split(':')[1])?.[sort]} renderCell={(player,column,prefs)=>{if(column.key==='player')return <button type="button" className="participation-player" onClick={event=>onOpenPlayer?.({player_id:player.playerId,player_display_name:player.playerDisplayName},event.currentTarget)}><span className="participation-avatar"><PlayerAvatar player={player}/></span><span><b>{player.playerDisplayName}</b><small>{player.position} / {depthByPlayer[player.playerId]}</small></span></button>;const isTotal=column.key==='total';const values=isTotal?player.total:player.segments.find(segment=>String(segment.segment)===column.key.split(':')[1])||{};return <div className={`kpi-stack${isTotal?' total':''}`}>{metrics.map(metric=>{const value=values[metric.key]??null;const denominator=isTotal?totalMetric(activePlayers.map(row=>row.total[metric.key])):maxima[metric.key];const width=value==null||!denominator?0:Math.max(0,Math.min(100,value/denominator*100));const formatted=value==null?'—':prefs.numberFormat==='integer'?Math.round(value).toLocaleString():prefs.numberFormat==='decimal'?Number(value).toFixed(1):formatMetric(metric.key,value);return <div className="kpi-lane" key={metric.key} title={`${player.playerDisplayName} · ${column.label} · ${metric.label}: ${formatMetric(metric.key,value)}`}><span>{metric.short}</span><i><b style={{width:`${width}%`,background:metric.color}}/></i><strong style={{color:prefs.heatmap?metric.color:undefined}}>{formatted}</strong></div>;})}</div>;}}/>
-
+      <div className="participation-table-wrap">
+        <table className="participation-table" aria-label={`${activeTeam} ${mode} by game segment`}>
+          <thead><tr><th><span>Player</span><small>{activePlayers.length} selected · scroll for all</small></th>{segments.map((segment) => <th key={segment.segment}><span>{segment.label}</span><small>{segment.phase}</small></th>)}<th><span>Total</span><small>Share of team</small></th></tr></thead>
+          <tbody>
+            {activePlayers.map((player) => (
+              <tr key={player.playerId}>
+                <th><button type="button" className="participation-player" onClick={(event) => onOpenPlayer?.({ player_id: player.playerId, player_display_name: player.playerDisplayName }, event.currentTarget)}><span className="participation-avatar"><PlayerAvatar player={player} /></span><span><b>{player.playerDisplayName}</b><small>{player.position} / {depthByPlayer[player.playerId]}</small></span></button></th>
+                {segments.map((segmentMeta) => {
+                  const values = player.segments.find((item) => item.segment === segmentMeta.segment) || {};
+                  return <td key={`${player.playerId}-${segmentMeta.segment}`}><div className="kpi-stack">{metrics.map((metric) => {
+                    const value = values[metric.key] ?? null;
+                    const width = value == null || !maxima[metric.key] ? 0 : Math.max(0, Math.min(100, value / maxima[metric.key] * 100));
+                    return <div className="kpi-lane" key={metric.key} title={`${player.playerDisplayName} · ${segmentMeta.label} · ${metric.label}: ${formatMetric(metric.key, value)}`}><span>{metric.short}</span><i><b style={{ width: `${width}%`, background: metric.color }} /></i><strong style={{ color: metric.color }}>{formatMetric(metric.key, value)}</strong></div>;
+                  })}</div></td>;
+                })}
+                <td><div className="kpi-stack total">{metrics.map((metric) => {
+                  const value = player.total[metric.key] ?? null;
+                  const rosterTotal = totalMetric(activePlayers.map(row => row.total[metric.key]));
+                  return <div className="kpi-lane" key={metric.key}><span>{metric.short}</span><i><b style={{ width: `${Math.min(100, rosterTotal ? value / rosterTotal * 100 : 0)}%`, background: metric.color }} /></i><strong style={{ color: metric.color }}>{formatMetric(metric.key, value)}</strong></div>;
+                })}</div></td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot><tr><th><span>Team total</span><small>{activeTeam} · {totalPlays} plays</small></th>{segments.map((segmentMeta) => <td key={`total-${segmentMeta.segment}`}><div className="segment-team-total">{metrics.map((metric) => <span key={metric.key} style={{ color: metric.color }}>{formatMetric(metric.key, totalMetric(activePlayers.map(player => player.segments.find((item) => item.segment === segmentMeta.segment)?.[metric.key])))}</span>)}</div></td>)}<td><div className="segment-team-total">{metrics.map((metric) => <span key={metric.key} style={{ color: metric.color }}>{formatMetric(metric.key, totalMetric(activePlayers.map(player => player.total[metric.key])))}</span>)}</div></td></tr></tfoot>
+        </table>
+      </div>
     </section>
   );
 }

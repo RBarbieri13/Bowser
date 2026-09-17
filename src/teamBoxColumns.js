@@ -93,11 +93,10 @@ export function clampColumnWidth(key, value) {
   return Math.round(Math.max(definition.min, Math.min(definition.max, numeric)));
 }
 
-export function columnsForPosition(position, visibleStats = DEFAULT_VISIBLE_STATS, order = []) {
+export function columnsForPosition(position, visibleStats = DEFAULT_VISIBLE_STATS) {
   const keys = position === "QB" ? QB_COLUMN_KEYS : SKILL_COLUMN_KEYS;
   const selected = new Set(visibleStats);
-  const ordered = [...new Set([...order, ...keys])];
-  return ordered.filter((key) => keys.includes(key) && selected.has(key)).map((key) => WEEK_COLUMN_REGISTRY[key]);
+  return keys.filter((key) => selected.has(key)).map((key) => WEEK_COLUMN_REGISTRY[key]);
 }
 
 export function columnGroups(columns) {

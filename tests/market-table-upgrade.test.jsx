@@ -20,31 +20,37 @@ test('player profile navigation and provider history are separate actions',async
   expect(screen.getByRole('complementary',{name:'Fixture Runner details'})).toBeInTheDocument();
   expect(open).toHaveBeenCalledTimes(1);
 });
-test('numeric and source filters exclude unknown values without substituting zero',async()=>{
+test('restores the original search, position, team, and watchlist filters without the added filter system',async()=>{
   render(<MarketPulse/>);await ready();
-  fireEvent.change(screen.getByLabelText('Minimum Adds'),{target:{value:'20'}});
+  expect(screen.queryByRole('button',{name:'Table settings'})).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Minimum Adds')).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Sources')).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Identity')).not.toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText('Position'),{target:{value:'RB'}});
   expect(bodyRows()).toHaveLength(1);expect(bodyRows()[0]).toHaveTextContent('Fixture Runner');
-  fireEvent.click(screen.getByRole('button',{name:'Reset filters'}));
-  fireEvent.change(screen.getByLabelText('Maximum Roster %'),{target:{value:'80'}});
-  expect(bodyRows()).toHaveLength(1);
-  fireEvent.click(screen.getByRole('button',{name:'Reset filters'}));
-  fireEvent.change(screen.getByLabelText('Sources'),{target:{value:'espn-only'}});
-  expect(bodyRows()).toHaveLength(1);expect(bodyRows()[0]).toHaveTextContent('ESPN Only');
-  fireEvent.change(screen.getByLabelText('Identity'),{target:{value:'matched'}});expect(bodyRows()).toHaveLength(0);
+  fireEvent.change(screen.getByLabelText('Position'),{target:{value:'All'}});
+  fireEvent.change(screen.getByRole('combobox',{name:'Team',exact:true}),{target:{value:'NYG'}});
+  expect(bodyRows()).toHaveLength(1);expect(bodyRows()[0]).toHaveTextContent('Fixture Receiver');
+  fireEvent.change(screen.getByRole('combobox',{name:'Team',exact:true}),{target:{value:'All'}});
+  fireEvent.click(screen.getByRole('button',{name:'Watch Fixture Runner'}));
+  fireEvent.click(screen.getByRole('button',{name:'Watchlist',exact:true}));
+  expect(bodyRows()).toHaveLength(1);expect(bodyRows()[0]).toHaveTextContent('Fixture Runner');
 });
-test('settings hide, format, and resize actual rendered columns and survive remount',async()=>{
+test('ignores removed dialog layout settings while preserving header sorting and resizing',async()=>{
+  localStorage.setItem('bowser:market-pulse:table:v2',JSON.stringify({hidden:['drops'],numberFormat:'integer',density:'comfortable'}));
   const view=render(<MarketPulse/>);await ready();
-  fireEvent.click(screen.getByRole('button',{name:'Table settings'}));
-  fireEvent.click(screen.getByRole('checkbox',{name:'Drops',exact:true}));
-  fireEvent.change(screen.getByLabelText('Number format'),{target:{value:'integer'}});
-  fireEvent.click(screen.getByRole('button',{name:'Apply settings'}));
-  expect(within(screen.getByRole('table')).queryByRole('button',{name:'Drops',exact:true})).not.toBeInTheDocument();
-  expect(screen.getByText('78%')).toBeInTheDocument();
+  expect(within(screen.getByRole('table')).getByRole('button',{name:'Drops',exact:true})).toBeInTheDocument();
+  expect(screen.getByText('78.4%')).toBeInTheDocument();
+  expect(screen.queryByRole('button',{name:'Table settings'})).not.toBeInTheDocument();
+  const width=Number(screen.getByRole('separator',{name:'Resize Adds column'}).getAttribute('aria-valuenow'));
   fireEvent.keyDown(screen.getByRole('separator',{name:'Resize Adds column'}),{key:'ArrowRight',shiftKey:true});
-  expect(JSON.parse(localStorage.getItem('bowser:market-pulse:table:v2')).widths.adds).toBe(103);
+  expect(JSON.parse(localStorage.getItem('bowser:market-pulse:table:v2')).widths.adds).toBe(width+25);
+  fireEvent.click(screen.getByRole('button',{name:'Adds',exact:true}));
+  expect(bodyRows()[0]).toHaveTextContent('Fixture Receiver');
+  expect(bodyRows().at(-1)).toHaveTextContent('ESPN Only');
   view.unmount();render(<MarketPulse/>);await ready();
-  expect(within(screen.getByRole('table')).queryByRole('button',{name:'Drops',exact:true})).not.toBeInTheDocument();
-  expect(screen.getByRole('separator',{name:'Resize Adds column'})).toHaveAttribute('aria-valuenow','103');
+  expect(within(screen.getByRole('table')).getByRole('button',{name:'Drops',exact:true})).toBeInTheDocument();
+  expect(screen.getByRole('separator',{name:'Resize Adds column'})).toHaveAttribute('aria-valuenow',String(width+25));
 });
 test('both provider charts expose metric and observation selectors and plot signed observations',async()=>{
   render(<MarketPulse/>);await ready();fireEvent.click(screen.getByRole('button',{name:'Market history for Fixture Runner'}));

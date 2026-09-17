@@ -17,10 +17,6 @@ export function validatePreferences(value) {
     sorts: Array.isArray(p.sorts) ? p.sorts.filter(s => s && safeKey(s.key) && typeof s.desc === 'boolean').slice(0, 5) : DEFAULT_PREFS.sorts,
     density: ['compact', 'comfortable'].includes(p.density) ? p.density : 'compact',
     autoFit: p.autoFit === true, drawer: p.drawer === true,
-    order: Array.isArray(p.order)?p.order.filter(safeKey):[],
-    numberFormat: ['source','integer','decimal'].includes(p.numberFormat)?p.numberFormat:'source',
-    heatmap: p.heatmap !== false,
-    savedViews: Array.isArray(p.savedViews)?p.savedViews.slice(0,12):[],
     trendWeeks: [5,8,10,18].includes(p.trendWeeks)?p.trendWeeks:10,
     trendMetrics: Object.fromEntries(Object.entries(TREND_OPTIONS).map(([group, options]) => [group, options.some(option => option.key === p.trendMetrics?.[group]) ? p.trendMetrics[group] : DEFAULT_PREFS.trendMetrics[group]])),
   };

@@ -68,3 +68,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Opportunity Tracker reuses the Team Box Scores schedule/range controls, with explicit year, scoring and history window. Independent matchup weeks remain distinct from the continuous range.
 - Weekly positional finish ranks all NFL peers in the same position and scoring context before user filters, uses competition ranks for ties, and labels the exact week. Multiple selected weeks do not create a fake weekly aggregate rank.
 - Weekly DFS refresh must validate source week, Classic slate games, price/projection provenance and identity matching before atomic publication. Preserve historical snapshots and last-good current data on failure. No historical averages substituted for projections. Automated releases stop on failed checks.
+
+## Table controls rollback (September 17, 2026)
+
+- Robert requested reverting the September 16 shared table-settings and expanded filter rollout. Restore the page-specific controls and layouts from before that rollout; retain the Player Database's existing column studio and the native Waivers/Team Box controls. Do not reintroduce the removed universal settings dialogs or numeric/source/identity filter panels without a new request.
+- This rollback preserves sourced DFS data and archives, weekly position finishes, shared player profiles, aligned trend scales/calendars, metric/history selectors, and anchored Team Box trend columns.

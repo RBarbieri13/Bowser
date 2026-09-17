@@ -49,23 +49,26 @@ test('every weekly leaf header sorts its own week; null data stays last and widt
   expect(JSON.parse(localStorage.getItem('bowser:team-box-preferences:v2')).columnWidths.draft_kings_price).toBe(88);
 });
 
-test('settings stage visibility, formatting, conditional colors and saved layout until applied',async()=>{
+test('restores the native statistic picker and ignores removed shared-table formatting preferences',async()=>{
+  localStorage.setItem('bowser:team-box-table:v3', JSON.stringify({
+    hidden:['draft_kings_projection'], density:'comfortable', numberFormat:'integer', heatmap:false,
+    order:['fantasy_points','draft_kings_price','snaps'], widths:{player:360}, autoFit:true,
+  }));
   renderPage();await screen.findByRole('button',{name:'Alpha Runner',exact:true});
-  fireEvent.click(screen.getByRole('button',{name:'Table settings'}));let panel=screen.getByRole('dialog',{name:'Team Box Scores table settings'});
-  expect(panel.closest('.table-settings-layer').parentElement).toBe(document.body);
-  fireEvent.click(within(panel).getByRole('checkbox',{name:'DraftKings projection'}));
+  expect(screen.queryByRole('button',{name:'Table settings'})).not.toBeInTheDocument();
   expect(table().querySelectorAll('col[data-column="draft_kings_projection"]')).toHaveLength(4);
-  fireEvent.click(within(panel).getByRole('button',{name:'Cancel'}));
-  fireEvent.click(screen.getByRole('button',{name:'Table settings'}));panel=screen.getByRole('dialog');
-  fireEvent.click(within(panel).getByRole('checkbox',{name:'DraftKings projection'}));
-  fireEvent.change(within(panel).getByLabelText('Density'),{target:{value:'comfortable'}});
-  fireEvent.change(within(panel).getByLabelText('Number format'),{target:{value:'integer'}});
-  fireEvent.click(within(panel).getByLabelText('Conditional colors'));
-  fireEvent.click(within(panel).getByRole('button',{name:'Apply settings'}));
+  expect(document.querySelector('main')).not.toHaveClass('density-comfortable');
+  expect(table().querySelector('[data-stat="fantasy_points"]')).toHaveTextContent('14.1');
+  expect(table().querySelector('.metric-heat')).not.toBeNull();
+  expect(table().querySelector('col[data-column="player"]')).toHaveStyle({width:'190px'});
+  expect([...table().querySelectorAll('col[data-week="1"]')][0]).toHaveAttribute('data-column','snaps');
+  fireEvent.click(screen.getByRole('button',{name:'All defaults'}));
+  const picker=screen.getByRole('group',{name:'Statistical categories'});
+  fireEvent.click(within(picker).getByRole('checkbox',{name:'DraftKings projection'}));
   expect(table().querySelectorAll('col[data-column="draft_kings_projection"]')).toHaveLength(0);
-  expect(document.querySelector('main')).toHaveClass('density-comfortable');
-  expect(table().querySelector('[data-stat="fantasy_points"]')).toHaveTextContent('14');
-  expect(table().querySelector('.metric-heat')).toBeNull();
+  expect(JSON.parse(localStorage.getItem('bowser:team-box-preferences:v2')).visibleStats).not.toContain('draft_kings_projection');
+  fireEvent.click(screen.getByRole('button',{name:'Reset defaults'}));
+  expect(table().querySelectorAll('col[data-column="draft_kings_projection"]')).toHaveLength(4);
 });
 
 test('inserts anchored calendar trends, switches all metrics, moves via keyboard controls and drag/drop, and persists window',async()=>{
@@ -92,18 +95,18 @@ test('inserts anchored calendar trends, switches all metrics, moves via keyboard
   fireEvent.click(screen.getByRole('button',{name:`Remove trend ${id}`}));expect(document.querySelector('.box-trend-header')).toBeNull();
 });
 
-test('filters player names, exact archived salary, projections, weekly scoring, and marked players',async()=>{
-  renderPage();await screen.findByRole('button',{name:'Alpha Runner',exact:true});
-  fireEvent.change(screen.getByLabelText('Player search'),{target:{value:'Beta'}});expect(bodyOrder()).toEqual(['b']);
-  fireEvent.change(screen.getByLabelText('Player search'),{target:{value:''}});
+test('retains the original team, position, scoring, salary and matchup filters without the added filter row',async()=>{
+  renderPage({onSeasonChange:vi.fn()});await screen.findByRole('button',{name:'Alpha Runner',exact:true});
+  for(const label of ['Player search','Research markers','Minimum weekly projection','Minimum weekly FPTS','Team box score year']) {
+    expect(screen.queryByLabelText(label)).not.toBeInTheDocument();
+  }
+  expect(screen.getByRole('combobox',{name:'Scoring'})).toBeEnabled();
+  expect(screen.getByRole('button',{name:'QB, RB, WR, TE'})).toBeEnabled();
+  expect(screen.getByLabelText('Week column width')).toBeEnabled();
   fireEvent.change(screen.getByLabelText('Minimum DraftKings price'),{target:{value:'5000'}});expect(bodyOrder()).toEqual(['a']);
-  fireEvent.change(screen.getByLabelText('Minimum DraftKings price'),{target:{value:'3000'}});
-  fireEvent.change(screen.getByLabelText('Minimum weekly projection'),{target:{value:'14'}});expect(bodyOrder()).toEqual(['a']);
-  fireEvent.change(screen.getByLabelText('Minimum weekly projection'),{target:{value:''}});
-  fireEvent.change(screen.getByLabelText('Minimum weekly FPTS'),{target:{value:'0'}});expect(bodyOrder()).toEqual(['a']);
-  fireEvent.change(screen.getByLabelText('Minimum weekly FPTS'),{target:{value:''}});
+  fireEvent.change(screen.getByLabelText('Minimum DraftKings price'),{target:{value:'3000'}});expect(bodyOrder()).toEqual(['a','b']);
   fireEvent.click(screen.getByRole('button',{name:'Beta Runner: No marker'}));fireEvent.click(screen.getByRole('radio',{name:'Favorite'}));
-  fireEvent.change(screen.getByLabelText('Research markers'),{target:{value:'favorite'}});expect(bodyOrder()).toEqual(['b']);
+  expect(screen.getByRole('button',{name:'Beta Runner: Favorite'})).toBeEnabled();
 });
 
 test('validates persisted block preferences and reanchors to the visible left-hand week',()=>{

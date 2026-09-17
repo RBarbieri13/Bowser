@@ -3332,3 +3332,15 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
 
 .player-database-page .filter-grid {flex-wrap:wrap;}
 .player-database-page .filter-grid > .field {flex-shrink:0;}
+
+/* Player navigation and corrected profile trends survive the table-controls rollback. */
+.player-name-link{background:none;border:0;padding:0;color:inherit;font:inherit;font-weight:650;text-align:left;cursor:pointer}
+.player-name-link:hover{text-decoration:underline;color:#45d49a}
+.profile-trajectory .shared-trend{display:flex;width:100%;padding:12px}
+.profile-trajectory-controls{display:flex;gap:12px;align-items:center}
+.profile-trajectory-controls label{display:grid;gap:4px;font-size:11px}
+.profile-trajectory-controls select{background:#242725;color:#ddd;border:1px solid #555;padding:6px}
+.player-resolution-alert{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:160;background:#253e32;color:#e8fff2;padding:12px 18px;border:1px solid #63b48b;border-radius:8px;max-width:90vw;box-shadow:0 8px 40px #0008}
+.player-resolution-alert button{margin-left:16px;background:none;border:0;color:inherit}
+.intel-player-name.player-name-link{font-size:inherit}
+.opportunity-data-note{color:#aab9ae;font-size:12px;padding:10px 0}

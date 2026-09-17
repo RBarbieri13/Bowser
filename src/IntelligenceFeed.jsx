@@ -1,4 +1,3 @@
-import { DataTable } from './DataTable.jsx';
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowClockwise, ArrowSquareOut, Broadcast, ChartLineUp, Clock, Database,
@@ -36,7 +35,7 @@ function EventCard({ event, onOpenPlayer, season }) {
       <div className="intel-event-body">
         <header>
           <div>
-            <button className="intel-player-name player-name-link" onClick={e=>onOpenPlayer?.({...event.player, player_id:event.player.gsisId, season},e.currentTarget)}>{event.player.name} <small>{event.player.team}</small></button>
+            <button type="button" className="intel-player-name player-name-link" onClick={e => onOpenPlayer?.({ ...event.player, player_id: event.player.gsisId, season }, e.currentTarget)}>{event.player.name} <small>{event.player.team}</small></button>
             <h2>{event.headline}</h2>
           </div>
           <time dateTime={event.lastUpdatedAt}>{ageLabel(event.lastUpdatedAt)}</time>
@@ -71,9 +70,8 @@ function EventCard({ event, onOpenPlayer, season }) {
   );
 }
 
-export function IntelligenceFeed({ season=2026, onOpenPlayer }) {
+export function IntelligenceFeed({ season = 2026, onOpenPlayer }) {
   const [tab, setTab] = useState("feed");
-  const [view,setView] = useState("table");
   const [hours, setHours] = useState("168");
   const [position, setPosition] = useState("ALL");
   const [impact, setImpact] = useState("ALL");
@@ -174,8 +172,8 @@ export function IntelligenceFeed({ season=2026, onOpenPlayer }) {
             <div><Clock /><span>Snapshot {feed?.meta?.generatedAt ? ageLabel(feed.meta.generatedAt) : "loading"}</span></div>
             <div><ShieldCheck /><span>Confidence is source-based</span></div>
           </header>
-          <div className="data-table-controls"><label>Layout<select aria-label="Intelligence layout" value={view} onChange={event=>setView(event.target.value)}><option value="table">Table</option><option value="cards">Analysis cards</option></select></label></div><div className="intel-method-strip"><span><b>Confidence</b> authority + corroboration</span><span><b>Sentiment</b> fantasy-value direction</span><span><b>Buzz</b> discussion velocity</span></div>
-          {loading ? <div className="intel-loading" aria-live="polite"><Pulse />Loading intelligence…</div> : feed?.events?.length ? view === "table" ? <DataTable id="intelligence" title="Intelligence events" columns={[{key:'name',label:'Player',group:'Player',width:190,required:true},{key:'team',label:'Team',group:'Player',width:65},{key:'position',label:'Position',group:'Player',width:70},{key:'headline',label:'Development',group:'News',width:370},{key:'fantasyImpact',label:'Impact',group:'News',width:100},{key:'confidence',label:'Confidence %',group:'Signals',width:120,type:'percent'},{key:'sentiment',type:'number',label:'Sentiment',group:'Signals',width:100},{key:'lastUpdatedAt',label:'Updated',group:'News',width:170},{key:'summary',label:'Analysis',group:'News',width:440}]} rows={feed.events.map(event=>({...event,name:event.player.name,team:event.player.team,position:event.player.position,confidence:event.sourceQuality.confidence,sentiment:event.sentiment.score}))} rowKey={event=>event.eventId} renderCell={(event,column)=>column.key==='name'?<button className="player-name-link" onClick={e=>onOpenPlayer?.({...event.player,season},e.currentTarget)}>{event.name}</button>:undefined}/> : <div className="intel-event-list">{feed.events.map((event) => <EventCard key={event.eventId} event={event} season={season} onOpenPlayer={onOpenPlayer} />)}</div> : <div className="intel-empty"><MagnifyingGlass /><h2>No matching developments</h2><p>Widen the time window or clear a filter.</p></div>}
+          <div className="intel-method-strip"><span><b>Confidence</b> authority + corroboration</span><span><b>Sentiment</b> fantasy-value direction</span><span><b>Buzz</b> discussion velocity</span></div>
+          {loading ? <div className="intel-loading" aria-live="polite"><Pulse />Loading intelligence…</div> : feed?.events?.length ? <div className="intel-event-list">{feed.events.map((event) => <EventCard key={event.eventId} event={event} season={season} onOpenPlayer={onOpenPlayer} />)}</div> : <div className="intel-empty"><MagnifyingGlass /><h2>No matching developments</h2><p>Widen the time window or clear a filter.</p></div>}
         </section>
       ) : (
         <section className="intel-source-shell">

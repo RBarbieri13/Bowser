@@ -44,7 +44,7 @@ const fixture = (input = '/api/v1/opportunity-tracker?season=2026&games=10') => 
 const response = body => ({ ok: true, json: async () => body });
 const meta = { teams: ['NYG', 'BUF'], seasons: [2026, 2025] };
 const ready = () => screen.findByRole('button', { name: 'Known Runner', exact: true });
-const row = name => screen.getByRole('row', { name: `${name} opportunity` });
+const row = name => screen.getByRole('article', { name: `${name} opportunity` });
 const chart = (name, metric) => within(row(name)).getByRole('img', { name: new RegExp(`^${metric} trend for ${name}:`) });
 const latestQuery = () => new URL(fetch.mock.calls.at(-1)[0], 'http://local').searchParams;
 beforeEach(() => {
@@ -88,7 +88,7 @@ test('all three charts use the same complete menu and save choices by position a
   expect(chart('Known Runner', 'Rushing yards')).toHaveAttribute('data-scale-max', '120');
   expect(chart('Known Runner', 'Rushing yards').querySelector('[data-season="2026"]')).toHaveAttribute('data-value', '60');
   expect(within(row('Known Runner')).getByText('Rushing yards -12.5 avg')).toBeInTheDocument();
-  const averages = row('Known Runner');
+  const averages = within(row('Known Runner')).getByLabelText('Last three calendar weeks averages for Known Runner');
   const average = within(averages).getByText('Rushing yards').closest('div');
   expect(average).toHaveTextContent('45.0');
   expect(average).toHaveTextContent('2/3 values');
@@ -137,7 +137,7 @@ test('year, scoring and team reach the API; roster and position filters do not c
   expect(latestQuery().get('scoring')).toBe('half');
   fireEvent.click(await ready());
   expect(openPlayer).toHaveBeenCalledWith(expect.objectContaining({ player_id: 'runner', name: 'Known Runner', season:2026 }), expect.any(HTMLElement), 'half');
-  expect(within(row('Known Runner')).getAllByText('Half PPR points')).toHaveLength(1);
+  expect(within(row('Known Runner')).getAllByText('Half PPR points')).toHaveLength(2);
   fireEvent.change(screen.getByLabelText('Opportunity statistics year'), { target: { value: '2025' } }); await ready();
   expect(latestQuery().get('season')).toBe('2025');
   expect(latestQuery().get('weeks')).toBe(Array.from({ length: 18 }, (_, index) => index + 1).join(','));
@@ -179,4 +179,28 @@ test('old requests cannot replace a newer scoring result', async () => {
   await waitFor(() => expect(screen.queryByText('Stale Player')).not.toBeInTheDocument());
   expect(await ready()).toBeInTheDocument();
   expect(screen.getByLabelText('Opportunity scoring')).toHaveValue('standard');
+});
+
+
+test('restores the original opportunity grid without new table controls while retaining weekly DFS and all player links', async () => {
+  const openPlayer = vi.fn();
+  fetch.mockImplementation(async input => {
+    const result = fixture(input);
+    result.data.groups[0].players[0] = { ...result.data.groups[0].players[0], position_finish: 18, position_finish_week: 1, position_finish_season: 2026, draft_kings_price: 4600, draft_kings_projection: 14.95 };
+    return response(result);
+  });
+  render(<OpportunityTracker meta={meta} onOpenPlayer={openPlayer} />);
+  await ready();
+  expect(row('Known Runner')).toHaveClass('opportunity-player-row');
+  expect(screen.queryByRole('button', { name: 'Table settings' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('table')).not.toBeInTheDocument();
+  expect(screen.queryByRole('textbox', { name: /Search.*opportunities/ })).not.toBeInTheDocument();
+  const values = within(row('Known Runner')).getByLabelText('Known Runner fantasy and DFS values');
+  expect(values).toHaveTextContent('FIN RB18 · DK $4,600 · PROJ 14.95');
+  expect(within(row('Rookie Runner')).getByLabelText('Rookie Runner fantasy and DFS values')).toHaveTextContent('FIN — · DK — · PROJ —');
+  fireEvent.click(screen.getByRole('button', { name: 'Rookie Runner', exact: true }));
+  expect(openPlayer).toHaveBeenCalledWith(expect.objectContaining({ player_id: 'rookie', season: 2026 }), expect.any(HTMLElement), 'ppr');
+  fireEvent.change(screen.getByLabelText('Opportunity DFS slate'), { target: { value: 'selected-week' } });
+  await ready();
+  expect(latestQuery().get('dfsSlate')).toBe('selected-week');
 });

@@ -103,9 +103,11 @@ test('saved table controls stay isolated, preserve collapsed groups, and support
   expect(screen.queryByRole('button', { name: 'Sort Passing ATT' })).not.toBeInTheDocument();
   fireEvent.keyDown(screen.getByRole('separator', { name: 'Resize Player column' }), { key: 'ArrowRight' });
   fireEvent.click(screen.getByRole('button', { name: 'Table', exact: true }));
-  fireEvent.change(screen.getByLabelText('Density'), { target: { value: 'comfortable' } });
+  fireEvent.change(screen.getByLabelText('Waiver row density'), { target: { value: 'comfortable' } });
   fireEvent.click(screen.getByRole('checkbox', { name: 'GP', exact: true }));
-  fireEvent.click(screen.getByRole('button', {name:'Apply settings'}));
+  expect(screen.queryByRole('dialog', {name:'Waiver table settings'})).not.toBeInTheDocument();
+  expect(screen.getByRole('region', {name:'Waiver table settings'})).toBeInTheDocument();
+  expect(screen.queryByRole('button', {name:'Apply settings'})).not.toBeInTheDocument();
   const saved = JSON.parse(localStorage.getItem(WAIVER_PREFS_KEY));
   expect(saved).toMatchObject({ density: 'comfortable', widths: { name: 200 }, collapsed: ['passing'], hidden: ['games_played'] });
   expect(localStorage.getItem('bowser:player-table:v1')).toBe('untouched');
@@ -182,4 +184,20 @@ test('an unavailable historical snapshot displays the API explanation without st
   await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('No published waiver snapshot is available for 2025 Week 2.'));
   expect(screen.queryByRole('button', { name: 'Fixture Runner', exact: true })).not.toBeInTheDocument();
   expect(screen.getByRole('alert')).not.toHaveTextContent('[object Object]');
+});
+
+
+test('native waiver settings discard removed dialog formatting but retain trend history', async () => {
+  localStorage.setItem(WAIVER_PREFS_KEY, JSON.stringify({ order: ['fantasy_points'], numberFormat: 'integer', savedViews: [{ name: 'Old layout' }], trendWeeks: 5 }));
+  render(<Waivers />); await ready();
+  expect(screen.getByLabelText('Waiver trend history')).toHaveValue('5');
+  expect(fetch.mock.calls.at(-1)[0]).toContain('trendWeeks=5');
+  expect(within((await ready()).closest('tr')).getByText('16.4')).toBeInTheDocument();
+  const saved = JSON.parse(localStorage.getItem(WAIVER_PREFS_KEY));
+  expect(saved).not.toHaveProperty('numberFormat');
+  expect(saved).not.toHaveProperty('order');
+  expect(saved).not.toHaveProperty('savedViews');
+  fireEvent.click(screen.getByRole('button', { name: 'Table', exact: true }));
+  expect(screen.getByLabelText('Waiver row density')).toHaveValue('compact');
+  expect(screen.queryByLabelText('Number format')).not.toBeInTheDocument();
 });

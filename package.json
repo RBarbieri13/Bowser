@@ -11,7 +11,7 @@
     "data:verify": "python3 scripts/verify_warehouse.py",
     "intelligence:refresh": "node scripts/refresh_intelligence.mjs",
     "test": "node --test tests/warehouse.test.mjs tests/warehouse-2026.test.mjs tests/dfs.test.mjs tests/intelligence-sources.test.mjs tests/intelligence-dedup.test.mjs tests/intelligence-ingest.test.mjs tests/intelligence-api.test.mjs tests/dfs-weekly.test.mjs tests/dfs-archive.test.mjs",
-    "test:ui": "vitest run tests/ui.test.jsx tests/trends.test.jsx tests/opportunity-repair.test.jsx tests/data-table-upgrade.test.jsx tests/table-settings.test.jsx tests/team-box-upgrade.test.jsx tests/market-table-upgrade.test.jsx tests/review-trends-regression.test.jsx tests/review-table-regression.test.jsx",
+    "test:ui": "vitest run tests/ui.test.jsx tests/trends.test.jsx tests/opportunity-repair.test.jsx tests/table-settings.test.jsx tests/team-box-upgrade.test.jsx tests/market-table-upgrade.test.jsx tests/review-trends-regression.test.jsx tests/review-table-regression.test.jsx",
     "test:market": "node --test tests/market-pulse.test.mjs && vitest run tests/market-pulse-ui.test.jsx",
     "check": "npm run data:verify && npm run data:verify:2026 && npm test && npm run test:dfs-import && npm run test:ui && npm run test:market && npm run test:waivers && npm run build && npm run test:production && npm run test:sites",
     "build": "vite build && node scripts/prepare-sites-build.mjs",

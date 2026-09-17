@@ -1,7 +1,7 @@
-.team-boxscore-page .box-extended-filters { display:flex; flex-wrap:wrap; align-items:end; gap:10px; padding:12px 0 4px; border-top:1px solid var(--border); margin-top:12px; }
-.team-boxscore-page .box-extended-filters label { display:grid; gap:5px; color:var(--text-label); font:600 10px var(--font-ui); text-transform:uppercase; letter-spacing:.05em; }
-.team-boxscore-page .box-extended-filters input,.team-boxscore-page .box-extended-filters select { width:150px; min-height:32px; padding:6px 8px; border:1px solid var(--border-strong); border-radius:5px; background:var(--bg-raised); color:var(--text); font:500 12px var(--font-ui); }
-.team-boxscore-page .box-extended-filters button,.team-boxscore-page .table-settings-button { min-height:32px; padding:6px 10px; border:1px solid var(--border-strong); border-radius:5px; color:var(--text); background:var(--bg-raised); font:650 12px var(--font-ui); cursor:pointer; }
+.team-boxscore-page .box-trend-controls { display:flex; flex-wrap:wrap; align-items:end; gap:10px; padding:12px 0 4px; border-top:1px solid var(--border); margin-top:12px; }
+.team-boxscore-page .box-trend-controls label { display:grid; gap:5px; color:var(--text-label); font:600 10px var(--font-ui); text-transform:uppercase; letter-spacing:.05em; }
+.team-boxscore-page .box-trend-controls input,.team-boxscore-page .box-trend-controls select { width:150px; min-height:32px; padding:6px 8px; border:1px solid var(--border-strong); border-radius:5px; background:var(--bg-raised); color:var(--text); font:500 12px var(--font-ui); }
+.team-boxscore-page .box-trend-controls button { min-height:32px; padding:6px 10px; border:1px solid var(--border-strong); border-radius:5px; color:var(--text); background:var(--bg-raised); font:650 12px var(--font-ui); cursor:pointer; }
 .team-boxscore-page .box-trend-explainer { margin:6px 0 10px; color:var(--text-muted); font:500 11px/1.5 var(--font-ui); }
 .team-boxscore-page .boxscore-table th:has(.column-resizer) { position:relative; }
 .team-boxscore-page .box-sort-button { color:inherit; background:none; border:0; width:100%; height:100%; min-height:25px; padding:3px 8px 3px 3px; cursor:pointer; font:inherit; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -21,9 +21,6 @@
 .team-boxscore-page .boxscore-table .box-trend-cell { padding:6px 9px; border-left:2px solid #345c46; overflow:visible; }
 .team-boxscore-page .box-trend-cell .shared-trend { width:100%; min-width:0; }
 .team-boxscore-page .box-trend-cell .trend-bar-item { max-width:none; }
-.team-boxscore-page.density-comfortable .boxscore-table tbody td,.team-boxscore-page.density-comfortable .boxscore-table tbody th { height:52px; }
 .team-boxscore-page .stat-draft_kings_price,.team-boxscore-page .stat-draft_kings_projection,.team-boxscore-page .stat-position_finish { color:var(--accent) !important; }
 .team-boxscore-page .box-trend-sort { border:0; background:transparent; color:var(--text-label); margin:0 0 5px; cursor:pointer; font:600 10px var(--font-data); }
 .team-boxscore-page .box-trend-cell .trend-bar-item b,.team-boxscore-page .box-trend-cell .trend-bar-item small { overflow:hidden; text-overflow:clip; }
-
-.team-boxscore-page .boxscore-filters .box-year-field{min-width:96px;flex-shrink:0}.team-boxscore-page .box-year-field select{padding-left:10px;padding-right:22px;min-width:86px}

@@ -1,5 +1,7 @@
 # Bowser table upgrade acceptance — September 16, 2026
 
+> Historical release record. The shared settings dialogs and expanded filters were reverted at Robert's request on September 17. See `table-controls-rollback-20260917.md` for the current UI scope.
+
 | Surface | Settings / filtering | Sort / resize | Player navigation | Trends |
 |---|---|---|---|---|
 | Player Database | Existing column studio, views, visibility, density, source/week/scoring/position/team filters; dated DFS selector | Headers, multi-sort, column/group resize | Shared profile, including depth-popover names | Shared 19-stat menus; 5/8/10/18 regular-calendar weeks |
