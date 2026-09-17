@@ -1,0 +1,61 @@
+// @vitest-environment jsdom
+import '@testing-library/jest-dom/vitest';
+import {IDBFactory} from 'fake-indexeddb';
+import {cleanup,fireEvent,render,screen,waitFor,within} from '@testing-library/react';
+import {afterEach,beforeEach,expect,test,vi} from 'vitest';
+import {MarketPulse} from '../src/MarketPulse.jsx';
+const rows=[{id:'sleeper:1',name:'Fixture Runner',position:'RB',team:'BUF',adds:120,drops:30,net:90,addShare:80},{id:'sleeper:2',name:'Fixture Receiver',position:'WR',team:'NYG',adds:10,drops:null,net:null,addShare:null}];
+const espnRows=[{id:'espn:11',name:'Fixture Runner',position:'RB',team:'BUF',rosterPct:78.4,startPct:55.6,rosterDelta:1.5},{id:'espn:22',name:'ESPN Only',position:'QB',team:'KC',rosterPct:99,startPct:89,rosterDelta:-2}];
+const snapshot=(provider)=>({provider,window:provider==='sleeper'?'24':'current',rows:provider==='sleeper'?rows:espnRows,capturedAt:1800000000000,history:[{capturedAt:1799999999000,rows:(provider==='sleeper'?rows:espnRows).map(row=>({...row,net:-5}))},{capturedAt:1800000000000,rows:provider==='sleeper'?rows:espnRows}]});
+beforeEach(()=>{localStorage.clear();global.indexedDB=new IDBFactory();global.fetch=vi.fn(async url=>({ok:true,json:async()=>snapshot(url.includes('espn')?'espn':'sleeper')}));});
+afterEach(()=>{cleanup();vi.restoreAllMocks();});
+const ready=()=>screen.findByRole('button',{name:'Fixture Runner',exact:true});
+const bodyRows=()=>within(screen.getByRole('table')).getAllByRole('row').slice(2);
+test('player profile navigation and provider history are separate actions',async()=>{
+  const open=vi.fn();render(<MarketPulse season={2026} onOpenPlayer={open}/>);await ready();
+  fireEvent.click(screen.getByRole('button',{name:'Fixture Runner',exact:true}));
+  expect(open).toHaveBeenCalledWith(expect.objectContaining({player_id:null,name:'Fixture Runner',team:'BUF',position:'RB',season:2026}));
+  expect(screen.queryByRole('complementary')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:'Market history for Fixture Runner'}));
+  expect(screen.getByRole('complementary',{name:'Fixture Runner details'})).toBeInTheDocument();
+  expect(open).toHaveBeenCalledTimes(1);
+});
+test('numeric and source filters exclude unknown values without substituting zero',async()=>{
+  render(<MarketPulse/>);await ready();
+  fireEvent.change(screen.getByLabelText('Minimum Adds'),{target:{value:'20'}});
+  expect(bodyRows()).toHaveLength(1);expect(bodyRows()[0]).toHaveTextContent('Fixture Runner');
+  fireEvent.click(screen.getByRole('button',{name:'Reset filters'}));
+  fireEvent.change(screen.getByLabelText('Maximum Roster %'),{target:{value:'80'}});
+  expect(bodyRows()).toHaveLength(1);
+  fireEvent.click(screen.getByRole('button',{name:'Reset filters'}));
+  fireEvent.change(screen.getByLabelText('Sources'),{target:{value:'espn-only'}});
+  expect(bodyRows()).toHaveLength(1);expect(bodyRows()[0]).toHaveTextContent('ESPN Only');
+  fireEvent.change(screen.getByLabelText('Identity'),{target:{value:'matched'}});expect(bodyRows()).toHaveLength(0);
+});
+test('settings hide, format, and resize actual rendered columns and survive remount',async()=>{
+  const view=render(<MarketPulse/>);await ready();
+  fireEvent.click(screen.getByRole('button',{name:'Table settings'}));
+  fireEvent.click(screen.getByRole('checkbox',{name:'Drops',exact:true}));
+  fireEvent.change(screen.getByLabelText('Number format'),{target:{value:'integer'}});
+  fireEvent.click(screen.getByRole('button',{name:'Apply settings'}));
+  expect(within(screen.getByRole('table')).queryByRole('button',{name:'Drops',exact:true})).not.toBeInTheDocument();
+  expect(screen.getByText('78%')).toBeInTheDocument();
+  fireEvent.keyDown(screen.getByRole('separator',{name:'Resize Adds column'}),{key:'ArrowRight',shiftKey:true});
+  expect(JSON.parse(localStorage.getItem('bowser:market-pulse:table:v2')).widths.adds).toBe(103);
+  view.unmount();render(<MarketPulse/>);await ready();
+  expect(within(screen.getByRole('table')).queryByRole('button',{name:'Drops',exact:true})).not.toBeInTheDocument();
+  expect(screen.getByRole('separator',{name:'Resize Adds column'})).toHaveAttribute('aria-valuenow','103');
+});
+test('both provider charts expose metric and observation selectors and plot signed observations',async()=>{
+  render(<MarketPulse/>);await ready();fireEvent.click(screen.getByRole('button',{name:'Market history for Fixture Runner'}));
+  expect(within(screen.getByLabelText('Sleeper trend metric')).getAllByRole('option')).toHaveLength(4);
+  expect(within(screen.getByLabelText('ESPN trend metric')).getAllByRole('option')).toHaveLength(3);
+  fireEvent.change(screen.getByLabelText('Sleeper trend metric'),{target:{value:'net'}});
+  expect(screen.getByText('Observed net adds')).toBeInTheDocument();
+  const history=screen.getAllByRole('region',{name:'Player snapshot history'})[0];
+  expect(history.querySelector('.mp-history-plot i.negative')).toBeInTheDocument();
+  expect(history.querySelector('.mp-history-bars')).toHaveAttribute('data-scale-min','-5');
+  fireEvent.change(screen.getByLabelText('Sleeper historical observations'),{target:{value:'5'}});
+  expect(screen.getByLabelText('Sleeper historical observations')).toHaveValue('5');
+  expect(screen.getAllByText(/provider observations, not NFL games/)).toHaveLength(2);
+});
