@@ -1,0 +1,27 @@
+.team-boxscore-page .box-extended-filters { display:flex; flex-wrap:wrap; align-items:end; gap:10px; padding:12px 0 4px; border-top:1px solid var(--border); margin-top:12px; }
+.team-boxscore-page .box-extended-filters label { display:grid; gap:5px; color:var(--text-label); font:600 10px var(--font-ui); text-transform:uppercase; letter-spacing:.05em; }
+.team-boxscore-page .box-extended-filters input,.team-boxscore-page .box-extended-filters select { width:150px; min-height:32px; padding:6px 8px; border:1px solid var(--border-strong); border-radius:5px; background:var(--bg-raised); color:var(--text); font:500 12px var(--font-ui); }
+.team-boxscore-page .box-extended-filters button,.team-boxscore-page .table-settings-button { min-height:32px; padding:6px 10px; border:1px solid var(--border-strong); border-radius:5px; color:var(--text); background:var(--bg-raised); font:650 12px var(--font-ui); cursor:pointer; }
+.team-boxscore-page .box-trend-explainer { margin:6px 0 10px; color:var(--text-muted); font:500 11px/1.5 var(--font-ui); }
+.team-boxscore-page .boxscore-table th:has(.column-resizer) { position:relative; }
+.team-boxscore-page .box-sort-button { color:inherit; background:none; border:0; width:100%; height:100%; min-height:25px; padding:3px 8px 3px 3px; cursor:pointer; font:inherit; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.team-boxscore-page .box-sort-button > span { color:var(--text-muted); font-size:9px; }
+.team-boxscore-page .box-sort-button:hover,.team-boxscore-page .box-sort-button:focus-visible { color:var(--accent); background:rgba(62,207,142,.06); }
+.team-boxscore-page .box-week-title { position:relative; }
+.team-boxscore-page .box-trend-drop-label { display:none; }
+.team-boxscore-page .box-trend-drop-active .box-trend-drop-label { display:block; position:absolute; right:0; top:0; bottom:0; width:92px; align-content:center; z-index:2; color:var(--accent); border:2px dashed var(--accent); background:#14251fee; font:700 11px/1.3 var(--font-ui); }
+.team-boxscore-page .boxscore-table .box-trend-header { padding:8px 10px; position:relative; min-width:160px; background:#202a25; border-left:2px solid #345c46; vertical-align:middle; }
+.team-boxscore-page .box-trend-heading,.team-boxscore-page .box-trend-move { display:flex; align-items:center; justify-content:space-between; gap:6px; }
+.team-boxscore-page .box-trend-heading button,.team-boxscore-page .box-trend-move button { min-width:24px; padding:2px 5px; border:1px solid var(--border-strong); border-radius:4px; background:var(--bg-raised); color:var(--text); cursor:pointer; }
+.team-boxscore-page .box-trend-heading .box-trend-drag { cursor:grab; text-align:left; color:var(--accent); }
+.team-boxscore-page .box-trend-header .trend-metric-select { width:100%; max-width:none; margin:7px 0 5px; padding:5px; border:1px solid var(--border-strong); border-radius:3px; background:var(--bg-raised); color:var(--text); font:600 11px var(--font-ui); }
+.team-boxscore-page .box-trend-header > small { display:block; color:var(--text-muted); font:500 10px/1.4 var(--font-data); margin:4px 0; }
+.team-boxscore-page .box-trend-move { color:var(--text-muted); font:500 10px var(--font-data); }
+.team-boxscore-page .box-trend-move button:disabled { opacity:.35; cursor:default; }
+.team-boxscore-page .boxscore-table .box-trend-cell { padding:6px 9px; border-left:2px solid #345c46; overflow:visible; }
+.team-boxscore-page .box-trend-cell .shared-trend { width:100%; min-width:0; }
+.team-boxscore-page .box-trend-cell .trend-bar-item { max-width:none; }
+.team-boxscore-page.density-comfortable .boxscore-table tbody td,.team-boxscore-page.density-comfortable .boxscore-table tbody th { height:52px; }
+.team-boxscore-page .stat-draft_kings_price,.team-boxscore-page .stat-draft_kings_projection,.team-boxscore-page .stat-position_finish { color:var(--accent) !important; }
+.team-boxscore-page .box-trend-sort { border:0; background:transparent; color:var(--text-label); margin:0 0 5px; cursor:pointer; font:600 10px var(--font-data); }
+.team-boxscore-page .box-trend-cell .trend-bar-item b,.team-boxscore-page .box-trend-cell .trend-bar-item small { overflow:hidden; text-overflow:clip; }
