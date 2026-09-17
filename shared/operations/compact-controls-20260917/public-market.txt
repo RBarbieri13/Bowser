@@ -1,0 +1,6 @@
+### Result
+{"headers":1,"collapsed":"false","top":107,"rows":100,"alerts":[],"summary":"24h transactions · ESPN ownership\n1016 players"}
+### Ran Playwright code
+```js
+await (async page => {await page.setViewportSize({width:1600,height:1000});await page.goto("https://fantasy-football-stats-preview.vercel.app/#/market-pulse");await page.getByRole("button",{name:"Refresh data",exact:true}).click();await page.getByRole("button",{name:"Refresh data",exact:true}).waitFor();const t=page.getByRole("button",{name:"Filters & settings"});if(await t.getAttribute("aria-expanded")==="true")await t.click();await page.screenshot({path:"output/playwright/compact-controls/public/market-pulse.png"});return await page.evaluate(()=>({headers:document.querySelectorAll(".page-controls").length,collapsed:document.querySelector(".page-controls-toggle").getAttribute("aria-expanded"),top:document.querySelector(".mp-table-scroll").getBoundingClientRect().top,rows:document.querySelectorAll(".mp-table-scroll tbody tr").length,alerts:Array.from(document.querySelectorAll("[role=alert]")).map(e=>e.innerText),summary:document.querySelector(".page-controls-summary").innerText}));})(page);
+```

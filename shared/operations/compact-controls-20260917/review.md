@@ -27,3 +27,5 @@ Focused: Team8; Waivers/Opportunity21; root existing UI/Market regression44; sha
 Initial full check hit an existing250ms query-time threshold under simultaneous browser review (276ms); no assertion was changed. Final check runs after browser sessions close. Browser development console's single websocket disconnect came from the dev server restart during package script changes, not application runtime; production console is checked separately.
 
 Screenshots are saved under output/playwright/compact-controls (excluded from deployment/Git); final public screenshots and probes will be captured after promotion. Detailed source caches and test logs remain under artifacts/compact-controls/dfs and /private/tmp.
+
+Final release: full npm run check PASS; local/candidate/public483 assertions each PASS; public five-page desktop disclosure and loaded table verification PASS; narrow panels and Thursday Captain values PASS; no public runtime page errors. Main alias resolved to dpl_Ec3cCU7UH1981ddmyGj1qJe6E1aB READY. Fresh Market browser required the existing Refresh data action to initialize real snapshots; refreshed1016 players, no alerts.

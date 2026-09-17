@@ -1,0 +1,12 @@
+{
+  "id": "bowser-weekly-dfs-refresh",
+  "status": "ACTIVE",
+  "rrule": "FREQ=WEEKLY;BYDAY=TH;BYHOUR=8;BYMINUTE=0;BYSECOND=0",
+  "checks": {
+    "active": true,
+    "same_schedule": true,
+    "new_release_base": true,
+    "preserve_compact": true,
+    "showdown": true
+  }
+}
