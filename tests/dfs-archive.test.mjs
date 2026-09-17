@@ -103,3 +103,11 @@ test('selected-week DFS keeps the requested upcoming week independent of complet
  const players=queryPlayers(params({season:'2026',weeks:'2',dfsSlate:'selected-week'}));
  assert.equal(players.meta.dfs.week,2);
 });
+
+test('Vercel shared player research function preserves all public route query parameters',async()=>{
+ const {default:handler}=await import('../api/v1/player-profile.mjs');
+ const invoke=url=>{const response={setHeader(){},end(text){this.body=JSON.parse(text);}};handler({method:'GET',url},response);assert.equal(response.statusCode,200);return response.body;};
+ assert.equal(invoke('/api/v1/player-profile?resource=identity&season=2026&name=Cam%20Skattebo&team=NYG&position=RB').match.player_display_name,'Cam Skattebo');
+ assert.equal(invoke('/api/v1/dfs-archive?season=2026&week=2').meta.week,2);
+ assert.equal(invoke('/api/v1/player-profile?resource=archive&season=2026&week=1').meta.week,1);
+});
