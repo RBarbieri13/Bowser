@@ -168,7 +168,7 @@ export function sanitizePlayerTablePreferences(value) {
     showPlayerTrends: raw.showPlayerTrends !== false,
     autoFit: raw.autoFit === true,
     smartCompact: raw.smartCompact !== false,
-    trendGameCount: [5, 8, 10].includes(Number(raw.trendGameCount)) ? Number(raw.trendGameCount) : 10,
+    trendGameCount: [5, 8, 10, 18].includes(Number(raw.trendGameCount)) ? Number(raw.trendGameCount) : 10,
     rowDensity: Math.round(Math.max(0, Math.min(100, Number.isFinite(Number(raw.rowDensity)) ? Number(raw.rowDensity) : DEFAULT_PLAYER_ROW_DENSITY)) / 5) * 5,
     trendMetrics,
     hiddenColumns: [...hiddenColumns],

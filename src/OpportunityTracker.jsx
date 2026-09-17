@@ -1,3 +1,5 @@
+import { DataTable } from './DataTable.jsx';
+import { formatTableValue } from './tableSettings.js';
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowDownRight, ArrowRight, ArrowUpRight, CaretDown, ChartBar, FirstAid,
@@ -36,7 +38,7 @@ export function validateOpportunityPreferences(value) {
   }
   return {
     version: 1,
-    games: [5, 8, 10].includes(source.games) ? source.games : 10,
+    games: [5, 8, 10, 18].includes(source.games) ? source.games : 10,
     scoring: Object.hasOwn(SCORING_LABELS, source.scoring) ? source.scoring : "ppr",
     metrics,
     weekSelections,
@@ -98,71 +100,17 @@ function TrendContext({ history, metric, scoring }) {
   </>;
 }
 
-function PlayerRow({ player, metrics, slots, domains, season, scoring, onOpenPlayer }) {
-  const history = alignedHistory(player, slots, season);
-  const recent = history.slice(-3);
-  const hasRecordedHistory = player.hasNFLHistory;
-  return (
-    <article className={`opportunity-player-row${hasRecordedHistory ? "" : " no-history"}`} aria-label={`${player.name} opportunity`}>
-      <div className="opportunity-player-identity">
-        <div className="opportunity-player-photo"><PlayerPortrait player={player} /></div>
-        <div>
-          <span className="opportunity-depth">{player.depthRank ? `${player.depthPosition || player.position} ${player.depthRank}` : "Rostered"}</span>
-          {hasRecordedHistory ? (
-            <button type="button" onClick={(event) => onOpenPlayer?.({ player_id: player.playerId, player_display_name: player.name }, event.currentTarget, scoring)}>{player.name}</button>
-          ) : <strong>{player.name}</strong>}
-          <small title={player.statusDetail || player.rosterStatusLabel}>{player.rookie ? `${player.rookieYear || 2026} rookie` : `${player.yearsExperience ?? "—"} yrs exp`} · {player.rosterStatusLabel}</small>
-        </div>
-      </div>
-      <div className="opportunity-player-context">
-        <TrendContext history={history} metric={metrics[1]} scoring={scoring} />
-        {!hasRecordedHistory ? <span className="opportunity-rookie-note"><Lightning weight="fill" aria-hidden="true" />No recorded games in this window</span> : null}
-      </div>
-      <div className="opportunity-player-charts">
-        {metrics.map((metric, index) => <figure key={index} className="opportunity-metric-chart">
-          <figcaption>{metricLabel(metric, scoring)}</figcaption>
-          <TrendChart history={history} metric={metric} domain={domains?.[metric]} playerName={player.name} height={44} />
-        </figure>)}
-      </div>
-      <dl className="opportunity-player-averages" aria-label={`Last three calendar weeks averages for ${player.name}`}>
-        {metrics.map((metric, index) => {
-          const average = averageFor(recent, metric);
-          return <div key={index} title={`${metricLabel(metric, scoring)} · ${calendarLabel(recent)} · ${average.count} of ${recent.length} calendar values available; missing values excluded`}>
-            <dt>{metricLabel(metric, scoring)}</dt><dd>{formatAverage(average.value, metric)}</dd><small>{average.count}/{recent.length} values</small>
-          </div>;
-        })}
-      </dl>
-    </article>
-  );
-}
-
-function PositionGroup({ group, metrics, onMetricChange, games, ...chartProps }) {
-  return (
-    <section className={`opportunity-position-card position-${group.position.toLowerCase()}`} aria-labelledby={`opportunity-${group.position}`}>
-      <header>
-        <div><span>{group.position}</span><div><h2 id={`opportunity-${group.position}`}>{POSITION_LABELS[group.position]}</h2><p>Official depth rank · recent opportunity order</p></div></div>
-        <strong>{group.players.length} players</strong>
-      </header>
-      <div className="opportunity-position-table" tabIndex="0" aria-label={`${POSITION_LABELS[group.position]} scrollable trends`}>
-        <div className="opportunity-position-columns">
-          <span>Player / roster status</span><span>Chart 2 · last 3 vs prior 3</span>
-          <div className="opportunity-chart-selectors">
-            {metrics.map((metric, index) => <div key={index}><span>Chart {index + 1} · {games} calendar weeks</span><TrendMetricSelect metric={metric} onChange={(value) => onMetricChange(group.position, index, value)} label={`${group.position} chart ${index + 1} metric`} /></div>)}
-          </div>
-          <span>Last 3 calendar weeks avg</span>
-        </div>
-        <div className="opportunity-position-roster">
-          {group.players.map((player) => <PlayerRow key={`${player.team}-${player.playerId}`} player={player} metrics={metrics} {...chartProps} />)}
-        </div>
-      </div>
-    </section>
-  );
+function PositionGroup({ group, metrics, onMetricChange, games, slots, domains, season, scoring, onOpenPlayer }) {
+  const columns=[{key:'name',label:'Player / status',group:'Player',width:270,minWidth:180,required:true},{key:'depthRank',label:'Depth',group:'Player',width:70},{key:'position_finish',label:'Position finish',group:'Fantasy',width:110},{key:'draft_kings_price',label:'DK salary',group:'DFS',width:110,type:'currency'},{key:'draft_kings_projection',label:'DK projection',group:'DFS',width:120,decimals:2},{key:'context',label:'Recent change',group:'Trends',width:245},...metrics.map((metric,i)=>({key:`trend${i}`,label:`Chart ${i+1}`,group:'Trends',width:300,minWidth:180})),...metrics.map((metric,i)=>({key:`average${i}`,label:`Chart ${i+1} · last 3 avg`,group:'Averages',width:120}))];
+  const value=(player,key)=>{const history=alignedHistory(player,slots,season);if(key.startsWith('trend'))return averageFor(history,metrics[Number(key.slice(-1))]).value;if(key.startsWith('average'))return averageFor(history.slice(-3),metrics[Number(key.slice(-1))]).value;if(key==='context')return averageFor(history.slice(-3),metrics[1]).value;return player[key];};
+  return <section className={`opportunity-position-card position-${group.position.toLowerCase()}`} aria-labelledby={`opportunity-${group.position}`}><header><div><span>{group.position}</span><div><h2 id={`opportunity-${group.position}`}>{POSITION_LABELS[group.position]}</h2><p>Official depth rank · recent opportunity order</p></div></div><strong>{group.players.length} players</strong></header><div className="data-table-controls" style={{padding:"10px 16px"}}>{metrics.map((metric,index)=><label key={index}>Chart {index+1} · {games} calendar weeks<TrendMetricSelect metric={metric} onChange={value=>onMetricChange(group.position,index,value)} label={`${group.position} chart ${index+1} metric`}/></label>)}</div><DataTable rowLabel={player=>`${player.name} opportunity`} id={`opportunity-${group.position}`} title={`${POSITION_LABELS[group.position]} opportunities`} columns={columns} rows={group.players} rowKey={player=>player.playerId||player.name} getValue={value} renderCell={(player,column,prefs)=>{const history=alignedHistory(player,slots,season);if(column.key==='name')return <div className="opportunity-player-identity"><div className="opportunity-player-photo"><PlayerPortrait player={player}/></div><div><button type="button" onClick={event=>onOpenPlayer?.({...player,player_id:player.playerId,season},event.currentTarget,scoring)}>{player.name}</button><small>{player.rosterStatusLabel} · {player.rookie?'Rookie':`${player.yearsExperience??'—'} yrs exp`}</small></div></div>;if(column.key==='context')return <div className="opportunity-player-context"><TrendContext history={history} metric={metrics[1]} scoring={scoring}/>{!player.hasNFLHistory&&<span>No recorded games in this window</span>}</div>;if(column.key.startsWith('trend')){const index=Number(column.key.slice(-1));return <div className="opportunity-table-metric"><TrendChart history={history} metric={metrics[index]} domain={domains?.[metrics[index]]} playerName={player.name} height={44}/></div>;}if(column.key.startsWith('average')){const metric=metrics[Number(column.key.slice(-1))], recent=history.slice(-3), average=averageFor(recent,metric);return <div title={`${metricLabel(metric,scoring)} · ${calendarLabel(recent)} · ${average.count} of ${recent.length} values`}><span>{metricLabel(metric,scoring)}</span><strong style={{display:'block'}}>{formatAverage(average.value,metric)}</strong><small>{average.count}/{recent.length} values</small></div>;}if(column.key==='position_finish')return <span title={`NFL position finish · ${player.position_finish_season||season} W${player.position_finish_week||'—'}`}>{player.position_finish==null?'—':`${player.position}${player.position_finish}`}</span>;return formatTableValue(player[column.key],column,prefs);}}/></section>;
 }
 
 export function OpportunityTracker({ season = 2026, meta, onOpenPlayer, onSeasonChange, onOpenGame }) {
   const [team, setTeam] = useState("NYG");
   const [position, setPosition] = useState("ALL");
   const [rosterFilter, setRosterFilter] = useState("ALL");
+  const [dfsSlate,setDfsSlate] = useState("current");
   const [preferences, setPreferences] = useState(readPreferences);
   const [payload, setPayload] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -192,7 +140,7 @@ export function OpportunityTracker({ season = 2026, meta, onOpenPlayer, onSeason
     setLoading(true);
     setPayload(null);
     setError("");
-    const params = new URLSearchParams({ season: String(season), team, games: String(games), scoring, weeks: selectedWeeks });
+    const params = new URLSearchParams({ season: String(season), team, games: String(games), scoring, weeks: selectedWeeks, dfsSlate });
     fetch(`/api/v1/opportunity-tracker?${params}`, { signal: controller.signal })
       .then(async (response) => {
         const result = await response.json();
@@ -203,7 +151,7 @@ export function OpportunityTracker({ season = 2026, meta, onOpenPlayer, onSeason
       .catch((requestError) => { if (!controller.signal.aborted && requestError.name !== "AbortError") setError(requestError.message); })
       .finally(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => controller.abort();
-  }, [team, season, games, scoring, selectedWeeks]);
+  }, [team, season, games, scoring, selectedWeeks, dfsSlate]);
 
   const visibleGroups = useMemo(() => (payload?.data?.groups || []).map((group) => ({
     ...group,
@@ -222,6 +170,7 @@ export function OpportunityTracker({ season = 2026, meta, onOpenPlayer, onSeason
 
   return (
     <main className="page-content opportunity-tracker-page">
+      <div className="data-table-controls"><label>DFS slate<select aria-label="Opportunity DFS slate" value={dfsSlate} onChange={event=>setDfsSlate(event.target.value)}><option value="current">Current upcoming slate</option><option value="selected-week">Selected historical week</option></select></label><span>Fantasy finish: selected statistical week · DFS: {trackerMeta?.dfs?.season || season} W{trackerMeta?.dfs?.week || (dfsSlate === "selected-week" ? end : "—")} · Missing source records appear as —.</span></div>
       <section className="opportunity-hero" aria-labelledby="opportunity-title">
         <div className="opportunity-title-block">
           <span className="page-eyebrow"><Gauge weight="bold" /> Team participation</span>
@@ -236,7 +185,7 @@ export function OpportunityTracker({ season = 2026, meta, onOpenPlayer, onSeason
         <label><span>Team</span><div className="opportunity-select"><select aria-label="Opportunity team" value={team} onChange={(event) => setTeam(event.target.value)}>{teams.map((item) => <option key={item} value={item}>{item}</option>)}</select><CaretDown weight="bold" /></div></label>
         <label><span>Scoring</span><div className="opportunity-select"><select aria-label="Opportunity scoring" value={scoring} onChange={(event) => setPreferences((current) => ({ ...current, scoring: event.target.value }))}>{Object.entries(SCORING_LABELS).map(([key, label]) => <option value={key} key={key}>{label}</option>)}</select><CaretDown weight="bold" /></div></label>
         <WeekRangePicker start={start} end={end} onChange={changeRange} />
-        <label><span>History window</span><div className="opportunity-select"><select aria-label="Opportunity history window" value={games} onChange={(event) => setPreferences((current) => ({ ...current, games: Number(event.target.value) }))}>{[5, 8, 10].map((count) => <option key={count} value={count}>{count} calendar weeks</option>)}</select><CaretDown weight="bold" /></div></label>
+        <label><span>History window</span><div className="opportunity-select"><select aria-label="Opportunity history window" value={games} onChange={(event) => setPreferences((current) => ({ ...current, games: Number(event.target.value) }))}>{[5, 8, 10, 18].map((count) => <option key={count} value={count}>{count} calendar weeks</option>)}</select><CaretDown weight="bold" /></div></label>
         <div className="opportunity-segmented" role="group" aria-label="Position group">
           <span>Position</span><div>{["ALL", "QB", "RB", "WR", "TE"].map((item) => <button type="button" aria-pressed={position === item} className={position === item ? "active" : ""} onClick={() => setPosition(item)} key={item}>{item === "ALL" ? "All" : item}</button>)}</div>
         </div>

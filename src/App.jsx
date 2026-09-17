@@ -116,7 +116,7 @@ function TrendColumnHeader({ columnKey, metric, gameCount, onMetricChange, onMin
   </span>;
 }
 
-function DepthChartCell({ row, depthChart, compact = false }) {
+function DepthChartCell({ row, depthChart, compact = false, onOpenPlayer }) {
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0, above: false });
   const triggerRef = useRef(null);
@@ -197,7 +197,7 @@ function DepthChartCell({ row, depthChart, compact = false }) {
             const playerRank = player.depthRank ?? player.depth_rank ?? index + 1;
             const name = player.name ?? player.player_display_name ?? "Unknown player";
             const selected = player.selected || player.playerId === row.player_id || player.player_id === row.player_id;
-            return <span key={player.playerId ?? player.player_id ?? `${name}-${playerRank}`} className={selected ? "selected" : ""}><b>{playerRank}</b><span>{name}</span>{player.rosterStatus ? <small>{player.rosterStatus}</small> : null}</span>;
+            return <span key={player.playerId ?? player.player_id ?? `${name}-${playerRank}`} className={selected ? "selected" : ""}><b>{playerRank}</b><button className="player-name-link" onClick={event=>{onOpenPlayer?.({...player,name,team,position:depthPosition},event.currentTarget);setOpen(false);}}>{name}</button>{player.rosterStatus ? <small>{player.rosterStatus}</small> : null}</span>;
           })}
         </span>
       ) : <em>Depth-chart lineup is not available.</em>}
@@ -400,7 +400,7 @@ function CustomColumnsPanel({
     setDraftGates({ draft: config.showDraftMetrics !== false, yahoo: config.showYahooMetrics === true, trends: true });
     setDraftSmartCompact(config.smartCompact !== false);
     setDraftAutoFit(config.autoFit === true);
-    setDraftTrendGameCount([5, 8, 10].includes(config.trendGameCount) ? config.trendGameCount : 10);
+    setDraftTrendGameCount([5, 8, 10, 18].includes(config.trendGameCount) ? config.trendGameCount : 10);
     setDraftRowDensity(Math.round(Math.max(0, Math.min(100, Number.isFinite(Number(config.rowDensity)) ? Number(config.rowDensity) : DEFAULT_PLAYER_ROW_DENSITY)) / 5) * 5);
     setDraftTrendMetrics(sanitizePlayerTrendMetrics(config.trendMetrics));
     setDraftOrder(config.groupOrder || DEFAULT_PLAYER_GROUP_ORDER);
@@ -495,7 +495,7 @@ function CustomColumnsPanel({
             <span><b>Row density</b><output htmlFor="player-row-density">{draftRowDensity <= 25 ? "Compact" : draftRowDensity >= 75 ? "Comfortable" : "Balanced"}</output></span>
             <div><small>Compact</small><input id="player-row-density" type="range" min="0" max="100" step="5" value={draftRowDensity} onChange={(event) => setDraftRowDensity(Number(event.target.value))} aria-label="Player table row density" aria-valuetext={`${draftRowDensity <= 25 ? "Compact" : draftRowDensity >= 75 ? "Comfortable" : "Balanced"}, ${draftRowDensity} percent`} /><small>Comfortable</small></div>
           </div>
-          <div className="trend-window-setting"><b>Trend window</b><div role="group" aria-label="Trend window">{[5, 8, 10].map((count) => <button type="button" key={count} aria-pressed={draftTrendGameCount === count} className={draftTrendGameCount === count ? "active" : ""} onClick={() => setDraftTrendGameCount(count)}>{count}</button>)}</div></div>
+          <div className="trend-window-setting"><b>Trend window</b><div role="group" aria-label="Trend window">{[5, 8, 10, 18].map((count) => <button type="button" key={count} aria-pressed={draftTrendGameCount === count} className={draftTrendGameCount === count ? "active" : ""} onClick={() => setDraftTrendGameCount(count)}>{count}</button>)}</div></div>
           <div className="column-studio-behaviors"><label><input type="checkbox" checked={draftSmartCompact} onChange={(event) => setDraftSmartCompact(event.target.checked)} /><span>Smart compact</span></label><label><input type="checkbox" checked={draftAutoFit} onChange={(event) => setDraftAutoFit(event.target.checked)} /><span>Auto Fit</span></label></div>
           <div className="column-studio-order"><b>Table order <small>(drag to reorder)</small></b><div>{draftOrder.map((key) => { const group = PLAYER_TABLE_GROUPS.find((item) => item.key === key); if (!group || !groupGate(group.key) || collapsedSet.has(key) || group.columns.every((column) => hiddenSet.has(column.key))) return null; return <span key={key} className={`tone-${group.tone}${draggingGroup === key ? " dragging" : ""}`} draggable onDragStart={() => setDraggingGroup(key)} onDragEnd={() => setDraggingGroup(null)} onDragOver={(event) => event.preventDefault()} onDrop={() => reorderGroup(draggingGroup, key)}><DotsSixVertical aria-hidden="true" />{group.shortName || group.name}<button type="button" aria-label={`Move ${group.name} left`} onClick={() => moveGroup(key, -1)}><ArrowLeft /></button><button type="button" aria-label={`Move ${group.name} right`} onClick={() => moveGroup(key, 1)}><ArrowRight /></button></span>; })}</div></div>
         </section>
@@ -780,7 +780,7 @@ export function App() {
     setShowPlayerTrends(configuration.showPlayerTrends !== false);
     setSmartCompactPlayerTable(configuration.smartCompact !== false);
     setAutoFitPlayerTable(configuration.autoFit === true);
-    setTrendGameCount([5, 8, 10].includes(configuration.trendGameCount) ? configuration.trendGameCount : 10);
+    setTrendGameCount([5, 8, 10, 18].includes(configuration.trendGameCount) ? configuration.trendGameCount : 10);
     setPlayerRowDensity(Math.round(Math.max(0, Math.min(100, Number.isFinite(Number(configuration.rowDensity)) ? Number(configuration.rowDensity) : DEFAULT_PLAYER_ROW_DENSITY)) / 5) * 5);
     setTrendMetrics(sanitizePlayerTrendMetrics(configuration.trendMetrics));
     setPlayerGroupOrder(configuration.groupOrder || DEFAULT_PLAYER_GROUP_ORDER);
@@ -1104,14 +1104,27 @@ export function App() {
     return parts.join(" · ");
   }, [weekStart, weekEnd, scoring, position, team]);
 
-  const openProfile = (row, opener, profileScoring = scoring) => {
+  const [profileLookup, setProfileLookup] = useState("");
+  const profileRequest = useRef(0);
+  const openProfile = async (row, opener, profileScoring = scoring) => {
+    const request = ++profileRequest.current;
     profileOpener.current = opener;
-    setProfilePlayer({
-      playerId: row.player_id || row.playerId,
-      name: row.player_display_name || row.name,
-      scoring: profileScoring,
-      season: row.season || route.season || season,
-    });
+    const name = row.player_display_name || row.name || row.playerDisplayName;
+    const profileSeason = row.season || route.season || season;
+    let playerId = row.player_id || row.playerId;
+    if (!playerId) {
+      setProfileLookup(`Finding ${name}…`);
+      try {
+        const response = await fetch(`/api/v1/player-identity?${new URLSearchParams({season: profileSeason, name, team:row.team || '',position:row.position || ''})}`);
+        const result = await response.json();
+        if (request !== profileRequest.current) return;
+        if (!response.ok || !result.match) { setProfileLookup(result.reason || `No unique NFL player match for ${name}.`); return; }
+        playerId = result.match.player_id;
+      } catch { if(request === profileRequest.current) setProfileLookup(`The player lookup for ${name} could not load. Please try again.`); return; }
+    }
+    if (request !== profileRequest.current) return;
+    setProfileLookup("");
+    setProfilePlayer({playerId, name, scoring:profileScoring, season:profileSeason});
   };
 
   const closeProfile = useCallback(() => {
@@ -1128,21 +1141,21 @@ export function App() {
 
   return (
     <div className={`app-shell${sidebarWidth < 112 ? " sidebar-icon-only" : ""}`} style={{ "--sidebar-width": `${sidebarWidth}px` }}>
-      <AppHeader season={route.season || season} onSeasonChange={changeSeason} currentPage={currentPage === "game" ? "team-box-scores" : currentPage} width={sidebarWidth} collapsed={sidebarWidth < 112} onResize={resizeSidebar} />
+      <>{profileLookup && <div className="player-resolution-alert" role="status">{profileLookup}<button aria-label="Dismiss player lookup message" onClick={()=>{profileRequest.current++;setProfileLookup("");}}>×</button></div>}</><AppHeader season={route.season || season} onSeasonChange={changeSeason} currentPage={currentPage === "game" ? "team-box-scores" : currentPage} width={sidebarWidth} collapsed={sidebarWidth < 112} onResize={resizeSidebar} />
       {currentPage === "game" ? (
         <GameBreakdown season={route.season || season} gameId={route.gameId} scoring={route.scoring} onBack={() => { window.location.hash = "#/team-box-scores"; }} onOpenPlayer={(row, opener) => openProfile(row, opener, route.scoring)} />
       ) : currentPage === "team-box-scores" ? (
-        <TeamBoxScores key={season} season={season} meta={meta} onOpenPlayer={openProfile} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}`; }} />
+        <TeamBoxScores key={season} season={season} meta={meta} onSeasonChange={changeSeason} onOpenPlayer={openProfile} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}`; }} />
       ) : currentPage === "opportunity-tracker" ? (
         <OpportunityTracker key={season} season={season} meta={meta} onOpenPlayer={openProfile} onSeasonChange={changeSeason} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}&season=${season}`; }} />
       ) : currentPage === "league-hub" ? (
         <LeagueHub />
       ) : currentPage === "intelligence" ? (
-        <IntelligenceFeed />
+        <IntelligenceFeed season={season} onOpenPlayer={openProfile} />
       ) : currentPage === "waivers" ? (
         <Waivers season={season} onOpenPlayer={openProfile} />
       ) : currentPage === "market-pulse" ? (
-        <MarketPulse />
+        <MarketPulse season={season} onOpenPlayer={openProfile} />
       ) : (
       <main className="page-content player-database-page">
       <section className="filter-band" aria-label="Statistics filters">
@@ -1377,7 +1390,7 @@ export function App() {
                     const value = row[field];
                     const className = `${column.align === "center" ? "center " : ""}${column.align === "left" ? "left " : ""}${column.key === "rank" ? "identity sticky-rank " : ""}${column.key === "name" ? "identity sticky-name player-name " : ""}${column.key === "position" ? "position-cell " : ""}${column.group === "draft" ? "draft-metric " : ""}${column.group === "yahoo" ? "yahoo-metric " : ""}${column.key === "fantasy_points" ? "fantasy-cell " : ""}${playerGroupEndKeys.has(column.key) ? "group-end" : ""}`;
                     if (column.key === "name") {
-                      return <td key={column.key} title={row.player_display_name} className={className}><span className="player-name-cell-content"><button type="button" className="player-name-button" onClick={(event) => openProfile(row, event.currentTarget)}>{row.player_display_name}</button><span className="player-name-team-logo" title={row.team}><TeamLogo team={row.team} decorative /><span className="sr-only">{row.team}</span></span><DepthChartCell row={row} depthChart={responseMeta?.depthCharts?.[row.current_depth_key]} compact /></span></td>;
+                      return <td key={column.key} title={row.player_display_name} className={className}><span className="player-name-cell-content"><button type="button" className="player-name-button" onClick={(event) => openProfile(row, event.currentTarget)}>{row.player_display_name}</button><span className="player-name-team-logo" title={row.team}><TeamLogo team={row.team} decorative /><span className="sr-only">{row.team}</span></span><DepthChartCell row={row} depthChart={responseMeta?.depthCharts?.[row.current_depth_key]} compact onOpenPlayer={openProfile} /></span></td>;
                     }
                     if (column.key === "upcoming_matchup") {
                       const matchupLines = splitUpcomingMatchup(value);

@@ -1,3 +1,6 @@
+import { DataTable } from './DataTable.jsx';
+import { formatTableValue } from './tableSettings.js';
+import { TrendChart, TrendMetricSelect } from './TrendChart.jsx';
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChartLineUp, Fire, LinkBreak, ListBullets, User, UsersThree, X } from "@phosphor-icons/react";
 
@@ -135,40 +138,9 @@ function SnapMeter({ value }) {
   return <span className="profile-snap-meter"><b>{whole.format(pct)}%</b><i aria-hidden="true"><span style={{ width: `${pct}%` }} /></i></span>;
 }
 
-function TrajectoryStrip({ logs, playerName }) {
-  const [metricKey, setMetricKey] = useState("fantasy_points");
-  const metric = TRAJECTORY_METRICS.find((item) => item.key === metricKey) || TRAJECTORY_METRICS[0];
-  const values = logs.map((row) => numeric(row[metricKey]));
-  const max = Math.max(...values, 1);
-  const average = values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : 0;
-  const averageHeight = 8 + 88 * (average / max);
-
-  return (
-    <section className="profile-trajectory" aria-labelledby="trajectory-title">
-      <header>
-        <div><h3 id="trajectory-title">Season trajectory</h3><span>{playerName} · played games</span></div>
-        <div className="profile-metric-pills" role="group" aria-label="Trajectory metric">
-          {TRAJECTORY_METRICS.map((item) => <button type="button" key={item.key} className={item.key === metricKey ? "active" : ""} aria-pressed={item.key === metricKey} onClick={() => setMetricKey(item.key)}>{item.label}</button>)}
-        </div>
-      </header>
-      <div className="profile-trajectory-chart">
-        <span className="profile-average-label" style={{ bottom: `${averageHeight + 18}px` }}>AVG {metric.format(average)}</span>
-        <i className="profile-average-line" style={{ bottom: `${averageHeight + 18}px` }} aria-hidden="true" />
-        <div className="profile-trajectory-bars">
-          {logs.map((log) => {
-            const value = numeric(log[metricKey]);
-            const height = 8 + 88 * (value / max);
-            return (
-              <span className="profile-trajectory-item" key={`${log.season_type}-${log.week}`} title={`Wk ${log.week} vs ${log.opponent_team || "—"} — ${metric.format(value)}`}>
-                <b className={value >= average ? "above-average" : ""} style={{ height: `${height}px` }} aria-hidden="true" />
-                <small>{log.season_type === "POST" ? `P${log.week}` : log.week}</small>
-              </span>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
+function TrajectoryStrip({ profile, trendWeeks, onTrendWeeks }) {
+  const [metric, setMetric] = useState("fantasy_points");
+  return <section className="profile-trajectory" aria-labelledby="trajectory-title"><header><div><h3 id="trajectory-title">Season trajectory</h3><span>{profile.player.name} · aligned regular-season calendar weeks</span></div><div className="profile-trajectory-controls"><TrendMetricSelect metric={metric} onChange={setMetric} label="Player trajectory metric"/><label>History<select aria-label="Player trajectory history" value={trendWeeks} onChange={event=>onTrendWeeks(Number(event.target.value))}>{[5,8,10,18].map(n=><option key={n} value={n}>{n} calendar weeks</option>)}</select></label></div></header><TrendChart history={profile.history || []} metric={metric} domain={profile.meta?.trendDomains?.[metric]} playerName={profile.player.name} height={96}/></section>;
 }
 
 function GameLogHeader({ groups }) {
@@ -212,35 +184,21 @@ function SummaryRow({ logs, groups, position, mode }) {
 }
 
 function GameLogTable({ logs, profile }) {
+  const [period,setPeriod] = useState('ALL');
   const groups = gameGroups(profile.player.position);
-  const regular = logs.filter((log) => log.season_type !== "POST");
-  const postseason = logs.filter((log) => log.season_type === "POST");
-  const average = mean(logs, "fantasy_points");
-  return (
-    <div className="profile-table-scroll" tabIndex="0" aria-label="Scrollable player game log">
-      <table className={`profile-v2-table profile-game-log-table ${isQuarterback(profile.player.position) ? "is-quarterback" : "is-skill"}`}>
-        <caption>{profile.player.name} {profile.meta?.season || 2025} game logs</caption>
-        <colgroup><col style={{ width: 44 }} /><col style={{ width: 96 }} />{groups.flatMap((group) => group.columns.map((column) => <col key={`${group.label}-${column.key}`} style={{ width: column.width }} />))}</colgroup>
-        <GameLogHeader groups={groups} />
-        <tbody>
-          {regular.map((log) => <GameLogRow key={`${log.season_type}-${log.week}`} log={log} groups={groups} position={profile.player.position} average={average} />)}
-          {postseason.length ? <tr className="profile-postseason-divider"><th colSpan={2 + groups.reduce((sum, group) => sum + group.columns.length, 0)}><span>POSTSEASON</span></th></tr> : null}
-          {postseason.map((log) => <GameLogRow key={`${log.season_type}-${log.week}`} log={log} groups={groups} position={profile.player.position} average={average} />)}
-        </tbody>
-        <tfoot><SummaryRow logs={logs} groups={groups} position={profile.player.position} mode="average" /><SummaryRow logs={logs} groups={groups} position={profile.player.position} mode="total" /></tfoot>
-      </table>
-    </div>
-  );
+  const columns = [{key:'week',label:'Week',group:'Game',width:64,required:true},{key:'season_type',label:'Phase',group:'Game',width:76},{key:'opponent_team',label:'Opponent',group:'Game',width:95},...groups.flatMap(group=>group.columns.map(column=>({...column,group:group.label,width:column.width || 90,decimals:column.kind==='fpts'?1:undefined,type:column.kind==='snap'?'percent':'number'}))),{key:'draft_kings_price',label:'DK salary',group:'DFS',width:110,type:'currency'},{key:'draft_kings_projection',label:'DK projection',group:'DFS',width:120,decimals:2}];
+  const filtered = logs.filter(log=>period==='ALL'||log.season_type===period);
+  return <DataTable id={`profile-logs-${profile.player.position}`} title={`${profile.player.name} game logs`} columns={columns} rows={filtered} rowKey={row=>`${row.season_type}-${row.week}`} defaultSorts={[{key:'week',desc:false}]} filters={<label>Phase<select aria-label="Game log phase" value={period} onChange={event=>setPeriod(event.target.value)}><option value="ALL">Regular + postseason</option><option value="REG">Regular season</option><option value="POST">Postseason</option></select></label>} renderCell={(row,column,prefs)=>column.kind==='finish' && row[column.key]!=null?`${profile.player.position}${row[column.key]}`:formatTableValue(row[column.key],column,prefs)}/>;
 }
 
-function GameLogs({ profile }) {
+function GameLogs({ profile, trendWeeks, onTrendWeeks }) {
   const logs = useMemo(() => profile.gameLogs.map(enrichLog), [profile.gameLogs]);
   return (
     <section className="profile-tab-panel profile-logs-panel" role="tabpanel" id="game-logs-panel" aria-labelledby="game-logs-tab">
       <header className="profile-panel-heading"><div><h3>Game Logs</h3></div><span>{profile.meta.season} · Regular + postseason</span></header>
-      <TrajectoryStrip logs={logs} playerName={profile.player.name} />
+      <TrajectoryStrip profile={profile} trendWeeks={trendWeeks} onTrendWeeks={onTrendWeeks} />
       <GameLogTable logs={logs} profile={profile} />
-      <div className="profile-performance-legend"><span className="legend-great" />≥ 115% of season avg <span className="legend-poor" />≤ 60% of season avg <em>FPTS is the only judged column — everything else is plain data</em></div>
+      <p className="profile-note">Weekly finish compares all NFL peers before filters. Historical DFS values appear only for their exact week; unavailable records are shown as —.</p>
     </section>
   );
 }
@@ -273,14 +231,7 @@ function HeatMap({ profile }) {
   return (
     <section className="profile-tab-panel profile-heat-panel" role="tabpanel" id="heat-map-panel" aria-labelledby="heat-map-tab">
       <header className="profile-panel-heading"><div><h3>Heat Map</h3></div><div className="profile-heat-pills" role="group" aria-label="Heat map stat group">{Object.keys(HEAT_GROUPS).map((key) => <button type="button" key={key} aria-pressed={activeGroup === key} className={activeGroup === key ? "active" : ""} onClick={() => setActiveGroup(key)}>{key[0].toUpperCase() + key.slice(1)}</button>)}</div></header>
-      <div className="profile-table-scroll" tabIndex="0" aria-label="Scrollable player performance heat map">
-        <table className="profile-v2-table profile-heat-table">
-          <caption>{profile.player.name} season heat map</caption>
-          <colgroup><col style={{ width: 44 }} /><col style={{ width: 92 }} />{columns.map((column) => <col key={column.key} />)}</colgroup>
-          <thead><tr><th>WK</th><th>OPP</th>{columns.map((column) => <th key={column.key}>{column.label}</th>)}</tr></thead>
-          <tbody>{logs.map((log) => <tr key={`${log.season_type}-${log.week}`}><th scope="row">{log.week}</th><td className="profile-opponent"><strong>{log.opponent_team || "—"}</strong><span className={`result-${String(log.result || "").toLowerCase()}`}>{log.result || "—"}</span></td>{columns.map((column) => { const strength = heatStrength(log[column.key], column, maxima[column.key]); const alpha = 0.04 + 0.38 * strength; const value = column.finish ? `${profile.player.position}${whole.format(log[column.key])}` : column.percent ? `${whole.format(log[column.key])}%` : column.decimal ? oneDecimal.format(log[column.key]) : whole.format(log[column.key]); return <td key={column.key}><span className="profile-heat-tile" style={{ "--heat-alpha": alpha, "--heat-text": strength > 0.55 ? "#EAFFF4" : "#D8D8D8" }}>{value}</span></td>; })}</tr>)}</tbody>
-        </table>
-      </div>
+      <DataTable id={`profile-heat-${activeGroup}`} title={`${profile.player.name} heat map`} columns={[{key:'week',label:'Week',group:'Game',width:64,required:true},{key:'opponent_team',label:'Opponent',group:'Game',width:100},...columns.map(column=>({...column,width:110,group:activeGroup,type:column.percent?'percent':'number',decimals:column.decimal?1:0}))]} rows={logs} rowKey={row=>`${row.season_type}-${row.week}`} renderCell={(row,column,prefs)=>{if(['week','opponent_team'].includes(column.key))return undefined;const value=row[column.key];return <span className="profile-heat-tile" style={{background:prefs.heatmap&&value!=null?`rgba(66,211,146,${0.04+0.38*heatStrength(value,column,maxima[column.key])})`:'transparent'}}>{column.finish&&value!=null?`${profile.player.position}${value}`:formatTableValue(value,column,prefs)}</span>;}}/>
       <footer className="profile-heat-legend"><span>Shading = share of this player’s season best in that column</span><i aria-hidden="true" /><small>0</small><small>BEST</small></footer>
     </section>
   );
@@ -309,14 +260,7 @@ function SeasonStats({ profile }) {
   return (
     <section className="profile-tab-panel profile-season-panel" role="tabpanel" id="season-stats-panel" aria-labelledby="season-stats-tab">
       <header className="profile-panel-heading"><div><h3>Season Stats</h3></div><span>{profile.meta.scoring.toUpperCase()} scoring</span></header>
-      <div className="profile-table-scroll" tabIndex="0" aria-label="Scrollable player season statistics">
-        <table className="profile-v2-table profile-season-table">
-          <caption>{profile.player.name} season statistics</caption>
-          <colgroup><col style={{ width: 70 }} />{columns.map((column) => <col key={column.key} />)}</colgroup>
-          <thead><tr><th>YEAR</th>{columns.map((column) => <th key={column.key}>{column.label}</th>)}</tr></thead>
-          <tbody>{profile.seasonStats.map((row) => <tr key={row.season} className={row.season === profile.meta.season ? "current" : ""}><th scope="row">{row.season}</th>{columns.map((column) => { const value = row[column.key]; const classes = [column.className || "", column.muted ? "is-muted" : "", column.td ? (numeric(value) > 0 ? "is-touchdown" : "is-zero") : ""].filter(Boolean).join(" "); const formatted = column.finish ? `${profile.player.position}${whole.format(value)}` : column.percent ? `${whole.format(value)}%` : column.decimal ? oneDecimal.format(value) : whole.format(value); return <td className={classes} key={column.key}>{formatted}</td>; })}</tr>)}</tbody>
-        </table>
-      </div>
+      <DataTable id={`profile-seasons-${profile.player.position}`} title={`${profile.player.name} season statistics`} columns={[{key:'season',label:'Year',group:'Season',width:80,required:true},...columns.map(column=>({...column,group:'Statistics',width:110,type:column.percent?'percent':'number',decimals:column.decimal?1:0}))]} rows={profile.seasonStats} rowKey={row=>row.season} renderCell={(row,column,prefs)=>column.finish&&row[column.key]!=null?`${profile.player.position}${row[column.key]}`:formatTableValue(row[column.key],column,prefs)}/>
       <p className="profile-note">Additional seasons appear automatically as they are loaded into the Bowser warehouse.</p>
     </section>
   );
@@ -346,6 +290,7 @@ export function PlayerProfile({ player, season = 2026, scoring, initialTab = "lo
   const [activeTab, setActiveTab] = useState(safeInitialTab);
   const [error, setError] = useState("");
   const [headshotFailed, setHeadshotFailed] = useState(false);
+  const [trendWeeks,setTrendWeeks] = useState(10);
   const dialogRef = useRef(null);
   const firstTabRef = useRef(null);
 
@@ -355,7 +300,7 @@ export function PlayerProfile({ player, season = 2026, scoring, initialTab = "lo
     setError("");
     setHeadshotFailed(false);
     setActiveTab(safeInitialTab);
-    fetch(`/api/v1/player-profile?${new URLSearchParams({ playerId: player.playerId, scoring, season: String(season) })}`, { signal: controller.signal })
+    fetch(`/api/v1/player-profile?${new URLSearchParams({ playerId: player.playerId, scoring, season: String(season), trendWeeks:String(trendWeeks) })}`, { signal: controller.signal })
       .then(async (response) => {
         const payload = await response.json();
         if (!response.ok) throw new Error(payload.error?.message || "The player profile could not be loaded.");
@@ -364,13 +309,14 @@ export function PlayerProfile({ player, season = 2026, scoring, initialTab = "lo
       .then((payload) => setProfile({ ...payload.data, meta: payload.meta }))
       .catch((requestError) => { if (requestError.name !== "AbortError") setError(requestError.message); });
     return () => controller.abort();
-  }, [player.playerId, season, scoring, safeInitialTab]);
+  }, [player.playerId, season, scoring, safeInitialTab, trendWeeks]);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     firstTabRef.current?.focus();
     const onKeyDown = (event) => {
+      if (!dialogRef.current?.contains(event.target)) return;
       if (event.key === "Escape") onClose();
       if (event.key !== "Tab" || !dialogRef.current) return;
       const focusable = [...dialogRef.current.querySelectorAll('button:not([disabled]), [href], select, input, [tabindex]:not([tabindex="-1"])')];
@@ -414,7 +360,7 @@ export function PlayerProfile({ player, season = 2026, scoring, initialTab = "lo
         <div className="profile-content">
           {!profile && !error ? <div className="profile-loading" role="status"><span aria-hidden="true" />Loading player warehouse data…</div> : null}
           {error ? <div className="profile-error" role="alert"><strong>Player card unavailable</strong><span>{error}</span><button type="button" onClick={onClose}>Close</button></div> : null}
-          {profile && activeTab === "logs" ? <GameLogs profile={profile} /> : null}
+          {profile && activeTab === "logs" ? <GameLogs profile={profile} trendWeeks={trendWeeks} onTrendWeeks={setTrendWeeks} /> : null}
           {profile && activeTab === "heat" ? <HeatMap profile={profile} /> : null}
           {profile && activeTab === "season" ? <SeasonStats profile={profile} /> : null}
           {profile && activeTab === "depth" ? <DepthChart profile={profile} onSelectPlayer={onSelectPlayer} /> : null}

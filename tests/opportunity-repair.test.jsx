@@ -44,7 +44,7 @@ const fixture = (input = '/api/v1/opportunity-tracker?season=2026&games=10') => 
 const response = body => ({ ok: true, json: async () => body });
 const meta = { teams: ['NYG', 'BUF'], seasons: [2026, 2025] };
 const ready = () => screen.findByRole('button', { name: 'Known Runner', exact: true });
-const row = name => screen.getByRole('article', { name: `${name} opportunity` });
+const row = name => screen.getByRole('row', { name: `${name} opportunity` });
 const chart = (name, metric) => within(row(name)).getByRole('img', { name: new RegExp(`^${metric} trend for ${name}:`) });
 const latestQuery = () => new URL(fetch.mock.calls.at(-1)[0], 'http://local').searchParams;
 beforeEach(() => {
@@ -88,7 +88,7 @@ test('all three charts use the same complete menu and save choices by position a
   expect(chart('Known Runner', 'Rushing yards')).toHaveAttribute('data-scale-max', '120');
   expect(chart('Known Runner', 'Rushing yards').querySelector('[data-season="2026"]')).toHaveAttribute('data-value', '60');
   expect(within(row('Known Runner')).getByText('Rushing yards -12.5 avg')).toBeInTheDocument();
-  const averages = within(row('Known Runner')).getByLabelText('Last three calendar weeks averages for Known Runner');
+  const averages = row('Known Runner');
   const average = within(averages).getByText('Rushing yards').closest('div');
   expect(average).toHaveTextContent('45.0');
   expect(average).toHaveTextContent('2/3 values');
@@ -136,8 +136,8 @@ test('year, scoring and team reach the API; roster and position filters do not c
   fireEvent.change(screen.getByLabelText('Opportunity scoring'), { target: { value: 'half' } }); await ready();
   expect(latestQuery().get('scoring')).toBe('half');
   fireEvent.click(await ready());
-  expect(openPlayer).toHaveBeenCalledWith({ player_id: 'runner', player_display_name: 'Known Runner' }, expect.any(HTMLElement), 'half');
-  expect(within(row('Known Runner')).getAllByText('Half PPR points')).toHaveLength(2);
+  expect(openPlayer).toHaveBeenCalledWith(expect.objectContaining({ player_id: 'runner', name: 'Known Runner', season:2026 }), expect.any(HTMLElement), 'half');
+  expect(within(row('Known Runner')).getAllByText('Half PPR points')).toHaveLength(1);
   fireEvent.change(screen.getByLabelText('Opportunity statistics year'), { target: { value: '2025' } }); await ready();
   expect(latestQuery().get('season')).toBe('2025');
   expect(latestQuery().get('weeks')).toBe(Array.from({ length: 18 }, (_, index) => index + 1).join(','));

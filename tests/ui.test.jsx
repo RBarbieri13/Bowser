@@ -244,7 +244,8 @@ describe("statistics table UI", () => {
     window.location.hash = "#/intelligence";
     render(<App />);
     expect(await screen.findByRole("heading", { name: "Fantasy Intelligence" })).toBeInTheDocument();
-    expect(await screen.findByRole("heading", { name: "Test Player earns first-team work" })).toBeInTheDocument();
+    expect(await screen.findByText("Test Player earns first-team work")).toBeInTheDocument();
+    expect(screen.getByRole("table", {name:"Intelligence events"})).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Refresh now" })).toBeDisabled();
     await user.click(screen.getByRole("tab", { name: "Source registry" }));
     expect(await screen.findByRole("heading", { name: "Source registry" })).toBeInTheDocument();
@@ -825,7 +826,7 @@ describe("statistics table UI", () => {
     expect(dialog).toBeInTheDocument();
     expect(screen.getAllByText("31.2").length).toBeGreaterThan(0);
     expect(screen.getByText("Roster data not connected")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "SNAP %" })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Player trajectory metric" })).toBeInTheDocument();
 
     await user.click(screen.getByRole("tab", { name: "Heat Map" }));
     expect(screen.getByRole("tabpanel", { name: "Heat Map" })).toBeInTheDocument();
