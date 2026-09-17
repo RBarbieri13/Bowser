@@ -1,4 +1,4 @@
-import { getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "./stats-store.mjs";
+import { queryPlayerIdentity, queryDfsArchive, getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "./stats-store.mjs";
 import { getIntelligenceRegistry, queryPersistedIntelligenceFeed, IntelligenceQueryError } from "./intelligence-store.mjs";
 import { IntelligenceProviderError } from "./intelligence-errors.mjs";
 import { IntelligenceApiError, intelligenceRunStatus, startIntelligenceRefresh } from "./intelligence-api.mjs";
@@ -28,6 +28,8 @@ export function fantasyStatsApiPlugin() {
           if (request.method !== "GET") return sendJson(response, 405, { error: { code: "read_only", message: "This API is read-only" } });
           if (url.pathname === "/meta") return sendJson(response, 200, getMeta(undefined, url.searchParams));
           if (url.pathname === "/player-stats") return sendJson(response, 200, queryPlayers(url.searchParams));
+          if (url.pathname === "/player-identity") return sendJson(response, 200, queryPlayerIdentity(url.searchParams));
+          if (url.pathname === "/dfs-archive") return sendJson(response, 200, queryDfsArchive(url.searchParams));
           if (url.pathname === "/player-profile") return sendJson(response, 200, queryPlayerProfile(url.searchParams));
           if (url.pathname === "/team-box-scores") return sendJson(response, 200, queryTeamBoxScores(url.searchParams));
           if (url.pathname === "/opportunity-tracker") return sendJson(response, 200, queryOpportunityTracker(url.searchParams));

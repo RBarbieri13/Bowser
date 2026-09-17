@@ -1,0 +1,97 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { getDfsWeek,getDfsArchiveIndex,getDfsSlate } from '../server/dfs-store.mjs';
+import { queryPlayers,queryTeamBoxScores,queryOpportunityTracker,queryPlayerIdentity,queryPlayerProfile,queryDfsArchive,openDatabase } from '../server/stats-store.mjs';
+
+const params = value => new URLSearchParams(value);
+
+test('archive keeps both 2026 weeks and immutable pre-enrichment capture versions', () => {
+  const index = getDfsArchiveIndex();
+  assert.ok(index.some(s => s.season===2026 && s.week===1));
+  const allWeek = index.filter(s => s.slateId===153427);
+  assert.ok(allWeek.length>=2);
+  const old = allWeek.find(s => s.projectedPlayers===192);
+  const expanded = allWeek.find(s => s.projectedPlayers===398);
+  assert.ok(old); assert.ok(expanded);
+  assert.notEqual(old.captureId,expanded.captureId);
+  const oldData = getDfsWeek(2026,2,{captureId:old.captureId});
+  const newData = getDfsWeek(2026,2,{captureId:expanded.captureId});
+  assert.equal(oldData.records.find(r=>r.name==='Carson Wentz').projection,null);
+  assert.equal(newData.records.find(r=>r.name==='Carson Wentz').projection,14.95);
+  assert.equal(newData.records.find(r=>r.name==='Carson Wentz').projectionSource,'Fantasy Sports Central');
+});
+
+test('exact-week lookup never leaks current DFS into unavailable historical weeks', () => {
+  const prior = getDfsWeek(2026,1).records.find(r=>r.name==='Jahmyr Gibbs');
+  const next = getDfsWeek(2026,2).records.find(r=>r.name==='Jahmyr Gibbs');
+  assert.equal(prior.salary,8000); assert.equal(next.salary,8500);
+  for (const [season,week] of [[2025,18],[2026,3]]) {
+    const result=getDfsWeek(season,week);
+    assert.equal(result.meta.available,false); assert.deepEqual(result.records,[]);
+    assert.match(result.meta.reason,new RegExp(`${season} Week ${week}`));
+  }
+  assert.equal(getDfsWeek(2026,2,{captureId:'does-not-exist'}).meta.available,false);
+  assert.ok(getDfsSlate('week1').records.length>350);
+});
+
+test('Team Box joins historical salaries and NFL-wide position ranks before team filtering', () => {
+  const result=queryTeamBoxScores(params('season=2026&team=DET&weeks=1&scoring=ppr&trendAnchors=1&trendWeeks=18'));
+  const gibbs=result.data.find(r=>r.player_display_name==='Jahmyr Gibbs');
+  assert.equal(gibbs.draft_kings_price,8000); assert.equal(gibbs.draft_kings_projection,22.2);
+  assert.equal(gibbs.dfs_meta.week,1); assert.equal(gibbs.position_finish,3);
+  const all=queryPlayers(params('season=2026&weeks=1&positions=RB&limit=all&scoring=ppr')).data;
+  assert.equal(gibbs.position_finish,all.find(r=>r.player_id===gibbs.player_id).position_finish);
+  assert.equal(gibbs.trendsByAnchor['1'].length,18);
+  assert.deepEqual(gibbs.trendsByAnchor['1'].map(r=>r.key),result.meta.trendsByAnchor['1'].slots.map(r=>r.key));
+});
+
+test('upcoming Team Box rows contain verified DFS and null actual statistics', () => {
+  const result=queryTeamBoxScores(params('season=2026&team=DET&weeks=2&trendAnchors=2&trendWeeks=5'));
+  const gibbs=result.data.find(r=>r.player_display_name==='Jahmyr Gibbs');
+  assert.equal(gibbs.played,false); assert.equal(gibbs.stats_available,false);
+  for(const key of ['snaps','fantasy_points','position_finish','carries','rushing_yards']) assert.equal(gibbs[key],null);
+  assert.equal(gibbs.draft_kings_price,8500);assert.equal(gibbs.draft_kings_projection,23.1);
+  assert.equal(result.meta.trendsByAnchor['2'].week,1);
+  assert.equal(gibbs.trendsByAnchor['2'].at(-1).week,1);
+});
+
+test('moving Team Box anchors really reanchors the shared prior-season history', () => {
+  const result=queryTeamBoxScores(params('season=2025&team=MIN&weeks=3,4&trendAnchors=3,4&trendWeeks=5'));
+  assert.equal(result.meta.trendsByAnchor['3'].slots.at(-1).week,3);
+  assert.equal(result.meta.trendsByAnchor['4'].slots.at(-1).week,4);
+  assert.ok(result.data.every(row=>row.draft_kings_price===null && row.dfs_meta.season===2025));
+});
+
+test('Opportunity and Player Database expose explicitly selected-week DFS and 18-week histories', () => {
+  for(const dfsSlate of ['current','selected-week']) {
+    const result=queryOpportunityTracker(params(`season=2026&team=DET&weeks=1&games=18&dfsSlate=${dfsSlate}`));
+    const gibbs=result.data.groups.flatMap(g=>g.players).find(p=>p.name==='Jahmyr Gibbs');
+    assert.equal(gibbs.history.length,18); assert.equal(gibbs.position_finish,3);
+    assert.equal(result.meta.dfs.week,dfsSlate==='current'?2:1);
+    assert.equal(gibbs.draft_kings_price,dfsSlate==='current'?8500:8000);
+  }
+  const database=queryPlayers(params('season=2026&weeks=1&search=Jahmyr&dfsSlate=selected-week&trendWeeks=18'));
+  assert.equal(database.meta.dfs.week,1); assert.equal(database.data[0].draft_kings_price,8000);
+});
+
+test('identity resolution is conservative and rostered players without current statistics have profiles', () => {
+  assert.equal(queryPlayerIdentity(params('season=2026&name=Jahmyr+Gibbs&team=DET&position=RB')).match.player_id,'00-0039139');
+  assert.equal(queryPlayerIdentity(params('season=2026&name=Jahmyr+Gibbs&team=BUF&position=RB')).match,null);
+  assert.equal(queryPlayerIdentity(params('season=2026&name=Not+a+Real+Player')).match,null);
+  const db=openDatabase(undefined,2026);
+  const row=db.prepare(`SELECT player_id FROM team_roster WHERE position IN ('QB','RB','WR','TE') AND player_id NOT IN (
+    SELECT player_id FROM player_week_stats WHERE source_player_stats=1) LIMIT 1`).get();
+  assert.ok(row);
+  const profile=queryPlayerProfile(params(`season=2026&playerId=${row.player_id}&trendWeeks=18`));
+  assert.equal(profile.data.player.playerId,row.player_id);
+  assert.equal(profile.data.gameLogs.length,0);assert.equal(profile.meta.statsAvailable,false);
+  assert.equal(profile.data.history.length,18);assert.equal(profile.meta.trendSlots.length,18);
+  assert.ok(profile.meta.emptyReason);
+});
+
+test('archive API filters by player and preserves source and capture lineage',()=>{
+  const result=queryDfsArchive(params('season=2026&week=1&playerId=00-0039139'));
+  assert.equal(result.data.length,1);assert.equal(result.data[0].salary,8000);
+  assert.ok(result.meta.captureId);assert.ok(result.meta.captures.length>=2);
+  assert.throws(()=>queryDfsArchive(params('season=2026&week=19')),/regular-season/);
+});

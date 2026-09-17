@@ -1,4 +1,4 @@
-import { getDfsSlate } from "./dfs-store.mjs";
+import { getDfsSlate, getDfsWeek, dfsPlayerFields, getDfsArchiveIndex } from "./dfs-store.mjs";
 import { alignedHistory } from "./trend-history.mjs";
 import { DatabaseSync } from "node:sqlite";
 import { copyFileSync } from "node:fs";
@@ -150,7 +150,7 @@ function decorateUpcomingMatchup(row) {
 
 function trendWindow(value, field) {
   const count = value === null || value === "" ? 10 : Number(value);
-  if (![5, 8, 10].includes(count)) throw new QueryValidationError(field, `${field} must be 5, 8 or 10`);
+  if (![5, 8, 10, 18].includes(count)) throw new QueryValidationError(field, `${field} must be 5, 8, 10 or 18`);
   return count;
 }
 
@@ -338,7 +338,9 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
   const upcomingTeam = season === 2026
     ? "COALESCE(NULLIF(players.latest_team, ''), draft_rankings.source_team)"
     : "COALESCE(NULLIF(draft_rankings.source_team, ''), players.latest_team)";
-  const dfs=getDfsSlate(searchParams.get("dfsSlate") || undefined);
+  const history = queryAlignedHistory(db, { season, weeks, count: trendWeeks, receptionBonus, seasonType });
+  const dfsChoice = searchParams.get('dfsSlate') || 'current';
+  const dfs = dfsChoice === 'selected-week' ? getDfsWeek(season,history.rankContext.week || Math.max(...weeks,1)) : getDfsSlate(dfsChoice);
   if(!dfs) throw new QueryValidationError("dfsSlate", "Unknown DraftKings slate");
   const where = [`season = ${season}`];
   const params = [];
@@ -363,7 +365,6 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
     params.push(`%${search}%`, `%${search}%`);
   }
 
-  const history = queryAlignedHistory(db, { season, weeks, count: trendWeeks, receptionBonus, seasonType });
   const rankFilter = ranks.length ? `WHERE rank IN (${placeholders(ranks)})` : "";
   const sql = `
     WITH dfs AS MATERIALIZED (
@@ -609,6 +610,9 @@ export function queryOpportunityTracker(searchParams = new URLSearchParams(), db
     WHERE season = 2026 AND team = ? AND position IN ('QB', 'RB', 'WR', 'TE')
   `).all(team);
   const aligned = queryAlignedHistory(db, { season, weeks, count: gameLimit, receptionBonus });
+  const dfsChoice = searchParams.get('dfsSlate') || 'current';
+  const dfs = dfsChoice === 'selected-week' ? getDfsWeek(season, aligned.rankContext.week || Math.max(...weeks, 1)) : getDfsSlate(dfsChoice);
+  if (!dfs) throw new QueryValidationError('dfsSlate', 'Unknown DraftKings slate');
   const players = roster.map((row) => {
     const history = aligned.forPlayer(row.player_id);
     const recentThree = history.slice(-3);
@@ -631,6 +635,7 @@ export function queryOpportunityTracker(searchParams = new URLSearchParams(), db
       hasNFLHistory: history.some((game) => game.available),
       recordedGames: history.filter((game) => game.available).length,
       ...aligned.rankForPlayer(row.player_id),
+      ...dfsPlayerFields(dfs, row.player_id),
       opportunityMetric,
       averages: { snaps: average("snaps"), snapPct: average("snapPct"), opportunity: average(opportunityMetric), fantasyPoints: average("fantasyPoints") },
       trend: opportunityTrend(history, row.position),
@@ -652,6 +657,7 @@ export function queryOpportunityTracker(searchParams = new URLSearchParams(), db
     data: { team, groups },
     meta: {
       season, scoring, weeks,
+      dfs: { ...dfs.meta, selection: dfsChoice, statisticsSeason: season, statisticsWeek: aligned.rankContext.week },
       schedule: queryScheduleForTeam(db, team, "REG"),
       ...historyMetadata(aligned, scoring),
       rosterSeason: 2026,
@@ -738,14 +744,68 @@ export function queryTeamBoxScores(searchParams = new URLSearchParams(), dbPath)
 
   const schedule = queryScheduleForTeam(db, team, seasonType);
   const matchupByWeek = new Map(schedule.map((game) => [game.week, game]));
+  const trendWeeks = trendWindow(searchParams.get('trendWeeks'), 'trendWeeks');
+  const trendAnchors = [...new Set(list(searchParams.get('trendAnchors'), Number))];
+  if (trendAnchors.some(week => !Number.isInteger(week) || week < 1 || week > 22) || trendAnchors.length > 22) {
+    throw new QueryValidationError('trendAnchors', 'Trend anchors must be unique NFL weeks between 1 and 22');
+  }
+  const histories = new Map(trendAnchors.map(week => [String(week), queryAlignedHistory(db, {
+    season, weeks: [week], count: trendWeeks, receptionBonus,
+  })]));
+  // Rank the entire NFL before the team filter. Historical DFS always uses the row's own week.
+  const rankedWeeks = db.prepare(`WITH totals AS (
+    SELECT player_id,season,week,season_type,
+      CASE WHEN MAX(position) IN ('RB','FB','HB') THEN 'RB' ELSE MAX(position) END AS position_group,
+      ROUND(SUM(fantasy_points + receptions * ?),2) AS rank_points
+    FROM player_week_stats WHERE season=? AND played=1
+    GROUP BY player_id,season,season_type,week
+  ), ranks AS (
+    SELECT *,RANK() OVER (PARTITION BY season,season_type,week,position_group ORDER BY rank_points DESC) AS position_finish
+    FROM totals
+  ) SELECT * FROM ranks WHERE week IN (${placeholders(weeks)})`).all(receptionBonus,season,...weeks);
+  const rankByPlayerWeek = new Map(rankedWeeks.map(r => [`${r.player_id}:${r.season_type}:${r.week}`,r.position_finish]));
+  const dfsByWeek = new Map(weeks.map(week => [week, getDfsWeek(season,week)]));
+  const canonicalTeam = value => ({LA:'LAR',JAC:'JAX',WSH:'WAS'}[value] || value);
+  const emptyActuals = Object.fromEntries(['snaps','snap_pct','completions','passing_attempts','passing_yards','passing_tds',
+    'interceptions','carries','rushing_yards','rushing_tds','targets','receptions','receiving_yards','receiving_tds','fantasy_points']
+    .map(key => [key,null]));
+  for (const week of weeks) {
+    const game = matchupByWeek.get(week);
+    if (!game || game.seasonType !== 'REG' || (game.homeScore !== null && game.awayScore !== null)) continue;
+    const existing = new Set(rows.filter(row => row.week === week).map(row => row.player_id));
+    for (const record of dfsByWeek.get(week).records) {
+      if (existing.has(record.playerId) || canonicalTeam(record.team) !== canonicalTeam(team) || !['QB','RB','WR','TE'].includes(record.position)) continue;
+      rows.push({game_id:game.gameId,player_id:record.playerId,player_display_name:record.name,
+        position_group:record.position,position:record.position,week,season_type:'REG',opponent_team:game.opponent,
+        played:false,stats_available:false,record_source:'Verified pregame DFS roster',...emptyActuals});
+    }
+  }
+  const trendsByPlayer = new Map();
+  const enrichedRows = rows.map(row => {
+    if (!trendsByPlayer.has(row.player_id)) trendsByPlayer.set(row.player_id,
+      Object.fromEntries([...histories].map(([anchor,history]) => [anchor,history.forPlayer(row.player_id)])));
+    return { played:true,stats_available:true,...row, season,
+      position_finish: rankByPlayerWeek.get(`${row.player_id}:${row.season_type}:${row.week}`) ?? null,
+      position_finish_week: row.week, position_finish_season: season,
+      ...dfsPlayerFields(dfsByWeek.get(row.week),row.player_id),
+      trendsByAnchor: trendsByPlayer.get(row.player_id),
+    };
+  });
 
   return {
-    data: rows,
+    data: enrichedRows,
     meta: {
       season,
       team,
       scoring,
       seasonType,
+      trendWeeks,
+      trendsByAnchor: Object.fromEntries([...histories].map(([anchor,history]) => [anchor,{
+        slots:history.slots,domains:history.domains,season,week:history.slots.at(-1)?.week ?? null,
+        requestedWeek:Number(anchor),basis:'Aligned regular-season calendar weeks, including gaps',
+      }])),
+      dfsByWeek: Object.fromEntries([...dfsByWeek].map(([week,slate]) => [String(week),slate.meta])),
+      positionFinish: { scope:'All NFL players at the same position and week before team filters',method:'Competition RANK; tied point totals share rank',scoring },
       weeks: weeks.map((week) => matchupByWeek.get(week) ?? {
         week,
         opponent: null,
@@ -1043,6 +1103,42 @@ export function queryGameBreakdown(searchParams = new URLSearchParams(), dbPath)
   };
 }
 
+export function queryPlayerIdentity(searchParams = new URLSearchParams(), dbPath) {
+  const season = querySeason(searchParams);
+  const db = openDatabase(dbPath,season);
+  const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
+    .replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z0-9]/g,'');
+  const positionKey = value => ['FB','HB'].includes(value) ? 'RB' : value;
+  const teamKey = value => ({LA:'LAR',JAC:'JAX',WSH:'WAS',OAK:'LV',SD:'LAC'}[value] || value);
+  const name = normalize(searchParams.get('name'));
+  const team = teamKey(String(searchParams.get('team') || '').toUpperCase());
+  const position = positionKey(String(searchParams.get('position') || '').toUpperCase());
+  if (!name || name.length > 100) throw new QueryValidationError('name','A player name is required');
+  const candidates = db.prepare(`
+    SELECT player_id,display_name AS player_display_name,latest_team AS team,position FROM players
+    UNION SELECT player_id,first_name || ' ' || last_name,latest_team,position FROM players
+    UNION SELECT player_id,full_name,team,position FROM team_roster
+    UNION SELECT DISTINCT player_id,player_display_name,team,position FROM player_week_stats
+  `).all().filter(row => normalize(row.player_display_name) === name
+    && (!team || teamKey(row.team) === team) && (!position || positionKey(row.position) === position));
+  const ids = [...new Set(candidates.map(row => row.player_id))];
+  if (ids.length !== 1) return {match:null,reason:ids.length ? 'Ambiguous player identity; no profile was guessed.' : 'No verified player identity matches this name, team and position.'};
+  const roster = db.prepare(`SELECT player_id,full_name AS player_display_name,team,position FROM team_roster
+    WHERE player_id=? ORDER BY season DESC,roster_status='CUT',team LIMIT 1`).get(ids[0]);
+  return {match:roster || candidates[0],reason:null,method:'Unique normalized name with optional team and position; no fuzzy matching'};
+}
+
+export function queryDfsArchive(searchParams = new URLSearchParams()) {
+  const season = Number(searchParams.get('season') || 2026);
+  const week = Number(searchParams.get('week'));
+  if (!Number.isInteger(season) || season < 2010 || season > 2100) throw new QueryValidationError('season','Invalid season');
+  if (!Number.isInteger(week) || week < 1 || week > 18) throw new QueryValidationError('week','Choose a regular-season week between 1 and 18');
+  const slate = getDfsWeek(season,week,{slateId:searchParams.get('slateId'),captureId:searchParams.get('captureId')});
+  const playerId = searchParams.get('playerId');
+  return {data:playerId ? slate.records.filter(r => r.playerId === playerId) : slate.records,
+    meta:{...slate.meta,captures:getDfsArchiveIndex().filter(s => s.season === season && s.week === week)}};
+}
+
 export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath) {
   const season = querySeason(searchParams);
   const db = openDatabase(dbPath, season);
@@ -1071,8 +1167,11 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
       p.headshot_url
     FROM players p
     WHERE p.player_id = ?
-  `).get(playerId);
+  `).get(playerId) || db.prepare(`SELECT player_id,full_name AS player_display_name,position,team,headshot_url
+    FROM team_roster WHERE player_id=? ORDER BY season DESC,roster_status='CUT',team LIMIT 1`).get(playerId);
   if (!playerRow) throw new QueryValidationError("playerId", "Unknown player");
+  const history = queryAlignedHistory(db,{season,weeks:selectedWeeks(searchParams),
+    count:trendWindow(searchParams.get('trendWeeks'),'trendWeeks'),receptionBonus});
 
   const gameLogs = db.prepare(`
     WITH weekly AS (
@@ -1219,13 +1318,17 @@ export function queryPlayerProfile(searchParams = new URLSearchParams(), dbPath)
         headshotUrl: playerRow.headshot_url,
         leagueStatus: "Roster data not connected",
       },
-      gameLogs,
+      gameLogs: gameLogs.map(row => ({ ...row,season,...dfsPlayerFields(getDfsWeek(season,row.week),playerId) })),
+      history: history.forPlayer(playerId),
       seasonStats,
       depthChart: { team: playerRow.team, groups: groupedDepth },
     },
     meta: {
       season,
       scoring,
+      ...historyMetadata(history,scoring),
+      statsAvailable: gameLogs.length > 0,
+      emptyReason: gameLogs.length ? null : `No recorded ${season} statistics are available for this rostered player.`,
       queryMs: Number((performance.now() - started).toFixed(2)),
     },
   };

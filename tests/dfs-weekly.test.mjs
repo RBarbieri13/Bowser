@@ -49,7 +49,8 @@ test('Week 2 sample prices/projections and rookies join stable current identitie
       assert.equal(record.projectionWeek, 2);
       assert.equal(record.projectionSeason, 2026);
       assert.equal(record.projectionGameId, record.gameId);
-      assert.ok(record.projectionSourceDate);
+      assert.ok(record.projectionSourceDate || record.projectionCapturedAt);
+      if (!record.projectionSourceDate) assert.match(record.projectionSourceDateBasis,/Publication time unavailable/);
     }
   }
 });

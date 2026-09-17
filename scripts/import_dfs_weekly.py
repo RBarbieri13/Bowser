@@ -26,11 +26,13 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from import_dfs_week1 import TableRows, name_key
+from dfs_archive import archive_snapshots, verify_archive
 
 ROOT = Path(__file__).resolve().parents[1]
 LOBBY = 'https://www.draftkings.com/lobby/getcontests?sport=NFL'
 SCHEDULE = 'https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv'
 FIC = 'https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings'
+FSC = 'https://fantasysportscentral.com/football/dfscheat.php'
 ET = ZoneInfo('America/New_York')
 TEAM_ALIASES = {'LA': 'LAR', 'JAC': 'JAX', 'WSH': 'WAS', 'OAK': 'LV', 'SD': 'LAC'}
 POSITIONS = {'QB', 'RB', 'WR', 'TE', 'DEF'}
@@ -219,7 +221,48 @@ def roster_identities(text, season, week, alias_text):
     return matches, roster_week
 
 
-def build_records(text, slate, projections, identities):
+def parse_supplemental_projections(html, season, week, games, source, now):
+    """Validate the publisher's week and every dated matchup before using any number."""
+    require(re.search(rf'<title>DraftKings DFS Cheatsheet - Week {week}</title>', html) is not None,
+            'Supplemental projection week or scoring does not match')
+    game_labels = re.findall(r'([A-Z]{2,3})@([A-Z]{2,3}) (\d{1,2}/\d{1,2}/\d{4} \d{1,2}:\d{2}:\d{2} [AP]M)', html)
+    actual = {(team_key(a), team_key(b), iso(datetime.strptime(date, '%m/%d/%Y %I:%M:%S %p').replace(tzinfo=ET)))
+              for a,b,date in game_labels}
+    expected = {(g['away'],g['home'],g['startsAt']) for g in games}
+    require(actual == expected, 'Supplemental projection dates, season or matchups do not match NFL schedule')
+    require(min(instant(g['startsAt']) for g in games) - timedelta(days=9) <= now,
+            'Supplemental capture outside scheduled pregame week')
+    require('DraftKings Salary</th><th>Proj Pts' in html, 'Supplemental projection columns changed')
+    parser = TableRows(); parser.feed(html)
+    by_team = {t:g for g in games for t in (g['away'],g['home'])}
+    result = {}
+    for row, _ in parser.rows:
+        if len(row) != 8 or not row[0].isdigit():
+            continue
+        if row[3] == 'D':
+            continue
+        require(row[3] in ('QB','RB','WR','TE'), 'Unknown supplemental position')
+        parts = row[1].split(', ')
+        require(len(parts) == 2, 'Supplemental name format changed')
+        name = parts[1] + ' ' + parts[0]
+        team, opponent = team_key(row[2]),team_key(row[4].lstrip('@'))
+        require(team in by_team and opponent in (by_team[team]['away'],by_team[team]['home']) and opponent != team,
+                'Supplemental player matchup mismatch')
+        value = float(row[6]); salary = int(row[5].replace('$','').replace(',',''))
+        require(math.isfinite(value) and 0 <= value <= 70 and 2000 <= salary <= 15000, 'Invalid supplemental projection or salary')
+        key = (name_key(name),row[3],team)
+        require(key not in result, 'Ambiguous supplemental identity')
+        result[key] = {'projection':value,'projectionSource':'Fantasy Sports Central','projectionUrl':FSC,
+            'projectionSourceDate':None,'projectionCapturedAt':source['retrievedAt'],
+            'projectionSourceDateBasis':'Publication time unavailable; capture time retained separately',
+            'projectionSeason':season,'projectionWeek':week,'projectionGameId':by_team[team]['gameId'],
+            'projectionSourceSalary':salary}
+    require(all((t,p) in {(k[2],k[1]) for k in result} for t in by_team for p in ('QB','RB','WR','TE')),
+            'Supplemental source misses team/position coverage')
+    return result
+
+
+def build_records(text, slate, projections, identities, supplemental=None):
     reader = csv.DictReader(io.StringIO(text))
     require({'Position', 'Name', 'ID', 'Salary', 'Game Info', 'TeamAbbrev', 'Roster Position'} <= set(reader.fieldnames or []), 'Salary CSV columns changed')
     rows = list(reader)
@@ -246,6 +289,10 @@ def build_records(text, slate, projections, identities):
         candidates = identities.get(identity, set())
         player_id = next(iter(candidates)) if len(candidates) == 1 and counts[identity] == 1 else None
         projection = projections.get(identity)
+        if not projection:
+            candidate = (supplemental or {}).get(identity)
+            if candidate and candidate['projectionSourceSalary'] == salary:
+                projection = candidate
         records.append({'playerId': player_id, 'name': row['Name'], 'position': position, 'team': team,
                         'draftKingsId': row['ID'], 'salary': salary, 'game': row['Game Info'], 'gameId': game['gameId'],
                         'status': row.get('Status') or None,
@@ -261,7 +308,8 @@ def build_records(text, slate, projections, identities):
     require(all((t, p) in covered for t in by_team for p in POSITIONS), 'Salary feed misses team/position coverage')
     # Every source projection for a slate team must join the official salary list.
     eligible = {k for k in projections if k[2] in by_team}
-    joined = {(name_key(r['name']), r['position'], r['team']) for r in records if r['projection'] is not None}
+    joined = {(name_key(r['name']), r['position'], r['team']) for r in records if r['projection'] is not None and
+              (name_key(r['name']), r['position'], r['team']) in projections}
     require(eligible == joined, f'Projection-to-salary identity coverage mismatch: {sorted(eligible - joined)}')
     return sorted(records, key=lambda r: (int(r['draftKingsId']), r['name']))
 
@@ -273,7 +321,7 @@ def coverage(records, projections, database_ids):
             'rosterPlayersWithSalary': sum(bool(r['playerId']) for r in records),
             'unmatchedSalaryPlayers': sum(not r['playerId'] for r in records),
             'sourceProjectionRows': len(projections),
-            'projectionCoverageDefinition': 'All source rows for slate teams must join; every scheduled team has QB/RB/WR/TE source coverage. Other players remain null.'}
+            'projectionCoverageDefinition': 'All primary FIC rows for slate teams must join; every scheduled team has QB/RB/WR/TE coverage. Supplemental FSC values require exact name, position, team, game and official salary matches. Other players remain null.'}
 
 
 def content_fingerprint(snapshot):
@@ -305,7 +353,7 @@ def validate_snapshot(snapshot):
         projected = [r for r in records if r['projection'] is not None]
         require(all(isinstance(r['projection'], (float, int)) and math.isfinite(r['projection']) and 0 <= r['projection'] <= 70 and
                     r['projectionSeason'] == slate['season'] and r['projectionWeek'] == slate['week'] and
-                    r['projectionGameId'] == r['gameId'] and r['projectionSource'] and r['projectionSourceDate'] and
+                    r['projectionGameId'] == r['gameId'] and r['projectionSource'] and (r['projectionSourceDate'] or r.get('projectionCapturedAt')) and
                     r['projectionUrl'].startswith('https://') for r in projected), 'Invalid/mismatched snapshot projection')
         require(all(any(r['team'] == t and r['position'] == p for r in projected) for t in teams for p in ('QB', 'RB', 'WR', 'TE')),
                 'Snapshot projection team/position coverage is incomplete')
@@ -329,17 +377,17 @@ def atomic_write(target, snapshot):
             temp.unlink(missing_ok=True)
 
 
-def refresh(target, raw_dir, now, dry_run=False):
+def refresh(target, raw_dir, now, dry_run=False, archive_path=None):
     lock_path = Path(tempfile.gettempdir()) / f'bowser-dfs-{digest(str(target.resolve()).encode())[:20]}.lock'
     with lock_path.open('a') as lock:
         try:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError as exc:
             raise PartialData('A refresh for this snapshot is already running') from exc
-        return _refresh(target, raw_dir, now, dry_run)
+        return _refresh(target, raw_dir, now, dry_run, archive_path)
 
 
-def _refresh(target, raw_dir, now, dry_run=False):
+def _refresh(target, raw_dir, now, dry_run=False, archive_path=None):
     previous = json.loads(target.read_text()) if target.exists() else None
     if previous:
         validate_snapshot(previous)
@@ -349,6 +397,14 @@ def _refresh(target, raw_dir, now, dry_run=False):
     slates = discover_slates(json.loads(fetch.get(LOBBY, 'lobby.json')), games, now)
     html = fetch.get(FIC, 'projections.html')
     projections = parse_projections(html, season, week, games, fetch.sources['projections.html'], now)
+    supplemental = {}
+    try:
+        secondary_html = fetch.get(FSC,'supplemental-projections.html')
+        supplemental = parse_supplemental_projections(secondary_html,season,week,games,fetch.sources['supplemental-projections.html'],now)
+        supplemental_status = {'status':'verified','source':'Fantasy Sports Central','rows':len(supplemental)}
+    except Exception as error:
+        # The complete primary source gates still apply. Explicitly report an unavailable optional provider.
+        supplemental_status = {'status':'unavailable','source':'Fantasy Sports Central','reason':str(error)}
     roster_url = f'https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_{season}.csv'
     roster = fetch.get(roster_url, 'roster.csv')
     alias_path = ROOT / 'data/raw/players.csv'
@@ -370,14 +426,16 @@ def _refresh(target, raw_dir, now, dry_run=False):
     for slate in slates:
         filename = f"dk-{slate['id']}.csv"
         url = f"https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId={slate['id']}"
-        records = build_records(fetch.get(url, filename), slate, projections, matches)
+        records = build_records(fetch.get(url, filename), slate, projections, matches, supplemental)
         old = combined.get(slate['key'])
         if old:
             require({r['draftKingsId'] for r in old['records']} <= {r['draftKingsId'] for r in records},
                     f"Salary population shrank for existing group {slate['id']}; preserve last good pending review")
         key = slate.pop('key')
         combined[key] = {**slate, 'salarySource': 'DraftKings', 'salaryUrl': url, 'capturedAt': iso(now),
-                         'projectionProvider': 'Fantasy Info Central', 'projectionSourceDate': projections[next(iter(projections))]['projectionSourceDate'],
+                         'projectionProvider': 'Fantasy Info Central; Fantasy Sports Central fills missing values' if supplemental else 'Fantasy Info Central',
+                         'supplementalProjectionStatus': supplemental_status,
+                         'projectionSourceDate': projections[next(iter(projections))]['projectionSourceDate'],
                          'rosterSeason': season, 'rosterWeek': roster_week, 'records': records,
                          'coverage': coverage(records, projections, database_ids), 'sources': {**shared_sources, filename: fetch.sources[filename]},
                          'identityAliasSource': fetch.sources['identity-aliases'], 'validation': {'status': 'verified'}}
@@ -390,11 +448,17 @@ def _refresh(target, raw_dir, now, dry_run=False):
     snapshot['contentFingerprint'] = content_fingerprint(snapshot)
     validate_snapshot(snapshot)
     changed = previous is None or previous['contentFingerprint'] != snapshot['contentFingerprint']
+    archive = None
+    if not dry_run:
+        archive = archive_snapshots(archive_path or target.with_name('dfs_archive.sqlite'), [
+            json.loads((ROOT / 'data/dfs-week1-2026.json').read_text()), snapshot])
     if changed and not dry_run:
         atomic_write(target, snapshot)
-    return {'status': 'updated' if changed else 'unchanged', 'changed': changed, 'publishable': True,
+    publish_changed = changed or bool(archive and archive['changed'])
+    return {'status': 'updated' if publish_changed else 'unchanged', 'changed': publish_changed, 'publishable': True,
             'written': changed and not dry_run, 'dryRun': dry_run, 'season': season, 'week': week, 'defaultSlate': default,
             'updatedSlates': updated_keys, 'snapshot': str(target), 'rawEvidence': str(raw_dir),
+            'archive': archive,
             'coverage': {key: combined[key]['coverage'] for key in updated_keys}}
 
 
@@ -402,6 +466,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=ROOT / 'data/dfs-weekly.json')
     parser.add_argument('--raw-dir', type=Path)
+    parser.add_argument('--archive', type=Path, help='Versioned SQLite archive; defaults beside the output snapshot')
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--verify', action='store_true', help='Validate saved snapshot offline; do not refresh or publish')
     args = parser.parse_args(argv)
@@ -410,9 +475,10 @@ def main(argv=None):
     try:
         if args.verify:
             validate_snapshot(json.loads(args.output.read_text()))
-            result = {'status': 'verified', 'changed': False, 'publishable': True, 'snapshot': str(args.output)}
+            result = {'status': 'verified', 'changed': False, 'publishable': True, 'snapshot': str(args.output),
+                      'archive': verify_archive(args.archive or args.output.with_name('dfs_archive.sqlite'))}
         else:
-            result = refresh(args.output, raw_dir, now, args.dry_run)
+            result = refresh(args.output, raw_dir, now, args.dry_run, args.archive)
         code = 0
     except NoData as exc:
         result, code = {'status': 'no-data', 'reason': str(exc)}, 4

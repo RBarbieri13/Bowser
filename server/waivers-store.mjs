@@ -81,7 +81,7 @@ export async function queryWaivers(params = new URLSearchParams(), deps = {}) {
   if (!/^\d+(,\d+)*$/.test(rawWeeks)) throw new QueryValidationError('weeks','Choose valid statistics weeks.');
   const selectedWeeks = [...new Set(rawWeeks.split(',').map(Number))];
   if (selectedWeeks.some(w=>w<1 || w>22)) throw new QueryValidationError('weeks','Choose statistics weeks from 1 through 22.');
-  const statsParams = new URLSearchParams({season:String(season),seasonType:'ALL',weeks:selectedWeeks.join(','),scoring,limit:'all',includeTrends:'1',positions:'QB,RB,WR,TE,K'});
+  const statsParams = new URLSearchParams({season:String(season),seasonType:'ALL',weeks:selectedWeeks.join(','),scoring,limit:'all',includeTrends:'1',positions:'QB,RB,WR,TE,K',trendWeeks:params.get('trendWeeks') || '10'});
   const statsPayload = (deps.queryStats || queryPlayers)(statsParams);
   const statsById = uniqueIndex(statsPayload.data,row=>row.player_id);
   const statsByIdentity = uniqueIndex(statsPayload.data,identity);

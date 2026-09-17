@@ -57,7 +57,8 @@ test('team box scores and game breakdown use real outcomes and never invent part
   assert.equal(scores.meta.weeks[0].scoreLabel, 'W 28-20');
   assert.equal(scores.meta.weeks[1].homeScore, null);
   assert.equal(scores.meta.weeks[1].result, null);
-  assert.ok(scores.data.every((row) => row.week === 1));
+  assert.ok(scores.data.filter(row => row.stats_available).every((row) => row.week === 1));
+  assert.ok(scores.data.filter(row => !row.stats_available).every(row => row.week === 2 && row.fantasy_points === null && row.position_finish === null && row.draft_kings_price > 0));
   const game = queryGameBreakdown(params('gameId=2026_01_DAL_NYG'));
   assert.equal(game.data.game.homeScore, 28);
   assert.equal(game.data.game.awayScore, 20);
