@@ -1,22 +1,21 @@
 {
   "status": "PASS",
-  "verifiedAt": "2026-09-17T01:51:01.178909+00:00",
+  "verifiedAt": "2026-09-17T18:02:48.617142+00:00",
   "publicUrl": "https://fantasy-football-stats-preview.vercel.app",
-  "candidateUrl": "https://bowser-fantasy-football-74vhqqebf-rbarbieri13s-projects.vercel.app",
-  "deploymentId": "dpl_CQnSz8Ufr8xAE63ve5zHeg5doXvM",
+  "candidateUrl": "https://bowser-fantasy-football-72zwjong6-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_3x46QyD6NYBeJQWqaWTV6gxCvt9b",
   "deploymentState": "READY",
-  "applicationCommit": "7c13035bca53df98ce2cb656077230e14a0a76dc",
-  "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-table-upgrade",
+  "applicationCommit": "f1259e678acf6af6707e478a61d9a1431dd43ffb",
+  "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-table-rollback-20260917",
   "checks": {
     "npmRunCheck": "PASS",
-    "fullCheckLog": "artifacts/table-upgrade/check-routed-release.log",
-    "fullCheckLogSha256": "ff9bc92451a8d8b366fde15a7b3ad8e96938c5fd34e7d7156857727efd9dae80",
-    "independentReviews": 3,
+    "fullCheckLog": "/private/tmp/bowser-table-rollback-final-check.log",
+    "fullCheckLogSha256": "8956f5cd3e02f4713bbce3bd81094d921b80b8b7fa3808947177817aa7f28b3b",
+    "independentScopeReview": "PASS",
     "candidateAssertions": 426,
     "publicAssertions": 426,
-    "publicBrowserTeam": "PASS",
-    "publicBrowserMarket": "PASS",
-    "marketProviderReadback": "100 rows on first page; shared Devin Singletary game-log profile opened"
+    "publicBrowserRollback": "PASS",
+    "dataServerApiImporterDiff": "UNCHANGED"
   },
   "dfs": {
     "season": 2026,
@@ -41,16 +40,19 @@
     "id": "bowser-weekly-dfs-refresh",
     "status": "ACTIVE",
     "schedule": "Thursdays at 08:00 America/Chicago",
-    "workflow": "shared/operations/weekly-dfs-refresh.md"
+    "workflow": "shared/operations/weekly-dfs-refresh.md",
+    "baseRecord": "shared/operations/production-release.json"
   },
   "githubSync": {
     "status": "BLOCKED",
-    "reason": "Existing GitHub CLI token invalid. Verified local application commit was deployed directly to the existing Vercel project."
+    "reason": "GitHub CLI token is still invalid on September 17. Verified local rollback commit deployed directly to the existing authorized Vercel project."
   },
   "limitations": [
     "Missing source projections remain null. No fabricated historical DFS prices or projections.",
     "Archived 2026 Week 1 and Week 2 DFS captures are retained. Uncaptured older DFS weeks remain unavailable; historical actual statistics are preserved.",
     "Market Pulse history uses provider observations rather than NFL game weeks."
   ],
-  "evidenceDirectory": "shared/operations/release-evidence-20260916"
+  "evidenceDirectory": "shared/operations/rollback-evidence-20260917",
+  "releasePurpose": "Revert September 16 shared table settings and expanded filters; restore native page controls while preserving data, trends and player profiles.",
+  "previousDeploymentId": "dpl_CQnSz8Ufr8xAE63ve5zHeg5doXvM"
 }

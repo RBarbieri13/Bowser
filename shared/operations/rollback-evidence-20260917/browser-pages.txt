@@ -1,0 +1,9 @@
+### Result
+{"profileMetric":true,"profileSettings":0,"opportunityNativeArticles":30,"opportunityNewSettings":0,"teamNewSettings":0,"teamNewSearch":0,"anchoredTrends":11}
+### Ran Playwright code
+```js
+await (async page => { const out={}; await page.getByRole("button",{name:"Devin Singletary",exact:true}).click(); await page.getByRole("combobox",{name:"Player trajectory metric",exact:true}).waitFor(); out.profileMetric=true; out.profileSettings=await page.getByRole("button",{name:"Table settings",exact:true}).count(); await page.getByRole("button",{name:"Close player card",exact:true}).click(); await page.getByRole("link",{name:"Opportunity Tracker",exact:true}).click(); await page.getByRole("article",{name:"Cam Skattebo opportunity",exact:true}).waitFor(); out.opportunityNativeArticles=await page.getByRole("article").count(); out.opportunityNewSettings=await page.getByRole("button",{name:"Table settings",exact:true}).count(); await page.getByRole("link",{name:"Team Box Scores",exact:true}).click(); await page.waitForSelector(".boxscore-table tbody tr"); out.teamNewSettings=await page.getByRole("button",{name:"Table settings",exact:true}).count(); out.teamNewSearch=await page.getByLabel("Player search",{exact:true}).count(); await page.getByRole("button",{name:"Add trend column",exact:true}).click(); await page.waitForSelector(".box-trend-cell .shared-trend"); out.anchoredTrends=await page.locator(".box-trend-cell .shared-trend").count(); if(out.profileSettings||out.opportunityNewSettings||out.teamNewSettings||out.teamNewSearch) throw Error("Reverted controls remain"); await page.screenshot({path:"/private/tmp/bowser-rollback-team.png"}); return out; })(page);
+```
+### Page
+- Page URL: http://127.0.0.1:5192/#/team-box-scores
+- Page Title: Bowser Fantasy Football

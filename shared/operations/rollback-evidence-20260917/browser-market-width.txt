@@ -1,0 +1,9 @@
+### Result
+{"container":1272,"table":1272}
+### Ran Playwright code
+```js
+await (async page => { await page.getByRole("link",{name:"Market Pulse",exact:true}).click(); await page.waitForSelector(".mp-player"); const dimensions=await page.locator(".mp-table-scroll").evaluate(el=>({container:el.clientWidth,table:el.querySelector("table").getBoundingClientRect().width})); if(dimensions.table<dimensions.container-20)throw Error("Table does not fill restored layout"); await page.screenshot({path:"/private/tmp/bowser-rollback-market-final.png"}); return dimensions; })(page);
+```
+### Page
+- Page URL: http://127.0.0.1:5192/#/market-pulse
+- Page Title: Bowser Fantasy Football
