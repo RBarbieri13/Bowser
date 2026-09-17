@@ -1,0 +1,137 @@
+{
+  "status": "PASS",
+  "reviewed_revision": "d038443 (including c5a82ff and 001f278), baseline 8e643fd",
+  "findings": [],
+  "checks": [
+    {
+      "name": "Fresh independent interaction reproductions",
+      "command": "node node_modules/vitest/vitest.mjs run --root /private/tmp/bowser-ui-review-20260916 --config /private/tmp/bowser-ui-review-20260916/vitest.config.mjs --reporter=verbose",
+      "result": "4 expected-contract tests failed, reproducing findings UI-01 through UI-04",
+      "source": "/private/tmp/bowser-ui-review-20260916/ui-review.test.jsx"
+    },
+    {
+      "name": "Shared settings/DataTable and Opportunity targeted tests",
+      "command": "node node_modules/vitest/vitest.mjs run tests/data-table-upgrade.test.jsx tests/table-settings.test.jsx tests/opportunity-repair.test.jsx --reporter=dot",
+      "result": "PASS: 19 tests across 3 files"
+    },
+    {
+      "name": "App/profile/Intelligence/GameBreakdown targeted checks",
+      "command": "node node_modules/vitest/vitest.mjs run tests/ui.test.jsx -t 'opens the accessible v2 player card|renders the filterable intelligence feed|switches and minimizes trend metrics|2026 game opportunities remain visible' --reporter=dot",
+      "result": "PASS: 4 tests, 18 skipped"
+    },
+    {
+      "name": "Source review",
+      "result": "Reviewed App profile callbacks and identity fallback; DataTable filtering/sort/resize/settings; shared preference validation; Opportunity chart controls and player callbacks; PlayerProfile tabs/logs/heat/season/depth; GameBreakdown participation table; Intelligence table/card navigation; Waivers settings, callbacks, favorites and trends. Sampled Team Box anchored trend DOM placement and sorting. No full check, build, deployment, or source edits performed."
+    },
+    {
+      "name": "Scope limits",
+      "result": "Backend worker still in progress; missing backend features excluded. Browser layout and production verification excluded. Root has begun corrections; initial findings retained pending fresh verification."
+    },
+    {
+      "name": "Original fresh reproductions after corrections",
+      "result": "PASS for UI-01, UI-02 and Waivers UI-03. Original cross-section movement expectation intentionally replaced by the explicitly constrained semantic-section contract; old expectation does not apply."
+    },
+    {
+      "name": "Corrected contract and shared mechanics regression pass",
+      "command": "node node_modules/vitest/vitest.mjs run tests/review-table-regression.test.jsx tests/data-table-upgrade.test.jsx tests/table-settings.test.jsx --reporter=dot",
+      "result": "PASS: 17 tests across 3 files; includes disabled waiver cross-section move and applied within-section order."
+    },
+    {
+      "name": "Fresh independent numeric preset component checks",
+      "command": "node node_modules/vitest/vitest.mjs run numeric-presets.test.jsx --root /private/tmp/bowser-ui-review-20260916 --config /private/tmp/bowser-ui-review-20260916/vitest.config.mjs --reporter=verbose",
+      "result": "PASS: 3 tests; GameBreakdown retains segment/total KPIs; Opportunity retains position finish, averages, and projection; Intelligence retains sentiment and confidence. Latest run at 20:24:14 local test time.",
+      "source": "/private/tmp/bowser-ui-review-20260916/numeric-presets.test.jsx"
+    },
+    {
+      "name": "Final scope",
+      "result": "No remaining P1/P2 findings in reviewed UI scope. No source code changes, full check, deployment, or browser layout verification performed by reviewer. PASS covers UI correctness and reported corrections, not backend or production release."
+    }
+  ],
+  "reverified_revision": "2edd6e1 plus working-tree numeric type corrections in GameBreakdown.jsx, OpportunityTracker.jsx, and IntelligenceFeed.jsx",
+  "resolvedFindings": [
+    {
+      "id": "UI-01",
+      "priority": "P2",
+      "title": "Preserve selected profile statistic when changing history window",
+      "file": "src/PlayerProfile.jsx",
+      "lines": [
+        299,
+        312
+      ],
+      "reproduction": [
+        "Open a player profile.",
+        "Select Rushing yards in Player trajectory metric.",
+        "Select 5 calendar weeks in Player trajectory history."
+      ],
+      "expected": "History refresh retains rushing_yards.",
+      "actual": "Metric resets to fantasy_points after profile is cleared and TrajectoryStrip is remounted.",
+      "cause": "Metric state belongs to TrajectoryStrip, but trendWeeks refetch sets profile to null and unmounts it.",
+      "verification": "Fresh independent test failed: expected rushing_yards, received fantasy_points. Root reports correction in progress; not reverified yet.",
+      "resolution": "Trajectory metric now lives in PlayerProfile and is passed to TrajectoryStrip; original independent history-change reproduction passes.",
+      "resolutionStatus": "VERIFIED"
+    },
+    {
+      "id": "UI-02",
+      "priority": "P2",
+      "title": "Discard numeric filters for fields absent from the current table schema",
+      "file": "src/DataTable.jsx",
+      "lines": [
+        11,
+        14
+      ],
+      "reproduction": [
+        "Open a player profile Heat Map with two logs (5 and 30 FPTS).",
+        "Set numeric filter to FPTS and minimum to 20.",
+        "Switch Heat Map stat group to Rushing."
+      ],
+      "expected": "New group has no selected numeric filter and shows both logs.",
+      "actual": "Numeric selector displays Any value but the old FPTS filter invisibly remains active; only one log appears.",
+      "cause": "DataTable keeps rangeKey across id/column changes and applies it without checking the current columns.",
+      "verification": "Fresh independent test failed: expected 2 rows, received 1, even while selector value was empty.",
+      "resolution": "Only a numeric range key present in the current columns is applied and displayed; original independent group-switch reproduction passes.",
+      "resolutionStatus": "VERIFIED"
+    },
+    {
+      "id": "UI-03",
+      "priority": "P2",
+      "title": "Provide numeric column types to the Waivers numeric preset",
+      "file": "src/Waivers.jsx",
+      "lines": [
+        167,
+        167
+      ],
+      "reproduction": [
+        "Open Waivers Table settings.",
+        "Choose Numeric fields.",
+        "Apply settings."
+      ],
+      "expected": "Keep source ranks, FAAB amounts, market figures, and statistical numeric columns.",
+      "actual": "Every optional column disappears, leaving only identity fields.",
+      "cause": "TableSettingsPanel numeric preset recognizes column.type, but waiverColumns descriptors identify numeric fields only with kind. Same type gap exists for some Opportunity and participation columns.",
+      "verification": "Fresh independent test failed: Sort Fantasy FPTS absent after preset.",
+      "resolution": "Waivers adapts numeric kind metadata to shared column types. Opportunity, participation, and Intelligence numeric descriptors also corrected and verified with fresh component tests.",
+      "resolutionStatus": "VERIFIED"
+    },
+    {
+      "id": "UI-04",
+      "priority": "P2",
+      "title": "Apply the same waiver column order shown in settings",
+      "file": "src/Waivers.jsx",
+      "lines": [
+        71,
+        72
+      ],
+      "reproduction": [
+        "Open Waivers Table settings.",
+        "Move FPTS earlier once, across the preceding Receiving trend column.",
+        "Apply settings."
+      ],
+      "expected": "FPTS appears before the Receiving trend as shown in the settings order.",
+      "actual": "FPTS remains after the entire Receiving group.",
+      "cause": "Renderer retains fixed GROUPS order and only sorts members inside each group, so cross-group moves permitted by the shared panel are ignored.",
+      "verification": "Fresh independent test failed: FPTS header index 35 was not before Receiving trend index 34.",
+      "resolution": "Semantic section constraints are explicit in settings, boundary moves are disabled, and allowed within-section moves match rendered order. Revised contract verified by source inspection and regression test.",
+      "resolutionStatus": "VERIFIED"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+### Result
+{"url":"https://fantasy-football-stats-preview.vercel.app/#/market-pulse","rows":100,"settingsVisible":true,"player":"Devin Singletary","profileTable":"Devin Singletary game logs"}
+### Ran Playwright code
+```js
+await (async page => { await page.getByRole("button",{name:"Refresh data",exact:true}).click(); await page.waitForSelector(".mp-player",{timeout:45000}); const rows=await page.locator(".mp-player").count(); await page.getByRole("button",{name:"Table settings",exact:true}).click(); const settingsVisible=await page.getByRole("dialog",{name:"Market Pulse table settings"}).isVisible(); await page.getByRole("button",{name:"Cancel",exact:true}).click(); const playerButton=page.getByRole("button",{name:"Devin Singletary",exact:true}); const player=await playerButton.innerText(); await playerButton.click(); const profile=page.getByRole("dialog",{name:"Devin Singletary",exact:true}); await profile.waitFor(); await profile.getByRole("table").waitFor(); const profileTable=await profile.getByRole("table").getByRole("caption").textContent(); await page.getByRole("button",{name:"Close player card",exact:true}).click(); return {url:page.url(),rows,settingsVisible,player,profileTable}; })(page);
+```

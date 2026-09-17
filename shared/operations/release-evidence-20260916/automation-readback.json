@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "id": "bowser-weekly-dfs-refresh",
+  "kind": "heartbeat",
+  "name": "Bowser weekly DFS refresh",
+  "status": "ACTIVE",
+  "rrule": "FREQ=WEEKLY;BYDAY=TH;BYHOUR=8;BYMINUTE=0;BYSECOND=0",
+  "target_thread_id": "01a083b9-5cd2-7b73-8e16-f354bcf4c918",
+  "created_at": 1789608993625,
+  "updated_at": 1789609650103
+}
