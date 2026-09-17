@@ -25,7 +25,7 @@ test('exact-week lookup never leaks current DFS into unavailable historical week
   const prior = getDfsWeek(2026,1).records.find(r=>r.name==='Jahmyr Gibbs');
   const next = getDfsWeek(2026,2).records.find(r=>r.name==='Jahmyr Gibbs');
   assert.equal(prior.salary,8000); assert.equal(next.salary,8500);
-  for (const [season,week] of [[2025,18],[2026,3]]) {
+  for (const [season,week] of [[2025,18],[2099,1]]) {
     const result=getDfsWeek(season,week);
     assert.equal(result.meta.available,false); assert.deepEqual(result.records,[]);
     assert.match(result.meta.reason,new RegExp(`${season} Week ${week}`));
@@ -67,8 +67,9 @@ test('Opportunity and Player Database expose explicitly selected-week DFS and 18
     const result=queryOpportunityTracker(params(`season=2026&team=DET&weeks=1&games=18&dfsSlate=${dfsSlate}`));
     const gibbs=result.data.groups.flatMap(g=>g.players).find(p=>p.name==='Jahmyr Gibbs');
     assert.equal(gibbs.history.length,18); assert.equal(gibbs.position_finish,3);
-    assert.equal(result.meta.dfs.week,dfsSlate==='current'?2:1);
-    assert.equal(gibbs.draft_kings_price,dfsSlate==='current'?8500:8000);
+    const current=getDfsSlate('current');
+    assert.equal(result.meta.dfs.week,dfsSlate==='current'?current.meta.week:1);
+    assert.equal(gibbs.draft_kings_price,dfsSlate==='current'?(current.records.find(row=>row.playerId===gibbs.playerId)?.salary ?? null):8000);
   }
   const database=queryPlayers(params('season=2026&weeks=1&search=Jahmyr&dfsSlate=selected-week&trendWeeks=18'));
   assert.equal(database.meta.dfs.week,1); assert.equal(database.data[0].draft_kings_price,8000);
@@ -94,4 +95,11 @@ test('archive API filters by player and preserves source and capture lineage',()
   assert.equal(result.data.length,1);assert.equal(result.data[0].salary,8000);
   assert.ok(result.meta.captureId);assert.ok(result.meta.captures.length>=2);
   assert.throws(()=>queryDfsArchive(params('season=2026&week=19')),/regular-season/);
+});
+
+test('selected-week DFS keeps the requested upcoming week independent of completed rank context',()=>{
+ const opportunity=queryOpportunityTracker(params({season:'2026',team:'NYG',weeks:'2',dfsSlate:'selected-week'}));
+ assert.equal(opportunity.meta.dfs.week,2);
+ const players=queryPlayers(params({season:'2026',weeks:'2',dfsSlate:'selected-week'}));
+ assert.equal(players.meta.dfs.week,2);
 });

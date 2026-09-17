@@ -23,16 +23,15 @@ function withArchive(callback) {
 function archiveSlates() {
   const signature = archiveSignature();
   if (archiveCache?.signature === signature) return archiveCache.slates;
-  const slates = withArchive(db => Object.fromEntries(db.prepare(`
-    SELECT * FROM (SELECT *, ROW_NUMBER() OVER (
-      PARTITION BY season,week,slate_id ORDER BY captured_at DESC,capture_id DESC
-    ) AS version_order FROM dfs_captures) WHERE version_order=1
-  `).all().map(row => {
-    const meta = JSON.parse(row.metadata_json);
-    const records = db.prepare('SELECT record_json FROM dfs_prices WHERE capture_id=? ORDER BY rowid').all(row.capture_id)
-      .map(r => JSON.parse(r.record_json));
-    return [row.slate_key, { ...meta, records }];
-  }))) || {};
+  const slates = withArchive(db => {
+    const hasHeads = db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='dfs_slate_heads'").get();
+    const query = hasHeads ? 'SELECT c.*,h.observed_at FROM dfs_slate_heads h JOIN dfs_captures c USING(capture_id)' : `SELECT * FROM (SELECT *,ROW_NUMBER() OVER(PARTITION BY season,week,slate_id ORDER BY captured_at DESC,capture_id DESC) AS version_order FROM dfs_captures) WHERE version_order=1`;
+    return Object.fromEntries(db.prepare(query).all().map(row => {
+      const meta=JSON.parse(row.metadata_json);
+      const records=db.prepare('SELECT record_json FROM dfs_prices WHERE capture_id=? ORDER BY rowid').all(row.capture_id).map(r=>JSON.parse(r.record_json));
+      return [row.slate_key,{...meta,lastObservedAt:row.observed_at || row.captured_at,records}];
+    }));
+  }) || {};
   archiveCache = {signature,slates,index:null};
   return slates;
 }
@@ -90,7 +89,8 @@ export function getDfsSlate(key = 'current') {
 
 // Exact historical lookup: a missing week is never substituted with the current slate.
 export function getDfsWeek(season, week, { slateId, captureId } = {}) {
-  const index = getDfsArchiveIndex().filter(s => s.season === season && s.week === week
+  const active = archiveSlates();
+  const index = getDfsArchiveIndex().filter(s => (captureId || active[s.key]?.captureId === s.captureId) && s.season === season && s.week === week
     && (!slateId || s.slateId === Number(slateId)) && (!captureId || s.captureId === captureId));
   const choice = index.toSorted((a,b) => b.gameCount-a.gameCount || b.capturedAt.localeCompare(a.capturedAt) || a.slateId-b.slateId)[0];
   if (choice) {

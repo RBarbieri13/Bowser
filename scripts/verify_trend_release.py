@@ -62,6 +62,23 @@ try:
     check(sum(s.get('faabCount', 0) > 0 and s.get('type') != 'community' for s in waivers['meta']['sources']) >= 8, 'Eight expert FAAB sources retained')
     penix = next(p for p in waivers['rows'] if p.get('playerId') == '00-0039917')
     check(penix['stats']['fantasy_points'] is None and penix['stats']['trends'][0]['passAttempts'] == 28, 'Waiver history survives absence of selected-week totals')
+    archive = get('/api/v1/dfs-archive?season=2026&week=2')
+    check(len(archive['meta']['captures']) >= 12, 'Dated slate capture versions available')
+    wentz = next(p for p in archive['data'] if p['name'] == 'Carson Wentz')
+    check(wentz['projection'] == 14.95 and wentz['projectionSource'] == 'Fantasy Sports Central', 'Expanded source projection preserved with provenance')
+    old_capture = next(s for s in archive['meta']['captures'] if s['slateId'] == 153427 and s['projectedPlayers'] == 192)
+    old = get('/api/v1/dfs-archive?season=2026&week=2&captureId=' + old_capture['captureId'])
+    check(next(p for p in old['data'] if p['name'] == 'Carson Wentz')['projection'] is None, 'Historical pre-enrichment values reproducible')
+    identity = get('/api/v1/player-identity?season=2026&name=Cam%20Skattebo&team=NYG&position=RB')
+    check(identity['match']['player_id'] == cam['player_id'], 'Global player identity route resolves to warehouse profile')
+    profile = get('/api/v1/player-profile?season=2026&playerId=' + cam['player_id'] + '&trendWeeks=5')
+    check(len(profile['data']['history']) == 5 and profile['data']['history'][-1]['snaps'] == 42, 'Profile shares aligned history with exact snap values')
+    boxes = get('/api/v1/team-box-scores?season=2026&team=DET&weeks=1,2&trendAnchors=1,2&trendWeeks=5')
+    gibbs = [p for p in boxes['data'] if p['player_display_name'] == 'Jahmyr Gibbs']
+    check({p['week']:p['draft_kings_price'] for p in gibbs} == {1:8000,2:8500}, 'Team Box prices belong to their exact historical week')
+    check(next(p for p in gibbs if p['week']==2)['fantasy_points'] is None, 'Upcoming DFS rows never manufacture actual points')
+    for anchor in ['1','2']:
+        check(len(boxes['meta']['trendsByAnchor'][anchor]['slots'])==5, 'Anchored Team Box calendar available for week ' + anchor)
     result = {'status': 'PASS', 'url': args.url, 'checks': checks, 'dfs': {'id': expected['id'], 'season': expected['season'], 'week': expected['week'], 'joinedPlayers': joined}}
 except Exception as error:
     result = {'status': 'FAIL', 'url': args.url, 'checks': checks, 'error': str(error)}

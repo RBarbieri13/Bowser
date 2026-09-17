@@ -527,7 +527,7 @@ export function TeamBoxScores({ season = 2026, meta, onSeasonChange, onOpenPlaye
     <section className="boxscore-toolbar" aria-labelledby="team-boxscore-title">
       <div className="boxscore-intro"><span className="page-eyebrow"><TrendUp weight="bold" aria-hidden="true" /> Sequential analysis</span><h1 id="team-boxscore-title">Team Box Scores</h1><p>Compare every fantasy-relevant player across completed weeks, from left to right.</p></div>
       <div className="boxscore-filters" aria-label="Team box score filters">
-        {onSeasonChange && <label className="field"><span className="field-label">Year</span><span className="select-wrap"><select aria-label="Team box score year" value={season} onChange={event => onSeasonChange(Number(event.target.value))}>{[2026, 2025].map(year => <option key={year}>{year}</option>)}</select></span></label>}
+        {onSeasonChange && <label className="field box-year-field"><span className="field-label">Year</span><span className="select-wrap"><select aria-label="Team box score year" value={season} onChange={event => onSeasonChange(Number(event.target.value))}>{[2026, 2025].map(year => <option key={year}>{year}</option>)}</select></span></label>}
         <TeamFilter team={team} teams={meta?.teams || ["NYG"]} onChange={(event) => setTeam(event.target.value)} />
         <PositionFilter selected={positions} onChange={setPositions} />
         <StatisticsFilter visibleStats={visibleStats} onChange={setVisibleStats} />

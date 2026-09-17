@@ -16,6 +16,7 @@ import math
 import os
 import re
 import sqlite3
+import shutil
 import sys
 import tempfile
 import urllib.request
@@ -26,7 +27,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from import_dfs_week1 import TableRows, name_key
-from dfs_archive import archive_snapshots, verify_archive
+from dfs_archive import archive_snapshots, archive_lock, verify_archive
 
 ROOT = Path(__file__).resolve().parents[1]
 LOBBY = 'https://www.draftkings.com/lobby/getcontests?sport=NFL'
@@ -329,7 +330,7 @@ def content_fingerprint(snapshot):
     slates = {}
     for key, slate in snapshot['slates'].items():
         slates[key] = {k: slate[k] for k in ('id', 'season', 'week', 'label', 'games', 'records', 'coverage')}
-        slates[key]['records'] = [{k: v for k, v in r.items() if k != 'projectionSourceDate'} for r in slate['records']]
+        slates[key]['records'] = [{k: v for k, v in r.items() if k not in ('projectionSourceDate','projectionCapturedAt')} for r in slate['records']]
     return digest(json.dumps({'defaultSlate': snapshot['defaultSlate'], 'slates': slates}, sort_keys=True).encode())
 
 
@@ -375,6 +376,41 @@ def atomic_write(target, snapshot):
             os.replace(temp, target)
         finally:
             temp.unlink(missing_ok=True)
+
+
+def publish_snapshot_and_archive(target, snapshot, archive_target, write_snapshot):
+    """Stage both outputs before publishing; roll back JSON if archive publication fails.
+
+    Imports run in an isolated release checkout, never inside the deployed reader.
+    The archive lock also serializes standalone backfills against this publication.
+    """
+    target, archive_target = Path(target), Path(archive_target)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    archive_target.parent.mkdir(parents=True, exist_ok=True)
+    with archive_lock(archive_target), tempfile.TemporaryDirectory(prefix='.dfs-publish-', dir=archive_target.parent) as stage_dir:
+        staged_archive = Path(stage_dir) / archive_target.name
+        if archive_target.exists(): shutil.copyfile(archive_target, staged_archive)
+        result = archive_snapshots(staged_archive, [json.loads((ROOT / 'data/dfs-week1-2026.json').read_text()), snapshot])
+        with tempfile.TemporaryDirectory(prefix='.dfs-json-', dir=target.parent) as json_dir:
+            staged_json = Path(json_dir) / target.name
+            backup_json = Path(json_dir) / 'previous.json'
+            had_json = target.exists()
+            if had_json: shutil.copyfile(target, backup_json)
+            if write_snapshot: atomic_write(staged_json, snapshot)
+            json_published = False
+            try:
+                if write_snapshot:
+                    os.replace(staged_json, target)
+                    json_published = True
+                if result['changed'] or not archive_target.exists():
+                    os.replace(staged_archive, archive_target)
+            except BaseException:
+                if json_published:
+                    if had_json: os.replace(backup_json, target)
+                    else: target.unlink(missing_ok=True)
+                raise
+        result['path'] = str(archive_target)
+        return result
 
 
 def refresh(target, raw_dir, now, dry_run=False, archive_path=None):
@@ -450,10 +486,8 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None):
     changed = previous is None or previous['contentFingerprint'] != snapshot['contentFingerprint']
     archive = None
     if not dry_run:
-        archive = archive_snapshots(archive_path or target.with_name('dfs_archive.sqlite'), [
-            json.loads((ROOT / 'data/dfs-week1-2026.json').read_text()), snapshot])
-    if changed and not dry_run:
-        atomic_write(target, snapshot)
+        archive = publish_snapshot_and_archive(target, snapshot if changed else previous,
+            archive_path or target.with_name('dfs_archive.sqlite'), changed)
     publish_changed = changed or bool(archive and archive['changed'])
     return {'status': 'updated' if publish_changed else 'unchanged', 'changed': publish_changed, 'publishable': True,
             'written': changed and not dry_run, 'dryRun': dry_run, 'season': season, 'week': week, 'defaultSlate': default,

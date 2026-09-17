@@ -340,7 +340,7 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
     : "COALESCE(NULLIF(draft_rankings.source_team, ''), players.latest_team)";
   const history = queryAlignedHistory(db, { season, weeks, count: trendWeeks, receptionBonus, seasonType });
   const dfsChoice = searchParams.get('dfsSlate') || 'current';
-  const dfs = dfsChoice === 'selected-week' ? getDfsWeek(season,history.rankContext.week || Math.max(...weeks,1)) : getDfsSlate(dfsChoice);
+  const dfs = dfsChoice === 'selected-week' ? getDfsWeek(season,Math.max(...weeks,1)) : getDfsSlate(dfsChoice);
   if(!dfs) throw new QueryValidationError("dfsSlate", "Unknown DraftKings slate");
   const where = [`season = ${season}`];
   const params = [];
@@ -611,7 +611,7 @@ export function queryOpportunityTracker(searchParams = new URLSearchParams(), db
   `).all(team);
   const aligned = queryAlignedHistory(db, { season, weeks, count: gameLimit, receptionBonus });
   const dfsChoice = searchParams.get('dfsSlate') || 'current';
-  const dfs = dfsChoice === 'selected-week' ? getDfsWeek(season, aligned.rankContext.week || Math.max(...weeks, 1)) : getDfsSlate(dfsChoice);
+  const dfs = dfsChoice === 'selected-week' ? getDfsWeek(season, Math.max(...weeks, 1)) : getDfsSlate(dfsChoice);
   if (!dfs) throw new QueryValidationError('dfsSlate', 'Unknown DraftKings slate');
   const players = roster.map((row) => {
     const history = aligned.forPlayer(row.player_id);

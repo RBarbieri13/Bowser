@@ -25,3 +25,5 @@
 .team-boxscore-page .stat-draft_kings_price,.team-boxscore-page .stat-draft_kings_projection,.team-boxscore-page .stat-position_finish { color:var(--accent) !important; }
 .team-boxscore-page .box-trend-sort { border:0; background:transparent; color:var(--text-label); margin:0 0 5px; cursor:pointer; font:600 10px var(--font-data); }
 .team-boxscore-page .box-trend-cell .trend-bar-item b,.team-boxscore-page .box-trend-cell .trend-bar-item small { overflow:hidden; text-overflow:clip; }
+
+.team-boxscore-page .boxscore-filters .box-year-field{min-width:96px;flex-shrink:0}.team-boxscore-page .box-year-field select{padding-left:10px;padding-right:22px;min-width:86px}

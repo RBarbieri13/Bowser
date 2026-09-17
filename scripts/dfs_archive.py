@@ -10,7 +10,7 @@ from pathlib import Path
 import shutil
 import sqlite3
 import tempfile
-from contextlib import closing
+from contextlib import closing, contextmanager
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ARCHIVE = ROOT / 'data/dfs_archive.sqlite'
@@ -30,8 +30,9 @@ CREATE TABLE IF NOT EXISTS dfs_prices (
  PRIMARY KEY(capture_id,draft_kings_id)
 );
 CREATE INDEX IF NOT EXISTS dfs_player_lookup ON dfs_prices(player_id,capture_id);
+CREATE TABLE IF NOT EXISTS dfs_slate_heads (slate_key TEXT PRIMARY KEY,capture_id TEXT NOT NULL REFERENCES dfs_captures(capture_id),observed_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS dfs_archive_meta (key TEXT PRIMARY KEY,value TEXT NOT NULL);
-INSERT OR REPLACE INTO dfs_archive_meta VALUES ('schema_version','1');
+INSERT OR REPLACE INTO dfs_archive_meta VALUES ('schema_version','2');
 '''
 
 
@@ -63,12 +64,14 @@ def validate_slate(key, slate):
 def content_hash(slate):
     # Re-fetching identical provider content is idempotent. Changed projections,
     # prices or source bytes produce a new immutable version; retrieval time alone does not.
-    value = {k: v for k, v in slate.items() if k not in ('capturedAt', 'sources', 'validation', 'identityAliasSource')}
+    value = {k: v for k, v in slate.items() if k not in ('capturedAt', 'sources', 'validation', 'identityAliasSource','captureId','contentSha256')}
+    value['records'] = [{k:v for k,v in row.items() if k != 'projectionCapturedAt'} for row in slate['records']]
     value['sourceHashes'] = {k: v.get('sha256') for k, v in slate.get('sources', {}).items()}
     return hashlib.sha256(canonical(value).encode()).hexdigest()
 
 
-def archive_snapshots(target, snapshots):
+@contextmanager
+def archive_lock(target):
     target = Path(target)
     lock_path = Path(tempfile.gettempdir()) / ('bowser-archive-' + hashlib.sha256(str(target.resolve()).encode()).hexdigest()[:20] + '.lock')
     with lock_path.open('a') as lock:
@@ -76,6 +79,11 @@ def archive_snapshots(target, snapshots):
             fcntl.flock(lock,fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError as error:
             raise RuntimeError('Another DFS archive update is running') from error
+        yield
+
+
+def archive_snapshots(target, snapshots):
+    with archive_lock(target):
         return _archive_snapshots(target,snapshots)
 
 
@@ -90,36 +98,56 @@ def _archive_snapshots(target, snapshots):
     os.close(fd)
     temporary = Path(temporary)
     inserted = 0
+    heads_changed = 0
     db = None
     try:
         if target.exists():
             shutil.copyfile(target, temporary)
         with sqlite3.connect(temporary) as db:
+            had_heads = bool(db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='dfs_slate_heads'").fetchone())
             db.executescript(SCHEMA)
+            if not had_heads:
+                db.execute("INSERT INTO dfs_slate_heads SELECT slate_key,capture_id,captured_at FROM (SELECT *,ROW_NUMBER() OVER(PARTITION BY slate_key ORDER BY captured_at DESC,capture_id DESC) AS priority FROM dfs_captures) WHERE priority=1")
+                heads_changed += 1
             for key, slate in slates:
                 fingerprint = content_hash(slate)
                 capture_id = f"{slate['season']}-w{slate['week']}-dk{slate['id']}-{fingerprint[:20]}"
-                metadata = {k: v for k, v in slate.items() if k != 'records'}
-                metadata.update({'captureId': capture_id, 'contentSha256': fingerprint})
-                cursor = db.execute('INSERT OR IGNORE INTO dfs_captures VALUES (?,?,?,?,?,?,?,?,?,?,?)',
-                    (capture_id, key, slate['season'], slate['week'], slate['id'], slate['capturedAt'],
-                     slate['gameCount'], slate.get('startsAt'), slate.get('endsAt'), fingerprint, canonical(metadata)))
-                if cursor.rowcount:
-                    inserted += 1
-                    db.executemany('INSERT INTO dfs_prices VALUES (?,?,?,?,?,?)', [
-                        (capture_id, str(r['draftKingsId']), r.get('playerId'), r['salary'], r.get('projection'), canonical(r))
-                        for r in slate['records']])
+                # Older captures used a hash that included per-row retrieval times.
+                # Compare canonical source content without rewriting those immutable IDs.
+                equivalent = False
+                for prior_id, prior_json in db.execute('SELECT capture_id,metadata_json FROM dfs_captures WHERE season=? AND week=? AND slate_id=?', (slate['season'],slate['week'],slate['id'])).fetchall():
+                    prior = json.loads(prior_json)
+                    prior['records'] = [json.loads(row[0]) for row in db.execute('SELECT record_json FROM dfs_prices WHERE capture_id=? ORDER BY rowid',(prior_id,))]
+                    if content_hash(prior) == fingerprint:
+                        equivalent = True
+                        capture_id = prior_id
+                        break
+                if not equivalent:
+                    metadata = {k: v for k, v in slate.items() if k != 'records'}
+                    metadata.update({'captureId': capture_id, 'contentSha256': fingerprint})
+                    cursor = db.execute('INSERT OR IGNORE INTO dfs_captures VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+                        (capture_id, key, slate['season'], slate['week'], slate['id'], slate['capturedAt'],
+                         slate['gameCount'], slate.get('startsAt'), slate.get('endsAt'), fingerprint, canonical(metadata)))
+                    if cursor.rowcount:
+                        inserted += 1
+                        db.executemany('INSERT INTO dfs_prices VALUES (?,?,?,?,?,?)', [
+                            (capture_id, str(r['draftKingsId']), r.get('playerId'), r['salary'], r.get('projection'), canonical(r))
+                            for r in slate['records']])
+                head = db.execute('SELECT capture_id,observed_at FROM dfs_slate_heads WHERE slate_key=?',(key,)).fetchone()
+                if not head or (head[0] != capture_id and slate['capturedAt'] >= head[1]):
+                    db.execute('INSERT OR REPLACE INTO dfs_slate_heads VALUES (?,?,?)',(key,capture_id,slate['capturedAt']))
+                    heads_changed += 1
             assert db.execute('PRAGMA integrity_check').fetchone()[0] == 'ok'
             assert not db.execute('PRAGMA foreign_key_check').fetchall()
             captures = db.execute('SELECT COUNT(*) FROM dfs_captures').fetchone()[0]
             rows = db.execute('SELECT COUNT(*) FROM dfs_prices').fetchone()[0]
             weeks = [dict(zip(('season','week'), r)) for r in db.execute('SELECT DISTINCT season,week FROM dfs_captures ORDER BY season,week')]
         db.close()
-        if inserted or not target.exists():
+        if inserted or heads_changed or not target.exists():
             with temporary.open('rb') as handle:
                 os.fsync(handle.fileno())
             os.replace(temporary, target)
-        return {'path': str(target), 'insertedCaptures': inserted, 'captures': captures, 'rows': rows, 'weeks': weeks, 'changed': bool(inserted)}
+        return {'path': str(target), 'insertedCaptures': inserted, 'captures': captures, 'rows': rows, 'weeks': weeks, 'changed': bool(inserted or heads_changed), 'headsChanged': heads_changed}
     finally:
         if db is not None:
             db.close()
