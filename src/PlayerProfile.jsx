@@ -138,9 +138,8 @@ function SnapMeter({ value }) {
   return <span className="profile-snap-meter"><b>{whole.format(pct)}%</b><i aria-hidden="true"><span style={{ width: `${pct}%` }} /></i></span>;
 }
 
-function TrajectoryStrip({ profile, trendWeeks, onTrendWeeks }) {
-  const [metric, setMetric] = useState("fantasy_points");
-  return <section className="profile-trajectory" aria-labelledby="trajectory-title"><header><div><h3 id="trajectory-title">Season trajectory</h3><span>{profile.player.name} · aligned regular-season calendar weeks</span></div><div className="profile-trajectory-controls"><TrendMetricSelect metric={metric} onChange={setMetric} label="Player trajectory metric"/><label>History<select aria-label="Player trajectory history" value={trendWeeks} onChange={event=>onTrendWeeks(Number(event.target.value))}>{[5,8,10,18].map(n=><option key={n} value={n}>{n} calendar weeks</option>)}</select></label></div></header><TrendChart history={profile.history || []} metric={metric} domain={profile.meta?.trendDomains?.[metric]} playerName={profile.player.name} height={96}/></section>;
+function TrajectoryStrip({ profile, trendWeeks, onTrendWeeks, metric, onMetric }) {
+  return <section className="profile-trajectory" aria-labelledby="trajectory-title"><header><div><h3 id="trajectory-title">Season trajectory</h3><span>{profile.player.name} · aligned regular-season calendar weeks</span></div><div className="profile-trajectory-controls"><TrendMetricSelect metric={metric} onChange={onMetric} label="Player trajectory metric"/><label>History<select aria-label="Player trajectory history" value={trendWeeks} onChange={event=>onTrendWeeks(Number(event.target.value))}>{[5,8,10,18].map(n=><option key={n} value={n}>{n} calendar weeks</option>)}</select></label></div></header><TrendChart history={profile.history || []} metric={metric} domain={profile.meta?.trendDomains?.[metric]} playerName={profile.player.name} height={96}/></section>;
 }
 
 function GameLogHeader({ groups }) {
@@ -191,12 +190,12 @@ function GameLogTable({ logs, profile }) {
   return <DataTable id={`profile-logs-${profile.player.position}`} title={`${profile.player.name} game logs`} columns={columns} rows={filtered} rowKey={row=>`${row.season_type}-${row.week}`} defaultSorts={[{key:'week',desc:false}]} filters={<label>Phase<select aria-label="Game log phase" value={period} onChange={event=>setPeriod(event.target.value)}><option value="ALL">Regular + postseason</option><option value="REG">Regular season</option><option value="POST">Postseason</option></select></label>} renderCell={(row,column,prefs)=>column.kind==='finish' && row[column.key]!=null?`${profile.player.position}${row[column.key]}`:formatTableValue(row[column.key],column,prefs)}/>;
 }
 
-function GameLogs({ profile, trendWeeks, onTrendWeeks }) {
+function GameLogs({ profile, trendWeeks, onTrendWeeks, metric, onMetric }) {
   const logs = useMemo(() => profile.gameLogs.map(enrichLog), [profile.gameLogs]);
   return (
     <section className="profile-tab-panel profile-logs-panel" role="tabpanel" id="game-logs-panel" aria-labelledby="game-logs-tab">
       <header className="profile-panel-heading"><div><h3>Game Logs</h3></div><span>{profile.meta.season} · Regular + postseason</span></header>
-      <TrajectoryStrip profile={profile} trendWeeks={trendWeeks} onTrendWeeks={onTrendWeeks} />
+      <TrajectoryStrip profile={profile} trendWeeks={trendWeeks} onTrendWeeks={onTrendWeeks} metric={metric} onMetric={onMetric} />
       <GameLogTable logs={logs} profile={profile} />
       <p className="profile-note">Weekly finish compares all NFL peers before filters. Historical DFS values appear only for their exact week; unavailable records are shown as —.</p>
     </section>
@@ -291,6 +290,7 @@ export function PlayerProfile({ player, season = 2026, scoring, initialTab = "lo
   const [error, setError] = useState("");
   const [headshotFailed, setHeadshotFailed] = useState(false);
   const [trendWeeks,setTrendWeeks] = useState(10);
+  const [trajectoryMetric,setTrajectoryMetric] = useState("fantasy_points");
   const dialogRef = useRef(null);
   const firstTabRef = useRef(null);
 
@@ -360,7 +360,7 @@ export function PlayerProfile({ player, season = 2026, scoring, initialTab = "lo
         <div className="profile-content">
           {!profile && !error ? <div className="profile-loading" role="status"><span aria-hidden="true" />Loading player warehouse data…</div> : null}
           {error ? <div className="profile-error" role="alert"><strong>Player card unavailable</strong><span>{error}</span><button type="button" onClick={onClose}>Close</button></div> : null}
-          {profile && activeTab === "logs" ? <GameLogs profile={profile} trendWeeks={trendWeeks} onTrendWeeks={setTrendWeeks} /> : null}
+          {profile && activeTab === "logs" ? <GameLogs profile={profile} trendWeeks={trendWeeks} onTrendWeeks={setTrendWeeks} metric={trajectoryMetric} onMetric={setTrajectoryMetric} /> : null}
           {profile && activeTab === "heat" ? <HeatMap profile={profile} /> : null}
           {profile && activeTab === "season" ? <SeasonStats profile={profile} /> : null}
           {profile && activeTab === "depth" ? <DepthChart profile={profile} onSelectPlayer={onSelectPlayer} /> : null}

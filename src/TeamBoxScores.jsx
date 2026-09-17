@@ -468,7 +468,7 @@ export function TeamBoxScores({ season = 2026, meta, onSeasonChange, onOpenPlaye
     const readableWidth = Math.max(250, count * 22);
     if (columnWidths.trend < readableWidth) resizeColumn('trend', readableWidth);
   };
-  const onSort = (key, week, shift, trendId) => { setSortWeek(week || null); setSortTrendId(trendId || null); setTablePrefs(current => (week && week !== sortWeek) || (trendId && trendId !== sortTrendId) ? { ...current, sorts: [{ key, desc: true }] } : toggleTableSort(current, key, shift)); };
+  const onSort = (key, week, shift, trendId) => { if(week != null || !shift) setSortWeek(week || null); if(trendId != null || !shift) setSortTrendId(trendId || null); setTablePrefs(current => (week && week !== sortWeek) || (trendId && trendId !== sortTrendId) ? { ...current, sorts: [{ key, desc: true }] } : toggleTableSort(current, key, shift)); };
   const moveTrend = (id, direction) => { const current = resolvedTrends.find(block => block.id === id); const index = selectedWeeks.indexOf(current?.anchor); const next = selectedWeeks[index + direction]; if (next) setTrendBlocks(blocks => blocks.map(block => block.id === id ? { ...block, afterWeek: next } : block)); };
   const dropTrend = (id, week) => { setTrendBlocks(blocks => blocks.map(block => block.id === id ? { ...block, afterWeek: week } : block)); setDraggedTrend(null); };
   const changeTrendMetric = (id, metric) => setTrendBlocks(blocks => blocks.map(block => block.id === id ? { ...block, metric } : block));

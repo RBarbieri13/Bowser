@@ -33,10 +33,11 @@ function History({data,player}) {
   const choices=HISTORY_METRICS[data.provider];
   const [metric,setMetric]=useState(choices[0].key), [count,setCount]=useState(16);
   const definition=choices.find(choice=>choice.key===metric);
-  const observations=(data.history || []).slice(-count).map(h=>({at:h.capturedAt,value:h.rows.find(r=>r.id===player.id)?.[metric]??null}));
+  const history=(data.history || []).map((snapshot,index,all)=>({ ...snapshot,rows:snapshot.rows.map(row=>{if(metric!=='rosterDelta')return row;const previous=all[index-1]?.rows.find(item=>item.id===row.id);return {...row,rosterDelta:Number.isFinite(row.rosterPct)&&Number.isFinite(previous?.rosterPct)?row.rosterPct-previous.rosterPct:null};})}));
+  const observations=history.slice(-count).map(h=>({at:h.capturedAt,value:h.rows.find(r=>r.id===player.id)?.[metric]??null}));
   const present=observations.filter(point=>point.value!==null);
   // All players in this source/window share the scale. Missing samples stay missing.
-  const values=(data.history || []).slice(-count).flatMap(h=>h.rows.map(row=>row[metric])).filter(Number.isFinite);
+  const values=history.slice(-count).flatMap(h=>h.rows.map(row=>row[metric])).filter(Number.isFinite);
   const min=values.reduce((lowest,value)=>Math.min(lowest,value),0), max=definition.percent?100:values.reduce((highest,value)=>Math.max(highest,value),1), span=max-min;
   const valueLabel=value=>value==null?'Not in returned sample':definition.percent?pct(value):new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(value);
   return <section className="mp-history" aria-label="Player snapshot history"><h3>Observed {definition.label.toLowerCase()}</h3>

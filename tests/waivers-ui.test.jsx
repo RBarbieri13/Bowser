@@ -39,7 +39,7 @@ test('renders five independent rank and five FAAB sources, real usage, and exact
   expect(within(runner).getByText('30%').title).toContain('ESPN');
   expect(within(runner).getAllByText('15–20%')[0].title).toContain('annual budget');
   expect(screen.queryByText('DFS')).not.toBeInTheDocument();
-  fireEvent.click(await ready()); expect(open).toHaveBeenCalledWith({ player_id: 'one', player_display_name: 'Fixture Runner' }, expect.any(HTMLElement), 'ppr');
+  fireEvent.click(await ready()); expect(open).toHaveBeenCalledWith(expect.objectContaining({ player_id: 'one', player_display_name: 'Fixture Runner',season:2026 }), expect.any(HTMLElement), 'ppr');
 });
 
 test('sort keeps unknowns last both ways and adds secondary sorts without altering source data', async () => {
@@ -103,8 +103,9 @@ test('saved table controls stay isolated, preserve collapsed groups, and support
   expect(screen.queryByRole('button', { name: 'Sort Passing ATT' })).not.toBeInTheDocument();
   fireEvent.keyDown(screen.getByRole('separator', { name: 'Resize Player column' }), { key: 'ArrowRight' });
   fireEvent.click(screen.getByRole('button', { name: 'Table', exact: true }));
-  fireEvent.change(screen.getByLabelText('Waiver row density'), { target: { value: 'comfortable' } });
+  fireEvent.change(screen.getByLabelText('Density'), { target: { value: 'comfortable' } });
   fireEvent.click(screen.getByRole('checkbox', { name: 'GP', exact: true }));
+  fireEvent.click(screen.getByRole('button', {name:'Apply settings'}));
   const saved = JSON.parse(localStorage.getItem(WAIVER_PREFS_KEY));
   expect(saved).toMatchObject({ density: 'comfortable', widths: { name: 200 }, collapsed: ['passing'], hidden: ['games_played'] });
   expect(localStorage.getItem('bowser:player-table:v1')).toBe('untouched');

@@ -64,13 +64,20 @@ export function TableSettingsPanel({open, onClose, title = 'Table settings', col
   const patch = update => setDraft(old => validateTablePreferences({...old, ...update}, columns));
   const groups = [...new Set(columns.map(column => column.group || 'Columns'))];
   const byKey = new Map(columns.map(column => [column.key, column]));
-  const move = (key, direction) => {
-    const order = [...draft.order], index = order.indexOf(key);
-    if (byKey.get(key)?.orderable === false) return;
-    let next = index + direction;
-    while (next >= 0 && next < order.length && byKey.get(order[next])?.orderable === false) next += direction;
-    if (next < 0 || next >= order.length) return;
-    [order[index], order[next]] = [order[next], order[index]]; patch({order});
+  const nextIndex = (key,direction) => {
+    const index=draft.order.indexOf(key), column=byKey.get(key);
+    if(column?.orderable===false)return -1;
+    for(let next=index+direction;next>=0&&next<draft.order.length;next+=direction){
+      const candidate=byKey.get(draft.order[next]);
+      if(column?.orderGroup && candidate?.orderGroup!==column.orderGroup)continue;
+      if(candidate?.orderable!==false)return next;
+    }
+    return -1;
+  };
+  const move = (key,direction) => {
+    const order=[...draft.order],index=order.indexOf(key),next=nextIndex(key,direction);
+    if(next<0)return;
+    [order[index],order[next]]=[order[next],order[index]];patch({order});
   };
   const toggle = (column, visible) => patch({hidden: visible ? draft.hidden.filter(key => key !== column.key) : [...draft.hidden, column.key]});
   const reset = () => setDraft(validateTablePreferences({savedViews: draft.savedViews}, columns));
@@ -98,7 +105,7 @@ export function TableSettingsPanel({open, onClose, title = 'Table settings', col
           const members = columns.filter(column => (column.group || 'Columns') === group);
           return <fieldset key={group}><legend>{group}</legend><div className="table-settings-group-actions"><button onClick={() => patch({hidden: draft.hidden.filter(key => !members.some(column => column.key === key))})}>Show section</button><button onClick={() => patch({hidden: [...draft.hidden, ...members.filter(column => !column.required).map(column => column.key)]})}>Hide section</button></div>{members.map(column => <div key={column.key} className="table-settings-field"><label><input type="checkbox" checked={!draft.hidden.includes(column.key)} disabled={column.required} onChange={event => toggle(column, event.target.checked)}/>{column.label}{column.required && <small>Required</small>}</label><label className="table-settings-width"><span className="sr-only">{column.label} width</span><input aria-label={`${column.label} width`} type="number" min={column.minWidth ?? 44} max={column.maxWidth ?? 700} step={1} value={draft.widths[column.key]} onChange={event => patch({widths: {...draft.widths, [column.key]: Number(event.target.value)}})}/><span>px</span></label></div>)}</fieldset>;
         })}</div>
-        <section className="table-settings-order" aria-label="Column order"><h3>Column order</h3><p>Hidden fields keep their position when restored.</p><ol>{draft.order.map((key, index) => <li key={key}><span>{index+1}. {byKey.get(key)?.label}{byKey.get(key)?.orderable === false ? ' · fixed' : ''}{draft.hidden.includes(key) ? ' · hidden' : ''}</span><button aria-label={`Move ${byKey.get(key)?.label} earlier`} disabled={byKey.get(key)?.orderable === false || !draft.order.slice(0,index).some(other => byKey.get(other)?.orderable !== false)} onClick={() => move(key,-1)}>←</button><button aria-label={`Move ${byKey.get(key)?.label} later`} disabled={byKey.get(key)?.orderable === false || !draft.order.slice(index+1).some(other => byKey.get(other)?.orderable !== false)} onClick={() => move(key,1)}>→</button></li>)}</ol></section>
+        <section className="table-settings-order" aria-label="Column order"><h3>Column order</h3>{columns.some(column=>column.orderGroup)&&<p>Columns move within their labeled section.</p>}<p>Hidden fields keep their position when restored.</p><ol>{draft.order.map((key, index) => <li key={key}><span>{index+1}. {byKey.get(key)?.label}{byKey.get(key)?.orderable === false ? ' · fixed' : ''}{draft.hidden.includes(key) ? ' · hidden' : ''}</span><button aria-label={`Move ${byKey.get(key)?.label} earlier`} disabled={nextIndex(key,-1)<0} onClick={() => move(key,-1)}>←</button><button aria-label={`Move ${byKey.get(key)?.label} later`} disabled={nextIndex(key,1)<0} onClick={() => move(key,1)}>→</button></li>)}</ol></section>
       </div>
       <footer><button onClick={reset}>Reset table</button><span>{columns.length-draft.hidden.length} of {columns.length} columns visible</span><button onClick={onClose}>Cancel</button><button className="table-settings-apply" onClick={() => {onChange(validateTablePreferences(draft, columns)); onClose();}}>Apply settings</button></footer>
     </section>

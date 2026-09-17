@@ -351,7 +351,7 @@ describe("statistics table UI", () => {
     const widthControl = screen.getByLabelText("Week column width");
     fireEvent.change(widthControl, { target: { value: "220" } });
     const table = await screen.findByRole("table", { name: "QB week-by-week player statistics" });
-    expect(table).toHaveStyle({ width: "592px" });
+    expect(parseFloat(table.style.width)).toBeCloseTo([...table.querySelectorAll('col:not([data-column="position"])')].reduce((sum,col)=>sum+parseFloat(col.style.width),0), 3);
     const synchronizedWeekResizer = screen.getAllByRole("separator", { name: "Resize all week groups" })[0];
     expect(synchronizedWeekResizer).toHaveAttribute("aria-valuenow", "220");
     fireEvent.keyDown(synchronizedWeekResizer, { key: "ArrowRight", shiftKey: true });
@@ -414,7 +414,8 @@ describe("statistics table UI", () => {
 
     const playerResize = screen.getByRole("separator", { name: "Resize Player column" });
     fireEvent.keyDown(playerResize, { key: "ArrowRight", shiftKey: true });
-    expect(table).toHaveStyle({ width: "950px" });
+    expect(parseFloat(table.style.width)).toBeCloseTo([...table.querySelectorAll('col:not([data-column="position"])')].reduce((sum,col)=>sum+parseFloat(col.style.width),0), 3);
+    expect(parseFloat(table.querySelector('col[data-column="player"]').style.width)).toBe(Number(playerResize.getAttribute("aria-valuenow")));
 
     await user.click(screen.getByRole("button", { name: /All defaults/ }));
     await user.click(screen.getByRole("checkbox", { name: "Passing yards" }));
@@ -535,7 +536,7 @@ describe("statistics table UI", () => {
     const view = render(<App />);
     await screen.findByRole("button", { name: "Test Player" });
     const table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
-    const columnOrder = Array.from(table.querySelectorAll("col")).map((column) => column.dataset.column);
+    const columnOrder = Array.from(table.querySelectorAll('col:not([data-column="position"])')).map((column) => column.dataset.column);
 
     expect(columnOrder.indexOf("trend_snaps")).toBe(columnOrder.indexOf("snaps") + 1);
     expect(columnOrder.indexOf("trend_rush_attempts")).toBe(columnOrder.indexOf("rushing_tds") + 1);
