@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test, { after } from "node:test";
 
-import { closeDatabase, getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "../server/stats-store.mjs";
+import { closeDatabase, getMeta, openDatabase, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "../server/stats-store.mjs";
 import { getIntelligenceRegistry, queryIntelligenceFeed, IntelligenceQueryError } from "../server/intelligence-store.mjs";
 import { buildXaiRequestBody } from "../server/intelligence-provider-xai.mjs";
 
@@ -23,7 +23,11 @@ test("intelligence feed is filterable and publishes a transparent source registr
   const all = queryIntelligenceFeed(new URLSearchParams("hours=168"));
   assert.equal(all.events.length, 3);
   assert.equal(all.meta.snapshotMode, "curated_bootstrap");
-  assert.equal(all.meta.provider.configured, false);
+  assert.equal(all.meta.provider.configured, true);
+  assert.equal(all.meta.provider.storage.ready, false);
+  assert.equal(all.meta.provider.sources.sleeper.ready, true);
+  assert.equal(all.meta.provider.sources.rotowire.ready, false);
+  assert.equal(all.meta.provider.sources["32bw"].ready, false);
   assert.match(all.meta.methodology.confidence, /social volume never increases/);
   assert.ok(all.events.every((event) => event.sources.length && event.sourceQuality.confidence >= 90));
 
@@ -31,8 +35,11 @@ test("intelligence feed is filterable and publishes a transparent source registr
   assert.equal(receivers.events.length, 1);
   assert.equal(receivers.events[0].player.name, "Noah Brown");
   const registry = getIntelligenceRegistry();
-  assert.equal(registry.summary.total, 15);
-  assert.equal(registry.summary.primary, 2);
+  assert.equal(registry.summary.total, 23);
+  assert.equal(registry.summary.primary, 3);
+  assert.equal(registry.summary.connector_ready, 4);
+  assert.equal(registry.summary.supplementary, 1);
+  assert.equal(registry.xAccounts.length, 11);
   assert.ok(registry.sources.some((source) => source.id === "twif-overall" && source.automation === "disabled_by_robots"));
   assert.throws(() => queryIntelligenceFeed(new URLSearchParams("position=K")), IntelligenceQueryError);
   clock.mock.mockImplementation(() => Date.parse("2026-09-07T12:00:00Z"));
@@ -49,6 +56,8 @@ test("xAI Responses requests use the current text.format structured-output contr
   assert.equal(request.max_turns, 2);
   assert.equal(request.tools[0].from_date, "2026-08-25");
   assert.equal(request.tools[0].to_date, "2026-08-26");
+  const priority = buildXaiRequestBody({ lookbackHours: 24, searchMode: "priority" }, new Date("2026-08-26T18:00:00.000Z"));
+  assert.equal(priority.tools[0].allowed_x_handles.length, 11);
 });
 
 test("postseason round names are normalized and snap-backed", () => {
@@ -58,7 +67,7 @@ test("postseason round names are normalized and snap-backed", () => {
   assert.equal(getMeta().warehouse.postseason_weeks.length, 4);
 });
 
-test("opportunity tracker joins the current full roster to honest recent-game history", () => {
+test("opportunity tracker joins the current full roster to aligned calendar history", () => {
   const result = queryOpportunityTracker(new URLSearchParams("team=NYG&games=10"));
   assert.equal(result.data.team, "NYG");
   assert.deepEqual(result.data.groups.map((group) => group.position), ["QB", "RB", "WR", "TE"]);
@@ -68,10 +77,13 @@ test("opportunity tracker joins the current full roster to honest recent-game hi
   assert.equal(result.meta.injuryNewsAvailable, false);
   assert.match(result.meta.ordering, /Official nflverse depth rank/);
   const players = result.data.groups.flatMap((group) => group.players);
-  assert.ok(players.some((player) => player.rookie && player.history.length === 0));
+  assert.ok(players.some((player) => player.rookie && !player.hasNFLHistory));
   assert.ok(players.some((player) => player.history.length === 10));
   assert.ok(players.every((player) => player.history.length <= 10));
-  assert.ok(players.filter((player) => player.hasNFLHistory).every((player) => player.history.every((game) => Number.isFinite(game.snaps) && Number.isFinite(game.fantasyPoints))));
+  assert.ok(players.every((player) => player.history.every((game) => game.available
+    ? Number.isFinite(game.snaps) && Number.isFinite(game.fantasyPoints)
+    : game.snaps === null && game.fantasyPoints === null)));
+  assert.ok(players.every((player) => player.history.map((game) => game.key).join() === result.meta.trendSlots.map((slot) => slot.key).join()));
   assert.throws(() => queryOpportunityTracker(new URLSearchParams("team=INVALID")), QueryValidationError);
 });
 
@@ -84,31 +96,29 @@ test("default request returns ranked PPR leaders quickly", () => {
   assert.ok(result.meta.queryMs < 250);
 });
 
-test("player rows expose chronological ten-game REG trends with touches and selected scoring", () => {
+test("player rows expose chronological ten-week REG trends with explicit byes and selected scoring", () => {
   const common = "seasonType=REG&search=Christian%20McCaffrey&limit=1";
   const ppr = queryPlayers(new URLSearchParams(`${common}&scoring=ppr`)).data[0];
   const standard = queryPlayers(new URLSearchParams(`${common}&scoring=standard`)).data[0];
 
   assert.equal(ppr.player_trends.length, 10);
-  assert.deepEqual(ppr.player_trends.map((game) => game.week), [8, 9, 10, 11, 12, 13, 15, 16, 17, 18]);
+  assert.deepEqual(ppr.player_trends.map((game) => game.week), [9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
   assert.ok(ppr.player_trends.every((game) => game.seasonType === "REG"));
   assert.deepEqual(
-    ppr.player_trends.map((game) => game.gameday),
-    [...ppr.player_trends.map((game) => game.gameday)].sort(),
+    ppr.player_trends.filter((game) => game.available).map((game) => game.gameday),
+    [...ppr.player_trends.filter((game) => game.available).map((game) => game.gameday)].sort(),
   );
 
-  const weekEight = ppr.player_trends[0];
-  assert.equal(weekEight.rushAttempts, 8);
-  assert.equal(weekEight.rushingYards, 25);
-  assert.equal(weekEight.rushingTds, 0);
-  assert.equal(weekEight.receptions, 3);
-  assert.equal(weekEight.receivingYards, 43);
-  assert.equal(weekEight.receivingTds, 0);
-  assert.ok(Number.isFinite(weekEight.snapPct));
-  assert.equal(weekEight.touches, weekEight.rushAttempts + weekEight.receptions);
-  assert.equal(weekEight.touches, 11);
-  assert.equal(weekEight.fantasyPoints, 9.8);
-  assert.equal(standard.player_trends[0].fantasyPoints, 6.8);
+  const weekFourteen = ppr.player_trends.find((game) => game.week === 14);
+  assert.equal(weekFourteen.available, false);
+  assert.equal(weekFourteen.snaps, null);
+  assert.equal(weekFourteen.fantasyPoints, null);
+  const recorded = ppr.player_trends.filter((game) => game.available);
+  assert.ok(recorded.every((game) => game.touches === game.rushAttempts + game.receptions));
+  for (const game of recorded) {
+    const standardGame = standard.player_trends.find((candidate) => candidate.key === game.key);
+    assert.equal(Number((game.fantasyPoints - standardGame.fantasyPoints).toFixed(1)), game.receptions);
+  }
 });
 
 test("player rows expose current nflverse depth rank and same-position teammates", () => {
@@ -273,7 +283,11 @@ test("FantasyPros PPR ADP and positional rank are joined and sortable", () => {
 test("player rows expose the next 2026 matchup and Yahoo-ready nullable fields", () => {
   const result = queryPlayers(new URLSearchParams("seasonType=ALL&weeks=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18&search=Jahmyr%20Gibbs&limit=all"));
   assert.equal(result.data.length, 1);
-  assert.match(result.data[0].upcoming_matchup, /^Sun \d{1,2}:\d{2} (am|pm) (vs|@) [A-Z]+$/);
+  assert.match(result.data[0].upcoming_matchup, /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) \d{1,2}:\d{2} (am|pm) (vs|@) [A-Z]+$/);
+  const next = openDatabase().prepare("SELECT * FROM team_schedule WHERE season = 2026 AND team = 'DET' AND gameday >= DATE('now') ORDER BY gameday LIMIT 1").get();
+  assert.equal(result.data[0].upcoming_opponent, next.opponent);
+  assert.equal(result.data[0].upcoming_kickoff_utc, next.kickoff_utc);
+  assert.ok(result.data[0].upcoming_matchup.startsWith(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'short' }).format(new Date(next.kickoff_utc))));
   assert.match(result.data[0].upcoming_game_url, /^https:\/\/www\.espn\.com\/nfl\/game\/_\/gameId\//);
   assert.equal(result.data[0].yahoo_roster_pct, null);
   assert.equal(result.data[0].yahoo_start_pct, null);

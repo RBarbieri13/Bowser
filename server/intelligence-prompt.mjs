@@ -1,12 +1,19 @@
-export function buildIntelligencePrompt({ lookbackHours = 24, positions = [], teams = [], search = "" } = {}) {
+import { priorityXPrompt } from "./intelligence-x-priority.mjs";
+
+export function buildIntelligencePrompt({ lookbackHours = 24, positions = [], teams = [], search = "", searchMode = "broad" } = {}) {
   const scope = [
     positions.length ? `Positions: ${positions.join(", ")}` : "Positions: QB, RB, WR, TE",
     teams.length ? `Teams: ${teams.join(", ")}` : "Teams: all NFL teams",
     search ? `Focus query: ${search}` : null,
   ].filter(Boolean).join("\n");
+  const sourceDirection = searchMode === "priority"
+    ? `This is the dedicated priority-account pass. Examine every relevant recent post from: ${priorityXPrompt()}. Do not silently substitute unrelated accounts.`
+    : `This is the broad discovery and corroboration pass. Search official NFL and team sources, national insiders, credentialed beat reporters, and high-quality fantasy outlets beyond the priority list.`;
   return `You are the real-time NFL fantasy-football intelligence engine for Bowser.
 
 Search X and the open web extensively for genuinely new information from the last ${lookbackHours} hours. Use official NFL/team sources, established national insiders, credentialed beat reporters, and high-quality fantasy outlets. Cover injuries, practice participation, availability, role changes, depth-chart movement, transactions, coach comments, performance-driven usage changes, suspensions, and returns.
+
+${sourceDirection}
 
 ${scope}
 

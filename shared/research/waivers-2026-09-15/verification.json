@@ -1,0 +1,84 @@
+{
+  "completedAt": "2026-09-15T22:12:41.636738+00:00",
+  "phase": "research only; no app changes or deployment",
+  "researchNodes": 3,
+  "freshVerifierLenses": [
+    {
+      "lens": "correct",
+      "verdict": "pass",
+      "checks": 23
+    },
+    {
+      "lens": "current",
+      "verdict": "pass",
+      "checks": 23
+    },
+    {
+      "lens": "source-real",
+      "verdict": "pass",
+      "checks": 23
+    }
+  ],
+  "resourcesCataloged": 22,
+  "claimsScreened": 23,
+  "claimsKept": 23,
+  "sourceVerification": "Researcher primary reads/API probes; fresh reviewers screened all findings and spot-checked key sources, not every numeric sample.",
+  "localValidation": "PASS:22 unique records; metadata and links; strict7node/69evaluation completeness",
+  "graphValidation": "claims=23 kept=23 dropped=0 unverified=0\nruns_ok=7 expected=7 artifacts=10 evals=69\n\nOK: all four invariants hold",
+  "feedReadback": [
+    {
+      "id": "nflverse-stats",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2026.csv",
+      "status": 200,
+      "capturedAt": "2026-09-15T22:11:46.000939+00:00",
+      "lastModified": "Tue, 15 Sep 2026 14:21:38 GMT",
+      "rows": 1118,
+      "columns": 150,
+      "seasons": [
+        "2026"
+      ],
+      "weeks": [
+        "1"
+      ],
+      "games": 16
+    },
+    {
+      "id": "nflverse-snaps",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/snap_counts/snap_counts_2026.csv",
+      "status": 200,
+      "capturedAt": "2026-09-15T22:11:45.542713+00:00",
+      "lastModified": "Tue, 15 Sep 2026 11:25:15 GMT",
+      "rows": 1492,
+      "columns": 16,
+      "seasons": [
+        "2026"
+      ],
+      "weeks": [
+        "1"
+      ],
+      "games": 16
+    },
+    {
+      "id": "sleeper-trends",
+      "url": "https://api.sleeper.app/v1/players/nfl/trending/add?lookback_hours=24&limit=5",
+      "status": 200,
+      "capturedAt": "2026-09-15T22:11:45.090344+00:00",
+      "lastModified": null,
+      "rows": 5,
+      "sample": {
+        "count": 2560831,
+        "player_id": "11834"
+      }
+    }
+  ],
+  "limits": [
+    "Paid/current full matrices and production adapters unverified where catalog says so",
+    "CLI initialization failed; model-compatible retries used; inconsistent intermediate verdict retained and resolved",
+    "No purchases or paid third-party API calls; exact Codex token cost unavailable"
+  ],
+  "files": {
+    "integration-plan.md": "78d0f9095ec70b44734be077264a99e4493df5a13b8b0a2e96b323a4c0ef2c1f",
+    "README.md": "25d56ac00e0bebd905f5f5aeb40d44b006bd1c1bbadb865eabee6a3222048e07",
+    "source-catalog.json": "3b54e89469555cc75090536e6c38ed89c7841efe6762725b5443670d69abe374"
+  }
+}

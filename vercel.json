@@ -4,8 +4,18 @@
   "outputDirectory": "dist/client",
   "functions": {
     "api/**/*.mjs": {
-      "includeFiles": "data/*.{sqlite,json}",
+      "includeFiles": "{data/*.{sqlite,json},db/migrations/*.sql}",
       "maxDuration": 180
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/api/v1/player-identity",
+      "destination": "/api/v1/player-profile?resource=identity"
+    },
+    {
+      "source": "/api/v1/dfs-archive",
+      "destination": "/api/v1/player-profile?resource=archive"
+    }
+  ]
 }

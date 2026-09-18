@@ -1,0 +1,111 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-09-17T22:46:37.483359+00:00",
+  "publicUrl": "https://fantasy-football-stats-preview.vercel.app",
+  "candidateUrl": "https://bowser-fantasy-football-8miz6pg5a-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_Ec3cCU7UH1981ddmyGj1qJe6E1aB",
+  "deploymentState": "READY",
+  "applicationCommit": "5c5355405d3ae21f48f7c5ed53b6c2d543592a41",
+  "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-compact-controls-20260917",
+  "checks": {
+    "npmRunCheck": "PASS",
+    "fullCheckLog": "/private/tmp/bowser-compact-full-check.log",
+    "fullCheckLogSha256": "369aded138cbd5d0dde3efe9f42e58c215bba78e63b28c8a71997b6038799ce0",
+    "independentUiReview": "PASS",
+    "independentDfsReview": "PASS",
+    "desktop": {
+      "players": {
+        "before": 356,
+        "after": 109
+      },
+      "waivers": {
+        "before": 296,
+        "after": 107
+      },
+      "teamBox": {
+        "before": 497.5,
+        "after": 91
+      },
+      "opportunityFirstRow": {
+        "before": 806.4,
+        "after": 197
+      },
+      "market": {
+        "before": 237.7,
+        "after": 107
+      }
+    },
+    "narrowViewport390": "PASS after corrections",
+    "thursdayUiRoleSwitch": "PASS",
+    "columnOptionsDialog": "PASS",
+    "localApiAssertions": 483,
+    "publicApiAssertions": 483,
+    "candidateApiAssertions": 483,
+    "publicBrowser": "PASS",
+    "publicRuntimeErrors": 0,
+    "publicThursdayAndNarrow": "PASS",
+    "publicMarketSnapshotPlayers": 1016,
+    "localAssertions": 483,
+    "candidateAssertions": 483,
+    "publicAssertions": 483,
+    "publicAssets": {
+      "js": "index-TceADQRE.js",
+      "css": "index-BJ6nBIVH.css"
+    }
+  },
+  "dfs": {
+    "season": 2026,
+    "week": 2,
+    "defaultSlate": "2026-w2-dk-153427",
+    "slateId": 153427,
+    "coverage": {
+      "salaryPlayers": 818,
+      "projectedPlayers": 393,
+      "databasePlayersWithSalary": 756,
+      "databasePlayersWithProjection": 389,
+      "rosterPlayersWithSalary": 758,
+      "unmatchedSalaryPlayers": 60,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "All primary FIC rows for slate teams must join; every scheduled team has QB/RB/WR/TE coverage. Supplemental FSC values require exact name, position, team, game and official salary matches. Other players remain null."
+    },
+    "historicalCaptures": 86,
+    "historicalPlayerRows": 25108,
+    "capturedAt": "2026-09-17T22:32:47.028333Z",
+    "thursday": {
+      "slateId": 153434,
+      "game": "DET @ BUF",
+      "date": "2026-09-17",
+      "format": "Showdown Captain Mode",
+      "roleOptions": [
+        "FLEX",
+        "CPT"
+      ],
+      "salaryEntries": 94,
+      "distinctPlayers": 47,
+      "projectionsPerRole": 22,
+      "apiMatchedPlayersPerRole": 44,
+      "apiMatchedProjectionsPerRole": 21,
+      "baseKey": "2026-w2-dk-153434",
+      "captainKey": "2026-w2-dk-153434:cpt"
+    }
+  },
+  "automation": {
+    "id": "bowser-weekly-dfs-refresh",
+    "status": "ACTIVE",
+    "schedule": "Thursdays at 08:00 America/Chicago",
+    "workflow": "shared/operations/weekly-dfs-refresh.md",
+    "baseRecord": "shared/operations/production-release.json"
+  },
+  "githubSync": {
+    "status": "BLOCKED",
+    "reason": "Fresh gh auth status on September17 reports invalid GitHub token. Local verified commit deployed directly to the authorized existing Vercel project; no push claimed."
+  },
+  "limitations": [
+    "Missing source projections remain null. No fabricated historical DFS prices or projections.",
+    "Archived 2026 Week 1 and Week 2 DFS captures are retained. Uncaptured older DFS weeks remain unavailable; historical actual statistics are preserved.",
+    "Market Pulse history uses provider observations rather than NFL game weeks."
+  ],
+  "evidenceDirectory": "shared/operations/compact-controls-20260917",
+  "releasePurpose": "One compact collapsed controls header per active page; preserve native functionality; hide League Hub and Fantasy Intelligence; shorter Team Box with single matchup header; official Thursday Showdown FLEX/CPT selections and weekly archive support.",
+  "previousDeploymentId": "dpl_3x46QyD6NYBeJQWqaWTV6gxCvt9b"
+}

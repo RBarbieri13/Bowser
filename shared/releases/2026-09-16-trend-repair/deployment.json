@@ -1,0 +1,12 @@
+{
+  "id": "dpl_4zRyX4uJj7Lf1aCntJNqXFzNxkQt",
+  "url": "bowser-fantasy-football-1wr2sqm8n-rbarbieri13s-projects.vercel.app",
+  "readyState": "READY",
+  "target": "production",
+  "publicUrl": "https://fantasy-football-stats-preview.vercel.app",
+  "appCommit": "835c82a1c5fc0c047312e498cbe00516c77f9118",
+  "apiAssertions": 417,
+  "browserStatus": "PASS",
+  "automation": "awaiting-user-confirmation",
+  "githubSync": "Not pushed: previously verified GitHub write credentials unavailable; deployed directly to Vercel."
+}

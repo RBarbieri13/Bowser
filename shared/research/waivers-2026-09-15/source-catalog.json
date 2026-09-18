@@ -1,0 +1,423 @@
+{
+  "asOf": "2026-09-15",
+  "phase": "research",
+  "sources": [
+    {
+      "id": "fantasypros",
+      "name": "FantasyPros",
+      "urls": [
+        "https://www.fantasypros.com/nfl/rankings/?scoring=PPR&type=waiver",
+        "https://www.fantasypros.com/2026/09/fantasy-football-waiver-wire-advice-players-to-add-stash-drop-week-2-2026/",
+        "https://www.fantasypros.com/api-data/"
+      ],
+      "scope": "2026 Week 2",
+      "published": "Article initially September14; ranking page as of September15,2026",
+      "fields": [
+        "consensus rank",
+        "individual experts",
+        "best/worst/mean/stddev",
+        "scoring",
+        "tiered FAAB"
+      ],
+      "evidence": "PPR preview: 9 experts; Black ECR4, mean7.0. FAAB article: Black $9 true/$17 desperate/$5 budget on $100 reference.",
+      "budgetBasis": "reference-$100; starting/remaining unspecified",
+      "access": "Public editorial and limited ranking preview. Official API advertises expert/consensus JSON and external IDs; waiver-specific API support unproven. Free API sample/nonproduction; HOF personal production from $8.99/month annual; redistribution commercial.",
+      "status": "verified-current"
+    },
+    {
+      "id": "rotoballer",
+      "name": "RotoBaller",
+      "urls": [
+        "https://www.rotoballer.com/waiver-wire-rankings-fantasy-football-week-2-2026/1930758",
+        "https://www.rotoballer.com/faab-waiver-wire-advice-week-2-fantasy-pickups-2026/1931602",
+        "https://www.rotoballer.com/fantasy-sports-player-news-feeds-and-apis/335167"
+      ],
+      "scope": "2026 Week 2",
+      "published": "2026-09-15",
+      "fields": [
+        "overall/position table",
+        "roster percentage",
+        "FAAB ranges/tiers"
+      ],
+      "evidence": "85-row ranking table; Coker1, Black7. Nick Mariano FAAB: Black6\u201310%, aggressive10\u201314%, desperation14\u201320%. Rankings and FAAB have different player eligibility thresholds.",
+      "budgetBasis": "unknown",
+      "access": "Public HTML; high parser feasibility. Single analyst, not consensus. Commercial feeds offered; waiver/FAAB API field coverage not verified.",
+      "status": "verified-current"
+    },
+    {
+      "id": "footballguys",
+      "name": "Footballguys",
+      "urls": [
+        "https://www.footballguys.com/article/2026-email-feature-top-waiver-wire-pickups-week02",
+        "https://www.footballguys.com/waiver-wire"
+      ],
+      "scope": "2026 Week 2",
+      "published": "2026-09-14",
+      "fields": [
+        "FAAB ranges",
+        "position advice",
+        "format controls"
+      ],
+      "evidence": "Sigmund Bloom: Vele15\u201330%, Black10\u201320%, Shough7\u201315% annual FAAB.",
+      "budgetBasis": "annual",
+      "access": "Dated public feature; full configurable report PRO. Full report selected week and export not verified.",
+      "status": "verified-current"
+    },
+    {
+      "id": "rotowire",
+      "name": "RotoWire",
+      "urls": [
+        "https://www.rotowire.com/football/article/fantasy-football-waiver-wire-pickups-for-week-2-134360",
+        "https://rotowire.readme.io/docs/quick-start"
+      ],
+      "scope": "2026 Week 2",
+      "published": "2026-09-15",
+      "fields": [
+        "FAAB point bids",
+        "position advice",
+        "shallow/deep context"
+      ],
+      "evidence": "Joe Bartel Tuesday update: Black8%, Douglas11%, Vele7%, Mayer2%. Percentage of FAAB budget, starting/remaining not explicit.",
+      "budgetBasis": "unknown",
+      "access": "Public article parsed. Single expert; overall waiver numeric ranks not verified. General official API does not prove waiver/FAAB endpoint.",
+      "status": "verified-current"
+    },
+    {
+      "id": "fantasylife",
+      "name": "FantasyLife",
+      "urls": [
+        "https://www.fantasylife.com/articles/fantasy/waiver-wire-pickups-faab-advice-week-2-add-jalen-coker",
+        "https://www.fantasylife.com/tools/waiver-wire"
+      ],
+      "scope": "2026 Week 2",
+      "published": "2026-09-15",
+      "fields": [
+        "format-specific FAAB",
+        "league-size/scoring",
+        "1QB/superflex"
+      ],
+      "evidence": "Current article: Black10\u201312-team Standard32.5%, Half27.5%, Full22.5%; Shough1QB17.5%, superflex60%. Article budget basis unspecified.",
+      "budgetBasis": "unknown",
+      "access": "Article readable; tool premium preview contains Week1 opponents and gated cells. Current full-tool data not verified; no public export proved. Exclude guillotine from redraft consensus.",
+      "status": "verified-current"
+    },
+    {
+      "id": "cbs",
+      "name": "CBS Sports",
+      "urls": [
+        "https://hubapi.cbssports.com/fantasy/football/news/week-2-fantasy-football-waiver-wire-bryce-young-has-huge-opener/",
+        "https://www.cbssports.com/fantasy/football/news/week-2-fantasy-football-waiver-wire-bryce-young-has-huge-opener/"
+      ],
+      "scope": "2026 Week 2",
+      "published": "2026-09-15",
+      "fields": [
+        "position priority",
+        "roster percentage",
+        "FAAB lower bounds/ranges"
+      ],
+      "evidence": "Jamey Eisenberg: Black first RB, at least10% remaining; Schultz first TE,5\u201310% remaining. Weekly position rank is distinct from waiver priority.",
+      "budgetBasis": "remaining",
+      "access": "Publisher hubapi readable; canonical fetch failed. Public article, single expert; no API/export verified.",
+      "status": "verified-current"
+    },
+    {
+      "id": "ftn",
+      "name": "FTN",
+      "urls": [
+        "https://ftnfantasy.com/fantasy-football-waiver-wire-claims-to-make-heading-into-week-2",
+        "https://ftnfantasy.com/fantasy/nfl/waiver-wire-tool",
+        "https://ftnfantasy.com/stats/sports-data"
+      ],
+      "scope": "2026 Week 2",
+      "published": "2026-09-15",
+      "fields": [
+        "top-five ranks",
+        "FAAB ranges"
+      ],
+      "evidence": "Daniel Kelley article based on Jeff Ratcliffe tool: Coker10\u201320%; Black, Marks, Shough, Douglas5\u201310%.",
+      "budgetBasis": "unknown",
+      "access": "Public top5; full tool rows not verified. Single underlying analyst; do not count article and tool twice. General commercial feeds do not prove FAAB coverage.",
+      "status": "verified-current"
+    },
+    {
+      "id": "draftsharks",
+      "name": "DraftSharks",
+      "urls": [
+        "https://www.draftsharks.com/article/week-2-waiver-wire-pickups"
+      ],
+      "scope": "2026 Week 2",
+      "published": "2026-09-15 displayed; time/zone unverified",
+      "fields": [
+        "position priority",
+        "FAAB ranges"
+      ],
+      "evidence": "Kevin English: Black20\u201330%, Vele8\u201310%, Douglas5\u201310%. Position order, not overall ranking.",
+      "budgetBasis": "unknown",
+      "access": "Public rolling article. Displayed Sep15 8:52PM lacks verified timezone and may be ahead of capture; retain raw timestamp, validate before import.",
+      "status": "verified-current"
+    },
+    {
+      "id": "yahoo-editorial",
+      "name": "Yahoo / Justin Boone",
+      "urls": [
+        "https://sports.yahoo.com/fantasy/article/fantasy-football-waiver-wire-pickups-week-2-kaelon-black-denzel-boston-among-top-targets-to-add-170648838.html"
+      ],
+      "scope": "2026 Week 2",
+      "published": "2026-09-14",
+      "fields": [
+        "overall top10",
+        "position",
+        "Yahoo roster%",
+        "dollar bids"
+      ],
+      "evidence": "Index: Black1/$5, Boston3/$3; $100 salary cap.",
+      "budgetBasis": "reference-$100; starting/remaining unspecified",
+      "access": "Canonical open429; search-index evidence only, not import-ready. Single expert; syndicated copies are not independent votes.",
+      "status": "partial-index-only"
+    },
+    {
+      "id": "4for4",
+      "name": "4for4",
+      "urls": [
+        "https://www.4for4.com/2026/w2/fantasy-football-waiver-wire-week-2",
+        "https://www.4for4.com/fantasy-football-cheat-sheet/2026/week1"
+      ],
+      "scope": "2026 Week 2",
+      "published": "2026-09-14",
+      "fields": [
+        "weekly prioritized article"
+      ],
+      "evidence": "Ryan McDowell current article exists; numeric rows gated.",
+      "budgetBasis": "unknown",
+      "access": "Full rankings/bids unavailable in public preview. Navigation cheat sheet pointed to Week1 projections, not Week2 FAAB. No verified export.",
+      "status": "current-article-gated"
+    },
+    {
+      "id": "nfl",
+      "name": "NFL",
+      "urls": [
+        "https://www.nfl.com/news/2026-nfl-fantasy-football-waiver-wire-week-2-wr-jalen-coker-rb-kaelon-black-among-top-targets"
+      ],
+      "scope": "2026 Week 2",
+      "published": "2026-09-14",
+      "fields": [
+        "position priorities"
+      ],
+      "evidence": "Okada; Week2.",
+      "budgetBasis": "unknown",
+      "access": "Public rankings; no FAAB evidenced.",
+      "status": "verified-current"
+    },
+    {
+      "id": "espn-editorial",
+      "name": "ESPN editorial",
+      "urls": [
+        "https://www.espn.com/fantasy/football/story/_/page/FFWaiverWirePickUp-49939032/fantasy-football-waiver-wire-free-agent-pickups-nfl-week-2"
+      ],
+      "scope": "2026 Week 2",
+      "published": "2026-09-14",
+      "fields": [
+        "positional advice"
+      ],
+      "evidence": "Karabell; Black15\u201320%.",
+      "budgetBasis": "seasonlong-$100",
+      "access": "Public article.",
+      "status": "verified-current"
+    },
+    {
+      "id": "faabtastic",
+      "name": "Faabtastic",
+      "urls": [
+        "https://www.faabtastic.com/",
+        "https://www.faabtastic.com/week/202602/bids",
+        "https://www.faabtastic.com/how-to-use",
+        "https://www.faabtastic.com/terms"
+      ],
+      "scope": "2026 Week 2",
+      "published": "Undated pages; 2026 Week2 edition observed September15",
+      "fields": [
+        "expert matrix",
+        "expert count",
+        "mean/trimmed mean",
+        "community separately"
+      ],
+      "evidence": "Homepage Final10experts/83players: Black$8,9/10 experts. Dedicated page initially Early4/59 then Final; capture edition and URL. Generic help12experts is not current count.",
+      "budgetBasis": "starting-$100",
+      "access": "Public summaries; full current matrix $9.99/season. Sep10 terms prohibit scraping/bulk downloading/republishing. Reference only; separate authorization needed for ingestion.",
+      "status": "verified-current"
+    },
+    {
+      "id": "faablab",
+      "name": "FAABLab",
+      "urls": [
+        "https://www.faablab.app/",
+        "https://www.faablab.app/about"
+      ],
+      "scope": "2026 Week 2",
+      "published": "Undated; browser checked2026-09-15",
+      "fields": [
+        "crowd bids",
+        "format/budget controls",
+        "historical bid distribution"
+      ],
+      "evidence": "Browser verified Week2 targets and methodology. Unsubmitted YOUR BID defaults are not consensus. About defines bids as % of start-of-season budget.",
+      "budgetBasis": "starting",
+      "access": "JavaScript UI; current crowd results not inspected, no vote submitted. Advertised win probability is share of individual bids below amount, not verified chance of winning a league. No documented ingestion API.",
+      "status": "capability-current-results-unverified"
+    },
+    {
+      "id": "fantasymojo",
+      "name": "FantasyMojo",
+      "urls": [
+        "https://www.fantasymojo.com/index.php/2026/08/07/waiver-wire-bidding-for-the-win-2026/"
+      ],
+      "scope": "FFPC history",
+      "published": "2026-08-07",
+      "fields": [
+        "actual winning bid history",
+        "format/week comparisons"
+      ],
+      "evidence": "Official article describes FFPC historical winning bids by week and format; draft-capital correlation specifically preseason.",
+      "budgetBasis": "unknown",
+      "access": "Useful market-outcome complement; numeric historical tables not inspected. Not a weekly expert recommendation feed.",
+      "status": "methodology-only"
+    },
+    {
+      "id": "draftwaiver",
+      "name": "Draft Waiver",
+      "urls": [
+        "https://draftwaiver.com/fantasy-football-waiver-wire/week/2"
+      ],
+      "scope": "2026 Week 2",
+      "published": "Undated; checked2026-09-15",
+      "fields": [
+        "model ranks",
+        "FAAB%/$100"
+      ],
+      "evidence": "2026 Week2 page shows20 model-ranked adds; no named expert consensus. Several team labels disagree with current established publisher pages.",
+      "budgetBasis": "starting",
+      "access": "Do not choose as primary: unclear input provenance, team freshness questions, generic projections; customized recommendations paid.",
+      "status": "not-recommended"
+    },
+    {
+      "id": "sleeper",
+      "name": "Sleeper",
+      "urls": [
+        "https://docs.sleeper.com/#trending-players",
+        "https://api.sleeper.app/v1/players/nfl/trending/add?lookback_hours=24&limit=5",
+        "https://api.sleeper.app/v1/players/nfl",
+        "https://api.sleeper.com/projections/nfl/2026?season_type=regular",
+        "https://api.sleeper.com/players/nfl/research/regular/2026/1"
+      ],
+      "fields": [
+        "adds/drops",
+        "player IDs",
+        "experimental ADP/ownership"
+      ],
+      "evidence": "Documented trends return player_id/count. Experimental projections:9420 uniqueIDs, company rotowire, season2026/weeknull; JoshAllen PPR21.5/2QB3.8. Only2487 have0<ADP_PPR<999. Experimental ownership map654players.",
+      "access": "Trends supported; no API key. Cache player dictionary daily. ADP/research routes undocumented; filter999sentinel/inactive/IDP and retain company label. No assumption these are verified native Sleeper draft observations. Operational403 occurred; do not depend on bypassing access refusals.",
+      "status": "verified-live",
+      "scope": "2026; checked September15 21:59\u201322:04 UTC",
+      "published": "Live response",
+      "budgetBasis": "not-applicable"
+    },
+    {
+      "id": "yahoo-data",
+      "name": "Yahoo platform data",
+      "urls": [
+        "https://sports.yahoo.com/developer/docs/",
+        "https://football.fantasysports.yahoo.com/f1/draftanalysis",
+        "https://pub-api-ro.fantasysports.yahoo.com/fantasy/v2/game/470/players;count=2/draft_analysis?format=json",
+        "https://pub-api-ro.fantasysports.yahoo.com/fantasy/v2/game/470/players;count=2/percent_owned?format=json"
+      ],
+      "fields": [
+        "ADP",
+        "draft%",
+        "auction average",
+        "roster%/delta"
+      ],
+      "evidence": "Public game470 response season2026: Gibbs average_pick1.2, average_cost73.7, percent_drafted1.00. Ownership coverageweek2/value100/delta0. Arrays of one-key objects.",
+      "access": "Official API requires OAuth (401 unauthenticated); public app JSON worked experimentally. Basic ADP scoring/window unspecified; validate percent_drafted unit before display. Default public league is not Robert's league. No verified global add/drop counts.",
+      "status": "verified-live",
+      "scope": "2026; checked September15 21:59\u201322:04 UTC",
+      "published": "Live response",
+      "budgetBasis": "not-applicable"
+    },
+    {
+      "id": "espn-data",
+      "name": "ESPN platform data",
+      "urls": [
+        "https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2026/segments/0/leaguedefaults/3?view=kona_player_info"
+      ],
+      "fields": [
+        "roster/start%",
+        "ADP",
+        "auction average"
+      ],
+      "evidence": "Filtered sample Gibbs ID4429795: owned99.94%, started99.82%, ADP1.44, ownership timestampSep15 21:30:14UTC.",
+      "access": "Experimental app endpoint. x-fantasy-filter players limit2/sortPercOwned required for bounded sample. Change window/scoring unspecified; retain requestseason. Existing Bowser uses defaultleague1, research probe3; do not assume draft-scope equivalence.",
+      "status": "verified-live",
+      "scope": "2026; checked September15 21:59\u201322:04 UTC",
+      "published": "Live response",
+      "budgetBasis": "not-applicable"
+    },
+    {
+      "id": "nflverse-stats",
+      "name": "nflverse weekly statistics",
+      "urls": [
+        "https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2026.csv",
+        "https://nflreadr.nflverse.com/articles/nflverse_data_schedule.html"
+      ],
+      "fields": [
+        "passing/rushing/receiving",
+        "fantasy points",
+        "usage shares",
+        "game/player IDs"
+      ],
+      "evidence": "HTTP200:1118rows/150columns/16games,2026REGWeek1; unique(player_id,game_id). LastModifiedSep15 14:21:38GMT.",
+      "access": "Public CSV. GSIS player IDs; preserve player/game/teamgrain, positional scope and attribution. Separate from immutable2025warehouse.",
+      "status": "verified-live",
+      "scope": "2026; checked September15 21:59\u201322:04 UTC",
+      "published": "Live response",
+      "budgetBasis": "not-applicable"
+    },
+    {
+      "id": "nflverse-snaps",
+      "name": "nflverse snap counts",
+      "urls": [
+        "https://github.com/nflverse/nflverse-data/releases/download/snap_counts/snap_counts_2026.csv",
+        "https://github.com/nflverse/nflverse-data/releases/download/players/players.csv"
+      ],
+      "fields": [
+        "offense snaps/share",
+        "defense/special teams shares",
+        "PFR IDs"
+      ],
+      "evidence": "HTTP200:1492rows/16columns/16games,2026REGWeek1; unique(pfr_player_id,game_id). LastModifiedSep15 11:25:15GMT. offense_pct1 means100%.",
+      "access": "Public CSV. Map PFR IDs via players.csv toGSIS; ESPN crosswalk also available. Participation is a different dataset and cannot stand in for current snap counts.",
+      "status": "verified-live",
+      "scope": "2026; checked September15 21:59\u201322:04 UTC",
+      "published": "Live response",
+      "budgetBasis": "not-applicable"
+    },
+    {
+      "id": "fantasynerds",
+      "name": "Fantasy Nerds",
+      "urls": [
+        "https://api.fantasynerds.com/docs/nfl",
+        "https://api.fantasynerds.com/v1/nfl/add-drops?apikey=TEST",
+        "https://api.fantasynerds.com/getting-started/pricing"
+      ],
+      "fields": [
+        "48h aggregated add/drop lists",
+        "format-specific ADP"
+      ],
+      "evidence": "Docs describe Yahoo/ESPN/CBS/Sleeper aggregate and ADP teams/format filters. TEST returns historicalnames with no counts/current timestamp.",
+      "access": "Paid live data unverified. Standard$499/year; Extended$2999/year. Do not ship TEST as live or treat provider aggregate as expert FAAB consensus.",
+      "status": "documented-live-unverified",
+      "scope": "2026; checked September15 21:59\u201322:04 UTC",
+      "published": "Live response",
+      "budgetBasis": "not-applicable"
+    }
+  ]
+}

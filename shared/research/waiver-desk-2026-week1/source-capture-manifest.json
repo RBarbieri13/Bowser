@@ -1,0 +1,82 @@
+[
+  {
+    "id": "fantasypros0",
+    "url": "https://www.fantasypros.com/nfl/rankings/?scoring=PPR&type=waiver",
+    "bytes": 283339,
+    "sha256": "0105d654df86f5f1f5769423879d2477c9cd81cb094ec052cf5883e47e48c1d7",
+    "capturedAt": "2026-09-16T03:23:12.409917+00:00",
+    "captureTimeMethod": "archive file modification time from this fetch session"
+  },
+  {
+    "id": "fantasypros1",
+    "url": "https://www.fantasypros.com/2026/09/fantasy-football-waiver-wire-advice-players-to-add-stash-drop-week-2-2026/",
+    "bytes": 425101,
+    "sha256": "21a078a63615f6e201e61eb553cb8cf559a8a45cc620b94d4e24e830c538ff4b",
+    "capturedAt": "2026-09-16T03:23:12.179540+00:00",
+    "captureTimeMethod": "archive file modification time from this fetch session"
+  },
+  {
+    "id": "rotoballer0",
+    "url": "https://www.rotoballer.com/waiver-wire-rankings-fantasy-football-week-2-2026/1930758",
+    "bytes": 1081918,
+    "sha256": "263453b4a7ffc5b110cc520892de4b0f69b59ef5d43a1c0170f23fd5c2a81d09",
+    "capturedAt": "2026-09-16T03:23:12.125134+00:00",
+    "captureTimeMethod": "archive file modification time from this fetch session"
+  },
+  {
+    "id": "rotoballer1",
+    "url": "https://www.rotoballer.com/faab-waiver-wire-advice-week-2-fantasy-pickups-2026/1931602",
+    "bytes": 921929,
+    "sha256": "3c2a0b6aab8a5fff04c83e1f1df159abe5bb5493ccf5c518ca41877bff6e1808",
+    "capturedAt": "2026-09-16T03:23:12.084145+00:00",
+    "captureTimeMethod": "archive file modification time from this fetch session"
+  },
+  {
+    "id": "footballguys0",
+    "url": "https://www.footballguys.com/article/2026-email-feature-top-waiver-wire-pickups-week02",
+    "bytes": 117433,
+    "sha256": "ae9cfe17bc7965e8074900884490a198c1b0d81ac1c89509d279fa2341f3dd08",
+    "capturedAt": "2026-09-16T03:23:15.364187+00:00",
+    "captureTimeMethod": "archive file modification time from this fetch session"
+  },
+  {
+    "id": "rotowire0",
+    "url": "https://www.rotowire.com/football/article/fantasy-football-waiver-wire-pickups-for-week-2-134360",
+    "bytes": 408016,
+    "sha256": "8621579dd8f0657f123329502b010ab7b2bf75c46a04f4c673fe9fef7ce7f846",
+    "capturedAt": "2026-09-16T03:23:12.932591+00:00",
+    "captureTimeMethod": "archive file modification time from this fetch session"
+  },
+  {
+    "id": "cbs0",
+    "url": "https://hubapi.cbssports.com/fantasy/football/news/week-2-fantasy-football-waiver-wire-bryce-young-has-huge-opener/",
+    "bytes": 1067292,
+    "sha256": "4bdebadadc3b882f2c3d31c53c9abf86e82ed2cfc2d3687310e17de2040e824b",
+    "capturedAt": "2026-09-16T03:23:14.292723+00:00",
+    "captureTimeMethod": "archive file modification time from this fetch session"
+  },
+  {
+    "id": "draftsharks0",
+    "url": "https://www.draftsharks.com/article/week-2-waiver-wire-pickups",
+    "bytes": 297436,
+    "sha256": "eba0353d5aa3b16b5337ad6e4ef2bc629931c19175a4e5410852ddf9fa67b08f",
+    "capturedAt": "2026-09-16T03:23:12.758247+00:00",
+    "captureTimeMethod": "archive file modification time from this fetch session"
+  },
+  {
+    "id": "nfl0",
+    "url": "https://www.nfl.com/news/2026-nfl-fantasy-football-waiver-wire-week-2-wr-jalen-coker-rb-kaelon-black-among-top-targets",
+    "bytes": 1011425,
+    "sha256": "4f737d109d080ca6b1bc73fdfcb0eb8151c5a1c44d398b44d558c6a5b35b28a4",
+    "capturedAt": "2026-09-16T03:23:13.227687+00:00",
+    "captureTimeMethod": "archive file modification time from this fetch session"
+  },
+  {
+    "id": "fantasylife0",
+    "url": "https://www.fantasylife.com/articles/fantasy/waiver-wire-pickups-faab-advice-week-2-add-jalen-coker",
+    "bytes": 280105,
+    "sha256": "8ef05a7b5f810541481363e1a0693394f11ae2b1e5916d50b0ea67608a5717b8",
+    "capturedAt": "2026-09-16T03:23:13.193454+00:00",
+    "captureTimeMethod": "archive file modification time from this fetch session"
+  }
+]

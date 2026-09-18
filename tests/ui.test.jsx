@@ -1,11 +1,12 @@
 // @vitest-environment jsdom
 
 import "@testing-library/jest-dom/vitest";
-import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { cleanup, fireEvent, render as renderView, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 import { App } from "../src/App.jsx";
+import { GameBreakdown } from "../src/GameBreakdown.jsx";
 
 const samplePlayer = {
   player_id: "00-test",
@@ -56,7 +57,7 @@ const samplePlayer = {
   current_depth_rank: 2,
   current_depth_position: "QB",
   player_trends: Array.from({ length: 10 }, (_, index) => ({
-    week: index + 1,
+    season: 2025, week: index + 1,
     seasonType: "REG",
     gameId: `2025_${String(index + 1).padStart(2, "0")}_BUF_TEST`,
     team: "BUF",
@@ -161,7 +162,7 @@ const sampleOpportunityTracker = {
         hasNFLHistory: true, opportunityMetric: "passAttempts",
         averages: { snaps: 68, snapPct: 98, opportunity: 31, fantasyPoints: 24.2 },
         trend: { direction: "up", delta: 9, label: "Snap share up 9 pts over prior 3" },
-        history: Array.from({ length: 10 }, (_, index) => ({ gameId: `game-${index}`, week: index + 1, team: "NYG", opponent: "DAL", snaps: 59 + index, snapPct: 90 + index, passAttempts: 22 + index, carries: 4, targets: 0, fantasyPoints: 15 + index })),
+        history: Array.from({ length: 10 }, (_, index) => ({ gameId: `game-${index}`, season: 2025, week: index + 1, team: "NYG", opponent: "DAL", snaps: 59 + index, snapPct: 90 + index, passAttempts: 22 + index, carries: 4, targets: 0, fantasyPoints: 15 + index })),
       }] },
       { position: "RB", players: [{
         playerId: "rookie-test", name: "Rookie Runner", team: "NYG", position: "RB", depthPosition: "RB", depthRank: 4,
@@ -174,6 +175,15 @@ const sampleOpportunityTracker = {
   },
   meta: { rosterSeason: 2026, historySeason: 2025, gameWindow: 10, playerCount: 2, playersWithHistory: 1, rookies: 1, depthUpdatedAt: "2026-08-18T07:33:20Z", ordering: "Official nflverse depth rank, then recent recorded snap volume", injuryNewsAvailable: false, injuryNewsMessage: "The 2026 injury feed is not published yet.", source: { name: "nflverse", license: "CC BY 4.0", url: "https://github.com/nflverse/nflverse-data" }, queryMs: 3.2 },
 };
+
+// Existing interaction scenarios explicitly open the consolidated controls.
+// Default collapsed behavior is covered separately in page-controls.test.jsx.
+function render(ui) {
+  const view = renderView(ui);
+  const toggle = screen.queryByRole("button", { name: "Filters & settings" });
+  if (toggle?.getAttribute("aria-expanded") === "false") fireEvent.click(toggle);
+  return view;
+}
 
 function latestPlayerUrl() {
   const calls = fetch.mock.calls.map(([input]) => String(input)).filter((url) => url.startsWith("/api/v1/player-stats?"));
@@ -188,10 +198,12 @@ function latestBoxScoreUrl() {
 beforeEach(() => {
   window.location.hash = "";
   localStorage.clear();
+  // Existing interaction fixtures intentionally exercise the preserved 2025 view.
+  localStorage.setItem("bowser:data-season:v1", "2025");
   sessionStorage.clear();
   vi.stubGlobal("fetch", vi.fn(async (input) => {
     const url = String(input);
-    if (url === "/api/v1/meta") {
+    if (url.startsWith("/api/v1/meta?")) {
       return {
         ok: true,
         json: async () => ({ positions: ["QB", "RB", "WR", "TE"], teams: ["NYG", "BUF", "KC"], weekOptions: Array.from({ length: 22 }, (_, index) => ({ week: index + 1 })) }),
@@ -211,6 +223,7 @@ beforeEach(() => {
       json: async () => ({
         data: [samplePlayer],
         meta: {
+          dfs: { season:2026, week:1, coverage:{salaryPlayers:100, projectedPlayers:90}, options:[{key:"current",label:"Current Week 1"},{key:"main",label:"Week 1 Main"}] },
           returnedCount: 1,
           totalCount: 609,
           queryMs: 4.2,
@@ -235,16 +248,13 @@ afterEach(() => {
 });
 
 describe("statistics table UI", () => {
-  test("renders the filterable intelligence feed and transparent source registry", async () => {
-    const user = userEvent.setup();
-    window.location.hash = "#/intelligence";
-    render(<App />);
-    expect(await screen.findByRole("heading", { name: "Fantasy Intelligence" })).toBeInTheDocument();
-    expect(await screen.findByRole("heading", { name: "Test Player earns first-team work" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Scan now" })).toBeDisabled();
-    await user.click(screen.getByRole("tab", { name: "Source registry" }));
-    expect(await screen.findByRole("heading", { name: "Source registry" })).toBeInTheDocument();
-    expect(screen.getByText("xAI X Search")).toBeInTheDocument();
+  test.each(["intelligence", "league-hub"])("hides %s and routes old links to Player Database", async route => {
+    window.location.hash = `#/${route}`;
+    renderView(<App />);
+    expect(await screen.findByRole("heading", { name: "Player Database" })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Fantasy Intelligence" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "League Hub" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", {name: "Filters & settings"})).toHaveAttribute("aria-expanded", "false");
   });
 
   test("uses the Bowser mascot lockup and navigates to team box scores", async () => {
@@ -282,34 +292,14 @@ describe("statistics table UI", () => {
     expect(screen.getByRole("link", { name: "Opportunity Tracker" })).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("heading", { name: "Quarterbacks" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Running backs" })).toBeInTheDocument();
-    expect(screen.getByLabelText(/Snaps: NYG Week 1, 59/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Pass att: NYG Week 1, 22/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/PPR pts: NYG Week 1, 15/)).toBeInTheDocument();
-    expect(screen.getByText("Awaiting NFL debut")).toBeInTheDocument();
+    expect(screen.getByLabelText(/Snaps trend for Test Player: 2025 Week 1: 59/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Pass attempts trend for Test Player: 2025 Week 1: 22/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Fantasy points trend for Test Player: 2025 Week 1: 15/)).toBeInTheDocument();
+    expect(screen.getByText("No recorded games in this window")).toBeInTheDocument();
     expect(screen.getByText(/injury feed is not published yet/i)).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "RB" }));
     expect(screen.queryByRole("heading", { name: "Quarterbacks" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Running backs" })).toBeInTheDocument();
-  });
-
-  test("renders a four-league Yahoo-ready League Hub without inventing private data", async () => {
-    const user = userEvent.setup();
-    window.location.hash = "#/league-hub";
-    render(<App />);
-
-    expect(await screen.findByRole("heading", { name: "League Hub" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "League Hub" })).toHaveAttribute("aria-current", "page");
-    expect(screen.getByRole("option", { name: "All four leagues" })).toBeInTheDocument();
-    expect(screen.getAllByText("LOEG").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("Loongi League").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("College Football Fantasy").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("League 4").length).toBeGreaterThan(0);
-    expect(screen.getByText("0 of 4 leagues")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Connect Yahoo/i })).toBeDisabled();
-    expect(screen.getByText("No private Yahoo data is stored in this build.")).toBeInTheDocument();
-
-    await user.click(screen.getByRole("button", { name: "Waivers" }));
-    expect(screen.getByRole("button", { name: "Waivers" })).toHaveAttribute("aria-pressed", "true");
   });
 
   test("uses a collapsed schedule brush, adds sporadic weeks, and resizes every week column", async () => {
@@ -346,7 +336,7 @@ describe("statistics table UI", () => {
     const widthControl = screen.getByLabelText("Week column width");
     fireEvent.change(widthControl, { target: { value: "220" } });
     const table = await screen.findByRole("table", { name: "QB week-by-week player statistics" });
-    expect(table).toHaveStyle({ width: "592px" });
+    expect(parseFloat(table.style.width)).toBeCloseTo([...table.querySelectorAll('col:not([data-column="position"])')].reduce((sum,col)=>sum+parseFloat(col.style.width),0), 3);
     const synchronizedWeekResizer = screen.getAllByRole("separator", { name: "Resize all week groups" })[0];
     expect(synchronizedWeekResizer).toHaveAttribute("aria-valuenow", "220");
     fireEvent.keyDown(synchronizedWeekResizer, { key: "ArrowRight", shiftKey: true });
@@ -371,6 +361,7 @@ describe("statistics table UI", () => {
     expect(screen.getByRole("heading", { name: "Scoreboard–Rail Waterfall v2" })).toBeInTheDocument();
     expect(screen.getByText("1ST QUARTER")).toBeInTheDocument();
     expect(screen.getByLabelText(/KC · Touchdown · 7 plays, 62 yds/)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Filters & settings" }));
     expect(screen.getByRole("heading", { name: "Key player participation" })).toBeInTheDocument();
     expect(screen.getByRole("table", { name: "BUF opportunity by game segment" })).toBeInTheDocument();
     expect(screen.getAllByText("Snaps").length).toBeGreaterThan(0);
@@ -409,7 +400,8 @@ describe("statistics table UI", () => {
 
     const playerResize = screen.getByRole("separator", { name: "Resize Player column" });
     fireEvent.keyDown(playerResize, { key: "ArrowRight", shiftKey: true });
-    expect(table).toHaveStyle({ width: "950px" });
+    expect(parseFloat(table.style.width)).toBeCloseTo([...table.querySelectorAll('col:not([data-column="position"])')].reduce((sum,col)=>sum+parseFloat(col.style.width),0), 3);
+    expect(parseFloat(table.querySelector('col[data-column="player"]').style.width)).toBe(Number(playerResize.getAttribute("aria-valuenow")));
 
     await user.click(screen.getByRole("button", { name: /All defaults/ }));
     await user.click(screen.getByRole("checkbox", { name: "Passing yards" }));
@@ -485,10 +477,10 @@ describe("statistics table UI", () => {
     expect(screen.getByRole("columnheader", { name: "Passing" })).toHaveAttribute("colspan", "4");
     expect(screen.getByRole("columnheader", { name: "Rushing" })).toHaveAttribute("colspan", "4");
     expect(screen.getByRole("columnheader", { name: "Receiving" })).toHaveAttribute("colspan", "5");
-    expect(screen.getByRole("columnheader", { name: "Fantasy" })).toHaveAttribute("colspan", "2");
+    expect(screen.getByRole("columnheader", { name: "Fantasy" })).toHaveAttribute("colspan", "3");
     expect(screen.getByRole("link", { name: "Sun 12:00 pm vs KC" })).toHaveAttribute("href", expect.stringContaining("401-test"));
-    expect(table.querySelector('col[data-column="draft_kings_price"]')).not.toBeInTheDocument();
-    expect(table.querySelector('col[data-column="draft_kings_projection"]')).not.toBeInTheDocument();
+    expect(table.querySelector('col[data-column="draft_kings_price"]')).toBeInTheDocument();
+    expect(table.querySelector('col[data-column="draft_kings_projection"]')).toBeInTheDocument();
     expect(table.querySelector('col[data-column="snap_pct"]')).toBeInTheDocument();
     expect(screen.getByText("90%")).toBeInTheDocument();
 
@@ -530,38 +522,37 @@ describe("statistics table UI", () => {
     const view = render(<App />);
     await screen.findByRole("button", { name: "Test Player" });
     const table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
-    const columnOrder = Array.from(table.querySelectorAll("col")).map((column) => column.dataset.column);
+    const columnOrder = Array.from(table.querySelectorAll('col:not([data-column="position"])')).map((column) => column.dataset.column);
 
     expect(columnOrder.indexOf("trend_snaps")).toBe(columnOrder.indexOf("snaps") + 1);
     expect(columnOrder.indexOf("trend_rush_attempts")).toBe(columnOrder.indexOf("rushing_tds") + 1);
     expect(columnOrder.indexOf("trend_targets")).toBe(columnOrder.indexOf("receiving_tds") + 1);
-    expect(columnOrder.indexOf("trend_fantasy_points")).toBe(columnOrder.indexOf("fantasy_points") + 1);
+    expect(columnOrder.indexOf("trend_fantasy_points")).toBe(columnOrder.indexOf("position_finish") + 1);
     expect(columnOrder).not.toContain("depth_rank");
     expect(columnOrder).not.toContain("team");
     const playerNameCell = screen.getByRole("button", { name: "Test Player" }).closest("td");
     expect(playerNameCell.querySelector(".player-name-team-logo img")).toHaveAttribute("src", expect.stringContaining("/buf.png"));
     expect(within(table).queryByRole("button", { name: "Team" })).not.toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Snaps trend for Test Player: Week 1: 58;.*Week 10: 96/ })).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Attempts trend for Test Player/ })).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Targets trend for Test Player: Week 1: 2/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Snaps trend for Test Player: 2025 Week 1: 58;.*Week 10: 96/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Rush attempts trend for Test Player/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Targets trend for Test Player: 2025 Week 1: 2/ })).toBeInTheDocument();
     expect(table.querySelector('.trend-rushing .trend-bar-item[title*="rush attempts"]')).toBeInTheDocument();
     const snapTrend = screen.getByRole("img", { name: /Snaps trend for Test Player/ });
     const targetTrend = screen.getByRole("img", { name: /Targets trend for Test Player/ });
-    expect(snapTrend).toHaveAttribute("data-scale-mode", "focus");
-    expect(snapTrend).toHaveAttribute("title", expect.stringContaining("focused row scale"));
-    expect(targetTrend).toHaveAttribute("data-scale-mode", "zero");
+    expect(snapTrend).toHaveAttribute("data-scale-mode", "shared");
+    expect(snapTrend).toHaveAttribute("title", expect.stringContaining("shared NFL scale"));
+    expect(targetTrend).toHaveAttribute("data-scale-mode", "shared");
     expect(targetTrend.querySelector('.trend-bar-item[data-week="1"]')).not.toHaveClass("zero");
-    expect(Number.parseFloat(targetTrend.querySelector('.trend-bar-item[data-week="3"] i').style.getPropertyValue("--trend-height"))).toBeGreaterThan(20);
-    expect(screen.getByText(/Last 10 · Focus scale/)).toBeInTheDocument();
-    expect(screen.getAllByText(/Last 10 · 0 baseline/).length).toBeGreaterThan(0);
+    expect(Number.parseFloat(targetTrend.querySelector('.trend-bar-item[data-week="3"] i').style.height)).toBe(16);
+    expect(screen.getAllByText(/10 NFL weeks · shared scale/)).toHaveLength(4);
     expect(latestPlayerUrl().searchParams.get("includeTrends")).toBe("1");
 
     await user.selectOptions(screen.getByRole("combobox", { name: "Usage trend metric" }), "snap_pct");
-    expect(screen.getByRole("img", { name: /Snap % trend for Test Player: Week 1: 72/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Snap % trend for Test Player: 2025 Week 1: 72/ })).toBeInTheDocument();
     await user.selectOptions(screen.getByRole("combobox", { name: "Rushing trend metric" }), "rushing_yards");
-    expect(screen.getByRole("img", { name: /Yards trend for Test Player: Week 1: 18/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Rushing yards trend for Test Player: 2025 Week 1: 18/ })).toBeInTheDocument();
     await user.selectOptions(screen.getByRole("combobox", { name: "Receiving trend metric" }), "receptions");
-    expect(screen.getByRole("img", { name: /Receptions trend for Test Player: Week 1: 0/ })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Receptions trend for Test Player: 2025 Week 1: 0/ })).toBeInTheDocument();
     let stored = JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1"));
     expect(stored.trendMetrics).toMatchObject({ trend_snaps: "snap_pct", trend_rush_attempts: "rushing_yards", trend_targets: "receptions" });
 
@@ -588,12 +579,12 @@ describe("statistics table UI", () => {
     await waitFor(() => expect(screen.queryByRole("tooltip")).not.toBeInTheDocument());
     expect(depthButton).toHaveFocus();
 
-    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    await user.click(screen.getByRole("button", { name: "Column options" }));
     expect(screen.getByRole("dialog", { name: "Build a Player Database view" })).toBeVisible();
     await user.click(within(screen.getByRole("group", { name: "Trend window" })).getByRole("button", { name: "5" }));
     await user.click(screen.getByRole("button", { name: "Apply changes" }));
     expect(table.querySelectorAll(".trend-snaps .trend-bar-item")).toHaveLength(5);
-    expect(screen.getAllByText(/Last 5 ·/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/5 NFL weeks ·/).length).toBeGreaterThan(0);
 
     await user.click(screen.getByRole("button", { name: "Hide player trends" }));
     await waitFor(() => expect(latestPlayerUrl().searchParams.get("includeTrends")).toBe("0"));
@@ -614,7 +605,7 @@ describe("statistics table UI", () => {
     await screen.findByRole("button", { name: "Test Player" });
     let table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
 
-    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    await user.click(screen.getByRole("button", { name: "Column options" }));
     const passingGroup = screen.getByText("Passing", { selector: ".column-settings-group > header b" }).closest("section");
     await user.click(within(passingGroup).getByLabelText("Hide Passing section"));
     await user.click(screen.getByRole("button", { name: "Apply changes" }));
@@ -655,7 +646,7 @@ describe("statistics table UI", () => {
     await screen.findByRole("button", { name: "Test Player" });
     const table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
 
-    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    await user.click(screen.getByRole("button", { name: "Column options" }));
     const rushingGroup = screen.getByText("Rushing", { selector: ".column-settings-group > header b" }).closest("section");
     await user.click(within(rushingGroup).getByRole("button", { name: "Expand Rushing column choices" }));
     await user.click(within(rushingGroup).getByLabelText("Hide Rush attempts column"));
@@ -679,7 +670,7 @@ describe("statistics table UI", () => {
     expect(table.querySelector('col[data-column="passing_attempts"]')).toBeInTheDocument();
     expect(table.querySelector('col[data-column="targets"]')).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    await user.click(screen.getByRole("button", { name: "Column options" }));
     const usageGroup = screen.getByText("Usage", { selector: ".column-settings-group > header b" }).closest("section");
     await user.click(within(usageGroup).getByRole("button", { name: "Expand Usage column choices" }));
     await user.click(within(usageGroup).getByLabelText("Hide Snap trend column"));
@@ -700,7 +691,7 @@ describe("statistics table UI", () => {
     fireEvent.keyDown(screen.getByRole("separator", { name: "Resize Snaps column" }), { key: "ArrowRight", shiftKey: true });
     await user.click(screen.getByRole("button", { name: "POS" }));
     await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("position"));
-    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    await user.click(screen.getByRole("button", { name: "Column options" }));
     const balanced = screen.getByRole("button", { name: /Balanced/ });
     expect(balanced).toHaveAttribute("aria-pressed", "true");
     await user.click(screen.getByRole("button", { name: /Opportunity/ }));
@@ -723,7 +714,7 @@ describe("statistics table UI", () => {
     const view = render(<App />);
     await screen.findByRole("button", { name: "Test Player" });
 
-    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    await user.click(screen.getByRole("button", { name: "Column options" }));
     const density = screen.getByRole("slider", { name: "Player table row density" });
     expect(density).toHaveValue("50");
     expect(density).toHaveAttribute("aria-valuetext", "Balanced, 50 percent");
@@ -741,7 +732,7 @@ describe("statistics table UI", () => {
     await screen.findByRole("button", { name: "Test Player" });
     table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
     expect(table.style.getPropertyValue("--player-row-height")).toBe("32px");
-    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    await user.click(screen.getByRole("button", { name: "Column options" }));
     expect(screen.getByRole("slider", { name: "Player table row density" })).toHaveValue("0");
   });
 
@@ -749,14 +740,14 @@ describe("statistics table UI", () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByRole("button", { name: "Test Player" });
-    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    await user.click(screen.getByRole("button", { name: "Column options" }));
 
     const visibleOrder = () => [...document.querySelectorAll(".column-studio-order > div > span")]
       .map((chip) => chip.childNodes[1]?.textContent?.trim() || "");
-    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Receiving", "Fantasy"]);
+    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Receiving", "DFS", "Fantasy"]);
 
     await user.click(screen.getByRole("button", { name: "Move Fantasy left" }));
-    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Fantasy", "Receiving"]);
+    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Receiving", "Fantasy", "DFS"]);
 
     const receivingChip = [...document.querySelectorAll(".column-studio-order > div > span")]
       .find((chip) => chip.textContent.includes("Receiving"));
@@ -766,7 +757,7 @@ describe("statistics table UI", () => {
     await waitFor(() => expect(receivingChip).toHaveClass("dragging"));
     fireEvent.dragOver(fantasyChip);
     fireEvent.drop(fantasyChip);
-    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Receiving", "Fantasy"]);
+    expect(visibleOrder()).toEqual(["Details", "Usage", "Passing", "Rushing", "Fantasy", "Receiving", "DFS"]);
   });
 
   test("stages saved-view selection until Apply and lets Current layout clear the selection", async () => {
@@ -792,13 +783,13 @@ describe("statistics table UI", () => {
     await screen.findByRole("button", { name: "Test Player" });
     const table = screen.getByRole("table", { name: /2025 NFL player fantasy statistics/i });
 
-    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    await user.click(screen.getByRole("button", { name: "Column options" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Saved view" }), "saved-opportunity");
     await user.click(screen.getByRole("button", { name: "Cancel" }));
     expect(table.querySelector('col[data-column="passing_attempts"]')).toBeInTheDocument();
     expect(JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1")).activeViewId).toBe("default");
 
-    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    await user.click(screen.getByRole("button", { name: "Column options" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Saved view" }), "saved-opportunity");
     await user.click(screen.getByRole("button", { name: "Apply changes" }));
     expect(table.querySelector('col[data-column="passing_attempts"]')).not.toBeInTheDocument();
@@ -806,7 +797,7 @@ describe("statistics table UI", () => {
     await waitFor(() => expect(latestPlayerUrl().searchParams.get("sort")).toBe("position"));
     expect(JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1")).activeViewId).toBe("saved-opportunity");
 
-    await user.click(screen.getByRole("button", { name: "Table Settings" }));
+    await user.click(screen.getByRole("button", { name: "Column options" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Saved view" }), "default");
     await user.click(screen.getByRole("button", { name: "Apply changes" }));
     expect(JSON.parse(localStorage.getItem("bowser:player-table-preferences:v1")).activeViewId).toBe("default");
@@ -822,7 +813,7 @@ describe("statistics table UI", () => {
     expect(dialog).toBeInTheDocument();
     expect(screen.getAllByText("31.2").length).toBeGreaterThan(0);
     expect(screen.getByText("Roster data not connected")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "SNAP %" })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Player trajectory metric" })).toBeInTheDocument();
 
     await user.click(screen.getByRole("tab", { name: "Heat Map" }));
     expect(screen.getByRole("tabpanel", { name: "Heat Map" })).toBeInTheDocument();
@@ -886,5 +877,39 @@ test('DFS fields display real values, sort, and retain the explicitly selected 2
   await waitFor(()=>expect(fetch.mock.calls.some(([url])=>String(url).includes('sort=draft_kings_price'))).toBe(true));
   fireEvent.change(screen.getByLabelText('DFS slate'),{target:{value:'main'}});
   await waitFor(()=>expect(fetch.mock.calls.some(([url])=>String(url).includes('dfsSlate=main'))).toBe(true));
-  expect(localStorage.getItem('bowser:dfs-slate:v1')).toBe('main');
+  expect(localStorage.getItem('bowser:dfs-slate:v2')).toBe('main');
+});
+
+
+test("data season defaults to 2026 and switching to history updates API scope", async () => {
+  localStorage.removeItem("bowser:data-season:v1");
+  const user = userEvent.setup();
+  render(<App />);
+  await screen.findByRole("table", { name: /2026 NFL player fantasy statistics/i });
+  await waitFor(() => expect(latestPlayerUrl().searchParams.get("season")).toBe("2026"));
+  expect(latestPlayerUrl().searchParams.get("weeks")).toBe("1");
+  await user.selectOptions(screen.getByRole("combobox", { name: "Data season" }), "2025");
+  await screen.findByRole("table", { name: /2025 NFL player fantasy statistics/i });
+  await waitFor(() => expect(latestPlayerUrl().searchParams.get("season")).toBe("2025"));
+  expect(localStorage.getItem("bowser:data-season:v1")).toBe("2025");
+});
+
+
+test("2026 game opportunities remain visible while unpublished participation snaps stay unknown", async () => {
+  const payload = structuredClone(sampleGameBreakdown);
+  payload.data.availability.playerParticipation = false;
+  payload.data.availability.playerOpportunities = true;
+  for (const player of payload.data.playerSegments) {
+    player.total.snaps = null;
+    player.segments.forEach(segment => { segment.snaps = null; });
+  }
+  fetch.mockResolvedValue({ ok: true, json: async () => payload });
+  render(<GameBreakdown season={2026} gameId="2026_01_KC_BUF" />);
+  await screen.findByRole("table", { name: /opportunity by game segment/ });
+  fireEvent.click(screen.getByRole("button", { name: "Filters & settings" }));
+  expect(screen.getByText(/Segment-level participation snaps have not been published/)).toBeInTheDocument();
+  const lanes = document.querySelectorAll(".participation-table tbody td .kpi-stack")[0].querySelectorAll("strong");
+  expect([...lanes].map(lane => lane.textContent)).toEqual(["—", "0", "3", "0"]);
+  expect(document.querySelector(".segment-team-total span")).toHaveTextContent("—");
+  expect(fetch.mock.calls[0][0]).toContain("season=2026");
 });

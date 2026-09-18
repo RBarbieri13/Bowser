@@ -5,6 +5,7 @@ import {
   Copy, Database, DotsSixVertical, Eye, EyeSlash, Football, Info, MagnifyingGlass, Minus, PencilSimple,
   Person, PersonSimpleRun, Plus, SlidersHorizontal, Sparkle, Target, Trophy, X,
 } from "@phosphor-icons/react";
+import { PageControls } from "./PageControls.jsx";
 import { PlayerProfile } from "./PlayerProfile.jsx";
 import { WeekRangePicker } from "./WeekRangePicker.jsx";
 import { AppHeader } from "./AppHeader.jsx";
@@ -14,7 +15,10 @@ import { OpportunityTracker } from "./OpportunityTracker.jsx";
 import { LeagueHub } from "./LeagueHub.jsx";
 import { IntelligenceFeed } from "./IntelligenceFeed.jsx";
 import { MarketPulse } from "./MarketPulse.jsx";
+import { Waivers } from "./Waivers.jsx";
 import { TeamLogo } from "./teamLogos.jsx";
+import { TrendChart, TrendMetricSelect } from "./TrendChart.jsx";
+import { TREND_METRICS } from "./trendMetrics.js";
 import {
   clampPlayerTableWidth,
   DEFAULT_HIDDEN_PLAYER_COLUMNS,
@@ -41,7 +45,7 @@ const COMPACT_GROUP_NAMES = { player: "Details", draft: "Draft", yahoo: "Yahoo",
 const REQUIRED_PLAYER_COLUMNS = new Set(["name"]);
 const TREND_COLUMN_KEYS = Object.keys(DEFAULT_PLAYER_TREND_METRICS);
 const PLAYER_VIEW_PRESETS = [
-  { key: "balanced", name: "Balanced", description: "All the key stats in a balanced view.", icon: SlidersHorizontal, groups: ["player", "usage", "passing", "rushing", "receiving", "fantasy"] },
+  { key: "balanced", name: "Balanced", description: "All the key stats in a balanced view.", icon: SlidersHorizontal, groups: ["player", "usage", "passing", "rushing", "receiving", "dfs", "fantasy"] },
   { key: "opportunity", name: "Opportunity", description: "Focus on usage and opportunities.", icon: Target, columns: ["select", "rank", "name", "position", "upcoming_matchup", "games_played", "snaps", "trend_snaps", "snap_pct", "passing_attempts", "carries", "trend_rush_attempts", "targets", "trend_targets", "fantasy_points", "trend_fantasy_points"] },
   { key: "passing", name: "Passing", description: "Deep dive into passing performance.", icon: Football, groups: ["player", "usage", "passing", "fantasy"] },
   { key: "rushing", name: "Rushing", description: "Focus on rushing performance.", icon: PersonSimpleRun, groups: ["player", "usage", "rushing", "fantasy"] },
@@ -49,18 +53,6 @@ const PLAYER_VIEW_PRESETS = [
   { key: "fantasy", name: "Fantasy", description: "Optimize for fantasy scoring.", icon: Trophy, groups: ["player", "usage", "fantasy", "dfs"] },
   { key: "all", name: "All Data", description: "Show everything available.", icon: Database, groups: PLAYER_TABLE_GROUPS.map((group) => group.key) },
 ];
-const TREND_METRICS = {
-  snaps: { label: "Snaps", heading: "Snap Trend", unit: "snaps", className: "snaps", decimals: 0, focusScale: true },
-  snap_pct: { label: "Snap %", heading: "Snap % Trend", unit: "snap percentage", className: "snaps", decimals: 0, focusScale: true },
-  rush_attempts: { label: "Attempts", heading: "Attempt Trend", unit: "rush attempts", className: "rushing", decimals: 0 },
-  rushing_yards: { label: "Yards", heading: "Yardage Trend", unit: "rushing yards", className: "rushing", decimals: 0 },
-  rushing_tds: { label: "Touchdowns", heading: "TD Trend", unit: "rushing touchdowns", className: "rushing", decimals: 0 },
-  targets: { label: "Targets", heading: "Target Trend", unit: "targets", className: "targets", decimals: 0 },
-  receptions: { label: "Receptions", heading: "Reception Trend", unit: "receptions", className: "targets", decimals: 0 },
-  receiving_yards: { label: "Yards", heading: "Yardage Trend", unit: "receiving yards", className: "targets", decimals: 0 },
-  receiving_tds: { label: "Touchdowns", heading: "TD Trend", unit: "receiving touchdowns", className: "targets", decimals: 0 },
-  fantasy_points: { label: "Fantasy Points", heading: "FPTS Trend", unit: "fantasy points", className: "fantasy", decimals: 1 },
-};
 
 const TREND_COLUMN_LABELS = {
   trend_snaps: "Usage",
@@ -113,145 +105,19 @@ function trendGamesFor(row) {
   return Array.isArray(games) ? games.slice(-10) : [];
 }
 
-function trendMetricValue(game, metric) {
-  if (metric === "fantasy_points") {
-    const value = game.fantasyPoints ?? game.fantasy_points;
-    return value === null || value === undefined ? null : Number(value);
-  }
-  if (metric === "pass_attempts") return Number.isFinite(Number(game.passAttempts ?? game.passing_attempts)) ? Number(game.passAttempts ?? game.passing_attempts) : null;
-  if (metric === "rush_attempts") return Number.isFinite(Number(game.rushAttempts ?? game.rush_attempts ?? game.carries)) ? Number(game.rushAttempts ?? game.rush_attempts ?? game.carries) : null;
-  const aliases = {
-    snap_pct: game.snapPct,
-    rushing_yards: game.rushingYards,
-    rushing_tds: game.rushingTds,
-    receiving_yards: game.receivingYards,
-    receiving_tds: game.receivingTds,
-  };
-  const value = aliases[metric] ?? game[metric];
-  return value === null || value === undefined ? null : Number(value);
-}
-
-function percentile(values, proportion) {
-  if (!values.length) return 1;
-  const ordered = [...values].sort((a, b) => a - b);
-  const position = (ordered.length - 1) * proportion;
-  const lower = Math.floor(position);
-  const upper = Math.ceil(position);
-  if (lower === upper) return ordered[lower];
-  return ordered[lower] + (ordered[upper] - ordered[lower]) * (position - lower);
-}
-
-function trendScaleFor(values, metric) {
-  const clean = values.filter(Number.isFinite);
-  if (!clean.length) return { lower: 0, upper: 1, mode: "zero" };
-  if (TREND_METRICS[metric]?.focusScale) {
-    const lowerBand = percentile(clean, .1);
-    const upperBand = percentile(clean, .9);
-    const spread = Math.max(1, upperBand - lowerBand);
-    const lower = Math.max(0, Math.floor(lowerBand - Math.max(1, spread * .22)));
-    const upper = Math.max(lower + 1, Math.ceil(upperBand + spread * .08));
-    return { lower, upper, mode: "focus" };
-  }
-  const nonNegative = clean.map((value) => Math.max(0, value));
-  return { lower: 0, upper: Math.max(1, Math.ceil(percentile(nonNegative, .9))), mode: "zero" };
-}
-
-function compactTrendValue(value, definition) {
-  if (!Number.isFinite(value)) return "—";
-  if (!definition.decimals || Math.abs(value) >= 10) return numberFormatter.format(value);
-  return decimalFormatter.format(value);
-}
-
-function InlinePlayerTrend({ row, metric, gameCount = 10 }) {
-  const definition = TREND_METRICS[metric];
-  const games = trendGamesFor(row).slice(-gameCount);
-  const points = games.map((game) => ({
-    game,
-    value: trendMetricValue(game, metric),
-  }));
-  const slots = [
-    ...Array.from({ length: Math.max(0, gameCount - points.length) }, () => ({ game: null, value: null })),
-    ...points,
-  ];
-  const availableValues = points.map((point) => point.value).filter((value) => Number.isFinite(value));
-  if (!games.length) {
-    return <span className="player-trend-empty" aria-label={`No regular-season ${definition.label.toLowerCase()} trend available`}>No games</span>;
-  }
-  if (!availableValues.length) {
-    return <span className="player-trend-empty" aria-label={`Regular-season games exist, but ${definition.label.toLowerCase()} data is unavailable`}>No data</span>;
-  }
-  const scale = trendScaleFor(availableValues, metric);
-  const playerName = row.player_display_name || row.name || "Player";
-  const summary = points.map(({ game, value }) => `Week ${game.week}: ${Number.isFinite(value) ? (definition.decimals ? decimalFormatter.format(value) : numberFormatter.format(value)) : "no data"}`).join("; ");
-  const scaleDescription = scale.mode === "focus"
-    ? `focused row scale ${scale.lower} to ${scale.upper}`
-    : `zero baseline with a robust upper scale of ${scale.upper}`;
-  return (
-    <span
-      className={`inline-player-trend trend-${definition.className} scale-${scale.mode}`}
-      role="img"
-      aria-label={`${definition.label} trend for ${playerName}: ${summary}`}
-      title={`${definition.label} uses a ${scaleDescription}. Exact values appear above each game; hover a bar for matchup context.`}
-      data-scale-mode={scale.mode}
-      data-scale-min={scale.lower}
-      data-scale-max={scale.upper}
-    >
-      {slots.map(({ game, value }, index) => {
-        const emptySlot = !game;
-        const missing = !Number.isFinite(value);
-        const displayValue = missing ? "—" : definition.decimals ? decimalFormatter.format(value) : numberFormatter.format(value);
-        const compactValue = compactTrendValue(value, definition);
-        const capped = !missing && value > scale.upper;
-        const negative = !missing && value < 0;
-        const zero = !missing && value === 0;
-        const normalized = missing || value <= scale.lower ? 0 : (Math.min(value, scale.upper) - scale.lower) / (scale.upper - scale.lower);
-        const height = missing ? 0 : negative || zero ? 2 : Math.max(5, Math.min(24, normalized * 24));
-        const gameLabel = emptySlot ? "No earlier recorded game" : `Week ${game.week}: ${missing ? "no data" : `${displayValue} ${definition.unit}`}${game.opponent ? ` vs ${game.opponent}` : ""}`;
-        return (
-          <span
-            className={`trend-bar-item${missing ? " missing" : ""}${emptySlot ? " empty-slot" : ""}${capped ? " capped" : ""}${negative ? " negative" : ""}${zero ? " zero" : ""}`}
-            key={game?.gameId ?? game?.game_id ?? `${game?.week ?? "empty"}-${index}`}
-            title={gameLabel}
-            data-week={game?.week ?? ""}
-            data-value={missing ? "" : value}
-            aria-hidden="true"
-          >
-            <b>{compactValue}</b>
-            {missing ? <i /> : <i style={{ "--trend-height": `${height}px` }} />}
-          </span>
-        );
-      })}
-    </span>
-  );
+function InlinePlayerTrend({ row, metric, gameCount = 10, domains }) {
+  return <TrendChart history={trendGamesFor(row).slice(-gameCount)} metric={metric} domain={domains?.[metric]} playerName={row.player_display_name || row.name} height="max(10px, calc(var(--player-row-height, 40px) - 27px))" />;
 }
 
 function TrendColumnHeader({ columnKey, metric, gameCount, onMetricChange, onMinimize }) {
-  const definition = TREND_METRICS[metric];
-  const options = PLAYER_TREND_METRIC_OPTIONS[columnKey] || [metric];
-  const selectable = options.length > 1;
-  const scaleLabel = definition.focusScale ? "Focus scale" : "0 baseline";
-  return (
-    <span className="trend-column-heading" title={definition.focusScale ? "Focused row scale magnifies changes in usage. Exact values remain above every bar." : "Zero-baseline row scale uses a robust upper bound so one outlier does not flatten the other games."}>
-      <span className="trend-heading-control">
-        {selectable ? (
-          <label>
-            <span className="sr-only">{TREND_COLUMN_LABELS[columnKey]} trend metric</span>
-            <select aria-label={`${TREND_COLUMN_LABELS[columnKey]} trend metric`} value={metric} onChange={(event) => onMetricChange(columnKey, event.target.value)}>
-              {options.map((option) => <option key={option} value={option}>{TREND_METRICS[option].heading}</option>)}
-            </select>
-            <CaretDown weight="bold" aria-hidden="true" />
-          </label>
-        ) : <b>{definition.heading}</b>}
-        <button type="button" className="trend-minimize" aria-label={`Hide ${TREND_COLUMN_LABELS[columnKey]} trend chart`} title={`Hide ${TREND_COLUMN_LABELS[columnKey]} trend chart`} onClick={() => onMinimize(columnKey)}>
-          <Minus weight="bold" aria-hidden="true" />
-        </button>
-      </span>
-      <small>Last {gameCount} · {scaleLabel}</small>
-    </span>
-  );
+  return <span className="trend-column-heading" title="Shared scale and aligned regular-season weeks across all players. Missing games remain gaps.">
+    <span className="trend-heading-control"><TrendMetricSelect label={`${TREND_COLUMN_LABELS[columnKey]} trend metric`} metric={metric} onChange={value=>onMetricChange(columnKey,value)} />
+      <button type="button" className="trend-minimize" aria-label={`Hide ${TREND_COLUMN_LABELS[columnKey]} trend chart`} onClick={()=>onMinimize(columnKey)}><Minus weight="bold" /></button>
+    </span><small>{gameCount} NFL weeks · shared scale</small>
+  </span>;
 }
 
-function DepthChartCell({ row, depthChart, compact = false }) {
+function DepthChartCell({ row, depthChart, compact = false, onOpenPlayer }) {
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0, above: false });
   const triggerRef = useRef(null);
@@ -332,7 +198,7 @@ function DepthChartCell({ row, depthChart, compact = false }) {
             const playerRank = player.depthRank ?? player.depth_rank ?? index + 1;
             const name = player.name ?? player.player_display_name ?? "Unknown player";
             const selected = player.selected || player.playerId === row.player_id || player.player_id === row.player_id;
-            return <span key={player.playerId ?? player.player_id ?? `${name}-${playerRank}`} className={selected ? "selected" : ""}><b>{playerRank}</b><span>{name}</span>{player.rosterStatus ? <small>{player.rosterStatus}</small> : null}</span>;
+            return <span key={player.playerId ?? player.player_id ?? `${name}-${playerRank}`} className={selected ? "selected" : ""}><b>{playerRank}</b><button className="player-name-link" onClick={event=>{onOpenPlayer?.({...player,name,team,position:depthPosition},event.currentTarget);setOpen(false);}}>{name}</button>{player.rosterStatus ? <small>{player.rosterStatus}</small> : null}</span>;
           })}
         </span>
       ) : <em>Depth-chart lineup is not available.</em>}
@@ -535,7 +401,7 @@ function CustomColumnsPanel({
     setDraftGates({ draft: config.showDraftMetrics !== false, yahoo: config.showYahooMetrics === true, trends: true });
     setDraftSmartCompact(config.smartCompact !== false);
     setDraftAutoFit(config.autoFit === true);
-    setDraftTrendGameCount([5, 8, 10].includes(config.trendGameCount) ? config.trendGameCount : 10);
+    setDraftTrendGameCount([5, 8, 10, 18].includes(config.trendGameCount) ? config.trendGameCount : 10);
     setDraftRowDensity(Math.round(Math.max(0, Math.min(100, Number.isFinite(Number(config.rowDensity)) ? Number(config.rowDensity) : DEFAULT_PLAYER_ROW_DENSITY)) / 5) * 5);
     setDraftTrendMetrics(sanitizePlayerTrendMetrics(config.trendMetrics));
     setDraftOrder(config.groupOrder || DEFAULT_PLAYER_GROUP_ORDER);
@@ -616,7 +482,7 @@ function CustomColumnsPanel({
                     const required = REQUIRED_PLAYER_COLUMNS.has(column.key);
                     const visible = gateVisible && !hiddenSet.has(column.key);
                     const trendMetric = column.metric ? (draftTrendMetrics[column.key] || column.metric) : null;
-                    return <div className="column-settings-column" key={column.key}><Checkbox checked={visible} label={`${visible ? "Hide" : "Show"} ${column.studioLabel || column.label || "selection"} column`} disabled={required} onChange={() => setColumnVisible(group, column, !visible)} /><span><b>{column.studioLabel || column.label || "Player selection"}</b>{trendMetric ? <small>{TREND_METRICS[trendMetric]?.heading} · last {draftTrendGameCount} games</small> : required ? <small>Always shown</small> : null}</span></div>;
+                    return <div className="column-settings-column" key={column.key}><Checkbox checked={visible} label={`${visible ? "Hide" : "Show"} ${column.studioLabel || column.label || "selection"} column`} disabled={required} onChange={() => setColumnVisible(group, column, !visible)} /><span><b>{column.studioLabel || column.label || "Player selection"}</b>{trendMetric ? <small>{TREND_METRICS[trendMetric]?.heading} · last {draftTrendGameCount} NFL weeks</small> : required ? <small>Always shown</small> : null}</span></div>;
                   })}
                 </div> : null}
               </section>
@@ -630,7 +496,7 @@ function CustomColumnsPanel({
             <span><b>Row density</b><output htmlFor="player-row-density">{draftRowDensity <= 25 ? "Compact" : draftRowDensity >= 75 ? "Comfortable" : "Balanced"}</output></span>
             <div><small>Compact</small><input id="player-row-density" type="range" min="0" max="100" step="5" value={draftRowDensity} onChange={(event) => setDraftRowDensity(Number(event.target.value))} aria-label="Player table row density" aria-valuetext={`${draftRowDensity <= 25 ? "Compact" : draftRowDensity >= 75 ? "Comfortable" : "Balanced"}, ${draftRowDensity} percent`} /><small>Comfortable</small></div>
           </div>
-          <div className="trend-window-setting"><b>Trend window</b><div role="group" aria-label="Trend window">{[5, 8, 10].map((count) => <button type="button" key={count} aria-pressed={draftTrendGameCount === count} className={draftTrendGameCount === count ? "active" : ""} onClick={() => setDraftTrendGameCount(count)}>{count}</button>)}</div></div>
+          <div className="trend-window-setting"><b>Trend window</b><div role="group" aria-label="Trend window">{[5, 8, 10, 18].map((count) => <button type="button" key={count} aria-pressed={draftTrendGameCount === count} className={draftTrendGameCount === count ? "active" : ""} onClick={() => setDraftTrendGameCount(count)}>{count}</button>)}</div></div>
           <div className="column-studio-behaviors"><label><input type="checkbox" checked={draftSmartCompact} onChange={(event) => setDraftSmartCompact(event.target.checked)} /><span>Smart compact</span></label><label><input type="checkbox" checked={draftAutoFit} onChange={(event) => setDraftAutoFit(event.target.checked)} /><span>Auto Fit</span></label></div>
           <div className="column-studio-order"><b>Table order <small>(drag to reorder)</small></b><div>{draftOrder.map((key) => { const group = PLAYER_TABLE_GROUPS.find((item) => item.key === key); if (!group || !groupGate(group.key) || collapsedSet.has(key) || group.columns.every((column) => hiddenSet.has(column.key))) return null; return <span key={key} className={`tone-${group.tone}${draggingGroup === key ? " dragging" : ""}`} draggable onDragStart={() => setDraggingGroup(key)} onDragEnd={() => setDraggingGroup(null)} onDragOver={(event) => event.preventDefault()} onDrop={() => reorderGroup(draggingGroup, key)}><DotsSixVertical aria-hidden="true" />{group.shortName || group.name}<button type="button" aria-label={`Move ${group.name} left`} onClick={() => moveGroup(key, -1)}><ArrowLeft /></button><button type="button" aria-label={`Move ${group.name} right`} onClick={() => moveGroup(key, 1)}><ArrowRight /></button></span>; })}</div></div>
         </section>
@@ -764,16 +630,17 @@ function PlayerGroupResizeHandle({ group, width, enabled, onResize, onReset }) {
 }
 
 function routeFromHash() {
+  if (window.location.hash.includes("waivers")) return { page: "waivers", gameId: null };
   if (window.location.hash.includes("market-pulse")) return { page: "market-pulse", gameId: null };
   const gameMatch = window.location.hash.match(/^#\/game\/([^?]+)/);
   if (gameMatch) {
     const query = window.location.hash.split("?")[1] || "";
     const scoring = new URLSearchParams(query).get("scoring");
-    return { page: "game", gameId: decodeURIComponent(gameMatch[1]), scoring: ["ppr", "half", "standard"].includes(scoring) ? scoring : "ppr" };
+    return { page: "game", gameId: decodeURIComponent(gameMatch[1]), season: Number(gameMatch[1].slice(0, 4)) === 2025 ? 2025 : 2026, scoring: ["ppr", "half", "standard"].includes(scoring) ? scoring : "ppr" };
   }
   if (window.location.hash.includes("opportunity-tracker")) return { page: "opportunity-tracker", gameId: null };
-  if (window.location.hash.includes("league-hub")) return { page: "league-hub", gameId: null };
-  if (window.location.hash.includes("intelligence")) return { page: "intelligence", gameId: null };
+  if (window.location.hash.includes("league-hub")) return { page: "players", gameId: null };
+  if (window.location.hash.includes("intelligence")) return { page: "players", gameId: null };
   return { page: window.location.hash.includes("team-box-scores") ? "team-box-scores" : "players", gameId: null };
 }
 
@@ -781,11 +648,14 @@ export function App() {
   const initialTablePreferences = useMemo(() => readPlayerTablePreferences(), []);
   const [route, setRoute] = useState(routeFromHash);
   const currentPage = route.page;
+  const [season, setSeason] = useState(() => { try { return localStorage.getItem("bowser:data-season:v1") === "2025" ? 2025 : 2026; } catch { return 2026; } });
+  useEffect(() => { try { localStorage.setItem("bowser:data-season:v1", String(season)); } catch { /* Preferences remain usable in memory. */ } }, [season]);
+  const changeSeason = (value) => { const next = Number(value) === 2025 ? 2025 : 2026; setSeason(next); setRows([]); setResponseMeta(null); setError(""); setWeekStart(1); setWeekEnd(next === 2026 ? 1 : 18); setProfilePlayer(null); if (route.page === "game") window.location.hash = "#/team-box-scores"; };
   const [meta, setMeta] = useState(null);
   const [rows, setRows] = useState([]);
   const [responseMeta, setResponseMeta] = useState(null);
-  const [dfsSlate,setDfsSlate] = useState(()=>{try {return localStorage.getItem('bowser:dfs-slate:v1')==='main'?'main':'week1';}catch{return 'week1';}});
-  useEffect(()=>{try{localStorage.setItem('bowser:dfs-slate:v1',dfsSlate);}catch{/* Optional preference. */}},[dfsSlate]);
+  const [dfsSlate,setDfsSlate] = useState(()=>{try {return localStorage.getItem('bowser:dfs-slate:v2') || 'current';}catch{return 'current';}});
+  useEffect(()=>{try{localStorage.setItem('bowser:dfs-slate:v2',dfsSlate);}catch{/* Optional preference. */}},[dfsSlate]);
   const [position, setPosition] = useState("ALL");
   const [scoring, setScoring] = useState("ppr");
   const [search, setSearch] = useState("");
@@ -795,7 +665,7 @@ export function App() {
   const [appliedRanks, setAppliedRanks] = useState("");
   const [customError, setCustomError] = useState("");
   const [weekStart, setWeekStart] = useState(1);
-  const [weekEnd, setWeekEnd] = useState(18);
+  const [weekEnd, setWeekEnd] = useState(season === 2026 ? 1 : 18);
   const [team, setTeam] = useState("ALL");
   const [minGames, setMinGames] = useState("0");
   const [minSnaps, setMinSnaps] = useState("0");
@@ -911,7 +781,7 @@ export function App() {
     setShowPlayerTrends(configuration.showPlayerTrends !== false);
     setSmartCompactPlayerTable(configuration.smartCompact !== false);
     setAutoFitPlayerTable(configuration.autoFit === true);
-    setTrendGameCount([5, 8, 10].includes(configuration.trendGameCount) ? configuration.trendGameCount : 10);
+    setTrendGameCount([5, 8, 10, 18].includes(configuration.trendGameCount) ? configuration.trendGameCount : 10);
     setPlayerRowDensity(Math.round(Math.max(0, Math.min(100, Number.isFinite(Number(configuration.rowDensity)) ? Number(configuration.rowDensity) : DEFAULT_PLAYER_ROW_DENSITY)) / 5) * 5);
     setTrendMetrics(sanitizePlayerTrendMetrics(configuration.trendMetrics));
     setPlayerGroupOrder(configuration.groupOrder || DEFAULT_PLAYER_GROUP_ORDER);
@@ -1108,20 +978,24 @@ export function App() {
   );
 
   useEffect(() => {
-    fetch("/api/v1/meta")
+    const controller = new AbortController();
+    setMeta(null);
+    fetch(`/api/v1/meta?season=${season}`, { signal: controller.signal })
       .then((response) => {
         if (!response.ok) throw new Error("The local warehouse could not be opened.");
         return response.json();
       })
-      .then(setMeta)
-      .catch((requestError) => setError(requestError.message));
-  }, []);
+      .then((payload) => { if (!controller.signal.aborted) setMeta(payload); })
+      .catch((requestError) => { if (requestError.name !== "AbortError") setError(requestError.message); });
+    return () => controller.abort();
+  }, [season]);
 
   useEffect(() => {
     if (currentPage !== "players") return undefined;
     const controller = new AbortController();
     const querySorts = sorts.length ? sorts : [{ key: "name", direction: "asc" }];
     const params = new URLSearchParams({
+      season: String(season),
       seasonType: "ALL",
       dfsSlate,
       scoring,
@@ -1133,6 +1007,7 @@ export function App() {
       minSnaps,
       weeks: selectedWeeks.join(","),
       includeTrends: showPlayerTrends ? "1" : "0",
+      trendWeeks: String(trendGameCount),
     });
     if (position === "ALL") params.set("positions", "QB,RB,WR,TE");
     else if (position === "FLEX") params.set("positions", "RB,WR,TE");
@@ -1148,6 +1023,7 @@ export function App() {
         return payload;
       })
       .then((payload) => {
+        if (controller.signal.aborted) return;
         setRows(payload.data);
         setResponseMeta(payload.meta);
       })
@@ -1158,7 +1034,7 @@ export function App() {
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [currentPage, dfsSlate, scoring, debouncedSearch, sorts, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps, showPlayerTrends]);
+  }, [currentPage, season, dfsSlate, scoring, debouncedSearch, sorts, customEnabled, appliedRanks, position, team, selectedWeeks, minGames, minSnaps, showPlayerTrends, trendGameCount]);
 
   const allVisibleSelected = rows.length > 0 && rows.every((row) => selected.has(row.player_id));
   const someVisibleSelected = rows.some((row) => selected.has(row.player_id)) && !allVisibleSelected;
@@ -1229,13 +1105,27 @@ export function App() {
     return parts.join(" · ");
   }, [weekStart, weekEnd, scoring, position, team]);
 
-  const openProfile = (row, opener, profileScoring = scoring) => {
+  const [profileLookup, setProfileLookup] = useState("");
+  const profileRequest = useRef(0);
+  const openProfile = async (row, opener, profileScoring = scoring) => {
+    const request = ++profileRequest.current;
     profileOpener.current = opener;
-    setProfilePlayer({
-      playerId: row.player_id || row.playerId,
-      name: row.player_display_name || row.name,
-      scoring: profileScoring,
-    });
+    const name = row.player_display_name || row.name || row.playerDisplayName;
+    const profileSeason = row.season || route.season || season;
+    let playerId = row.player_id || row.playerId;
+    if (!playerId) {
+      setProfileLookup(`Finding ${name}…`);
+      try {
+        const response = await fetch(`/api/v1/player-identity?${new URLSearchParams({season: profileSeason, name, team:row.team || '',position:row.position || ''})}`);
+        const result = await response.json();
+        if (request !== profileRequest.current) return;
+        if (!response.ok || !result.match) { setProfileLookup(result.reason || `No unique NFL player match for ${name}.`); return; }
+        playerId = result.match.player_id;
+      } catch { if(request === profileRequest.current) setProfileLookup(`The player lookup for ${name} could not load. Please try again.`); return; }
+    }
+    if (request !== profileRequest.current) return;
+    setProfileLookup("");
+    setProfilePlayer({playerId, name, scoring:profileScoring, season:profileSeason});
   };
 
   const closeProfile = useCallback(() => {
@@ -1252,25 +1142,28 @@ export function App() {
 
   return (
     <div className={`app-shell${sidebarWidth < 112 ? " sidebar-icon-only" : ""}`} style={{ "--sidebar-width": `${sidebarWidth}px` }}>
-      <AppHeader currentPage={currentPage === "game" ? "team-box-scores" : currentPage} width={sidebarWidth} collapsed={sidebarWidth < 112} onResize={resizeSidebar} />
+      <>{profileLookup && <div className="player-resolution-alert" role="status">{profileLookup}<button aria-label="Dismiss player lookup message" onClick={()=>{profileRequest.current++;setProfileLookup("");}}>×</button></div>}</><AppHeader season={route.season || season} onSeasonChange={changeSeason} currentPage={currentPage === "game" ? "team-box-scores" : currentPage} width={sidebarWidth} collapsed={sidebarWidth < 112} onResize={resizeSidebar} />
       {currentPage === "game" ? (
-        <GameBreakdown gameId={route.gameId} scoring={route.scoring} onBack={() => { window.location.hash = "#/team-box-scores"; }} onOpenPlayer={(row, opener) => openProfile(row, opener, route.scoring)} />
+        <GameBreakdown season={route.season || season} gameId={route.gameId} scoring={route.scoring} onBack={() => { window.location.hash = "#/team-box-scores"; }} onOpenPlayer={(row, opener) => openProfile(row, opener, route.scoring)} />
       ) : currentPage === "team-box-scores" ? (
-        <TeamBoxScores meta={meta} onOpenPlayer={openProfile} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}`; }} />
+        <TeamBoxScores key={season} season={season} meta={meta} onSeasonChange={changeSeason} onOpenPlayer={openProfile} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}`; }} />
       ) : currentPage === "opportunity-tracker" ? (
-        <OpportunityTracker meta={meta} onOpenPlayer={openProfile} />
+        <OpportunityTracker key={season} season={season} meta={meta} onOpenPlayer={openProfile} onSeasonChange={changeSeason} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}&season=${season}`; }} />
       ) : currentPage === "league-hub" ? (
         <LeagueHub />
       ) : currentPage === "intelligence" ? (
-        <IntelligenceFeed />
+        <IntelligenceFeed season={season} onOpenPlayer={openProfile} />
+      ) : currentPage === "waivers" ? (
+        <Waivers season={season} onOpenPlayer={openProfile} />
       ) : currentPage === "market-pulse" ? (
-        <MarketPulse />
+        <MarketPulse season={season} onOpenPlayer={openProfile} />
       ) : (
       <main className="page-content player-database-page">
+      <PageControls title="Player Database" summary={<><span>{filterSummary}</span><span>{responseMeta?.totalCount ?? rows.length} players</span>{search && <span>Search: {search}</span>}{(Number(minGames)>0 || Number(minSnaps)>0 || customEnabled) && <span>Advanced filters active</span>}<span>{responseMeta?.dfs ? `DFS: ${responseMeta.dfs.label || `${responseMeta.dfs.season} W${responseMeta.dfs.week}`}` : "DFS loading…"}</span></>} actions={<button ref={customColumnsOpener} type="button" onClick={()=>setCustomColumnsOpen(true)} aria-haspopup="dialog" aria-expanded={customColumnsOpen}><Columns aria-hidden="true"/>Column options</button>}>
       <section className="filter-band" aria-label="Statistics filters">
         <div className="filter-grid">
-          <SelectField className="season-field" label="Season" value="2025" onChange={() => {}} info="NFL season used for this table.">
-            <option value="2025">2025</option>
+          <SelectField className="season-field" label="Season" value={season} onChange={(event) => changeSeason(event.target.value)} info="NFL season used for this table.">
+            <option value="2026">2026</option><option value="2025">2025</option>
           </SelectField>
           <WeekRangePicker start={weekStart} end={weekEnd} onChange={(start, end) => { setWeekStart(start); setWeekEnd(end); }} />
           <SelectField className="position-field" label="Position(s)" value={position} onChange={(event) => setPosition(event.target.value)}>
@@ -1332,7 +1225,7 @@ export function App() {
               aria-pressed={showPlayerTrends}
               aria-label={showPlayerTrends ? "Hide player trends" : "Show player trends"}
               onClick={() => setShowPlayerTrends((current) => !current)}
-              title={`Show or hide each player's last ${trendGameCount} played regular-season games`}
+              title={`Show or hide each player's last ${trendGameCount} aligned regular-season weeks`}
             >
               {showPlayerTrends ? <Eye weight="bold" aria-hidden="true" /> : <EyeSlash weight="bold" aria-hidden="true" />}
               <span>{showPlayerTrends ? "Shown" : "Hidden"}</span>
@@ -1369,18 +1262,7 @@ export function App() {
         </div>
 
         <div className="player-table-tools" aria-label="Player table view controls">
-          <button
-            ref={customColumnsOpener}
-            type="button"
-            className={customColumnsOpen ? "active" : ""}
-            aria-haspopup="dialog"
-            aria-expanded={customColumnsOpen}
-            onClick={() => setCustomColumnsOpen(true)}
-            title="Choose columns, section visibility, trend range, and compact behavior"
-          >
-            <Columns weight="duotone" aria-hidden="true" />
-            <span>Table Settings</span>
-          </button>
+
           <button
             type="button"
             className={sectionResizeEnabled ? "active" : ""}
@@ -1404,12 +1286,8 @@ export function App() {
         </div>
       </section>
 
-      <section className="table-panel" aria-label="2025 NFL player fantasy statistics">
-        {loading ? <div className="progress" role="progressbar" aria-label="Updating statistics"><span /></div> : null}
-        {error ? <div className="error-banner" role="alert"><span>{error}</span><button onClick={() => window.location.reload()}>Retry</button></div> : null}
-        {showSwipeHint ? <div className="swipe-hint">Swipe horizontally for more stats <button onClick={() => { setShowSwipeHint(false); localStorage.setItem("stats-scroll-hint-dismissed", "1"); }} aria-label="Dismiss horizontal scroll hint"><X /></button></div> : null}
-        <header className="table-panel-heading">
-          <h1>Player Database</h1>
+        <div className="player-restoration-controls">
+
           {hiddenTrendColumns.length === 1 ? (
             <button type="button" className="hidden-trend-restore" onClick={() => setTrendColumnVisible(hiddenTrendColumns[0], true)}>
               <Plus weight="bold" aria-hidden="true" />Restore {TREND_COLUMN_LABELS[hiddenTrendColumns[0]]} trend
@@ -1440,17 +1318,24 @@ export function App() {
               </div> : null}
             </div>
           ) : null}
-          <span>{filterSummary} · All matching</span>
-        </header>
+
+        </div>
         <div className="dfs-context" aria-label="DraftKings slate and sources">
           <button type="button" onClick={()=>{setHiddenPlayerColumns(keys=>keys.filter(key=>!['draft_kings_price','draft_kings_projection'].includes(key)));setCollapsedPlayerGroups(keys=>keys.filter(key=>key!=='dfs'));}}>Show DFS fields</button>
-          <label>DFS slate <select aria-label="DFS slate" value={dfsSlate} onChange={event=>setDfsSlate(event.target.value)}><option value="week1">2026 W1 · Wed–Mon Classic</option><option value="main">2026 W1 · Sunday Main</option></select></label>
-          <span>DraftKings scoring · 2025 stats stay historical</span>
-          {responseMeta?.dfs ? <details><summary>Sources & coverage</summary><p><a href={responseMeta.dfs.salaryUrl} target="_blank" rel="noreferrer">DraftKings salaries</a> · <a href="https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings" target="_blank" rel="noreferrer">Fantasy Info Central projections</a> · <a href="https://sharksnip.com/picks/dfs/nfl" target="_blank" rel="noreferrer">Shark Snip supplemental projections</a></p><p>Captured {new Date(responseMeta.dfs.capturedAt).toLocaleString()}. {responseMeta.dfs.coverage.salaryPlayers} slate salaries; {responseMeta.dfs.coverage.projectedPlayers} published projections. Matched to the historical database: {responseMeta.dfs.coverage.databasePlayersWithSalary} salaries and {responseMeta.dfs.coverage.databasePlayersWithProjection} projections. Players without 2025 stats are not in this historical table. — means unavailable, never zero. Hover a DFS value for its source and current team. These are pregame estimates, not historical averages; scoring controls apply to historical stats only.</p></details> : null}
+          <label>DFS slate <select aria-label="DFS slate" value={dfsSlate} onChange={event=>setDfsSlate(event.target.value)}>{(responseMeta?.dfs?.options || [{key:'current',label:'Current NFL week · Classic'}]).concat([{key:'selected-week',label:'Selected statistical week · Classic'}]).map(option=><option key={option.key} value={option.key}>{option.label}</option>)}</select></label>
+          <span>{responseMeta?.dfs?.scoring || "DraftKings scoring"} · {responseMeta?.dfs ? `salary week: ${responseMeta.dfs.season} W${responseMeta.dfs.week}` : "Loading salaries…"} · statistics: {season}</span>
+          {responseMeta?.dfs ? <details><summary>Sources & coverage</summary><p><a href={responseMeta.dfs.salaryUrl} target="_blank" rel="noreferrer">DraftKings salaries</a> · <a href="https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings" target="_blank" rel="noreferrer">Fantasy Info Central projections</a>{responseMeta.dfs.supplementalProjectionStatus?.status === "verified" && <> · <a href="https://fantasysportscentral.com/football/dfscheat.php" target="_blank" rel="noreferrer">Fantasy Sports Central projections</a></>}{!responseMeta.dfs.projectionProvider && <> · <a href="https://sharksnip.com/picks/dfs/nfl" target="_blank" rel="noreferrer">Shark Snip supplemental projections</a></>}</p><p>{responseMeta.dfs.projectionBasis || responseMeta.dfs.projectionDerivation || ""}</p><p>Captured {new Date(responseMeta.dfs.capturedAt).toLocaleString()}. {responseMeta.dfs.coverage.salaryPlayers} slate salaries; {responseMeta.dfs.coverage.projectedPlayers} published projections. Identity matches{responseMeta.dfs.rosterSeason ? ` in the ${responseMeta.dfs.rosterSeason} roster` : " in the source archive"}: {responseMeta.dfs.coverage.databasePlayersWithSalary} salaries and {responseMeta.dfs.coverage.databasePlayersWithProjection} projections. Players without recorded statistics in the selected season are not in this table. — means unavailable, never zero. Hover a DFS value for its source and current team. These are pregame estimates, not historical averages; scoring controls apply to historical stats only.</p></details> : null}
         </div>
+        {responseMeta?.dfs?.availabilityMessage && <p className="trend-context" role="status">{responseMeta.dfs.availabilityMessage}</p>}
+        <div className="trend-context" role="note">Trends: {responseMeta?.trendSlots?.length ? `${responseMeta.trendSlots[0].season} W${responseMeta.trendSlots[0].week} → ${responseMeta.trendSlots.at(-1).season} W${responseMeta.trendSlots.at(-1).week}` : "regular-season weeks"} · common weeks and metric scales for every player · gaps = bye / DNP / unavailable. Table totals use the selected weeks.{responseMeta?.positionFinish?.week ? ` Position finish: ${season} W${responseMeta.positionFinish.week}.` : ""}</div>
+      </PageControls>
+      <section className="table-panel" aria-label={`${season} NFL player fantasy statistics`}>
+        {loading ? <div className="progress" role="progressbar" aria-label="Updating statistics"><span /></div> : null}
+        {error ? <div className="error-banner" role="alert"><span>{error}</span><button onClick={() => window.location.reload()}>Retry</button></div> : null}
+        {showSwipeHint ? <div className="swipe-hint">Swipe horizontally for more stats <button onClick={() => { setShowSwipeHint(false); localStorage.setItem("stats-scroll-hint-dismissed", "1"); }} aria-label="Dismiss horizontal scroll hint"><X /></button></div> : null}
         <div className="table-scroller" ref={tableScroller} onScroll={onHorizontalScroll} tabIndex="0" aria-label="Scrollable player statistics table">
           <table style={playerTableStyle} className={smartCompactActive ? "smart-compact" : ""}>
-            <caption>2025 NFL player fantasy statistics. {filterSummary}. {responseMeta?.totalCount ?? 0} matching players.</caption>
+            <caption>{season} NFL player fantasy statistics. {filterSummary}. {responseMeta?.totalCount ?? 0} matching players.</caption>
             <colgroup>{visiblePlayerColumns.map((column) => <col key={column.key} data-column={column.key} style={{ width: `${column.width}px` }} />)}</colgroup>
             <thead>
               <tr className="group-row">
@@ -1460,7 +1345,7 @@ export function App() {
                   const groupLabel = group.shortName || ((autoFitPlayerTable || smartCompactActive) ? (COMPACT_GROUP_NAMES[group.groupKey] || group.name) : group.name);
                   return (
                     <th key={group.key} colSpan={group.columns.length} scope="colgroup" className={`group-${group.groupKey}${group.controlsGroup ? "" : " passive-group-segment"}${group.compactLabelHidden ? " compact-label-hidden" : ""}`}>
-                      <span title={group.groupKey==='dfs'?responseMeta?.dfs?.label:group.name}>{group.groupKey==='dfs'?'DFS · 2026 W1':groupLabel}</span>
+                      <span title={group.groupKey==='dfs'?responseMeta?.dfs?.label:group.name}>{group.groupKey==='dfs'?`DFS · ${responseMeta?.dfs?.season ?? '—'} W${responseMeta?.dfs?.week ?? '—'}`:groupLabel}</span>
                       {group.controlsGroup ? <PlayerGroupResizeHandle group={sourceGroup} width={groupWidth} enabled={sectionResizeEnabled} onResize={resizePlayerGroup} onReset={resetPlayerGroup} /> : null}
                     </th>
                   );
@@ -1497,15 +1382,16 @@ export function App() {
                     const value = row[field];
                     const className = `${column.align === "center" ? "center " : ""}${column.align === "left" ? "left " : ""}${column.key === "rank" ? "identity sticky-rank " : ""}${column.key === "name" ? "identity sticky-name player-name " : ""}${column.key === "position" ? "position-cell " : ""}${column.group === "draft" ? "draft-metric " : ""}${column.group === "yahoo" ? "yahoo-metric " : ""}${column.key === "fantasy_points" ? "fantasy-cell " : ""}${playerGroupEndKeys.has(column.key) ? "group-end" : ""}`;
                     if (column.key === "name") {
-                      return <td key={column.key} title={row.player_display_name} className={className}><span className="player-name-cell-content"><button type="button" className="player-name-button" onClick={(event) => openProfile(row, event.currentTarget)}>{row.player_display_name}</button><span className="player-name-team-logo" title={row.team}><TeamLogo team={row.team} decorative /><span className="sr-only">{row.team}</span></span><DepthChartCell row={row} depthChart={responseMeta?.depthCharts?.[row.current_depth_key]} compact /></span></td>;
+                      return <td key={column.key} title={row.player_display_name} className={className}><span className="player-name-cell-content"><button type="button" className="player-name-button" onClick={(event) => openProfile(row, event.currentTarget)}>{row.player_display_name}</button><span className="player-name-team-logo" title={row.team}><TeamLogo team={row.team} decorative /><span className="sr-only">{row.team}</span></span><DepthChartCell row={row} depthChart={responseMeta?.depthCharts?.[row.current_depth_key]} compact onOpenPlayer={openProfile} /></span></td>;
                     }
                     if (column.key === "upcoming_matchup") {
                       const matchupLines = splitUpcomingMatchup(value);
                       const content = matchupLines.map((line, index) => <span key={`${line}-${index}`}>{line}</span>);
                       return <td key={column.key} className={`${className} upcoming-matchup-cell`}>{row.upcoming_game_url ? <a href={row.upcoming_game_url} target="_blank" rel="noreferrer" aria-label={value || "No upcoming matchup"}>{content}</a> : <span className="upcoming-matchup-copy">{content}</span>}</td>;
                     }
+                    if (column.key === "position_finish") return <td key={column.key} className={className} title={`${row.position_finish_season || season} W${row.position_finish_week || "—"} · NFL ${row.position} fantasy points rank · ${scoring} · tied ranks share a place`}>{row.position_finish == null ? "—" : `${row.position}${row.position_finish}`}</td>;
                     if (column.metric) {
-                      return <td key={column.key} className={`${className} player-trend-cell`}><InlinePlayerTrend row={row} metric={trendMetrics[column.key] || column.metric} gameCount={trendGameCount} /></td>;
+                      return <td key={column.key} className={`${className} player-trend-cell`}><InlinePlayerTrend row={row} metric={trendMetrics[column.key] || column.metric} gameCount={trendGameCount} domains={responseMeta?.trendDomains} /></td>;
                     }
                     if (column.key === "yahoo_add_drop_ratio") {
                       const adds = Number(row.yahoo_adds) || 0;
@@ -1562,9 +1448,10 @@ export function App() {
       {profilePlayer ? (
         <PlayerProfile
           player={profilePlayer}
+          season={profilePlayer.season || season}
           scoring={profilePlayer.scoring || scoring}
           onClose={closeProfile}
-          onSelectPlayer={(playerId, name) => setProfilePlayer({ playerId, name })}
+          onSelectPlayer={(playerId, name) => setProfilePlayer((current) => ({ ...current, playerId, name }))}
         />
       ) : null}
     </div>

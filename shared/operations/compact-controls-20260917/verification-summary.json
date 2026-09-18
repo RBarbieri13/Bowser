@@ -1,0 +1,39 @@
+{
+  "npmRunCheck": "PASS",
+  "fullCheckLog": "/private/tmp/bowser-compact-full-check.log",
+  "fullCheckLogSha256": "369aded138cbd5d0dde3efe9f42e58c215bba78e63b28c8a71997b6038799ce0",
+  "independentUiReview": "PASS",
+  "independentDfsReview": "PASS",
+  "desktop": {
+    "players": {
+      "before": 356,
+      "after": 109
+    },
+    "waivers": {
+      "before": 296,
+      "after": 107
+    },
+    "teamBox": {
+      "before": 497.5,
+      "after": 91
+    },
+    "opportunityFirstRow": {
+      "before": 806.4,
+      "after": 197
+    },
+    "market": {
+      "before": 237.7,
+      "after": 107
+    }
+  },
+  "narrowViewport390": "PASS after corrections",
+  "thursdayUiRoleSwitch": "PASS",
+  "columnOptionsDialog": "PASS",
+  "localApiAssertions": 483,
+  "publicApiAssertions": 483,
+  "candidateApiAssertions": 483,
+  "publicBrowser": "PASS",
+  "publicRuntimeErrors": 0,
+  "publicThursdayAndNarrow": "PASS",
+  "publicMarketSnapshotPlayers": 1016
+}

@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "Shared table settings and expanded filters reverted to native page controls",
+  "independentScopeReviewer": "rollback_team_controls",
+  "dataPreserved": true,
+  "serverApiImportersPreserved": true,
+  "playerDatabaseStudioPreserved": true,
+  "trendsPlayerLinksDfsPreserved": true,
+  "staleSettingsIgnored": true,
+  "fullCheckStatus": "PASS",
+  "fullCheckLogSha256": "8956f5cd3e02f4713bbce3bd81094d921b80b8b7fa3808947177817aa7f28b3b"
+}

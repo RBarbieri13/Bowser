@@ -1,0 +1,152 @@
+{
+  "status": "PASS",
+  "reviewedCommit": "2edd6e1",
+  "baselineCommit": "8e643fd",
+  "reviewer": "Independent skeptical DFS archive/backend reviewer",
+  "findings": [
+    {
+      "priority": "P2",
+      "title": "Exclude retrieval-only timestamps from publication fingerprints",
+      "file": "scripts/import_dfs_weekly.py",
+      "lines": [
+        327,
+        333
+      ],
+      "relatedFile": "scripts/dfs_archive.py:63-68",
+      "description": "Supplemental FSC rows get a new projectionCapturedAt on every fetch. Both content_fingerprint and content_hash retain that field, so identical provider values and source bytes become new captures and trigger changed=true on every successful refresh. This contradicts the stated idempotence contract and causes unnecessary archive growth and automated releases.",
+      "reproduction": "Deep-copy data/dfs-weekly.json; change only every existing row.projectionCapturedAt to a later retrieval time. Compare content_fingerprint for the two snapshots and content_hash for the default slate. Archive the original then the changed copy into a temporary SQLite path.",
+      "observed": {
+        "snapshotFingerprintEqual": false,
+        "archiveHashEqual": false,
+        "insertedCaptures": 6,
+        "capturesBefore": 6,
+        "capturesAfter": 12
+      },
+      "expected": "Identical prices, projections, identities and source content should yield equal semantic fingerprints and insert zero captures when only retrieval time changes. Preserve the timestamp in provenance without treating it as changed provider content.",
+      "resolution": "Fixed by parent; independently verified against current working-tree corrections.",
+      "status": "RESOLVED"
+    },
+    {
+      "priority": "P2",
+      "title": "Make reader-visible archive and JSON publication one successful generation",
+      "file": "scripts/import_dfs_weekly.py",
+      "lines": [
+        452,
+        456
+      ],
+      "relatedFile": "server/dfs-store.mjs:65-68",
+      "description": "The refresh publishes the updated archive before writing the JSON snapshot. If atomic_write fails, the importer throws and reports lastGoodPreserved:true, but the archive has already changed. getDfsSlate overlays archived slates on JSON and exact-week lookups select the latest archive capture, so the failed refresh is immediately reader-visible despite the old JSON remaining intact.",
+      "reproduction": "Copy shipped JSON and archive to a TemporaryDirectory. Mock fetch/parsers to return the same validated slates with Gibbs projection changed from 23.1 to 23.2. Patch atomic_write to raise OSError('simulated JSON replace failure') and invoke refresh against temporary paths. Read both outputs and the latest archive capture afterward.",
+      "observed": {
+        "refreshRaised": "OSError: simulated JSON replace failure",
+        "jsonPreserved": true,
+        "archivePreserved": false,
+        "previousJsonProjection": 23.1,
+        "latestVisibleArchiveProjection": 23.2
+      },
+      "expected": "On any publication failure, all reader-visible current and exact-week defaults remain at the prior successfully committed generation. A published-generation pointer or coordinated staging/rollback must govern both outputs; simply reversing write order leaves the symmetric failure possible.",
+      "resolution": "Fixed by parent; independently verified against current working-tree corrections.",
+      "status": "RESOLVED"
+    },
+    {
+      "priority": "P2",
+      "title": "Track the active capture separately from immutable content identity",
+      "file": "scripts/dfs_archive.py",
+      "lines": [
+        111,
+        118
+      ],
+      "relatedFile": "server/dfs-store.mjs:27-29,93-95",
+      "description": "A -> B -> A source-content recovery skips reusing A as active because the archive deduplicates against any historical equivalent capture. Readers still choose B by captured_at. A transient supplemental outage can therefore keep overriding recovered JSON projections with nulls.",
+      "reproduction": "Archive shipped default slate A in a temporary database; append B with later capturedAt and all FSC projections unavailable; append recovered original A with a still later capture time, changing only retrieval timestamps.",
+      "observed": {
+        "recoveredSourceProjection": 14.95,
+        "recoveryInsertedCaptures": 0,
+        "latestArchiveProjection": null
+      },
+      "expected": "Recovered A is the default active capture while both immutable captures and their original timestamps remain reproducible.",
+      "resolution": "Fixed by parent; independently verified against current working-tree corrections.",
+      "status": "RESOLVED",
+      "resolutionEvidence": {
+        "currentApiRecoveredProjection": 14.95,
+        "exactWeekApiRecoveredProjection": 14.95,
+        "recoveryInsertedCaptures": 0,
+        "recoveryHeadsChanged": 1,
+        "captureRowsUnchanged": true,
+        "originalCaptureIdReused": true,
+        "originalCapturedAtPreserved": true,
+        "pinnedOutageStillReturnsNull": true,
+        "repeatedRecoveryChanged": false,
+        "repeatedRecoveryBytesPreserved": true
+      }
+    }
+  ],
+  "checks": [
+    {
+      "status": "PASS",
+      "name": "Exact-week DFS joins across every NFL team",
+      "evidence": "Queried Team Box for all 32 teams, weeks 1 and 2. All 360 completed-game rows and 752 upcoming rows match the exact-week archive salary and projection for their stable identity; dfs_meta.week equals the row week."
+    },
+    {
+      "status": "PASS",
+      "name": "Independent NFL-wide positional ranks",
+      "evidence": "Independently aggregated raw player_week_stats PPR totals and computed competition rank by counting strictly higher same-position totals. All 360 completed Team Box rows and 410 Player Database rows matched."
+    },
+    {
+      "status": "PASS",
+      "name": "Upcoming rows do not fabricate actuals",
+      "evidence": "All 752 Week 2 rows have played=false, stats_available=false, and null snaps, passing/rushing/receiving yards, fantasy_points and position_finish."
+    },
+    {
+      "status": "PASS",
+      "name": "Separate anchors and unavailable historical DFS",
+      "evidence": "2025 MIN weeks 3 and 4 with two 5-week anchors end at their respective weeks; every player's key sequence matches each shared slot sequence; 2025 salaries stay null."
+    },
+    {
+      "status": "PASS",
+      "name": "Roster-only profile and identity support",
+      "evidence": "Five independently selected rostered players without source player statistics resolve by exact name/team/position and return statsAvailable=false with 18 aligned history slots."
+    },
+    {
+      "status": "PASS",
+      "name": "Primary live source samples",
+      "evidence": "FSC live Week 2 page lists MIN Carson Wentz at $4,600 and 14.95 versus CHI, matching the shipped supplemental row. Its schedule includes dated 2026 Week 2 games. FIC currently lists Gibbs at $8,500 and 23.2 (the older archived capture is 23.1, a permissible dated snapshot rather than a current-value claim).",
+      "sources": [
+        "https://fantasysportscentral.com/football/dfscheat.php",
+        "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings"
+      ]
+    },
+    {
+      "status": "LIMITED",
+      "name": "Live official salary CSV",
+      "evidence": "The web fetch returned an internal fetch error and the local read-only urllib attempt had DNS unavailable. The review therefore verified exact stored salary lineage and independent published source samples but did not independently retrieve a fresh DraftKings CSV."
+    },
+    {
+      "status": "PASS",
+      "name": "Retrieval-only idempotence",
+      "evidence": "Final head-enabled implementation: semantic migration inserts 0; new retrieval-only times leave both hashes equal, insert 0, change 0 heads and preserve all archive bytes."
+    },
+    {
+      "status": "PASS",
+      "name": "Cross-output publication failure",
+      "evidence": "Final head-enabled implementation: independently injected JSON staging, JSON publication, and archive publication failures each preserve both JSON and archive bytes. Isolated release checkout bounds intermediate-reader exposure."
+    },
+    {
+      "status": "PASS",
+      "name": "Return to previously archived source content",
+      "evidence": "Independent A -> B -> A reproduction loaded the actual dfs-store module against temporary data. Current and exact-week APIs restore Wentz 14.95 using original A capture ID/time; head observed time advances; no captures are added; capture rows remain byte-for-value unchanged; explicit B capture still returns null; repeated recovered input is byte-idempotent."
+    },
+    {
+      "status": "PASS",
+      "name": "Three scoring contexts",
+      "evidence": "Independently compared 1,308 Player Database and Detroit Opportunity ranks against raw-stat competition ranks for standard, half and PPR scoring; all matched and Opportunity slot sequences aligned."
+    }
+  ],
+  "limitations": [
+    "No application edits, full check, scheduling or deployment performed by this reviewer.",
+    "The parent task owns corrective implementation and the full verification run."
+  ],
+  "reviewedWorkingTree": "2edd6e1 plus parent corrections for idempotence, coordinated publication and active capture heads",
+  "verifiedAt": "2026-09-17T01:30:24.512705+00:00",
+  "openFindings": []
+}

@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "url": "https://fantasy-football-stats-preview.vercel.app/#/waivers",
+  "records": [
+    {
+      "label": "Snaps trend for Cam Skattebo: 2025 Week 10: unavailable; 2025 Week 11: unavailable; 2025 Week 12: unavailable; 2025 Week 13: unavailable; 2025 Week 14: unavailable; 2025 Week 15: unavailable; 2025 Week 16: unavailable; 2025 Week 17: unavailable; 2025 Week 18: unavailable; 2026 Week 1: 42",
+      "slots": 10,
+      "min": "0",
+      "max": "96",
+      "height": 19.25
+    },
+    {
+      "label": "Snaps trend for Tyrone Tracy Jr.: 2025 Week 10: 49; 2025 Week 11: 37; 2025 Week 12: 58; 2025 Week 13: 27; 2025 Week 14: unavailable; 2025 Week 15: 52; 2025 Week 16: 35; 2025 Week 17: 42; 2025 Week 18: 52; 2026 Week 1: 2",
+      "slots": 10,
+      "min": "0",
+      "max": "96",
+      "height": 0.90625
+    }
+  ],
+  "playerChart": {
+    "slots": 10,
+    "width": 8.609375
+  },
+  "penixSlots": 10,
+  "errors": []
+}

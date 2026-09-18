@@ -1,0 +1,129 @@
+{
+  "aggregate_mismatches": {},
+  "available_weeks": [
+    1
+  ],
+  "completed_games": 16,
+  "current_rookies": 216,
+  "current_roster_rows": 926,
+  "current_roster_teams": 32,
+  "database": "data/fantasy_football_2026.sqlite",
+  "draft_rankings": {
+    "ambiguous_or_duplicate_rows": 0,
+    "captured_at": "2026-08-17T00:49:08.835Z",
+    "imported_at": "2026-08-18T16:16:07.234966+00:00",
+    "matched_rows": 407,
+    "offensive_skill_rows": 569,
+    "scoring": "PPR",
+    "season": 2026,
+    "source_rows": 657,
+    "source_url": "https://www.fantasypros.com/nfl/adp/ppr-overall.php",
+    "unmatched_rows": 162,
+    "unmatched_sample": [
+      "Jeremiyah Love",
+      "Jadarian Price",
+      "Carnell Tate",
+      "Jordyn Tyson",
+      "Jonathon Brooks",
+      "Makai Lemon",
+      "KC Concepcion",
+      "De'Zhaun Stribling",
+      "Denzel Boston",
+      "Kenyon Sadiq",
+      "Tank Dell",
+      "Mike Washington Jr.",
+      "Jonah Coleman",
+      "Omar Cooper Jr.",
+      "MarShawn Lloyd",
+      "Ja'Kobi Lane",
+      "Fernando Mendoza",
+      "Antonio Williams",
+      "Cyrus Allen",
+      "Malachi Fields"
+    ]
+  },
+  "game_drives": 354,
+  "game_flow_events": 227,
+  "game_team_segments": 192,
+  "games": 272,
+  "games_with_play_by_play": 16,
+  "imported_at": "2026-09-16T18:06:35.461867+00:00",
+  "participation_available": false,
+  "participation_note": "Play-level personnel participation is not published for 2026; segment snaps remain unknown.",
+  "player_game_segments": 1884,
+  "player_stat_rows": 363,
+  "players": 952,
+  "positions": [
+    "C",
+    "CB",
+    "FB",
+    "P",
+    "QB",
+    "RB",
+    "TE",
+    "WR"
+  ],
+  "postseason_rows": 0,
+  "postseason_weeks": [],
+  "regular_season_rows": 410,
+  "regular_season_weeks": [
+    1
+  ],
+  "rows": 410,
+  "season": 2026,
+  "snap_join_methods": {
+    "exact_name_reviewed": 1,
+    "player_registry": 409
+  },
+  "snap_rows": 410,
+  "snapshot_kind": "in_progress_season",
+  "sources": {
+    "depth_charts_2026": {
+      "bytes": 49733281,
+      "path": "data/raw/2026/depth_charts_2026.csv",
+      "sha256": "5f445e934f8535892576c549567215b7dfbeed6aee4e17b10a9647bfbdf70a9a",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/depth_charts/depth_charts_2026.csv"
+    },
+    "play_by_play": {
+      "bytes": 1077502,
+      "path": "data/raw/2026/play_by_play.csv.gz",
+      "sha256": "f53e36793c1f61b4fc99e08f6c45923cf35bc6b8d2992852d3d86e4a6ecd6643",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2026.csv.gz"
+    },
+    "player_stats": {
+      "bytes": 498905,
+      "path": "data/raw/2026/player_stats.csv",
+      "sha256": "af043a5d702df0f745da0496198cf817407415ca4857e84a6b815713fd19fd05",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2026.csv"
+    },
+    "players": {
+      "bytes": 7291058,
+      "path": "data/raw/2026/players.csv",
+      "sha256": "dfbd8b482352bc42372ce16854f252b5470b1158d51cadd7e888c957760c8f85",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/players/players.csv"
+    },
+    "roster_2026": {
+      "bytes": 940136,
+      "path": "data/raw/2026/roster_2026.csv",
+      "sha256": "c29e341ff226b1f08e19ea45db656cb78ffc590437167001df242ceb976c770e",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv"
+    },
+    "schedules": {
+      "bytes": 2178317,
+      "path": "data/raw/2026/schedules.csv",
+      "sha256": "161e38665d05a71c0acde7ead9171a5354c4f524c8992c3fdd3704982fb4fcfb",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/schedules/games.csv"
+    },
+    "snap_counts": {
+      "bytes": 134005,
+      "path": "data/raw/2026/snap_counts.csv",
+      "sha256": "e995f21949eed665c189b931fd165dc38afd644565a507cd3ff117813304e785",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/snap_counts/snap_counts_2026.csv"
+    }
+  },
+  "stat_rows_with_snap_match": 363,
+  "unmatched_snap_player_ids_count": 1,
+  "unmatched_snap_player_ids_sample": [
+    "AndeAl01"
+  ]
+}

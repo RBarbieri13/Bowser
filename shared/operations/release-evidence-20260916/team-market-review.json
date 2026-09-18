@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "reviewedCommit": "d038443",
+  "baseline": "8e643fd",
+  "reviewMode": "Independent source review and focused component regression probes; no application edits, full check, or deployment",
+  "checks": [
+    {
+      "name": "Focused existing suites",
+      "status": "PASS",
+      "command": "npx vitest run tests/team-box-upgrade.test.jsx tests/market-table-upgrade.test.jsx tests/table-settings.test.jsx",
+      "result": "3 files, 18 tests passed"
+    },
+    {
+      "name": "Independent regression probes",
+      "status": "PASS",
+      "command": "npx vitest run --config /private/tmp/bowser-independent-review/vitest.config.mjs",
+      "probeFile": "/private/tmp/bowser-independent-review/regressions.test.jsx",
+      "result": "Both independent regression probes now pass after root corrections; original failures were captured before fixes."
+    },
+    {
+      "name": "Anchored trends and filter reanchoring",
+      "status": "PASS",
+      "evidence": "teamBoxColumns.js:70-77 resolves blocks to the visible week immediately on the left or the first visible week. TeamBoxScores.jsx:364-399 emits trend columns after the anchor, uses that anchor's history/domain, and supplies independent IDs/metrics plus drag/drop and equivalent move/remove controls. Existing component tests verify anchor query updates, retained calendar gaps, shared domains, metric changes and persistence."
+    },
+    {
+      "name": "Shared settings and synchronized semantic widths",
+      "status": "PASS",
+      "evidence": "Team columns are sized from shared semantic keys for every week/position; Market columns consume shared visibility/order/width/format settings. Existing suites verify staged Apply/Cancel, actual rendered visibility and formatting, width persistence, and conditional colors. The apparent extra 64px in Team inline colgroup widths is the intentionally collapsed position column: styles.css:2454 makes its effective width zero while a separate position rail owns that width."
+    },
+    {
+      "name": "Numeric filters and exact values",
+      "status": "PASS",
+      "evidence": "Team weekly fields retain individual salary/projection/rank values and their unavailable reasons; its numeric filters explicitly match any displayed week. Market ranges filter raw native numeric values and exclude null rather than treating missing provider samples as zero."
+    },
+    {
+      "name": "Global player links",
+      "status": "PASS",
+      "evidence": "Team and Market name buttons call the App openProfile path; Market history is an independent explicit control. App resolves unknown IDs conservatively before opening the common player profile. Backend identity completeness is outside this review while implementation is in flight."
+    },
+    {
+      "name": "History provider/window scope and signed/null charts",
+      "status": "PASS",
+      "evidence": "Provider-specific metric/catalogue and observation-count controls use source/window history; scales are source-wide and zero-inclusive, with negative bars below zero and absent observations retained. The rosterDelta derivation exception is documented as MARKET-DELTA-HISTORY. Root now derives rosterDelta from consecutive full observations before count slicing and uses derived values for the common scale."
+    }
+  ],
+  "reviewedWorkingTree": "d038443 plus current root corrections to TeamBoxScores.jsx:471 and MarketPulse.jsx:36-40",
+  "resolvedFindings": [
+    {
+      "id": "TEAM-SORT-CONTEXT",
+      "priority": "P2",
+      "title": "Preserve each retained sort's week when adding an identity sort",
+      "file": "src/TeamBoxScores.jsx",
+      "start": 471,
+      "end": 471,
+      "relatedLines": [
+        347
+      ],
+      "reason": "onSort clears the shared sortWeek and sortTrendId whenever Player or Marker is clicked, even when Shift preserves the existing primary metric sort. PositionSection then reads every retained metric from the last displayed week rather than the explicitly sorted week. Retained trend sorts similarly lose their block identity.",
+      "reproduction": "Display Weeks 1 and 2 with Alpha/Beta each scoring 30 in Week 1 and 5/20 in Week 2. Click Sort Week 1 Fantasy points, then Shift-click Sort Player.",
+      "expected": "Week 1 fantasy points remains the descending primary sort; the equal values are broken by ascending name, giving Alpha, Beta.",
+      "actual": "Prefs retain fantasy_points descending followed by player ascending, but sortWeek becomes null and rows become Beta, Alpha according to Week 2 points.",
+      "recommendation": "Store the week/block context with each sort descriptor, or at minimum preserve the existing metric context when adding identity tie-breakers. Reconcile retained contexts when their week or trend block is removed.",
+      "resolution": "Root implemented correction during review; independently reproduced original failure and verified the corrected desired behavior."
+    },
+    {
+      "id": "MARKET-DELTA-HISTORY",
+      "priority": "P2",
+      "title": "Derive historical ESPN changes from consecutive observations",
+      "file": "src/MarketPulse.jsx",
+      "start": 36,
+      "end": 40,
+      "relatedFiles": [
+        "src/marketPulseStorage.js",
+        "server/market-pulse.mjs:68"
+      ],
+      "reason": "The newly selectable rosterDelta chart reads row.rosterDelta directly from stored history, while the server's historical rows contain the source rosterPct fields and only the current response rows receive a calculated delta. Browser merging computes the current delta but does not reconstruct earlier raw-history deltas. Thus existing persisted/server history can contain ample real observations while the new metric reports them as missing.",
+      "reproduction": "Load three ESPN history observations for the same player with rosterPct 10, 20 and 15, and a current row rosterDelta of -5; open Market history and select Roster change pp.",
+      "expected": "First change is unavailable; the next changes are +10 and -5 percentage points, with signed bars and the common source-wide delta scale.",
+      "actual": "Exact observations are unavailable, unavailable, -5 and the chart is replaced by History starts here despite three real observations. Reproduced through the normal component fetch/save path with IndexedDB enabled.",
+      "recommendation": "Calculate deltas per player from consecutive full provider observations before applying the selected count, preserving null whenever either observation lacks rosterPct; use the same derived histories for scale and displayed values.",
+      "resolution": "Root implemented correction during review; independently reproduced original failure and verified the corrected desired behavior."
+    }
+  ],
+  "findings": []
+}

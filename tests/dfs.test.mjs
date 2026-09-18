@@ -24,7 +24,7 @@ test('pinned Classic slates have unique IDs, real prices, bounded projections an
   assert.equal(getDfsSlate('invalid'),null);
 });
 test('all-week salary and projection are joined by stable identity and remain independent of historical scoring',()=>{
-  const params='search=Jahmyr%20Gibbs&limit=all&includeTrends=0';
+  const params='season=2025&dfsSlate=week1&search=Jahmyr%20Gibbs&limit=all&includeTrends=0';
   const ppr=queryPlayers(new URLSearchParams(params));
   const standard=queryPlayers(new URLSearchParams(params+'&scoring=standard&weeks=1'));
   assert.equal(ppr.data[0].draft_kings_price,8000);

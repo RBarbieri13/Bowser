@@ -38,7 +38,7 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Keep the DraftKings placeholders compact and explicit: salary is labeled `$`, projection is labeled `FPTS`, and both remain visibly unavailable until a real source is connected.
 - Player Database column groups must remain independently collapsible with a compact labeled expand rail. Section resizing proportionally changes every member column, while Auto Fit is a persistent mode that sizes currently displayed values without clipping them.
 - In the Player Database, render snap, completion, and reception percentages as whole percentages. Keep upcoming matchups on two compact lines without increasing the 40px data-row height.
-- The Opportunity Tracker combines the current 2026 nflverse roster and official depth-chart rank with each player's last 10 recorded 2025 NFL games. Keep those seasons visibly distinct, include rostered rookies and players without game history, and never present a production-derived ordering as an authoritative depth rank.
+- The Opportunity Tracker combines the current 2026 nflverse roster and official depth-chart rank with each player's last 10 recorded games in the selected statistics season. Keep roster and statistics dates visibly distinct, include rostered rookies and players without game history, and never present a production-derived ordering as an authoritative depth rank.
 - Until nflverse publishes a current 2026 practice-report injury feed, show sourced roster status and an explicit injury/news-unavailable notice. Do not fabricate injury blurbs or player news.
 - Opportunity Tracker mini-bars compare values only within the same metric for the same player. Every player row must retain snaps, one position-relevant opportunity metric, and PPR fantasy points as separate scales.
 - Completed Bowser application changes should be published through the repository's branch/PR workflow, merged to `main`, and verified on the permanent Vercel production URL unless Robert explicitly requests a local-only or preview-only handoff.
@@ -54,3 +54,26 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Player Database DFS fields use the separately sourced 2026 Week 1 Classic snapshot in `data/dfs-week1-2026.json`. Keep historical 2025 statistics and selectable scoring independent of DraftKings projections.
 - All-week and Sunday Main slates must remain distinct. Never substitute Showdown/Captain salaries or DraftKings historical AvgPointsPerGame for projections. Match stable player identities conservatively; unknown is null, not zero. Show the projection provider, capture timestamp, and current DFS team.
 - Refresh through `npm run data:dfs`, which validates pinned draft groups and date coverage before atomically replacing the snapshot. `npm run check` must pass before publication. The original warehouse is immutable.
+
+## Waivers and 2026 season release
+
+- Waivers is a dense technical table: player details; five or more real source positional ranking columns; five or more real source FAAB columns; usage, passing, rushing/trend, receiving/trend and cumulative fantasy points. No runtime mock data or invented rankings/bids. Preserve source-native rank order, budget basis, range/operator, scoring, dates and missing values. Favorites, personal bid drafts and notes are local user preferences, never provider data mutations.
+- The app defaults to current 2026 statistics with 2025 history selectable. Keep the original 2025 warehouse unchanged; all statistics/profile/box-score/game/opportunity requests carry the selected season. The 2026 Week 1 import must preserve completed-game coverage and expose unavailable participation explicitly.
+- Completion requires npm run check, five-source rank/FAAB coverage tests, source-number readbacks, a second verifier pass, branch/PR merge and permanent Vercel verification. Stop after three repeated correction failures; never lower source counts or statistical checks to obtain a pass. This bounded implementation has a 180-minute review point.
+
+## Comparable weekly trends and DFS refresh (September 16, 2026)
+
+- Historical bars are aligned regular-season NFL calendar weeks across seasons, never independently compressed to each player's last appearances. The same x-position means the same season/week for every player. Preserve bye, DNP, rookie and missing-data gaps as null. Scalar table totals still follow the exact selected weeks.
+- All trend menus share the same weekly-statistic catalogue. All players use the same zero-inclusive metric domain across the NFL history window; never normalize per player or clip outliers. Negative fantasy points extend below zero. Show season/week labels and exact values.
+- Opportunity Tracker reuses the Team Box Scores schedule/range controls, with explicit year, scoring and history window. Independent matchup weeks remain distinct from the continuous range.
+- Weekly positional finish ranks all NFL peers in the same position and scoring context before user filters, uses competition ranks for ties, and labels the exact week. Multiple selected weeks do not create a fake weekly aggregate rank.
+- Weekly DFS refresh must validate source week, Classic slate games, price/projection provenance and identity matching before atomic publication. Preserve historical snapshots and last-good current data on failure. No historical averages substituted for projections. Automated releases stop on failed checks.
+
+## Table controls rollback (September 17, 2026)
+
+- Robert requested reverting the September 16 shared table-settings and expanded filter rollout. Restore the page-specific controls and layouts from before that rollout; retain the Player Database's existing column studio and the native Waivers/Team Box controls. Do not reintroduce the removed universal settings dialogs or numeric/source/identity filter panels without a new request.
+- This rollback preserves sourced DFS data and archives, weekly position finishes, shared player profiles, aligned trend scales/calendars, metric/history selectors, and anchored Team Box trend columns.
+
+## Compact page controls (September 17, 2026)
+
+Robert's latest request supersedes the earlier filter-layout rollback: all active pages use one compact, consistent PageControls header with a single collapsed-by-default Filters & settings area. Preserve every unique filter/setting, selected values and provenance; remove only duplicates. Keep the main data near the top, visible active context, keyboard access, and 44px coarse-pointer targets. Do not reinstate the removed universal column-settings replacement. Hide League Hub and Fantasy Intelligence navigation. Team Box repeats matchup labels only once and keeps shorter readable rows. Thursday-only DraftKings Showdown must preserve separate FLEX/CPT prices and explicit scoring/projection derivation.

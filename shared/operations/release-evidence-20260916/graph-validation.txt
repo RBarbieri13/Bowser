@@ -1,0 +1,4 @@
+claims=8 kept=8 dropped=0 unverified=0
+runs_ok=8 expected=8 artifacts=8 evals=24
+
+OK: all four invariants hold

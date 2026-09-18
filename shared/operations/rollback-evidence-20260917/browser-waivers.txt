@@ -1,0 +1,6 @@
+### Result
+{"nativeDensity":true,"nativeAutoFit":true,"newApply":0,"newDialogs":0}
+### Ran Playwright code
+```js
+await (async page => { await page.getByRole("combobox",{name:"Waiver row density",exact:true}).waitFor(); const out={nativeDensity:true,nativeAutoFit:await page.getByRole("button",{name:"Auto Fit",exact:true}).isVisible(),newApply:await page.getByRole("button",{name:"Apply settings",exact:true}).count(),newDialogs:await page.getByRole("dialog").count()}; if(out.newApply||out.newDialogs)throw Error("Shared dialog remains"); return out; })(page);
+```

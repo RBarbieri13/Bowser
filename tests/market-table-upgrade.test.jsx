@@ -1,0 +1,69 @@
+// @vitest-environment jsdom
+import '@testing-library/jest-dom/vitest';
+import {IDBFactory} from 'fake-indexeddb';
+import {cleanup,fireEvent,render as renderView,screen,waitFor,within} from '@testing-library/react';
+import {afterEach,beforeEach,expect,test,vi} from 'vitest';
+import {MarketPulse} from '../src/MarketPulse.jsx';
+const rows=[{id:'sleeper:1',name:'Fixture Runner',position:'RB',team:'BUF',adds:120,drops:30,net:90,addShare:80},{id:'sleeper:2',name:'Fixture Receiver',position:'WR',team:'NYG',adds:10,drops:null,net:null,addShare:null}];
+const espnRows=[{id:'espn:11',name:'Fixture Runner',position:'RB',team:'BUF',rosterPct:78.4,startPct:55.6,rosterDelta:1.5},{id:'espn:22',name:'ESPN Only',position:'QB',team:'KC',rosterPct:99,startPct:89,rosterDelta:-2}];
+const snapshot=(provider)=>({provider,window:provider==='sleeper'?'24':'current',rows:provider==='sleeper'?rows:espnRows,capturedAt:1800000000000,history:[{capturedAt:1799999999000,rows:(provider==='sleeper'?rows:espnRows).map(row=>({...row,net:-5}))},{capturedAt:1800000000000,rows:provider==='sleeper'?rows:espnRows}]});
+beforeEach(()=>{localStorage.clear();global.indexedDB=new IDBFactory();global.fetch=vi.fn(async url=>({ok:true,json:async()=>snapshot(url.includes('espn')?'espn':'sleeper')}));});
+afterEach(()=>{cleanup();vi.restoreAllMocks();});
+// These existing behavior scenarios exercise the controls after expansion.
+const render=(ui)=>{const view=renderView(ui);fireEvent.click(screen.getByRole('button',{name:'Filters & settings'}));return view;};
+const ready=()=>screen.findByRole('button',{name:'Fixture Runner',exact:true});
+const bodyRows=()=>within(screen.getByRole('table')).getAllByRole('row').slice(2);
+test('player profile navigation and provider history are separate actions',async()=>{
+  const open=vi.fn();render(<MarketPulse season={2026} onOpenPlayer={open}/>);await ready();
+  fireEvent.click(screen.getByRole('button',{name:'Fixture Runner',exact:true}));
+  expect(open).toHaveBeenCalledWith(expect.objectContaining({player_id:null,name:'Fixture Runner',team:'BUF',position:'RB',season:2026}));
+  expect(screen.queryByRole('complementary')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:'Market history for Fixture Runner'}));
+  expect(screen.getByRole('complementary',{name:'Fixture Runner details'})).toBeInTheDocument();
+  expect(open).toHaveBeenCalledTimes(1);
+});
+test('restores the original search, position, team, and watchlist filters without the added filter system',async()=>{
+  render(<MarketPulse/>);await ready();
+  expect(screen.queryByRole('button',{name:'Table settings'})).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Minimum Adds')).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Sources')).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Identity')).not.toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText('Position'),{target:{value:'RB'}});
+  expect(bodyRows()).toHaveLength(1);expect(bodyRows()[0]).toHaveTextContent('Fixture Runner');
+  fireEvent.change(screen.getByLabelText('Position'),{target:{value:'All'}});
+  fireEvent.change(screen.getByRole('combobox',{name:'Team',exact:true}),{target:{value:'NYG'}});
+  expect(bodyRows()).toHaveLength(1);expect(bodyRows()[0]).toHaveTextContent('Fixture Receiver');
+  fireEvent.change(screen.getByRole('combobox',{name:'Team',exact:true}),{target:{value:'All'}});
+  fireEvent.click(screen.getByRole('button',{name:'Watch Fixture Runner'}));
+  fireEvent.click(screen.getByRole('button',{name:'Watchlist',exact:true}));
+  expect(bodyRows()).toHaveLength(1);expect(bodyRows()[0]).toHaveTextContent('Fixture Runner');
+});
+test('ignores removed dialog layout settings while preserving header sorting and resizing',async()=>{
+  localStorage.setItem('bowser:market-pulse:table:v2',JSON.stringify({hidden:['drops'],numberFormat:'integer',density:'comfortable'}));
+  const view=render(<MarketPulse/>);await ready();
+  expect(within(screen.getByRole('table')).getByRole('button',{name:'Drops',exact:true})).toBeInTheDocument();
+  expect(screen.getByText('78.4%')).toBeInTheDocument();
+  expect(screen.queryByRole('button',{name:'Table settings'})).not.toBeInTheDocument();
+  const width=Number(screen.getByRole('separator',{name:'Resize Adds column'}).getAttribute('aria-valuenow'));
+  fireEvent.keyDown(screen.getByRole('separator',{name:'Resize Adds column'}),{key:'ArrowRight',shiftKey:true});
+  expect(JSON.parse(localStorage.getItem('bowser:market-pulse:table:v2')).widths.adds).toBe(width+25);
+  fireEvent.click(screen.getByRole('button',{name:'Adds',exact:true}));
+  expect(bodyRows()[0]).toHaveTextContent('Fixture Receiver');
+  expect(bodyRows().at(-1)).toHaveTextContent('ESPN Only');
+  view.unmount();render(<MarketPulse/>);await ready();
+  expect(within(screen.getByRole('table')).getByRole('button',{name:'Drops',exact:true})).toBeInTheDocument();
+  expect(screen.getByRole('separator',{name:'Resize Adds column'})).toHaveAttribute('aria-valuenow',String(width+25));
+});
+test('both provider charts expose metric and observation selectors and plot signed observations',async()=>{
+  render(<MarketPulse/>);await ready();fireEvent.click(screen.getByRole('button',{name:'Market history for Fixture Runner'}));
+  expect(within(screen.getByLabelText('Sleeper trend metric')).getAllByRole('option')).toHaveLength(4);
+  expect(within(screen.getByLabelText('ESPN trend metric')).getAllByRole('option')).toHaveLength(3);
+  fireEvent.change(screen.getByLabelText('Sleeper trend metric'),{target:{value:'net'}});
+  expect(screen.getByText('Observed net adds')).toBeInTheDocument();
+  const history=screen.getAllByRole('region',{name:'Player snapshot history'})[0];
+  expect(history.querySelector('.mp-history-plot i.negative')).toBeInTheDocument();
+  expect(history.querySelector('.mp-history-bars')).toHaveAttribute('data-scale-min','-5');
+  fireEvent.change(screen.getByLabelText('Sleeper historical observations'),{target:{value:'5'}});
+  expect(screen.getByLabelText('Sleeper historical observations')).toHaveValue('5');
+  expect(screen.getAllByText(/provider observations, not NFL games/)).toHaveLength(2);
+});

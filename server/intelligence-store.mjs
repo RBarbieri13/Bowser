@@ -2,11 +2,13 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
-import { xaiProviderStatus } from "./intelligence-provider-xai.mjs";
+import { liveProviderStatus } from "./intelligence-live.mjs";
+import { defaultIntelligenceStore, intelligenceDatabaseStatus } from "./intelligence-db.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const feed = JSON.parse(readFileSync(path.join(root, "data", "intelligence-feed.json"), "utf8"));
 const registry = JSON.parse(readFileSync(path.join(root, "data", "intelligence-sources.json"), "utf8"));
+const xRegistry = JSON.parse(readFileSync(path.join(root, "data", "intelligence-x-handles.json"), "utf8"));
 const ALLOWED = {
   position: new Set(["QB", "RB", "WR", "TE"]),
   impact: new Set(["CRITICAL", "HIGH", "MEDIUM", "LOW"]),
@@ -43,6 +45,7 @@ export class IntelligenceQueryError extends Error {
 export function getIntelligenceRegistry() {
   return {
     ...registry,
+    xAccounts: xRegistry.handles.map((account) => ({ ...account, handle: `@${account.handle}` })),
     summary: registry.sources.reduce((result, source) => {
       result.total += 1;
       result[source.adoption] = (result[source.adoption] || 0) + 1;
@@ -51,7 +54,7 @@ export function getIntelligenceRegistry() {
   };
 }
 
-export function queryIntelligenceFeed(params = new URLSearchParams()) {
+function queryEvents(events, params, snapshotMode, generatedAt) {
   const positions = validateList(params, "position", ALLOWED.position);
   const impacts = validateList(params, "impact", ALLOWED.impact);
   const statuses = validateList(params, "status", ALLOWED.status);
@@ -61,7 +64,7 @@ export function queryIntelligenceFeed(params = new URLSearchParams()) {
   const limit = integer(params, "limit", 50, 1, 100);
   const search = String(params.get("search") || "").trim().toLowerCase().slice(0, 100);
   const cutoff = Date.now() - hours * 60 * 60 * 1000;
-  const matching = feed.events
+  const matching = events
     .filter((event) => !positions.length || positions.includes(event.player.position))
     .filter((event) => !teams.length || teams.includes(event.player.team))
     .filter((event) => !impacts.length || impacts.includes(event.fantasyImpact))
@@ -72,12 +75,12 @@ export function queryIntelligenceFeed(params = new URLSearchParams()) {
     .sort((a, b) => (IMPACT_ORDER[a.fantasyImpact] - IMPACT_ORDER[b.fantasyImpact]) || Date.parse(b.lastUpdatedAt) - Date.parse(a.lastUpdatedAt));
   return {
     meta: {
-      generatedAt: feed.generatedAt,
-      snapshotMode: feed.mode,
+      generatedAt,
+      snapshotMode,
       lookbackHours: hours,
       total: matching.length,
       returned: Math.min(limit, matching.length),
-      provider: xaiProviderStatus(),
+      provider: { ...liveProviderStatus(), storage: intelligenceDatabaseStatus() },
       methodology: {
         confidence: "Source authority and corroboration only; social volume never increases factual confidence.",
         sentiment: "Fantasy-value direction from -100 to +100; distinct from factual confidence.",
@@ -86,4 +89,17 @@ export function queryIntelligenceFeed(params = new URLSearchParams()) {
     },
     events: matching.slice(0, limit),
   };
+}
+
+export function queryIntelligenceFeed(params = new URLSearchParams()) {
+  return queryEvents(feed.events, params, feed.mode, feed.generatedAt);
+}
+
+export async function queryPersistedIntelligenceFeed(params = new URLSearchParams()) {
+  if (!intelligenceDatabaseStatus().ready) return queryIntelligenceFeed(params);
+  const store = defaultIntelligenceStore();
+  if (!await store.hasActiveSnapshot()) return queryIntelligenceFeed(params);
+  const events = await store.activeEvents();
+  const generatedAt = events.length ? events.reduce((latest, event) => Date.parse(event.lastUpdatedAt) > Date.parse(latest) ? event.lastUpdatedAt : latest, events[0].lastUpdatedAt) : new Date().toISOString();
+  return queryEvents(events, params, "durable_active_snapshot", generatedAt);
 }

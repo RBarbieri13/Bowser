@@ -103,3 +103,7 @@
 }
 @media(pointer:coarse){.market-pulse button,.market-pulse select{min-height:44px}.market-pulse .mp-star{min-width:44px}.market-pulse col:first-child{width:48px!important}.market-pulse table{min-width:816px}}
 @media(prefers-reduced-motion:reduce){.mp-spin{animation:none}}
+
+/* Profile links and configurable provider history remain independent of table settings. */
+.mp-player-actions{display:flex;align-items:center;gap:4px}.market-pulse .mp-player-actions .mp-player{flex:1}.market-pulse .mp-history-open{padding:0;border:0;background:transparent;width:18px;height:28px;flex:none}.market-pulse .mp-history-open svg{width:12px}.market-pulse .mp-detail-heading h2 .mp-player{font-size:18px;width:auto}
+.mp-history-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.mp-history-controls label{display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--text-secondary)}.mp-history-plot{position:relative;height:92px;width:70%;flex:none}.mp-history-bars .mp-history-plot i{position:absolute;left:0;width:100%;background:var(--accent);border-radius:2px}.mp-history-bars .mp-history-plot i.negative{background:var(--negative)}.mp-history-zero{position:absolute;width:100%;border-top:1px solid var(--border-strong)}.mp-history-bars>div{align-self:stretch;justify-content:flex-end}

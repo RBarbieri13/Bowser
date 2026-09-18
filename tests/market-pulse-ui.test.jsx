@@ -2,7 +2,7 @@
 import '@testing-library/jest-dom/vitest';
 import { IDBFactory, IDBObjectStore } from 'fake-indexeddb';
 import { readSnapshot, saveSnapshot, mergeSnapshot } from '../src/marketPulseStorage.js';
-import {cleanup,fireEvent,render,screen,waitFor,within} from '@testing-library/react';
+import {cleanup,fireEvent,render as renderView,screen,waitFor,within} from '@testing-library/react';
 import {afterEach,beforeEach,expect,test,vi} from 'vitest';
 import {MarketPulse,csvFor} from '../src/MarketPulse.jsx';
 import {combineMarketRows,sortMarketRows} from '../src/marketPulseRows.js';
@@ -24,6 +24,8 @@ beforeEach(()=>{
   global.fetch=vi.fn(async url=>reply(url.includes('provider=espn')?espn:{...data,window:new URL(url,'http://localhost').searchParams.get('hours')}));
 });
 afterEach(()=>{cleanup();vi.restoreAllMocks();});
+// These existing behavior scenarios exercise the controls after expansion.
+const render=(ui)=>{const view=renderView(ui);fireEvent.click(screen.getByRole('button',{name:'Filters & settings'}));return view;};
 const ready=()=>screen.findByRole('button',{name:'Fixture Runner',exact:true});
 const tableRows=()=>within(screen.getByRole('table')).getAllByRole('row').slice(2);
 test('combines both providers in one dense table and removes all summary cards',async()=>{

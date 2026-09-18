@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "command": "npm run check",
+  "log": "artifacts/trend-repair/release-check.log",
+  "logSha256": "156315c873b6982049eebb032158f211b948d4be4b76b03a97b8701022e270d7",
+  "warehouses": {
+    "fantasy_football.sqlite": "d3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869",
+    "fantasy_football_2026.sqlite": "d8c14174fbc5d25731eab1bda6c552138e805a0df8a345ac2632c164cb7f65f2"
+  },
+  "automation": {
+    "status": "awaiting-user-confirmation",
+    "schedule": "Thursday 08:00 America/Chicago",
+    "reason": "Automatic approval review rejected active recurring deployment scheduling; explicit confirmation requested."
+  }
+}

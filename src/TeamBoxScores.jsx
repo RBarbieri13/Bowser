@@ -1,16 +1,22 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   ArrowLeft, ArrowRight, ArrowsHorizontal, Binoculars, CaretDown, Check, Crosshair,
-  CrownSimple, Eye, Question, Star, TrendUp, X,
+  CrownSimple, Eye, Question, Star, X,
 } from "@phosphor-icons/react";
+import { PageControls } from "./PageControls.jsx";
 import { ScheduleWeekSelector } from "./ScheduleWeekSelector.jsx";
 import {
   ALL_COLUMN_DEFINITIONS, DEFAULT_VISIBLE_STATS, IDENTITY_COLUMNS,
   LEAGUE_OPTIONS, POSITION_ORDER, TEAM_BOX_PREFERENCE_KEY, WEEK_COLUMN_REGISTRY,
   clampColumnWidth, columnGroups, columnsForPosition, readTeamBoxPreferences,
+  TEAM_TREND_WINDOWS, resolveTrendBlocks, sanitizeTrendBlocks,
 } from "./teamBoxColumns.js";
 import { gameTotalPoints, TeamLogo } from "./teamLogos.jsx";
+import { sortTableRows, toggleTableSort } from './tableSettings.js';
+import { TrendChart, TrendMetricSelect } from './TrendChart.jsx';
+import { trendValue } from './trendMetrics.js';
+import './TeamBoxScores.css';
 
 const WEEK_WIDTH = 554;
 const TEAM_BOX_STATE_KEY = "bowser:team-box-score-state:v1";
@@ -29,14 +35,15 @@ function savedTeamBoxState() {
 }
 
 function draftKingsPrice(row) {
-  const value = row.draftkings_salary ?? row.dk_salary ?? row.draftkings_price;
+  const value = row.draft_kings_price ?? row.draftkings_salary ?? row.dk_salary ?? row.draftkings_price;
   return value === null || value === undefined || value === "" ? null : Number(value);
 }
 
 function formatStat(value, key) {
   if (value === null || value === undefined || value === "") return "—";
   if (key === "snap_pct") return `${Number(value).toFixed(0)}%`;
-  if (key === "fantasy_points") return Number(value).toFixed(1);
+  if (key === "draft_kings_price") return `$${Number(value).toLocaleString('en-US')}`;
+  if (['fantasy_points', 'draft_kings_projection'].includes(key)) return Number(value).toFixed(1);
   return new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(Number(value));
 }
 
@@ -48,12 +55,13 @@ function groupRows(rows) {
     if (!group.has(row.player_id)) {
       group.set(row.player_id, {
         playerId: row.player_id, name: row.player_display_name, position: row.position_group,
-        weeks: new Map(), draftKingsPrice: draftKingsPrice(row),
+        weeks: new Map(), trendsByAnchor: {}, draftKingsPrice: draftKingsPrice(row),
       });
     }
     const player = group.get(row.player_id);
     if (player.draftKingsPrice === null && draftKingsPrice(row) !== null) player.draftKingsPrice = draftKingsPrice(row);
-    player.weeks.set(row.week, row);
+    player.weeks.set(Number(row.week), row);
+    Object.assign(player.trendsByAnchor, row.trendsByAnchor || {});
   }
   return POSITION_ORDER.map((position) => ({ position, players: [...byPosition.get(position).values()] }))
     .filter((group) => group.players.length);
@@ -310,75 +318,96 @@ function PlayerMarker({ player, marker, onChange }) {
   );
 }
 
-function PositionSection({ group, weeks, upcomingWeek, onOpenPlayer, onOpenGame, weekWidth, onWeekResize, maxima, columnWidths, visibleStats, markers, onMarkerChange, onResize, showIdentityHandles, resizableWeekKeys }) {
-  const columns = columnsForPosition(group.position, visibleStats);
-  const groups = columnGroups(columns);
-  const weekScale = weekWidth / WEEK_WIDTH;
-  const identityWidth = IDENTITY_COLUMNS.filter((column) => column.key !== "position").reduce((sum, column) => sum + columnWidths[column.key], 0);
-  const oneWeekWidth = columns.reduce((sum, column) => sum + columnWidths[column.key] * weekScale, 0);
-  const tableWidth = identityWidth + weeks.length * oneWeekWidth;
-  const sticky = {
-    "--w-position": `${columnWidths.position}px`, "--w-marker": `${columnWidths.marker}px`, "--w-player": `${columnWidths.player}px`,
-    "--w-salary": `${columnWidths.dk_salary}px`, "--w-projection": `${columnWidths.dk_projection}px`, "--week-scale": weekScale,
-  };
-  const identityHandles = Object.fromEntries(IDENTITY_COLUMNS.map((column) => [column.key, showIdentityHandles ? <ResizeHandle key={column.key} columnKey={column.key} width={columnWidths[column.key]} onResize={onResize} /> : null]));
-  return (
-    <section className={`box-position-section position-${group.position.toLowerCase()}`} aria-labelledby={`position-${group.position}`} style={{ "--position-rail-width": `${columnWidths.position}px` }}>
-      <h2 id={`position-${group.position}`} className="sr-only">{group.position} weekly box scores</h2>
-      <div className="box-position-rail" aria-hidden="true"><span>{group.position}</span>{identityHandles.position}</div>
-      <table className="boxscore-table" style={{ width: tableWidth, minWidth: tableWidth, ...sticky }}>
-        <caption>{group.position} week-by-week player statistics</caption>
-        <colgroup>
-          {IDENTITY_COLUMNS.map((column) => <col key={column.key} data-column={column.key} style={{ width: columnWidths[column.key] }} />)}
-          {weeks.flatMap(({ week }) => columns.map((column) => <col key={`${week}-${column.key}`} data-column={column.key} style={{ width: columnWidths[column.key] * weekScale }} />))}
-        </colgroup>
-        <thead>
-          <tr className="box-week-row">
-            <th rowSpan="3" className="sr-only box-position-head">Position</th>
-            <th colSpan="2" className="box-sticky box-player-title">Player</th>
-            <th colSpan="2" className="box-sticky box-upcoming-title"><span>Upcoming</span><strong>{upcomingWeek ? `Week ${upcomingWeek}` : "Next slate"}</strong></th>
-            {weeks.map((item, weekIndex) => {
-              const totalPoints = gameTotalPoints(item);
-              return <th key={item.week} colSpan={columns.length} className="box-week-title">
-                {item.gameId ? <button type="button" className="box-game-link" onClick={() => onOpenGame?.(item)} aria-label={`Open Week ${item.week} game breakdown`}><span className="box-game-kicker"><span>Week {item.week}</span>{totalPoints !== null ? <b title="Total points scored">{totalPoints} PTS</b> : null}</span><strong className="box-matchup"><TeamLogo team={item.opponent} className="box-opponent-logo" decorative /><span>{item.opponent ? `${item.homeAway === "away" ? "@" : "vs"} ${item.opponent}` : "No game"} · {item.scoreLabel || "Scheduled"}</span></strong><small>{formatGameDate(item)}</small></button> : <><span>Week {item.week}</span><strong>No game</strong><small>{formatGameDate(item)}</small></>}
-                {showIdentityHandles && weekIndex === 0 ? <WeekResizeHandle width={weekWidth} onResize={onWeekResize} /> : null}
-              </th>;
-            })}
-          </tr>
-          <tr className="box-subgroup-row">
-            <th rowSpan="2" className="box-sticky box-marker-head" aria-label="Player marker">Mark{identityHandles.marker}</th>
-            <th rowSpan="2" className="box-sticky box-player-head" aria-label="Player">{identityHandles.player}</th>
-            <th rowSpan="2" className="box-sticky box-salary-head"><span className="dk-column-label"><CrownSimple weight="fill" aria-hidden="true" />$</span>{identityHandles.dk_salary}</th>
-            <th rowSpan="2" className="box-sticky box-projection-head"><span className="dk-column-label"><CrownSimple weight="fill" aria-hidden="true" />FPTS</span>{identityHandles.dk_projection}</th>
-            {weeks.flatMap((item) => groups.map((columnGroup) => <th key={`${item.week}-${columnGroup.name}`} colSpan={columnGroup.columns.length} rowSpan={columnGroup.name === "Fantasy" ? 2 : undefined} className={`box-week-subgroup${columnGroup.name === "Fantasy" ? " box-fpts-header" : ""}`}>{columnGroup.name === "Fantasy" ? <>FPTS{resizableWeekKeys.has("fantasy_points") && item.week === weeks[0]?.week ? <ResizeHandle columnKey="fantasy_points" width={columnWidths.fantasy_points} onResize={onResize} /> : null}</> : columnGroup.name}</th>))}
-          </tr>
-          <tr className="box-column-row">
-            {weeks.flatMap((item, weekIndex) => columns.filter((column) => column.group !== "Fantasy").map((column) => <th key={`${item.week}-${column.key}`} className={`stat-${column.key}`}>{column.label}{resizableWeekKeys.has(column.key) && weekIndex === 0 ? <ResizeHandle columnKey={column.key} width={columnWidths[column.key]} onResize={onResize} /> : null}</th>))}
-          </tr>
-        </thead>
-        <tbody>{group.players.map((player, playerIndex) => <tr key={player.playerId}>
-          {playerIndex === 0 ? <th rowSpan={group.players.length} scope="rowgroup" className="sr-only box-position-cell">{group.position}</th> : null}
-          <td className="box-sticky box-marker-cell"><PlayerMarker player={player} marker={markers[player.playerId]} onChange={(marker) => onMarkerChange(player.playerId, marker)} /></td>
-          <th scope="row" className="box-sticky box-player-cell"><button type="button" onClick={(event) => onOpenPlayer(player, event.currentTarget)}>{player.name}</button></th>
-          <td className="box-sticky box-salary-cell unavailable" title="DraftKings salary source not connected">—</td>
-          <td className="box-sticky box-projection-cell unavailable" title="DraftKings projection source not connected">—</td>
-          {weeks.flatMap(({ week }) => { const stats = player.weeks.get(week); return columns.map((column) => {
-            const value = column.key === "passing_line" ? (stats ? `${stats.completions}-${stats.passing_attempts}` : null) : stats?.[column.key];
-            return <td key={`${week}-${column.key}`} title={value ?? undefined} className={`${column.key === "fantasy_points" ? "box-fpts-cell" : ""}${!stats ? " no-game" : ""}${stats ? heatClass(week, column.key, value, maxima) : ""}`}>{column.key === "passing_line" ? (value || "—") : formatStat(value, column.key)}</td>;
-          }); })}
-        </tr>)}</tbody>
-      </table>
-    </section>
-  );
+function dfsTitle(stats, season, week, field) {
+  const context = stats?.dfs_meta;
+  if (stats?.[field] === null || stats?.[field] === undefined) return context?.[field === 'draft_kings_price' ? 'salaryUnavailableReason' : 'projectionUnavailableReason'] || context?.reason || context?.availabilityReason || `No archived ${field === 'draft_kings_price' ? 'salary' : 'projection'} for ${season} Week ${week}`;
+  const source = field === 'draft_kings_price' ? context?.salarySource : context?.projectionSource;
+  const sourceName = typeof source === 'object' ? source?.name : source;
+  return `${season} Week ${week} · ${sourceName || (field === 'draft_kings_price' ? 'DraftKings Classic' : 'Archived DraftKings projection')}${context?.capturedAt ? ` · captured ${context.capturedAt}` : ''}`;
 }
 
-export function TeamBoxScores({ meta, onOpenPlayer, onOpenGame }) {
-  const initialState = useRef(savedTeamBoxState()).current;
+function PositionSection({ group, weeks, season, onOpenPlayer, onOpenGame, weekWidth, onWeekResize, maxima, columnWidths, visibleStats, markers, onMarkerChange, onResize, showIdentityHandles, resizableWeekKeys, sorts, sortWeek, onSort, trendBlocks, trendWeeks, trendMeta, sortTrendId, onTrendChange, onTrendMove, onTrendDrop, onTrendRemove, draggedTrend, setDraggedTrend }) {
+  const selectedColumns = columnsForPosition(group.position, visibleStats);
+  const columns = selectedColumns.length ? selectedColumns : [{ key: 'empty', label: '—', name: 'No statistics selected', group: 'No statistics selected', defaultWidth: 100 }];
+  const columnSections = columnGroups(columns);
+  const weekScale = weekWidth / WEEK_WIDTH;
+  const identityWidth = columnWidths.marker + columnWidths.player;
+  const oneWeekWidth = columns.reduce((sum, column) => sum + (columnWidths[column.key] || column.defaultWidth) * weekScale, 0);
+  const tableWidth = identityWidth + weeks.length * oneWeekWidth + trendBlocks.length * columnWidths.trend;
+  const sticky = { '--w-position': `${columnWidths.position}px`, '--w-marker': `${columnWidths.marker}px`, '--w-player': `${columnWidths.player}px`, '--week-scale': weekScale };
+  const blocksAfter = week => trendBlocks.filter(block => block.anchor === week);
+  const sortState = key => sorts?.[0]?.key === key ? (sorts[0].desc ? 'descending' : 'ascending') : 'none';
+  const sortButton = (key, text, label, week) => <button type="button" className="box-sort-button" aria-label={`Sort ${week ? `Week ${week} ` : ''}${label}`} onClick={event => onSort(key, week, event.shiftKey)}>{text}<span aria-hidden="true">{sortState(key) !== 'none' && (!week || sortWeek === week) ? (sorts[0].desc ? ' ↓' : ' ↑') : ' ↕'}</span></button>;
+  const players = sortTableRows(group.players, sorts || [], (player, key) => {
+    if (key === 'player') return player.name;
+    if (key === 'marker') return markers[player.playerId] || '';
+    if (key === 'position') return player.position;
+    if (key === 'trend') { const block = trendBlocks.find(item => item.id === sortTrendId); return block ? trendValue(player.trendsByAnchor[String(block.anchor)]?.at(-1), block.metric) : null; }
+    const row = player.weeks.get(sortWeek ?? weeks.at(-1)?.week);
+    return key === 'passing_line' ? row?.completions : row?.[key];
+  });
+  return <section className={`box-position-section position-${group.position.toLowerCase()}`} aria-labelledby={`position-${group.position}`} style={{ '--position-rail-width': `${columnWidths.position}px` }}>
+    <h2 id={`position-${group.position}`} className="sr-only">{group.position} weekly box scores</h2>
+    <div className="box-position-rail"><span aria-hidden="true">{group.position}</span>{showIdentityHandles && <ResizeHandle columnKey="position" width={columnWidths.position} onResize={onResize} />}</div>
+    <table className="boxscore-table" style={{ width: tableWidth, minWidth: tableWidth, ...sticky }}>
+      <caption>{group.position} week-by-week player statistics</caption>
+      <colgroup>
+        {IDENTITY_COLUMNS.map(column => <col key={column.key} data-column={column.key} style={{ width: columnWidths[column.key] }} />)}
+        {weeks.map(({ week }) => <Fragment key={week}>{columns.map(column => <col key={column.key} data-column={column.key} data-week={week} style={{ width: (columnWidths[column.key] || column.defaultWidth) * weekScale }} />)}{blocksAfter(week).map(block => <col key={block.id} data-column="trend" data-anchor={week} style={{ width: columnWidths.trend }} />)}</Fragment>)}
+      </colgroup>
+      <thead>
+        <tr className={`box-week-row${showIdentityHandles ? "" : " box-week-row-compact"}`}>
+          <th rowSpan="3" className="sr-only box-position-head">Position</th>
+          <th colSpan="2" className="box-sticky box-player-title"><span className="sr-only">Player details</span></th>
+          {weeks.map((item, weekIndex) => <Fragment key={item.week}>
+            <th colSpan={Math.max(1, columns.length)} className={`box-week-title${draggedTrend ? ' box-trend-drop-active' : ''}`} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); onTrendDrop(event.dataTransfer.getData('text/plain') || draggedTrend, item.week); }}>
+              {!showIdentityHandles ? <span className="box-week-number">Week {item.week}</span> : item.gameId ? <button type="button" className="box-game-link" onClick={() => onOpenGame?.(item)} aria-label={`Open Week ${item.week} game breakdown`}><span className="box-game-kicker"><span>Week {item.week}</span>{gameTotalPoints(item) !== null && <b title="Total points scored">{gameTotalPoints(item)} PTS</b>}</span><strong className="box-matchup"><TeamLogo team={item.opponent} className="box-opponent-logo" decorative /><span>{item.opponent ? `${item.homeAway === 'away' ? '@' : 'vs'} ${item.opponent}` : 'No game'} · {item.scoreLabel || 'Scheduled'}</span></strong><small>{formatGameDate(item)}</small></button> : <><span>Week {item.week}</span><strong>No game</strong><small>{formatGameDate(item)}</small></>}
+              <span className="box-trend-drop-label" aria-label={`Drop trend after Week ${item.week}`}>Drop trend after W{item.week}</span>
+              {showIdentityHandles && weekIndex === 0 && <WeekResizeHandle width={weekWidth} onResize={onWeekResize} />}
+            </th>
+            {blocksAfter(item.week).map(block => <th key={block.id} rowSpan="3" className="box-trend-header" data-trend-id={block.id} data-anchor={block.anchor}>
+              <div className="box-trend-heading"><button type="button" className="box-trend-drag" draggable onDragStart={event => { event.dataTransfer.setData('text/plain', block.id); event.dataTransfer.effectAllowed = 'move'; setDraggedTrend(block.id); }} onDragEnd={() => setDraggedTrend(null)} aria-label={`Drag trend after Week ${block.anchor}`} title="Drag onto a week header to place this trend after it">⠿ Trend</button><button type="button" aria-label={`Remove trend ${block.id}`} onClick={() => onTrendRemove(block.id)}>×</button></div>
+              <TrendMetricSelect metric={block.metric} onChange={metric => onTrendChange(block.id, metric)} label={`${group.position} ${block.id} trend metric`} />
+              <small>{trendWeeks} NFL weeks through {trendMeta?.[String(block.anchor)]?.season || season} W{trendMeta?.[String(block.anchor)]?.week || block.anchor}</small>
+              <div className="box-trend-move"><button type="button" aria-label={`Move trend ${block.id} left`} disabled={weekIndex === 0} onClick={() => onTrendMove(block.id, -1)}>←</button><button type="button" className="box-trend-sort" aria-label={`Sort ${block.id} trend latest value`} onClick={event => onSort('trend', block.anchor, event.shiftKey, block.id)}>Latest {sorts?.[0]?.key === 'trend' && sortTrendId === block.id ? (sorts[0].desc ? '↓' : '↑') : '↕'}</button><button type="button" aria-label={`Move trend ${block.id} right`} disabled={weekIndex === weeks.length - 1} onClick={() => onTrendMove(block.id, 1)}>→</button></div>
+              {showIdentityHandles && trendBlocks[0]?.id === block.id && <ResizeHandle columnKey="trend" width={columnWidths.trend} onResize={onResize} />}
+            </th>)}
+          </Fragment>)}
+        </tr>
+        <tr className="box-subgroup-row">
+          <th rowSpan="2" className="box-sticky box-marker-head" aria-sort={sortState('marker')}>{sortButton('marker', 'Mark', 'Player marker')}{showIdentityHandles && <ResizeHandle columnKey="marker" width={columnWidths.marker} onResize={onResize} />}</th>
+          <th rowSpan="2" className="box-sticky box-player-head" aria-sort={sortState('player')}>{sortButton('player', 'Player', 'Player')}{showIdentityHandles && <ResizeHandle columnKey="player" width={columnWidths.player} onResize={onResize} />}</th>
+          {weeks.flatMap(item => columnSections.map((section, index) => <th key={`${item.week}-${index}`} colSpan={section.columns.length} className="box-week-subgroup">{section.name}</th>))}
+        </tr>
+        <tr className="box-column-row">
+          {weeks.flatMap((item, weekIndex) => columns.map(column => <th key={`${item.week}-${column.key}`} className={`stat-${column.key}`} aria-sort={sortWeek === item.week ? sortState(column.key) : 'none'}>
+            {column.key === 'empty' ? column.label : sortButton(column.key, column.label, column.name, item.week)}{resizableWeekKeys.has(column.key) && weekIndex === 0 && <ResizeHandle columnKey={column.key} width={columnWidths[column.key]} onResize={onResize} />}
+          </th>))}
+        </tr>
+      </thead>
+      <tbody>{players.map((player, playerIndex) => <tr key={player.playerId} data-player-id={player.playerId}>
+        {playerIndex === 0 && <th rowSpan={players.length} scope="rowgroup" className="sr-only box-position-cell">{group.position}</th>}
+        <td className="box-sticky box-marker-cell"><PlayerMarker player={player} marker={markers[player.playerId]} onChange={marker => onMarkerChange(player.playerId, marker)} /></td>
+        <th scope="row" className="box-sticky box-player-cell"><button type="button" onClick={event => onOpenPlayer(player, event.currentTarget)}>{player.name}</button></th>
+        {weeks.map(({ week }) => { const stats = player.weeks.get(week); return <Fragment key={week}>
+          {columns.map(column => { const value = column.key === 'passing_line' ? (stats?.completions != null && stats?.passing_attempts != null ? `${stats.completions}-${stats.passing_attempts}` : null) : stats?.[column.key];
+            const title = column.group === 'DFS' ? dfsTitle(stats, season, week, column.key) : column.key === 'position_finish' ? `${season} Week ${week}: NFL ${group.position} fantasy finish; competition ranks before team filters.` : value ?? undefined;
+            return <td key={column.key} data-stat={column.key} data-week={week} title={title} className={`${column.key === 'fantasy_points' ? 'box-fpts-cell' : ''}${!stats ? ' no-game' : ''}${stats ? heatClass(week, column.key, value, maxima) : ''}`}>{column.key === 'passing_line' ? value || '—' : column.key === 'position_finish' && value != null ? `${group.position}${value}` : formatStat(value, column.key)}</td>;
+          })}
+          {blocksAfter(week).map(block => <td className="box-trend-cell" key={block.id} data-anchor={week}><TrendChart history={player.trendsByAnchor[String(week)] || []} metric={block.metric} domain={trendMeta?.[String(week)]?.domains?.[block.metric]} playerName={player.name} height={22} /></td>)}
+        </Fragment>; })}
+      </tr>)}</tbody>
+    </table>
+  </section>;
+}
+
+export function TeamBoxScores({ season = 2026, meta, onOpenPlayer, onOpenGame }) {
+  const initialState = useRef((() => { const saved = savedTeamBoxState(); return Number(saved.season || 2025) === season ? saved : {}; })()).current;
   const initialPreferences = useRef(readTeamBoxPreferences()).current;
   const [team, setTeam] = useState(initialState.team || "NYG");
   const [scoring, setScoring] = useState(["ppr", "half", "standard"].includes(initialState.scoring) ? initialState.scoring : "ppr");
   const [weekStart, setWeekStart] = useState(Number(initialState.weekStart) || 1);
-  const [weekEnd, setWeekEnd] = useState(Number(initialState.weekEnd) || 18);
+  const [weekEnd, setWeekEnd] = useState(Number(initialState.weekEnd) || (season === 2026 ? 1 : 18));
   const [extraWeeks, setExtraWeeks] = useState(Array.isArray(initialState.extraWeeks) ? initialState.extraWeeks : []);
   const [positions, setPositions] = useState(Array.isArray(initialState.positions) && initialState.positions.length ? initialState.positions : POSITION_ORDER);
   const [dkMin, setDkMin] = useState(initialState.dkMin || "3000");
@@ -386,6 +415,13 @@ export function TeamBoxScores({ meta, onOpenPlayer, onOpenGame }) {
   const [weekWidth, setWeekWidth] = useState(initialPreferences.weekWidth);
   const [columnWidths, setColumnWidths] = useState(initialPreferences.columnWidths);
   const [visibleStats, setVisibleStats] = useState(initialPreferences.visibleStats);
+  const [sorts, setSorts] = useState([{ key: 'player', desc: false }]);
+  const [sortWeek, setSortWeek] = useState(Number(initialState.sortWeek) || null);
+  const [sortTrendId, setSortTrendId] = useState(initialState.sortTrendId || null);
+  const [trendWeeks, setTrendWeeks] = useState(() => { try { const value = JSON.parse(localStorage.getItem('bowser:team-box-trends:v1') || '{}').weeks; return TEAM_TREND_WINDOWS.includes(value) ? value : 10; } catch { return 10; } });
+  const [trendBlocks, setTrendBlocks] = useState(() => { try { return sanitizeTrendBlocks(JSON.parse(localStorage.getItem('bowser:team-box-trends:v1') || '{}').blocks); } catch { return []; } });
+  const [insertAfter, setInsertAfter] = useState(Number(initialState.weekEnd) || 1);
+  const [draggedTrend, setDraggedTrend] = useState(null);
   const [markers, setMarkers] = useState(initialPreferences.markers);
   const [selectedLeagues, setSelectedLeagues] = useState(initialPreferences.selectedLeagues);
   const [schedule, setSchedule] = useState([]);
@@ -397,19 +433,33 @@ export function TeamBoxScores({ meta, onOpenPlayer, onOpenGame }) {
 
   const selectedWeeks = useMemo(() => [...new Set([...Array.from({ length: weekEnd - weekStart + 1 }, (_, index) => weekStart + index), ...extraWeeks.filter((week) => week < weekStart || week > weekEnd)])].sort((a, b) => a - b), [weekStart, weekEnd, extraWeeks]);
   const visibleExtraWeeks = useMemo(() => extraWeeks.filter((week) => week < weekStart || week > weekEnd).sort((a, b) => a - b), [extraWeeks, weekStart, weekEnd]);
-  const changeRange = (start, end) => { setWeekStart(start); setWeekEnd(end); setExtraWeeks((current) => current.filter((week) => week < start || week > end)); };
+  const changeRange = (start, end) => { setWeekStart(start); setWeekEnd(end); };
 
-  useEffect(() => { window.sessionStorage.setItem(TEAM_BOX_STATE_KEY, JSON.stringify({ team, scoring, weekStart, weekEnd, extraWeeks, positions, dkMin, dkMax })); }, [team, scoring, weekStart, weekEnd, extraWeeks, positions, dkMin, dkMax]);
+  const resolvedTrends = useMemo(() => resolveTrendBlocks(trendBlocks, selectedWeeks), [trendBlocks, selectedWeeks]);
+  const trendAnchors = [...new Set(resolvedTrends.map(block => block.anchor))].join(',');
+  useEffect(() => { window.sessionStorage.setItem(TEAM_BOX_STATE_KEY, JSON.stringify({ season, team, scoring, weekStart, weekEnd, extraWeeks, positions, dkMin, dkMax, sortWeek, sortTrendId })); }, [season, team, scoring, weekStart, weekEnd, extraWeeks, positions, dkMin, dkMax, sortWeek, sortTrendId]);
+  useEffect(() => { window.localStorage.setItem('bowser:team-box-trends:v1', JSON.stringify({ weeks: trendWeeks, blocks: trendBlocks })); }, [trendWeeks, trendBlocks]);
   useEffect(() => { setPreferencesReady(true); }, []);
   useEffect(() => {
     if (preferencesReady) window.localStorage.setItem(TEAM_BOX_PREFERENCE_KEY, JSON.stringify({ version: 2, weekWidth, columnWidths, visibleStats, markers, selectedLeagues }));
   }, [preferencesReady, weekWidth, columnWidths, visibleStats, markers, selectedLeagues]);
-  const resizeColumn = (key, width) => setColumnWidths((current) => ({ ...current, [key]: clampColumnWidth(key, width) }));
+  const resizeColumn = (key, width) => setColumnWidths(current => ({ ...current, [key]: clampColumnWidth(key, width) }));
+  const changeTrendWindow = count => {
+    setTrendWeeks(count);
+    const readableWidth = Math.max(250, count * 22);
+    if (columnWidths.trend < readableWidth) resizeColumn('trend', readableWidth);
+  };
+  const onSort = (key, week, shift, trendId) => { if(week != null || !shift) setSortWeek(week || null); if(trendId != null || !shift) setSortTrendId(trendId || null); setSorts(current => (week && week !== sortWeek) || (trendId && trendId !== sortTrendId) ? [{ key, desc: true }] : toggleTableSort({ sorts: current }, key, shift).sorts); };
+  const moveTrend = (id, direction) => { const current = resolvedTrends.find(block => block.id === id); const index = selectedWeeks.indexOf(current?.anchor); const next = selectedWeeks[index + direction]; if (next) setTrendBlocks(blocks => blocks.map(block => block.id === id ? { ...block, afterWeek: next } : block)); };
+  const dropTrend = (id, week) => { setTrendBlocks(blocks => blocks.map(block => block.id === id ? { ...block, afterWeek: week } : block)); setDraggedTrend(null); };
+  const changeTrendMetric = (id, metric) => setTrendBlocks(blocks => blocks.map(block => block.id === id ? { ...block, metric } : block));
+  const removeTrend = id => setTrendBlocks(blocks => blocks.filter(block => block.id !== id));
+  const addTrend = () => setTrendBlocks(blocks => [...blocks, { id: `trend-${Date.now().toString(36)}-${blocks.length}`, afterWeek: selectedWeeks.includes(insertAfter) ? insertAfter : selectedWeeks[0], metric: 'snaps' }].slice(0, 12));
   const openGame = (game) => onOpenGame?.(game, scoring);
 
   useEffect(() => {
     const controller = new AbortController();
-    const params = new URLSearchParams({ team, scoring: "ppr", seasonType: "ALL", weeks: Array.from({ length: 22 }, (_, index) => index + 1).join(",") });
+    const params = new URLSearchParams({ season: String(season), team, scoring: "ppr", seasonType: "ALL", weeks: Array.from({ length: 22 }, (_, index) => index + 1).join(",") });
     fetch(`/api/v1/team-box-scores?${params}`, { signal: controller.signal }).then((response) => response.ok ? response.json() : null).then((result) => {
       if (result?.meta?.schedule || result?.meta?.weeks) {
         const nextSchedule = result.meta.schedule || result.meta.weeks;
@@ -418,20 +468,25 @@ export function TeamBoxScores({ meta, onOpenPlayer, onOpenGame }) {
       }
     }).catch(() => undefined);
     return () => controller.abort();
-  }, [team]);
+  }, [team, season]);
 
   useEffect(() => {
     const controller = new AbortController();
-    const params = new URLSearchParams({ team, scoring, seasonType: "ALL", weeks: selectedWeeks.join(",") });
+    const params = new URLSearchParams({ season: String(season), team, scoring, seasonType: "ALL", weeks: selectedWeeks.join(","), trendAnchors, trendWeeks: String(trendWeeks) });
     setLoading(true); setError("");
     fetch(`/api/v1/team-box-scores?${params}`, { signal: controller.signal }).then(async (response) => { const result = await response.json(); if (!response.ok) throw new Error(result.error?.message || "The team query failed."); return result; }).then(setPayload).catch((requestError) => { if (requestError.name !== "AbortError") setError(requestError.message); }).finally(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => controller.abort();
-  }, [team, scoring, selectedWeeks]);
+  }, [team, scoring, selectedWeeks, season, trendAnchors, trendWeeks]);
 
   const hasDraftKingsData = useMemo(() => payload.data.some((row) => Number.isFinite(draftKingsPrice(row))), [payload.data]);
   const groups = useMemo(() => {
-    const minimum = Number(dkMin) || 0; const maximum = Number(dkMax) || Number.MAX_SAFE_INTEGER;
-    return groupRows(payload.data).filter((group) => positions.includes(group.position)).map((group) => ({ ...group, players: group.players.filter((player) => !hasDraftKingsData || (Number(player.draftKingsPrice) >= minimum && Number(player.draftKingsPrice) <= maximum)) })).filter((group) => group.players.length);
+    const minimum = dkMin === '' ? 0 : Number(dkMin); const maximum = dkMax === '' ? Infinity : Number(dkMax);
+    const activeSalary = hasDraftKingsData && (minimum > 3000 || maximum < 11000);
+    return groupRows(payload.data).filter(group => positions.includes(group.position)).map(group => ({ ...group, players: group.players.filter(player => {
+      const weekly = [...player.weeks.values()];
+      if (activeSalary && !weekly.some(row => { const value = draftKingsPrice(row); return value !== null && value >= minimum && value <= maximum; })) return false;
+      return true;
+    }) })).filter(group => group.players.length);
   }, [payload.data, positions, dkMin, dkMax, hasDraftKingsData]);
   const resizeOwners = useMemo(() => {
     const owners = new Map();
@@ -446,24 +501,29 @@ export function TeamBoxScores({ meta, onOpenPlayer, onOpenGame }) {
   const weeks = payload.meta?.weeks || selectedWeeks.map((week) => ({ week, opponent: null, seasonType: week <= 18 ? "REG" : "POST" }));
 
   return <main className="page-content team-boxscore-page">
-    <section className="boxscore-toolbar" aria-labelledby="team-boxscore-title">
-      <div className="boxscore-intro"><span className="page-eyebrow"><TrendUp weight="bold" aria-hidden="true" /> Sequential analysis</span><h1 id="team-boxscore-title">Team Box Scores</h1><p>Compare every fantasy-relevant player across completed weeks, from left to right.</p></div>
+    <PageControls title="Team Box Scores" className="team-box-controls" summary={<><span className="box-active-team"><TeamLogo team={team} decorative />{team}</span><span>{season} · {weekStart === weekEnd ? `Week ${weekStart}` : `Weeks ${weekStart}–${weekEnd}`}{visibleExtraWeeks.length ? ` + ${visibleExtraWeeks.map(week => `W${week}`).join(", ")}` : ""}</span><span>{scoring === "ppr" ? "PPR" : scoring === "half" ? "Half PPR" : "Standard"}</span>{positions.length < POSITION_ORDER.length && <span>{positions.join(", ")}</span>}{(Number(dkMin) > 3000 || (dkMax !== "" && Number(dkMax) < 11000)) && <span>DK ${dkMin || "0"}–{dkMax || "any"}</span>}{resolvedTrends.length > 0 && <span>{resolvedTrends.length} trend{resolvedTrends.length === 1 ? "" : "s"} · {trendWeeks} weeks</span>}</>} actions={<div className="box-scroll-buttons" aria-label="Scroll weekly columns"><button type="button" onClick={() => scroller.current?.scrollBy({ left: -weekWidth, behavior: "smooth" })} aria-label="Previous weeks"><ArrowLeft /></button><button type="button" onClick={() => scroller.current?.scrollBy({ left: weekWidth, behavior: "smooth" })} aria-label="Next weeks"><ArrowRight /></button></div>}>
       <div className="boxscore-filters" aria-label="Team box score filters">
         <TeamFilter team={team} teams={meta?.teams || ["NYG"]} onChange={(event) => setTeam(event.target.value)} />
         <PositionFilter selected={positions} onChange={setPositions} />
         <StatisticsFilter visibleStats={visibleStats} onChange={setVisibleStats} />
         <LeagueFilter selected={selectedLeagues} onChange={setSelectedLeagues} />
         <label className="field"><span className="field-label">Scoring</span><span className="select-wrap"><select aria-label="Scoring" value={scoring} onChange={(event) => setScoring(event.target.value)}><option value="ppr">PPR</option><option value="half">Half PPR</option><option value="standard">Standard</option></select><CaretDown weight="bold" aria-hidden="true" /></span></label>
-        <div className={`field dk-price-field${hasDraftKingsData ? "" : " unavailable"}`}><span className="field-label dk-filter-label"><CrownSimple weight="fill" aria-hidden="true" />$</span><span className="dk-price-inputs"><input aria-label="Minimum DraftKings price" type="number" min="0" step="100" value={dkMin} onChange={(event) => setDkMin(event.target.value)} disabled={!hasDraftKingsData} /><span>to</span><input aria-label="Maximum DraftKings price" type="number" min="0" step="100" value={dkMax} onChange={(event) => setDkMax(event.target.value)} disabled={!hasDraftKingsData} /></span>{!hasDraftKingsData ? <small>Price feed not connected</small> : null}</div>
+        <div className={`field dk-price-field${hasDraftKingsData ? "" : " unavailable"}`}><span className="field-label dk-filter-label"><CrownSimple weight="fill" aria-hidden="true" />$</span><span className="dk-price-inputs"><input aria-label="Minimum DraftKings price" type="number" min="0" step="100" value={dkMin} onChange={(event) => setDkMin(event.target.value)} disabled={!hasDraftKingsData} /><span>to</span><input aria-label="Maximum DraftKings price" type="number" min="0" step="100" value={dkMax} onChange={(event) => setDkMax(event.target.value)} disabled={!hasDraftKingsData} /></span>{!hasDraftKingsData ? <small>No archived salary for these weeks</small> : null}</div>
         <label className="field week-width-field"><span className="field-label">Week Width <small>{Math.round(weekWidth / WEEK_WIDTH * 100)}%</small></span><span className="week-width-control"><input aria-label="Week column width" type="range" min="220" max="720" step="8" value={weekWidth} onChange={(event) => setWeekWidth(Number(event.target.value))} /></span></label>
       </div>
-      <ScheduleWeekSelector team={team} schedule={schedule} start={weekStart} end={weekEnd} extras={extraWeeks} onRangeChange={changeRange} onExtrasChange={setExtraWeeks} onOpenGame={openGame} />
-      <div className="boxscore-context"><strong className="selected-team-pill"><span>{team}</span><TeamLogo team={team} decorative /></strong><span>{weekStart === weekEnd ? `Week ${weekStart}` : `Weeks ${weekStart}–${weekEnd}`}{visibleExtraWeeks.length ? ` + ${visibleExtraWeeks.map((week) => `W${week}`).join(", ")}` : ""}</span><span>{scoring === "ppr" ? "PPR" : scoring === "half" ? "Half PPR" : "Standard"}</span><span className="dk-status"><CrownSimple weight="fill" aria-hidden="true" />$ + FPTS awaiting source</span><div className="box-scroll-buttons" aria-label="Scroll weekly columns"><button type="button" onClick={() => scroller.current?.scrollBy({ left: -weekWidth, behavior: "smooth" })} aria-label="Previous weeks"><ArrowLeft /></button><button type="button" onClick={() => scroller.current?.scrollBy({ left: weekWidth, behavior: "smooth" })} aria-label="Next weeks"><ArrowRight /></button></div></div>
-    </section>
+      <div className="box-trend-controls" aria-label="Trend chart controls">
+        <label>Trend history<select value={trendWeeks} onChange={event => changeTrendWindow(Number(event.target.value))}>{TEAM_TREND_WINDOWS.map(count => <option key={count} value={count}>{count} NFL weeks</option>)}</select></label>
+        <label>Insert trend after<select value={selectedWeeks.includes(insertAfter) ? insertAfter : selectedWeeks[0]} onChange={event => setInsertAfter(Number(event.target.value))}>{selectedWeeks.map(week => <option key={week} value={week}>Week {week}</option>)}</select></label>
+        <button type="button" onClick={addTrend} disabled={trendBlocks.length >= 12}>Add trend column</button>
+      </div>
+      <p className="box-trend-explainer">Drag a trend onto a week header to insert it immediately after that week. Each chart looks backward from its left-hand week on a shared NFL calendar. Missing games remain gaps.</p>
+      <ScheduleWeekSelector season={season} team={team} schedule={schedule} start={weekStart} end={weekEnd} extras={extraWeeks} onRangeChange={changeRange} onExtrasChange={setExtraWeeks} onOpenGame={openGame} />
+      <div className="box-data-details"><span className="dk-status"><CrownSimple weight="fill" aria-hidden="true" />{hasDraftKingsData ? "Archived DK salary + projections by week" : "DFS archive unavailable for selected weeks"}</span><span>{payload.meta ? `${payload.meta.queryMs} ms query` : "Loading warehouse"}</span><a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noreferrer">Data: nflverse · CC BY 4.0</a><div className="performance-legend" aria-label="Performance color legend"><span><i className="strong" />Strong relative performance</span><span><i className="lower" />Lower relative performance</span><span><i className="typical" />Typical range</span></div></div>
+    </PageControls>
     <section className="boxscore-panel" aria-label={`${team} weekly team box scores`}>
       {loading ? <div className="progress" role="progressbar" aria-label="Updating team box scores"><span /></div> : null}{error ? <div className="error-banner" role="alert"><span>{error}</span></div> : null}
-      <div className="boxscore-scroller" ref={scroller} tabIndex="0" aria-label="Scrollable weekly team box scores">{!loading && !error && !groups.length ? <div className="boxscore-empty">No player data is available for this team and week range.</div> : null}{groups.map((group, index) => <PositionSection key={group.position} group={group} weeks={weeks} upcomingWeek={null} weekWidth={weekWidth} onWeekResize={setWeekWidth} maxima={maxima} columnWidths={columnWidths} visibleStats={visibleStats} markers={markers} onMarkerChange={(playerId, marker) => setMarkers((current) => { const next = { ...current }; if (marker) next[playerId] = marker; else delete next[playerId]; return next; })} onResize={resizeColumn} showIdentityHandles={index === 0} resizableWeekKeys={new Set([...resizeOwners].filter(([, owner]) => owner === index).map(([key]) => key))} onOpenGame={openGame} onOpenPlayer={(player, opener) => onOpenPlayer(player, opener, scoring)} />)}</div>
-      <footer className="data-status" aria-live="polite"><div className="performance-legend" aria-label="Performance color legend"><span><i className="strong" />Strong relative performance</span><span><i className="lower" />Lower relative performance</span><span><i className="typical" />Typical range</span></div><span><strong>{payload.meta?.playerCount ?? 0}</strong> players · <strong>{weeks.length}</strong> weeks</span><span>{payload.meta ? `${payload.meta.queryMs} ms query` : "Loading warehouse"}</span><a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noreferrer">Data: nflverse · CC BY 4.0</a></footer>
+      <div className="boxscore-scroller" ref={scroller} tabIndex="0" aria-label="Scrollable weekly team box scores">{!loading && !error && !groups.length ? <div className="boxscore-empty">No player data is available for this team and week range.</div> : null}{groups.map((group, index) => <PositionSection key={group.position} group={group} weeks={weeks} season={season} weekWidth={weekWidth} onWeekResize={setWeekWidth} maxima={maxima} columnWidths={columnWidths} visibleStats={visibleStats} markers={markers} onMarkerChange={(playerId, marker) => setMarkers((current) => { const next = { ...current }; if (marker) next[playerId] = marker; else delete next[playerId]; return next; })} onResize={resizeColumn} showIdentityHandles={index === 0} resizableWeekKeys={new Set([...resizeOwners].filter(([, owner]) => owner === index).map(([key]) => key))} sorts={sorts} sortWeek={sortWeek} onSort={onSort} trendBlocks={resolvedTrends} trendWeeks={trendWeeks} trendMeta={payload.meta?.trendsByAnchor} sortTrendId={sortTrendId} onTrendChange={changeTrendMetric} onTrendMove={moveTrend} onTrendDrop={dropTrend} onTrendRemove={removeTrend} draggedTrend={draggedTrend} setDraggedTrend={setDraggedTrend} onOpenGame={openGame} onOpenPlayer={(player, opener) => onOpenPlayer?.(player, opener, scoring)} />)}</div>
+      <footer className="data-status" aria-live="polite"><span><strong>{groups.reduce((total, group) => total + group.players.length, 0)}</strong> players · <strong>{weeks.length}</strong> weeks</span></footer>
     </section>
   </main>;
 }

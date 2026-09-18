@@ -1,0 +1,131 @@
+{
+  "status": "PASS",
+  "url": "https://bowser-fantasy-football-1wr2sqm8n-rbarbieri13s-projects.vercel.app",
+  "verifiedAt": "2026-09-16T20:25:39Z",
+  "checks": [
+    "2026 Week 1: 16 completed games, 410 rows; 2025 retained",
+    "Actual Week 1 statistics and 300+ matched DraftKings prices/projections",
+    "101 targets; 5 ranking + 8 expert FAAB + 1 community source; bid readbacks",
+    "News feed and 23-source registry load with provider readiness",
+    "Team Box Scores, Game Breakdown and Opportunity Tracker use 2026",
+    "Four published research artifacts match verified local content byte-for-byte",
+    "Sleeper and ESPN live Market Pulse refreshes return populated snapshots"
+  ],
+  "activity": {
+    "sleeper": {
+      "rows": 167,
+      "capturedAt": 1789590336581
+    },
+    "espn": {
+      "rows": 1000,
+      "capturedAt": 1789590339050
+    }
+  },
+  "newsProvider": {
+    "id": "bowser-live-intelligence",
+    "configured": true,
+    "model": "grok-4.6",
+    "capabilities": [
+      "x_search",
+      "web_search",
+      "structured_output",
+      "citations",
+      "adds",
+      "drops",
+      "velocity",
+      "waiver_market"
+    ],
+    "message": "2 live sources ready.",
+    "sources": {
+      "xai": {
+        "id": "xai-grok",
+        "configured": true,
+        "model": "grok-4.6",
+        "capabilities": [
+          "x_search",
+          "web_search",
+          "structured_output",
+          "citations"
+        ],
+        "message": "Live X and web research is available.",
+        "core": true
+      },
+      "fantasypros": {
+        "id": "fantasypros-news",
+        "configured": true,
+        "authorized": false,
+        "ready": false,
+        "core": true,
+        "capabilities": [
+          "player_news",
+          "injuries",
+          "transactions",
+          "fantasy_impact",
+          "source_attribution"
+        ],
+        "message": "The API key is configured, but storage and display remain disabled until FANTASYPROS_INGESTION_AUTHORIZED=true is backed by the applicable rights record."
+      },
+      "sleeper": {
+        "id": "sleeper-trending",
+        "configured": true,
+        "ready": true,
+        "core": true,
+        "capabilities": [
+          "adds",
+          "drops",
+          "velocity",
+          "waiver_market"
+        ],
+        "message": "Sleeper Trending is available through the official public API."
+      },
+      "32bw": {
+        "id": "32beatwriters",
+        "configured": false,
+        "authorized": false,
+        "ready": false,
+        "capabilities": [
+          "nuggets",
+          "fantasy_insight",
+          "player_identity",
+          "source_attribution"
+        ],
+        "message": "A provider-issued 32 Beat Writers API token is required; browser session tokens are not accepted.",
+        "core": true
+      },
+      "rotowire": {
+        "id": "rotowire-rss",
+        "configured": false,
+        "authorized": false,
+        "ready": false,
+        "capabilities": [
+          "rss",
+          "player_news",
+          "source_attribution"
+        ],
+        "message": "RotoWire RSS is connector-ready but disabled until ROTOWIRE_RSS_ENABLED=true confirms the intended use is covered.",
+        "core": false
+      },
+      "fantasycalc": {
+        "id": "fantasycalc-market",
+        "configured": false,
+        "ready": false,
+        "core": false,
+        "capabilities": [
+          "market_value",
+          "rank",
+          "trend_30_day",
+          "adp"
+        ],
+        "message": "FantasyCalc is connector-ready; set FANTASYCALC_ENABLED=true only for an attributed, non-commercial integration."
+      }
+    },
+    "storage": {
+      "configured": false,
+      "ready": false,
+      "provider": null,
+      "message": "Add a Vercel Marketplace Neon DATABASE_URL to persist refreshes."
+    }
+  },
+  "statsImportedAt": "2026-09-16T18:06:35.461867+00:00",
+  "commit": "835c82a1c5fc0c047312e498cbe00516c77f9118"
+}

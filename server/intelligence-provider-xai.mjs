@@ -1,14 +1,9 @@
 import { buildIntelligencePrompt } from "./intelligence-prompt.mjs";
 import { consolidateEvents, INTELLIGENCE_RESPONSE_SCHEMA, normalizeExternalEvent } from "./intelligence-schema.mjs";
+import { IntelligenceProviderError } from "./intelligence-errors.mjs";
+import { priorityXHandles, priorityXRegistry } from "./intelligence-x-priority.mjs";
 
-export class IntelligenceProviderError extends Error {
-  constructor(code, message, status = 502) {
-    super(message);
-    this.name = "IntelligenceProviderError";
-    this.code = code;
-    this.status = status;
-  }
-}
+export { IntelligenceProviderError } from "./intelligence-errors.mjs";
 
 function outputText(payload) {
   if (typeof payload.output_text === "string") return payload.output_text;
@@ -33,13 +28,13 @@ export function buildXaiRequestBody(options = {}, now = new Date()) {
   const lookbackHours = Math.max(1, Math.min(168, Number(options.lookbackHours) || 24));
   const toDate = new Date(now);
   const fromDate = new Date(toDate.getTime() - lookbackHours * 60 * 60 * 1000);
+  const searchMode = options.searchMode === "priority" ? "priority" : "broad";
+  const xSearch = { type: "x_search", from_date: fromDate.toISOString().slice(0, 10), to_date: toDate.toISOString().slice(0, 10) };
+  if (searchMode === "priority") xSearch.allowed_x_handles = priorityXHandles();
   return {
     model: process.env.XAI_MODEL || "grok-4.6",
-    input: [{ role: "user", content: buildIntelligencePrompt({ ...options, lookbackHours }) }],
-    tools: [
-      { type: "x_search", from_date: fromDate.toISOString().slice(0, 10), to_date: toDate.toISOString().slice(0, 10) },
-      { type: "web_search" },
-    ],
+    input: [{ role: "user", content: buildIntelligencePrompt({ ...options, lookbackHours, searchMode }) }],
+    tools: searchMode === "priority" ? [xSearch] : [xSearch, { type: "web_search" }],
     max_turns: 2,
     include: ["no_inline_citations"],
     text: {
@@ -48,11 +43,8 @@ export function buildXaiRequestBody(options = {}, now = new Date()) {
   };
 }
 
-export async function scanWithXai(options = {}) {
-  const apiKey = process.env.XAI_API_KEY;
-  if (!apiKey) throw new IntelligenceProviderError("provider_not_configured", "XAI_API_KEY is not configured", 503);
-  const lookbackHours = Math.max(1, Math.min(168, Number(options.lookbackHours) || 24));
-  const requestBody = buildXaiRequestBody({ ...options, lookbackHours });
+async function requestXai(apiKey, options, searchMode) {
+  const requestBody = buildXaiRequestBody({ ...options, searchMode });
   let response;
   try {
     response = await fetch("https://api.x.ai/v1/responses", {
@@ -76,15 +68,38 @@ export async function scanWithXai(options = {}) {
   catch { throw new IntelligenceProviderError("invalid_provider_json", "xAI output was not valid JSON"); }
   const citations = Array.isArray(payload.citations) ? payload.citations : [];
   const events = consolidateEvents((parsed.events || []).map((event) => normalizeExternalEvent(event, citations)));
+  return { events, citations, responseId: payload.id || null, generatedAt: parsed.generated_at || new Date().toISOString(), searchMode };
+}
+
+export async function scanWithXai(options = {}) {
+  const apiKey = process.env.XAI_API_KEY;
+  if (!apiKey) throw new IntelligenceProviderError("provider_not_configured", "XAI_API_KEY is not configured", 503);
+  const lookbackHours = Math.max(1, Math.min(168, Number(options.lookbackHours) || 24));
+  const settled = await Promise.allSettled([
+    requestXai(apiKey, { ...options, lookbackHours }, "priority"),
+    requestXai(apiKey, { ...options, lookbackHours }, "broad"),
+  ]);
+  const successes = settled.filter((item) => item.status === "fulfilled").map((item) => item.value);
+  if (!successes.length) throw settled[0].reason;
+  const events = consolidateEvents(successes.flatMap((item) => item.events));
+  const citations = [...new Set(successes.flatMap((item) => item.citations))];
   return {
     meta: {
       version: 1,
-      generatedAt: new Date(parsed.generated_at || Date.now()).toISOString(),
+      generatedAt: new Date().toISOString(),
       snapshotMode: "live_xai",
       lookbackHours,
       total: events.length,
       returned: events.length,
-      provider: { ...xaiProviderStatus(), citationsExamined: citations.length, responseId: payload.id || null },
+      provider: {
+        ...xaiProviderStatus(),
+        citationsExamined: citations.length,
+        responseIds: successes.map((item) => item.responseId).filter(Boolean),
+        searchPasses: successes.map((item) => item.searchMode),
+        handleSetVersion: priorityXRegistry().version,
+        priorityHandles: priorityXHandles(),
+        partialFailures: settled.filter((item) => item.status === "rejected").length,
+      },
       methodology: {
         confidence: "Source authority and corroboration only; social volume never increases factual confidence.",
         sentiment: "Fantasy-value direction from -100 to +100; distinct from factual confidence.",

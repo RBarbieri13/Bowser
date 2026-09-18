@@ -1,0 +1,110 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "status": "PASS",
+      "check": "86 source-backed offensive players"
+    },
+    {
+      "status": "PASS",
+      "check": "QB filter",
+      "detail": 15
+    },
+    {
+      "status": "PASS",
+      "check": "RB filter",
+      "detail": 23
+    },
+    {
+      "status": "PASS",
+      "check": "WR filter",
+      "detail": 33
+    },
+    {
+      "status": "PASS",
+      "check": "TE filter",
+      "detail": 15
+    },
+    {
+      "status": "PASS",
+      "check": "Player search"
+    },
+    {
+      "status": "PASS",
+      "check": "Budget bases, original dollars and open bounds stay distinct",
+      "detail": {
+        "footballguys": "$20\u2013$40 A",
+        "cbs": "\u2265$8 R",
+        "fantasypros": "$9 ?",
+        "draftsharks": "$20\u2013$30 ?"
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "Saved bid and note survive reload"
+    },
+    {
+      "status": "PASS",
+      "check": "New league workspace has no inherited targets"
+    },
+    {
+      "status": "PASS",
+      "check": "Returning to first league restores only its targets"
+    },
+    {
+      "status": "PASS",
+      "check": "Saved-target filter"
+    },
+    {
+      "status": "PASS",
+      "check": "Ownership filter excludes unknown and over-threshold players",
+      "detail": 22
+    },
+    {
+      "status": "PASS",
+      "check": "Numeric rank sort with missing values last"
+    },
+    {
+      "status": "PASS",
+      "check": "Multi-sort adds a second sort"
+    },
+    {
+      "status": "PASS",
+      "check": "1-QB and superflex source values remain separate"
+    },
+    {
+      "status": "PASS",
+      "check": "Half PPR differs only by reception scoring"
+    },
+    {
+      "status": "PASS",
+      "check": "Standard scoring conversion"
+    },
+    {
+      "status": "PASS",
+      "check": "All 65 columns available (63 metrics plus player and favorite)"
+    },
+    {
+      "status": "PASS",
+      "check": "Unmatched statistics remain unknown rather than zero"
+    },
+    {
+      "status": "PASS",
+      "check": "Visible table CSV export"
+    },
+    {
+      "status": "PASS",
+      "check": "Mobile page contains table overflow",
+      "detail": {
+        "pageWidth": 390,
+        "viewport": 390,
+        "tableScroll": true
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "No browser runtime or console errors",
+      "detail": []
+    }
+  ]
+}

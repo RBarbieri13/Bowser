@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "scope": "Independent read-only source/UI contract review; browser rendering is verified separately by the root agent.",
+  "checks": [
+    {"name": "Focused UI regressions", "status": "PASS", "evidence": "npx vitest run tests/trends.test.jsx tests/opportunity-repair.test.jsx tests/waivers-ui.test.jsx: 19 tests passed across 3 files. After corrections, node --test tests/waivers-api.test.mjs passed 7 tests and npx vitest run tests/waivers-ui.test.jsx passed 10 tests."},
+    {"name": "Shared metric selectors", "status": "PASS", "evidence": "OpportunityTracker, App and Waivers all render TrendMetricSelect from TrendChart.jsx; the complete 19-metric catalogue includes position_finish. Opportunity choices persist independently for each position and all three chart slots."},
+    {"name": "Comparable scales and missing/zero/negative values", "status": "PASS", "evidence": "server/trend-history.mjs derives zero-inclusive domains across NFL peers before user filters. TrendChart renders signed bars against that domain and distinguishes null from zero; focused tests check a 42:2 ratio and negative bars."},
+    {"name": "Aligned season/week slots", "status": "PASS", "evidence": "Player Database and Opportunity share calendarSlots and 2025-to-2026 alignedHistory. Corrected Waivers independently obtains history for known IDs absent from selected-statistics rows. Live local function readback asserts Penix history equality across Waivers and Opportunity, null current-week points, and ten aligned slots for every known waiver ID."},
+    {"name": "Opportunity filters and saved selections", "status": "PASS", "evidence": "Statistics year, scoring, team, 5/8/10-week history and independent matchup weeks reach their intended query/control state. Six focused tests cover range/extras preservation, reload, corrupt preferences, reset and stale-request handling."},
+    {"name": "Column controls remain reachable", "status": "PASS", "evidence": "App.jsx exposes Column options in the table heading independently of collapsed column groups; Table Settings remains separately reachable. Waivers Table settings remains in its fixed toolbar."},
+    {"name": "DFS dated context and unavailable values", "status": "PASS", "evidence": "App renders DFS salary season/week separately from statistics season, current slate metadata, sources and capture timestamp, null values as unavailable and last-good availabilityMessage. Root's contemporaneous correction suppresses Shark Snip for a declared projectionProvider."},
+    {"name": "Weekly positional finish meaning", "status": "PASS", "evidence": "Backend uses competition RANK across all NFL peers before filtering. App shows exact week. Waivers source readback now includes dedicated position/scoring/week tooltip and POS FIN context at Waivers.jsx:129,146 after root correction."}
+  ],
+  "findings": [
+    {
+      "id": "UI-02",
+      "status": "RESOLVED_AND_VERIFIED",
+      "priority": "P2",
+      "file": "server/waivers-store.mjs",
+      "line": 105,
+      "title": "Do not gate historical charts on current selected-week totals",
+      "detail": "Original defect: Waivers created trends only from stat.player_trends after joining selected-week totals. Root corrected this with queryPlayerHistories and one additional history lookup for absent known IDs. Independent readback and regression tests pass.",
+      "reproduction": "Before correction: queryWaivers(season=2026&week=2&weeks=1), with an injected empty market provider, yielded Michael Penix Jr. (00-0039917) stats.trends=[] and meta.trendSlots.length=10 while Opportunity returned ten slots. After correction both views return those ten slots, including 2025-10 passAttempts=28 and 2025-11 passAttempts=16, with 2026-1 correctly null.",
+      "expected": "Resolve aligned history independently by stable player ID, retain null selected-week totals, and preserve slot-shaped null history for known players without recorded values.",
+      "coverageGap": "Closed: tests/waivers-api.test.mjs now checks real Penix prior-season values, current missing values and matching slot counts for every known player ID."
+    },
+    {
+      "id": "UI-01",
+      "status": "RESOLVED_SOURCE_READBACK",
+      "priority": "P2",
+      "file": "src/Waivers.jsx",
+      "line": 129,
+      "title": "Label POS FIN with its actual week, position and scoring",
+      "detail": "Originally inherited the selected-range generic stat tooltip. Root corrected it during review with a dedicated exact-week, scoring and position tooltip and POS FIN context line. Source readback verified; all ten existing Waivers UI regressions passed after correction."
+    }
+  ]
+}

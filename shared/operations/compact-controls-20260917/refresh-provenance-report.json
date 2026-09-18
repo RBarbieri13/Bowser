@@ -1,0 +1,372 @@
+{
+  "status": "updated",
+  "changed": true,
+  "publishable": true,
+  "written": true,
+  "dryRun": false,
+  "season": 2026,
+  "week": 2,
+  "defaultSlate": "2026-w2-dk-153427",
+  "updatedSlates": [
+    "2026-w2-dk-153427",
+    "2026-w2-dk-153430",
+    "2026-w2-dk-153428",
+    "2026-w2-dk-153429",
+    "2026-w2-dk-153431",
+    "2026-w2-dk-153432",
+    "2026-w2-dk-153434",
+    "2026-w2-dk-153435",
+    "2026-w2-dk-153436",
+    "2026-w2-dk-153437",
+    "2026-w2-dk-153438",
+    "2026-w2-dk-153439",
+    "2026-w2-dk-153440",
+    "2026-w2-dk-153441",
+    "2026-w2-dk-153442",
+    "2026-w2-dk-153443",
+    "2026-w2-dk-153444",
+    "2026-w2-dk-153445",
+    "2026-w2-dk-153446",
+    "2026-w2-dk-153447",
+    "2026-w2-dk-153448",
+    "2026-w2-dk-153449"
+  ],
+  "snapshot": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-compact-controls-20260917/data/dfs-weekly.json",
+  "rawEvidence": "artifacts/compact-controls/dfs/refresh-provenance",
+  "archive": {
+    "path": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-compact-controls-20260917/data/dfs_archive.sqlite",
+    "insertedCaptures": 22,
+    "captures": 86,
+    "rows": 25108,
+    "weeks": [
+      {
+        "season": 2026,
+        "week": 1
+      },
+      {
+        "season": 2026,
+        "week": 2
+      }
+    ],
+    "changed": true,
+    "headsChanged": 22
+  },
+  "coverage": {
+    "2026-w2-dk-153427": {
+      "salaryPlayers": 818,
+      "projectedPlayers": 393,
+      "databasePlayersWithSalary": 756,
+      "databasePlayersWithProjection": 389,
+      "rosterPlayersWithSalary": 758,
+      "unmatchedSalaryPlayers": 60,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "All primary FIC rows for slate teams must join; every scheduled team has QB/RB/WR/TE coverage. Supplemental FSC values require exact name, position, team, game and official salary matches. Other players remain null."
+    },
+    "2026-w2-dk-153430": {
+      "salaryPlayers": 772,
+      "projectedPlayers": 370,
+      "databasePlayersWithSalary": 714,
+      "databasePlayersWithProjection": 367,
+      "rosterPlayersWithSalary": 716,
+      "unmatchedSalaryPlayers": 56,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "All primary FIC rows for slate teams must join; every scheduled team has QB/RB/WR/TE coverage. Supplemental FSC values require exact name, position, team, game and official salary matches. Other players remain null."
+    },
+    "2026-w2-dk-153428": {
+      "salaryPlayers": 670,
+      "projectedPlayers": 319,
+      "databasePlayersWithSalary": 618,
+      "databasePlayersWithProjection": 317,
+      "rosterPlayersWithSalary": 620,
+      "unmatchedSalaryPlayers": 50,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "All primary FIC rows for slate teams must join; every scheduled team has QB/RB/WR/TE coverage. Supplemental FSC values require exact name, position, team, game and official salary matches. Other players remain null."
+    },
+    "2026-w2-dk-153429": {
+      "salaryPlayers": 409,
+      "projectedPlayers": 197,
+      "databasePlayersWithSalary": 375,
+      "databasePlayersWithProjection": 195,
+      "rosterPlayersWithSalary": 376,
+      "unmatchedSalaryPlayers": 33,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "All primary FIC rows for slate teams must join; every scheduled team has QB/RB/WR/TE coverage. Supplemental FSC values require exact name, position, team, game and official salary matches. Other players remain null."
+    },
+    "2026-w2-dk-153431": {
+      "salaryPlayers": 259,
+      "projectedPlayers": 122,
+      "databasePlayersWithSalary": 243,
+      "databasePlayersWithProjection": 122,
+      "rosterPlayersWithSalary": 244,
+      "unmatchedSalaryPlayers": 15,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "All primary FIC rows for slate teams must join; every scheduled team has QB/RB/WR/TE coverage. Supplemental FSC values require exact name, position, team, game and official salary matches. Other players remain null."
+    },
+    "2026-w2-dk-153432": {
+      "salaryPlayers": 155,
+      "projectedPlayers": 70,
+      "databasePlayersWithSalary": 144,
+      "databasePlayersWithProjection": 70,
+      "rosterPlayersWithSalary": 145,
+      "unmatchedSalaryPlayers": 10,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "All primary FIC rows for slate teams must join; every scheduled team has QB/RB/WR/TE coverage. Supplemental FSC values require exact name, position, team, game and official salary matches. Other players remain null."
+    },
+    "2026-w2-dk-153434": {
+      "salaryPlayers": 94,
+      "salaryEntries": 94,
+      "distinctSalaryPlayers": 47,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 44,
+      "databasePlayersWithSalary": 84,
+      "databasePlayersWithProjection": 42,
+      "rosterPlayersWithSalary": 88,
+      "unmatchedSalaryPlayers": 6,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153435": {
+      "salaryPlayers": 106,
+      "salaryEntries": 106,
+      "distinctSalaryPlayers": 53,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 52,
+      "databasePlayersWithSalary": 96,
+      "databasePlayersWithProjection": 52,
+      "rosterPlayersWithSalary": 100,
+      "unmatchedSalaryPlayers": 6,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153436": {
+      "salaryPlayers": 108,
+      "salaryEntries": 108,
+      "distinctSalaryPlayers": 54,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 48,
+      "databasePlayersWithSalary": 96,
+      "databasePlayersWithProjection": 48,
+      "rosterPlayersWithSalary": 100,
+      "unmatchedSalaryPlayers": 8,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153437": {
+      "salaryPlayers": 104,
+      "salaryEntries": 104,
+      "distinctSalaryPlayers": 52,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 50,
+      "databasePlayersWithSalary": 90,
+      "databasePlayersWithProjection": 50,
+      "rosterPlayersWithSalary": 96,
+      "unmatchedSalaryPlayers": 8,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153438": {
+      "salaryPlayers": 106,
+      "salaryEntries": 106,
+      "distinctSalaryPlayers": 53,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 50,
+      "databasePlayersWithSalary": 94,
+      "databasePlayersWithProjection": 50,
+      "rosterPlayersWithSalary": 98,
+      "unmatchedSalaryPlayers": 8,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153439": {
+      "salaryPlayers": 100,
+      "salaryEntries": 100,
+      "distinctSalaryPlayers": 50,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 48,
+      "databasePlayersWithSalary": 88,
+      "databasePlayersWithProjection": 48,
+      "rosterPlayersWithSalary": 92,
+      "unmatchedSalaryPlayers": 8,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153440": {
+      "salaryPlayers": 106,
+      "salaryEntries": 106,
+      "distinctSalaryPlayers": 53,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 46,
+      "databasePlayersWithSalary": 92,
+      "databasePlayersWithProjection": 44,
+      "rosterPlayersWithSalary": 96,
+      "unmatchedSalaryPlayers": 10,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153441": {
+      "salaryPlayers": 116,
+      "salaryEntries": 116,
+      "distinctSalaryPlayers": 58,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 50,
+      "databasePlayersWithSalary": 98,
+      "databasePlayersWithProjection": 48,
+      "rosterPlayersWithSalary": 104,
+      "unmatchedSalaryPlayers": 12,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153442": {
+      "salaryPlayers": 112,
+      "salaryEntries": 112,
+      "distinctSalaryPlayers": 56,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 50,
+      "databasePlayersWithSalary": 96,
+      "databasePlayersWithProjection": 50,
+      "rosterPlayersWithSalary": 104,
+      "unmatchedSalaryPlayers": 8,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153443": {
+      "salaryPlayers": 112,
+      "salaryEntries": 112,
+      "distinctSalaryPlayers": 56,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 50,
+      "databasePlayersWithSalary": 102,
+      "databasePlayersWithProjection": 50,
+      "rosterPlayersWithSalary": 108,
+      "unmatchedSalaryPlayers": 4,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153444": {
+      "salaryPlayers": 106,
+      "salaryEntries": 106,
+      "distinctSalaryPlayers": 53,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 54,
+      "databasePlayersWithSalary": 96,
+      "databasePlayersWithProjection": 54,
+      "rosterPlayersWithSalary": 100,
+      "unmatchedSalaryPlayers": 6,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153445": {
+      "salaryPlayers": 112,
+      "salaryEntries": 112,
+      "distinctSalaryPlayers": 56,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 46,
+      "databasePlayersWithSalary": 96,
+      "databasePlayersWithProjection": 46,
+      "rosterPlayersWithSalary": 102,
+      "unmatchedSalaryPlayers": 10,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153446": {
+      "salaryPlayers": 106,
+      "salaryEntries": 106,
+      "distinctSalaryPlayers": 53,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 50,
+      "databasePlayersWithSalary": 94,
+      "databasePlayersWithProjection": 50,
+      "rosterPlayersWithSalary": 98,
+      "unmatchedSalaryPlayers": 8,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153447": {
+      "salaryPlayers": 106,
+      "salaryEntries": 106,
+      "distinctSalaryPlayers": 53,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 44,
+      "databasePlayersWithSalary": 98,
+      "databasePlayersWithProjection": 44,
+      "rosterPlayersWithSalary": 102,
+      "unmatchedSalaryPlayers": 4,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153448": {
+      "salaryPlayers": 108,
+      "salaryEntries": 108,
+      "distinctSalaryPlayers": 54,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 48,
+      "databasePlayersWithSalary": 96,
+      "databasePlayersWithProjection": 46,
+      "rosterPlayersWithSalary": 100,
+      "unmatchedSalaryPlayers": 8,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    },
+    "2026-w2-dk-153449": {
+      "salaryPlayers": 106,
+      "salaryEntries": 106,
+      "distinctSalaryPlayers": 53,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 56,
+      "databasePlayersWithSalary": 96,
+      "databasePlayersWithProjection": 56,
+      "rosterPlayersWithSalary": 100,
+      "unmatchedSalaryPlayers": 6,
+      "sourceProjectionRows": 192,
+      "projectionCoverageDefinition": "Both FLEX/CPT salary populations must match, at least 40 players per game, all team/positions including K/DEF. FIC full-game points join by name/position/team/game; FSC values first match an official same-week Classic salary. CPT projection = retained source base \u00d7 1.5; missing projections remain null."
+    }
+  }
+}

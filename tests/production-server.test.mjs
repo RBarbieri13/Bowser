@@ -40,7 +40,7 @@ test("production API serves the packaged SQLite warehouse", async (t) => {
   assert.equal(statsResponse.status, 200);
   const stats = await statsResponse.json();
   assert.equal(stats.data.length, 609);
-  assert.ok(stats.meta.queryMs < 250);
+  assert.ok(stats.meta.queryMs < 250, `Cold player query took ${stats.meta.queryMs} ms; budget is 250 ms`);
 
   const profileResponse = await fetch(`${origin}/api/v1/player-profile?playerId=00-0033280&scoring=ppr`);
   assert.equal(profileResponse.status, 200);
@@ -82,7 +82,13 @@ test("production API serves the packaged SQLite warehouse", async (t) => {
 
   const sourceResponse = await fetch(`${origin}/api/v1/intelligence-sources`);
   assert.equal(sourceResponse.status, 200);
-  assert.equal((await sourceResponse.json()).summary.total, 15);
+  assert.equal((await sourceResponse.json()).summary.total, 23);
+
+  const legacyLiveResponse = await fetch(`${origin}/api/v1/intelligence-feed?live=1`);
+  assert.equal(legacyLiveResponse.status, 405);
+
+  const refreshResponse = await fetch(`${origin}/api/v1/intelligence-runs`, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" });
+  assert.equal(refreshResponse.status, 503);
 });
 
 test("Market Pulse hosted route supports offline reads without writing the deployment filesystem", async () => {

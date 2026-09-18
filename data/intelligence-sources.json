@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-26T20:20:00-05:00",
+  "updatedAt": "2026-08-30T15:30:00-05:00",
   "sources": [
     {
       "id": "xai-x-search",
@@ -23,6 +23,94 @@
       "role": "Wide web discovery and corroboration with source URLs.",
       "adoption": "primary",
       "notes": "Runs with X Search so official reporting and social reporting can be compared."
+    },
+    {
+      "id": "fantasypros-player-news",
+      "name": "FantasyPros Player News API",
+      "kind": "authenticated_api",
+      "url": "https://api.fantasypros.com/public/v2/docs/",
+      "license": "FantasyPros API agreement",
+      "automation": "connector_ready_pending_rights_flag",
+      "role": "Core structured player news, fantasy impact, categories, links, and timestamps.",
+      "adoption": "connector_ready",
+      "notes": "Uses FANTASYPROS_API_KEY server-side through the documented public v2 NFL news endpoint, but will not activate until an applicable rights record supports FANTASYPROS_INGESTION_AUTHORIZED=true."
+    },
+    {
+      "id": "sleeper-trending",
+      "name": "Sleeper Trending Players API",
+      "kind": "public_api",
+      "url": "https://docs.sleeper.com/",
+      "license": "Public API with attribution and documented rate guidance",
+      "automation": "supported_with_daily_cache",
+      "role": "Core waiver-market signal for adds, drops, short-window velocity, and trend direction.",
+      "adoption": "primary",
+      "notes": "Cached for 24 hours and treated as market activity, never as confirmation of football news."
+    },
+    {
+      "id": "fantasycalc-market",
+      "name": "FantasyCalc",
+      "kind": "public_json",
+      "url": "https://fantasycalc.com/",
+      "license": "Attributed non-commercial integration; commercial permission required",
+      "automation": "connector_ready_opt_in",
+      "role": "Supplementary redraft market-value and 30-day movement signal.",
+      "adoption": "connector_ready",
+      "notes": "Disabled until FANTASYCALC_ENABLED=true; market values never override factual reporting."
+    },
+    {
+      "id": "fantasy-life-utilization",
+      "name": "Fantasy Life Utilization Report",
+      "kind": "licensed_surface",
+      "url": "https://www.fantasylife.com/articles/fantasy/",
+      "license": "Provider terms prohibit unlicensed scraping and database publication",
+      "automation": "blocked_pending_licensed_feed",
+      "role": "Desired utilization metrics: snaps, routes, target share, rush share, situational work, and utilization score.",
+      "adoption": "reference_only",
+      "notes": "The adapter remains gated until Fantasy Life provides permission or an authorized feed/export."
+    },
+    {
+      "id": "keeptradecut-market",
+      "name": "KeepTradeCut",
+      "kind": "licensed_surface",
+      "url": "https://keeptradecut.com/",
+      "license": "Website terms prohibit automated collection without permission",
+      "automation": "blocked_pending_licensed_feed",
+      "role": "Desired supplementary dynasty market-sentiment signal.",
+      "adoption": "reference_only",
+      "notes": "No automated collection is enabled."
+    },
+    {
+      "id": "32beatwriters-nuggets",
+      "name": "32 Beat Writers — Nuggets",
+      "kind": "authenticated_api",
+      "url": "https://www.32beatwriters.com/feeds/nuggets",
+      "license": "Paid membership; separate written ingestion and display authorization required",
+      "automation": "connector_ready_pending_rights_and_token",
+      "role": "Core beat-writer reporting feed with player, team, position, date, and team-usage context.",
+      "adoption": "connector_ready",
+      "notes": "The adapter targets the first-party JSON API. It rejects browser session tokens and remains inactive until a provider-issued token and written automation/display authorization are configured."
+    },
+    {
+      "id": "32beatwriters-fantasy-insight",
+      "name": "32 Beat Writers — Fantasy Insight",
+      "kind": "authenticated_api",
+      "url": "https://www.32beatwriters.com/feeds/fantasy-insight",
+      "license": "Paid membership; separate written ingestion and display authorization required",
+      "automation": "connector_ready_pending_rights_and_token",
+      "role": "Core expert interpretation layer associated with 32 Beat Writers nuggets.",
+      "adoption": "connector_ready",
+      "notes": "Uses the same first-party nuggets API with feedType=fantasy and onlyFantasyInsight=true once authorized."
+    },
+    {
+      "id": "rotowire-nfl-rss",
+      "name": "RotoWire NFL RSS",
+      "kind": "public_rss",
+      "url": "https://www.rotowire.com/rss/news.php?sport=NFL",
+      "license": "Public RSS for readers, blogs, and personal websites; commercial syndication is separate",
+      "automation": "supported_with_attribution",
+      "role": "Supplementary player-news signal and corroboration source; never overrides a core source.",
+      "adoption": "supplementary",
+      "notes": "Bowser stores the RSS item ID, headline, short description, timestamp, and source link with RotoWire attribution."
     },
     {
       "id": "twif-overall",

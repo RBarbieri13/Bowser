@@ -10,18 +10,24 @@
     "data:rankings": "python3 scripts/import_fantasypros_adp.py",
     "data:verify": "python3 scripts/verify_warehouse.py",
     "intelligence:refresh": "node scripts/refresh_intelligence.mjs",
-    "test": "node --test tests/warehouse.test.mjs tests/dfs.test.mjs",
-    "test:ui": "vitest run tests/ui.test.jsx",
+    "test": "node --test --test-concurrency=1 tests/warehouse.test.mjs tests/warehouse-2026.test.mjs tests/dfs.test.mjs tests/intelligence-sources.test.mjs tests/intelligence-dedup.test.mjs tests/intelligence-ingest.test.mjs tests/intelligence-api.test.mjs tests/dfs-weekly.test.mjs tests/dfs-archive.test.mjs",
+    "test:ui": "vitest run tests/ui.test.jsx tests/page-controls.test.jsx tests/trends.test.jsx tests/opportunity-repair.test.jsx tests/table-settings.test.jsx tests/team-box-upgrade.test.jsx tests/market-table-upgrade.test.jsx tests/review-trends-regression.test.jsx tests/review-table-regression.test.jsx",
     "test:market": "node --test tests/market-pulse.test.mjs && vitest run tests/market-pulse-ui.test.jsx",
-    "check": "npm run data:verify && npm test && npm run test:dfs-import && npm run test:ui && npm run test:market && npm run build && npm run test:production && npm run test:sites",
+    "check": "npm run data:verify && npm run data:verify:2026 && npm test && npm run test:dfs-import && npm run test:ui && npm run test:market && npm run test:waivers && npm run build && npm run test:production && npm run test:sites",
     "build": "vite build && node scripts/prepare-sites-build.mjs",
     "vercel-build": "vite build",
     "serve": "node scripts/serve-production.mjs",
     "test:production": "node --test tests/production-server.test.mjs",
     "preview": "vite preview",
     "test:sites": "node --test tests/sites-worker.test.mjs",
-    "data:dfs": "python3 scripts/import_dfs_week1.py",
-    "test:dfs-import": "python3 tests/test_dfs_import.py"
+    "data:dfs": "python3 scripts/import_dfs_weekly.py",
+    "test:dfs-import": "python3 tests/test_dfs_import.py && python3 tests/test_dfs_weekly_import.py && python3 tests/test_dfs_archive.py",
+    "data:2026": "python3 scripts/import_nflverse_2026.py",
+    "data:verify:2026": "python3 scripts/verify_warehouse_2026.py",
+    "data:waivers": "python3 scripts/import_waivers.py",
+    "test:waivers": "npm run verify:waivers && python3 tests/test_waiver_import.py && node --test tests/waivers-api.test.mjs && vitest run tests/waivers-ui.test.jsx",
+    "verify:waivers": "python3 scripts/import_waivers.py --verify",
+    "data:dfs:week1": "python3 scripts/import_dfs_week1.py"
   },
   "dependencies": {
     "@phosphor-icons/react": "2.1.10",
@@ -29,7 +35,8 @@
     "express": "5.2.1",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "vite": "6.4.2"
+    "vite": "6.4.2",
+    "@neondatabase/serverless": "1.1.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.9.1",
