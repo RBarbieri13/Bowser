@@ -29,12 +29,25 @@ function archiveSlates() {
     const query = hasHeads ? 'SELECT c.*,h.observed_at FROM dfs_slate_heads h JOIN dfs_captures c USING(capture_id)' : `SELECT * FROM (SELECT *,ROW_NUMBER() OVER(PARTITION BY season,week,slate_id ORDER BY captured_at DESC,capture_id DESC) AS version_order FROM dfs_captures) WHERE version_order=1`;
     return Object.fromEntries(db.prepare(query).all().map(row => {
       const meta=JSON.parse(row.metadata_json);
-      const records=db.prepare('SELECT record_json FROM dfs_prices WHERE capture_id=? ORDER BY rowid').all(row.capture_id).map(r=>JSON.parse(r.record_json));
-      return [row.slate_key,{...meta,lastObservedAt:row.observed_at || row.captured_at,records}];
+      return [row.slate_key,{...meta,lastObservedAt:row.observed_at || row.captured_at}];
     }));
   }) || {};
-  archiveCache = {signature,slates,index:null};
+  archiveCache = {signature,slates,index:null,records:new Map()};
   return slates;
+}
+
+// Loading the slate menu must not parse every historical salary record.
+function archivedSlate(key) {
+  const meta = archiveSlates()[key];
+  if (!meta) return null;
+  let records = archiveCache.records.get(meta.captureId);
+  if (!records) {
+    records = withArchive(db => db.prepare('SELECT record_json FROM dfs_prices WHERE capture_id=? ORDER BY rowid')
+      .all(meta.captureId).map(row => JSON.parse(row.record_json)));
+    if (!records) return null;
+    archiveCache.records.set(meta.captureId, records);
+  }
+  return { ...meta, records };
 }
 
 export function getDfsArchiveIndex() {
@@ -95,7 +108,9 @@ export function getDfsSlate(key = 'current') {
   const isCaptain = requestedKey.endsWith(':cpt');
   const resolvedKey = requestedKey === 'current' ? defaultKey : isCaptain ? requestedKey.slice(0,-4) : requestedKey;
   if (!Object.hasOwn(slates, resolvedKey)) return null;
-  const { records, ...meta } = slates[resolvedKey];
+  const selected = archivedSlate(resolvedKey) || weekly?.slates?.[resolvedKey] || historical.slates[resolvedKey];
+  if (!selected) return null;
+  const { records, ...meta } = selected;
   if (isCaptain && meta.contestTypeId !== 96) return null;
   const now = Date.now();
   const ended = new Date(meta.endsAt).getTime() + 4 * 60 * 60 * 1000 < now;
@@ -124,7 +139,7 @@ export function getDfsWeek(season, week, { slateId, captureId, rosterPosition = 
     && (slateId || captureId || s.scoring === 'DraftKings Classic') && (!slateId || s.slateId === Number(slateId)) && (!captureId || s.captureId === captureId));
   const choice = index.toSorted((a,b) => b.gameCount-a.gameCount || b.capturedAt.localeCompare(a.capturedAt) || a.slateId-b.slateId)[0];
   if (choice) {
-    const cached = archiveCache.slates[choice.key];
+    const cached = active[choice.key]?.captureId === choice.captureId ? archivedSlate(choice.key) : null;
     if (cached?.captureId === choice.captureId) {
       const { records,...meta } = cached;
       return selectRosterRole({records:records.filter(r => r.playerId),meta:{...meta,key:choice.key,availability:'archived',selection:'exact-week',referenceSeason:season,referenceWeek:week,available:true,reason:null}},rosterPosition);

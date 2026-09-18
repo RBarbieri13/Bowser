@@ -1,5 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { cpSync, mkdtempSync, mkdirSync, renameSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { DatabaseSync } from 'node:sqlite';
 import { getDfsWeek,getDfsArchiveIndex,getDfsSlate } from '../server/dfs-store.mjs';
 import { queryPlayers,queryTeamBoxScores,queryOpportunityTracker,queryPlayerIdentity,queryPlayerProfile,queryDfsArchive,openDatabase } from '../server/stats-store.mjs';
 
@@ -133,4 +138,32 @@ test('Showdown player/Opportunity joins and exact archived role selection never 
  }
  assert.throws(()=>queryDfsArchive(params({season:'2026',week:'2',slateId:'153434',rosterPosition:'invalid'})),/FLEX or CPT/);
  assert.equal(getDfsWeek(2026,2).meta.scoring,'DraftKings Classic');
+});
+
+
+test('selected archive records are reused and refreshed after atomic archive replacement', async () => {
+  const temp = mkdtempSync(join(tmpdir(), 'bowser-archive-cache-'));
+  try {
+    mkdirSync(join(temp, 'server')); mkdirSync(join(temp, 'data'));
+    for (const file of ['server/dfs-store.mjs', 'data/dfs-week1-2026.json', 'data/dfs-weekly.json', 'data/dfs_archive.sqlite']) {
+      cpSync(new URL(`../${file}`, import.meta.url), join(temp, file));
+    }
+    const isolated = await import(pathToFileURL(join(temp, 'server/dfs-store.mjs')));
+    const key = '2026-w2-dk-153427';
+    const first = isolated.getDfsSlate(key);
+    assert.equal(isolated.getDfsSlate(key).records[0], first.records[0]);
+    const archive = join(temp, 'data/dfs_archive.sqlite');
+    cpSync(archive, `${archive}.next`);
+    const db = new DatabaseSync(`${archive}.next`);
+    try {
+      db.prepare("UPDATE dfs_prices SET record_json=json_set(record_json, '$.salary', ?) WHERE capture_id=? AND player_id=?")
+        .run(first.records[0].salary + 100, first.meta.captureId, first.records[0].playerId);
+    } finally { db.close(); }
+    renameSync(`${archive}.next`, archive);
+    const updated = isolated.getDfsSlate(key);
+    assert.equal(updated.records[0].salary, first.records[0].salary + 100);
+    assert.notEqual(updated.records[0], first.records[0]);
+    assert.equal(isolated.getDfsWeek(2026, 2, { captureId: updated.meta.captureId }).records[0], updated.records[0]);
+    assert.deepEqual(updated.meta.options, first.meta.options);
+  } finally { rmSync(temp, { recursive: true, force: true }); }
 });
