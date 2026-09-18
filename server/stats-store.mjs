@@ -367,8 +367,9 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
 
   const rankFilter = ranks.length ? `WHERE rank IN (${placeholders(ranks)})` : "";
   const sql = `
+    -- Match the warehouse TEXT keys so SQLite can index both materialized joins.
     WITH dfs AS MATERIALIZED (
-      SELECT json_extract(value,'$.playerId') AS player_id,
+      SELECT CAST(json_extract(value,'$.playerId') AS TEXT) AS player_id,
         json_extract(value,'$.salary') AS salary,
         json_extract(value,'$.projection') AS projection,
         json_extract(value,'$.team') AS team,
@@ -377,8 +378,15 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
         json_extract(value,'$.projectionUrl') AS projection_url
       FROM json_each(?)
     ), weekly_finish AS MATERIALIZED (
-      SELECT json_extract(value, '$[0]') AS player_id, json_extract(value, '$[1]') AS position_finish
+      SELECT CAST(json_extract(value, '$[0]') AS TEXT) AS player_id, json_extract(value, '$[1]') AS position_finish
       FROM json_each(?)
+    ), upcoming_games AS MATERIALIZED (
+      SELECT schedule.* FROM team_schedule schedule
+      INNER JOIN (
+        SELECT team, MIN(gameday) AS gameday FROM team_schedule
+        WHERE season = 2026 AND gameday >= DATE('now') GROUP BY team
+      ) next_game ON next_game.team = schedule.team AND next_game.gameday = schedule.gameday
+      WHERE schedule.season = 2026
     ), aggregated AS (
       SELECT
         player_id,
@@ -465,16 +473,7 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
       LEFT JOIN players ON players.player_id = aggregated.player_id
       LEFT JOIN yahoo_ownership ON yahoo_ownership.player_id = aggregated.player_id
       LEFT JOIN yahoo_player_metrics ON yahoo_player_metrics.player_id = aggregated.player_id
-      LEFT JOIN team_schedule AS upcoming
-        ON upcoming.season = 2026
-        AND upcoming.team = ${upcomingTeam}
-        AND upcoming.gameday = (
-          SELECT MIN(next_game.gameday)
-          FROM team_schedule AS next_game
-          WHERE next_game.season = 2026
-            AND next_game.team = ${upcomingTeam}
-            AND next_game.gameday >= DATE('now')
-        )
+      LEFT JOIN upcoming_games AS upcoming ON upcoming.team = ${upcomingTeam}
     ), filtered AS (
       SELECT * FROM enriched WHERE games_played >= ? AND snaps >= ?
     ), ranked AS (

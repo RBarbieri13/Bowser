@@ -9,6 +9,9 @@ export const TREND_METRICS = {
   fantasy_points: 'fantasyPoints', position_finish: 'positionFinish',
 };
 
+const TREND_ENTRIES = Object.entries(TREND_METRICS);
+const TREND_FIELDS = Object.values(TREND_METRICS);
+
 export function completedRegularWeeks(db, season) {
   return db.prepare(`
     SELECT week FROM games WHERE season = ? AND season_type = 'REG'
@@ -82,7 +85,7 @@ export function alignedHistory(sources, { season, weeks = [], count = 10, recept
     const key = `${row.season}-${row.week}`;
     if (!byPlayer.has(row.player_id)) byPlayer.set(row.player_id, new Map());
     byPlayer.get(row.player_id).set(key, row);
-    for (const [metric, field] of Object.entries(TREND_METRICS)) {
+    for (const [metric, field] of TREND_ENTRIES) {
       if (Number.isFinite(row[field])) {
         domains[metric].min = Math.min(domains[metric].min, row[field]);
         domains[metric].max = Math.max(domains[metric].max, row[field]);
@@ -95,7 +98,7 @@ export function alignedHistory(sources, { season, weeks = [], count = 10, recept
   const rankRows = rankWeek === null ? [] : rows.filter((row) => row.season === season && row.week === rankWeek);
   const rankByPlayer = new Map((rankRows.length || rankWeek === null ? rankRows : readRankedWeeks(current.db, season, [rankWeek], receptionBonus))
     .map((row) => [row.player_id, row.positionFinish]));
-  const emptyMetrics = Object.fromEntries(Object.values(TREND_METRICS).map((metric) => [metric, null]));
+  const emptyMetrics = Object.fromEntries(TREND_FIELDS.map((metric) => [metric, null]));
   return {
     slots, domains, rankEntries: [...rankByPlayer],
     rankContext: {
@@ -109,7 +112,8 @@ export function alignedHistory(sources, { season, weeks = [], count = 10, recept
     forPlayer(playerId) {
       return slots.map((slot) => {
         const row = byPlayer.get(playerId)?.get(slot.key);
-        const values = row ? Object.fromEntries(Object.values(TREND_METRICS).map((metric) => [metric, row[metric]])) : emptyMetrics;
+        const values = row ? {} : emptyMetrics;
+        if (row) for (const metric of TREND_FIELDS) values[metric] = row[metric];
         return {
           ...slot, gameId: row?.gameId ?? null, gameday: row?.gameday ?? null,
           team: row?.team ?? null, opponent: row?.opponent ?? null,

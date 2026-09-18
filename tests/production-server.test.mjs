@@ -40,7 +40,7 @@ test("production API serves the packaged SQLite warehouse", async (t) => {
   assert.equal(statsResponse.status, 200);
   const stats = await statsResponse.json();
   assert.equal(stats.data.length, 609);
-  assert.ok(stats.meta.queryMs < 250);
+  assert.ok(stats.meta.queryMs < 250, `Cold player query took ${stats.meta.queryMs} ms; budget is 250 ms`);
 
   const profileResponse = await fetch(`${origin}/api/v1/player-profile?playerId=00-0033280&scoring=ppr`);
   assert.equal(profileResponse.status, 200);
