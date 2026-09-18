@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, cpSync, rmSync } from 'node:fs';
+import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, cpSync, rmSync, renameSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -113,4 +113,40 @@ test('Thursday full-game Showdown selection isolates official FLEX and CPT value
   assert.equal(captain.records.find(r=>r.playerId===gibbs.playerId).salary,18000);
   assert.equal(getDfsSlate('2026-w2-dk-153427:cpt'),null);
   assert.equal(getDfsSlate('current').meta.scoring,'DraftKings Classic');
+});
+
+
+test('weekly snapshot reuse detects atomic refreshes and preserves invalid-file fallback', async () => {
+  const temp = mkdtempSync(join(tmpdir(), 'bowser-dfs-cache-'));
+  try {
+    mkdirSync(join(temp, 'server')); mkdirSync(join(temp, 'data'));
+    cpSync(new URL('../server/dfs-store.mjs', import.meta.url), join(temp, 'server/dfs-store.mjs'));
+    cpSync(pinnedPath, join(temp, 'data/dfs-week1-2026.json'));
+    const key = weekly.defaultSlate;
+    const slate = structuredClone(weekly.slates[key]);
+    slate.records = slate.records.filter(row => row.playerId).slice(0, 1);
+    const snapshot = { schemaVersion: 2, validation: { status: 'verified' }, defaultSlate: key, slates: { [key]: slate } };
+    const path = join(temp, 'data/dfs-weekly.json');
+    writeFileSync(path, JSON.stringify(snapshot));
+    const isolated = await import(pathToFileURL(join(temp, 'server/dfs-store.mjs')));
+    const first = isolated.getDfsSlate().records[0];
+    assert.equal(isolated.getDfsSlate().records[0], first, 'unchanged snapshots reuse parsed records');
+    assert.equal(isolated.getDfsWeek(slate.season, slate.week).records[0], first);
+    slate.records[0].salary += 100;
+    writeFileSync(`${path}.next`, JSON.stringify(snapshot));
+    renameSync(`${path}.next`, path);
+    const updated = isolated.getDfsSlate().records[0];
+    assert.notEqual(updated, first);
+    assert.equal(updated.salary, first.salary + 100);
+    assert.equal(isolated.getDfsWeek(slate.season, slate.week).records[0].salary, updated.salary);
+    for (const invalid of ['{broken', JSON.stringify({ ...snapshot, validation: { status: 'partial' } })]) {
+      writeFileSync(path, invalid);
+      assert.equal(isolated.getDfsSlate().meta.id, pinned.slates[pinned.defaultSlate].id);
+      assert.equal(isolated.getDfsWeek(slate.season, slate.week).meta.available, false);
+    }
+    rmSync(path);
+    assert.equal(isolated.getDfsSlate().meta.id, pinned.slates[pinned.defaultSlate].id);
+    writeFileSync(path, JSON.stringify(snapshot));
+    assert.equal(isolated.getDfsSlate().records[0].salary, updated.salary);
+  } finally { rmSync(temp, { recursive: true, force: true }); }
 });

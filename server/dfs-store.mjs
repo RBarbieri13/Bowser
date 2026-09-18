@@ -5,6 +5,7 @@ const historical = JSON.parse(readFileSync(new URL('../data/dfs-week1-2026.json'
 const weeklyPath = new URL('../data/dfs-weekly.json', import.meta.url);
 const archivePath = new URL('../data/dfs_archive.sqlite', import.meta.url);
 let archiveCache = null;
+let weeklyCache = null;
 
 function archiveSignature() {
   if (!existsSync(archivePath)) return null;
@@ -52,9 +53,15 @@ export function getDfsArchiveIndex() {
 function readWeekly() {
   if (!existsSync(weeklyPath)) return null;
   try {
+    // Historical profiles request many weeks; parse an unchanged snapshot once.
+    // Atomic importer replacements change the inode even when size/time match.
+    const stat = statSync(weeklyPath);
+    const signature = `${stat.ino}:${stat.size}:${stat.mtimeMs}:${stat.ctimeMs}`;
+    if (weeklyCache?.signature === signature) return weeklyCache.data;
     const data = JSON.parse(readFileSync(weeklyPath, 'utf8'));
     if (data.schemaVersion !== 2 || data.validation?.status !== 'verified' || !data.slates?.[data.defaultSlate]) return null;
     if (Object.values(data.slates).some(s => s.validation?.status !== 'verified' || !Array.isArray(s.records))) return null;
+    weeklyCache = { signature, data };
     return data;
   } catch {
     // A missing/corrupt update must never hide the last shipped historical data.
