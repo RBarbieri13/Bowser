@@ -1,0 +1,16 @@
+.yahoo-connection { min-width: 0; }
+.yahoo-connection p { font-size: 13px; line-height: 1.55; }
+.yahoo-connection a { color: var(--accent, #67aaf9); }
+.yahoo-connection .yahoo-button, .yahoo-connection button { padding: 6px 10px; border: 1px solid #444; border-radius: 5px; background: #202224; color: #eee; font: inherit; font-size: 12px; cursor: pointer; text-decoration: none; }
+.yahoo-connection button:disabled { opacity: .5; cursor: wait; }
+.yahoo-connection button[aria-pressed="true"] { border-color: #67aaf9; }
+.yahoo-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 10px 0; font-size: 12px; }
+.yahoo-notice { padding: 12px; border: 1px solid #72612d; border-radius: 5px; }
+.yahoo-table-wrap { overflow: auto; max-width: 100%; margin: 12px 0; }
+.yahoo-connection table { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums; }
+.yahoo-connection caption { text-align: left; font-weight: 600; padding: 8px 0; }
+.yahoo-connection th, .yahoo-connection td { padding: 7px 10px; text-align: left; white-space: nowrap; border-bottom: 1px solid #343638; }
+.yahoo-connection th { color: #bbb; background: #222426; }
+.yahoo-connection tbody tr:nth-child(even) { background: #ffffff04; }
+.yahoo-attribution { margin-top: 20px; }
+@media (pointer: coarse) { .yahoo-connection button, .yahoo-connection .yahoo-button { min-height: 44px; } }

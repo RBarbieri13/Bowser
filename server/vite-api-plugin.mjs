@@ -1,3 +1,4 @@
+import { yahooHandler } from "./yahoo-auth.mjs";
 import { queryPlayerIdentity, queryDfsArchive, getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "./stats-store.mjs";
 import { getIntelligenceRegistry, queryPersistedIntelligenceFeed, IntelligenceQueryError } from "./intelligence-store.mjs";
 import { IntelligenceProviderError } from "./intelligence-errors.mjs";
@@ -20,6 +21,10 @@ export function fantasyStatsApiPlugin() {
   return {
     name: "local-fantasy-stats-api",
     configureServer(server) {
+      server.middlewares.use((request, response, next) => {
+        if (request.url?.startsWith("/api/v1/auth/yahoo/") || request.url?.startsWith("/api/v1/yahoo?")) return yahooHandler(request, response);
+        return next();
+      });
       server.middlewares.use("/api/v1", async (request, response, next) => {
         try {
           const url = new URL(request.url || "/", "http://local");

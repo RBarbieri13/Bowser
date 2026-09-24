@@ -1,3 +1,4 @@
+import { yahooHandler } from "./server/yahoo-auth.mjs";
 import express from "express";
 import { waiversHandler } from "./server/waivers-store.mjs";
 import { marketPulseHandler } from "./server/market-pulse.mjs";
@@ -18,6 +19,8 @@ const indexHtml = readFileSync(indexPath, "utf8");
 const app = express();
 app.all('/api/v1/market-pulse', marketPulseHandler);
 app.all('/api/v1/waivers', waiversHandler);
+app.all("/api/v1/auth/yahoo/:action", yahooHandler);
+app.all("/api/v1/yahoo", yahooHandler);
 app.disable("x-powered-by");
 app.use(express.json({ limit: "32kb" }));
 

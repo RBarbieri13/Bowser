@@ -10,6 +10,10 @@
   },
   "rewrites": [
     {
+      "source": "/api/v1/auth/yahoo/:action",
+      "destination": "/api/v1/yahoo?action=:action"
+    },
+    {
       "source": "/api/v1/player-identity",
       "destination": "/api/v1/player-profile?resource=identity"
     },
