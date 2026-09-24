@@ -1,57 +1,24 @@
 {
   "status": "PASS",
-  "verifiedAt": "2026-09-17T22:46:37.483359+00:00",
-  "publicUrl": "https://fantasy-football-stats-preview.vercel.app",
-  "candidateUrl": "https://bowser-fantasy-football-8miz6pg5a-rbarbieri13s-projects.vercel.app",
-  "deploymentId": "dpl_Ec3cCU7UH1981ddmyGj1qJe6E1aB",
+  "verifiedAt": "2026-09-24T18:30:02.581011+00:00",
+  "publicUrl": "https://bowser-fantasy-football.vercel.app",
+  "candidateUrl": "https://bowser-fantasy-football-c9w9h1r7a-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_GULBaBFfyibipfQozyfW9aK2uq7e",
   "deploymentState": "READY",
-  "applicationCommit": "5c5355405d3ae21f48f7c5ed53b6c2d543592a41",
-  "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-compact-controls-20260917",
+  "applicationCommit": "2e23878c50dbc19afe0dba7f4a72972b66306d20",
+  "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-yahoo-connect-20260924",
   "checks": {
     "npmRunCheck": "PASS",
-    "fullCheckLog": "/private/tmp/bowser-compact-full-check.log",
-    "fullCheckLogSha256": "369aded138cbd5d0dde3efe9f42e58c215bba78e63b28c8a71997b6038799ce0",
-    "independentUiReview": "PASS",
-    "independentDfsReview": "PASS",
-    "desktop": {
-      "players": {
-        "before": 356,
-        "after": 109
-      },
-      "waivers": {
-        "before": 296,
-        "after": 107
-      },
-      "teamBox": {
-        "before": 497.5,
-        "after": 91
-      },
-      "opportunityFirstRow": {
-        "before": 806.4,
-        "after": 197
-      },
-      "market": {
-        "before": 237.7,
-        "after": 107
-      }
-    },
-    "narrowViewport390": "PASS after corrections",
-    "thursdayUiRoleSwitch": "PASS",
-    "columnOptionsDialog": "PASS",
-    "localApiAssertions": 483,
-    "publicApiAssertions": 483,
-    "candidateApiAssertions": 483,
-    "publicBrowser": "PASS",
-    "publicRuntimeErrors": 0,
-    "publicThursdayAndNarrow": "PASS",
-    "publicMarketSnapshotPlayers": 1016,
-    "localAssertions": 483,
-    "candidateAssertions": 483,
-    "publicAssertions": 483,
-    "publicAssets": {
-      "js": "index-TceADQRE.js",
-      "css": "index-BJ6nBIVH.css"
-    }
+    "fullCheckLog": "/private/tmp/bowser-yahoo-check.log",
+    "fullCheckLogSha256": "2d1abed44fdcf132412923a88ffd547f629d9b449aefa294a296a36d8a2eb819",
+    "yahooBackendTests": 9,
+    "yahooUiTests": 4,
+    "localRegressionAssertions": 483,
+    "candidateRegressionAssertions": 483,
+    "publicRegressionAssertions": 483,
+    "candidateYahooAssertions": 10,
+    "publicYahooAssertions": 13,
+    "browser": "Production Yahoo Connection renders; Connect Yahoo reaches official Yahoo login. User sign-in/consent pending."
   },
   "dfs": {
     "season": 2026,
@@ -98,14 +65,20 @@
   },
   "githubSync": {
     "status": "BLOCKED",
-    "reason": "Fresh gh auth status on September17 reports invalid GitHub token. Local verified commit deployed directly to the authorized existing Vercel project; no push claimed."
+    "reason": "gh login expired; git push has no credentials; connected GitHub integration denies tree writes with 403. Device login started for user. No remote push or PR claimed.",
+    "branch": "codex/yahoo-connect-20260924",
+    "originMainAtRelease": "147e9d4b6459f88c1ac5db049216b069c19a709c"
   },
   "limitations": [
     "Missing source projections remain null. No fabricated historical DFS prices or projections.",
     "Archived 2026 Week 1 and Week 2 DFS captures are retained. Uncaptured older DFS weeks remain unavailable; historical actual statistics are preserved.",
-    "Market Pulse history uses provider observations rather than NFL game weeks."
+    "Market Pulse history uses provider observations rather than NFL game weeks.",
+    "Yahoo live league, roster and refresh tests require user authorization; successful redirect is not proof of Fantasy API access.",
+    "Yahoo tokens use an eight-hour encrypted HttpOnly browser session; no durable server-side account store or unattended imports.",
+    "This verified production code is newer than GitHub main. Do not deploy older main over it. Restore GitHub login and merge this worktree first."
   ],
-  "evidenceDirectory": "shared/operations/compact-controls-20260917",
-  "releasePurpose": "One compact collapsed controls header per active page; preserve native functionality; hide League Hub and Fantasy Intelligence; shorter Team Box with single matchup header; official Thursday Showdown FLEX/CPT selections and weekly archive support.",
-  "previousDeploymentId": "dpl_3x46QyD6NYBeJQWqaWTV6gxCvt9b"
+  "evidenceDirectory": "shared/operations/yahoo-connect-20260924",
+  "releasePurpose": "Private interactive Yahoo authorization and owned-league/roster verification; preserve compact controls and all existing data.",
+  "previousDeploymentId": "dpl_GxmppR3if5dKfsQuoSQj6UMbcRbe",
+  "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app"
 }
