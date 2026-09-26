@@ -1,5 +1,7 @@
 # Yahoo Fantasy integration plan
 
+September 24 update: interactive OAuth and owned-league/roster verification are implemented in `/#/yahoo`. See [connection boundaries and verification](yahoo-connection-2026-09-24.md). The durable server-side token store and unattended imports described below remain future work.
+
 Last verified: 2026-08-16
 
 ## What Bowser can obtain through the supported Yahoo Fantasy Sports API

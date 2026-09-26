@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "url": "https://bowser-fantasy-football.vercel.app",
+  "checks": [
+    "Production Yahoo environment configured",
+    "Anonymous browser has no Yahoo account session",
+    "Registered permanent callback domain",
+    "Private API caching disabled",
+    "Private leagues reject anonymous or noncanonical requests",
+    "No private data in anonymous responses",
+    "Connection start redirects",
+    "Authorization uses official Yahoo host",
+    "Exact callback passed to Yahoo",
+    "Code flow with random state",
+    "State cookie security attributes",
+    "Invalid callback strips code from redirect",
+    "Callback fails closed before exchange"
+  ],
+  "liveYahooAccountTest": "Pending user authorization"
+}

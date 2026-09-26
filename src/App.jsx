@@ -1,3 +1,4 @@
+import { YahooConnection } from "./YahooConnection.jsx";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
@@ -630,6 +631,7 @@ function PlayerGroupResizeHandle({ group, width, enabled, onResize, onReset }) {
 }
 
 function routeFromHash() {
+  if (window.location.hash.startsWith("#/yahoo")) return { page: "yahoo", gameId: null };
   if (window.location.hash.includes("waivers")) return { page: "waivers", gameId: null };
   if (window.location.hash.includes("market-pulse")) return { page: "market-pulse", gameId: null };
   const gameMatch = window.location.hash.match(/^#\/game\/([^?]+)/);
@@ -1143,7 +1145,9 @@ export function App() {
   return (
     <div className={`app-shell${sidebarWidth < 112 ? " sidebar-icon-only" : ""}`} style={{ "--sidebar-width": `${sidebarWidth}px` }}>
       <>{profileLookup && <div className="player-resolution-alert" role="status">{profileLookup}<button aria-label="Dismiss player lookup message" onClick={()=>{profileRequest.current++;setProfileLookup("");}}>×</button></div>}</><AppHeader season={route.season || season} onSeasonChange={changeSeason} currentPage={currentPage === "game" ? "team-box-scores" : currentPage} width={sidebarWidth} collapsed={sidebarWidth < 112} onResize={resizeSidebar} />
-      {currentPage === "game" ? (
+      {currentPage === "yahoo" ? (
+        <YahooConnection season={season} />
+      ) : currentPage === "game" ? (
         <GameBreakdown season={route.season || season} gameId={route.gameId} scoring={route.scoring} onBack={() => { window.location.hash = "#/team-box-scores"; }} onOpenPlayer={(row, opener) => openProfile(row, opener, route.scoring)} />
       ) : currentPage === "team-box-scores" ? (
         <TeamBoxScores key={season} season={season} meta={meta} onSeasonChange={changeSeason} onOpenPlayer={openProfile} onOpenGame={(game, gameScoring) => { window.location.hash = `#/game/${encodeURIComponent(game.gameId)}?scoring=${gameScoring}`; }} />

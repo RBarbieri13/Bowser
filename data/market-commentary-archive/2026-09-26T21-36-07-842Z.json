@@ -1,0 +1,2173 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-26T21:36:07.842Z",
+  "sourceUrl": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?limit=50",
+  "coverage": "Latest 50 ESPN NFL feed articles; only players named in the public headline or description. Not a social-media or expert consensus sample.",
+  "model": "typesafe/jev-1.13",
+  "policy": "espn-player-excerpts-v1",
+  "calls": 48,
+  "costUSD": 0.0016821840000000006,
+  "changed": true,
+  "records": [
+    {
+      "id": "espn:50029379:3912547",
+      "articleId": "50029379",
+      "espnId": "espn:3912547",
+      "playerName": "Sam Darnold",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50029379/qb-sam-darnold-back-sunday-seahawks-two-safeties",
+      "publishedAt": "2026-09-26T21:33:09.000Z",
+      "headline": "QB Sam Darnold back Sunday, but Seahawks down two safeties",
+      "inputHash": "ad0cdadfd8c9b64fc803cb0806f30515dd3c96cb839d96dd9972ff8164e1021d",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "role": 0.26,
+            "waiver": 0,
+            "usage": 0,
+            "uncertain": 0,
+            "injury": 0.74,
+            "irrelevant": 0
+          },
+          "confidence": 0.68
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "positive": 0.7,
+            "negative": 0.01,
+            "unclear": 0.14,
+            "neutral": 0.15
+          },
+          "confidence": 0.6
+        }
+      }
+    },
+    {
+      "id": "espn:50029379:4046675",
+      "articleId": "50029379",
+      "espnId": "espn:4046675",
+      "playerName": "Julian Love",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50029379/qb-sam-darnold-back-sunday-seahawks-two-safeties",
+      "publishedAt": "2026-09-26T21:33:09.000Z",
+      "headline": "QB Sam Darnold back Sunday, but Seahawks down two safeties",
+      "inputHash": "ad0cdadfd8c9b64fc803cb0806f30515dd3c96cb839d96dd9972ff8164e1021d",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.94
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "irrelevant": 0,
+            "waiver": 0,
+            "injury": 0.99,
+            "usage": 0,
+            "role": 0.01,
+            "uncertain": 0
+          },
+          "confidence": 0.99
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "unclear": 0.02,
+            "positive": 0,
+            "negative": 0.96,
+            "neutral": 0.02
+          },
+          "confidence": 0.96
+        }
+      }
+    },
+    {
+      "id": "espn:50029379:4247808",
+      "articleId": "50029379",
+      "espnId": "espn:4247808",
+      "playerName": "Ty Okada",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50029379/qb-sam-darnold-back-sunday-seahawks-two-safeties",
+      "publishedAt": "2026-09-26T21:33:09.000Z",
+      "headline": "QB Sam Darnold back Sunday, but Seahawks down two safeties",
+      "inputHash": "ad0cdadfd8c9b64fc803cb0806f30515dd3c96cb839d96dd9972ff8164e1021d",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.94
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "usage": 0,
+            "waiver": 0,
+            "injury": 0.97,
+            "irrelevant": 0,
+            "uncertain": 0,
+            "role": 0.03
+          },
+          "confidence": 0.96
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "negative": 0.99,
+            "unclear": 0,
+            "positive": 0,
+            "neutral": 0.01
+          },
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "id": "espn:50021286:4258173",
+      "articleId": "50021286",
+      "espnId": "espn:4258173",
+      "playerName": "Nico Collins",
+      "source": "ESPN",
+      "url": "https://www.espn.com/fantasy/football/story/_/id/50021286/fantasy-football-injuries-nfl-week-3-inactive-active",
+      "publishedAt": "2026-09-26T21:17:11.000Z",
+      "headline": "Fantasy football Week 3 inactives: Nico Collins out again, Puka Nacua uncertain, Darnold a go",
+      "inputHash": "f2714adab10aeab7983579f89d8d92f69066eb409309873bf7967e362612e2c0",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "usage": 0,
+            "injury": 1,
+            "irrelevant": 0,
+            "role": 0,
+            "waiver": 0,
+            "uncertain": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "positive": 0,
+            "neutral": 0,
+            "negative": 0.99,
+            "unclear": 0.01
+          },
+          "confidence": 0.99
+        }
+      }
+    },
+    {
+      "id": "espn:50021286:4426515",
+      "articleId": "50021286",
+      "espnId": "espn:4426515",
+      "playerName": "Puka Nacua",
+      "source": "ESPN",
+      "url": "https://www.espn.com/fantasy/football/story/_/id/50021286/fantasy-football-injuries-nfl-week-3-inactive-active",
+      "publishedAt": "2026-09-26T21:17:11.000Z",
+      "headline": "Fantasy football Week 3 inactives: Nico Collins out again, Puka Nacua uncertain, Darnold a go",
+      "inputHash": "f2714adab10aeab7983579f89d8d92f69066eb409309873bf7967e362612e2c0",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "irrelevant": 0,
+            "role": 0,
+            "uncertain": 0.14,
+            "usage": 0,
+            "injury": 0.86,
+            "waiver": 0
+          },
+          "confidence": 0.83
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "unclear",
+          "probabilities": {
+            "positive": 0,
+            "unclear": 0.53,
+            "neutral": 0.08,
+            "negative": 0.39
+          },
+          "confidence": 0.37
+        }
+      }
+    },
+    {
+      "id": "espn:50034943:2976592",
+      "articleId": "50034943",
+      "espnId": "espn:2976592",
+      "playerName": "Sterling Shepard",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50034943/jets-elevate-sterling-shepard-adonai-mitchell-question",
+      "publishedAt": "2026-09-26T19:44:13.000Z",
+      "headline": "Jets elevate Sterling Shepard with Adonai Mitchell in question",
+      "inputHash": "d871cda82fe5cc4aa2f44a95c450445a135c762999164a1eedbc29abb1cc3d72",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.95
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "role",
+          "probabilities": {
+            "uncertain": 0,
+            "irrelevant": 0,
+            "role": 1,
+            "usage": 0,
+            "injury": 0,
+            "waiver": 0
+          },
+          "confidence": 0.99
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "negative": 0,
+            "positive": 0.84,
+            "neutral": 0.11,
+            "unclear": 0.05
+          },
+          "confidence": 0.78
+        }
+      }
+    },
+    {
+      "id": "espn:50034949:4431611",
+      "articleId": "50034949",
+      "espnId": "espn:4431611",
+      "playerName": "Caleb Williams",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50034949/bears-qb-williams-mnf-backup-bagent-back-practice",
+      "publishedAt": "2026-09-26T19:30:24.000Z",
+      "headline": "Bears QB Williams out for MNF; backup Bagent back at practice",
+      "inputHash": "0db7d943e36c8173f5b54bc7738c91ab394f296a6c521e40734b2ee754326ee0",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "uncertain": 0,
+            "waiver": 0,
+            "irrelevant": 0,
+            "injury": 1,
+            "role": 0,
+            "usage": 0
+          },
+          "confidence": 0.99
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "neutral": 0,
+            "negative": 1,
+            "positive": 0,
+            "unclear": 0
+          },
+          "confidence": 0.99
+        }
+      }
+    },
+    {
+      "id": "espn:50034608:2512477",
+      "articleId": "50034608",
+      "espnId": "espn:2512477",
+      "playerName": "Laken Tomlinson",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50034608/sources-packers-sign-og-tomlinson-cowboys-practice-squad",
+      "publishedAt": "2026-09-26T18:52:22.000Z",
+      "headline": "Sources: Packers sign OG Tomlinson off Cowboys' practice squad",
+      "inputHash": "8038e4a920f813744e5e8e1654230e7e6dabad56cbb3f559af820b32674eb20c",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.84
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "role",
+          "probabilities": {
+            "usage": 0,
+            "injury": 0,
+            "role": 0.95,
+            "irrelevant": 0.04,
+            "waiver": 0,
+            "uncertain": 0.01
+          },
+          "confidence": 0.94
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "unclear": 0.19,
+            "negative": 0,
+            "positive": 0.54,
+            "neutral": 0.27
+          },
+          "confidence": 0.38
+        }
+      }
+    },
+    {
+      "id": "espn:50017164:4426340",
+      "articleId": "50017164",
+      "espnId": "espn:4426340",
+      "playerName": "Nakobe Dean",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50017164/las-vegas-raiders-defense-nakobe-dean-2026-season",
+      "publishedAt": "2026-09-26T18:40:37.000Z",
+      "headline": "How has Nakobe Dean reshaped the Raiders' defense?",
+      "inputHash": "3cd6224281af19c762c990a8b2e22498b5b1cec86e32537bb729a203f0b613f0",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.79
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "usage",
+          "probabilities": {
+            "injury": 0,
+            "irrelevant": 0.04,
+            "waiver": 0,
+            "role": 0.21,
+            "uncertain": 0.31,
+            "usage": 0.44
+          },
+          "confidence": 0.33
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "positive": 1,
+            "neutral": 0,
+            "negative": 0,
+            "unclear": 0
+          },
+          "confidence": 1
+        }
+      }
+    },
+    {
+      "id": "espn:50034054:4360078",
+      "articleId": "50034054",
+      "espnId": "espn:4360078",
+      "playerName": "Alec Pierce",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50034054/colts-officially-place-wr-alec-pierce-ir-heel-issue",
+      "publishedAt": "2026-09-26T16:59:20.000Z",
+      "headline": "Colts officially place WR Alec Pierce on IR with heel issue",
+      "inputHash": "72231cbf288156ab79f69bbb1de27cbe8402c7e045f4013dccea43bf3e8d46e0",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.95
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "waiver": 0,
+            "role": 0,
+            "irrelevant": 0,
+            "injury": 1,
+            "uncertain": 0,
+            "usage": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "positive": 0,
+            "unclear": 0.01,
+            "negative": 0.96,
+            "neutral": 0.03
+          },
+          "confidence": 0.94
+        }
+      }
+    },
+    {
+      "id": "espn:50033883:3912547",
+      "articleId": "50033883",
+      "espnId": "espn:3912547",
+      "playerName": "Sam Darnold",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50033883/sam-darnold-set-return-sunday",
+      "publishedAt": "2026-09-26T16:25:21.000Z",
+      "headline": "Sam Darnold set to return Sunday",
+      "inputHash": "e16c7999bce62bc281f0bd1a86b45c7accda93d7ae3753e3c277ca45baa08812",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.95
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "irrelevant": 0,
+            "uncertain": 0,
+            "injury": 1,
+            "usage": 0,
+            "waiver": 0,
+            "role": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "unclear": 0.01,
+            "positive": 0.97,
+            "negative": 0,
+            "neutral": 0.02
+          },
+          "confidence": 0.97
+        }
+      }
+    },
+    {
+      "id": "espn:50028858:2969939",
+      "articleId": "50028858",
+      "espnId": "espn:2969939",
+      "playerName": "Jameis Winston",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028858/new-york-giants-offense-shift-qb-jameis-winston-jaxson-dart",
+      "publishedAt": "2026-09-26T10:00:12.000Z",
+      "headline": "Giants' offense about to 'shift' with Jameis Winston",
+      "inputHash": "b3cb5f6bb0d73cbd50ce2f0ef60df7d29d5ffe122a71739c12721051e9e12a04",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.92
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "role",
+          "probabilities": {
+            "waiver": 0,
+            "role": 1,
+            "irrelevant": 0,
+            "injury": 0,
+            "uncertain": 0,
+            "usage": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "unclear",
+          "probabilities": {
+            "positive": 0.27,
+            "unclear": 0.52,
+            "negative": 0.02,
+            "neutral": 0.19
+          },
+          "confidence": 0.36
+        }
+      }
+    },
+    {
+      "id": "espn:50029598:3929630",
+      "articleId": "50029598",
+      "espnId": "espn:3929630",
+      "playerName": "Saquon Barkley",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50029598/eagles-saquon-barkley-fearless-vs-bears-stinger",
+      "publishedAt": "2026-09-25T23:01:03.000Z",
+      "headline": "Eagles' Saquon Barkley to be 'fearless' vs. Bears despite stinger",
+      "inputHash": "3d15df44b038cea2701d648c7fb94dd042002686c348f861eba39dc465580196",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.94
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "role": 0,
+            "injury": 1,
+            "irrelevant": 0,
+            "waiver": 0,
+            "uncertain": 0,
+            "usage": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "unclear": 0.11,
+            "positive": 0.85,
+            "neutral": 0.02,
+            "negative": 0.02
+          },
+          "confidence": 0.8
+        }
+      }
+    },
+    {
+      "id": "espn:50027742:4040605",
+      "articleId": "50027742",
+      "espnId": "espn:4040605",
+      "playerName": "Nick Bosa",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50027742/sources-49ers-nick-bosa-injures-calf-miss-multiple-weeks",
+      "publishedAt": "2026-09-25T22:43:23.000Z",
+      "headline": "49ers star DE Nick Bosa injures calf, to miss multiple weeks",
+      "inputHash": "50b5264110b32c4c5abc9a67571565eb94ad6410bcdf2a035d60d3b329f9dd52",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "role": 0,
+            "irrelevant": 0,
+            "injury": 1,
+            "waiver": 0,
+            "uncertain": 0,
+            "usage": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "unclear": 0,
+            "positive": 0,
+            "neutral": 0,
+            "negative": 1
+          },
+          "confidence": 1
+        }
+      }
+    },
+    {
+      "id": "espn:50027179:4426348",
+      "articleId": "50027179",
+      "espnId": "espn:4426348",
+      "playerName": "Jayden Daniels",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50027179/commanders-gm-elbow-surgery-ir-not-table-right-now-qb-daniels",
+      "publishedAt": "2026-09-25T22:01:57.000Z",
+      "headline": "Commanders GM: Elbow surgery 'not on table' for QB Daniels",
+      "inputHash": "edea8f594b1eafb0d0d24ad797cf5e4e1b938bebb32dc334b01fc6b5ac898b86",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.95
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "role": 0,
+            "waiver": 0,
+            "injury": 1,
+            "usage": 0,
+            "uncertain": 0,
+            "irrelevant": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "unclear": 0.02,
+            "positive": 0.89,
+            "neutral": 0.06,
+            "negative": 0.03
+          },
+          "confidence": 0.85
+        }
+      }
+    },
+    {
+      "id": "espn:50029122:3127273",
+      "articleId": "50029122",
+      "espnId": "espn:3127273",
+      "playerName": "Frankie Luvu",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50029122/commanders-rule-rg-cosmi-te-okonkwo-lb-luvu-sunday",
+      "publishedAt": "2026-09-25T21:53:22.000Z",
+      "headline": "Commanders rule RG Cosmi, TE Okonkwo, LB Luvu out Sunday",
+      "inputHash": "e91988551a912bfa74fb3ddc3c3de961b6bd60a275233c52d74f6d1469859952",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "injury": 1,
+            "role": 0,
+            "usage": 0,
+            "waiver": 0,
+            "uncertain": 0,
+            "irrelevant": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "positive": 0,
+            "unclear": 0.01,
+            "negative": 0.98,
+            "neutral": 0.01
+          },
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "id": "espn:50029122:4262199",
+      "articleId": "50029122",
+      "espnId": "espn:4262199",
+      "playerName": "Sam Cosmi",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50029122/commanders-rule-rg-cosmi-te-okonkwo-lb-luvu-sunday",
+      "publishedAt": "2026-09-25T21:53:22.000Z",
+      "headline": "Commanders rule RG Cosmi, TE Okonkwo, LB Luvu out Sunday",
+      "inputHash": "e91988551a912bfa74fb3ddc3c3de961b6bd60a275233c52d74f6d1469859952",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "usage": 0,
+            "waiver": 0,
+            "injury": 1,
+            "irrelevant": 0,
+            "uncertain": 0,
+            "role": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "negative": 0.99,
+            "unclear": 0,
+            "positive": 0,
+            "neutral": 0.01
+          },
+          "confidence": 0.99
+        }
+      }
+    },
+    {
+      "id": "espn:50029122:4360635",
+      "articleId": "50029122",
+      "espnId": "espn:4360635",
+      "playerName": "Chig Okonkwo",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50029122/commanders-rule-rg-cosmi-te-okonkwo-lb-luvu-sunday",
+      "publishedAt": "2026-09-25T21:53:22.000Z",
+      "headline": "Commanders rule RG Cosmi, TE Okonkwo, LB Luvu out Sunday",
+      "inputHash": "e91988551a912bfa74fb3ddc3c3de961b6bd60a275233c52d74f6d1469859952",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "waiver": 0,
+            "uncertain": 0,
+            "injury": 1,
+            "usage": 0,
+            "role": 0,
+            "irrelevant": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "negative": 0.98,
+            "neutral": 0.01,
+            "unclear": 0.01,
+            "positive": 0
+          },
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "id": "espn:50029190:4426348",
+      "articleId": "50029190",
+      "espnId": "espn:4426348",
+      "playerName": "Jayden Daniels",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50029190/jayden-daniels-avoids-ir-elbow-injury",
+      "publishedAt": "2026-09-25T21:20:48.000Z",
+      "headline": "Jayden Daniels avoids IR after elbow injury",
+      "inputHash": "dc7cfd2d22a044da6a6ade631aedc89f57a27857a1bcd9b085918f7a3b553dc8",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.94
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "uncertain": 0,
+            "injury": 1,
+            "role": 0,
+            "usage": 0,
+            "irrelevant": 0,
+            "waiver": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "unclear": 0,
+            "neutral": 0,
+            "positive": 1,
+            "negative": 0
+          },
+          "confidence": 1
+        }
+      }
+    },
+    {
+      "id": "espn:50028887:3042519",
+      "articleId": "50028887",
+      "espnId": "espn:3042519",
+      "playerName": "Aaron Jones Sr",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028887/vikings-aaron-jones-sr-knee-cleared-play-vs-buccaneers",
+      "publishedAt": "2026-09-25T20:45:53.000Z",
+      "headline": "Vikings' Aaron Jones Sr. (knee) cleared to play vs. Buccaneers",
+      "inputHash": "20b5d398a72fdadd5d1d7e7c373e885e05e61badd0dbaad010bc1b24c4e0e57f",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "injury": 0.99,
+            "role": 0.01,
+            "usage": 0,
+            "waiver": 0,
+            "uncertain": 0,
+            "irrelevant": 0
+          },
+          "confidence": 0.98
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "positive": 1,
+            "unclear": 0,
+            "negative": 0,
+            "neutral": 0
+          },
+          "confidence": 1
+        }
+      }
+    },
+    {
+      "id": "espn:50027962:3925345",
+      "articleId": "50027962",
+      "espnId": "espn:3925345",
+      "playerName": "Minkah Fitzpatrick",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50027962/jets-no-1-te-mason-taylor-thumb-vs-high-scoring-lions",
+      "publishedAt": "2026-09-25T20:42:50.000Z",
+      "headline": "Jets' No. 1 TE Mason Taylor (thumb) out vs. high-scoring Lions",
+      "inputHash": "5361ed6c715a0c7bbc81f7a8ddf7090416465fb8326d0edf423c71cd368abe34",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.94
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "waiver": 0,
+            "injury": 1,
+            "uncertain": 0,
+            "usage": 0,
+            "role": 0,
+            "irrelevant": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "positive": 0,
+            "neutral": 0,
+            "negative": 1,
+            "unclear": 0
+          },
+          "confidence": 0.99
+        }
+      }
+    },
+    {
+      "id": "espn:50027962:4808766",
+      "articleId": "50027962",
+      "espnId": "espn:4808766",
+      "playerName": "Mason Taylor",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50027962/jets-no-1-te-mason-taylor-thumb-vs-high-scoring-lions",
+      "publishedAt": "2026-09-25T20:42:50.000Z",
+      "headline": "Jets' No. 1 TE Mason Taylor (thumb) out vs. high-scoring Lions",
+      "inputHash": "5361ed6c715a0c7bbc81f7a8ddf7090416465fb8326d0edf423c71cd368abe34",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "role": 0,
+            "injury": 1,
+            "uncertain": 0,
+            "waiver": 0,
+            "usage": 0,
+            "irrelevant": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "positive": 0,
+            "unclear": 0,
+            "neutral": 0,
+            "negative": 1
+          },
+          "confidence": 0.99
+        }
+      }
+    },
+    {
+      "id": "espn:50028970:4880124",
+      "articleId": "50028970",
+      "espnId": "espn:4880124",
+      "playerName": "Mansoor Delane",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028970/chiefs-cb-mansoor-delane-set-play-missing-colts-win",
+      "publishedAt": "2026-09-25T20:37:52.000Z",
+      "headline": "Chiefs CB Mansoor Delane set to play after missing win over Colts",
+      "inputHash": "eebff66efa4bab1e28a2fd60d6d741ae8171e06c63c6f0059a5e070c0c0e955e",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.93
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "waiver": 0,
+            "usage": 0,
+            "uncertain": 0,
+            "injury": 1,
+            "role": 0,
+            "irrelevant": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "positive": 0.99,
+            "neutral": 0,
+            "unclear": 0.01,
+            "negative": 0
+          },
+          "confidence": 0.97
+        }
+      }
+    },
+    {
+      "id": "espn:50028897:4258173",
+      "articleId": "50028897",
+      "espnId": "espn:4258173",
+      "playerName": "Nico Collins",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028897/texans-wr-nico-collins-hamstring-miss-second-straight-game",
+      "publishedAt": "2026-09-25T20:32:19.000Z",
+      "headline": "Texans WR Nico Collins (hamstring) to miss second straight game",
+      "inputHash": "8205af7d5549b76cb1e98aae7f3919b271250d48ca28e3d17736275fd7ad03ef",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "irrelevant": 0,
+            "waiver": 0,
+            "injury": 1,
+            "usage": 0,
+            "role": 0,
+            "uncertain": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "unclear": 0,
+            "positive": 0,
+            "negative": 1,
+            "neutral": 0
+          },
+          "confidence": 1
+        }
+      }
+    },
+    {
+      "id": "espn:50028890:2971595",
+      "articleId": "50028890",
+      "espnId": "espn:2971595",
+      "playerName": "Kenneth Walker",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50028890/jeff-hafley-credits-chiefs-striking-offense-kenneth-walker",
+      "publishedAt": "2026-09-25T20:01:29.000Z",
+      "headline": "Jeff Hafley credits Chiefs' striking offense to Kenneth Walker",
+      "inputHash": "aeaf256e812f1054a581cce4a35b7f7c2f393b2ca2b9d97a63e7264be6f22365",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.21
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "uncertain",
+          "probabilities": {
+            "injury": 0,
+            "waiver": 0,
+            "irrelevant": 0.24,
+            "role": 0.01,
+            "uncertain": 0.65,
+            "usage": 0.1
+          },
+          "confidence": 0.59
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "unclear": 0.38,
+            "positive": 0.56,
+            "negative": 0,
+            "neutral": 0.06
+          },
+          "confidence": 0.41
+        }
+      }
+    },
+    {
+      "id": "espn:50028567:4426515",
+      "articleId": "50028567",
+      "espnId": "espn:4426515",
+      "playerName": "Puka Nacua",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028567/rams-targeting-week-4-return-wr-puka-nacua",
+      "publishedAt": "2026-09-25T19:33:10.000Z",
+      "headline": "Rams targeting Week 4 return for WR Puka Nacua",
+      "inputHash": "0f0be884ec275252d2d9f1ebf263788d12e00059d5f0f2b66c9fcb0e8120e945",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "injury": 1,
+            "irrelevant": 0,
+            "role": 0,
+            "waiver": 0,
+            "uncertain": 0,
+            "usage": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "positive": 0.01,
+            "neutral": 0.01,
+            "negative": 0.88,
+            "unclear": 0.1
+          },
+          "confidence": 0.84
+        }
+      }
+    },
+    {
+      "id": "espn:50028146:4243256",
+      "articleId": "50028146",
+      "espnId": "espn:4243256",
+      "playerName": "Devin Lloyd",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028146/panthers-scratch-lb-devin-lloyd-wrs-coker-legette-questionable",
+      "publishedAt": "2026-09-25T19:28:59.000Z",
+      "headline": "Panthers scratch LB Devin Lloyd; WRs Coker, Legette questionable",
+      "inputHash": "b5096c71cdb096349dd3ad9cf4fe02f4e136b9ce8ab49826374e1f2e05e2ef50",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "usage": 0,
+            "waiver": 0,
+            "injury": 1,
+            "irrelevant": 0,
+            "uncertain": 0,
+            "role": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "negative": 0.99,
+            "unclear": 0,
+            "positive": 0,
+            "neutral": 0.01
+          },
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "id": "espn:50028146:4430034",
+      "articleId": "50028146",
+      "espnId": "espn:4430034",
+      "playerName": "Xavier Legette",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028146/panthers-scratch-lb-devin-lloyd-wrs-coker-legette-questionable",
+      "publishedAt": "2026-09-25T19:28:59.000Z",
+      "headline": "Panthers scratch LB Devin Lloyd; WRs Coker, Legette questionable",
+      "inputHash": "b5096c71cdb096349dd3ad9cf4fe02f4e136b9ce8ab49826374e1f2e05e2ef50",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "injury": 1,
+            "waiver": 0,
+            "irrelevant": 0,
+            "usage": 0,
+            "uncertain": 0,
+            "role": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "unclear": 0.2,
+            "negative": 0.67,
+            "positive": 0,
+            "neutral": 0.13
+          },
+          "confidence": 0.55
+        }
+      }
+    },
+    {
+      "id": "espn:50028146:4695883",
+      "articleId": "50028146",
+      "espnId": "espn:4695883",
+      "playerName": "Jalen Coker",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028146/panthers-scratch-lb-devin-lloyd-wrs-coker-legette-questionable",
+      "publishedAt": "2026-09-25T19:28:59.000Z",
+      "headline": "Panthers scratch LB Devin Lloyd; WRs Coker, Legette questionable",
+      "inputHash": "b5096c71cdb096349dd3ad9cf4fe02f4e136b9ce8ab49826374e1f2e05e2ef50",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.95
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "role": 0,
+            "irrelevant": 0,
+            "injury": 1,
+            "usage": 0,
+            "uncertain": 0,
+            "waiver": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "unclear": 0.26,
+            "positive": 0,
+            "neutral": 0.13,
+            "negative": 0.61
+          },
+          "confidence": 0.47
+        }
+      }
+    },
+    {
+      "id": "espn:50028662:3915416",
+      "articleId": "50028662",
+      "espnId": "espn:3915416",
+      "playerName": "DJ Moore",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028662/bills-mark-keon-coleman-dj-moore-ed-oliver-questionable",
+      "publishedAt": "2026-09-25T19:14:30.000Z",
+      "headline": "Bills mark Keon Coleman, DJ Moore, Ed Oliver as questionable",
+      "inputHash": "4f964e741bb040b76e8690cfcef653d37ad99e3144813bbc66c909cec7877786",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.95
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "role": 0,
+            "waiver": 0,
+            "usage": 0,
+            "injury": 1,
+            "uncertain": 0,
+            "irrelevant": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "neutral": 0.09,
+            "positive": 0,
+            "unclear": 0.3,
+            "negative": 0.61
+          },
+          "confidence": 0.48
+        }
+      }
+    },
+    {
+      "id": "espn:50028662:4039303",
+      "articleId": "50028662",
+      "espnId": "espn:4039303",
+      "playerName": "Ed Oliver",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028662/bills-mark-keon-coleman-dj-moore-ed-oliver-questionable",
+      "publishedAt": "2026-09-25T19:14:30.000Z",
+      "headline": "Bills mark Keon Coleman, DJ Moore, Ed Oliver as questionable",
+      "inputHash": "4f964e741bb040b76e8690cfcef653d37ad99e3144813bbc66c909cec7877786",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "irrelevant": 0,
+            "waiver": 0,
+            "usage": 0,
+            "uncertain": 0,
+            "role": 0,
+            "injury": 1
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "positive": 0,
+            "negative": 0.63,
+            "unclear": 0.27,
+            "neutral": 0.1
+          },
+          "confidence": 0.51
+        }
+      }
+    },
+    {
+      "id": "espn:50028662:4635008",
+      "articleId": "50028662",
+      "espnId": "espn:4635008",
+      "playerName": "Keon Coleman",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028662/bills-mark-keon-coleman-dj-moore-ed-oliver-questionable",
+      "publishedAt": "2026-09-25T19:14:30.000Z",
+      "headline": "Bills mark Keon Coleman, DJ Moore, Ed Oliver as questionable",
+      "inputHash": "4f964e741bb040b76e8690cfcef653d37ad99e3144813bbc66c909cec7877786",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "role": 0,
+            "uncertain": 0,
+            "injury": 1,
+            "usage": 0,
+            "waiver": 0,
+            "irrelevant": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "negative": 0.56,
+            "positive": 0,
+            "unclear": 0.32,
+            "neutral": 0.12
+          },
+          "confidence": 0.41
+        }
+      }
+    },
+    {
+      "id": "espn:50028668:3122840",
+      "articleId": "50028668",
+      "espnId": "espn:3122840",
+      "playerName": "Deshaun Watson",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50028668/todd-monken-huge-belief-deshaun-watson",
+      "publishedAt": "2026-09-25T19:01:15.000Z",
+      "headline": "Todd Monken has 'huge belief' in Deshaun Watson",
+      "inputHash": "9facfb342ca4df046d3412dd6b1b0f278c23d46bbb5b48cbfa81a7af24dc0a21",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.55
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "uncertain",
+          "probabilities": {
+            "irrelevant": 0.1,
+            "role": 0.3,
+            "uncertain": 0.59,
+            "usage": 0.01,
+            "waiver": 0,
+            "injury": 0
+          },
+          "confidence": 0.51
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "negative": 0,
+            "positive": 0.99,
+            "unclear": 0.01,
+            "neutral": 0
+          },
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "id": "espn:50028187:4689114",
+      "articleId": "50028187",
+      "espnId": "espn:4689114",
+      "playerName": "Jaxson Dart",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028187/sources-giants-jaxson-dart-scheduled-left-knee-surgery-friday",
+      "publishedAt": "2026-09-25T18:43:10.000Z",
+      "headline": "Sources: Giants' Jaxson Dart scheduled for left knee surgery Friday",
+      "inputHash": "7ec3d1fbe7f9a5e6f51c1558cbf3ee306524cc4fb7ee404645cdd8e8b35ea287",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.94
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "uncertain": 0,
+            "usage": 0,
+            "role": 0,
+            "injury": 1,
+            "irrelevant": 0,
+            "waiver": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "negative": 0.91,
+            "positive": 0,
+            "unclear": 0.01,
+            "neutral": 0.08
+          },
+          "confidence": 0.88
+        }
+      }
+    },
+    {
+      "id": "espn:50028226:3128720",
+      "articleId": "50028226",
+      "espnId": "espn:3128720",
+      "playerName": "Nick Chubb",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50028226/nick-chubb-retires-browns-ahead-game-day-honor",
+      "publishedAt": "2026-09-25T17:47:35.000Z",
+      "headline": "Nick Chubb retires with Browns ahead of game-day honor",
+      "inputHash": "f30257de9a5f8e259e1c85cc8ed73db26c5420ec12e85019132709db3e6ae52c",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.82
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "role",
+          "probabilities": {
+            "role": 0.75,
+            "waiver": 0,
+            "usage": 0,
+            "injury": 0.01,
+            "irrelevant": 0.19,
+            "uncertain": 0.05
+          },
+          "confidence": 0.71
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "neutral": 0.13,
+            "positive": 0,
+            "unclear": 0.05,
+            "negative": 0.82
+          },
+          "confidence": 0.77
+        }
+      }
+    },
+    {
+      "id": "espn:50028309:4040605",
+      "articleId": "50028309",
+      "espnId": "espn:4040605",
+      "playerName": "Nick Bosa",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50028309/nick-bosa-suffers-multi-week-calf-injury",
+      "publishedAt": "2026-09-25T17:42:54.000Z",
+      "headline": "Nick Bosa suffers a multi-week calf injury",
+      "inputHash": "43ee4f82f9ecb5ebe0e2102ee08bdf4eabe112fc9eff0e115195440c78585b7e",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "injury": 1,
+            "irrelevant": 0,
+            "usage": 0,
+            "uncertain": 0,
+            "role": 0,
+            "waiver": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "positive": 0,
+            "unclear": 0,
+            "negative": 1,
+            "neutral": 0
+          },
+          "confidence": 0.99
+        }
+      }
+    },
+    {
+      "id": "espn:50028225:4040605",
+      "articleId": "50028225",
+      "espnId": "espn:4040605",
+      "playerName": "Nick Bosa",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50028225/ian-rapoport-details-ridiculous-problem-49ers-face-nick-bosa",
+      "publishedAt": "2026-09-25T17:18:37.000Z",
+      "headline": "Ian Rapoport details 'ridiculous problem' 49ers face with Nick Bosa",
+      "inputHash": "2c17393107442d31a5ff0b5664ab48ddec68b7911c7c7aac1e582776d2ea1a7e",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.39
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "uncertain",
+          "probabilities": {
+            "irrelevant": 0.03,
+            "waiver": 0,
+            "usage": 0,
+            "uncertain": 0.88,
+            "role": 0.01,
+            "injury": 0.08
+          },
+          "confidence": 0.85
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "positive": 0,
+            "negative": 0.54,
+            "unclear": 0.45,
+            "neutral": 0.01
+          },
+          "confidence": 0.39
+        }
+      }
+    },
+    {
+      "id": "espn:50027869:4869645",
+      "articleId": "50027869",
+      "espnId": "espn:4869645",
+      "playerName": "Caleb Douglas",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50027869/dolphins-leading-receiver-caleb-douglas-vs-chiefs",
+      "publishedAt": "2026-09-25T16:12:56.000Z",
+      "headline": "Dolphins' leading receiver Caleb Douglas out vs. Chiefs",
+      "inputHash": "3ececbc1416ed18f793704d7bc7e8b6977ddda1582bab8ca661c0b5d3d615b99",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "waiver": 0,
+            "role": 0,
+            "injury": 1,
+            "usage": 0,
+            "uncertain": 0,
+            "irrelevant": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "positive": 0,
+            "unclear": 0,
+            "negative": 0.99,
+            "neutral": 0.01
+          },
+          "confidence": 0.99
+        }
+      }
+    },
+    {
+      "id": "espn:50027601:4685512",
+      "articleId": "50027601",
+      "espnId": "espn:4685512",
+      "playerName": "Jadarian Price",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50027601/should-fantasy-managers-worried-jadarian-price",
+      "publishedAt": "2026-09-25T15:39:26.000Z",
+      "headline": "Should fantasy managers be worried about Jadarian Price?",
+      "inputHash": "f19447637e5f67bf3f810215bf845d09d69d4a0c429a7ac1eed422aa047e49a6",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.08
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "uncertain",
+          "probabilities": {
+            "waiver": 0,
+            "role": 0,
+            "uncertain": 0.99,
+            "usage": 0,
+            "irrelevant": 0.01,
+            "injury": 0
+          },
+          "confidence": 0.99
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "unclear",
+          "probabilities": {
+            "negative": 0.03,
+            "neutral": 0.02,
+            "unclear": 0.95,
+            "positive": 0
+          },
+          "confidence": 0.94
+        }
+      }
+    },
+    {
+      "id": "espn:50027607:3128429",
+      "articleId": "50027607",
+      "espnId": "espn:3128429",
+      "playerName": "Courtland Sutton",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50027607/why-mike-clay-some-concerns-courtland-sutton",
+      "publishedAt": "2026-09-25T15:31:34.000Z",
+      "headline": "Why Mike Clay has some concerns about Courtland Sutton",
+      "inputHash": "410dcc34e22f2011cd46158210c976434f64c96f4abe98364eaf386d0bdc2c07",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.25
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "uncertain",
+          "probabilities": {
+            "uncertain": 0.97,
+            "waiver": 0,
+            "injury": 0,
+            "usage": 0.02,
+            "role": 0,
+            "irrelevant": 0.01
+          },
+          "confidence": 0.96
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "probabilities": {
+            "negative": 0.77,
+            "neutral": 0.01,
+            "unclear": 0.22,
+            "positive": 0
+          },
+          "confidence": 0.7
+        }
+      }
+    },
+    {
+      "id": "espn:50027571:4361423",
+      "articleId": "50027571",
+      "espnId": "espn:4361423",
+      "playerName": "Micah Parsons",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50027571/stephen-flabbergasted-skip-micah-parsons-lambasting",
+      "publishedAt": "2026-09-25T15:19:16.000Z",
+      "headline": "Stephen A. flabbergasted by Skip's Micah Parsons lambasting",
+      "inputHash": "e42a7d3a5b501db418575c8f6eedd1eb9ac7e4440cb77d40d6beec52a9269fcb",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.06
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "irrelevant",
+          "probabilities": {
+            "usage": 0,
+            "waiver": 0,
+            "injury": 0,
+            "irrelevant": 0.79,
+            "uncertain": 0.21,
+            "role": 0
+          },
+          "confidence": 0.74
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "unclear",
+          "probabilities": {
+            "negative": 0.21,
+            "positive": 0,
+            "unclear": 0.78,
+            "neutral": 0.01
+          },
+          "confidence": 0.71
+        }
+      }
+    },
+    {
+      "id": "espn:50027676:3121422",
+      "articleId": "50027676",
+      "espnId": "espn:3121422",
+      "playerName": "Terry McLaurin",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50027676/clay-dopp-debate-terry-mclaurin-denzel-boston-their-flex-options",
+      "publishedAt": "2026-09-25T15:17:54.000Z",
+      "headline": "Clay and Dopp debate Terry McLaurin and Denzel Boston for their flex options",
+      "inputHash": "42637810a02cbf348399129b36ee2a2bb45dbb08cb5c1df24169f9f4366205b7",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.6
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "uncertain",
+          "probabilities": {
+            "waiver": 0.11,
+            "uncertain": 0.68,
+            "irrelevant": 0.02,
+            "injury": 0,
+            "role": 0.03,
+            "usage": 0.16
+          },
+          "confidence": 0.61
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "unclear",
+          "probabilities": {
+            "positive": 0,
+            "negative": 0,
+            "unclear": 0.94,
+            "neutral": 0.06
+          },
+          "confidence": 0.92
+        }
+      }
+    },
+    {
+      "id": "espn:50027676:4832800",
+      "articleId": "50027676",
+      "espnId": "espn:4832800",
+      "playerName": "Denzel Boston",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50027676/clay-dopp-debate-terry-mclaurin-denzel-boston-their-flex-options",
+      "publishedAt": "2026-09-25T15:17:54.000Z",
+      "headline": "Clay and Dopp debate Terry McLaurin and Denzel Boston for their flex options",
+      "inputHash": "42637810a02cbf348399129b36ee2a2bb45dbb08cb5c1df24169f9f4366205b7",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.52
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "uncertain",
+          "probabilities": {
+            "usage": 0.16999999999999998,
+            "injury": 0,
+            "role": 0.06,
+            "waiver": 0.05,
+            "irrelevant": 0.02,
+            "uncertain": 0.7
+          },
+          "confidence": 0.65
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "unclear",
+          "probabilities": {
+            "unclear": 0.92,
+            "negative": 0,
+            "positive": 0,
+            "neutral": 0.08
+          },
+          "confidence": 0.89
+        }
+      }
+    },
+    {
+      "id": "espn:50027575:4870808",
+      "articleId": "50027575",
+      "espnId": "espn:4870808",
+      "playerName": "Jeremiyah Love",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50027575/why-yates-jeremiyah-love-flex-consideration-week-3",
+      "publishedAt": "2026-09-25T15:14:12.000Z",
+      "headline": "Why Yates has Jeremiyah Love as a flex consideration in Week 3",
+      "inputHash": "e1086cf8b3b773cc9ee01d6d7baa453d05c91fa2b12b66a70703697b135d4a22",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.68
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "uncertain",
+          "probabilities": {
+            "role": 0.31,
+            "injury": 0,
+            "uncertain": 0.52,
+            "irrelevant": 0.01,
+            "usage": 0.05,
+            "waiver": 0.11
+          },
+          "confidence": 0.42
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "positive": 0.51,
+            "unclear": 0.43,
+            "neutral": 0.06,
+            "negative": 0
+          },
+          "confidence": 0.34
+        }
+      }
+    },
+    {
+      "id": "espn:50027449:4595342",
+      "articleId": "50027449",
+      "espnId": "espn:4595342",
+      "playerName": "Oronde Gadsden",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50027449/breaking-oronde-gadsden-excepted-high-volume-week-3",
+      "publishedAt": "2026-09-25T15:09:19.000Z",
+      "headline": "Breaking down Oronde Gadsden's excepted high volume in Week 3",
+      "inputHash": "9c16e09511cfe25623745f0e74e6191305a462195ad81a3d4fa54a4194d83789",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.78
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "usage",
+          "probabilities": {
+            "waiver": 0,
+            "uncertain": 0.01,
+            "irrelevant": 0,
+            "injury": 0,
+            "role": 0,
+            "usage": 0.99
+          },
+          "confidence": 0.99
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "positive": 0.54,
+            "unclear": 0.39,
+            "negative": 0.01,
+            "neutral": 0.06
+          },
+          "confidence": 0.38
+        }
+      }
+    },
+    {
+      "id": "espn:50000042:4426348",
+      "articleId": "50000042",
+      "espnId": "espn:4426348",
+      "playerName": "Jayden Daniels",
+      "source": "ESPN",
+      "url": "https://www.espn.com/nfl/story/_/id/50000042/washington-commanders-jayden-daniels-dislocated-elbow-injury-cowboys",
+      "publishedAt": "2026-09-25T14:57:43.000Z",
+      "headline": "What's next for Jayden Daniels, Commanders after elbow injury?",
+      "inputHash": "383374fc3ad581758bd0f5be763dc21e330ea02d3d90728010f9d9f846dc6638",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.81
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "injury",
+          "probabilities": {
+            "uncertain": 0,
+            "injury": 1,
+            "irrelevant": 0,
+            "role": 0,
+            "waiver": 0,
+            "usage": 0
+          },
+          "confidence": 1
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "unclear",
+          "probabilities": {
+            "unclear": 0.83,
+            "negative": 0.12,
+            "positive": 0,
+            "neutral": 0.05
+          },
+          "confidence": 0.78
+        }
+      }
+    },
+    {
+      "id": "espn:50027569:4426340",
+      "articleId": "50027569",
+      "espnId": "espn:4426340",
+      "playerName": "Nakobe Dean",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50027569/nakobe-dean-making-early-impact-raiders-defense-takes-shape",
+      "publishedAt": "2026-09-25T14:53:56.000Z",
+      "headline": "Nakobe Dean making an early impact as Raiders' defense takes shape",
+      "inputHash": "9811480527ff436dffbc0939b08227c9d6ca7f51b13d8156550833f8cb5f4b6c",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.8
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "usage",
+          "probabilities": {
+            "waiver": 0,
+            "uncertain": 0.15,
+            "injury": 0,
+            "usage": 0.53,
+            "role": 0.25,
+            "irrelevant": 0.07
+          },
+          "confidence": 0.44
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "positive",
+          "probabilities": {
+            "negative": 0,
+            "positive": 1,
+            "unclear": 0,
+            "neutral": 0
+          },
+          "confidence": 1
+        }
+      }
+    },
+    {
+      "id": "espn:50027341:4426348",
+      "articleId": "50027341",
+      "espnId": "espn:4426348",
+      "playerName": "Jayden Daniels",
+      "source": "ESPN",
+      "url": "https://www.espn.com/video/clip/_/id/50027341/how-commanders-protect-jayden-daniels-going-forward",
+      "publishedAt": "2026-09-25T14:10:52.000Z",
+      "headline": "How can Commanders protect Jayden Daniels going forward?",
+      "inputHash": "9c95d2ba008cae9b847fdaabc2c4345a79a54e0e5300239464fda27ed636cc56",
+      "policy": "espn-player-excerpts-v1",
+      "requestedModel": "typesafe/jev-1.13",
+      "model": "typesafe/jev-1.13-20260917",
+      "analyzedAt": "2026-09-26T21:36:07.842Z",
+      "answers": {
+        "relevance": {
+          "type": "noul",
+          "noul": 0.15
+        },
+        "topic": {
+          "type": "choice",
+          "choice": "uncertain",
+          "probabilities": {
+            "uncertain": 0.62,
+            "usage": 0.01,
+            "role": 0.02,
+            "injury": 0.14,
+            "irrelevant": 0.21,
+            "waiver": 0
+          },
+          "confidence": 0.54
+        },
+        "sentiment": {
+          "type": "choice",
+          "choice": "unclear",
+          "probabilities": {
+            "negative": 0.08,
+            "positive": 0,
+            "unclear": 0.89,
+            "neutral": 0.03
+          },
+          "confidence": 0.85
+        }
+      }
+    }
+  ]
+}

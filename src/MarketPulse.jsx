@@ -5,6 +5,8 @@ import { combineMarketRows, isWatched } from './marketPulseRows.js';
 import { TableColumnResize, useTablePreferences } from './TableSettings.jsx';
 import { sortTableRows, tableColumnWidth, toggleTableSort } from './tableSettings.js';
 import './MarketPulse.css';
+import commentarySnapshot from '../data/market-commentary.json';
+import { addCommentary, TOPICS, topicOf, sentimentOf } from './marketCommentary.js';
 import { mergeSnapshot, readSnapshot, saveSnapshot } from './marketPulseStorage.js';
 
 const KEY='bowser:market-pulse:v1';
@@ -18,8 +20,8 @@ export function csvFor(rows, snapshots) {
   const escape = value => `"${(typeof value === 'string' ? value.replace(/^[\s]*[=+@-]/, "'$&") : String(value ?? '')).replaceAll('"', '""')}"`;
   const iso = value => value ? new Date(value).toISOString() : '';
   return [
-    ['Player','Position','Team','Sleeper ID','ESPN ID','Identity match','Sleeper window','Sleeper captured at','ESPN captured at','Adds','Drops','Net','Add share %','Roster %','Start %','Roster change pp','ESPN previous at'],
-    ...rows.map(p => [p.name,p.position,p.team,p.sleeperId,p.espnId,p.match,snapshots.sleeper?.window,iso(snapshots.sleeper?.capturedAt),iso(snapshots.espn?.capturedAt),p.adds,p.drops,p.net,p.addShare,p.rosterPct,p.startPct,p.rosterDelta,iso(snapshots.espn?.previousAt)])
+    ['Player','Position','Team','Sleeper ID','ESPN ID','Identity match','Sleeper window','Sleeper captured at','ESPN captured at','Adds','Drops','Net','Add share %','Roster %','Start %','Roster change pp','ESPN previous at','News items','Latest topic','Positive','Neutral','Negative','Unclear','Model confidence %','Commentary balance','Balance change pp','Publications','Commentary captured at'],
+    ...rows.map(p => [p.name,p.position,p.team,p.sleeperId,p.espnId,p.match,snapshots.sleeper?.window,iso(snapshots.sleeper?.capturedAt),iso(snapshots.espn?.capturedAt),p.adds,p.drops,p.net,p.addShare,p.rosterPct,p.startPct,p.rosterDelta,iso(snapshots.espn?.previousAt),p.newsCount,p.newsTopic,p.positive,p.neutral,p.negative,p.unclear,p.newsConfidence,p.newsBalance,p.newsDelta,p.newsSources,iso(snapshots.commentary?.capturedAt)])
   ].map(row => row.map(escape).join(',')).join('\r\n');
 }
 function Balance({row}) {
@@ -55,10 +57,15 @@ const COLUMNS = [
   ['watch','Watchlist',32], ['name','Player',150], ['team','Team',44], ['position','Pos',36],
   ['adds','Adds',68], ['drops','Drops',68], ['net','Net',80], ['addShare','Add / drop',92],
   ['rosterPct','Roster %',76], ['startPct','Start %',70], ['rosterDelta','Δ Ros · pp',84],
+  ['newsCount','News',48], ['newsTopic','Latest topic',128], ['positive','Pos +',54], ['neutral','Neutral',60], ['negative','Neg −',54], ['unclear','Unclear',64], ['newsConfidence','Conf %',66], ['newsBalance','Tone',60], ['newsDelta','Δ Tone · pp',88],
 ];
+const NEWS_HELP={newsCount:'Unique sampled articles naming this player. Click a count to inspect sources.',newsTopic:'Topic of the newest matching article; model confidence below 70% is Uncertain.',positive:'Favorable fantasy outlook expressed in the excerpt; accepted classifications only.',neutral:'Relevant commentary without directional implication; accepted classifications only.',negative:'Unfavorable fantasy outlook expressed in the excerpt; accepted classifications only.',unclear:'Low relevance, low confidence, insufficient context or mixed signals.',newsConfidence:'Mean accepted sentiment confidence; not source reliability or football success probability.',newsBalance:'Commentary balance: 100 × (positive − negative) / classified articles. Not a popularity score.',newsDelta:'Balance change versus preceding equal window; requires two accepted articles in each.'};
 const RESIZABLE_COLUMNS=COLUMNS.map(([key,label,width])=>({key,label,width,minWidth:key==='watch'?32:44}));
-export function MarketPulse({season=2026,onOpenPlayer}) {
+export function MarketPulse({season=2026,onOpenPlayer,commentary=commentarySnapshot}) {
   const saved = useMemo(preferences, []);
+  const [newsHours,setNewsHours]=useState(72), [newsTopic,setNewsTopic]=useState('all'), [newsOnly,setNewsOnly]=useState(false), [newsTone,setNewsTone]=useState('all');
+  const [clock,setClock]=useState(Date.now);
+  useEffect(()=>{const timer=setInterval(()=>setClock(Date.now()),60000);return ()=>clearInterval(timer);},[]);
   const [hours,setHours] = useState([6,24,72].includes(saved.hours) ? saved.hours : 24);
   const [position,setPosition] = useState(['All','QB','RB','WR','TE','K','DEF'].includes(saved.position) ? saved.position : 'All');
   const [search,setSearch] = useState(''), [team,setTeam] = useState('All');
@@ -122,13 +129,13 @@ export function MarketPulse({season=2026,onOpenPlayer}) {
     setSelected(null); setLimit(100); load();
     return ()=>{request.current.id++;request.current.controller?.abort();};
   },[hours]);
-  const combined=useMemo(()=>combineMarketRows(
+  const combined=useMemo(()=>addCommentary(combineMarketRows(
     snapshots.sleeper?.window===String(hours)?snapshots.sleeper.rows:[],snapshots.espn?.rows||[]
-  ),[snapshots,hours]);
+  ),commentary,{hours:newsHours,topic:newsTopic,now:clock}),[snapshots,hours,commentary,newsHours,newsTopic,clock]);
   const rows=useMemo(()=>sortTableRows(combined.filter(r=>
     (position==='All'||r.position===position)&&(team==='All'||r.team===team)&&
-    (!watchOnly||isWatched(r,watch))&&`${r.name} ${r.team}`.toLowerCase().includes(search.toLowerCase())
-  ),tablePrefs.sorts,(row,key)=>key==='watch'?Number(isWatched(row,watch)):row[key]),[combined,position,team,watchOnly,watch,search,tablePrefs.sorts]);
+    (!watchOnly||isWatched(r,watch))&&(!newsOnly||r.newsCount>0)&&(newsTopic==='all'||r.newsCount>0)&&(newsTone==='all'||r[newsTone]>0)&&`${r.name} ${r.team}`.toLowerCase().includes(search.toLowerCase())
+  ),tablePrefs.sorts,(row,key)=>key==='watch'?Number(isWatched(row,watch)):row[key]),[combined,position,team,watchOnly,watch,search,tablePrefs.sorts,newsOnly,newsTone,newsTopic]);
   const teams=[...new Set(combined.map(r=>r.team))].sort();
   const player=combined.find(r=>r.aliases.includes(selected));
   const hasSnapshot=SOURCES.some(source=>snapshots[source]?.capturedAt);
@@ -138,7 +145,7 @@ export function MarketPulse({season=2026,onOpenPlayer}) {
     const {key,label}=column, active=tablePrefs.sorts.find(item=>item.key===key);
     return <th key={key} scope="col" aria-sort={active?(active.desc?'descending':'ascending'):'none'} style={{position:'relative'}}>
       <button aria-label={key==='watch'?'Sort by watchlist':label}
-        title={key==='rosterDelta'?'ESPN roster percentage-point change since previous saved snapshot':`Sort by ${label}. Shift-click adds a secondary sort.`}
+        title={NEWS_HELP[key] ? `${NEWS_HELP[key]} Click to sort; Shift-click adds a secondary sort.` : key==='rosterDelta'?'ESPN roster percentage-point change since previous saved snapshot':`Sort by ${label}. Shift-click adds a secondary sort.`}
         onClick={event=>setTablePrefs(old=>{
           const existing=old.sorts.some(item=>item.key===key);
           const next=toggleTableSort(old,key,event.shiftKey);
@@ -151,11 +158,11 @@ export function MarketPulse({season=2026,onOpenPlayer}) {
     </th>;
   }
   function download() {
-    const url=URL.createObjectURL(new Blob([csvFor(rows,snapshots)],{type:'text/csv;charset=utf-8'}));
+    const url=URL.createObjectURL(new Blob([csvFor(rows,{...snapshots,commentary})],{type:'text/csv;charset=utf-8'}));
     const a=document.createElement('a');a.href=url;a.download=`bowser-market-combined-${hours}h.csv`;a.click();URL.revokeObjectURL(url);
   }
   return <main className="page-content market-pulse">
-    <PageControls title="Market Pulse" summary={<><span>{hours}h transactions · ESPN ownership</span><span>{rows.length} players</span>{position!=='All'&&<span>{position}</span>}{team!=='All'&&<span>{team}</span>}{watchOnly&&<span>Watchlist</span>}{search&&<span>Search: {search}</span>}</>} actions={<><button onClick={download} disabled={!rows.length}><DownloadSimple/>Export CSV</button><button className="mp-primary" onClick={()=>load(true)} disabled={busy}><ArrowClockwise className={busy?'mp-spin':''}/>{busy?'Loading…':'Refresh data'}</button></>} notices={<>{SOURCES.filter(source=>errors[source]).map(source=><div className="mp-alert" role="alert" key={source}>
+    <PageControls title="Market Pulse" summary={<><span>{hours}h transactions · ESPN ownership</span><span>{rows.length} players</span>{position!=='All'&&<span>{position}</span>}{team!=='All'&&<span>{team}</span>}{watchOnly&&<span>Watchlist</span>}{search&&<span>Search: {search}</span>}<span>News {newsHours}h · {commentary.capturedAt?`captured ${stamp(commentary.capturedAt)}`:'not captured'}</span>{newsTopic!=='all'&&<span>{TOPICS[newsTopic]}</span>}{newsOnly&&<span>With news</span>}{newsTone!=='all'&&<span>{newsTone} commentary</span>}</>} actions={<><button onClick={download} disabled={!rows.length}><DownloadSimple/>Export CSV</button><button className="mp-primary" onClick={()=>load(true)} disabled={busy}><ArrowClockwise className={busy?'mp-spin':''}/>{busy?'Loading…':'Refresh data'}</button></>} notices={<>{SOURCES.filter(source=>errors[source]).map(source=><div className="mp-alert" role="alert" key={source}>
       <strong>{source==='sleeper'?'Sleeper':'ESPN'}:</strong> {errors[source]} {snapshots[source]?.capturedAt?'Last successful snapshot retained.':'No values substituted.'} Use Refresh data to retry.
     </div>)}</>}>
       <div className="mp-toolbar">
@@ -163,6 +170,10 @@ export function MarketPulse({season=2026,onOpenPlayer}) {
         <label>Position<select value={position} onChange={e=>setPosition(e.target.value)}>{['All','QB','RB','WR','TE','K','DEF'].map(p=><option key={p}>{p}</option>)}</select></label>
         <label>Team<select value={team} onChange={e=>setTeam(e.target.value)}><option>All</option>{teams.map(t=><option key={t}>{t}</option>)}</select></label>
         <button aria-pressed={watchOnly} onClick={()=>setWatchOnly(v=>!v)}><Star weight={watchOnly?'fill':'regular'}/> Watchlist</button>
+        <label>News window<select value={newsHours} onChange={e=>setNewsHours(Number(e.target.value))}>{[24,72,168].map(n=><option key={n} value={n}>{n} hours</option>)}</select></label>
+        <label>News topic<select value={newsTopic} onChange={e=>setNewsTopic(e.target.value)}><option value="all">All topics</option>{Object.entries(TOPICS).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label>
+        <label>Commentary tone<select value={newsTone} onChange={e=>setNewsTone(e.target.value)}><option value="all">All tones</option>{['positive','neutral','negative','unclear'].map(value=><option key={value} value={value}>{value}</option>)}</select></label>
+        <button aria-pressed={newsOnly} onClick={()=>setNewsOnly(v=>!v)}>With news</button>
         <span className="mp-matching">{rows.length} matching</span>
       </div>
 
@@ -181,6 +192,8 @@ export function MarketPulse({season=2026,onOpenPlayer}) {
       <p>ESPN: reported roster/start percentages, not transaction counts. Δ Ros is percentage-point change since our previous ESPN snapshot ({stamp(snapshots.espn?.previousAt)}), not a standardized daily change. ESPN is an experimental public endpoint and may change without notice.</p>
       <p>Rows match on a shared provider ID when available, otherwise an unambiguous name + position + team (team for defenses). Unmatched or ambiguous players stay separate with unavailable metrics shown as —. Populations and observation windows are not interchangeable.</p>
       <p>Refresh updates both sources with independent 15-minute caches and last-good snapshots. History retains up to 96 observations per source/window; overlapping windows cannot be added together. Watchlists and sorting stay in this browser. Saved history stays in this browser on this device; clearing site data removes it. Server caches may reset between requests. No background refresh job runs.</p>
+      <p>Jev commentary: {commentary.coverage || 'No captured source sample yet.'} Capture: {stamp(commentary.capturedAt)}. News windows end now, not at the capture date. Refresh data reloads ownership and transaction observations; new commentary requires a verified server-side capture and release.</p>
+      <p>News counts unique articles per player; latest topic follows the newest matching article. Pos + / Neutral / Neg − count text classifications with relevance and sentiment confidence ≥70%; other judgments are Unclear. Conf % is their mean model confidence, not source reliability or a probability of football success. Tone = 100 × (positive − negative) ÷ classified items. Δ Tone compares adjacent equal windows only with ≥2 classified items in each. These uncalibrated thresholds are research defaults; this limited news sample is not community consensus. — means no sampled evidence or insufficient history. Topic and tone filters never alter provider metrics.</p>
       <p>For personal fantasy research. No Yahoo credentials or private league data are accessed. Source coverage and availability may change.</p>
       <a href="https://docs.sleeper.com/" target="_blank" rel="noreferrer">Sleeper API documentation ↗</a> · <a href="https://fantasy.espn.com/football/players/add" target="_blank" rel="noreferrer">ESPN Fantasy ↗</a>
     </details></div>
@@ -189,7 +202,7 @@ export function MarketPulse({season=2026,onOpenPlayer}) {
       <div className="mp-table-scroll" role="region" aria-label="Combined player trends" tabIndex={0}>
         <table style={{width:`max(100%, ${RESIZABLE_COLUMNS.reduce((total,column)=>total+tableColumnWidth(column,tablePrefs),0)}px)`}}><caption className="sr-only">Sleeper and ESPN player popularity metrics. Click any column header to sort.</caption>
           <colgroup>{RESIZABLE_COLUMNS.map(column=><col key={column.key} style={{width:tableColumnWidth(column,tablePrefs)}}/>)}</colgroup>
-          <thead><tr className="mp-groups"><th colSpan={4} scope="colgroup">Player</th><th colSpan={4} scope="colgroup">Sleeper · {hours}h transactions</th><th colSpan={3} scope="colgroup">ESPN · ownership</th></tr><tr>{RESIZABLE_COLUMNS.map(header)}</tr></thead>
+          <thead><tr className="mp-groups"><th colSpan={4} scope="colgroup">Player</th><th colSpan={4} scope="colgroup">Sleeper · {hours}h transactions</th><th colSpan={3} scope="colgroup">ESPN · ownership</th><th colSpan={9} scope="colgroup">News commentary · Jev · {newsHours}h</th></tr><tr>{RESIZABLE_COLUMNS.map(header)}</tr></thead>
           <tbody>{rows.slice(0,limit).map(row=><tr key={row.id} className={player?.id===row.id?'selected':''}>
             <td><button className="mp-star" aria-label={`${isWatched(row,watch)?'Unwatch':'Watch'} ${row.name}`} aria-pressed={isWatched(row,watch)} onClick={()=>toggleWatch(row)}><Star weight={isWatched(row,watch)?'fill':'regular'}/></button></td>
             <th scope="row"><div className="mp-player-actions"><button className="mp-player" title={`Open ${row.name} player profile · ${row.match}`} onClick={()=>openPlayer(row)}>{row.name}</button><button className="mp-history-open" aria-label={`Market history for ${row.name}`} aria-expanded={player?.id===row.id} onClick={()=>setSelected(player?.id===row.id?null:row.id)}><ChartLineUp aria-hidden="true"/></button></div></th>
@@ -198,6 +211,9 @@ export function MarketPulse({season=2026,onOpenPlayer}) {
             <td className={row.net==null?'':row.net>=0?'mp-positive':'mp-negative'}>{row.net>0?'+':''}{fmt(row.net)}</td>
             <td><Balance row={row}/></td><td>{pct(row.rosterPct)}</td><td>{pct(row.startPct)}</td>
             <td title={snapshots.espn?.previousAt?`ESPN percentage-point change since ${stamp(snapshots.espn.previousAt)}`:'A second ESPN observation is needed'}>{row.rosterDelta==null?'—':`${row.rosterDelta>0?'+':''}${row.rosterDelta.toFixed(2)}`}</td>
+            <td>{row.newsCount==null?'—':<button className="mp-news-open" aria-label={`News evidence for ${row.name}`} onClick={()=>setSelected(row.id)}>{row.newsCount}</button>}</td>
+            <td className="mp-news-topic" title={row.newsTopic||'No matched article in the selected window'}>{row.newsTopic||'—'}</td>
+            <td className="mp-positive">{fmt(row.positive)}</td><td>{fmt(row.neutral)}</td><td className="mp-negative">{fmt(row.negative)}</td><td>{fmt(row.unclear)}</td><td title="Mean accepted Jev sentiment confidence; not source reliability">{pct(row.newsConfidence)}</td><td title="100 × (positive − negative) / classified items">{row.newsBalance==null?'—':row.newsBalance.toFixed(0)}</td><td title="Change versus the preceding equal window; at least two classified items in each required">{row.newsDelta==null?'—':`${row.newsDelta>0?'+':''}${row.newsDelta.toFixed(1)}`}</td>
           </tr>)}</tbody>
         </table>
         {!rows.length&&<div className="mp-empty"><ChartLineUp/><h2>{busy?'Loading snapshots…':hasSnapshot?'No matching players':'Start your market history'}</h2><p>{hasSnapshot?'Adjust the search, position, team or watchlist filter.':'Refresh data to retrieve real provider snapshots. No account or token is required.'}</p></div>}
@@ -205,6 +221,10 @@ export function MarketPulse({season=2026,onOpenPlayer}) {
       {rows.length>limit&&<button className="mp-more" onClick={()=>setLimit(n=>n+100)}>Show 100 more · {rows.length-limit} remaining</button>}
       {player&&<aside className="mp-detail" aria-label={`${player.name} details`}>
         <div className="mp-detail-heading"><div><h2><button className="mp-player" onClick={()=>openPlayer(player)}>{player.name}</button></h2><p>{player.team} · {player.position} · {player.match}</p></div><button aria-label="Close player details" onClick={()=>setSelected(null)}><X/></button></div>
+        <section className="mp-news-evidence" aria-label="News evidence"><h3>Source evidence · {player.newsCount||0} sampled articles · {player.newsSources||0} publications</h3><p>Model: {commentary.model||'unavailable'} · confidence describes the model’s classification only. Open the source for the full report.</p>
+          {!player.news.length&&<p>No matched commentary in this window. This does not mean no news exists.</p>}
+          {player.news.map(item=><article key={item.id}><div><a href={item.url} target="_blank" rel="noreferrer">{item.headline} ↗</a><time dateTime={item.publishedAt}>{item.source} · {stamp(item.publishedAt)}</time></div><span>{TOPICS[topicOf(item)]} · {sentimentOf(item)} · {pct(item.answers.sentiment.confidence*100)} confidence</span><details><summary>Exact model judgments</summary><p>Relevance {pct(item.answers.relevance.noul*100)} · topic confidence {pct(item.answers.topic.confidence*100)} · analyzed {stamp(item.analyzedAt)} · {item.model}</p><p>{Object.entries(item.answers.sentiment.probabilities).map(([label,value])=>`${label}: ${pct(value*100)}`).join(' · ')}</p></details></article>)}
+        </section>
         <div className="mp-history-grid">{SOURCES.map(source=>snapshots[source]&&player[source==='sleeper'?'sleeperId':'espnId']
           ?<History key={source} data={snapshots[source]} player={{id:player[source==='sleeper'?'sleeperId':'espnId']}}/>
           :<p key={source}>No confidently matched {source==='sleeper'?'Sleeper':'ESPN'} observation for this player.</p>)}</div>

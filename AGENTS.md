@@ -77,3 +77,9 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 ## Compact page controls (September 17, 2026)
 
 Robert's latest request supersedes the earlier filter-layout rollback: all active pages use one compact, consistent PageControls header with a single collapsed-by-default Filters & settings area. Preserve every unique filter/setting, selected values and provenance; remove only duplicates. Keep the main data near the top, visible active context, keyboard access, and 44px coarse-pointer targets. Do not reinstate the removed universal column-settings replacement. Hide League Hub and Fantasy Intelligence navigation. Team Box repeats matchup labels only once and keeps shorter readable rows. Thursday-only DraftKings Showdown must preserve separate FLEX/CPT prices and explicit scoring/projection derivation.
+
+## Yahoo interactive connection (September 24, 2026)
+
+- Yahoo league and roster responses are private to the authorized browser. Never write them to public warehouse snapshots, Git, build artifacts or logs. Keep all Yahoo routes no-store at browser and CDN layers.
+- This release uses an eight-hour encrypted HttpOnly session, with state binding, canonical HTTPS callback and same-origin POST controls. Do not describe it as durable server-side storage or unattended import support.
+- Yahoo authorization is not proof of Fantasy API access. Live completion requires the user to approve read access and verify real league/roster responses; mock tests must never be described as a live account test.

@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "date": "2026-09-26",
+  "npmRunCheck": "PASS",
+  "checkLogSha256": "f1c6ccc093b2d994873a5ffd758effef1248fefab100935ebc1f0c8d9d108fd6",
+  "regressionAssertions": 483,
+  "newBackendTests": 6,
+  "newUiTests": 3,
+  "repeatImport": {
+    "changed": false,
+    "calls": 0,
+    "costUSD": 0
+  },
+  "browser": {
+    "liveMatchedPlayers": 26,
+    "filtersDefaultCollapsed": true,
+    "sourceEvidence": "Jayden Daniels: 4 articles, 1 publication, source URLs and raw judgments visible",
+    "responsiveCssWidths": [
+      320,
+      375,
+      413,
+      768
+    ],
+    "rootHorizontalOverflow": false
+  },
+  "productionBaseDeployment": "dpl_HCJZVp1QyfA5uJRXj4d5QCEfs85s",
+  "limitations": [
+    "One ESPN publication sample; no social sentiment feed",
+    "Manual bounded CLI refresh and deployment; no new background schedule",
+    "Jev confidence thresholds uncalibrated; not football predictions"
+  ]
+}
