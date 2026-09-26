@@ -1,24 +1,21 @@
 {
   "status": "PASS",
-  "verifiedAt": "2026-09-24T18:30:02.581011+00:00",
+  "verifiedAt": "2026-09-26T21:48:07.986665+00:00",
   "publicUrl": "https://bowser-fantasy-football.vercel.app",
-  "candidateUrl": "https://bowser-fantasy-football-c9w9h1r7a-rbarbieri13s-projects.vercel.app",
-  "deploymentId": "dpl_GULBaBFfyibipfQozyfW9aK2uq7e",
+  "candidateUrl": "https://bowser-fantasy-football-df794737b-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_FxqHn7zR4cAeFPDoGkpttk4QUYnA",
   "deploymentState": "READY",
-  "applicationCommit": "2e23878c50dbc19afe0dba7f4a72972b66306d20",
-  "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-yahoo-connect-20260924",
+  "applicationCommit": "3353953d29566610bca35c402b2be635363c734e",
+  "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-jev-20260926",
   "checks": {
     "npmRunCheck": "PASS",
-    "fullCheckLog": "/private/tmp/bowser-yahoo-check.log",
-    "fullCheckLogSha256": "2d1abed44fdcf132412923a88ffd547f629d9b449aefa294a296a36d8a2eb819",
-    "yahooBackendTests": 9,
-    "yahooUiTests": 4,
     "localRegressionAssertions": 483,
     "candidateRegressionAssertions": 483,
     "publicRegressionAssertions": 483,
-    "candidateYahooAssertions": 10,
-    "publicYahooAssertions": 13,
-    "browser": "Production Yahoo Connection renders; Connect Yahoo reaches official Yahoo login. User sign-in/consent pending."
+    "commentaryOffline": "PASS",
+    "commentaryBrowser": "PASS: live source matching, filtering, sorting, source evidence and responsive containment",
+    "yahooConfigured": true,
+    "evidenceDirectory": "shared/operations/market-commentary-20260926"
   },
   "dfs": {
     "season": 2026,
@@ -79,6 +76,55 @@
   ],
   "evidenceDirectory": "shared/operations/yahoo-connect-20260924",
   "releasePurpose": "Private interactive Yahoo authorization and owned-league/roster verification; preserve compact controls and all existing data.",
-  "previousDeploymentId": "dpl_GxmppR3if5dKfsQuoSQj6UMbcRbe",
-  "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app"
+  "previousDeploymentId": "dpl_GULBaBFfyibipfQozyfW9aK2uq7e",
+  "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app",
+  "credentialRedeployment": {
+    "date": "2026-09-25",
+    "method": "Redeployed exact verified deployment with current Production environment; no application code changes",
+    "clientIdCheck": {
+      "publicClientIdPrefix": "dj0yJmk9VVNaMVV0T2ZFWXUx",
+      "publicClientIdSha256": "bf88b8a7ff1b39c8711d7d3e2638db9a51bd04cc5cb7bfd059b50e3ab235f9ab",
+      "changedFromPrevious": true,
+      "callback": "https://bowser-fantasy-football.vercel.app/api/v1/auth/yahoo/callback"
+    },
+    "checks": {
+      "status": "PASS",
+      "url": "https://bowser-fantasy-football.vercel.app",
+      "checks": [
+        "Production Yahoo environment configured",
+        "Anonymous browser has no Yahoo account session",
+        "Registered permanent callback domain",
+        "Private API caching disabled",
+        "Private leagues reject anonymous or noncanonical requests",
+        "No private data in anonymous responses",
+        "Connection start redirects",
+        "Authorization uses official Yahoo host",
+        "Exact callback passed to Yahoo",
+        "Code flow with random state",
+        "State cookie security attributes",
+        "Invalid callback strips code from redirect",
+        "Callback fails closed before exchange"
+      ],
+      "liveYahooAccountTest": "Pending user authorization"
+    },
+    "browser": "Reached official Yahoo consent for Bowser with scope fspt-r (Yahoo Fantasy Sports Read); terms checkbox and Agree left for user",
+    "liveAccountTest": "Pending fresh authorization of alternate application. Earlier app refreshed successfully but league read returned 403."
+  },
+  "previousVerifiedRelease": {
+    "deploymentId": "dpl_HCJZVp1QyfA5uJRXj4d5QCEfs85s",
+    "applicationCommit": "2e23878c50dbc19afe0dba7f4a72972b66306d20",
+    "verifiedAt": "2026-09-25T18:29:16.966907+00:00"
+  },
+  "commentary": {
+    "capture": "2026-09-26T21:36:07.842Z",
+    "records": 48,
+    "articles": 37,
+    "players": 39,
+    "costUSD": 0.001682184,
+    "repeatCalls": 0,
+    "source": "ESPN public NFL feed excerpts",
+    "refresh": "bounded manual CLI; immutable captures; release required",
+    "importerHardeningCommit": "c830e72",
+    "applicationCodeNote": "Importer-only same-name ambiguity guard and release records after applicationCommit do not change the deployed UI or API."
+  }
 }
