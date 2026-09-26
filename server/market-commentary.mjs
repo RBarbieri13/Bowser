@@ -19,12 +19,19 @@ export function newsCandidates(payload, now = Date.now()) {
     try { url = new URL(article.links?.web?.href); } catch { continue; }
     if (url.protocol !== 'https:' || !['www.espn.com', 'espn.com'].includes(url.hostname)) continue;
     url.search = ''; url.hash = '';
-    const text = `${article.headline}\n${article.description || ''}`.slice(0, 2400);
+    const text = `${article.headline}\n${typeof article.description === 'string' ? article.description : ''}`.slice(0, 2400);
     const normalized = ` ${nameKey(text)} `;
-    for (const category of article.categories || []) {
+    const categories = Array.isArray(article.categories) ? article.categories : [];
+    const names = new Map();
+    for (const category of categories) {
+      if (category.type !== 'athlete' || category.sportId !== 28 || !category.description || !category.athleteId) continue;
+      const key = nameKey(category.description);
+      names.set(key, new Set([...(names.get(key) || []), String(category.athleteId)]));
+    }
+    for (const category of categories) {
       const id = String(category.athleteId || '');
       const name = category.description;
-      if (category.type !== 'athlete' || category.sportId !== 28 || !/^\d+$/.test(id) || !name || !normalized.includes(` ${nameKey(name)} `)) continue;
+      if (category.type !== 'athlete' || category.sportId !== 28 || !/^\d+$/.test(id) || !name || names.get(nameKey(name))?.size !== 1 || !normalized.includes(` ${nameKey(name)} `)) continue;
       const key = `espn:${article.id}:${id}`;
       records.set(key, {
         id: key, articleId: String(article.id), espnId: `espn:${id}`, playerName: name,
