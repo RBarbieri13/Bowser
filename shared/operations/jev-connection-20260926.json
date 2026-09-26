@@ -1,0 +1,19 @@
+{
+  "verifiedAt": "2026-09-26T21:26:33.434235+00:00",
+  "status": "PASS",
+  "scope": "Local Bowser project utility; not deployed to Vercel",
+  "endpoint": "https://openrouter.ai/api/alpha/decisions",
+  "requestedModel": "typesafe/jev-1.13",
+  "resolvedModel": "typesafe/jev-1.13-20260917",
+  "provider": "TypeSafe",
+  "test": "Synthetic American-football text, Noul classification",
+  "answer": 0.99,
+  "usage": {
+    "input_tokens": 283,
+    "output_tokens": 20,
+    "costUsd": 1.1886e-05
+  },
+  "requestId": "gen-dec-1790457968-N5J2pd29h0Zk8EoaEuLt",
+  "privateLeagueDataSent": false,
+  "credentialFileMode": "0o600"
+}

@@ -1,6 +1,6 @@
 # Jev for Bowser
 
-Prepared September 26, 2026. Live access remains unverified until an OpenRouter key is configured and the live smoke test passes.
+Live access verified September 26, 2026 through OpenRouter using the local ignored credential file. Available in this checkout; not deployed to Vercel.
 
 ## Purpose
 
@@ -59,3 +59,7 @@ Uses `POST https://openrouter.ai/api/alpha/decisions`, not chat completions. The
 - `npm run jev -- --status` correctly reports `configured: false`, `liveVerified: false`.
 - No paid live request was made, no credentials changed, and no production deployment was made.
 - Prepared in branch `codex/jev-setup-20260926`, checkout `Bowser-jev-20260926`, based on the latest local Yahoo implementation. The dirty Yahoo release evidence and other checkouts were preserved.
+
+## Live activation — September 26, 2026
+
+After the user saved the key, the live smoke test passed. TypeSafe resolved the model to `typesafe/jev-1.13-20260917` and returned `noul: 0.99`. Usage: 283 input tokens, 20 output tokens, $0.000011886. Only the synthetic smoke-test sentence was sent. Evidence: `shared/operations/jev-connection-20260926.json`. The `.env.local` file is Git-ignored with owner-only mode 0600. The status command continues to report `liveVerified: false` because it performs no live verification; the dated record is the evidence of the completed test. Production and GitHub publication are not part of this activation.
