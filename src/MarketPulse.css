@@ -107,3 +107,18 @@
 /* Profile links and configurable provider history remain independent of table settings. */
 .mp-player-actions{display:flex;align-items:center;gap:4px}.market-pulse .mp-player-actions .mp-player{flex:1}.market-pulse .mp-history-open{padding:0;border:0;background:transparent;width:18px;height:28px;flex:none}.market-pulse .mp-history-open svg{width:12px}.market-pulse .mp-detail-heading h2 .mp-player{font-size:18px;width:auto}
 .mp-history-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.mp-history-controls label{display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--text-secondary)}.mp-history-plot{position:relative;height:92px;width:70%;flex:none}.mp-history-bars .mp-history-plot i{position:absolute;left:0;width:100%;background:var(--accent);border-radius:2px}.mp-history-bars .mp-history-plot i.negative{background:var(--negative)}.mp-history-zero{position:absolute;width:100%;border-top:1px solid var(--border-strong)}.mp-history-bars>div{align-self:stretch;justify-content:flex-end}
+/* Hallmark · component: commentary columns/evidence · existing Bowser tokens
+   Pre-emit critique: P4 H4 E4 S5 R5 V3; compact grouped table, no new page chrome. */
+.market-pulse .mp-news-open{padding:0 7px;min-width:28px;border:0;background:transparent;color:var(--accent);text-decoration:underline;font:inherit}
+.market-pulse td.mp-news-topic{font-family:var(--font-ui);font-size:11px;white-space:normal;line-height:14px}
+.market-pulse tbody td:nth-child(12){border-left:1px solid var(--border)}
+.mp-news-evidence{margin-top:12px;border-top:1px solid var(--border);padding-top:10px;min-width:0}
+.mp-news-evidence h3{font-size:13px;margin:0 0 6px}
+.mp-news-evidence p,.mp-news-evidence time,.mp-news-evidence article>span{font-size:11px;line-height:1.6;color:var(--text-secondary)}
+.mp-news-evidence article{padding:10px 0;border-bottom:1px solid var(--border)}
+.mp-news-evidence article>div{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.mp-news-evidence a{color:var(--accent);font-size:13px;overflow-wrap:anywhere}
+.mp-news-evidence time{flex-shrink:0}
+.mp-news-evidence summary{cursor:pointer;font-size:11px;margin-top:4px}
+.mp-news-evidence a:focus-visible,.mp-news-evidence summary:focus-visible,.market-pulse .mp-news-open:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:768px){.mp-news-evidence article>div{flex-direction:column;gap:3px}}
