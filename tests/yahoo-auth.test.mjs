@@ -112,3 +112,55 @@ test('provider failures are actionable and do not leak response or exception det
   const error=await call('leagues',{headers:{cookie:sessionCookie()},fetcher:async()=>{throw Error('PRIVATE_ACCESS');}});
   assert.equal(error.status,502); assert(!error.body.includes('PRIVATE'));
 });
+
+const teamKey='999.l.42.t.1';
+const leaguePayload={fantasy_content:{league:[{league_key:'999.l.42',name:'Fixture League',season:'2026',current_week:'3',start_week:'1',end_week:'17',scoring_type:'head'}]}};
+function dashboardFetcher(overrides={}) {
+  return async url=>{
+    const section=url.includes('/teams?')?'owned':url.includes('/standings?')?'standings':url.includes('/scoreboard;')?'scoreboard':url.includes('/settings?')?'settings':url.includes('/roster;')?'roster':'league';
+    if(overrides[section])return overrides[section](url);
+    const wk=new URL(url).pathname.match(/week=(\d+)/)?.[1]||'3';
+    const team=(key,name,total)=>[[{team_key:key},{name}],{team_points:{coverage_type:'week',week:wk,total}},{team_projected_points:{coverage_type:'week',week:wk,total:'105.25'}}];
+    const rosterPlayer = [[{player_key:'999.p.1'},{name:{full:'Fixture RB'}},{display_position:'RB'},{editorial_team_abbr:'BUF'},{status:'Q'},{bye_weeks:{week:'7'}}],{selected_position:[{position:'RB'}]},{player_points:{coverage_type:'week',week:wk,total:'0'}}];
+    const standingTeam = [[{team_key:teamKey},{name:'My team'},{faab_balance:'0'}],{team_standings:{rank:'2',outcome_totals:{wins:'1',losses:'1',ties:'0'},points_for:'202.5',points_against:'200'}}];
+    const matchup = {week:wk,status:'midevent',teams:{0:{team:team(teamKey,'My team','12.3')},1:{team:team('999.l.42.t.2','Opponent','0')}}};
+    const payloads = {
+      owned: teams,
+      league: leaguePayload,
+      roster: {fantasy_content:{team:[[{team_key:teamKey}],{roster:{week:wk,coverage_type:'week',players:{0:{player:rosterPlayer},count:1}}}]}},
+      standings: {fantasy_content:{league:[{},{standings:{teams:{0:{team:standingTeam},count:1}}}]}},
+      settings: {fantasy_content:{league:[{},{settings:{roster_positions:[{roster_position:{position:'RB',count:'2'}}],waiver_type:'FAAB'}}]}},
+      scoreboard: {fantasy_content:{league:[{},{scoreboard:{week:wk,0:{matchups:{0:{matchup},count:1}}}}]}},
+    };
+    return response(payloads[section]);
+  };
+}
+test('dashboard normalizes selected-week lineup, standings and matchup without leaking provider identities',async()=>{
+ const r=await call(`dashboard?season=2026&team=${teamKey}&week=2`,{headers:{cookie:sessionCookie()},fetcher:dashboardFetcher()});
+ assert.equal(r.status,200);assert.equal(r.data.week,2);assert.equal(r.data.roster.week,2);assert.equal(r.data.roster.players[0].points,0);assert.equal(r.data.roster.players[0].slot,'RB');assert.equal(r.data.standings[0].faabBalance,0);assert.equal(r.data.scoreboard.matchups[0].teams[1].points,0);assert.equal(r.data.settings.rosterPositions[0].count,2);assert.deepEqual(r.data.errors,{});assert(!/PRIVATE|private-guid|access_token|manager_id/.test(r.body));assert.equal(r.headers.get('vercel-cdn-cache-control'),'no-store');
+});
+test('dashboard requires ownership, valid season and a week within the league season',async()=>{
+ assert.equal((await call('dashboard')).status,401);
+ for(const week of ['0','19','2;bad','18'])assert.equal((await call(`dashboard?season=2026&team=${teamKey}&week=${week}`,{headers:{cookie:sessionCookie()},fetcher:dashboardFetcher()})).status,400);
+ assert.equal((await call('dashboard?season=2026&team=999.l.42.t.99',{headers:{cookie:sessionCookie()},fetcher:dashboardFetcher()})).status,403);
+ assert.equal((await call(`dashboard?season=2025&team=${teamKey}`,{headers:{cookie:sessionCookie()},fetcher:dashboardFetcher()})).data.error.code,'league_mismatch');
+});
+test('dashboard keeps missing sections unavailable without discarding successful data',async()=>{
+ const r=await call(`dashboard?season=2026&team=${teamKey}`,{headers:{cookie:sessionCookie()},fetcher:dashboardFetcher({standings:async()=>response({},500)})});
+ assert.equal(r.status,200);assert.equal(r.data.standings,null);assert(r.data.errors.standings);assert.equal(r.data.roster.players.length,1);
+ const denied=await call(`dashboard?season=2026&team=${teamKey}`,{headers:{cookie:sessionCookie()},fetcher:dashboardFetcher({scoreboard:async()=>response({},403)})});assert.equal(denied.status,403);assert(!denied.body.includes('Fixture RB'));
+});
+test('dashboard rejects a provider week mismatch and never calls it the requested week',async()=>{
+ const r=await call(`dashboard?season=2026&team=${teamKey}&week=2`,{headers:{cookie:sessionCookie()},fetcher:dashboardFetcher({roster:async()=>response({fantasy_content:{team:[{},{roster:{week:'3',players:{}}}]}})})});
+ assert.equal(r.data.roster,null);assert.match(r.data.errors.roster,/different week/);
+});
+test('dashboard retains roster slots when the weekly player statistics resource fails',async()=>{
+ const base=dashboardFetcher();
+ const r=await call(`dashboard?season=2026&team=${teamKey}&week=2`,{headers:{cookie:sessionCookie()},fetcher:dashboardFetcher({roster:async url=>{
+   if(url.includes('/players/stats'))return response({},500);
+   const result=await base(url);const data=await result.json();
+   delete data.fantasy_content.team[1].roster.players[0].player[2].player_points;
+   return response(data);
+ }})});
+ assert.equal(r.status,200);assert.equal(r.data.roster.week,2);assert.equal(r.data.roster.players[0].slot,'RB');assert.equal(r.data.roster.players[0].points,null);assert.match(r.data.warnings.roster,/unavailable/);assert.deepEqual(r.data.errors,{});
+});

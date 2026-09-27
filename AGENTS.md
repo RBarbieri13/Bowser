@@ -83,3 +83,10 @@ Robert's latest request supersedes the earlier filter-layout rollback: all activ
 - Yahoo league and roster responses are private to the authorized browser. Never write them to public warehouse snapshots, Git, build artifacts or logs. Keep all Yahoo routes no-store at browser and CDN layers.
 - This release uses an eight-hour encrypted HttpOnly session, with state binding, canonical HTTPS callback and same-origin POST controls. Do not describe it as durable server-side storage or unattended import support.
 - Yahoo authorization is not proof of Fantasy API access. Live completion requires the user to approve read access and verify real league/roster responses; mock tests must never be described as a live account test.
+
+## Yahoo dashboard (September 27, 2026)
+
+- The Yahoo page is now a private read-only team dashboard. Keep the old League Hub hidden; do not populate that placeholder with guessed league records.
+- Authorize every dashboard team against the signed-in user's NFL teams in the requested season before fetching league standings, scoreboard, settings or roster. Keep responses no-store and never log/store private response bodies.
+- Lineups and matchup scores must carry the selected Yahoo week; standings are current season standings and must say so even when viewing an earlier lineup week. Use Yahoo's league-scored points, never generic PPR/DFS projections in their place. Unknown stays null and actual zero stays zero.
+- Dashboard account data stays in memory. Load teams sequentially to bound provider calls and avoid racing refresh cookies. Fixtures belong only in tests or ignored local verification outputs, never production fallbacks.
