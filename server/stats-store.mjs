@@ -539,6 +539,34 @@ function scheduleGame(row) {
   };
 }
 
+// Public schedule data only; Yahoo account data never enters the warehouse.
+export function querySchedule(searchParams = new URLSearchParams(), dbPath) {
+  const season = querySeason(searchParams);
+  const rawWeeks = searchParams.get("week") ?? searchParams.get("weeks");
+  if (rawWeeks !== null && !/^(?:[1-9]|1[0-9]|2[0-2])(?:,(?:[1-9]|1[0-9]|2[0-2]))*$/.test(rawWeeks)) {
+    throw new QueryValidationError("week", "Choose NFL weeks from 1 to 22, separated by commas");
+  }
+  const weeks = rawWeeks === null ? [] : [...new Set(rawWeeks.split(",").map(Number))].sort((a, b) => a - b);
+  const db = openDatabase(dbPath, season);
+  const rows = db.prepare(`
+    SELECT g.*, s.kickoff_utc FROM games g
+    LEFT JOIN team_schedule s ON s.game_id = g.game_id AND s.season = g.season AND s.home_away = 'home'
+    WHERE g.season = ? ${weeks.length ? `AND g.week IN (${placeholders(weeks)})` : ""}
+    ORDER BY g.week, g.gameday, g.gametime, g.game_id
+  `).all(season, ...weeks);
+  return {
+    data: rows.map(row => ({
+      gameId: row.game_id, season: row.season, week: row.week, seasonType: row.season_type,
+      homeTeam: row.home_team, awayTeam: row.away_team,
+      gameday: row.gameday || null, gametime: row.gametime || null, timeZone: "America/New_York",
+      kickoffUtc: row.kickoff_utc || null,
+      homeScore: row.home_score, awayScore: row.away_score,
+      totalPoints: row.home_score !== null && row.away_score !== null ? row.home_score + row.away_score : null,
+    })),
+    meta: { season, weeks, count: rows.length, source: "nflverse schedules", linesAvailable: false },
+  };
+}
+
 function queryScheduleForTeam(db, team, seasonType = "ALL") {
   const season = databaseSeason(db);
   const params = [team];

@@ -1,3 +1,4 @@
+import { queryLeagueResearch } from './yahoo-research.mjs';
 import { metadata, entities, leagueInfo, teamInfo, rosterInfo, scoreboardInfo, settingsInfo } from './yahoo-dashboard.mjs';
 export { metadata, entities } from './yahoo-dashboard.mjs';
 import { createCipheriv, createDecipheriv, hkdfSync, randomBytes, timingSafeEqual } from 'node:crypto';
@@ -80,7 +81,7 @@ export function createYahooHandler({ env = process.env, fetcher = fetch, now = (
     const clear = () => cookie(res, COOKIE, '', 0);
     const postActions = ['refresh', 'disconnect'];
     try {
-      if (!['status', 'start', 'callback', 'leagues', 'roster', 'dashboard', ...postActions].includes(action)) return json(res, 404, { error: { code: 'not_found', message: 'Unknown Yahoo action.' } });
+      if (!['status', 'start', 'callback', 'leagues', 'roster', 'dashboard', 'league-research', ...postActions].includes(action)) return json(res, 404, { error: { code: 'not_found', message: 'Unknown Yahoo action.' } });
       if (req.method !== (postActions.includes(action) ? 'POST' : 'GET')) { res.setHeader('Allow', postActions.includes(action) ? 'POST' : 'GET'); return json(res, 405, { error: { code: 'method_not_allowed', message: 'Unsupported request method.' } }); }
       if (action === 'status') return json(res, 200, { configured, connected: Boolean(session), expiresAt: session ? new Date(session.expiresAt).toISOString() : null, connectionUrl: configured ? `${callback.origin}/#/yahoo` : null, storage: 'Encrypted HttpOnly cookie; eight-hour browser session. No background imports.' });
       if (!configured) fail('not_configured', 'Yahoo credentials or the HTTPS callback are not configured for this deployment.', 503);
@@ -151,6 +152,7 @@ export function createYahooHandler({ env = process.env, fetcher = fetch, now = (
       if (!/^\d+\.l\.\d+\.t\.\d+$/.test(teamKey)) fail('invalid_team', 'Select one of your Yahoo teams.');
       const owned = entities(await query(`${userGames}/teams`), 'team');
       if (!owned.some(t => t.team_key === teamKey)) fail('team_not_owned', 'This team is not one of your teams in the selected season.', 403);
+      if (action === 'league-research') return json(res, 200, await queryLeagueResearch({ params: url.searchParams, teamKey, season, query, fail, now }));
       if (action === 'dashboard') {
         const leagueKey = teamKey.split('.t.')[0];
         const league = leagueInfo(entities(await query(`league/${leagueKey}`), 'league')[0] || {});

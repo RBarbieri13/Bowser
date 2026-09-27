@@ -164,3 +164,83 @@ test('dashboard retains roster slots when the weekly player statistics resource 
  }})});
  assert.equal(r.status,200);assert.equal(r.data.roster.week,2);assert.equal(r.data.roster.players[0].slot,'RB');assert.equal(r.data.roster.players[0].points,null);assert.match(r.data.warnings.roster,/unavailable/);assert.deepEqual(r.data.errors,{});
 });
+
+function researchFetcher({ playerCount = 1, transactionCount = 1, overrides = {}, calls = [] } = {}) {
+  return async (url, init) => {
+    calls.push(url);
+    if (url.includes('/get_token')) return response({ access_token: 'NEW_ACCESS', expires_in: 3600 });
+    assert.equal(init.method, undefined, 'Fantasy reads must use GET');
+    if (url.includes('/teams?')) return response(teams);
+    if (url.includes('/players;')) {
+      if (overrides.availability) return overrides.availability(url);
+      const players = { count: playerCount };
+      for (let i = 0; i < playerCount; i++) players[i] = { player: [[{ player_key: `999.p.${i + 1}` }, { name: { full: `Available ${i + 1}` } }, { display_position: 'RB' }, { editorial_team_abbr: 'BUF' }, { private_field: 'PRIVATE_PAYLOAD' }]] };
+      return response({ fantasy_content: { league: [{ league_key: '999.l.42' }, { players }] } });
+    }
+    if (url.includes('/transactions;')) {
+      const section = url.includes('pending_trade') ? 'trades' : 'transactions';
+      if (overrides[section]) return overrides[section](url);
+      const transactions = { count: transactionCount };
+      for (let i = 0; i < transactionCount; i++) transactions[i] = { transaction: [{ transaction_key: `999.l.42.${section === 'trades' ? 'pt' : 'tr'}.${i + 1}`, type: section === 'trades' ? 'pending_trade' : 'trade', status: 'proposed', timestamp: '0', trader_team_key: teamKey, tradee_team_key: '999.l.42.t.2', trade_note: 'PRIVATE_NOTE' }, { players: { count: 1, 0: { player: [[{ player_key: '999.p.1' }, { name: { full: 'Fixture RB' } }], { transaction_data: [{ type: 'pending_trade', source_team_key: teamKey, destination_team_key: '999.l.42.t.2' }] }] } } }] };
+      return response({ fantasy_content: { league: [{ league_key: '999.l.42' }, { transactions }] } });
+    }
+    return overrides.league ? overrides.league(url) : response(leaguePayload);
+  };
+}
+const researchAction = `league-research?season=2026&team=${teamKey}`;
+test('league research authorizes owned teams and season before any private league reads', async () => {
+  assert.equal((await call(researchAction)).status, 401);
+  assert.equal((await call(researchAction, { method: 'POST', headers: { cookie: sessionCookie() } })).status, 405);
+  const forbidden = await call('league-research?season=2026&team=999.l.42.t.99', { headers: { cookie: sessionCookie() }, fetcher: researchFetcher() });
+  assert.equal(forbidden.status, 403); assert.equal(forbidden.count, 1);
+  const mismatch = await call(`league-research?season=2025&team=${teamKey}`, { headers: { cookie: sessionCookie() }, fetcher: researchFetcher() });
+  assert.equal(mismatch.data.error.code, 'league_mismatch'); assert.equal(mismatch.count, 2);
+});
+test('research uses documented filters and exposes only normalized private no-store results', async () => {
+  const calls = [];
+  const r = await call(`${researchAction}&include=availability,trades,transactions`, { headers: { cookie: sessionCookie() }, fetcher: researchFetcher({ calls }) });
+  assert.equal(r.status, 200); assert.equal(r.count, 5);
+  assert(calls.some(url => url.includes('/players;status=FA;start=0;count=25?')));
+  assert(calls.some(url => url.includes(`/transactions;type=pending_trade;team_key=${teamKey};count=50?`)));
+  assert(calls.some(url => url.includes('/transactions;types=add,drop,trade;count=50?')));
+  assert.equal(r.data.availability.players[0].key, '999.p.1'); assert.equal(r.data.availability.complete, true);
+  assert.equal(r.data.trades.items[0].players[0].sourceTeamKey, teamKey); assert.equal(r.data.trades.items[0].timestamp, 0);
+  assert.equal(r.data.transactions.items[0].type, 'trade'); assert.deepEqual(r.data.errors, {});
+  assert(!/PRIVATE|trade_note|private-guid|access_token/.test(r.body));
+  for (const key of ['cache-control', 'cdn-cache-control', 'vercel-cdn-cache-control']) assert.match(r.headers.get(key), /no-store/);
+  assert.equal(r.headers.get('vary'), 'Cookie');
+});
+test('availability pagination never claims a full pool when only a page is known', async () => {
+  const first = await call(`${researchAction}&include=availability`, { headers: { cookie: sessionCookie() }, fetcher: researchFetcher({ playerCount: 25 }) });
+  assert.equal(first.data.availability.complete, false); assert.equal(first.data.availability.nextStart, 25); assert.equal(first.data.availability.exhausted, false);
+  const last = await call(`${researchAction}&include=availability&availabilityStart=25&availabilityStatus=W`, { headers: { cookie: sessionCookie() }, fetcher: researchFetcher({ playerCount: 0 }) });
+  assert.equal(last.data.availability.complete, false); assert.equal(last.data.availability.exhausted, true); assert.equal(last.data.availability.nextStart, null); assert.equal(last.data.availability.status, 'W');
+  const cap = await call(`${researchAction}&include=availability&availabilityStart=5000`, { headers: { cookie: sessionCookie() }, fetcher: researchFetcher({ playerCount: 25 }) });
+  assert.equal(cap.data.availability.limitReached, true); assert.equal(cap.data.availability.nextStart, null);
+  const bounded = await call(`${researchAction}&include=trades`, { headers: { cookie: sessionCookie() }, fetcher: researchFetcher({ transactionCount: 50 }) });
+  assert.equal(bounded.data.trades.complete, false); assert.equal(bounded.data.trades.limitReached, true);
+});
+test('research validates pagination and includes without interpolating arbitrary input into Yahoo routes', async () => {
+  for (const query of ['include=secrets', 'include=', 'availabilityStart=-1', 'availabilityStart=5001', 'availabilityStart=2.5', 'availabilityStart=2;count=5000', 'availabilityStatus=T']) {
+    const r = await call(`${researchAction}&${query}`, { headers: { cookie: sessionCookie() }, fetcher: researchFetcher() });
+    assert.equal(r.status, 400, query); assert.equal(r.count, 1, 'Only ownership discovery occurs');
+  }
+});
+test('research distinguishes failure from an empty collection and fails closed on access errors', async () => {
+  const partial = await call(researchAction, { headers: { cookie: sessionCookie() }, fetcher: researchFetcher({ overrides: { availability: async () => response({ fantasy_content: { league: [] } }) } }) });
+  assert.equal(partial.status, 200); assert.equal(partial.data.availability, null); assert(partial.data.errors.availability); assert.equal(partial.data.trades.items.length, 1);
+  const badCount = await call(`${researchAction}&include=trades`, { headers: { cookie: sessionCookie() }, fetcher: researchFetcher({ overrides: { trades: async () => response({ fantasy_content: { league: [{ transactions: { count: 1 } }] } }) } }) });
+  assert.equal(badCount.data.trades, null);
+  for (const status of [401, 403, 429]) {
+    const denied = await call(researchAction, { headers: { cookie: sessionCookie() }, fetcher: researchFetcher({ overrides: { trades: async () => response({ secret: 'PRIVATE_PAYLOAD' }, status) } }) });
+    assert.equal(denied.status, status);
+    assert(!denied.body.includes('Available 1')); assert(!denied.body.includes('PRIVATE'));
+  }
+});
+test('research rejects a different league collection rather than mislabeling its players', async () => {
+  const result = await call(`${researchAction}&include=availability`, {
+    headers: { cookie: sessionCookie() },
+    fetcher: researchFetcher({ overrides: { availability: async () => response({ fantasy_content: { league: [{ league_key: '999.l.99' }, { players: { count: 0 } }] } }) } }),
+  });
+  assert.equal(result.data.availability, null); assert(result.data.errors.availability);
+});
