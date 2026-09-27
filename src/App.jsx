@@ -1146,7 +1146,7 @@ export function App() {
     <div className={`app-shell${sidebarWidth < 112 ? " sidebar-icon-only" : ""}`} style={{ "--sidebar-width": `${sidebarWidth}px` }}>
       <>{profileLookup && <div className="player-resolution-alert" role="status">{profileLookup}<button aria-label="Dismiss player lookup message" onClick={()=>{profileRequest.current++;setProfileLookup("");}}>×</button></div>}</><AppHeader season={route.season || season} onSeasonChange={changeSeason} currentPage={currentPage === "game" ? "team-box-scores" : currentPage} width={sidebarWidth} collapsed={sidebarWidth < 112} onResize={resizeSidebar} />
       {currentPage === "yahoo" ? (
-        <YahooConnection season={season} />
+        <YahooConnection season={season} onOpenPlayer={openProfile} />
       ) : currentPage === "game" ? (
         <GameBreakdown season={route.season || season} gameId={route.gameId} scoring={route.scoring} onBack={() => { window.location.hash = "#/team-box-scores"; }} onOpenPlayer={(row, opener) => openProfile(row, opener, route.scoring)} />
       ) : currentPage === "team-box-scores" ? (

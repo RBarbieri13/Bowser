@@ -1,11 +1,11 @@
 {
   "status": "PASS",
-  "verifiedAt": "2026-09-26T21:48:07.986665+00:00",
+  "verifiedAt": "2026-09-27T20:14:31.479979+00:00",
   "publicUrl": "https://bowser-fantasy-football.vercel.app",
-  "candidateUrl": "https://bowser-fantasy-football-df794737b-rbarbieri13s-projects.vercel.app",
-  "deploymentId": "dpl_FxqHn7zR4cAeFPDoGkpttk4QUYnA",
+  "candidateUrl": "https://bowser-fantasy-football-7vtc36q2o-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_5ekBD5VrX81x2YjXQS9ykJBKPHmL",
   "deploymentState": "READY",
-  "applicationCommit": "3353953d29566610bca35c402b2be635363c734e",
+  "applicationCommit": "286a19d1a4b669be02ef6af7cf2f01e37442beba",
   "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-jev-20260926",
   "checks": {
     "npmRunCheck": "PASS",
@@ -15,7 +15,12 @@
     "commentaryOffline": "PASS",
     "commentaryBrowser": "PASS: live source matching, filtering, sorting, source evidence and responsive containment",
     "yahooConfigured": true,
-    "evidenceDirectory": "shared/operations/market-commentary-20260926"
+    "evidenceDirectory": "shared/operations/yahoo-dashboard-20260927",
+    "yahooApiTests": 14,
+    "yahooUiTests": 6,
+    "yahooPublicSecurity": "PASS: no-store and anonymous access rejection",
+    "yahooDashboardBrowser": "PASS: fixture-only team views, sorting, resizing and responsive containment",
+    "liveYahooAccountTest": "Pending user sign-in; no live league read claimed"
   },
   "dfs": {
     "season": 2026,
@@ -61,21 +66,21 @@
     "baseRecord": "shared/operations/production-release.json"
   },
   "githubSync": {
-    "status": "BLOCKED",
-    "reason": "gh login expired; git push has no credentials; connected GitHub integration denies tree writes with 403. Device login started for user. No remote push or PR claimed.",
-    "branch": "codex/yahoo-connect-20260924",
-    "originMainAtRelease": "147e9d4b6459f88c1ac5db049216b069c19a709c"
+    "status": "Application branch pushed; PR tracks merge status",
+    "branch": "codex/yahoo-dashboard-20260927",
+    "applicationCommit": "286a19d1a4b669be02ef6af7cf2f01e37442beba",
+    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/15",
+    "originMainAtStart": "4f4940db77672ead15867d7a01562c3249ee8e76"
   },
   "limitations": [
     "Missing source projections remain null. No fabricated historical DFS prices or projections.",
     "Archived 2026 Week 1 and Week 2 DFS captures are retained. Uncaptured older DFS weeks remain unavailable; historical actual statistics are preserved.",
     "Market Pulse history uses provider observations rather than NFL game weeks.",
     "Yahoo live league, roster and refresh tests require user authorization; successful redirect is not proof of Fantasy API access.",
-    "Yahoo tokens use an eight-hour encrypted HttpOnly browser session; no durable server-side account store or unattended imports.",
-    "This verified production code is newer than GitHub main. Do not deploy older main over it. Restore GitHub login and merge this worktree first."
+    "Yahoo tokens use an eight-hour encrypted HttpOnly browser session; no durable server-side account store or unattended imports."
   ],
-  "evidenceDirectory": "shared/operations/yahoo-connect-20260924",
-  "releasePurpose": "Private interactive Yahoo authorization and owned-league/roster verification; preserve compact controls and all existing data.",
+  "evidenceDirectory": "shared/operations/yahoo-dashboard-20260927",
+  "releasePurpose": "Private Yahoo team dashboard with weekly lineups and matchups, current standings, and read-only lineup alerts.",
   "previousDeploymentId": "dpl_GULBaBFfyibipfQozyfW9aK2uq7e",
   "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app",
   "credentialRedeployment": {
@@ -111,9 +116,8 @@
     "liveAccountTest": "Pending fresh authorization of alternate application. Earlier app refreshed successfully but league read returned 403."
   },
   "previousVerifiedRelease": {
-    "deploymentId": "dpl_HCJZVp1QyfA5uJRXj4d5QCEfs85s",
-    "applicationCommit": "2e23878c50dbc19afe0dba7f4a72972b66306d20",
-    "verifiedAt": "2026-09-25T18:29:16.966907+00:00"
+    "deploymentId": "dpl_AgZCrE4f5xq1WvBjzTp81FrSfAm6",
+    "applicationCommit": "4f4940db77672ead15867d7a01562c3249ee8e76"
   },
   "commentary": {
     "capture": "2026-09-26T21:36:07.842Z",

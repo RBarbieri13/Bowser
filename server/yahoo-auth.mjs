@@ -1,3 +1,5 @@
+import { metadata, entities, leagueInfo, teamInfo, rosterInfo, scoreboardInfo, settingsInfo } from './yahoo-dashboard.mjs';
+export { metadata, entities } from './yahoo-dashboard.mjs';
 import { createCipheriv, createDecipheriv, hkdfSync, randomBytes, timingSafeEqual } from 'node:crypto';
 
 const PREFIX = '/api/v1/auth/yahoo/';
@@ -49,19 +51,6 @@ function json(res, status, body) {
 }
 function redirect(res, location) { res.statusCode = 303; res.setHeader('Location', location); res.end(); }
 
-// Yahoo nests entities inside arrays of metadata fragments and numbered collections.
-export function metadata(value) {
-  if (Array.isArray(value)) return Object.assign({}, ...value.map(metadata));
-  return value && typeof value === 'object' ? value : {};
-}
-export function entities(value, name, found = []) {
-  if (!value || typeof value !== 'object') return found;
-  for (const [key, child] of Object.entries(value)) {
-    if (key === name) found.push(metadata(child));
-    else entities(child, name, found);
-  }
-  return found;
-}
 function number(value) { return value === undefined || value === null || value === '' ? null : Number.isFinite(Number(value)) ? Number(value) : null; }
 function text(value) { return typeof value === 'string' ? value : ''; }
 function seasonParam(params) {
@@ -91,7 +80,7 @@ export function createYahooHandler({ env = process.env, fetcher = fetch, now = (
     const clear = () => cookie(res, COOKIE, '', 0);
     const postActions = ['refresh', 'disconnect'];
     try {
-      if (!['status', 'start', 'callback', 'leagues', 'roster', ...postActions].includes(action)) return json(res, 404, { error: { code: 'not_found', message: 'Unknown Yahoo action.' } });
+      if (!['status', 'start', 'callback', 'leagues', 'roster', 'dashboard', ...postActions].includes(action)) return json(res, 404, { error: { code: 'not_found', message: 'Unknown Yahoo action.' } });
       if (req.method !== (postActions.includes(action) ? 'POST' : 'GET')) { res.setHeader('Allow', postActions.includes(action) ? 'POST' : 'GET'); return json(res, 405, { error: { code: 'method_not_allowed', message: 'Unsupported request method.' } }); }
       if (action === 'status') return json(res, 200, { configured, connected: Boolean(session), expiresAt: session ? new Date(session.expiresAt).toISOString() : null, connectionUrl: configured ? `${callback.origin}/#/yahoo` : null, storage: 'Encrypted HttpOnly cookie; eight-hour browser session. No background imports.' });
       if (!configured) fail('not_configured', 'Yahoo credentials or the HTTPS callback are not configured for this deployment.', 503);
@@ -162,6 +151,49 @@ export function createYahooHandler({ env = process.env, fetcher = fetch, now = (
       if (!/^\d+\.l\.\d+\.t\.\d+$/.test(teamKey)) fail('invalid_team', 'Select one of your Yahoo teams.');
       const owned = entities(await query(`${userGames}/teams`), 'team');
       if (!owned.some(t => t.team_key === teamKey)) fail('team_not_owned', 'This team is not one of your teams in the selected season.', 403);
+      if (action === 'dashboard') {
+        const leagueKey = teamKey.split('.t.')[0];
+        const league = leagueInfo(entities(await query(`league/${leagueKey}`), 'league')[0] || {});
+        if (league.key !== leagueKey || league.season !== Number(season)) fail('league_mismatch', 'Yahoo returned a different league or season.', 502);
+        const rawWeek = url.searchParams.get('week') || 'current';
+        if (rawWeek !== 'current' && !/^(?:[1-9]|1[0-8])$/.test(rawWeek)) fail('invalid_week', 'Select an NFL week from 1 to 18.');
+        const week = rawWeek === 'current' ? league.week : Number(rawWeek);
+        if (!Number.isInteger(week) || week < (league.startWeek || 1) || week > Math.min(league.endWeek || 18, 18)) fail('invalid_week', 'The selected week is outside this league’s season.');
+        const paths = {
+          roster: `team/${teamKey}/roster;week=${week}/players/stats;type=week;week=${week}`,
+          standings: `league/${leagueKey}/standings`,
+          scoreboard: `league/${leagueKey}/scoreboard;week=${week}`,
+          settings: `league/${leagueKey}/settings`,
+        };
+        // Sequential requests avoid racing refresh-token rotation within one response.
+        const result = {season:Number(season),teamKey,league,week,standings:null,scoreboard:null,roster:null,settings:null,errors:{},warnings:{}};
+        for (const [section,path] of Object.entries(paths)) {
+          try {
+            let data;
+            try { data = await query(path); }
+            catch (error) {
+              if (section !== 'roster' || ['authorization_expired','fantasy_access_denied','rate_limited'].includes(error.code)) throw error;
+              data = await query(`team/${teamKey}/roster;week=${week}`);
+              result.warnings.roster = 'Weekly Yahoo player points are unavailable; roster slots are still shown.';
+            }
+            if (section === 'roster') {
+              result.roster = rosterInfo(data);
+              if (result.roster.week !== week) fail('week_mismatch', 'Yahoo returned a roster for a different week.', 502);
+              result.roster.players = result.roster.players.map(p => ({...p,points:p.pointsWeek === week ? p.points : null}));
+            } else if (section === 'standings') result.standings = entities(data,'team').map(teamInfo).sort((a,b)=>(a.rank??Infinity)-(b.rank??Infinity));
+            else if (section === 'scoreboard') {
+              result.scoreboard = scoreboardInfo(data);
+              if (result.scoreboard.week !== week || result.scoreboard.matchups.some(m=>m.week!==week)) fail('week_mismatch','Yahoo returned matchups for a different week.',502);
+            } else result.settings = settingsInfo(data);
+          } catch (error) {
+            if (['authorization_expired','fantasy_access_denied','rate_limited'].includes(error.code)) throw error;
+            result[section]=null;
+            result.errors[section]=error instanceof YahooError ? error.message : 'This Yahoo section is temporarily unavailable.';
+          }
+        }
+        result.checkedAt = new Date(now()).toISOString();
+        return json(res,200,result);
+      }
       const rosterData = await query(`team/${teamKey}/roster`);
       const roster = entities(rosterData, 'roster')[0] || {};
       const players = entities(rosterData, 'player').map(p => ({ key: text(p.player_key), name: text(p.name?.full), position: text(p.display_position), team: text(p.editorial_team_abbr), slot: text(metadata(p.selected_position).position), status: text(p.status) }));

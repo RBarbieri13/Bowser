@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-09-27T20:13:51.277347+00:00",
+  "url": "https://bowser-fantasy-football.vercel.app",
+  "checks": [
+    "Production Yahoo configured; anonymous session isolated",
+    "Yahoo status is not cached",
+    "Dashboard refuses anonymous account reads",
+    "Private dashboard is not cached",
+    "Permanent site serves application",
+    "Released client contains all dashboard views",
+    "No synthetic UI fixtures in deployed client"
+  ],
+  "liveAccountVerification": "Pending user sign-in; no live league read claimed"
+}

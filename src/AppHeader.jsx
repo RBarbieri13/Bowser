@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { key: "market-pulse", label: "Market Pulse", href: "#/market-pulse", icon: ChartLineUp },
   { key: "team-box-scores", label: "Team Box Scores", href: "#/team-box-scores", icon: Football },
   { key: "opportunity-tracker", label: "Opportunity Tracker", href: "#/opportunity-tracker", icon: ChartLineUp },
-  { key: "yahoo", label: "Yahoo Connection", href: "#/yahoo", icon: Broadcast },
+  { key: "yahoo", label: "Yahoo Dashboard", href: "#/yahoo", icon: Broadcast },
 ];
 
 export function AppHeader({ season = 2026, onSeasonChange, currentPage, width, collapsed, onResize }) {
