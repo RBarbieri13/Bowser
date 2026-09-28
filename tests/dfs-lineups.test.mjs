@@ -95,3 +95,14 @@ test("metadata API routes dfs-lineup through the existing meta function", () => 
   assert.equal(bad.statusCode, 400);
   assert.equal(bad.body.error.field, "dfsSlate");
 });
+
+test("old capture lineup pool retains historical projection nulls and complete salary population",()=>{
+  const current=queryDfsLineup(params("dfsSlate=2026-w2-dk-153427"));
+  const old=current.meta.captures.find(c=>c.projectedPlayers===192);
+  assert.ok(old);
+  const prior=queryDfsLineup(params("dfsSlate=2026-w2-dk-153427&captureId="+old.captureId));
+  assert.equal(prior.meta.captureId,old.captureId);
+  assert.equal(prior.data.find(r=>r.name==="Carson Wentz").projection,null);
+  assert.ok(prior.data.some(r=>r.position==="DST"));
+  assert.throws(()=>queryDfsLineup(params("dfsSlate=2026-w2-dk-153434&captureId="+old.captureId)),/Unknown DraftKings slate/);
+});

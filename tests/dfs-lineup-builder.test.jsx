@@ -44,6 +44,7 @@ afterEach(() => {
 test("fetches its own slate pool, filters players, fills slots and saves by capture", async () => {
   render(<DfsLineupBuilder slate="fixture-classic" season={2026} onOpen={() => {}} />);
   await screen.findByText("Fixture Classic");
+  await screen.findByRole("tab", { name: "Lineup 1" });
   expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/v1/meta?"), expect.objectContaining({ cache: "no-store" }));
   expect(new URL(fetch.mock.calls[0][0], "http://fixture.test").searchParams.get("view")).toBe("dfs-lineup");
   expect(new URL(fetch.mock.calls[0][0], "http://fixture.test").searchParams.get("dfsSlate")).toBe("fixture-classic");
@@ -59,7 +60,7 @@ test("fetches its own slate pool, filters players, fills slots and saves by capt
   fireEvent.change(screen.getByLabelText("Search lineup pool"), { target: { value: "" } });
   fireEvent.click(within(screen.getByText("Fixture QB").closest('[role="listitem"]')).getByText("Add"));
   expect(screen.getByRole("button", { name: /QB Fixture QB/ })).toBeInTheDocument();
-  expect(screen.getByText("$43.0K")).toBeInTheDocument();
+  expect(screen.getByText("$43,000")).toBeInTheDocument();
 
   fireEvent.click(screen.getByRole("button", { name: /DST Open slot/ }));
   fireEvent.click(within(screen.getByText("Fixture Defense").closest('[role="listitem"]')).getByText("Add"));
@@ -71,6 +72,7 @@ test("does not load saved lineups from another capture", async () => {
   localStorage.setItem("bowser:dfs-lineups:v1:2026:w2:fixture-classic:old-capture", JSON.stringify([{ name: "Old capture", snapshot: { season: 2026, week: 2, slate: "fixture-classic", captureIdentity: "old" }, slots: [] }]));
   render(<DfsLineupBuilder slate="fixture-classic" season={2026} />);
   await screen.findByText("Fixture Classic");
+  await screen.findByRole("tab", { name: "Lineup 1" });
   expect(screen.queryByRole("tab", { name: "Old capture" })).not.toBeInTheDocument();
   expect(screen.getByRole("tab", { name: "Lineup 1" })).toBeInTheDocument();
 });

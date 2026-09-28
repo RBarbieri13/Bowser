@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { fmt, salary, stamp } from "./model.js";
+import { fmt, stamp } from "./model.js";
 import {
   assignPlayer,
+  eligibleForSlot,
   createLineup,
   removeSlot,
   sanitizeLineups,
@@ -10,6 +11,8 @@ import {
   validateLineup,
 } from "./dfsLineupModel.js";
 import "./DfsLineupBuilder.css";
+
+const salary=value=>Number.isFinite(value)?`$${value.toLocaleString('en-US')}`:'—';
 
 function loadSaved(key, meta) {
   try {
@@ -21,8 +24,8 @@ function loadSaved(key, meta) {
 
 function saveLineups(key, lineups) {
   try {
-    localStorage.setItem(key, JSON.stringify(lineups));
-  } catch {}
+    localStorage.setItem(key, JSON.stringify(lineups)); return true;
+  } catch { return false; }
 }
 
 function playerSearch(row, query) {
@@ -32,6 +35,9 @@ function playerSearch(row, query) {
 }
 
 export function DfsLineupBuilder({ slate = "current", season = 2026, onOpen }) {
+  const [captureChoice,setCaptureChoice]=useState({slate:null,id:""});
+  const captureId=captureChoice.slate===slate?captureChoice.id:"";
+  const [savedOk,setSavedOk]=useState(true),[selectionNotice,setSelectionNotice]=useState("");
   const [payload, setPayload] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -44,7 +50,7 @@ export function DfsLineupBuilder({ slate = "current", season = 2026, onOpen }) {
 
   useEffect(() => {
     const controller = new AbortController();
-    const params = new URLSearchParams({ view: "dfs-lineup", dfsSlate: slate || "current", season: String(season) });
+    const params = new URLSearchParams({ view: "dfs-lineup", dfsSlate: slate || "current", season: String(season), ...(captureId?{captureId}:{}) });
     setLoading(true);
     setError("");
     fetch(`/api/v1/meta?${params}`, { signal: controller.signal, credentials: "same-origin", cache: "no-store" })
@@ -66,7 +72,7 @@ export function DfsLineupBuilder({ slate = "current", season = 2026, onOpen }) {
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [slate, season]);
+  }, [slate, season, captureId]);
 
   const meta = payload?.meta || {};
   const players = payload?.data || [];
@@ -83,7 +89,7 @@ export function DfsLineupBuilder({ slate = "current", season = 2026, onOpen }) {
   }, [payload?.meta?.captureIdentity, storageKey]);
 
   useEffect(() => {
-    if (hydratedKey && hydratedKey === storageKey) saveLineups(storageKey, lineups);
+    if (hydratedKey && hydratedKey === storageKey) setSavedOk(saveLineups(storageKey, lineups));
   }, [hydratedKey, storageKey, lineups]);
 
   const lineup = lineups.find(item => item.id === activeId) || lineups[0] || null;
@@ -98,9 +104,13 @@ export function DfsLineupBuilder({ slate = "current", season = 2026, onOpen }) {
 
   const updateLineup = transform => setLineups(items => items.map(item => item.id === lineup?.id ? transform(item) : item));
   const choosePlayer = player => {
-    updateLineup(item => assignPlayer(item, players, player.id, activeSlot, meta));
-    const next = selectedPlayers(assignPlayer(lineup, players, player.id, activeSlot, meta), players).find(slot => !slot.player)?.id;
-    setActiveSlot(next || activeSlot);
+    const preferred=lineup?.slots.find(slot=>slot.id===activeSlot&&eligibleForSlot(player,slot.slot,meta.contest));
+    const slot=preferred||lineup?.slots.find(slot=>!slot.playerId&&eligibleForSlot(player,slot.slot,meta.contest));
+    if(!slot){setSelectionNotice("Select an eligible slot to replace a player.");return;}
+    const nextLineup=assignPlayer(lineup,players,player.id,slot.id,meta);
+    if(nextLineup===lineup){setSelectionNotice("This athlete is already in the lineup. Remove the existing entry to change roles.");return;}
+    updateLineup(()=>nextLineup);setSelectionNotice("");
+    setActiveSlot(selectedPlayers(nextLineup,players).find(slot=>!slot.player)?.id||slot.id);
   };
   const createNew = () => {
     const next = createLineup(meta, `Lineup ${lineups.length + 1}`);
@@ -130,6 +140,8 @@ export function DfsLineupBuilder({ slate = "current", season = 2026, onOpen }) {
       <button className="dfs-lineup-mini" onClick={createNew}>New</button>
     </header>
 
+    {meta.availabilityMessage&&<p className="dfs-lineup-source-notice">{meta.availabilityMessage}</p>}
+    <label className="dfs-capture-select">Salary capture<select aria-label="Salary capture" value={captureId} onChange={e=>setCaptureChoice({slate,id:e.target.value})}><option value="">Latest verified capture</option>{(meta.captures||[]).map(c=><option key={c.captureId} value={c.captureId}>{stamp(c.capturedAt)} · {c.salaryPlayers} prices</option>)}</select></label>
     <div className="dfs-lineup-tabs" role="tablist" aria-label="Saved lineups">
       {lineups.map(item => <button key={item.id} role="tab" aria-selected={item.id === lineup?.id} onClick={() => { setActiveId(item.id); setActiveSlot(item.slots.find(slot => !slot.playerId)?.id || item.slots[0]?.id || null); }}>{item.name}</button>)}
     </div>
@@ -139,7 +151,9 @@ export function DfsLineupBuilder({ slate = "current", season = 2026, onOpen }) {
       <button className="dfs-lineup-mini" disabled={lineups.length <= 1} onClick={deleteCurrent}>Delete</button>
     </div>}
 
+    <div className="dfs-lineup-save-state" role="status">{savedOk?"Saved on this device · exact slate & capture":"Device storage unavailable — changes are not saved."}</div>
     <div className="dfs-lineup-totals">
+      <b>{salary(validation.salary)}</b><span>salary used</span>
       <b className={validation.remainingSalary < 0 ? "bad" : ""}>{validation.remainingSalary < 0 ? "-" : ""}{salary(Math.abs(validation.remainingSalary))}</b>
       <span>remaining</span>
       <b>{validation.projectionComplete ? fmt(validation.projection, 2) : `${fmt(validation.projection, 2)}*`}</b>
@@ -147,16 +161,15 @@ export function DfsLineupBuilder({ slate = "current", season = 2026, onOpen }) {
     </div>
 
     <div className="dfs-lineup-slots">
-      {decoratedSlots.map(slot => <button key={slot.id} className={activeSlot === slot.id ? "active" : ""} onClick={() => setActiveSlot(slot.id)}>
+      {decoratedSlots.map(slot => <div key={slot.id} className="dfs-lineup-slot-row"><button className={activeSlot === slot.id ? "active" : ""} onClick={() => setActiveSlot(slot.id)}>
         <b>{slot.slot}</b>
         {slot.player ? <span><strong>{slot.player.name}</strong><small>{slot.player.team || "--"} / {salary(slot.player.salary)} / {fmt(slot.player.projection, 1)} FPTS</small></span> : <span><strong>Open slot</strong><small>Select from the pool below</small></span>}
-        {slot.player && <em aria-label={`Remove ${slot.player.name}`} onClick={event => { event.stopPropagation(); updateLineup(item => removeSlot(item, slot.id)); }}>x</em>}
-      </button>)}
+      </button>{slot.player&&<button className="dfs-lineup-remove" aria-label={`Remove ${slot.player.name}`} onClick={()=>updateLineup(item=>removeSlot(item,slot.id))}>×</button>}</div>)}
     </div>
 
-    <div className="dfs-lineup-validation" aria-live="polite">
+    <div className="dfs-lineup-validation" aria-live="polite">{selectionNotice&&<p>{selectionNotice}</p>}
       {validation.errors.length ? validation.errors.map(message => <p key={message} className="dfs-lineup-error">{message}</p>) : <p>{validation.complete ? "Lineup filled" : `${validation.filled}/${decoratedSlots.length} slots filled`} / {meta.rules}</p>}
-      {!validation.projectionComplete && <p>*Projection total is incomplete because at least one selected player has no sourced projection.</p>}
+      {!validation.projectionComplete && <p>*Partial total: open slots or players without a sourced projection remain.</p>}
     </div>
 
     <div className="dfs-lineup-filters">

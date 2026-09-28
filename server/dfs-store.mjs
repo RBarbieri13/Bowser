@@ -148,8 +148,19 @@ export function getDfsSlate(key = 'current') {
   return resolveDfsSlate(key, { includeUnmatched: false });
 }
 
-export function getDfsLineupSlate(key = 'current') {
-  return resolveDfsSlate(key, { includeUnmatched: true, lineupPool: true });
+export function getDfsLineupSlate(key = 'current', captureId = null) {
+  const head = resolveDfsSlate(key, { includeUnmatched: true, lineupPool: true });
+  if (!head) return null;
+  const captures = getDfsArchiveIndex().filter(row => row.key === head.meta.key);
+  if (!captureId || captureId === head.meta.captureId) return {...head,meta:{...head.meta,captures}};
+  const prior = withArchive(db => {
+    const row = db.prepare('SELECT metadata_json,slate_key FROM dfs_captures WHERE capture_id=?').get(captureId);
+    if (!row || row.slate_key !== head.meta.key) return null;
+    const metadata = JSON.parse(row.metadata_json);
+    const records = db.prepare('SELECT record_json FROM dfs_prices WHERE capture_id=? ORDER BY rowid').all(captureId).map(row=>JSON.parse(row.record_json));
+    return {records,meta:{...head.meta,...metadata,key:row.slate_key,captureId,captures,availability:'archived',currentSnapshotAvailable:false,availabilityMessage:'Historical capture selected. Saved lineup prices are fixed to this capture.'}};
+  });
+  return prior;
 }
 
 // Exact historical lookup: a missing week is never substituted with the current slate.

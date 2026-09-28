@@ -279,7 +279,7 @@ test('shared headers explain snap percentage and exact-week NFL positional finis
 
 test('Player competition ranks follow active metric and direction with ties; Rank sort and NFL finish keep their separate contexts', async () => {
   const fixture = [
-    { ...fixturePlayer, player_id: 'a', player_display_name: 'Fixture Alpha', snaps: 20, fantasy_points: 4, position_finish: 9 },
+    { ...fixturePlayer, player_id: 'a', player_display_name: 'Fixture Alpha', snaps: 20, fantasy_points: 4, position_finish: 9, range_position_rank: 9 },
     { ...fixturePlayer, player_id: 'b', player_display_name: 'Fixture Beta', snaps: 20, fantasy_points: 10, position_finish: 4 },
     { ...fixturePlayer, player_id: 'c', player_display_name: 'Fixture Gamma', snaps: 5, fantasy_points: 0, position_finish: 20 },
     { ...fixturePlayer, player_id: 'd', player_display_name: 'Fixture Missing', snaps: null, fantasy_points: null, position_finish: null },

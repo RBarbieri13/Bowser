@@ -114,3 +114,5 @@
 .lhq-ownership-mark.unknown {
   color: #777;
 }
+
+.lhq-research-panel{padding:8px;gap:7px;min-width:0}.lhq-research-panel .lhq-research-controls{grid-template-columns:minmax(0,1fr) auto}.lhq-research-panel .lhq-field{display:grid;padding:0;gap:3px}.lhq-research-panel select{width:100%;max-width:100%}.lhq-research-note{margin:4px 0;font-size:11px}.lhq-view-tabs button{border-radius:0;font-size:11px;padding:2px}.lhq-view-tabs button.active{border-color:#3ecf8e;color:#3ecf8e;background:#17231b}.lhq-research-player{grid-template-columns:minmax(0,1fr) 50px 54px;gap:5px;font-size:12px;padding:3px 0;min-height:36px}.lhq-research-player small{font-size:10px}.lhq-research-player .lhq-player{max-width:100%;text-overflow:ellipsis}.lhq-pickup-button{min-width:0;width:100%;border-radius:0}.lhq-research-list{gap:0}

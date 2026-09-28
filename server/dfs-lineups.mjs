@@ -77,7 +77,7 @@ function lineupPlayer(row, slate) {
 
 export function queryDfsLineup(searchParams = new URLSearchParams()) {
   const requestedSlate = searchParams.get("dfsSlate") || searchParams.get("slate") || "current";
-  const slate = getDfsLineupSlate(requestedSlate);
+  const slate = getDfsLineupSlate(requestedSlate, searchParams.get("captureId"));
   if (!slate) throw new DfsLineupQueryError("dfsSlate", "Unknown DraftKings slate");
   const contest = slate.meta.contestTypeId === 96 ? "showdown" : "classic";
   const players = slate.records.map(row => lineupPlayer(row, slate));
