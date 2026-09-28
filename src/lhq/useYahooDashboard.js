@@ -53,6 +53,30 @@ async function request(action, method = 'GET') {
 }
 const emptyData = season => ({ season, account: null, dashboards: {}, research: {} });
 const defaultNavigate = url => window.location.assign(url);
+function mergeResearch(previous, result) {
+  const existing = previous?.research?.[result.teamKey] || {};
+  const next = { ...existing, ...result, errors: { ...(existing.errors || {}), ...(result.errors || {}) } };
+  if (result.availability && existing.availability && result.availability.status === existing.availability.status && result.availability.start > 0) {
+    const players = [...(existing.availability.players || [])];
+    const seen = new Set(players.map(player => player.key));
+    for (const player of result.availability.players || []) if (!seen.has(player.key)) { seen.add(player.key); players.push(player); }
+    next.availability = { ...result.availability, players, accumulated: true, pages: (existing.availability.pages || 1) + 1 };
+  } else if (!result.availability && existing.availability && !Object.hasOwn(result.errors || {}, 'availability')) next.availability = existing.availability;
+  if (!result.trades && existing.trades && !Object.hasOwn(result.errors || {}, 'trades')) next.trades = existing.trades;
+  if (!result.transactions && existing.transactions && !Object.hasOwn(result.errors || {}, 'transactions')) next.transactions = existing.transactions;
+  if (result.ownership && existing.ownership) {
+    const matches = new Map((existing.ownership.matches || []).map(item => [item.id, item]));
+    for (const item of result.ownership.matches || []) matches.set(item.id, item);
+    next.ownership = {
+      ...result.ownership,
+      requested: matches.size,
+      matched: [...matches.values()].filter(item => item.owned !== null).length,
+      complete: [...matches.values()].every(item => item.owned !== null),
+      matches: [...matches.values()],
+    };
+  } else if (!result.ownership && existing.ownership && !Object.hasOwn(result.errors || {}, 'ownership')) next.ownership = existing.ownership;
+  return { ...previous, research: { ...previous.research, [result.teamKey]: next } };
+}
 
 /** Private, in-memory Yahoo account state. Mount once in the app and share its result across Yahoo/League Hub views. */
 export function useYahooDashboard({ season = 2026, initialWeek = 'current', navigate = defaultNavigate } = {}) {
@@ -180,8 +204,7 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
       const result = await enqueue(() => active() ? request(`league-research?${query}`) : null);
       if (!active()) return null;
       if (!result || result.teamKey !== teamKey || result.leagueKey !== teamKey.split('.t.')[0] || result.season !== Number(season)) throw error('invalid_data_response');
-      // Preserve the server's single-page completeness, pagination, and coverage exactly.
-      setData(previous => ({ ...previous, research: { ...previous.research, [teamKey]: result } }));
+      setData(previous => mergeResearch(previous, result));
       appendLog('research');
       return result;
     } catch (caught) {

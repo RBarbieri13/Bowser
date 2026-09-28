@@ -176,6 +176,19 @@ test('research is on demand, owned-team gated and retains pagination and complet
   expect(result.current.summaries[0].pendingTrades.count).toBe(0);
   expect(calls.find(call => call.url.includes('/league-research?')).url).toContain('availabilityStart=25');
 });
+test('partial research refreshes preserve existing ownership and transaction sections', async () => {
+  let second = false;
+  const first = { season: 2026, teamKey: teamA, leagueKey: '999.l.1', availability: null, trades: null, transactions: { items: [{ key: '999.l.1.tr.1', type: 'add', players: [] }], complete: true, limit: 50, coverage: 'Fixture transactions' }, ownership: { requested: 1, matched: 1, complete: true, matches: [{ id: 'fixture|RB|NYG', owned: false, ownershipType: 'freeagents' }] }, errors: {}, checkedAt: account.checkedAt };
+  const page = { season: 2026, teamKey: teamA, leagueKey: '999.l.1', availability: { status: 'FA', players: [{ key: '999.p.100', name: 'Available fixture' }], start: 0, pageSize: 25, complete: false, exhausted: false, nextStart: 25, limitReached: false, coverage: 'One page only' }, trades: null, transactions: null, ownership: null, errors: {}, checkedAt: account.checkedAt };
+  mockReads(url => url.includes('/league-research?') ? response(second ? page : first) : undefined);
+  const { result } = renderHook(() => useYahooDashboard()); await settle(result);
+  await act(async () => { await result.current.loadResearch(teamA, { include: 'transactions,ownership', players: [{ id: 'fixture|RB|NYG', name: 'Fixture', team: 'NYG', position: 'RB' }] }); });
+  second = true;
+  await act(async () => { await result.current.loadResearch(teamA, { include: 'availability', availabilityStart: 0 }); });
+  expect(result.current.research[teamA].availability.players).toHaveLength(1);
+  expect(result.current.research[teamA].transactions.items).toHaveLength(1);
+  expect(result.current.research[teamA].ownership.matches[0].id).toBe('fixture|RB|NYG');
+});
 test('research failures never leave a stale successful availability claim', async () => {
   let fail = false;
   mockReads(url => url.includes('/league-research?') ? fail ? response({ error: { code: 'rate_limited', message: 'PRIVATE' } }, false) : response({ season: 2026, teamKey: teamA, leagueKey: '999.l.1', availability: { players: [], complete: true }, trades: null, errors: {} }) : undefined);
