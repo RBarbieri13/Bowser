@@ -63,9 +63,9 @@ Robert explicitly allows horizontal scrolling with the sidebar open, synchronize
 
 - Team menu opens at y=50px, spans the viewport's usable width (1901px with the native scrollbar), and uses eight columns. Escape dismisses it.
 - Team SNP resized 36→40px in one header updated all 12 matching headers across three weeks and four position sections. Reversing the resize restored 36px. Stat widths are keyed by metric, independent of week.
-- At 1920px with the sidebar hidden, all three default week blocks fit: grid clientWidth equals scrollWidth (1839px). With the 420px sidebar open, grid width is1411px and content1786px, providing internal horizontal scrolling. Document width stays contained.
+- At 1920px with the sidebar hidden, all three default week blocks fit: grid clientWidth equals scrollWidth (1839px). With the 420px sidebar open, grid width is 1411px and content 1786px, providing internal horizontal scrolling. Document width stays contained.
 - At 1000px, the sidebar automatically collapses and the document does not overflow horizontally; explicit user reopening remains possible. Initial narrow mounts also collapse saved-open state.
-- Default ordinary rows measured35.996px and Opportunity rows71.992px (subpixel rounding). Header widths are explicit colgroups. Hover/zebra and opaque pinned sorted headers were compared visually.
+- Default ordinary rows measured 35.996px and Opportunity rows 71.992px (subpixel rounding). Header widths are explicit colgroups. Hover/zebra and opaque pinned sorted headers were compared visually.
 - DESC-first sorting, nulls-last, shared resizing, metric/history selection, malformed persisted preferences, range filtering, source-native FAAB conversion, CSV provenance and private account isolation have focused regression coverage.
 - Player links still open the unchanged warehouse-backed Player Card v2. No page chrome/grid reintroduces Poppins or Source Code Pro.
 
@@ -74,7 +74,7 @@ Robert explicitly allows horizontal scrolling with the sidebar open, synchronize
 1. Competition rank follows active sort context; weekly NFL position finish remains a separate source field.
 2. Real schedule endpoint powers game tiles; implied totals are omitted without a lines source.
 3. In-row trends use aligned history and common NFL domains.
-4. Density preferences30/32/36/40/44 and font multipliers implemented; Opportunity retains its specified72px rows.
+4. Density preferences 30/32/36/40/44 and font multipliers implemented; Opportunity retains its specified 72px rows.
 5. Search/Reset embedded in group headers.
 6. Inclusive numeric ranges available on Player Database, Waivers and Market Pulse.
 7. Native/percent/dollar FAAB chooser uses existing basis-aware conversion.
@@ -93,3 +93,5 @@ Robert explicitly allows horizontal scrolling with the sidebar open, synchronize
 ### Release gates
 
 The independent visual review is PASS. Focused UI/privacy/data regressions are included in `npm run check`, not a separate optional suite. Production release evidence and final commit/deployment IDs are recorded in `shared/operations/lineuphq-conversion-20260927/` and `shared/operations/production-release.json` after candidate and permanent-URL verification. Missing historical DFS captures and live Yahoo authorization remain explicit data/access boundaries, not substituted sample records.
+
+Hosting correction: the first candidate hit Vercel's twelve-function limit. The public schedule URL now rewrites to the existing metadata function; dedicated routing/read-only tests and a function-count guard pass. No plan, secrets or source data changed.

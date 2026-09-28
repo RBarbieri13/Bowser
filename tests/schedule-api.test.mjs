@@ -1,7 +1,8 @@
 import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync, readdirSync } from 'node:fs';
 import { querySchedule, closeDatabase, QueryValidationError } from '../server/stats-store.mjs';
-import handler from '../api/v1/schedule.mjs';
+import handler from '../api/v1/meta.mjs';
 import { fantasyStatsApiPlugin } from '../server/vite-api-plugin.mjs';
 
 after(closeDatabase);
@@ -41,6 +42,29 @@ test('Vercel schedule route is read-only and rejects invalid queries', () => {
   assert.equal(invalid.statusCode, 400); assert.equal(invalid.body.error.field, 'week');
   const write = response(); handler({ method: 'POST', url: '/api/v1/schedule' }, write);
   assert.equal(write.statusCode, 405); assert.equal(write.body.error.code, 'read_only');
+});
+test('Vercel rewrite preserves schedule query parameters through the shared metadata function', () => {
+  const config = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
+  const rewrite = config.rewrites.find(rule => rule.source === '/api/v1/schedule');
+  assert.equal(rewrite?.destination, '/api/v1/meta?resource=schedule');
+  const destination = new URL(rewrite.destination, 'https://fixture.test');
+  destination.searchParams.set('season', '2026'); destination.searchParams.set('week', '1,2');
+  const rewritten = response(); handler({ method: 'GET', url: `${destination.pathname}${destination.search}` }, rewritten);
+  assert.equal(rewritten.statusCode, 200);
+  assert.deepEqual(rewritten.body, querySchedule(params('season=2026&week=1,2')));
+  const providerQuery = response(); handler({ method: 'GET', url: '/api/v1/meta?season=2026&week=2', query: { resource: 'schedule' } }, providerQuery);
+  assert.equal(providerQuery.statusCode, 200); assert.deepEqual(providerQuery.body.meta.weeks, [2]);
+  const write = response(); handler({ method: 'POST', url: `${destination.pathname}${destination.search}` }, write);
+  assert.equal(write.statusCode, 405); assert.equal(write.body.error.code, 'read_only');
+  const invalid = response(); handler({ method: 'GET', url: '/api/v1/meta?resource=schedule&week=99' }, invalid);
+  assert.equal(invalid.statusCode, 400); assert.equal(invalid.body.error.field, 'week');
+  const meta = response(); handler({ method: 'GET', url: '/api/v1/meta?season=2025' }, meta);
+  assert.equal(meta.statusCode, 200); assert.equal(meta.body.warehouse.players, 609);
+});
+test('Vercel API packaging stays within the existing twelve-function deployment limit', () => {
+  const functions = readdirSync(new URL('../api/', import.meta.url), { recursive: true }).filter(file => /\.(?:mjs|cjs|js|ts)$/.test(file));
+  assert(functions.length <= 12, `Packaged ${functions.length} API functions; hosting limit is 12`);
+  assert(!functions.includes('v1/schedule.mjs'), 'Schedule must reuse the metadata function');
 });
 test('Vite schedule route shares the exact warehouse query contract', async () => {
   let route;

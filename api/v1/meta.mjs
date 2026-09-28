@@ -1,4 +1,4 @@
-import { getMeta } from "../../server/stats-store.mjs";
+import { getMeta, querySchedule } from "../../server/stats-store.mjs";
 import { runQuery, sendJson } from "../../server/vercel-response.mjs";
 
 export default function handler(request, response) {
@@ -7,5 +7,8 @@ export default function handler(request, response) {
     return;
   }
   const url = new URL(request.url, "https://local.invalid");
-  runQuery(response, () => getMeta(undefined, url.searchParams));
+  // Public schedule reads share this function to fit the existing hosting plan.
+  const resource = request.query?.resource || url.searchParams.get("resource");
+  const schedule = resource === "schedule" || url.pathname.endsWith("/schedule");
+  runQuery(response, () => schedule ? querySchedule(url.searchParams) : getMeta(undefined, url.searchParams));
 }
