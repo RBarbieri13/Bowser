@@ -16,6 +16,7 @@ const SORT_COLUMNS = new Map([
   ["rank", "fantasy_points"], ["name", "player_display_name"],
   ["team", "team"], ["position", "position"], ["games_played", "games_played"],
   ["adp", "adp"], ["draft_position_rank", "draft_position_rank"], ["position_finish", "position_finish"],
+  ["range_position_rank", "range_position_rank"],
   ["draft_kings_price", "draft_kings_price"], ["draft_kings_projection", "draft_kings_projection"],
   ["snaps", "snaps"], ["snap_pct", "snap_pct"],
   ["passing_attempts", "passing_attempts"], ["completions", "completions"],
@@ -150,7 +151,7 @@ function decorateUpcomingMatchup(row) {
 
 function trendWindow(value, field) {
   const count = value === null || value === "" ? 10 : Number(value);
-  if (![5, 8, 10, 18].includes(count)) throw new QueryValidationError(field, `${field} must be 5, 8, 10 or 18`);
+  if (![3, 5, 8, 10, 18].includes(count)) throw new QueryValidationError(field, `${field} must be 3, 5, 8, 10 or 18`);
   return count;
 }
 
@@ -194,6 +195,33 @@ function historyMetadata(history, scoring) {
     trendDomainScope: "All NFL players in the same calendar window, independent of search, team and page filters",
     unavailableTrendMetrics: ["fumbles"],
     positionFinish: { ...history.rankContext, scoring },
+  };
+}
+
+function queryStatsCoverage(db, { season, seasonType, weeks }) {
+  const typeFilter = seasonType === "ALL" ? "" : " AND season_type = ?";
+  const params = seasonType === "ALL" ? [season] : [season, seasonType];
+  const availableWeeks = db.prepare(`
+    SELECT DISTINCT week
+    FROM player_week_stats
+    WHERE season = ?${typeFilter}
+    ORDER BY week
+  `).all(...params).map((row) => row.week);
+  const requestedWeeks = weeks.length ? weeks : availableWeeks;
+  const available = new Set(availableWeeks);
+  const missingWeeks = requestedWeeks.filter((week) => !available.has(week));
+  const availableRequestedWeeks = requestedWeeks.filter((week) => available.has(week));
+  const label = missingWeeks.length
+    ? `nflverse stats available for ${availableRequestedWeeks.length ? `Weeks ${availableRequestedWeeks.join(", ")}` : "no requested weeks"}; missing Weeks ${missingWeeks.join(", ")}.`
+    : `nflverse stats available for requested Weeks ${requestedWeeks.join(", ")}.`;
+  return {
+    requestedWeeks,
+    availableWeeks,
+    availableRequestedWeeks,
+    missingWeeks,
+    complete: missingWeeks.length === 0,
+    source: "nflverse player_week_stats",
+    label,
   };
 }
 
@@ -262,9 +290,12 @@ function enrichPlayerTrendsAndDepth(db, rows, history, { includeTrends, includeD
         players: depthPlayers.map(({ selected, ...player }) => player),
       };
     }
+    const weeklyRank = history.rankForPlayer(row.player_id);
     return {
       ...row,
-      ...history.rankForPlayer(row.player_id),
+      position_finish: Object.hasOwn(row, "position_finish") ? row.position_finish : weeklyRank.position_finish,
+      position_finish_week: Object.hasOwn(row, "position_finish_week") ? row.position_finish_week : weeklyRank.position_finish_week,
+      position_finish_season: Object.hasOwn(row, "position_finish_season") ? row.position_finish_season : weeklyRank.position_finish_season,
       ...(includeTrends ? { player_trends: history.forPlayer(row.player_id) } : {}),
       current_depth_team: currentRoster?.team ?? null,
       current_depth_rank: currentRoster?.depth_rank ?? null,
@@ -334,6 +365,20 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
   const ranks = parseRanks(searchParams.get("ranks"));
   const includeTrends = binaryFlag(searchParams.get("includeTrends"), true, "includeTrends");
   const includeDepthCharts = binaryFlag(searchParams.get("includeDepthCharts"), false, "includeDepthCharts");
+  const coverage = queryStatsCoverage(db, { season, seasonType, weeks });
+  const rankWhere = ["season = ?", "played = 1"];
+  const rankParams = [season];
+  if (seasonType !== "ALL") {
+    rankWhere.push("season_type = ?");
+    rankParams.push(seasonType);
+  }
+  if (weeks.length) {
+    rankWhere.push(`week IN (${placeholders(weeks)})`);
+    rankParams.push(...weeks);
+  }
+  const rankRangeLabel = coverage.requestedWeeks.length === 1
+    ? `${season} Week ${coverage.requestedWeeks[0]}`
+    : `${season} Weeks ${coverage.requestedWeeks.join(", ")}`;
 
   const upcomingTeam = season === 2026
     ? "COALESCE(NULLIF(players.latest_team, ''), draft_rankings.source_team)"
@@ -377,9 +422,22 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
         json_extract(value,'$.projectionSource') AS projection_source,
         json_extract(value,'$.projectionUrl') AS projection_url
       FROM json_each(?)
-    ), weekly_finish AS MATERIALIZED (
-      SELECT CAST(json_extract(value, '$[0]') AS TEXT) AS player_id, json_extract(value, '$[1]') AS position_finish
-      FROM json_each(?)
+    ), range_totals AS MATERIALIZED (
+      SELECT
+        player_id,
+        CASE WHEN MAX(position) IN ('RB', 'FB', 'HB') THEN 'RB' ELSE MAX(position) END AS position_group,
+        ROUND(SUM(fantasy_points + receptions * ?), 2) AS rank_points,
+        COUNT(DISTINCT season_type || '-' || week) AS rank_games
+      FROM player_week_stats
+      WHERE ${rankWhere.join(" AND ")}
+      GROUP BY player_id
+    ), range_rank AS MATERIALIZED (
+      SELECT
+        player_id,
+        RANK() OVER (PARTITION BY position_group ORDER BY rank_points DESC) AS range_position_rank,
+        ROUND(rank_points, 1) AS range_rank_points,
+        rank_games AS range_rank_games
+      FROM range_totals
     ), upcoming_games AS MATERIALIZED (
       SELECT schedule.* FROM team_schedule schedule
       INNER JOIN (
@@ -441,7 +499,10 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
     ), enriched AS (
       SELECT
         aggregated.*,
-        weekly_finish.position_finish,
+        range_rank.range_position_rank,
+        range_rank.range_position_rank AS position_finish,
+        range_rank.range_rank_points,
+        range_rank.range_rank_games,
         dfs.salary AS draft_kings_price,
         dfs.projection AS draft_kings_projection,
         dfs.team AS dfs_team,
@@ -464,7 +525,7 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
         upcoming.kickoff_utc AS upcoming_kickoff_utc,
         upcoming.espn_game_id AS upcoming_espn_game_id
       FROM aggregated
-      LEFT JOIN weekly_finish ON weekly_finish.player_id = aggregated.player_id
+      LEFT JOIN range_rank ON range_rank.player_id = aggregated.player_id
       LEFT JOIN dfs ON dfs.player_id = aggregated.player_id
       LEFT JOIN draft_rankings
         ON draft_rankings.player_id = aggregated.player_id
@@ -485,9 +546,29 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
     ORDER BY rank ASC
     LIMIT ?
   `;
-  const baseRows = db.prepare(sql).all(JSON.stringify(dfs.records), JSON.stringify(history.rankEntries), receptionBonus, receptionBonus, ...params, minGames, minSnaps, ...ranks, limit).map(decorateUpcomingMatchup);
+  const baseRows = db.prepare(sql).all(JSON.stringify(dfs.records), receptionBonus, ...rankParams, receptionBonus, receptionBonus, ...params, minGames, minSnaps, ...ranks, limit)
+    .map((row) => decorateUpcomingMatchup({
+      ...row,
+      position_finish_week: coverage.requestedWeeks.length === 1 ? coverage.requestedWeeks[0] : null,
+      position_finish_weeks: coverage.requestedWeeks,
+      position_finish_season: season,
+      position_finish_range: rankRangeLabel,
+    }));
   const enrichment = enrichPlayerTrendsAndDepth(db, baseRows, history, { includeTrends, includeDepthCharts });
   const rows = enrichment.rows;
+  const positionFinish = {
+    season,
+    week: coverage.requestedWeeks.length === 1 ? coverage.requestedWeeks[0] : null,
+    weeks: coverage.requestedWeeks,
+    availableWeeks: coverage.availableRequestedWeeks,
+    missingWeeks: coverage.missingWeeks,
+    seasonType,
+    scoring,
+    scope: "All NFL players at the same position across the selected week range before search, team and page filters; FB/HB grouped with RB",
+    method: "Competition RANK on cumulative selected-scoring fantasy points at two decimals; tied totals share rank",
+    source: "nflverse player_week_stats",
+    label: `${rankRangeLabel} cumulative ${scoring.toUpperCase()} position rank`,
+  };
   return {
     data: rows,
     meta: {
@@ -497,7 +578,7 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
       season, seasonType, scoring, positions, teams, weeks, search,
       minGames, minSnaps, sorts: sorts.map(({ key, direction }) => ({ key, direction })), limit, ranks,
       includeTrends, includeDepthCharts, depthCharts: enrichment.depthCharts, dfs:dfs.meta,
-      trendWeeks, ...historyMetadata(history, scoring),
+      trendWeeks, ...historyMetadata(history, scoring), positionFinish, statsCoverage: coverage,
     },
   };
 }
