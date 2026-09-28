@@ -105,3 +105,15 @@ test("unknown API routes do not fall back to the app shell", async () => {
   assert.equal(response.status, 404);
   assert.equal((await response.json()).error.code, "not_found");
 });
+
+
+test("production schedule route exposes real multiweek games and rejects invalid weeks", async () => {
+  const response = await fetch(`${origin}/api/v1/schedule?season=2026&week=1,2`);
+  assert.equal(response.status, 200);
+  const payload = await response.json();
+  assert.deepEqual(payload.meta.weeks, [1, 2]);
+  assert.equal(payload.data.length, 32);
+  assert.equal(payload.meta.linesAvailable, false);
+  const invalid = await fetch(`${origin}/api/v1/schedule?week=0`);
+  assert.equal(invalid.status, 400);
+});

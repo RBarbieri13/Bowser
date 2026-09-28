@@ -10,6 +10,10 @@
   },
   "rewrites": [
     {
+      "source": "/api/v1/schedule",
+      "destination": "/api/v1/meta?resource=schedule"
+    },
+    {
       "source": "/api/v1/auth/yahoo/:action",
       "destination": "/api/v1/yahoo?action=:action"
     },

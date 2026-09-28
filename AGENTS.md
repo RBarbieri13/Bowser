@@ -90,3 +90,16 @@ Robert's latest request supersedes the earlier filter-layout rollback: all activ
 - Authorize every dashboard team against the signed-in user's NFL teams in the requested season before fetching league standings, scoreboard, settings or roster. Keep responses no-store and never log/store private response bodies.
 - Lineups and matchup scores must carry the selected Yahoo week; standings are current season standings and must say so even when viewing an earlier lineup week. Use Yahoo's league-scored points, never generic PPR/DFS projections in their place. Unknown stays null and actual zero stays zero.
 - Dashboard account data stays in memory. Load teams sequentially to bound provider calls and avoid racing refresh cookies. Fixtures belong only in tests or ignored local verification outputs, never production fallbacks.
+
+## LineupHQ shell (September 27, 2026)
+
+Robert's supplied `LINEUPHQ-APP-CONVERSION-HANDOFF.md` and seven prototypes govern the active UI. This section supersedes older layout rules where they conflict.
+
+- Use the shared LineupHQ shell: 50px app bar with context stacks, 35px section-navigation links, source row, pool tabs, 60px strip, pinned-identity native grids, and draggable accordion sidebar. No left navigation rail. League Hub and Yahoo Connection are visible; Fantasy Intelligence remains outside active navigation.
+- Default grids have 36px rows, zero vertical padding, Helvetica Neue/Helvetica/Arial 16px body (13px Team Box Score week blocks), two 36px gradient header bands, explicit semantic widths, zebra `#121212/#181818`, hover `#262626`, and DESC-first sorting with nulls last. Opportunity rows are 72px. Team Box adds a 22px subgroup band.
+- Team Box renders abbreviated 13-stat week blocks side by side with per-week sorting and at least three default complete weeks at 1920px with sidebar hidden.
+- Robert's subsequent clarification overrides the handoff's prohibition on resizing and its impossible three-weeks-with-sidebar constraint: horizontal scrolling is supported with sidebar open; resizing any stat applies to that stat in every past/future week and every position section. Sidebars may narrow to 240px or collapse completely. Identity widths remain independent. Keep a reset action and validate saved widths.
+- This replaces the old 40px Player Database rows, compact PageControls header, bulk week-width slider, hidden League Hub navigation, and per-player trend scaling. All trend metric choices use the existing catalogue and shared NFL calendar/domain rules.
+- Preserve Player Card v2 unchanged. The older standalone Game Breakdown route remains outside this seven-route conversion and retains its specialized console.
+- Necessary read-only schedule and Yahoo league-research endpoints are explicitly authorized. Existing authorization, same-origin controls, encrypted sessions, no-store headers, in-memory private data, immutable warehouse, missing-value semantics, and branch/PR/check/production verification gates remain binding.
+- League Hub uses discovered league/team identities only. No sample-data toggle or runtime sample account fallback. Availability reads are explicitly paginated and labeled current; absence from a page never proves ownership. League-specific derived fields stay unavailable until their inputs exist.

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "automationId": "bowser-weekly-dfs-refresh",
+  "active": true,
+  "schedule": "Thursdays08:00 America/Chicago; unchanged",
+  "layoutGuard": "September27 LineupHQ shell and current AGENTS.md; data-only refresh",
+  "releaseRecord": "shared/operations/production-release.json"
+}

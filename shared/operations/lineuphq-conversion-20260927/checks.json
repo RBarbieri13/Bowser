@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "command": "npm run check",
+  "exitCode": 0,
+  "nodeMainTests": 114,
+  "uiTests": 125,
+  "newFocusedUiTests": 60,
+  "marketUiTests": 19,
+  "waiverUiTests": 12,
+  "localDataAssertions": 483,
+  "independentVisualReview": "PASS",
+  "graphValidation": "PASS; two claims, two evaluations, two runs, all four invariants hold",
+  "privateYahooLiveRead": "Not claimed",
+  "warehouseAndSourceDataDiff": "No changes relative to origin/main",
+  "firstVercelCandidate": {
+    "status": "FAIL",
+    "reason": "Hobby plan permits12 functions; standalone schedule added a13th",
+    "remediation": "Preserve schedule URL through existing meta function; no plan or environment changes"
+  },
+  "vercelFunctions": 12,
+  "schedulePackagingTests": "PASS; public URL, rewritten dispatch, read-only rejection and12-function guard"
+}

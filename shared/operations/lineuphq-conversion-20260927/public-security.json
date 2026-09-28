@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "action": "status",
+      "status": 200,
+      "cache": "no-store",
+      "result": "configured and anonymous"
+    },
+    {
+      "action": "leagues",
+      "status": 401,
+      "cache": "no-store",
+      "result": "anonymous account read rejected"
+    },
+    {
+      "action": "league-research",
+      "status": 401,
+      "cache": "no-store",
+      "result": "anonymous account read rejected"
+    }
+  ],
+  "privatePayloadStored": false
+}

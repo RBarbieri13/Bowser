@@ -1,5 +1,5 @@
 import { yahooHandler } from "./yahoo-auth.mjs";
-import { queryPlayerIdentity, queryDfsArchive, getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "./stats-store.mjs";
+import { querySchedule, queryPlayerIdentity, queryDfsArchive, getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "./stats-store.mjs";
 import { getIntelligenceRegistry, queryPersistedIntelligenceFeed, IntelligenceQueryError } from "./intelligence-store.mjs";
 import { IntelligenceProviderError } from "./intelligence-errors.mjs";
 import { IntelligenceApiError, intelligenceRunStatus, startIntelligenceRefresh } from "./intelligence-api.mjs";
@@ -31,6 +31,7 @@ export function fantasyStatsApiPlugin() {
           if (url.pathname === "/intelligence-runs" && request.method === "POST") return sendJson(response, 200, await startIntelligenceRefresh({ authorization: request.headers.authorization, idempotencyKey: request.headers["idempotency-key"], body: await readBody(request) }));
           if (url.pathname === "/intelligence-runs" && request.method === "GET") return sendJson(response, 200, await intelligenceRunStatus({ authorization: request.headers.authorization, runId: url.searchParams.get("runId"), latest: url.searchParams.get("latest") === "1" }));
           if (request.method !== "GET") return sendJson(response, 405, { error: { code: "read_only", message: "This API is read-only" } });
+          if (url.pathname === "/schedule") return sendJson(response, 200, querySchedule(url.searchParams));
           if (url.pathname === "/meta") return sendJson(response, 200, getMeta(undefined, url.searchParams));
           if (url.pathname === "/player-stats") return sendJson(response, 200, queryPlayers(url.searchParams));
           if (url.pathname === "/player-identity") return sendJson(response, 200, queryPlayerIdentity(url.searchParams));

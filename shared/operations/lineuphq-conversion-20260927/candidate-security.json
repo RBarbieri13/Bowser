@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "action": "status",
+      "status": 200,
+      "cache": "no-store",
+      "result": "configured and anonymous"
+    },
+    {
+      "action": "leagues",
+      "status": 400,
+      "cache": "no-store",
+      "result": "noncanonical host rejected"
+    },
+    {
+      "action": "league-research",
+      "status": 400,
+      "cache": "no-store",
+      "result": "noncanonical host rejected"
+    }
+  ],
+  "privatePayloadStored": false
+}
