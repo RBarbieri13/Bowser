@@ -1,11 +1,11 @@
 {
   "status": "PASS",
-  "verifiedAt": "2026-09-27T20:14:31.479979+00:00",
+  "verifiedAt": "2026-09-28T00:50:11.572330+00:00",
   "publicUrl": "https://bowser-fantasy-football.vercel.app",
-  "candidateUrl": "https://bowser-fantasy-football-7vtc36q2o-rbarbieri13s-projects.vercel.app",
-  "deploymentId": "dpl_5ekBD5VrX81x2YjXQS9ykJBKPHmL",
+  "candidateUrl": "https://bowser-fantasy-football-64p65wk05-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_54ZsKn7Xp4boHSg1iw335oKQA1MA",
   "deploymentState": "READY",
-  "applicationCommit": "286a19d1a4b669be02ef6af7cf2f01e37442beba",
+  "applicationCommit": "d2201a28a3917fe4358fd53486a57b6ddd41e6a2",
   "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-jev-20260926",
   "checks": {
     "npmRunCheck": "PASS",
@@ -15,12 +15,16 @@
     "commentaryOffline": "PASS",
     "commentaryBrowser": "PASS: live source matching, filtering, sorting, source evidence and responsive containment",
     "yahooConfigured": true,
-    "evidenceDirectory": "shared/operations/yahoo-dashboard-20260927",
+    "evidenceDirectory": "shared/operations/lineuphq-conversion-20260927",
     "yahooApiTests": 14,
     "yahooUiTests": 6,
     "yahooPublicSecurity": "PASS: no-store and anonymous access rejection",
     "yahooDashboardBrowser": "PASS: fixture-only team views, sorting, resizing and responsive containment",
-    "liveYahooAccountTest": "Pending user sign-in; no live league read claimed"
+    "liveYahooAccountTest": "Not exercised in this UI release; no live account read claimed",
+    "uiTests": 125,
+    "newFocusedUiTests": 60,
+    "sevenRouteVisualReview": "PASS",
+    "warehouseAndArchivesUnchanged": true
   },
   "dfs": {
     "season": 2026,
@@ -63,14 +67,15 @@
     "status": "ACTIVE",
     "schedule": "Thursdays at 08:00 America/Chicago",
     "workflow": "shared/operations/weekly-dfs-refresh.md",
-    "baseRecord": "shared/operations/production-release.json"
+    "baseRecord": "shared/operations/production-release.json",
+    "uiPreservation": "September 27 LineupHQ layout and current AGENTS.md; data-only refresh; schedule unchanged"
   },
   "githubSync": {
-    "status": "Application branch pushed; PR tracks merge status",
-    "branch": "codex/yahoo-dashboard-20260927",
-    "applicationCommit": "286a19d1a4b669be02ef6af7cf2f01e37442beba",
-    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/15",
-    "originMainAtStart": "4f4940db77672ead15867d7a01562c3249ee8e76"
+    "status": "Release branch pushed; PR is authoritative for merge status",
+    "branch": "codex/lineuphq-conversion-20260927",
+    "applicationCommit": "d2201a28a3917fe4358fd53486a57b6ddd41e6a2",
+    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/16",
+    "originMainAtStart": "8bcb62f4ce754b6b10374699baaeaa61fbce1a4d"
   },
   "limitations": [
     "Missing source projections remain null. No fabricated historical DFS prices or projections.",
@@ -79,9 +84,9 @@
     "Yahoo live league, roster and refresh tests require user authorization; successful redirect is not proof of Fantasy API access.",
     "Yahoo tokens use an eight-hour encrypted HttpOnly browser session; no durable server-side account store or unattended imports."
   ],
-  "evidenceDirectory": "shared/operations/yahoo-dashboard-20260927",
-  "releasePurpose": "Private Yahoo team dashboard with weekly lineups and matchups, current standings, and read-only lineup alerts.",
-  "previousDeploymentId": "dpl_GULBaBFfyibipfQozyfW9aK2uq7e",
+  "evidenceDirectory": "shared/operations/lineuphq-conversion-20260927",
+  "releasePurpose": "Seven-route LineupHQ UI conversion with synchronized weekly column widths, collapsible sidebars and read-only source-backed functionality.",
+  "previousDeploymentId": "dpl_EsjTgLdyVhHWxfbiTGyBpeJ9xMa3",
   "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app",
   "credentialRedeployment": {
     "date": "2026-09-25",
@@ -116,8 +121,8 @@
     "liveAccountTest": "Pending fresh authorization of alternate application. Earlier app refreshed successfully but league read returned 403."
   },
   "previousVerifiedRelease": {
-    "deploymentId": "dpl_AgZCrE4f5xq1WvBjzTp81FrSfAm6",
-    "applicationCommit": "4f4940db77672ead15867d7a01562c3249ee8e76"
+    "deploymentId": "dpl_EsjTgLdyVhHWxfbiTGyBpeJ9xMa3",
+    "applicationCommit": "8bcb62f4ce754b6b10374699baaeaa61fbce1a4d"
   },
   "commentary": {
     "capture": "2026-09-26T21:36:07.842Z",

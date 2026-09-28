@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-09-28T00:50:11.572330+00:00",
+  "aliasAssets": [
+    {
+      "url": "https://bowser-fantasy-football.vercel.app",
+      "scripts": [
+        "/assets/index-BEHy3fNw.js"
+      ]
+    },
+    {
+      "url": "https://fantasy-football-stats-preview.vercel.app",
+      "scripts": [
+        "/assets/index-BEHy3fNw.js"
+      ]
+    },
+    {
+      "url": "https://bowser-fantasy-football-64p65wk05-rbarbieri13s-projects.vercel.app",
+      "scripts": [
+        "/assets/index-BEHy3fNw.js"
+      ]
+    }
+  ],
+  "routes": [
+    "players",
+    "waivers",
+    "market-pulse",
+    "team-box-scores",
+    "opportunity-tracker",
+    "yahoo",
+    "league-hub"
+  ],
+  "visualReview": "PASS: independent seven-route prototype comparison, followed by final sidebar refinement review",
+  "marketRefresh": "PASS: sourced provider refresh returned joined rows on candidate and permanent URL",
+  "privateYahoo": "Anonymous state and authorization boundaries verified; no live signed-in league read claimed",
+  "teamResize": "36px to 40px propagated across 12 stat headers; restored",
+  "teamScroll": "Sidebar-open internal horizontal scroll and collapsed-sidebar three-week fit verified",
+  "dataChanged": false
+}
