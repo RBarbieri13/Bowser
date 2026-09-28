@@ -130,6 +130,8 @@ No source statistics, API contracts, private Yahoo data, or DFS capture archives
 | Market Pulse | Provider-specific public projections, up to three discovered Yahoo league ownership marks, real returned Yahoo add/drop/net counts; explicit unknown and bounded coverage. No synthetic leagues. |
 | Opportunity / League Hub / Yahoo | Shared logo and initially hidden sidebar retained; Opportunity adds depth, schedule and lineup cards. Existing private dashboard preserved. |
 
-`npm run check` passed, including 143 UI tests and the complete data/API/market/waiver/build/production/sites chain. Local release verifier passed 499 assertions. Three fresh-context code reviews passed. Browser tests used real public data; private Yahoo behavior was tested with test-only fixtures, not represented as a live account test.
+`npm run check` passed, including 144 UI tests and the complete data/API/market/waiver/build/production/sites chain. Local release verifier passed 499 assertions. Three fresh-context code reviews passed. Browser tests used real public data; private Yahoo behavior was tested with test-only fixtures, not represented as a live account test.
 
 2026 nflverse now contains Weeks 1–3 (47 completed games at capture); 2025 remains byte-identical. The last verified DFS source remains 2026 Week 2, with 86 immutable historical captures; unavailable newer salaries or projections are explicitly labeled, never invented. Local screenshots and full logs are ignored artifacts. Public release evidence is in `shared/operations/contextual-research-20260928/`.
+
+Capture synchronization follow-up: choosing an older salary capture in the Team Box sidebar also updates the matching-week table and export through the builder snapshot callback; a regression test asserts the exact older salary payload is reported.

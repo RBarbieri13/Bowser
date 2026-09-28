@@ -34,7 +34,7 @@ function playerSearch(row, query) {
   return [row.name, row.team, row.position, row.game, row.status].some(value => String(value || "").toLowerCase().includes(q));
 }
 
-export function DfsLineupBuilder({ slate = "current", season = 2026, onOpen }) {
+export function DfsLineupBuilder({ slate = "current", season = 2026, onOpen, onSnapshot }) {
   const [captureChoice,setCaptureChoice]=useState({slate:null,id:""});
   const captureId=captureChoice.slate===slate?captureChoice.id:"";
   const [savedOk,setSavedOk]=useState(true),[selectionNotice,setSelectionNotice]=useState("");
@@ -73,6 +73,8 @@ export function DfsLineupBuilder({ slate = "current", season = 2026, onOpen }) {
       });
     return () => controller.abort();
   }, [slate, season, captureId]);
+
+  useEffect(() => { if (!loading && payload) onSnapshot?.(payload); }, [loading, payload, onSnapshot]);
 
   const meta = payload?.meta || {};
   const players = payload?.data || [];

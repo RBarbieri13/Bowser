@@ -76,3 +76,13 @@ test("does not load saved lineups from another capture", async () => {
   expect(screen.queryByRole("tab", { name: "Old capture" })).not.toBeInTheDocument();
   expect(screen.getByRole("tab", { name: "Lineup 1" })).toBeInTheDocument();
 });
+
+
+test("reports the selected archived capture for the accompanying team table", async () => {
+  const onSnapshot=vi.fn();
+  vi.stubGlobal("fetch", vi.fn(async url=>({ok:true,json:async()=>String(url).includes('captureId=capture-old')?{...payload,meta:{...payload.meta,captureId:'capture-old',captureIdentity:'old-exact'},data:payload.data.map(p=>({...p,salary:p.salary-100}))}:{...payload,meta:{...payload.meta,captures:[{captureId:'capture-old',capturedAt:'2026-09-16T12:00:00Z',salaryPlayers:5}]}}})));
+  render(<DfsLineupBuilder slate="fixture-classic" onSnapshot={onSnapshot}/>);
+  await screen.findByRole('tab',{name:'Lineup 1'});
+  fireEvent.change(screen.getByLabelText('Salary capture'),{target:{value:'capture-old'}});
+  await waitFor(()=>expect(onSnapshot).toHaveBeenLastCalledWith(expect.objectContaining({meta:expect.objectContaining({captureId:'capture-old'}),data:expect.arrayContaining([expect.objectContaining({id:'qb',salary:6900})])})));
+});
