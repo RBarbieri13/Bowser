@@ -1,4 +1,5 @@
 import { getMeta, querySchedule } from "../../server/stats-store.mjs";
+import { queryDfsLineup } from "../../server/dfs-lineups.mjs";
 import { runQuery, sendJson } from "../../server/vercel-response.mjs";
 
 export default function handler(request, response) {
@@ -9,6 +10,7 @@ export default function handler(request, response) {
   const url = new URL(request.url, "https://local.invalid");
   // Public schedule reads share this function to fit the existing hosting plan.
   const resource = request.query?.resource || url.searchParams.get("resource");
+  const view = request.query?.view || url.searchParams.get("view");
   const schedule = resource === "schedule" || url.pathname.endsWith("/schedule");
-  runQuery(response, () => schedule ? querySchedule(url.searchParams) : getMeta(undefined, url.searchParams));
+  runQuery(response, () => view === "dfs-lineup" ? queryDfsLineup(url.searchParams) : schedule ? querySchedule(url.searchParams) : getMeta(undefined, url.searchParams));
 }

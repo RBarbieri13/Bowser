@@ -100,7 +100,7 @@ function selectRosterRole(slate, requestedRole) {
       unmatchedSalaryPlayers:slate.meta.coverage.unmatchedSalaryPlayers/2} } };
 }
 
-export function getDfsSlate(key = 'current') {
+function resolveDfsSlate(key = 'current', { includeUnmatched = false, lineupPool = false } = {}) {
   const weekly = readWeekly();
   const slates = { ...historical.slates, ...(weekly?.slates || {}), ...archiveSlates() };
   const defaultKey = weekly?.defaultSlate || historical.defaultSlate;
@@ -123,13 +123,33 @@ export function getDfsSlate(key = 'current') {
         label:s.label + (role ? ` · ${role}` : ''), season:s.season,week:s.week,startsAt:s.startsAt,endsAt:s.endsAt,
         scoring:s.scoring,rosterPosition:role,contestTypeId:s.contestTypeId}))),
   ];
-  return selectRosterRole({
+  const payload = {
     meta: { ...meta, key: resolvedKey, requestedKey, defaultSlate: defaultKey, options,
       availability: fallback ? 'last-good' : ended ? 'archived' : 'available',
       currentSnapshotAvailable: Boolean(weekly) && !ended,
       availabilityMessage: fallback ? `Showing last verified ${meta.season} Week ${meta.week} data; a newer verified slate is not available.` : null },
-    records: records.filter(row => row.playerId),
-  }, isCaptain ? 'CPT' : 'FLEX');
+    records: includeUnmatched ? records : records.filter(row => row.playerId),
+  };
+  if (lineupPool && meta.contestTypeId === 96) {
+    return {
+      ...payload,
+      meta: {
+        ...payload.meta,
+        rosterPositions: ['FLEX', 'CPT'],
+        label: payload.meta.label.replace(/\s·\s(?:FLEX|CPT)$/, ''),
+        projectionBasis: 'Full-game DraftKings source projections; Captain rows use official CPT salary and a 1.5 projection multiplier while FLEX rows remain unscaled.',
+      },
+    };
+  }
+  return selectRosterRole(payload, isCaptain ? 'CPT' : 'FLEX');
+}
+
+export function getDfsSlate(key = 'current') {
+  return resolveDfsSlate(key, { includeUnmatched: false });
+}
+
+export function getDfsLineupSlate(key = 'current') {
+  return resolveDfsSlate(key, { includeUnmatched: true, lineupPool: true });
 }
 
 // Exact historical lookup: a missing week is never substituted with the current slate.
