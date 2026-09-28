@@ -93,6 +93,7 @@ test('Player totals exclude unavailable scores while keeping negative and zero r
   playerApi(playerPayload([{ ...fixturePlayer, fantasy_points: -2 }, { ...fixturePlayer, player_id: 'fixture-b', player_display_name: 'Fixture Missing', fantasy_points: null }]));
   show(<PlayerDatabase {...props} />);
   await screen.findAllByRole('button', { name: 'Fixture Alpha', exact: true });
+  fireEvent.click(screen.getByRole('button', { name: /Show sidebar/ }));
   const totals = screen.getByRole('columnheader', { name: 'Avg Fpts' }).closest('table');
   const cells = within(totals).getByRole('row', { name: /^RB / }).querySelectorAll('td');
   expect(cells[1]).toHaveTextContent('2');
@@ -183,6 +184,7 @@ test('League Hub never starts a different availability status at the previous st
   vi.stubGlobal('fetch', vi.fn(async () => reply(waiverPayload)));
   const yahoo = yahooFixture();
   show(<LeagueHub {...props} yahoo={yahoo} />);
+  fireEvent.click(screen.getByRole('button', { name: /Show sidebar/ }));
   fireEvent.click(screen.getByRole('button', { name: /^League research/ }));
   fireEvent.change(screen.getByLabelText('Availability'), { target: { value: 'FA' } });
   fireEvent.click(screen.getByRole('button', { name: 'Next 25' }));
@@ -241,6 +243,7 @@ test('Player trend visibility persists and Manage Columns restores all fields wi
   expect(within(dialog).getByLabelText('Snaps')).toBeChecked();
   fireEvent.click(within(dialog).getByRole('button', { name: 'Done' }));
   expect(screen.getByRole('separator', { name: 'Resize Snap trend' })).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: /Show sidebar/ }));
   const totals = screen.getByRole('columnheader', { name: 'Top' }).closest('table');
   fireEvent.click(within(totals).getByRole('button', { name: 'Fixture Alpha', exact: true }));
   expect(props.onOpen).toHaveBeenLastCalledWith(expect.objectContaining({ player_id: 'fixture-a' }), expect.any(HTMLElement));
@@ -298,4 +301,35 @@ test('Player competition ranks follow active metric and direction with ties; Ran
   expect(cells('Fixture Gamma')[1]).toHaveTextContent(/^1$/);
   expect(cells('Fixture Alpha')[1]).toHaveTextContent(/^2$/);
   expect(cells('Fixture Alpha')[cells('Fixture Alpha').length - 1]).toHaveTextContent('RB9');
+});
+
+test('Player inline trends have independent history and metric controls, including passing', async () => {
+  const history=Array.from({length:18},(_,i)=>({season:2025,week:i+1,snaps:i,passing_yards:i*10}));
+  playerApi(playerPayload([{...fixturePlayer,player_trends:history}]));
+  show(<PlayerDatabase {...props}/>);
+  await screen.findByRole('button',{name:'Fixture Alpha',exact:true});
+  const table=screen.getByRole('table',{name:'Player statistics'});
+  expect(table.querySelectorAll('.lhq-bars')).toHaveLength(5);
+  expect([...table.querySelectorAll('.lhq-bars')].map(n=>n.querySelectorAll('.lhq-bar-slot').length)).toEqual([5,5,5,5,5]);
+  fireEvent.click(screen.getByRole('button',{name:'passing trend settings',exact:true}));
+  fireEvent.change(screen.getByLabelText('passing trend history'),{target:{value:'10'}});
+  await waitFor(()=>expect(new URL(fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).at(-1)[0],'https://example.test').searchParams.get('trendWeeks')).toBe('10'));
+  await screen.findByRole('button',{name:'Fixture Alpha',exact:true});
+  fireEvent.change(screen.getByLabelText('passing trend statistic'),{target:{value:'completions'}});
+  expect(within(table).getByRole('button',{name:'Completions',exact:true})).toBeInTheDocument();
+  expect([...table.querySelectorAll('.lhq-bars')].map(n=>n.querySelectorAll('.lhq-bar-slot').length)).toEqual([5,10,5,5,5]);
+  fireEvent.keyDown(document,{key:'Escape'});
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+});
+
+test('Player team shortcut preserves selected week range and the schedule follows that range', async () => {
+  playerApi(playerPayload());show(<PlayerDatabase {...props}/>);
+  await screen.findByRole('button',{name:'Fixture Alpha',exact:true});
+  fireEvent.change(screen.getByLabelText('Through'),{target:{value:'3'}});
+  await waitFor(()=>expect(fetch.mock.calls.some(([u])=>String(u)==='/api/v1/schedule?season=2026&week=1,2,3')).toBe(true));
+  const link=await screen.findByRole('link',{name:'Open NYG team box scores for weeks 1,2,3'});
+  expect(link.getAttribute('href')).toBe('#/team-box-scores?team=NYG&season=2026&weeks=1%2C2%2C3&scoring=half');
+  expect(screen.queryByRole('button',{name:/Offense|Kicker/})).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Hide players with 0 snaps')).not.toBeInTheDocument();
+  expect(screen.getByRole('combobox',{name:'Season'})).toHaveValue('2026');
 });

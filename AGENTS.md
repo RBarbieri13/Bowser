@@ -103,3 +103,12 @@ Robert's supplied `LINEUPHQ-APP-CONVERSION-HANDOFF.md` and seven prototypes gove
 - Preserve Player Card v2 unchanged. The older standalone Game Breakdown route remains outside this seven-route conversion and retains its specialized console.
 - Necessary read-only schedule and Yahoo league-research endpoints are explicitly authorized. Existing authorization, same-origin controls, encrypted sessions, no-store headers, in-memory private data, immutable warehouse, missing-value semantics, and branch/PR/check/production verification gates remain binding.
 - League Hub uses discovered league/team identities only. No sample-data toggle or runtime sample account fallback. Availability reads are explicitly paginated and labeled current; absence from a page never proves ownership. League-specific derived fields stay unavailable until their inputs exist.
+
+## Compact research controls (September 28, 2026)
+
+- Every LineupHQ route starts with its sidebar hidden on navigation and reload; opening a sidebar is temporary. Width preferences may persist, open state must not.
+- Navigation labels remain high contrast at rest; the current page has heavier weight, bright accent, and an underline.
+- Sources/options and matchup strips have separate accessible collapse controls. The Team Box game selector starts collapsed. Player position filters sit in a single row with All; no redundant Offense, K/DST pool or hide-zero-snaps toggle.
+- Every Player Database trend column, including Passing, has an inline statistic/history menu. Histories remain aligned NFL weeks with missing/bye gaps; per-column windows share the source's NFL domains.
+- Player team links preserve the exact selected season, week set and scoring when opening Team Box Scores. Default app season remains 2026.
+- Team Box Scores uses one shared header and short collapsible position rows, explicit PASS (QB) / REC (RB/WR/TE) semantics, visible week boundaries, and links to original game breakdowns. Dates omit kickoff times. Whole-week resizing scales every member statistic and applies those widths across all weeks; individual-stat resizing remains synchronized.

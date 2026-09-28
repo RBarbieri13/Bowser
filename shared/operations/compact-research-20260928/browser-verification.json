@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "cssViewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "checks": [
+    "All seven route sidebars initially hidden",
+    "Sidebar hidden again on reload after manually opening",
+    "Inactive navigation readable, active page bold and underlined",
+    "Independent source and game strip collapse",
+    "Inline passing statistic and 10-week history menu",
+    "Puka Nacua link opens LA 2026 Weeks 1,2,3 with PPR",
+    "Single shared team header and separate week boundaries",
+    "Whole-week resize synchronizes all thirteen statistic widths across three weeks",
+    "Real game links and short dates",
+    "Responsive document containment at 320/375/414/768 target widths"
+  ],
+  "teamWidthsAfterResize": [
+    34,
+    42,
+    57,
+    38,
+    29,
+    53,
+    34,
+    38,
+    29,
+    42,
+    42,
+    46,
+    40
+  ],
+  "dataChanges": false,
+  "liveYahooAccountTest": "Not exercised; no private account data captured"
+}

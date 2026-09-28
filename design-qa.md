@@ -97,3 +97,22 @@ The independent visual review is PASS. Focused UI/privacy/data regressions are i
 Hosting correction: the first candidate hit Vercel's twelve-function limit. The public schedule URL now rewrites to the existing metadata function; dedicated routing/read-only tests and a function-count guard pass. No plan, secrets or source data changed.
 
 Final polish: Position Totals now reserves 40% for the top-player column and stacks the name and points without crowding; condensed sidebars scroll that summary internally. The final image was independently reviewed with PASS retained. A pre-existing randomized authentication test could replace an existing X with X (a 1-in-64 no-op); the test now guarantees a distinct tampered character before asserting rejection. Runtime authentication is unchanged.
+
+## Compact research controls — September 28, 2026
+
+Robert's follow-up replaces the earlier always-visible source/matchup bands and expanded-sidebar defaults. Typography and palette retain the existing LineupHQ contract.
+
+| Surface | Verified change | Evidence |
+| --- | --- | --- |
+| All seven routes | Sidebar hidden on fresh navigation and reload; high-contrast 600-weight navigation with 800-weight active underline; independent sources/options collapse | Browser navigation through all routes; shared-shell regression |
+| Player Database | One All/QB/RB/WR/TE/K/DST row, top Week(s)/Through selection, passing trend plus independent metric/history menus on all five charts | Browser menu interaction; per-column history and schedule request tests |
+| Player → Team | Puka/LA shortcut transfers 2026, exact Weeks 1–3 and PPR | Browser URL and rendered week-header readback; exact query regression |
+| Team Box Scores | Single three-band header, 30px data rows, 25px position toggles, shared QB passing / skill-position receiving slots, 3px week boundaries | Desktop browser screenshot and actual fixture values |
+| Team widths | Whole-week proportional resize applies to all 13 fields across every week; identity remains unchanged; independent stat resize retained | Browser keyboard resize and pointer/keyboard regression tests |
+| Team game links | Abbreviated dates with year, no kickoff time; separate comparison selection and original game-breakdown links | Link targets and date assertions |
+| Legacy game view | Starts with collapsed icon rail; historical game ID retains the game's 2025 season; ordinary entry defaults to 2026 | Existing historical interaction suite selects 2025 explicitly |
+| Responsive | No document overflow at approximately 320, 375, 414, 768px; tables scroll internally | Browser geometry readback |
+
+Desktop checks used a measured 1920×1080 CSS viewport. Collapsing both header bands places the Player grid near y=182 and Team grid near y=193; grid height reclaims the space. Local screenshots are in the ignored `.graph-session/compact-controls-20260928/screenshots/` folder. Release evidence is in `shared/operations/compact-research-20260928/`.
+
+No source statistics, API contracts, private Yahoo data, or DFS capture archives changed. Weeks without imported statistics remain unavailable, even when the real schedule and archived DFS salary exist.

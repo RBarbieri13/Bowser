@@ -71,10 +71,6 @@ function readSavedPlayerViews() {
   } catch { return []; }
 }
 
-function initialSidebarWidth() {
-  const stored = Number(window.localStorage.getItem(SIDEBAR_WIDTH_KEY));
-  return Number.isFinite(stored) && stored >= 56 && stored <= 280 ? stored : 216;
-}
 
 function useDebouncedValue(value, delay) {
   const [debounced, setDebounced] = useState(value);
@@ -650,7 +646,7 @@ export function App() {
   const initialTablePreferences = useMemo(() => readPlayerTablePreferences(), []);
   const [route, setRoute] = useState(routeFromHash);
   const currentPage = route.page;
-  const [season, setSeason] = useState(() => { try { return localStorage.getItem("bowser:data-season:v1") === "2025" ? 2025 : 2026; } catch { return 2026; } });
+  const [season, setSeason] = useState(() => route.page === "game" && route.gameId?.startsWith("2025_") ? 2025 : 2026);
   useEffect(() => { try { localStorage.setItem("bowser:data-season:v1", String(season)); } catch { /* Preferences remain usable in memory. */ } }, [season]);
   const changeSeason = (value) => { const next = Number(value) === 2025 ? 2025 : 2026; setSeason(next); setRows([]); setResponseMeta(null); setError(""); setWeekStart(1); setWeekEnd(next === 2026 ? 1 : 18); setProfilePlayer(null); if (route.page === "game") window.location.hash = "#/team-box-scores"; };
   const [meta, setMeta] = useState(null);
@@ -678,7 +674,7 @@ export function App() {
   const [error, setError] = useState("");
   const [showSwipeHint, setShowSwipeHint] = useState(() => localStorage.getItem("stats-scroll-hint-dismissed") !== "1");
   const [profilePlayer, setProfilePlayer] = useState(null);
-  const [sidebarWidth, setSidebarWidth] = useState(initialSidebarWidth);
+  const [sidebarWidth, setSidebarWidth] = useState(56);
   const [showDraftMetrics, setShowDraftMetrics] = useState(initialTablePreferences.showDraftMetrics);
   const [showYahooMetrics, setShowYahooMetrics] = useState(initialTablePreferences.showYahooMetrics);
   const [showPlayerTrends, setShowPlayerTrends] = useState(initialTablePreferences.showPlayerTrends);

@@ -179,9 +179,14 @@ const sampleOpportunityTracker = {
 // Existing interaction scenarios explicitly open the consolidated controls.
 // Default collapsed behavior is covered separately in page-controls.test.jsx.
 function render(ui) {
+  const fixtureSeason=localStorage.getItem("bowser:data-season:v1");
   const view = renderView(ui);
   const toggle = screen.queryByRole("button", { name: "Filters & settings" });
   if (toggle?.getAttribute("aria-expanded") === "false") fireEvent.click(toggle);
+  const seasonControl=screen.queryByRole("combobox",{name:"Data season"});
+  if(fixtureSeason==="2025"&&seasonControl) fireEvent.change(seasonControl,{target:{value:"2025"}});
+  const updatedToggle=screen.queryByRole("button",{name:"Filters & settings"});
+  if(updatedToggle?.getAttribute("aria-expanded")==="false") fireEvent.click(updatedToggle);
   return view;
 }
 
@@ -198,7 +203,7 @@ function latestBoxScoreUrl() {
 beforeEach(() => {
   window.location.hash = "";
   localStorage.clear();
-  // Existing interaction fixtures intentionally exercise the preserved 2025 view.
+  // The render helper explicitly selects 2025 for historical fixtures; production defaults to 2026.
   localStorage.setItem("bowser:data-season:v1", "2025");
   sessionStorage.clear();
   vi.stubGlobal("fetch", vi.fn(async (input) => {
@@ -273,10 +278,12 @@ describe("statistics table UI", () => {
     expect(screen.getByRole("button", { name: "Test Player" })).toBeInTheDocument();
   });
 
-  test("persists a manually resizable icon-only navigation sidebar", async () => {
+  test("defaults to an icon-only navigation sidebar while retaining manual resizing", async () => {
     render(<App />);
     const resizer = screen.getByRole("separator", { name: "Resize navigation sidebar" });
-    expect(resizer).toHaveAttribute("aria-valuenow", "216");
+    expect(resizer).toHaveAttribute("aria-valuenow", "56");
+    fireEvent.keyDown(resizer, { key: "ArrowRight" });
+    expect(Number(resizer.getAttribute("aria-valuenow"))).toBeGreaterThan(56);
     fireEvent.keyDown(resizer, { key: "Home" });
     expect(resizer).toHaveAttribute("aria-valuenow", "56");
     expect(document.querySelector(".app-shell")).toHaveClass("sidebar-icon-only");

@@ -5,7 +5,7 @@ import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 vi.mock('../src/lhq/model.js', async original => ({ ...(await original()), csvDownload: vi.fn() }));
 import { csvDownload } from '../src/lhq/model.js';
 import { LhqProvider } from '../src/lhq/shared.jsx';
-import { TeamBoxScores, median, shortKickoff, teamBoxWidths, teamCsvColumns, teamWeekValue } from '../src/lhq/TeamBoxScores.jsx';
+import { TeamBoxScores, median, shortKickoff, teamBoxWidths, teamCsvColumns, teamWeekValue, proportionalWeekWidths, parseWeekSelection } from '../src/lhq/TeamBoxScores.jsx';
 import { TEAM_BOX_PREFERENCE_KEY } from '../src/teamBoxColumns.js';
 
 const fixturePlayers = [
@@ -40,7 +40,7 @@ function payload(url) {
 function renderPage(props = {}) {
   return render(<LhqProvider><TeamBoxScores season={2025} scoring="ppr" setSeason={() => {}} setScoring={() => {}} onOpen={() => {}} {...props} /></LhqProvider>);
 }
-const table = position => screen.getByRole('table', { name: `${position} weekly team box scores` });
+const table = position => screen.getByRole('table', { name: 'Weekly team box scores' });
 const bodyRow = name => screen.getByRole('button', { name, exact: true }).closest('tr');
 function statCell(name, position, label, ordinal = 0) {
   const header = within(table(position)).getAllByRole('button', { name: new RegExp(`^${label}(?: [▲▼])?$`) })[ordinal].closest('th');
@@ -68,7 +68,7 @@ test('stat values distinguish genuine zero, missing actuals and separately sourc
 });
 test('width sanitization retains explicit custom widths but rejects malformed and unknown fields', () => {
   expect(teamBoxWidths({ columnWidths: { snaps: 75, fantasy_points: 62 }, lhqWidths: { player: 'bad', snaps: 80, targets: -10, carries: 9000, unknown: 90 } })).toEqual({ snaps: 80, targets: 28, carries: 420 });
-  expect(shortKickoff(game(2025, 3))).toBe('Jan 3, 1:00p ET');
+  expect(shortKickoff(game(2025, 3))).toBe('Jan 3, 2025');
   expect(median([null, NaN, 1, 3, 8])).toBe(3); expect(median([1, 3])).toBe(2); expect(median([])).toBeNull();
 });
 test('DNP actuals stay unavailable while known DFS prices remain visible and zero scores remain zero', async () => {
@@ -79,8 +79,8 @@ test('DNP actuals stay unavailable while known DFS prices remain visible and zer
   expect(statCell('Quarterback Zero', 'QB', 'PROJ', 1)).toHaveTextContent('12.5');
   expect(statCell('Runner Alpha', 'RB', 'FPTS', 1)).toHaveTextContent('—');
   const fptsHeader = within(table('RB')).getAllByRole('button', { name: /^FPTS/ })[1].closest('th');
-  expect(table('RB').querySelector('tfoot tr').children[fptsHeader.cellIndex]).toHaveTextContent('—');
-  expect(table('RB').querySelector('tfoot tr').children[fptsHeader.cellIndex]).toHaveStyle({ color: '#3ecf8e' });
+  expect([...table('RB').querySelectorAll('.lhq-team-total')].find(row=>row.textContent.includes('RB TOTAL')).children[fptsHeader.cellIndex]).toHaveTextContent('—');
+  expect([...table('RB').querySelectorAll('.lhq-team-total')].find(row=>row.textContent.includes('RB TOTAL')).children[fptsHeader.cellIndex]).toHaveStyle({ color: '#3ecf8e' });
 });
 test('one stat resize synchronizes every week and position while explicit preferences survive remounts', async () => {
   localStorage.setItem(TEAM_BOX_PREFERENCE_KEY, JSON.stringify({ selectedLeagues: ['LOEG'], lhqWidths: { player: 175 } }));
@@ -107,7 +107,7 @@ test('median shading uses all selected-team position peers rather than the filte
 test('latest result and top scorer are sourced and position titles include count, points and week count', async () => {
   renderPage(); await screen.findByRole('button', { name: 'Runner Charlie', exact: true });
   expect(screen.queryByText('Top scorer')).not.toBeInTheDocument();
-  expect(table('QB').closest('section').querySelector('.lhq-window-title')).toHaveTextContent('1 players · 0.0 pts · 3 weeks');
+  expect(screen.getByRole('button', {name:/QB 1 players/})).toHaveTextContent('1 players · 0.0 pts · 3 weeks');
   fireEvent.click(screen.getByRole('button', { name: /Show sidebar/ }));
   const aside = document.querySelector('.lhq-sidebar');
   expect(within(aside).getByText('Result').nextElementSibling).toHaveTextContent('W 24-17');
@@ -115,7 +115,7 @@ test('latest result and top scorer are sourced and position titles include count
   fireEvent.click(within(aside).getByRole('button', { name: /^Position Totals/ }));
   expect(within(aside).getByRole('columnheader', { name: 'Top scorer' })).toBeInTheDocument();
   expect(aside).toHaveTextContent('Runner Charlie · 24.0');
-  expect(within(table('QB')).getAllByRole('columnheader').some(header => header.textContent.includes('Jan 3, 1:00p ET'))).toBe(true);
+  expect(within(table('QB')).getAllByRole('columnheader').some(header => header.textContent.includes('Jan 3, 2025'))).toBe(true);
 });
 test('markers remain player-ID preferences and filtered CSV retains season-week and DFS provenance', async () => {
   renderPage(); await screen.findByRole('button', { name: 'Runner Alpha', exact: true });
@@ -143,11 +143,12 @@ test('anchored trends use historical calendar slots, aliases and shared domains'
   expect(alpha).toBeCloseTo(beta * 21);
   fireEvent.change(screen.getByLabelText('Trend metric'), { target: { value: 'rush_attempts' } });
   fireEvent.click(within(table('RB')).getByRole('button', { name: /^Trend/ }));
-  expect(table('RB').querySelector('tbody tr')).toHaveTextContent('Runner Charlie');
+  expect([...table('RB').querySelectorAll('tbody tr')].filter(row=>row.querySelector('.lhq-player'))[1]).toHaveTextContent('Runner Charlie');
 });
 test('hiding every visible week does not claim players played every week', async () => {
   renderPage(); await screen.findByRole('button', { name: 'Runner Alpha', exact: true });
-  for (const week of [1, 2, 3]) fireEvent.click(screen.getByRole('button', { name: new RegExp(`25·${week} · 41 pts`) }));
+  fireEvent.click(screen.getByRole('button',{name:'Toggle game selector'}));
+  for (const week of [1, 2, 3]) fireEvent.click(screen.getByRole('button', { name: `Toggle week 2025-${week}` }));
   expect(screen.getByRole('button', { name: 'Played every week (0)' })).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Played every week (0)' }));
   expect(screen.queryByRole('button', { name: 'Runner Alpha', exact: true })).not.toBeInTheDocument();
@@ -167,4 +168,37 @@ test('cross-season anchor keeps empty calendar slots for a player without previo
   const historyRequests = fetch.mock.calls.map(([url]) => new URL(url, 'http://fixture.test')).filter(url => url.searchParams.get('trendAnchors') === '18');
   expect(historyRequests.length).toBeGreaterThan(0);
   expect(historyRequests.every(url => url.searchParams.get('season') === '2025')).toBe(true);
+});
+
+
+test('one compact header shares correctly labeled passing and receiving statistics across positions', async()=>{
+ renderPage();await screen.findByRole('button',{name:'Runner Alpha',exact:true});
+ expect(screen.getAllByRole('table',{name:'Weekly team box scores'})).toHaveLength(1);
+ expect(within(table()).getAllByRole('button',{name:/^C-A \/ REC/})).toHaveLength(3);
+ expect(statCell('Quarterback Zero','QB','C-A \/ REC')).toHaveTextContent('10-20');
+ expect(statCell('Runner Alpha','RB','C-A \/ REC')).toHaveTextContent('1');
+ fireEvent.click(screen.getByRole('button',{name:/RB 3 players/}));
+ expect(screen.queryByRole('button',{name:'Runner Alpha',exact:true})).not.toBeInTheDocument();
+ expect(screen.getByRole('button',{name:'Quarterback Zero',exact:true})).toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:/RB 3 players/}));
+ expect(screen.getByRole('button',{name:'Runner Alpha',exact:true})).toBeInTheDocument();
+});
+test('whole-week resize scales all columns across weeks without altering identity widths', async()=>{
+ renderPage();await screen.findByRole('button',{name:'Runner Alpha',exact:true});
+ const before=[...table().querySelectorAll('col')].map(c=>parseFloat(c.style.width));
+ fireEvent.keyDown(screen.getByRole('separator',{name:'Resize week 2025-1'}),{key:'ArrowLeft'});
+ const after=[...table().querySelectorAll('col')].map(c=>parseFloat(c.style.width));
+ expect(after.slice(0,2)).toEqual(before.slice(0,2));
+ for(let i=2;i<15;i++){expect(after[i]).toBeLessThan(before[i]);expect(after[i+13]).toBe(after[i]);expect(after[i+26]).toBe(after[i]);}
+ expect(table().querySelectorAll('tbody tr:not(.lhq-team-section) td.lhq-week-boundary').length).toBeGreaterThan(0);
+ const bounded=proportionalWeekWidths([{key:'a',width:40},{key:'b',width:80}],1);expect(bounded).toEqual({a:28,b:56});
+});
+test('team links retain exact selected weeks rather than injecting previous-season games', async()=>{
+ renderPage({season:2026,initialTeam:'BUF',initialWeeks:'1,2,3'});await screen.findByRole('button',{name:'Runner Alpha',exact:true});
+ expect(screen.getByRole('button',{name:'Team'})).toHaveTextContent('BUF');
+ expect(screen.getByRole('separator',{name:'Resize week 2026-1'})).toBeInTheDocument();
+ expect(screen.getByRole('separator',{name:'Resize week 2026-3'})).toBeInTheDocument();
+ expect(screen.queryByRole('separator',{name:'Resize week 2025-18'})).not.toBeInTheDocument();
+ expect(screen.getByRole('link',{name:'Open BUF 2026 week 1 game breakdown'})).toHaveAttribute('href','#/game/2026_1_NYG_DAL?scoring=ppr');
+ expect(parseWeekSelection('3,1,2,3,0,99,foo')).toEqual([1,2,3]);
 });
