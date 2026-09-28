@@ -21,6 +21,8 @@ const MESSAGES = {
   invalid_week: 'Choose an NFL week from 1 to 18, or Current.',
   invalid_team: 'Select one of your discovered Yahoo teams.',
   invalid_query: 'The Yahoo research selection is invalid.',
+  invalid_players: 'Choose a bounded visible player list for Yahoo ownership lookup.',
+  invalid_player_keys: 'Choose valid Yahoo player keys for this season.',
   invalid_data_response: 'Yahoo returned data for an unexpected team, season, or week.',
   connection_failed: 'Yahoo could not be reached. Try again shortly.',
   declined: 'Yahoo authorization was declined. Connect again when ready.',
@@ -157,20 +159,25 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
     revision.current++; clear(); setBusy(false); appendLog('redirect'); navigate(connectionUrl); return connectionUrl;
   }, [status?.configured, connectionUrl, clear, appendLog, navigate]);
 
-  const loadResearch = useCallback(async (teamKey, { include = 'availability,trades', availabilityStart = 0, availabilityStatus = 'FA' } = {}) => {
+  const loadResearch = useCallback(async (teamKey, { include = 'availability,trades', availabilityStart = 0, availabilityStatus = 'FA', players = [], playerKeys = [] } = {}) => {
     const id = revision.current;
     const key = `research:${teamKey}`;
     const account = latest.current.season === season ? latest.current.account : null;
     if (!account?.teams.some(team => team.key === teamKey)) { setErrors(previous => ({ ...previous, [key]: MESSAGES.invalid_team })); return null; }
     const parts = Array.isArray(include) ? include : String(include).split(',');
-    if (!parts.length || parts.some(part => !['availability', 'trades', 'transactions'].includes(part)) || !Number.isInteger(availabilityStart) || availabilityStart < 0 || availabilityStart > 5000 || !['FA', 'W', 'A'].includes(availabilityStatus)) { setErrors(previous => ({ ...previous, [key]: MESSAGES.invalid_query })); return null; }
+    const safePlayers = Array.isArray(players) ? players.filter(player => player && typeof player.id === 'string' && typeof player.name === 'string' && typeof player.team === 'string' && typeof player.position === 'string').slice(0, 24) : [];
+    const safePlayerKeys = Array.isArray(playerKeys) ? playerKeys.filter(playerKey => typeof playerKey === 'string' && /^\d+\.p\.\d+$/.test(playerKey)).slice(0, 24) : [];
+    if (!parts.length || parts.some(part => !['availability', 'trades', 'transactions', 'ownership'].includes(part)) || !Number.isInteger(availabilityStart) || availabilityStart < 0 || availabilityStart > 5000 || !['FA', 'W', 'A'].includes(availabilityStatus) || (parts.includes('ownership') && !safePlayers.length && !safePlayerKeys.length)) { setErrors(previous => ({ ...previous, [key]: MESSAGES.invalid_query })); return null; }
     const ticket = (researchRevision.current[teamKey] || 0) + 1;
     researchRevision.current[teamKey] = ticket;
     const active = () => current(id) && researchRevision.current[teamKey] === ticket;
     setResearchBusy(previous => ({ ...previous, [teamKey]: true }));
     setErrors(previous => { const next = { ...previous }; delete next[key]; return next; });
     try {
-      const result = await enqueue(() => active() ? request(`league-research?${new URLSearchParams({ season, team: teamKey, include: parts.join(','), availabilityStart, availabilityStatus })}`) : null);
+      const query = new URLSearchParams({ season, team: teamKey, include: parts.join(','), availabilityStart, availabilityStatus });
+      if (safePlayers.length) query.set('players', JSON.stringify(safePlayers));
+      if (safePlayerKeys.length) query.set('playerKeys', safePlayerKeys.join(','));
+      const result = await enqueue(() => active() ? request(`league-research?${query}`) : null);
       if (!active()) return null;
       if (!result || result.teamKey !== teamKey || result.leagueKey !== teamKey.split('.t.')[0] || result.season !== Number(season)) throw error('invalid_data_response');
       // Preserve the server's single-page completeness, pagination, and coverage exactly.

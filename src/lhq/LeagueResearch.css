@@ -1,0 +1,67 @@
+.lhq-research-panel {
+  display: grid;
+  gap: 10px;
+}
+.lhq-research-controls {
+  display: grid;
+  grid-template-columns: 1fr 112px;
+  gap: 8px;
+  align-items: end;
+}
+.lhq-research-note {
+  color: #aeb7bd;
+  font-size: 12px;
+  line-height: 1.35;
+}
+.lhq-research-list {
+  display: grid;
+  gap: 6px;
+}
+.lhq-research-player {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px 68px;
+  gap: 8px;
+  align-items: center;
+  min-height: 38px;
+  border-top: 1px solid #252525;
+  padding-top: 6px;
+}
+.lhq-research-player strong,
+.lhq-research-player small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lhq-research-player small {
+  color: #8f9aa1;
+}
+.lhq-pickup-button {
+  min-width: 54px;
+  height: 28px;
+  border: 1px solid #3a3a3a;
+  background: #151515;
+  color: #d8d8d8;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.lhq-pickup-button.active {
+  border-color: #3ecf8e;
+  color: #3ecf8e;
+}
+.lhq-ownership-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-weight: 800;
+}
+.lhq-ownership-mark.owned {
+  color: #3ecf8e;
+}
+.lhq-ownership-mark.available {
+  color: #e8735a;
+}
+.lhq-ownership-mark.unknown {
+  color: #777;
+}
