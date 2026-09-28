@@ -66,3 +66,7 @@ Re-opened the refreshed `01-players-app.png`, `02-waivers-app.png`, and `05-oppo
 - Sidebar source now collapses once on initial mount below 1100px as well as on a debounced downward viewport crossing, closing the saved-open narrow-mount edge.
 
 All seven routes were visually reviewed across the second and third passes. League Hub and Yahoo preserve real empty states; no invented league identities or illustrative Yahoo data are required for this pass. This verdict covers the reviewed visual/interaction conversion under Robert’s width/scroll overrides. It does not claim literal pixel identity for source-dependent content, nor does it certify live Yahoo authorization, production deployment, or repository test completion. Those remain separate documented verification boundaries owned by the parent release workflow.
+
+## Final Position Totals refinement
+
+**PASS retained.** Inspected the freshly saved `01-players-app.png` and current Position Totals CSS/rendering. All four visible Top cells now show the complete player name above its separate point value without crowding; Avg Fpts is green. Source confirms Top receives 40% width, the table retains a 320px minimum width, and its sidebar container permits internal horizontal scrolling when condensed. The main grid, opaque sorted headers, and surrounding layout remain intact in this capture. No further issue found in this scoped refinement.

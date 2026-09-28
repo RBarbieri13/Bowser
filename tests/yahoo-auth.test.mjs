@@ -24,7 +24,10 @@ test('encrypted sessions reject tampering, wrong purpose/key and expiry', () => 
   assert.equal(unseal(value, 'wrong', 'session', now), null);
   assert.equal(unseal(value, env.YAHOO_CLIENT_SECRET, 'flow', now), null);
   assert.equal(unseal(value, env.YAHOO_CLIENT_SECRET, 'session', session.expiresAt), null);
-  assert.equal(unseal(value.slice(0,20)+'X'+value.slice(21), env.YAHOO_CLIENT_SECRET, 'session', now), null);
+  // Always change authenticated bytes; the original random character may already be X.
+  const tampered = value.slice(0,20)+(value[20] === 'X' ? 'Y' : 'X')+value.slice(21);
+  assert.notEqual(tampered, value);
+  assert.equal(unseal(tampered, env.YAHOO_CLIENT_SECRET, 'session', now), null);
 });
 test('status exposes configuration and connection only, never secrets or tokens', async () => {
   const result = await call('status', { headers: { cookie: sessionCookie() } });
