@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "applicationCommit": "50a75ed68194dc8d58817fbfe254645430af1e2a",
+  "deploymentId": "dpl_GCMGpHgnqjtq26kmjqmuYkAmFUUG",
+  "publicUrl": "https://bowser-fantasy-football.vercel.app",
+  "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app",
+  "javascript": "/assets/index-VKkMkM_5.js",
+  "stylesheet": "/assets/index-BgrFuku8.css",
+  "candidateAssertions": 483,
+  "productionAssertions": 483,
+  "npmRunCheck": "PASS",
+  "uiTests": 131,
+  "noDataOrBackendChanges": true,
+  "browser": [
+    "2026 default",
+    "five inline trend menus",
+    "hidden sidebar",
+    "exact team-week-range transfer",
+    "shared header and synchronized widths"
+  ],
+  "screenshots": ".graph-session/compact-controls-20260928/screenshots"
+}

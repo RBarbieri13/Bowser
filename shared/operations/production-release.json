@@ -1,11 +1,11 @@
 {
   "status": "PASS",
-  "verifiedAt": "2026-09-28T00:50:11.572330+00:00",
+  "verifiedAt": "2026-09-28T18:22:33.228139+00:00",
   "publicUrl": "https://bowser-fantasy-football.vercel.app",
-  "candidateUrl": "https://bowser-fantasy-football-64p65wk05-rbarbieri13s-projects.vercel.app",
-  "deploymentId": "dpl_54ZsKn7Xp4boHSg1iw335oKQA1MA",
+  "candidateUrl": "https://bowser-fantasy-football-1izkqqrr1-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_GCMGpHgnqjtq26kmjqmuYkAmFUUG",
   "deploymentState": "READY",
-  "applicationCommit": "d2201a28a3917fe4358fd53486a57b6ddd41e6a2",
+  "applicationCommit": "50a75ed68194dc8d58817fbfe254645430af1e2a",
   "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-jev-20260926",
   "checks": {
     "npmRunCheck": "PASS",
@@ -15,16 +15,17 @@
     "commentaryOffline": "PASS",
     "commentaryBrowser": "PASS: live source matching, filtering, sorting, source evidence and responsive containment",
     "yahooConfigured": true,
-    "evidenceDirectory": "shared/operations/lineuphq-conversion-20260927",
+    "evidenceDirectory": "shared/operations/compact-research-20260928",
     "yahooApiTests": 14,
     "yahooUiTests": 6,
     "yahooPublicSecurity": "PASS: no-store and anonymous access rejection",
     "yahooDashboardBrowser": "PASS: fixture-only team views, sorting, resizing and responsive containment",
     "liveYahooAccountTest": "Not exercised in this UI release; no live account read claimed",
-    "uiTests": 125,
-    "newFocusedUiTests": 60,
+    "uiTests": 131,
+    "newFocusedUiTests": 66,
     "sevenRouteVisualReview": "PASS",
-    "warehouseAndArchivesUnchanged": true
+    "warehouseAndArchivesUnchanged": true,
+    "compactControlsBrowser": "PASS: all seven sidebar defaults, independent collapsed bands, passing/history menus, Rams weeks 1-3 handoff, shared week widths and responsive containment"
   },
   "dfs": {
     "season": 2026,
@@ -72,10 +73,10 @@
   },
   "githubSync": {
     "status": "Release branch pushed; PR is authoritative for merge status",
-    "branch": "codex/lineuphq-conversion-20260927",
-    "applicationCommit": "d2201a28a3917fe4358fd53486a57b6ddd41e6a2",
-    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/16",
-    "originMainAtStart": "8bcb62f4ce754b6b10374699baaeaa61fbce1a4d"
+    "branch": "codex/compact-player-team-controls-20260928",
+    "applicationCommit": "50a75ed68194dc8d58817fbfe254645430af1e2a",
+    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/17",
+    "originMainAtStart": "8ed116319abd9c4c511d8788c8d351b05061bb64"
   },
   "limitations": [
     "Missing source projections remain null. No fabricated historical DFS prices or projections.",
@@ -84,9 +85,9 @@
     "Yahoo live league, roster and refresh tests require user authorization; successful redirect is not proof of Fantasy API access.",
     "Yahoo tokens use an eight-hour encrypted HttpOnly browser session; no durable server-side account store or unattended imports."
   ],
-  "evidenceDirectory": "shared/operations/lineuphq-conversion-20260927",
-  "releasePurpose": "Seven-route LineupHQ UI conversion with synchronized weekly column widths, collapsible sidebars and read-only source-backed functionality.",
-  "previousDeploymentId": "dpl_EsjTgLdyVhHWxfbiTGyBpeJ9xMa3",
+  "evidenceDirectory": "shared/operations/compact-research-20260928",
+  "releasePurpose": "Compact research controls, hidden sidebar defaults, inline trend menus, exact team/week links and consolidated Team Box comparisons.",
+  "previousDeploymentId": "dpl_54ZsKn7Xp4boHSg1iw335oKQA1MA",
   "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app",
   "credentialRedeployment": {
     "date": "2026-09-25",
@@ -121,8 +122,8 @@
     "liveAccountTest": "Pending fresh authorization of alternate application. Earlier app refreshed successfully but league read returned 403."
   },
   "previousVerifiedRelease": {
-    "deploymentId": "dpl_EsjTgLdyVhHWxfbiTGyBpeJ9xMa3",
-    "applicationCommit": "8bcb62f4ce754b6b10374699baaeaa61fbce1a4d"
+    "deploymentId": "dpl_54ZsKn7Xp4boHSg1iw335oKQA1MA",
+    "applicationCommit": "d2201a28a3917fe4358fd53486a57b6ddd41e6a2"
   },
   "commentary": {
     "capture": "2026-09-26T21:36:07.842Z",
