@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { competitionRank, inRanges, sortRows } from '../src/lhq/model.js';
-import { Bars, Grid, LhqProvider, useStored } from '../src/lhq/shared.jsx';
+import { Bars, Grid, LhqProvider, Shell, CollapsibleStrip, useStored } from '../src/lhq/shared.jsx';
 import { PlayerDatabase } from '../src/lhq/PlayerDatabase.jsx';
 
 let observers;
@@ -145,4 +145,23 @@ test('malformed saved widths cannot corrupt table dimensions or sticky offsets',
   expect(widths.every(width => Number.isFinite(width) && width >= 28 && width <= 420)).toBe(true);
   expect(parseFloat(container.querySelector('table').style.width)).toBe(widths.reduce((sum, width) => sum + width, 0));
   expect(screen.getByRole('button', { name: 'Team' }).closest('th').style.left).toBe(`${widths[0]}px`);
+});
+
+
+test('sidebars reopen only by user action and header bands collapse independently',()=>{
+ const page=p=><LhqProvider><Shell page={p} sources={<span>Source content</span>} panels={[{id:'filters',title:'Filters',content:'Sidebar content'}]}><CollapsibleStrip><span>Game content</span></CollapsibleStrip></Shell></LhqProvider>;
+ sessionStorage.setItem('bowser:lhq:sidebar-hidden:players','false');
+ const view=render(page('players'));
+ expect(screen.queryByText('Sidebar content')).not.toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:/Show sidebar/}));
+ expect(screen.getByText('Sidebar content')).toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:'Toggle sources and options'}));
+ expect(screen.queryByText('Source content')).not.toBeInTheDocument();
+ expect(screen.getByText('Game content')).toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:'Toggle game selector'}));
+ expect(screen.queryByText('Game content')).not.toBeInTheDocument();
+ view.rerender(page('waivers'));
+ expect(screen.queryByText('Sidebar content')).not.toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:/Show sidebar/}));view.unmount();render(page('waivers'));
+ expect(screen.queryByText('Sidebar content')).not.toBeInTheDocument();
 });
