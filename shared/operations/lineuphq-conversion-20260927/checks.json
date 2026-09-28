@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "command": "npm run check",
+  "exitCode": 0,
+  "nodeMainTests": 112,
+  "uiTests": 125,
+  "newFocusedUiTests": 60,
+  "marketUiTests": 19,
+  "waiverUiTests": 12,
+  "localDataAssertions": 483,
+  "independentVisualReview": "PASS",
+  "graphValidation": "PASS; two claims, two evaluations, two runs, all four invariants hold",
+  "privateYahooLiveRead": "Not claimed"
+}

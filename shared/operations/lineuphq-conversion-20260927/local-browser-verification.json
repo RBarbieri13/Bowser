@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "desktop": {
+    "width": 1920,
+    "height": 1080,
+    "cssZoom": 1,
+    "normalRowHeight": 35.996,
+    "opportunityRowHeight": 71.992,
+    "teamMenu": {
+      "top": 50,
+      "width": 1901.25,
+      "columns": 8
+    },
+    "synchronizedStatResize": {
+      "stat": "SNP",
+      "before": 36,
+      "after": 40,
+      "matchingHeaders": 12
+    },
+    "teamGridSidebarHidden": {
+      "clientWidth": 1839,
+      "scrollWidth": 1839,
+      "weeks": 3
+    },
+    "teamGridSidebarOpen": {
+      "clientWidth": 1411,
+      "scrollWidth": 1786,
+      "sidebarOuterWidth": 420
+    }
+  },
+  "responsive": {
+    "viewport": 1000,
+    "sidebarAutoCollapsed": true,
+    "documentHorizontalOverflow": false
+  },
+  "interactionChecks": [
+    "DESC-first sorting and live sort context",
+    "Show-row limit and reset",
+    "Grouped Manage Columns and independent trend toggle",
+    "Team selector Escape dismissal",
+    "Sidebar hide/show,condense/restore and synchronized week resizing",
+    "Unchanged Player Card opens from Team Box player identity",
+    "Signed movers and opaque pinned sorted headers"
+  ],
+  "routes": [
+    "players",
+    "waivers",
+    "market-pulse",
+    "team-box-scores",
+    "opportunity-tracker",
+    "yahoo",
+    "league-hub"
+  ],
+  "visualReviewer": "PASS; see visual-review.md",
+  "liveYahooAccount": "Not tested; no private account payload persisted",
+  "production": "Pending candidate verification and promotion"
+}

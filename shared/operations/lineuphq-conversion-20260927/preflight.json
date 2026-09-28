@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "baseMain": "8bcb62f4ce754b6b10374699baaeaa61fbce1a4d",
+  "productionDeploymentId": "dpl_EsjTgLdyVhHWxfbiTGyBpeJ9xMa3",
+  "productionCommit": "8bcb62f4ce754b6b10374699baaeaa61fbce1a4d",
+  "productionGitRef": "main",
+  "unrelatedCheckout": "Preserved; all work isolated on codex/lineuphq-conversion-20260927"
+}
