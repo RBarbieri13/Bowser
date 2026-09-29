@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "url": "https://fantasy-football-stats-preview.vercel.app",
+  "verifiedAt": "2026-09-29T23:57:14.853652+00:00",
+  "checks": [
+    "Metadata includes the exact sourced Week 2 Monday Showdown option",
+    "Monday salaries remain Week 2",
+    "Monday salary pool contains only Giants and Rams",
+    "Every salary identity belongs to the Monday game",
+    "Monday full salary pool retains all 53 eligible FLEX identities",
+    "Statistical trends retain Weeks 1-3 independently of Week 2 salaries",
+    "Every player uses three aligned slots",
+    "Davante Adams retains exact three-week GP, PPR and NFL rank",
+    "Unavailable weeks do not shift the Base week anchor backward",
+    "Unavailable future statistics stay explicitly unavailable",
+    "Independent Week 4 matchup schedule is available",
+    "No unverified Week 4 slate is invented or substituted"
+  ],
+  "count": 12
+}
