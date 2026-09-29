@@ -318,6 +318,8 @@ export function getMeta(dbPath, searchParams = new URLSearchParams()) {
     season,
     seasons: AVAILABLE_SEASONS,
     currentSeason: 2026,
+    dfsOptions: getDfsSlate('current').meta.options,
+    dfsDefault: getDfsSlate('current').meta.defaultSlate,
     availableWeeks: db.prepare("SELECT DISTINCT week FROM player_week_stats ORDER BY week").all().map((row) => row.week),
     seasonTypes: [
       { value: "REG", label: "Regular Season" },
@@ -383,7 +385,9 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
   const upcomingTeam = season === 2026
     ? "COALESCE(NULLIF(players.latest_team, ''), draft_rankings.source_team)"
     : "COALESCE(NULLIF(draft_rankings.source_team, ''), players.latest_team)";
-  const history = queryAlignedHistory(db, { season, weeks, count: trendWeeks, receptionBonus, seasonType });
+  const trendRange = searchParams.get('trendRange') || 'history';
+  if (!['history','selected'].includes(trendRange)) throw new QueryValidationError('trendRange','Choose history or selected trend range');
+  const history = queryAlignedHistory(db, { season, weeks, count: trendWeeks, receptionBonus, seasonType, exactWeeks: trendRange === 'selected' });
   const dfsChoice = searchParams.get('dfsSlate') || 'current';
   const dfs = dfsChoice === 'selected-week' ? getDfsWeek(season,Math.max(...weeks,1)) : getDfsSlate(dfsChoice);
   if(!dfs) throw new QueryValidationError("dfsSlate", "Unknown DraftKings slate");
@@ -578,7 +582,7 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
       season, seasonType, scoring, positions, teams, weeks, search,
       minGames, minSnaps, sorts: sorts.map(({ key, direction }) => ({ key, direction })), limit, ranks,
       includeTrends, includeDepthCharts, depthCharts: enrichment.depthCharts, dfs:dfs.meta,
-      trendWeeks, ...historyMetadata(history, scoring), positionFinish, statsCoverage: coverage,
+      trendWeeks, ...historyMetadata(history, scoring), trendRange, ...(trendRange === 'selected' ? {trendBasis:'Exact selected NFL weeks through Base week; bye, DNP and unavailable values stay null'} : {}), positionFinish, statsCoverage: coverage,
     },
   };
 }

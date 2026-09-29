@@ -37,7 +37,7 @@ export function calendarSlots(sources, season, weeks, count) {
   return slots.slice(-count);
 }
 
-export function readRankedWeeks(db, season, weeks, receptionBonus) {
+export function readRankedWeeks(db, season, weeks, receptionBonus, seasonType = 'REG') {
   if (!weeks.length) return [];
   return db.prepare(`
     WITH weekly AS (
@@ -62,7 +62,7 @@ export function readRankedWeeks(db, season, weeks, receptionBonus) {
         ROUND(SUM(stats.fantasy_points + stats.receptions * ?), 2) AS rank_points
       FROM player_week_stats stats
       INNER JOIN games ON games.game_id = stats.game_id
-      WHERE stats.season = ? AND stats.season_type = 'REG' AND stats.played = 1
+      WHERE stats.season = ? AND (? = 'ALL' OR stats.season_type = ?) AND stats.played = 1
         AND games.home_score IS NOT NULL AND games.away_score IS NOT NULL
         AND stats.week IN (${weeks.map(() => '?').join(',')})
       GROUP BY stats.player_id, stats.season, stats.week
@@ -72,13 +72,13 @@ export function readRankedWeeks(db, season, weeks, receptionBonus) {
         PARTITION BY season, week, position_group ORDER BY rank_points DESC
       ) END AS positionFinish
     FROM weekly
-  `).all(receptionBonus, season, ...weeks);
+  `).all(receptionBonus, season, seasonType, seasonType, ...weeks);
 }
 
-export function alignedHistory(sources, { season, weeks = [], count = 10, receptionBonus = 1, seasonType = 'REG' }) {
-  const slots = calendarSlots(sources, season, weeks, count);
+export function alignedHistory(sources, { season, weeks = [], count = 10, receptionBonus = 1, seasonType = 'REG', exactWeeks = false }) {
+  const slots = exactWeeks ? [...new Set(weeks)].sort((a,b)=>a-b).map(week => ({key:`${season}-${week}`,season,week,seasonType:week>18?'POST':'REG',label:`${season} W${week}`})) : calendarSlots(sources, season, weeks, count);
   const rows = sources.flatMap((source) => readRankedWeeks(source.db, source.season,
-    slots.filter((slot) => slot.season === source.season).map((slot) => slot.week), receptionBonus));
+    slots.filter((slot) => slot.season === source.season).map((slot) => slot.week), receptionBonus, exactWeeks ? seasonType : 'REG'));
   const byPlayer = new Map();
   const domains = Object.fromEntries(Object.keys(TREND_METRICS).map((metric) => [metric, { min: 0, max: 0 }]));
   for (const row of rows) {

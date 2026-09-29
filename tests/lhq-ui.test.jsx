@@ -135,7 +135,7 @@ test('game filters include multi-team aggregate rows and clear stale selections 
   await screen.findByRole('button', { name: 'Fixture Player' });
   fireEvent.click(await screen.findByRole('button', { name: /BUF @ NYJ/ }));
   expect(screen.getByRole('button', { name: 'Fixture Player' })).toBeInTheDocument();
-  fireEvent.change(screen.getByLabelText('Week(s)'), { target: { value: '2' } });
+  fireEvent.change(screen.getByLabelText('DFS week'), { target: { value: '2' } });
   await waitFor(() => expect(screen.getByRole('button', { name: 'Fixture Player' })).toBeInTheDocument());
   expect(screen.queryByText(/No records for this selection/)).not.toBeInTheDocument();
 });

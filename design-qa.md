@@ -137,3 +137,17 @@ No source statistics, API contracts, private Yahoo data, or DFS capture archives
 Capture synchronization follow-up: choosing an older salary capture in the Team Box sidebar also updates the matching-week table and export through the builder snapshot callback; a regression test asserts the exact older salary payload is reported.
 
 Production verification: the permanent Bowser URL passed 499 data assertions and 9 exact-capture lineup assertions. The preview alias passed 499 data assertions. Production browser readback confirms the Player research totals and Market Pulse render. Yahoo is signed out in this browser; live private league data is not claimed as verified.
+
+## Independent statistics / DFS windows — September 28, 2026
+
+| Surface | Verified behavior |
+| --- | --- |
+| Header | Separate Base week / smaller Weeks back and DFS week / slate groups. Base 7 + 3 selects 5–7. Season and scoring remain shared. |
+| Exact trends | All five metric menus retain independent metric selection; history count controls the common statistical window. Empty future slots stay anchored to Base week. |
+| Monday Showdown | Real Week 2 Giants–Rams salary pool: 53 FLEX identities, only LA/NYG teams; matchup highlighted first, unrelated games disabled. Base 3 + 3 retains W1–3 totals and three bars. |
+| Cumulative readback | Davante Adams W1–3: GP3, 144 snaps, 358 receiving yards, 2 receiving TD, 65.8 PPR, WR6. Opponent is Base-week DEN despite the independent NYG DFS matchup. |
+| DFS off | DFS dropdowns, fields, source, lineup panel and matchup strip hidden; salary/game constraints removed. LA team filter returns 16 statistical players for W1–3. |
+| Unavailable future source | Selecting DFS Week 4 preserves Base 3 / count3, shows Week 4 schedule and an unavailable slate notice; no stale Week 2 prices. No odds feed is manufactured; completed scores are explicitly Final, unavailable O/U is labeled. |
+| Layout | Browser confirmed no document overflow at 1920px and 750px; table scrolling remains internal. Selected-game visibility is preserved by placing eligible slate games first. |
+
+`npm run check` passed with 147 UI tests; exact-range API regression and three interaction tests cover coupled filters, role salaries, unmatched salary identities, DFS-off reset and unavailable future weeks. No warehouse, DFS archives, account credentials or private Yahoo data changed. Screenshots reside under ignored `artifacts/independent-weeks-20260928/`; public verifier evidence is stored in `shared/operations/independent-weeks-20260928/`.

@@ -23,7 +23,9 @@ test('range finish displays aggregate rank, missing-week coverage, and independe
  render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
  await screen.findByText('QB2');
  expect(screen.queryByText('QB7')).toBeNull();
- expect(screen.getByRole('status')).toHaveTextContent('statistics unavailable for W2');
+ expect(screen.getByText(/statistics unavailable for W2/)).toBeInTheDocument();
+ fireEvent.change(screen.getByLabelText('Base week'),{target:{value:'3'}});
+ await screen.findByText('QB2');
  fireEvent.click(screen.getByRole('button',{name:'usage trend settings'}));
  fireEvent.change(screen.getByLabelText('usage trend history'),{target:{value:'3'}});
  fireEvent.click(screen.getByRole('button',{name:'Done',exact:true}));

@@ -20,12 +20,19 @@ const props = { season: 2026, scoring: 'half', setSeason: vi.fn(), setScoring: v
 const reply = body => ({ ok: true, json: async () => body });
 const show = child => render(<LhqProvider>{child}</LhqProvider>);
 const fixturePlayer = { player_id: 'fixture-a', player_display_name: 'Fixture Alpha', position: 'RB', team: 'NYG', snaps: 0, fantasy_points: 0, player_trends: [] };
-const dfs = { key: 'fixture-slate', season: 2025, week: 18, capturedAt: '2026-01-03T00:00:00Z', salaryUrl: 'https://example.test/salaries', options: [{ key: 'current', label: 'Current' }, { key: 'fixture-slate', label: 'Fixture slate' }] };
+const dfs = { key: 'fixture-slate', season: 2026, week: 2, capturedAt: '2026-01-03T00:00:00Z', salaryUrl: 'https://example.test/salaries', options: [{ key: 'current', label: 'Current' }, { key: 'fixture-slate', label: 'Fixture slate', season:2026,week:2 }] };
 const playerPayload = (data = [fixturePlayer]) => ({ data, meta: { weeks: [1], dfs } });
 const waiverPayload = { rows: [{ id: 'fixture-a', playerId: 'fixture-a', name: 'Fixture Alpha', position: 'RB', team: 'NYG', rankings: {}, faab: {}, stats: { fantasy_points: 0, trends: [] }, activity: {} }], meta: { sources: [] } };
 function playerApi(payload) {
-  vi.stubGlobal('fetch', vi.fn(async url => reply(String(url).includes('/player-stats?') ? payload : String(url).includes('/schedule?') ? { data: [] } : { seasons: [2025, 2026] })));
+  vi.stubGlobal('fetch', vi.fn(async input => {
+    const url=new URL(String(input),'https://example.test');
+    if(url.pathname.endsWith('/player-stats')) return reply(payload);
+    if(url.pathname.endsWith('/schedule')) return reply({data:[]});
+    if(url.searchParams.get('view')==='dfs-lineup') return reply({data:payload.data.map(r=>({id:r.player_id,playerId:r.player_id,name:r.player_display_name,team:r.team,position:r.position,salary:r.draft_kings_price??null,projection:r.draft_kings_projection??null,projectionSource:r.dfs_projection_source,projectionUrl:r.dfs_projection_url})),meta:dfs});
+    return reply({seasons:[2025,2026],dfsOptions:dfs.options,dfsDefault:'fixture-slate'});
+  }));
 }
+
 beforeEach(() => {
   localStorage.clear(); sessionStorage.clear(); vi.clearAllMocks();
   vi.stubGlobal('innerWidth', 1920);
@@ -108,7 +115,7 @@ test('Player export keeps filtered stable IDs and independent stats/DFS source c
   fireEvent.click(screen.getByRole('button', { name: '↓', exact: true }));
   await waitFor(() => expect(csvDownload).toHaveBeenCalledTimes(1));
   const [, columns, rows] = csvDownload.mock.calls[0];
-  expect(rows).toEqual([expect.objectContaining({ player_id: 'fixture-a', _stats_season: 2026, _stats_weeks: '1', _scoring: 'half', _dfs_slate: 'fixture-slate', _dfs_season: 2025, _dfs_week: 18, _dfs_captured: dfs.capturedAt, _salary_url: dfs.salaryUrl, _projection_provider: 'Fixture provider', _projection_url: 'https://example.test/projection' })]);
+  expect(rows).toEqual([expect.objectContaining({ player_id: 'fixture-a', _stats_season: 2026, _stats_weeks: '1', _scoring: 'half', _dfs_slate: 'fixture-slate', _dfs_season: 2026, _dfs_week: 2, _dfs_captured: dfs.capturedAt, _salary_url: dfs.salaryUrl, _projection_provider: 'Fixture provider', _projection_url: 'https://example.test/projection' })]);
   expect(columns.map(column => column.key)).toContain('_projection_url');
   fireEvent.click(screen.getByRole('button', { name: 'Download all slates' }));
   await waitFor(() => expect(csvDownload).toHaveBeenCalledTimes(2));
@@ -303,30 +310,34 @@ test('Player competition ranks follow active metric and direction with ties; Ran
   expect(cells('Fixture Alpha')[cells('Fixture Alpha').length - 1]).toHaveTextContent('RB9');
 });
 
-test('Player inline trends have independent history and metric controls, including passing', async () => {
+test('Player inline metric menus share the selected statistics window, including passing', async () => {
   const history=Array.from({length:18},(_,i)=>({season:2025,week:i+1,snaps:i,passing_yards:i*10}));
   playerApi(playerPayload([{...fixturePlayer,player_trends:history}]));
   show(<PlayerDatabase {...props}/>);
   await screen.findByRole('button',{name:'Fixture Alpha',exact:true});
   const table=screen.getByRole('table',{name:'Player statistics'});
   expect(table.querySelectorAll('.lhq-bars')).toHaveLength(5);
-  expect([...table.querySelectorAll('.lhq-bars')].map(n=>n.querySelectorAll('.lhq-bar-slot').length)).toEqual([5,5,5,5,5]);
+  expect([...table.querySelectorAll('.lhq-bars')].map(n=>n.querySelectorAll('.lhq-bar-slot').length)).toEqual([1,1,1,1,1]);
+  fireEvent.change(screen.getByLabelText('Base week'), {target:{value:'10'}});
+  await screen.findByRole('button',{name:'Fixture Alpha',exact:true});
   fireEvent.click(screen.getByRole('button',{name:'passing trend settings',exact:true}));
   fireEvent.change(screen.getByLabelText('passing trend history'),{target:{value:'10'}});
-  await waitFor(()=>expect(new URL(fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).at(-1)[0],'https://example.test').searchParams.get('trendWeeks')).toBe('10'));
+  await waitFor(()=>expect(new URL(fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).at(-1)[0],'https://example.test').searchParams.get('weeks')).toBe('1,2,3,4,5,6,7,8,9,10'));
   await screen.findByRole('button',{name:'Fixture Alpha',exact:true});
   fireEvent.change(screen.getByLabelText('passing trend statistic'),{target:{value:'completions'}});
   expect(within(table).getByRole('button',{name:'Completions',exact:true})).toBeInTheDocument();
-  expect([...table.querySelectorAll('.lhq-bars')].map(n=>n.querySelectorAll('.lhq-bar-slot').length)).toEqual([5,10,5,5,5]);
+  expect([...table.querySelectorAll('.lhq-bars')].map(n=>n.querySelectorAll('.lhq-bar-slot').length)).toEqual([10,10,10,10,10]);
   fireEvent.keyDown(document,{key:'Escape'});
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 });
 
-test('Player team shortcut preserves selected week range and the schedule follows that range', async () => {
+test('Player team shortcut preserves the statistics window independently of the DFS schedule', async () => {
   playerApi(playerPayload());show(<PlayerDatabase {...props}/>);
   await screen.findByRole('button',{name:'Fixture Alpha',exact:true});
-  fireEvent.change(screen.getByLabelText('Through'),{target:{value:'3'}});
-  await waitFor(()=>expect(fetch.mock.calls.some(([u])=>String(u)==='/api/v1/schedule?season=2026&week=1,2,3')).toBe(true));
+  fireEvent.change(screen.getByLabelText('Base week'),{target:{value:'3'}});
+  fireEvent.change(screen.getByLabelText('Weeks back'),{target:{value:'3'}});
+  await waitFor(()=>expect(fetch.mock.calls.some(([u])=>String(u)==='/api/v1/schedule?season=2026&week=3')).toBe(true));
+  expect(screen.getByLabelText('DFS week')).toHaveValue('2');
   const link=await screen.findByRole('link',{name:'Open NYG team box scores for weeks 1,2,3'});
   expect(link.getAttribute('href')).toBe('#/team-box-scores?team=NYG&season=2026&weeks=1%2C2%2C3&scoring=half');
   expect(screen.queryByRole('button',{name:/Offense|Kicker/})).not.toBeInTheDocument();
