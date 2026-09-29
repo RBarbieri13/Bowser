@@ -1,28 +1,27 @@
 {
   "status": "PASS",
-  "verifiedAt": "2026-09-29T00:46:57.674173+00:00",
+  "verifiedAt": "2026-09-29T03:53:04.882734+00:00",
   "publicUrl": "https://bowser-fantasy-football.vercel.app",
-  "candidateUrl": "https://bowser-fantasy-football-g8tyfs1yy-rbarbieri13s-projects.vercel.app",
-  "deploymentId": "dpl_9Sgw1ZU2gNsdEfiFi9etBVWGCne3",
+  "candidateUrl": "https://bowser-fantasy-football-5p7c88kb0-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_9vUmXh21CXKVgHsA6fBH1shCdpii",
   "deploymentState": "READY",
-  "applicationCommit": "01e0a86265da9b0e9e9d917d317f3ee5b33a6a72",
+  "applicationCommit": "80e6ea10ac2bd06c87f565ddaca7ad24c03c298b",
   "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-jev-20260926",
   "checks": {
     "npmRunCheck": "PASS",
-    "uiTests": 144,
+    "uiTests": 147,
     "localRegressionAssertions": 499,
+    "localWindowAssertions": 12,
     "candidateRegressionAssertions": 499,
-    "candidateContextualAssertions": 9,
+    "candidateWindowAssertions": 12,
     "publicRegressionAssertions": 499,
-    "publicContextualAssertions": 9,
-    "previewAliasRegressionAssertions": 499,
-    "independentReviews": 3,
-    "liveYahooAccountTest": "Production browser is not connected; authenticated league readback remains unverified. Private behavior covered by fixture tests.",
-    "publicBrowser": "PASS: original logo, exact W1-2 cumulative player research, Market Pulse table loads without alerts; sidebar collapsed on navigation",
-    "warehouse2025Unchanged": true,
-    "dfsArchivesUnchanged": true,
-    "warehouse2026": "Refreshed from official nflverse: Weeks 1-3; 47 completed games at source capture",
-    "evidenceDirectory": "shared/operations/contextual-research-20260928"
+    "publicWindowAssertions": 12,
+    "previewAliasWindowAssertions": 12,
+    "secondVerifier": "PASS: independent read-only API verifier and real-data browser readback",
+    "publicBrowser": "PASS: Monday Week 2 53-player NYG/LA salary pool; Base 3 / count 3; exact three-week cumulative values and 3 bars; eligible game highlighted first; no alerts",
+    "warehouseAndArchivesUnchanged": true,
+    "yahooPrivateData": "Not accessed or changed in this release",
+    "evidenceDirectory": "shared/operations/independent-weeks-20260928"
   },
   "dfs": {
     "season": 2026,
@@ -70,10 +69,10 @@
   },
   "githubSync": {
     "status": "Release branch pushed; PR is authoritative for merge status",
-    "branch": "codex/contextual-research-20260928",
-    "applicationCommit": "01e0a86265da9b0e9e9d917d317f3ee5b33a6a72",
-    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/18",
-    "originMainAtStart": "02ba44996f20eb69e829eb51893104df7e86cb3c"
+    "branch": "codex/player-stat-dfs-windows",
+    "applicationCommit": "80e6ea10ac2bd06c87f565ddaca7ad24c03c298b",
+    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/19",
+    "originMainAtStart": "666478b414e31954b17a7efe371c6d7ca7f1a4c0"
   },
   "limitations": [
     "Missing source projections remain null. No fabricated historical DFS prices or projections.",
@@ -83,9 +82,9 @@
     "Latest verified DFS capture is 2026 Week 2. This release does not claim newer Week 3 salaries or projections.",
     "Production browser Yahoo session is not connected. A fresh sign-in is required to verify live authorized league panels."
   ],
-  "evidenceDirectory": "shared/operations/contextual-research-20260928",
-  "releasePurpose": "Cumulative week statistics and ranks, original logo, compact trend controls, contextual player and league research, exact-capture Classic/Showdown lineup drafts.",
-  "previousDeploymentId": "dpl_GCMGpHgnqjtq26kmjqmuYkAmFUUG",
+  "evidenceDirectory": "shared/operations/independent-weeks-20260928",
+  "releasePurpose": "Independent statistical Base week / Weeks back and DFS week / slate controls; exact source eligibility and intersecting matchup filters; statistics-only toggle.",
+  "previousDeploymentId": "dpl_9Sgw1ZU2gNsdEfiFi9etBVWGCne3",
   "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app",
   "credentialRedeployment": {
     "date": "2026-09-25",
@@ -120,10 +119,10 @@
     "liveAccountTest": "Pending fresh authorization of alternate application. Earlier app refreshed successfully but league read returned 403."
   },
   "previousVerifiedRelease": {
-    "deploymentId": "dpl_GCMGpHgnqjtq26kmjqmuYkAmFUUG",
-    "applicationCommit": "50a75ed68194dc8d58817fbfe254645430af1e2a",
-    "candidateUrl": "https://bowser-fantasy-football-1izkqqrr1-rbarbieri13s-projects.vercel.app",
-    "verifiedAt": "2026-09-28T18:22:33.228139+00:00"
+    "deploymentId": "dpl_9Sgw1ZU2gNsdEfiFi9etBVWGCne3",
+    "applicationCommit": "01e0a86265da9b0e9e9d917d317f3ee5b33a6a72",
+    "candidateUrl": "https://bowser-fantasy-football-g8tyfs1yy-rbarbieri13s-projects.vercel.app",
+    "verifiedAt": "2026-09-29T00:46:57.674173+00:00"
   },
   "commentary": {
     "capture": "2026-09-26T21:36:07.842Z",

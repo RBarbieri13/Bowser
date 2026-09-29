@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-09-29T03:53:04.882734+00:00",
+  "deploymentId": "dpl_9vUmXh21CXKVgHsA6fBH1shCdpii",
+  "applicationCommit": "80e6ea10ac2bd06c87f565ddaca7ad24c03c298b",
+  "publicUrl": "https://bowser-fantasy-football.vercel.app",
+  "checks": 511,
+  "browser": "PASS: Monday Week 2 53-player NYG/LA salary pool; Base 3 / count 3; exact three-week cumulative values and 3 bars; eligible game highlighted first; no alerts",
+  "screenshot": "artifacts/independent-weeks-20260928/production-independent-windows.png",
+  "dataChanges": false
+}
