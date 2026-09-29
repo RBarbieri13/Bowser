@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-09-29T00:46:57.674173+00:00",
+  "applicationCommit": "01e0a86265da9b0e9e9d917d317f3ee5b33a6a72",
+  "deploymentId": "dpl_9Sgw1ZU2gNsdEfiFi9etBVWGCne3",
+  "publicUrl": "https://bowser-fantasy-football.vercel.app",
+  "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app",
+  "productionAssertions": 508,
+  "previewAliasAssertions": 499,
+  "productionBrowser": "PASS: original logo, exact W1-2 cumulative player research, Market Pulse table loads without alerts; sidebar collapsed on navigation",
+  "liveYahooAccountTest": "Production browser is not connected; authenticated league readback remains unverified. Private behavior covered by fixture tests.",
+  "screenshot": "artifacts/contextual-research-20260928/production-player-research.png"
+}

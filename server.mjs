@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 import { querySchedule, queryPlayerIdentity, queryDfsArchive, getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "./server/stats-store.mjs";
+import { queryDfsLineup } from "./server/dfs-lineups.mjs";
 import { getIntelligenceRegistry, queryPersistedIntelligenceFeed, IntelligenceQueryError } from "./server/intelligence-store.mjs";
 import { IntelligenceProviderError } from "./server/intelligence-errors.mjs";
 import { IntelligenceApiError, intelligenceRunStatus, startIntelligenceRefresh } from "./server/intelligence-api.mjs";
@@ -70,7 +71,7 @@ function asyncApiHandler(handler) {
 }
 
 app.get("/api/v1/schedule", apiHandler((params) => querySchedule(params)));
-app.get("/api/v1/meta", apiHandler((params) => getMeta(undefined, params)));
+app.get("/api/v1/meta", apiHandler((params) => params.get("view") === "dfs-lineup" ? queryDfsLineup(params) : getMeta(undefined, params)));
 app.get("/api/v1/player-stats", apiHandler((params) => queryPlayers(params)));
 app.get("/api/v1/player-identity", apiHandler((params) => queryPlayerIdentity(params)));
 app.get("/api/v1/dfs-archive", apiHandler((params) => queryDfsArchive(params)));

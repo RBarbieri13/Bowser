@@ -100,7 +100,7 @@ function selectRosterRole(slate, requestedRole) {
       unmatchedSalaryPlayers:slate.meta.coverage.unmatchedSalaryPlayers/2} } };
 }
 
-export function getDfsSlate(key = 'current') {
+function resolveDfsSlate(key = 'current', { includeUnmatched = false, lineupPool = false } = {}) {
   const weekly = readWeekly();
   const slates = { ...historical.slates, ...(weekly?.slates || {}), ...archiveSlates() };
   const defaultKey = weekly?.defaultSlate || historical.defaultSlate;
@@ -123,13 +123,44 @@ export function getDfsSlate(key = 'current') {
         label:s.label + (role ? ` · ${role}` : ''), season:s.season,week:s.week,startsAt:s.startsAt,endsAt:s.endsAt,
         scoring:s.scoring,rosterPosition:role,contestTypeId:s.contestTypeId}))),
   ];
-  return selectRosterRole({
+  const payload = {
     meta: { ...meta, key: resolvedKey, requestedKey, defaultSlate: defaultKey, options,
       availability: fallback ? 'last-good' : ended ? 'archived' : 'available',
       currentSnapshotAvailable: Boolean(weekly) && !ended,
       availabilityMessage: fallback ? `Showing last verified ${meta.season} Week ${meta.week} data; a newer verified slate is not available.` : null },
-    records: records.filter(row => row.playerId),
-  }, isCaptain ? 'CPT' : 'FLEX');
+    records: includeUnmatched ? records : records.filter(row => row.playerId),
+  };
+  if (lineupPool && meta.contestTypeId === 96) {
+    return {
+      ...payload,
+      meta: {
+        ...payload.meta,
+        rosterPositions: ['FLEX', 'CPT'],
+        label: payload.meta.label.replace(/\s·\s(?:FLEX|CPT)$/, ''),
+        projectionBasis: 'Full-game DraftKings source projections; Captain rows use official CPT salary and a 1.5 projection multiplier while FLEX rows remain unscaled.',
+      },
+    };
+  }
+  return selectRosterRole(payload, isCaptain ? 'CPT' : 'FLEX');
+}
+
+export function getDfsSlate(key = 'current') {
+  return resolveDfsSlate(key, { includeUnmatched: false });
+}
+
+export function getDfsLineupSlate(key = 'current', captureId = null) {
+  const head = resolveDfsSlate(key, { includeUnmatched: true, lineupPool: true });
+  if (!head) return null;
+  const captures = getDfsArchiveIndex().filter(row => row.key === head.meta.key);
+  if (!captureId || captureId === head.meta.captureId) return {...head,meta:{...head.meta,captures}};
+  const prior = withArchive(db => {
+    const row = db.prepare('SELECT metadata_json,slate_key FROM dfs_captures WHERE capture_id=?').get(captureId);
+    if (!row || row.slate_key !== head.meta.key) return null;
+    const metadata = JSON.parse(row.metadata_json);
+    const records = db.prepare('SELECT record_json FROM dfs_prices WHERE capture_id=? ORDER BY rowid').all(captureId).map(row=>JSON.parse(row.record_json));
+    return {records,meta:{...head.meta,...metadata,key:row.slate_key,captureId,captures,availability:'archived',currentSnapshotAvailable:false,availabilityMessage:'Historical capture selected. Saved lineup prices are fixed to this capture.'}};
+  });
+  return prior;
 }
 
 // Exact historical lookup: a missing week is never substituted with the current slate.

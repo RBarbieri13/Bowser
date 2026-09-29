@@ -112,3 +112,12 @@ Robert's supplied `LINEUPHQ-APP-CONVERSION-HANDOFF.md` and seven prototypes gove
 - Every Player Database trend column, including Passing, has an inline statistic/history menu. Histories remain aligned NFL weeks with missing/bye gaps; per-column windows share the source's NFL domains.
 - Player team links preserve the exact selected season, week set and scoring when opening Team Box Scores. Default app season remains 2026.
 - Team Box Scores uses one shared header and short collapsible position rows, explicit PASS (QB) / REC (RB/WR/TE) semantics, visible week boundaries, and links to original game breakdowns. Dates omit kickoff times. Whole-week resizing scales every member statistic and applies those widths across all weeks; individual-stat resizing remains synchronized.
+
+## Contextual research workspace (September 28, 2026)
+
+- Retain the original Bowser raster logo in the shared app header; do not replace it with a monogram or duplicate text wordmark.
+- Player Database counting statistics, GP, fantasy totals and range positional ranks use the exact selected weeks. Weekly finish remains separately identified. Expose missing imported weeks explicitly; do not imply an unavailable week is zero.
+- Trend menus include three aligned NFL weeks. Each trend can collapse to its own narrow restore rail without redistributing adjacent widths.
+- Sidebars are page-specific research workspaces, hidden initially: selected-player stats, official depth, team schedule, selected-week game stats, contextual league information and real-slate lineup cards. Keep Player Card v2 unchanged.
+- DraftKings lineup drafts are local preferences, not submitted contest entries. Classic and Showdown rosters must use the exact archived slate/capture and actual roster-role salaries. Captain projections explicitly retain their 1.5 multiplier. Unknown projections stay unavailable; no inferred salaries or historical-average projections.
+- Yahoo ownership must come from affirmative authorized league data. Missing players in a bounded availability page never establish ownership. Store only local draft/marker preferences, not private account response bodies; keep authorized Yahoo reads in memory with no-store headers.

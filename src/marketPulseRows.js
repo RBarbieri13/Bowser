@@ -46,10 +46,12 @@ export function combineMarketRows(sleeper = [], espn = []) {
   return result;
 }
 export const isWatched = (row, watch) => row.aliases.some(id => watch.includes(id));
-export function sortMarketRows(rows, sort, watch = []) {
+export function sortMarketRows(rows, sort, watch = [], columns = []) {
+  const column = columns.find(item => item.key === sort.key);
+  const getter = column?.value || (row => sort.key === 'watch' ? Number(isWatched(row, watch)) : row[sort.key]);
   return [...rows].sort((a, b) => {
-    const x = sort.key === 'watch' ? Number(isWatched(a, watch)) : a[sort.key];
-    const y = sort.key === 'watch' ? Number(isWatched(b, watch)) : b[sort.key];
+    const x = getter(a);
+    const y = getter(b);
     if (x == null && y == null) return a.name.localeCompare(b.name);
     if (x == null) return 1;
     if (y == null) return -1;

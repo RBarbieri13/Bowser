@@ -124,6 +124,12 @@ test('numeric sorting respects negative numbers, zero and null in either directi
   expect(sortMarketRows(input,{key:'net',desc:true}).map(r=>r.net)).toEqual([0,-10,null]);
   expect(sortMarketRows(input,{key:'net',desc:false}).map(r=>r.net)).toEqual([-10,0,null]);
 });
+test('derived market columns sort through supplied accessors',()=>{
+  const input=[{name:'B',derived:null},{name:'A',derived:2},{name:'C',derived:7}];
+  const columns=[{key:'derived',value:row=>row.derived}];
+  expect(sortMarketRows(input,{key:'derived',desc:true},[],columns).map(row=>row.name)).toEqual(['C','A','B']);
+  expect(sortMarketRows(input,{key:'derived',desc:false},[],columns).map(row=>row.name)).toEqual(['A','C','B']);
+});
 test('CSV exports both source timestamps and protects spreadsheet formulas without altering negatives',()=>{
   const csv=csvFor([{...combineMarketRows(rows,espnRows)[0],name:'  =HYPERLINK("malicious")',adds:null,net:-20}],{sleeper:data,espn});
   expect(csv).toContain("'  =HYPERLINK");

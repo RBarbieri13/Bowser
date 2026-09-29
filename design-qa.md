@@ -116,3 +116,24 @@ Robert's follow-up replaces the earlier always-visible source/matchup bands and 
 Desktop checks used a measured 1920×1080 CSS viewport. Collapsing both header bands places the Player grid near y=182 and Team grid near y=193; grid height reclaims the space. Local screenshots are in the ignored `.graph-session/compact-controls-20260928/screenshots/` folder. Release evidence is in `shared/operations/compact-research-20260928/`.
 
 No source statistics, API contracts, private Yahoo data, or DFS capture archives changed. Weeks without imported statistics remain unavailable, even when the real schedule and archived DFS salary exist.
+
+## Contextual research workspaces — September 28, 2026
+
+| Route / feature | Comparison and verification |
+| --- | --- |
+| Shared shell | Original full-resolution Bowser image rendered at 140px, no duplicate wordmark. Sidebars stay initially hidden, independent vertical scrolling and condensed width retained. |
+| Player Database | Browser W1–2 Josh Allen: GP 2, 132 snaps, 582 passing yards, 5 passing TD, 76.5 PPR, QB1. Three aligned trend slots and an 18px independent hide/restore rail verified. Kickoff 1p / 4:25p in 58px. |
+| Player research | Browser readback of Josh Allen totals, official Buffalo depth, full season schedule, W1 game stats. Player Card v2 unchanged. |
+| DraftKings cards | Classic browser: Allen + McCaffrey = $15,400 used / $34,600 remaining; multiple saved cards persist by slate/capture. Showdown: Allen CPT + Gibbs FLEX = $29,100 used / $20,900 remaining; duplicate Allen FLEX rejected. Historic captures remain selectable. |
+| Team Box Scores | Exact selected 2026 W2 Captain source: Allen $17,100 / 35.85 projection, W1 retains $7,000 / 20.3. Export and position totals use selected slate too. Added depth, playing-time, schedule, selected-player and lineup panels. |
+| Waivers | Public positional-rank options with roster/start percentages; separate selectable depth panel, league roster/free agents/pickups/transactions. Three-week history retained. |
+| Market Pulse | Provider-specific public projections, up to three discovered Yahoo league ownership marks, real returned Yahoo add/drop/net counts; explicit unknown and bounded coverage. No synthetic leagues. |
+| Opportunity / League Hub / Yahoo | Shared logo and initially hidden sidebar retained; Opportunity adds depth, schedule and lineup cards. Existing private dashboard preserved. |
+
+`npm run check` passed, including 144 UI tests and the complete data/API/market/waiver/build/production/sites chain. Local release verifier passed 499 assertions. Three fresh-context code reviews passed. Browser tests used real public data; private Yahoo behavior was tested with test-only fixtures, not represented as a live account test.
+
+2026 nflverse now contains Weeks 1–3 (47 completed games at capture); 2025 remains byte-identical. The last verified DFS source remains 2026 Week 2, with 86 immutable historical captures; unavailable newer salaries or projections are explicitly labeled, never invented. Local screenshots and full logs are ignored artifacts. Public release evidence is in `shared/operations/contextual-research-20260928/`.
+
+Capture synchronization follow-up: choosing an older salary capture in the Team Box sidebar also updates the matching-week table and export through the builder snapshot callback; a regression test asserts the exact older salary payload is reported.
+
+Production verification: the permanent Bowser URL passed 499 data assertions and 9 exact-capture lineup assertions. The preview alias passed 499 data assertions. Production browser readback confirms the Player research totals and Market Pulse render. Yahoo is signed out in this browser; live private league data is not claimed as verified.

@@ -52,13 +52,22 @@ test('Team Box joins historical salaries and NFL-wide position ranks before team
 });
 
 test('upcoming Team Box rows contain verified DFS and null actual statistics', () => {
-  const result=queryTeamBoxScores(params('season=2026&team=DET&weeks=2&trendAnchors=2&trendWeeks=5'));
+  // Keep a pregame fixture even after Week 2 becomes completed source data.
+  const dir=mkdtempSync(join(tmpdir(),'bowser-pregame-'));
+  const file=join(dir,'fixture.sqlite');
+  cpSync(new URL('../data/fantasy_football_2026.sqlite',import.meta.url),file);
+  const fixture=new DatabaseSync(file);
+  fixture.exec("DELETE FROM player_week_stats WHERE season=2026 AND week>=2; UPDATE games SET home_score=NULL,away_score=NULL WHERE season=2026 AND week>=2;");
+  fixture.close();
+  try {
+  const result=queryTeamBoxScores(params('season=2026&team=DET&weeks=2&trendAnchors=2&trendWeeks=5'),file);
   const gibbs=result.data.find(r=>r.player_display_name==='Jahmyr Gibbs');
   assert.equal(gibbs.played,false); assert.equal(gibbs.stats_available,false);
   for(const key of ['snaps','fantasy_points','position_finish','carries','rushing_yards']) assert.equal(gibbs[key],null);
   assert.equal(gibbs.draft_kings_price,8500);assert.equal(gibbs.draft_kings_projection,getDfsWeek(2026,2).records.find(r=>r.name==='Jahmyr Gibbs').projection);
   assert.equal(result.meta.trendsByAnchor['2'].week,1);
   assert.equal(gibbs.trendsByAnchor['2'].at(-1).week,1);
+  } finally { openDatabase(); rmSync(dir,{recursive:true,force:true}); }
 });
 
 test('moving Team Box anchors really reanchors the shared prior-season history', () => {
