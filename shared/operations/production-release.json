@@ -1,31 +1,28 @@
 {
   "status": "PASS",
-  "verifiedAt": "2026-09-28T18:22:33.228139+00:00",
+  "verifiedAt": "2026-09-29T00:46:57.674173+00:00",
   "publicUrl": "https://bowser-fantasy-football.vercel.app",
-  "candidateUrl": "https://bowser-fantasy-football-1izkqqrr1-rbarbieri13s-projects.vercel.app",
-  "deploymentId": "dpl_GCMGpHgnqjtq26kmjqmuYkAmFUUG",
+  "candidateUrl": "https://bowser-fantasy-football-g8tyfs1yy-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_9Sgw1ZU2gNsdEfiFi9etBVWGCne3",
   "deploymentState": "READY",
-  "applicationCommit": "50a75ed68194dc8d58817fbfe254645430af1e2a",
+  "applicationCommit": "01e0a86265da9b0e9e9d917d317f3ee5b33a6a72",
   "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-jev-20260926",
   "checks": {
     "npmRunCheck": "PASS",
-    "localRegressionAssertions": 483,
-    "candidateRegressionAssertions": 483,
-    "publicRegressionAssertions": 483,
-    "commentaryOffline": "PASS",
-    "commentaryBrowser": "PASS: live source matching, filtering, sorting, source evidence and responsive containment",
-    "yahooConfigured": true,
-    "evidenceDirectory": "shared/operations/compact-research-20260928",
-    "yahooApiTests": 14,
-    "yahooUiTests": 6,
-    "yahooPublicSecurity": "PASS: no-store and anonymous access rejection",
-    "yahooDashboardBrowser": "PASS: fixture-only team views, sorting, resizing and responsive containment",
-    "liveYahooAccountTest": "Not exercised in this UI release; no live account read claimed",
-    "uiTests": 131,
-    "newFocusedUiTests": 66,
-    "sevenRouteVisualReview": "PASS",
-    "warehouseAndArchivesUnchanged": true,
-    "compactControlsBrowser": "PASS: all seven sidebar defaults, independent collapsed bands, passing/history menus, Rams weeks 1-3 handoff, shared week widths and responsive containment"
+    "uiTests": 144,
+    "localRegressionAssertions": 499,
+    "candidateRegressionAssertions": 499,
+    "candidateContextualAssertions": 9,
+    "publicRegressionAssertions": 499,
+    "publicContextualAssertions": 9,
+    "previewAliasRegressionAssertions": 499,
+    "independentReviews": 3,
+    "liveYahooAccountTest": "Production browser is not connected; authenticated league readback remains unverified. Private behavior covered by fixture tests.",
+    "publicBrowser": "PASS: original logo, exact W1-2 cumulative player research, Market Pulse table loads without alerts; sidebar collapsed on navigation",
+    "warehouse2025Unchanged": true,
+    "dfsArchivesUnchanged": true,
+    "warehouse2026": "Refreshed from official nflverse: Weeks 1-3; 47 completed games at source capture",
+    "evidenceDirectory": "shared/operations/contextual-research-20260928"
   },
   "dfs": {
     "season": 2026,
@@ -73,21 +70,22 @@
   },
   "githubSync": {
     "status": "Release branch pushed; PR is authoritative for merge status",
-    "branch": "codex/compact-player-team-controls-20260928",
-    "applicationCommit": "50a75ed68194dc8d58817fbfe254645430af1e2a",
-    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/17",
-    "originMainAtStart": "8ed116319abd9c4c511d8788c8d351b05061bb64"
+    "branch": "codex/contextual-research-20260928",
+    "applicationCommit": "01e0a86265da9b0e9e9d917d317f3ee5b33a6a72",
+    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/18",
+    "originMainAtStart": "02ba44996f20eb69e829eb51893104df7e86cb3c"
   },
   "limitations": [
     "Missing source projections remain null. No fabricated historical DFS prices or projections.",
     "Archived 2026 Week 1 and Week 2 DFS captures are retained. Uncaptured older DFS weeks remain unavailable; historical actual statistics are preserved.",
     "Market Pulse history uses provider observations rather than NFL game weeks.",
-    "Yahoo live league, roster and refresh tests require user authorization; successful redirect is not proof of Fantasy API access.",
-    "Yahoo tokens use an eight-hour encrypted HttpOnly browser session; no durable server-side account store or unattended imports."
+    "Yahoo tokens use an eight-hour encrypted HttpOnly browser session; no durable server-side account store or unattended imports.",
+    "Latest verified DFS capture is 2026 Week 2. This release does not claim newer Week 3 salaries or projections.",
+    "Production browser Yahoo session is not connected. A fresh sign-in is required to verify live authorized league panels."
   ],
-  "evidenceDirectory": "shared/operations/compact-research-20260928",
-  "releasePurpose": "Compact research controls, hidden sidebar defaults, inline trend menus, exact team/week links and consolidated Team Box comparisons.",
-  "previousDeploymentId": "dpl_54ZsKn7Xp4boHSg1iw335oKQA1MA",
+  "evidenceDirectory": "shared/operations/contextual-research-20260928",
+  "releasePurpose": "Cumulative week statistics and ranks, original logo, compact trend controls, contextual player and league research, exact-capture Classic/Showdown lineup drafts.",
+  "previousDeploymentId": "dpl_GCMGpHgnqjtq26kmjqmuYkAmFUUG",
   "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app",
   "credentialRedeployment": {
     "date": "2026-09-25",
@@ -122,8 +120,10 @@
     "liveAccountTest": "Pending fresh authorization of alternate application. Earlier app refreshed successfully but league read returned 403."
   },
   "previousVerifiedRelease": {
-    "deploymentId": "dpl_54ZsKn7Xp4boHSg1iw335oKQA1MA",
-    "applicationCommit": "d2201a28a3917fe4358fd53486a57b6ddd41e6a2"
+    "deploymentId": "dpl_GCMGpHgnqjtq26kmjqmuYkAmFUUG",
+    "applicationCommit": "50a75ed68194dc8d58817fbfe254645430af1e2a",
+    "candidateUrl": "https://bowser-fantasy-football-1izkqqrr1-rbarbieri13s-projects.vercel.app",
+    "verifiedAt": "2026-09-28T18:22:33.228139+00:00"
   },
   "commentary": {
     "capture": "2026-09-26T21:36:07.842Z",
@@ -136,5 +136,17 @@
     "refresh": "bounded manual CLI; immutable captures; release required",
     "importerHardeningCommit": "c830e72",
     "applicationCodeNote": "Importer-only same-name ambiguity guard and release records after applicationCommit do not change the deployed UI or API."
+  },
+  "statistics": {
+    "season": 2026,
+    "weeks": [
+      1,
+      2,
+      3
+    ],
+    "completedGames": 47,
+    "playerStatRows": 1074,
+    "snapRows": 1247,
+    "preserved2025Sha256": "d3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869"
   }
 }

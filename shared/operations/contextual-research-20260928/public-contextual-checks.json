@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "url": "https://bowser-fantasy-football.vercel.app",
+  "checks": [
+    "Classic roster has nine slots",
+    "Full official Classic salary pool includes 818 records",
+    "Real DST salary rows available",
+    "Showdown exposes 94 separately priced role rows",
+    "Official Allen CPT and FLEX salaries remain separate",
+    "Captain projection has explicit 1.5 multiplier",
+    "Shared athlete identity prevents role duplicates",
+    "Historical lineup capture readback matches exact requested ID",
+    "Historical full salary pool preserves capture population"
+  ],
+  "classicWeek": 2,
+  "classicSeason": 2026,
+  "classicSalaryRows": 818,
+  "showdownSalaryRows": 94,
+  "historicalCapture": "2026-w2-dk153427-dd521e79d5e71a987c09"
+}

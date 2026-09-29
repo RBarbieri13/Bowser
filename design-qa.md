@@ -135,3 +135,5 @@ No source statistics, API contracts, private Yahoo data, or DFS capture archives
 2026 nflverse now contains Weeks 1–3 (47 completed games at capture); 2025 remains byte-identical. The last verified DFS source remains 2026 Week 2, with 86 immutable historical captures; unavailable newer salaries or projections are explicitly labeled, never invented. Local screenshots and full logs are ignored artifacts. Public release evidence is in `shared/operations/contextual-research-20260928/`.
 
 Capture synchronization follow-up: choosing an older salary capture in the Team Box sidebar also updates the matching-week table and export through the builder snapshot callback; a regression test asserts the exact older salary payload is reported.
+
+Production verification: the permanent Bowser URL passed 499 data assertions and 9 exact-capture lineup assertions. The preview alias passed 499 data assertions. Production browser readback confirms the Player research totals and Market Pulse render. Yahoo is signed out in this browser; live private league data is not claimed as verified.
