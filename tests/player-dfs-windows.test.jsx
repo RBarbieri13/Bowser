@@ -44,7 +44,9 @@ test('game filters intersect the slate; turning DFS off restores statistics-only
  await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
  fireEvent.click(screen.getByRole('button',{name:/NYG @ LA/}));
  expect(within(grid()).queryByRole('button',{name:'Fixture Bill'})).not.toBeInTheDocument();
+ choose('Sort','draft_kings_price');
  fireEvent.click(screen.getByRole('checkbox',{name:'DFS',exact:true}));
+ expect(screen.getByLabelText('Sort')).toHaveValue('fantasy_points');
  await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
  expect(screen.queryByLabelText('DFS week')).not.toBeInTheDocument();expect(screen.queryByLabelText('DFS slate')).not.toBeInTheDocument();
  expect(within(grid()).queryByRole('button',{name:'Sal',exact:true})).not.toBeInTheDocument();
