@@ -1,0 +1,48 @@
+// @vitest-environment jsdom
+import '@testing-library/jest-dom/vitest';
+import {test,expect,vi,beforeEach,afterEach} from 'vitest';
+import {render,screen,fireEvent,waitFor,cleanup} from '@testing-library/react';
+import {LhqProvider} from '../src/lhq/shared.jsx';
+import {PositionalUsage} from '../src/lhq/PositionalUsage.jsx';
+const slots=[{season:2025,week:17},{season:2025,week:18},{season:2026,week:1},{season:2026,week:2},{season:2026,week:3}];
+const people=[{playerId:'a',name:'Receiver Alpha',player_display_name:'Receiver Alpha',team:'LA',position:'WR',depthPosition:'WR',depthRank:1},{playerId:'b',name:'Receiver Beta',player_display_name:'Receiver Beta',team:'LA',position:'WR',depthPosition:'WR',depthRank:2},{playerId:'q',name:'Quarterback Gamma',player_display_name:'Quarterback Gamma',team:'BUF',position:'QB',depthPosition:'QB',depthRank:1}];
+const reply=data=>({ok:true,json:async()=>data});
+beforeEach(()=>{
+ localStorage.clear();vi.stubGlobal('fetch',vi.fn(async url=>{
+  const u=new URL(url,'https://test.invalid');
+  if(u.searchParams.get('view')==='research-roster')return reply({data:people,meta:{rosterSeason:2026}});
+  return reply({data:{groups:['WR','QB'].map(position=>({position,players:people.filter(p=>p.position===position&&p.team===u.searchParams.get('team')).map((p,i)=>({...p,history:slots.map((slot,j)=>({...slot,...(j===1?{}:{snaps:i?2:40,targets:i?0:8,receptions:5,receivingYards:75,receivingTds:1,fantasyPoints:j===4?-1:18})}))}))}))},meta:{rosterSeason:2026,trendSlots:slots,trendDomains:{snaps:{min:0,max:80},fantasy_points:{min:-10,max:60}},depthUpdatedAt:'2026-09-29T12:00:00Z'}});
+ }));
+});
+afterEach(()=>{cleanup();vi.unstubAllGlobals();});
+test('selected player follows sourced team and position with six aligned WR metrics and exact missing/zero callouts',async()=>{
+ render(<LhqProvider><PositionalUsage selected={people[0]} season={2026} baseWeek={3}/></LhqProvider>);
+ await screen.findByRole('button',{name:'Receiver Alpha',exact:true});
+ expect(screen.getByLabelText('Usage team')).toHaveValue('LA');expect(screen.getByLabelText('Usage position')).toHaveValue('WR');
+ expect(document.querySelectorAll('.lhq-usage-player')).toHaveLength(2);
+ expect(document.querySelectorAll('.lhq-usage-player.selected .lhq-usage-metric')).toHaveLength(6);
+ expect([...document.querySelectorAll('.lhq-bars')].every(chart=>chart.children.length===5)).toBe(true);
+ const first=screen.getByRole('img',{name:/Receiver Alpha: Snaps/}),second=screen.getByRole('img',{name:/Receiver Beta: Snaps/});
+ expect(first).toHaveAccessibleName(/2025 W18: unavailable/);
+ expect(first.querySelector('.lhq-bar-plot i')).toHaveStyle({height:'50%'});
+ expect(second.querySelector('.lhq-bar-plot i')).toHaveStyle({height:'2.5%'});
+ expect(screen.getByRole('img',{name:/Receiver Beta: Targets/})).toHaveAccessibleName(/2026 W3: 0/);
+ expect(screen.getByRole('img',{name:/Receiver Alpha: Fantasy points/})).toHaveAccessibleName(/2026 W3: -1/);
+ expect(fetch.mock.calls.some(([url])=>String(url).includes('weeks=3&games=5'))).toBe(true);
+});
+test('manual team/position and comparison controls work, then a newly selected player resets the context',async()=>{
+ const {rerender}=render(<LhqProvider><PositionalUsage season={2026} baseWeek={3}/></LhqProvider>);
+ await screen.findByRole('option',{name:'BUF'});
+ fireEvent.change(screen.getByLabelText('Usage team'),{target:{value:'BUF'}});fireEvent.change(screen.getByLabelText('Usage position'),{target:{value:'QB'}});
+ await screen.findByRole('button',{name:'Quarterback Gamma',exact:true});
+ fireEvent.click(screen.getByRole('button',{name:'Compare stat',exact:true}));
+ fireEvent.change(screen.getByLabelText('Usage comparison statistic'),{target:{value:'passing_yards'}});
+ expect(screen.getAllByRole('img')).toHaveLength(1);
+ expect(screen.getByRole('img')).toHaveAccessibleName(/Passing yards/);
+ rerender(<LhqProvider><PositionalUsage selected={people[0]} season={2026} baseWeek={3}/></LhqProvider>);
+ await waitFor(()=>expect(screen.getByLabelText('Usage team')).toHaveValue('LA'));
+ expect(screen.getByLabelText('Usage position')).toHaveValue('WR');
+ expect(screen.getByLabelText('Usage comparison statistic')).toHaveValue('snaps');
+ await screen.findByRole('button',{name:'Receiver Beta',exact:true});
+ expect(screen.queryByRole('button',{name:'Quarterback Gamma',exact:true})).not.toBeInTheDocument();
+});

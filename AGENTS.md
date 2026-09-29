@@ -135,3 +135,9 @@ Robert's supplied `LINEUPHQ-APP-CONVERSION-HANDOFF.md` and seven prototypes gove
 - DFS Value is selected-slate projection divided by salary in thousands; missing projection or nonpositive/missing salary is unavailable. Keep the group label uppercase DFS.
 - Statistical sections collapse to 18px restore rails without changing adjacent widths. Preserve per-trend visibility and section preferences; Show All and Reset restore sections. Separate groups with restrained vertical rules.
 - The Team pool filter sits beside DST with matching typography. Depth research uses a separate sourced roster, team first, then player search and a surname-sorted player dropdown. Table/slate filters must not restrict that roster; label its actual roster season separately from the statistics season.
+
+## Positional Usage sidebar (September 29, 2026)
+
+- Player Database Positional Usage follows the selected player's sourced current team and QB/RB/WR/TE group; manual team/position selection remains available. Do not hardcode example teammates or derive official rank from statistics.
+- By player shows all relevant weekly metrics with numerical callouts; Compare stat compares all teammates for one selected metric. Use shared NFL metric domains and identical five-week slots, retaining bye/DNP/missing gaps, true zeroes and negative fantasy values.
+- This panel's five aligned regular-season weeks end at the requested Base week (capped at W18 for postseason selections), including previous-season regular weeks where necessary. The opt-in requested history anchor must not change existing Opportunity Tracker defaults or immutable data.

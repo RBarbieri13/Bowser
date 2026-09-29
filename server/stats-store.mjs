@@ -731,7 +731,9 @@ export function queryOpportunityTracker(searchParams = new URLSearchParams(), db
     FROM team_roster
     WHERE season = 2026 AND team = ? AND position IN ('QB', 'RB', 'WR', 'TE')
   `).all(team);
-  const aligned = queryAlignedHistory(db, { season, weeks, count: gameLimit, receptionBonus });
+  const historyAnchor = searchParams.get('historyAnchor') || 'completed';
+  if (!['completed','requested'].includes(historyAnchor)) throw new QueryValidationError('historyAnchor','Choose completed or requested');
+  const aligned = queryAlignedHistory(db, { season, weeks, count: gameLimit, receptionBonus, requestedAnchor:historyAnchor==='requested' });
   const dfsChoice = searchParams.get('dfsSlate') || 'current';
   const dfs = dfsChoice === 'selected-week' ? getDfsWeek(season, Math.max(...weeks, 1)) : getDfsSlate(dfsChoice);
   if (!dfs) throw new QueryValidationError('dfsSlate', 'Unknown DraftKings slate');

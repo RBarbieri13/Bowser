@@ -163,3 +163,9 @@ Production verification: the permanent Bowser URL passed 499 data assertions and
 | Shared grid / other routes | Section-boundary classes opt-in; existing week boundaries, pinning, sorting and resizing preserved | Full UI and production packaging suites |
 
 The comparison uses the established LineupHQ implementation and Robert's September 29 changes. No warehouse, DFS archives, private Yahoo data, credentials or Player Card v2 changes.
+
+### Positional Usage addition
+
+The new sidebar panel provides team/position selectors, follows the selected player's sourced roster context, and has two dense views: By player (all relevant metrics under official depth labels) and Compare stat (one metric for all teammates). Values are printed above compact shared-scale bars; five common week headings avoid repeating dates in every row. Missing/bye slots remain dashes and actual zeroes remain zero. Selected players are highlighted; other player blocks can collapse. The independent five-week history includes Week 3 even while another game in that NFL week is unfinished, without changing the Opportunity Tracker's default anchor.
+
+Full `npm run check` passed with 153 UI tests. Real-data browser readback verified both Positional Usage views, LA/WR selection, five aligned slots through Week 3, and 137 receiving yards for Davante Adams in the final slot. Independent local API verifiers passed 499 data and 12 window assertions.
