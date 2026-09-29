@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "url": "http://127.0.0.1:4193",
+  "rosterPlayers": 937,
+  "rosterTeams": 32,
+  "rosterSeason": 2026,
+  "baseWeekGame": {
+    "gameId": "2026_03_LA_DEN",
+    "season": 2026,
+    "week": 3,
+    "seasonType": "REG",
+    "homeTeam": "DEN",
+    "awayTeam": "LA",
+    "gameday": "2026-09-27",
+    "gametime": "20:20",
+    "timeZone": "America/New_York",
+    "kickoffUtc": "2026-09-28T00:20:00+00:00",
+    "homeScore": 30,
+    "awayScore": 26,
+    "totalPoints": 56
+  },
+  "browserReadback": {
+    "statsWeeks": [
+      1,
+      2,
+      3
+    ],
+    "dfsWeek": 2,
+    "player": "Davante Adams",
+    "fantasyTotal": 65.8,
+    "averageDisplay": 21.9,
+    "salary": 5900,
+    "projection": 13.3,
+    "valueDisplay": 2.25,
+    "tooltip": "2026 Week 3 \u00b7 Sep 27, 2026, 8:20 PM ET",
+    "depthSearch": "LA + puka = Puka Nacua only",
+    "sectionCollapse": "Passing and Rushing replaced by narrow restore controls"
+  }
+}

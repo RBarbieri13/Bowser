@@ -34,7 +34,7 @@ export function baseMatchup(row, games, baseWeek) {
   const baseTeam = row.player_trends?.find(slot => slot.week === baseWeek)?.team;
   const team = nflTeam(baseTeam || String(row.team || '').split(',').at(-1));
   const game = games.find(g => [nflTeam(g.homeTeam),nflTeam(g.awayTeam)].includes(team));
-  return {...row, upcoming_opponent:game ? (nflTeam(game.homeTeam)===team?game.awayTeam:game.homeTeam) : null, upcoming_kickoff_utc:game?.kickoffUtc || null};
+  return {...row, upcoming_opponent:game ? (nflTeam(game.homeTeam)===team?game.awayTeam:game.homeTeam) : null, upcoming_kickoff_utc:game?.kickoffUtc || null, base_game_date:game?.gameday || null, base_game_time:game?.gametime || null};
 }
 
 export function inMatchups(row, gameIds, schedule, slateActive) {
@@ -42,4 +42,17 @@ export function inMatchups(row, gameIds, schedule, slateActive) {
   if (slateActive) return gameIds.includes(row.dfs_game_id);
   const teams = String(row.team || '').split(',').map(nflTeam);
   return schedule.some(game => gameIds.includes(game.gameId) && teams.some(team => [nflTeam(game.homeTeam),nflTeam(game.awayTeam)].includes(team)));
+}
+
+export function kickoffLabel(row, season, baseWeek) {
+  const prefix = `${season} Week ${baseWeek}`;
+  const date = row.upcoming_kickoff_utc ? new Date(row.upcoming_kickoff_utc) : null;
+  if (date && Number.isFinite(date.getTime())) return `${prefix} · ${date.toLocaleString('en-US', {timeZone:'America/New_York',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})} ET`;
+  return `${prefix} · ${row.base_game_date || 'Game date unavailable'} · ${row.base_game_time ? row.base_game_time+' ET' : 'Kickoff unavailable'}`;
+}
+export function dfsValue(row) {
+  return Number.isFinite(row.draft_kings_projection) && Number.isFinite(row.draft_kings_price) && row.draft_kings_price > 0 ? row.draft_kings_projection / (row.draft_kings_price / 1000) : null;
+}
+export function windowAverage(row, count, missingWeeks = []) {
+  return Number.isFinite(row.fantasy_points) && count > 0 && !missingWeeks.length ? row.fantasy_points / count : null;
 }

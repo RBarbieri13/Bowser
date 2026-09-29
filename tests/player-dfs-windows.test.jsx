@@ -64,3 +64,37 @@ test('unavailable future slates never fall back to another week and the statisti
  expect(within(grid()).queryByText('$10.0K')).not.toBeInTheDocument();
  choose('Base week',1);expect(screen.getByLabelText('Weeks back')).toHaveValue('1');expect(screen.getByLabelText('DFS week')).toHaveValue('5');
 });
+
+test('average follows the selected window, DFS value follows slate salary, and Kick moves to base-week hover',async()=>{
+ render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
+ await within(grid()).findByRole('button',{name:'Fixture Ram',exact:true});
+ expect(within(grid()).queryByRole('button',{name:'Kick',exact:true})).not.toBeInTheDocument();
+ expect(within(grid()).queryByRole('button',{name:'Avg Fpts',exact:true})).not.toBeInTheDocument();
+ choose('Weeks back',3);
+ const row=await within(grid()).findByRole('button',{name:'Fixture Ram',exact:true});
+ expect(row.closest('tr')).toHaveTextContent('20.0');
+ expect(within(grid()).getByRole('button',{name:'Avg Fpts',exact:true})).toBeInTheDocument();
+ expect(within(row.closest('tr')).getByText('2.00')).toBeInTheDocument();
+ const opp=within(row.closest('tr')).getByText('NYG');fireEvent.mouseEnter(opp.closest('.lhq-tip-anchor'));
+ expect(screen.getByRole('tooltip')).toHaveTextContent('2026 Week 3');
+ expect(screen.getByRole('tooltip')).toHaveTextContent('Sep 21, 2026');
+ expect(screen.getByRole('tooltip')).toHaveTextContent('7:15 PM ET');
+ fireEvent.mouseLeave(opp.closest('.lhq-tip-anchor'));
+ choose('Sort','average_fantasy_points');choose('Weeks back',1);
+ expect(screen.getByLabelText('Sort')).toHaveValue('fantasy_points');
+});
+
+test('whole sections collapse into a narrow restore rail without changing adjacent widths',async()=>{
+ render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
+ await within(grid()).findByRole('button',{name:'Fixture Ram',exact:true});
+ const before=[...grid().querySelectorAll('col')].map(c=>c.style.width);
+ const header=screen.getByRole('button',{name:'Hide rushing section'}).closest('th');expect(header.colSpan).toBe(4);
+ fireEvent.click(screen.getByRole('button',{name:'Hide rushing section'}));
+ expect(screen.queryByRole('button',{name:'rushing trend settings'})).not.toBeInTheDocument();
+ expect(screen.getByRole('button',{name:'Show rushing section'}).closest('th').colSpan).toBe(1);
+ expect([...grid().querySelectorAll('col')].filter(c=>c.style.width==='18px')).toHaveLength(1);
+ expect(JSON.parse(localStorage.getItem('bowser:lhq:players:collapsed-groups:v1'))).toEqual(['rushing']);
+ fireEvent.click(screen.getByRole('button',{name:'Show rushing section'}));
+ expect([...grid().querySelectorAll('col')].map(c=>c.style.width)).toEqual(before);
+ expect(grid().querySelectorAll('tbody tr:first-child .lhq-section-boundary').length).toBe(7);
+});

@@ -151,3 +151,15 @@ Production verification: the permanent Bowser URL passed 499 data assertions and
 | Layout | Browser confirmed no document overflow at 1920px and 750px; table scrolling remains internal. Selected-game visibility is preserved by placing eligible slate games first. |
 
 `npm run check` passed with 147 UI tests; exact-range API regression and three interaction tests cover coupled filters, role salaries, unmatched salary identities, DFS-off reset and unavailable future weeks. No warehouse, DFS archives, account credentials or private Yahoo data changed. Screenshots reside under ignored `artifacts/independent-weeks-20260928/`; public verifier evidence is stored in `shared/operations/independent-weeks-20260928/`.
+
+## Player Database refinement — September 29, 2026
+
+| Area | Verified behavior | Evidence |
+| --- | --- | --- |
+| Player Database game fields | No Kick column; Team/Opponent expose Base-week date and Eastern kickoff on hover/focus | Tooltip regression test; schedule-backed date readback |
+| Player Database derived metrics | Avg Fpts appears only with count > 1; selected-slot denominator; incomplete imports unavailable. DFS Value follows actual selected capture, immediately after Proj | 151 UI tests; Davante Adams W1–3 total 65.8 / 3 = 21.9; Week 2 Classic 13.3 / 5.9 = 2.25 |
+| Density and section controls | Team next to DST with matching 15px typography. 18px section restore rails, adjacent widths retained, subtle 1px group rules | Browser at measured CSS 1920×1080; collapse/restore regression |
+| Depth research | Team first, search next, player selector last. Independent public roster, surname sorting, scoped search, source season labeled | Rams + puka returns only Puka Nacua; all-team roster endpoint tests |
+| Shared grid / other routes | Section-boundary classes opt-in; existing week boundaries, pinning, sorting and resizing preserved | Full UI and production packaging suites |
+
+The comparison uses the established LineupHQ implementation and Robert's September 29 changes. No warehouse, DFS archives, private Yahoo data, credentials or Player Card v2 changes.

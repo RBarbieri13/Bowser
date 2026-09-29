@@ -311,6 +311,16 @@ function enrichPlayerTrendsAndDepth(db, rows, history, { includeTrends, includeD
 export function getMeta(dbPath, searchParams = new URLSearchParams()) {
   const season = querySeason(searchParams);
   const db = openDatabase(dbPath, season);
+  if (searchParams.get('view') === 'research-roster') {
+    // Match the opportunity panel's explicitly current roster, independent of stat/DFS filters.
+    const roster = db.prepare(`SELECT r.player_id,r.full_name AS player_display_name,r.team,r.position,
+      p.last_name,r.depth_updated_at,r.roster_status FROM team_roster r LEFT JOIN players p ON p.player_id=r.player_id
+      WHERE r.season=2026 AND r.position IN ('QB','RB','WR','TE','K')
+      ORDER BY CASE r.roster_status WHEN 'ACT' THEN 1 WHEN 'INA' THEN 2 WHEN 'RES' THEN 3 WHEN 'DEV' THEN 4 WHEN 'DEPTH' THEN 5 ELSE 6 END,r.team,r.full_name`).all();
+    const seen = new Set();
+    const data = roster.filter(row => { if (seen.has(row.player_id)) return false; seen.add(row.player_id); return true; });
+    return {data,meta:{rosterSeason:2026,statisticsSeason:season,source:'nflverse team_roster',capturedAt:roster.map(r=>r.depth_updated_at).filter(Boolean).sort().at(-1)||null}};
+  }
   const summaryRow = db.prepare("SELECT value FROM warehouse_meta WHERE key = 'summary'").get();
   const draftSummaryRow = db.prepare("SELECT value FROM warehouse_meta WHERE key = 'fantasypros_adp_summary'").get();
   const summary = summaryRow ? JSON.parse(summaryRow.value) : {};
