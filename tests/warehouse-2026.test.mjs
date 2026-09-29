@@ -319,3 +319,16 @@ test('position finish sorts cumulative range ranks before pagination', () => {
   assert.deepEqual(descending, [...descending].sort((a, b) => b - a));
   assert.ok(historic.data.every((row) => row.position_finish === row.range_position_rank));
 });
+
+test('selected-range trends keep exact base week including unavailable future slots and NFL-wide ranks', () => {
+  const range = queryPlayers(new URLSearchParams('season=2026&seasonType=ALL&weeks=2,3,4&limit=all&trendRange=selected'));
+  assert.deepEqual(range.meta.trendSlots.map(s=>[s.season,s.week]), [[2026,2],[2026,3],[2026,4]]);
+  assert(range.data.every(p=>p.player_trends.length===3 && p.player_trends.at(-1).fantasyPoints===null));
+  const player=range.data.find(p=>p.range_position_rank===1);
+  const filtered=queryPlayers(new URLSearchParams(`season=2026&seasonType=ALL&weeks=2,3,4&limit=all&trendRange=selected&search=${encodeURIComponent(player.player_display_name)}`));
+  assert.equal(filtered.data[0].range_position_rank,player.range_position_rank);
+  assert.deepEqual(filtered.meta.trendDomains,range.meta.trendDomains);
+  const future=queryPlayers(new URLSearchParams('season=2026&weeks=5,6,7&trendRange=selected'));
+  assert.deepEqual(future.meta.trendSlots.map(s=>s.week),[5,6,7]);
+  assert.equal(future.data.length,0);
+});
