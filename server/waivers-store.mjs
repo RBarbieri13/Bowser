@@ -77,7 +77,8 @@ export async function queryWaivers(params = new URLSearchParams(), deps = {}) {
   if (![6,24,72].includes(hours)) throw new QueryValidationError('hours','Choose 6, 24 or 72 hours.');
   const meta = (deps.readMeta || getMeta)(undefined,new URLSearchParams({season:String(season)}));
   const completedWeeks = [...new Set((meta.weekOptions || []).map(w=>Number(w.week)))].sort((a,b)=>a-b);
-  const rawWeeks = params.get('weeks') || completedWeeks.filter(w=>w<week).join(',') || '1';
+  const eligibleWeeks = completedWeeks.filter(w=>w<week);
+  const rawWeeks = params.get('weeks') || (params.get('statsWindow') === 'latest' ? String(eligibleWeeks.at(-1) || 1) : eligibleWeeks.join(',')) || '1';
   if (!/^\d+(,\d+)*$/.test(rawWeeks)) throw new QueryValidationError('weeks','Choose valid statistics weeks.');
   const selectedWeeks = [...new Set(rawWeeks.split(',').map(Number))];
   if (selectedWeeks.some(w=>w<1 || w>22)) throw new QueryValidationError('weeks','Choose statistics weeks from 1 through 22.');

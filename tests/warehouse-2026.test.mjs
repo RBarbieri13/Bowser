@@ -15,11 +15,11 @@ test('current snapshot is isolated and the historic warehouse is byte-identical'
   assert.equal(meta.season, 2026);
   assert.deepEqual(meta.seasons, [2025, 2026]);
   assert.deepEqual(meta.availableWeeks, [1, 2, 3]);
-  assert.equal(meta.warehouse.completed_games, 47);
-  assert.equal(meta.warehouse.games_with_play_by_play, 47);
-  assert.equal(meta.warehouse.player_stat_rows, 1074);
-  assert.equal(meta.warehouse.stat_rows_with_snap_match, 1074);
-  assert.equal(meta.warehouse.snap_rows, 1247);
+  assert.equal(meta.warehouse.completed_games, 48);
+  assert.equal(meta.warehouse.games_with_play_by_play, 48);
+  assert.equal(meta.warehouse.player_stat_rows, 1097);
+  assert.equal(meta.warehouse.stat_rows_with_snap_match, 1097);
+  assert.equal(meta.warehouse.snap_rows, 1273);
   assert.equal(getMeta().season, 2025);
   assert.equal(getMeta().warehouse.player_stat_rows, 5630);
 });
@@ -82,7 +82,7 @@ test('opportunity history and profile preserve current rookies and no-game playe
   assert.ok(players.some((player) => !player.hasNFLHistory));
   assert.ok(players.some((player) => player.recordedGames === 1));
   assert.ok(players.every((player) => player.history.length === 10));
-  assert.ok(players.every((player) => player.history.at(-1).season === 2026 && player.history.at(-1).week === 2));
+  assert.ok(players.every((player) => player.history.at(-1).season === 2026 && player.history.at(-1).week === 3));
   assert.equal(players.find((p) => p.playerId === '00-0040691').history.find((game) => game.key === '2026-1').snaps, 69);
   assert.deepEqual(tracker.meta.trendSeasons, [2025, 2026]);
   assert.equal(queryOpportunityTracker(new URLSearchParams('team=NYG')).meta.historySeason, 2025);

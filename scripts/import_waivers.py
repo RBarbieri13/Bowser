@@ -376,8 +376,8 @@ def assemble(htmls, captured_at, players_path):
     return payload
 
 
-def validate(payload):
-    if payload.get('season')!=2026 or payload.get('waiverWeek')!=2:raise ValueError('Expected 2026 Week 2 snapshot')
+def validate(payload, expected_week=2):
+    if payload.get('season')!=2026 or payload.get('waiverWeek')!=expected_week:raise ValueError(f'Expected 2026 Week {expected_week} snapshot')
     captured=datetime.fromisoformat(payload['capturedAt'].replace('Z','+00:00'))
     if captured.tzinfo is None:raise ValueError('Capture timestamp needs timezone')
     if captured.year!=2026:raise ValueError('Capture timestamp is not in season 2026')
@@ -427,11 +427,11 @@ def validate(payload):
             if source.get(field) and not source[field].startswith('https://'):raise ValueError('Source URL must be HTTPS')
         if rank_counts[sid] and not source.get('rankUrl'):raise ValueError('Missing rank provenance')
         if faab_counts[sid] and not source.get('faabUrl'):raise ValueError('Missing FAAB provenance')
-    return {'status':'PASS','season':2026,'waiverWeek':2,'players':len(seen),'rankSources':len(rank_counts),'faabSources':len(faab_counts),'rankCells':sum(rank_counts.values()),'faabCells':sum(faab_counts.values()),'mappedPlayers':sum(p.get('playerId') is not None for p in payload['players']),'coverage':{s['id']:{'rank':rank_counts[s['id']],'faab':faab_counts[s['id']]} for s in sources}}
+    return {'status':'PASS','season':2026,'waiverWeek':expected_week,'players':len(seen),'rankSources':len(rank_counts),'faabSources':len(faab_counts),'rankCells':sum(rank_counts.values()),'faabCells':sum(faab_counts.values()),'mappedPlayers':sum(p.get('playerId') is not None for p in payload['players']),'coverage':{s['id']:{'rank':rank_counts[s['id']],'faab':faab_counts[s['id']]} for s in sources}}
 
 
-def atomic_write(path,payload):
-    validate(payload)
+def atomic_write(path,payload, expected_week=2):
+    validate(payload, expected_week)
     path.parent.mkdir(parents=True,exist_ok=True)
     text=json.dumps(payload,indent=2,ensure_ascii=False)+'\n'
     name=None

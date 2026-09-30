@@ -22,7 +22,7 @@ const show = child => render(<LhqProvider>{child}</LhqProvider>);
 const fixturePlayer = { player_id: 'fixture-a', player_display_name: 'Fixture Alpha', position: 'RB', team: 'NYG', snaps: 0, fantasy_points: 0, player_trends: [] };
 const dfs = { key: 'fixture-slate', season: 2026, week: 2, capturedAt: '2026-01-03T00:00:00Z', salaryUrl: 'https://example.test/salaries', options: [{ key: 'current', label: 'Current' }, { key: 'fixture-slate', label: 'Fixture slate', season:2026,week:2 }] };
 const playerPayload = (data = [fixturePlayer]) => ({ data, meta: { weeks: [1], dfs } });
-const waiverPayload = { rows: [{ id: 'fixture-a', playerId: 'fixture-a', name: 'Fixture Alpha', position: 'RB', team: 'NYG', rankings: {}, faab: {}, stats: { fantasy_points: 0, trends: [] }, activity: {} }], meta: { sources: [] } };
+const waiverPayload = { rows: [{ id: 'fixture-a', playerId: 'fixture-a', name: 'Fixture Alpha', position: 'RB', team: 'NYG', rankings: {}, faab: {}, stats: { fantasy_points: 0, trends: [] }, activity: {} }], meta: { season:2026,waiverWeek:2,statsWeeks:[1],selectedStatsWeeks:[1],availableWeeks:[2],sources: [] } };
 function playerApi(payload) {
   vi.stubGlobal('fetch', vi.fn(async input => {
     const url=new URL(String(input),'https://example.test');
@@ -75,7 +75,7 @@ test('waiver page recovers invalid saved trend metrics without crashing', async 
   localStorage.setItem('bowser:lhq:waivers:metrics', JSON.stringify({ usage: 'removed-statistic', rushing: null, receiving: {} }));
   vi.stubGlobal('fetch', vi.fn(async () => reply(waiverPayload)));
   show(<Waivers {...props} />);
-  expect(await screen.findByRole('button', { name: 'Fixture Alpha', exact: true })).toBeInTheDocument();
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Fixture Alpha', exact: true })).toBeInTheDocument());
   expect(screen.getByRole('button', { name: 'Snaps / week' })).toBeInTheDocument();
 });
 
@@ -343,4 +343,25 @@ test('Player team shortcut preserves the statistics window independently of the 
   expect(screen.queryByRole('button',{name:/Offense|Kicker/})).not.toBeInTheDocument();
   expect(screen.queryByLabelText('Hide players with 0 snaps')).not.toBeInTheDocument();
   expect(screen.getByRole('combobox',{name:'Season'})).toHaveValue('2026');
+});
+
+
+test('waivers discovers the newest published research and opens on the latest completed prior week', async () => {
+  const calls=[];
+  vi.stubGlobal('fetch',vi.fn(async url=>{
+    calls.push(String(url));
+    const query=new URL(String(url),'http://local').searchParams;
+    const week=Number(query.get('week'))||4;
+    return reply({...waiverPayload,meta:{...waiverPayload.meta,waiverWeek:week,availableWeeks:[2,4],statsWeeks:[1,2,3],selectedStatsWeeks:[3]}});
+  }));
+  show(<Waivers {...props}/>);
+  await waitFor(()=>expect(screen.getByRole('combobox',{name:'Waiver week'})).toHaveValue('4'));
+  await waitFor(()=>expect(screen.getByRole('combobox',{name:'Stats week(s)'})).toHaveValue('3'));
+  expect(calls.some(url=>url.includes('statsWindow=latest'))).toBe(true);
+  expect([...screen.getByRole('combobox',{name:'Waiver week'}).options].map(o=>o.value)).toEqual(['2','4']);
+  fireEvent.click(await screen.findByRole('button',{name:'Favorite Fixture Alpha'}));
+  await waitFor(()=>expect(JSON.parse(localStorage.getItem(favoriteKey(2026,4)))).toHaveLength(1));
+  fireEvent.change(screen.getByRole('combobox',{name:'Waiver week'}),{target:{value:'2'}});
+  await waitFor(()=>expect(screen.getByRole('combobox',{name:'Waiver week'})).toHaveValue('2'));
+  expect(JSON.parse(localStorage.getItem(favoriteKey(2026,4)))).toHaveLength(1);
 });

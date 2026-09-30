@@ -84,3 +84,13 @@ test('supplement rejects wrong scope, mismatched identities, invalid bids and in
   assert.deepEqual(base,snapshot);
  }
 });
+
+test('latest research opens with the latest completed prior stat week while explicit ranges remain independent',async()=>{
+ const latestDeps={...deps,snapshot:{...snapshot,waiverWeek:4},availableWeeks:[2,4],readMeta:()=>({weekOptions:[{week:1},{week:2},{week:3}]}),queryStats:()=>({data:stats})};
+ const latest=await queryWaivers(new URLSearchParams('statsWindow=latest'),latestDeps);
+ assert.equal(latest.meta.waiverWeek,4);assert.deepEqual(latest.meta.selectedStatsWeeks,[3]);
+ const range=await queryWaivers(new URLSearchParams('statsWindow=latest&weeks=1,2,3'),latestDeps);
+ assert.deepEqual(range.meta.selectedStatsWeeks,[1,2,3]);
+ const historical=await queryWaivers(new URLSearchParams('statsWindow=latest&week=2'),{...latestDeps,snapshot});
+ assert.deepEqual(historical.meta.selectedStatsWeeks,[1]);
+});

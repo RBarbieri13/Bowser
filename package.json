@@ -25,12 +25,13 @@
     "data:2026": "python3 scripts/import_nflverse_2026.py",
     "data:verify:2026": "python3 scripts/verify_warehouse_2026.py",
     "data:waivers": "python3 scripts/import_waivers.py",
-    "test:waivers": "npm run verify:waivers && python3 tests/test_waiver_import.py && node --test tests/waivers-api.test.mjs && vitest run tests/waivers-ui.test.jsx",
-    "verify:waivers": "python3 scripts/import_waivers.py --verify",
+    "test:waivers": "npm run verify:waivers && python3 tests/test_waiver_import.py && python3 tests/test_waiver_week4.py && node --test tests/waivers-api.test.mjs && vitest run tests/waivers-ui.test.jsx",
+    "verify:waivers": "python3 scripts/import_waivers.py --verify && python3 scripts/import_waivers_week4.py --verify",
     "data:dfs:week1": "python3 scripts/import_dfs_week1.py",
     "jev": "node --env-file-if-exists=.env.local scripts/jev.mjs",
     "test:jev": "node --test tests/jev.test.mjs",
-    "market:commentary:refresh": "node --env-file-if-exists=.env.local scripts/refresh_market_commentary.mjs"
+    "market:commentary:refresh": "node --env-file-if-exists=.env.local scripts/refresh_market_commentary.mjs",
+    "data:waivers:week4": "python3 scripts/import_waivers_week4.py"
   },
   "dependencies": {
     "@phosphor-icons/react": "2.1.10",
