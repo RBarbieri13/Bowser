@@ -225,3 +225,5 @@ Capture environment: Codex in-app browser retained its existing 80% zoom. Raw br
 Keyboard tabs support arrows/Home/End; More supports selection/Escape/outside close. Active tabs restore per route in sessionStorage; sidebar still starts hidden. Browser pin survives tab changes/collapse. Local matrix no-horizontal-scroll assertion: body scrollWidth==clientWidth at240 and400.
 
 Release gates: full `npm run check`, independent code/privacy review and candidate/public API regression verification. Detailed release evidence lives beside the four screenshots.
+
+Final release verification: `npm run check` PASS (173 UI tests); GitHub verify PASS; candidate499/499 and permanent production499/499 read-only regression assertions PASS. Production browser rendered six NYG RB players in six metric blocks and restored Usage share after a collapsed reload. Public Yahoo sections explicitly show unavailable without a signed-in league session. Both permanent aliases promoted to `dpl_7DnfMtKpqHPTWAskamuvDgsuwyZU`. The last shell review fix keeps the More chevron outside the truncated label.

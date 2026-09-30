@@ -1,0 +1,47 @@
+{
+  "source": "Local implementation with existing production warehouse",
+  "routes": [
+    {
+      "route": "waivers",
+      "collapsedOnEntry": true,
+      "visibleTabStrip": "Favorites (0)\nWaiver options\nYahoo league research\nMore\n▾"
+    },
+    {
+      "route": "market-pulse",
+      "collapsedOnEntry": true,
+      "visibleTabStrip": "Most added · 24h\nWatch list (0)\nYahoo league research\nMore\n▾"
+    },
+    {
+      "route": "team-box-scores",
+      "collapsedOnEntry": true,
+      "visibleTabStrip": "Latest game\nPosition Totals\nMarkers & leagues\nMore\n▾"
+    },
+    {
+      "route": "opportunity-tracker",
+      "collapsedOnEntry": true,
+      "visibleTabStrip": "Biggest movers\nFilters & settings\nDepth chart\nMore\n▾"
+    },
+    {
+      "route": "league-hub",
+      "collapsedOnEntry": true,
+      "visibleTabStrip": "Information needed\nPlayer exposure\nStandings snapshot\nMore\n▾"
+    },
+    {
+      "route": "yahoo",
+      "collapsedOnEntry": true,
+      "visibleTabStrip": "Status\nPrivacy & scope\nWhat unlocks\nFilters & settings"
+    }
+  ],
+  "playerDatabase": {
+    "widths": [
+      400,
+      240
+    ],
+    "groups": [
+      "NYG RB",
+      "LA WR"
+    ],
+    "noHorizontalSidebarOverflow": true,
+    "pinSurvivesTabChangeAndCollapse": true
+  }
+}
