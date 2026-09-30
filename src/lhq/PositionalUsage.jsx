@@ -28,14 +28,15 @@ export function PositionalUsage({selected,season=2026,baseWeek=1,scoring='ppr',o
  const metrics=METRICS[position],activeMetric=metrics.includes(metric)?metric:metrics[0];
  const teams=[...new Set((roster.data?.data||[]).map(r=>nflTeam(r.team)).filter(Boolean))].sort();
  const history=player=>slots.map(slot=>player.history?.find(h=>h.season===slot.season&&h.week===slot.week)||slot);
+ const activePlayers=players.filter(player=>history(player).some(week=>trendValue(week,'snaps')>0));
  const activeSort=sortMetric?(metrics.includes(sortMetric)?sortMetric:metrics[0]):'';
  const weekIndex=Math.min(sortWeek,Math.max(0,slots.length-1)),sortSlot=slots[weekIndex];
- const sortedPlayers=activeSort&&sortSlot?[...players].sort((a,b)=>{
+ const sortedPlayers=activeSort&&sortSlot?[...activePlayers].sort((a,b)=>{
   const av=trendValue(history(a)[weekIndex],activeSort),bv=trendValue(history(b)[weekIndex],activeSort);
   if(av===null)return bv===null?0:1;
   if(bv===null)return -1;
   return (av-bv)*(sortDirection==='asc'?1:-1);
- }):players;
+ }):activePlayers;
  const sortByWeek=index=>{
   setSortMetric(activeSort||activeMetric);
   setSortDirection(activeSort&&index===weekIndex?(sortDirection==='desc'?'asc':'desc'):'desc');
@@ -55,10 +56,10 @@ export function PositionalUsage({selected,season=2026,baseWeek=1,scoring='ppr',o
   {activeSort&&sortSlot&&<p className="lhq-usage-sort-summary" role="status">{TREND_METRICS[activeSort].label} · {sortSlot.season} W{sortSlot.week} · {sortDirection==='desc'?'highest':'lowest'} first · unavailable last</p>}
   <Status loading={roster.loading||response.loading} error={roster.error||response.error}/>
   {!team?<p className="lhq-note">Select a player in the table, or choose a team and position.</p>:<>
-   <p className="lhq-usage-basis">{meta.rosterSeason||'—'} depth chart · {scoring.toUpperCase()} · last {slots.length||5} aligned regular-season weeks{slots.length?` through ${slots.at(-1).season} W${slots.at(-1).week}`:''}. Bye/DNP gaps retained. Bar scales match across teammates.</p>
+   <p className="lhq-usage-basis">{meta.rosterSeason||'—'} depth chart · {scoring.toUpperCase()} · last {slots.length||5} aligned regular-season weeks{slots.length?` through ${slots.at(-1).season} W${slots.at(-1).week}`:''}. Players with no recorded snaps in this window are hidden. Bye/DNP gaps retained. Bar scales match across teammates.</p>
    {weekHeader}
    {view==='players'?sortedPlayers.map(player=>{const isSelected=idOf(player)===selectedId,closed=collapsed.includes(idOf(player))&&!isSelected;return <section key={idOf(player)} className={`lhq-usage-player ${isSelected?'selected':''}`}><header><span className="lhq-usage-rank">{player.depthPosition||position}{player.depthRank??'—'}</span><PlayerName row={player} onOpen={onOpen}/>{isSelected&&<span className="lhq-usage-selected">Selected</span>}<button aria-label={`${closed?'Expand':'Collapse'} ${player.name} usage`} aria-expanded={!closed} disabled={isSelected} onClick={()=>setCollapsed(a=>a.includes(idOf(player))?a.filter(id=>id!==idOf(player)):[...a,idOf(player)])}>{closed?'+':'−'}</button></header>{!closed&&metrics.map(key=><div className="lhq-usage-metric" key={key}><Tip text={TREND_METRICS[key].label}><span style={{color:color(key)}}>{LABELS[key]}</span></Tip>{plot(player,key)}</div>)}</section>;}):sortedPlayers.map(player=><div key={idOf(player)} className={`lhq-usage-comparison ${idOf(player)===selectedId?'selected':''}`}><div><span className="lhq-usage-rank">{player.depthPosition||position}{player.depthRank??'—'}</span><PlayerName row={player} onOpen={onOpen}/></div>{plot(player,activeMetric)}</div>)}
-   {!response.loading&&!players.length&&<p className="lhq-note">No sourced {position} depth-chart players are available for {team}.</p>}
+   {!response.loading&&!activePlayers.length&&<p className="lhq-note">No {team} {position} players have recorded snaps in these five weeks.</p>}
    <p className="lhq-usage-basis">Official depth captured {stamp(meta.depthUpdatedAt)}. Unranked players remain unranked; — means unavailable, 0 is a sourced zero. Historical weeks may reflect a previous team.</p>
   </>}
  </section>;
