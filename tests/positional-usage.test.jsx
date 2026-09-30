@@ -46,3 +46,43 @@ test('manual team/position and comparison controls work, then a newly selected p
  await screen.findByRole('button',{name:'Receiver Beta',exact:true});
  expect(screen.queryByRole('button',{name:'Quarterback Gamma',exact:true})).not.toBeInTheDocument();
 });
+
+test('sorts entire six-stat blocks by any week and metric, preserves ties, and keeps unavailable last',async()=>{
+ const rows=[...people.slice(0,2),{...people[0],playerId:'c',name:'Receiver Missing',depthRank:3}];
+ fetch.mockImplementation(async url=>String(url).includes('research-roster')?reply({data:rows}):reply({data:{groups:[{position:'WR',players:rows.map((p,i)=>({...p,history:slots.map((s,j)=>({...s,targets:i===2?null:(i===0?4:9),fantasyPoints:j===1?(i===0?0:i===1?-2:null):5}))}))}]},meta:{trendSlots:slots}}));
+ render(<LhqProvider><PositionalUsage selected={rows[0]} season={2026} baseWeek={3}/></LhqProvider>);
+ await screen.findByRole('button',{name:'Receiver Missing',exact:true});
+ const names=()=>[...document.querySelectorAll('.lhq-usage-player>header .lhq-player')].map(n=>n.textContent);
+ expect(names()).toEqual(['Receiver Alpha','Receiver Beta','Receiver Missing']);
+ fireEvent.change(screen.getByLabelText('Usage sort statistic'),{target:{value:'targets'}});
+ expect(names()).toEqual(['Receiver Beta','Receiver Alpha','Receiver Missing']);
+ expect([...document.querySelectorAll('.lhq-usage-player')].every(p=>p.querySelectorAll('.lhq-usage-metric').length===6)).toBe(true);
+ expect(screen.getByRole('button',{name:'Sort usage by 2026 Week 3'})).toHaveAttribute('aria-pressed','true');
+ fireEvent.change(screen.getByLabelText('Usage sort statistic'),{target:{value:'fantasy_points'}});
+ fireEvent.change(screen.getByLabelText('Usage sort week'),{target:{value:'1'}});
+ fireEvent.click(screen.getByRole('button',{name:/Usage sort: highest first/}));
+ expect(names()).toEqual(['Receiver Beta','Receiver Alpha','Receiver Missing']);
+ expect(screen.getByRole('status')).toHaveTextContent('Fantasy points · 2025 W18 · lowest first');
+ fireEvent.click(screen.getByRole('button',{name:'Sort usage by 2025 Week 18'}));
+ expect(names()).toEqual(['Receiver Alpha','Receiver Beta','Receiver Missing']);
+ // A new week starts descending; tied values retain official source order.
+ fireEvent.click(screen.getByRole('button',{name:'Sort usage by 2026 Week 1'}));
+ expect(names()).toEqual(['Receiver Alpha','Receiver Beta','Receiver Missing']);
+ fireEvent.change(screen.getByLabelText('Usage sort statistic'),{target:{value:''}});
+ expect(screen.getByRole('button',{name:/Usage sort: highest first/})).toBeDisabled();
+ expect(names()).toEqual(['Receiver Alpha','Receiver Beta','Receiver Missing']);
+});
+
+test('week-header sorting works in comparison mode and survives view switches without modifying history',async()=>{
+ render(<LhqProvider><PositionalUsage selected={people[0]} season={2026} baseWeek={3}/></LhqProvider>);
+ await screen.findByRole('button',{name:'Receiver Beta',exact:true});
+ fireEvent.click(screen.getByRole('button',{name:'Compare stat',exact:true}));
+ fireEvent.change(screen.getByLabelText('Usage comparison statistic'),{target:{value:'targets'}});
+ fireEvent.click(screen.getByRole('button',{name:'Sort usage by 2026 Week 3'}));
+ expect(screen.getByLabelText('Usage sort statistic')).toHaveValue('targets');
+ fireEvent.click(screen.getByRole('button',{name:'Sort usage by 2026 Week 3'}));
+ expect([...document.querySelectorAll('.lhq-usage-comparison .lhq-player')].map(n=>n.textContent)).toEqual(['Receiver Beta','Receiver Alpha']);
+ fireEvent.click(screen.getByRole('button',{name:'By player',exact:true}));
+ expect(document.querySelector('.lhq-usage-player .lhq-player')).toHaveTextContent('Receiver Beta');
+ expect(screen.getByRole('img',{name:/Receiver Beta: Targets/})).toHaveAccessibleName(/2025 W18: unavailable.*2026 W3: 0/);
+});
