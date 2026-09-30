@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "url": "https://bowser-fantasy-football.vercel.app/#/players",
+  "baseTargetsDescending": [
+    "Davante Adams",
+    "Konata Mumpfield",
+    "Jordan Whittington",
+    "Xavier Smith"
+  ],
+  "secondWeekFantasyAscending": {
+    "metricCounts": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "order": [
+      "Jordan Whittington",
+      "Konata Mumpfield",
+      "Alex Bachman",
+      "Xavier Smith",
+      "Tutu Atwell",
+      "Puka Nacua",
+      "Davante Adams",
+      "CJ Daniels",
+      "Brennan Presley",
+      "Tru Edwards",
+      "Tyler Scott"
+    ],
+    "summary": "Fantasy points · 2025 W18 · lowest first · unavailable last"
+  }
+}

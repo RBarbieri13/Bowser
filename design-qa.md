@@ -171,3 +171,11 @@ The new sidebar panel provides team/position selectors, follows the selected pla
 Full `npm run check` passed with 153 UI tests. Real-data browser readback verified both Positional Usage views, LA/WR selection, five aligned slots through Week 3, and 137 receiving yards for Davante Adams in the final slot. Independent local API verifiers passed 499 data and 12 window assertions.
 
 Production release: permanent Bowser passed 499 data assertions, 12 independent-window assertions, and the four-position/937-roster readback. Preview alias passed the window verifier. The live browser confirmed both usage layouts and hidden sidebar on reload. Evidence: `shared/operations/player-columns-20260929/`.
+
+## Positional Usage weekly sorting — September 29, 2026
+
+Added compact Sort statistic / Week / direction controls plus clickable historical-week headers. Default is source depth order. A selected statistic defaults to the Base slot; every displayed week, including prior-season slots, is selectable. The active week is underlined and the exact metric/week/direction appears in a compact summary. Sorting moves complete player blocks in both views; selected players are highlighted without being pinned above higher-ranked teammates. Unknowns sort last in both directions, ties retain source order, and Depth order resets the ranking.
+
+Regression tests cover Base-week targets descending, second-slot fantasy points ascending (including negative and zero values), missing values, ties, complete six-metric blocks, header toggle behavior, and comparison/player-view consistency.
+
+Validation passed: full `npm run check` (155 UI tests), local/candidate/permanent 499 data assertions, candidate/permanent 12 window assertions, and live browser readback of both requested sorting examples. Evidence: `shared/operations/usage-sorting-20260929/`.

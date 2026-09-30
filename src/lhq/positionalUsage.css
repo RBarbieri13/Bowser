@@ -31,3 +31,14 @@
 .lhq-usage-comparison.selected{box-shadow:inset 2px 0 #3ecf8e;background:#1c2b23}
 .lhq-usage-comparison,.lhq-usage-weeks.comparing{grid-template-columns:112px minmax(0,1fr)}
 .lhq-usage-comparison .lhq-player{white-space:normal;line-height:12px}
+
+.lhq-usage-sort{display:flex;align-items:end;gap:5px;flex-wrap:wrap;margin:6px 0}
+.lhq-usage-sort label{display:grid;gap:2px;flex:1;min-width:80px;font-size:10px;color:#aaa}
+.lhq-usage-sort select{width:100%;min-width:0;height:25px;font:11px Helvetica,Arial,sans-serif;background:#181818;color:#ddd;border:1px solid #444}
+.lhq-usage-sort>button{height:25px;padding:0 5px;font:11px Helvetica,Arial,sans-serif;background:#181818;color:#3ecf8e;border:1px solid #444;cursor:pointer}
+.lhq-usage-sort>button:disabled{color:#777;cursor:default}
+.lhq-usage-sort-summary{font-size:10px;color:#b9dacc;margin:4px 0 6px}
+.lhq-usage-weeks button{display:flex;justify-content:center;align-items:center;gap:1px;padding:4px 0;width:100%;min-height:24px;font:inherit;font-size:9px;color:inherit;border:0;background:none;cursor:pointer;white-space:nowrap}
+.lhq-usage-weeks button.active{color:#3ecf8e;box-shadow:inset 0 -2px #3ecf8e;background:#20332a}
+.lhq-usage-weeks button:hover{background:#333;color:#eee}
+.lhq-usage-weeks button:focus-visible,.lhq-usage-sort button:focus-visible{outline:1px solid #3ecf8e;outline-offset:-1px}
