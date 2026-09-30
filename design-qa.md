@@ -179,3 +179,49 @@ Added compact Sort statistic / Week / direction controls plus clickable historic
 Regression tests cover Base-week targets descending, second-slot fantasy points ascending (including negative and zero values), missing values, ties, complete six-metric blocks, header toggle behavior, and comparison/player-view consistency.
 
 Validation passed: full `npm run check` (155 UI tests), local/candidate/permanent 499 data assertions, candidate/permanent 12 window assertions, and live browser readback of both requested sorting examples. Evidence: `shared/operations/usage-sorting-20260929/`.
+
+
+## Usage share + shared sidebar tabs — 2026-09-30
+
+Scope: horizontal sidebar tabs on all seven routes; the new Player Database Usage share matrix; selected-league Yahoo transaction columns on Market Pulse and Waivers. Immutable source data, Player Card v2 and unrelated page contents remain unchanged.
+
+### Reference and visual review
+
+Read `handoff/usage-share/USAGE-SHARE-HANDOFF.md` in full and opened both supplied reference PNGs. The supplied Design System (8) ZIP contains the handoff, prompt and two PNGs only. `Bowser Sidebar Prototype.dc.html` and `proto/views.js` are absent; an in-chat request for their location remains unanswered. No claim is made to have inspected unavailable inline prototype styles.
+
+Four pre-PR browser captures use the current production warehouse (2026 W3, PPR, last five aligned regular-season weeks), not fixtures:
+
+| Group | Sidebar content width | Evidence | Result |
+|---|---:|---|---|
+| NYG RB | 400 CSS px | `shared/operations/usage-share-20260930/nyg-rb-400.png` | Six active players; exact gaps, negative Fpts and source totals |
+| NYG RB | 240 CSS px | `shared/operations/usage-share-20260930/nyg-rb-240.png` | No horizontal overflow; narrow labels/numbers fit |
+| LA WR | 400 CSS px | `shared/operations/usage-share-20260930/la-wr-400.png` | Six of seven active players, expandable; six correct stat hues |
+| LA WR | 240 CSS px | `shared/operations/usage-share-20260930/la-wr-240.png` | No horizontal overflow; three-digit yards remain visible |
+
+Capture environment: Codex in-app browser retained its existing 80% zoom. Raw browser surfaces are 1536×1200 pixels for a 1920×1500 CSS viewport; sidebar width assertions and contract measurements use CSS pixels. The existing shell retains its outside 20px right gutter. Measured body widths are exactly400/240, matrix widths372/212. Header25.996, block21.992, player21.992, chip18.008 CSS pixels (subpixel rounding within0.02px of26/22/22/18). Wide cells explicitly12px Helvetica Neue; fixed an inherited14px rule and duplicate body padding found during comparison. Header white800, totals bold, focused row#1c2b24, gaps#121212, one hue per stat and observed-value maxima match the contract.
+
+### Deliberate differences and limits
+
+- Route-specific tabs and width-driven More menu follow handoff§1 rather than the three demonstration tabs / Research label in the reference PNG. Existing Hide sidebar bar and outer shell are retained.
+- Current source data has complete2026W3 values and six eligibleNYG backs, unlike the dated five-player PNG with unavailableW3. Historical receiving/rushing fields use actual available data, never copied prototype gaps.
+- Prior explicit user rule excludes players without a positive recorded snap in all five displayed slots; one played week is sufficient. This is a display filter only.
+- Below300px, week labels use8px, first header9px, and value chips10px (9px for four-character values,7.5px for longer values). The required70px identity+42px total leaves20px per week at240px; default12px numbers and10px week headers overlap. Row/chip geometry and full-value tooltips stay intact. Normal400px typography is unchanged.
+- Following an explicitly selected player below the initial six automatically expands the group so focus stays visible; the user can collapse it again.
+- Negative fantasy values remain negative. Heat-map alpha is clamped to valid CSS0–1 rather than generating invalid negative opacity.
+- Yahoo counts are successful add/drop observations in the selected league's returned history (up to50 transactions), not fabricated Yahoo-wide totals. Captured time, returned coverage, and unknown values remain explicit. Live private account totals require an authorized session and were not claimed verified.
+
+### Route comparison
+
+| Route | Default tab / behavior | Verification |
+|---|---|---|
+| Player Database | Position Totals; Usage share follows selected player or stays pinned | Browser400/240, pin/tab/collapse persistence; component tests |
+| Waivers | Favorites; Yahoo Adds/Drops/Total/Net | Sidebar/route tests; real-data public release smoke |
+| Market Pulse | Most added; Yahoo Adds/Drops/Total/Net | Sidebar/route/coverage tests; real-data public release smoke |
+| Team Box Scores | Latest game | Defaults, width-driven overflow, accessible tab selection tests |
+| Opportunity Tracker | Biggest movers | Defaults and existing contents retained; route tests |
+| League Hub | Information needed | More access to existing league research; no sample data added |
+| Yahoo Connection | Status | Four existing panels; session privacy unchanged |
+
+Keyboard tabs support arrows/Home/End; More supports selection/Escape/outside close. Active tabs restore per route in sessionStorage; sidebar still starts hidden. Browser pin survives tab changes/collapse. Local matrix no-horizontal-scroll assertion: body scrollWidth==clientWidth at240 and400.
+
+Release gates: full `npm run check`, independent code/privacy review and candidate/public API regression verification. Detailed release evidence lives beside the four screenshots.

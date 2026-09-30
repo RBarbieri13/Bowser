@@ -162,7 +162,7 @@ export async function queryLeagueResearch({ params, teamKey, season, query, fail
         if (items.length > TRANSACTION_LIMIT || items.some(item => !item.key.startsWith(`${leagueKey}.`) || !allowedTypes.includes(item.type))) {
           fail('invalid_data_response', 'Yahoo returned unexpected transactions.', 502);
         }
-        result[section] = { items, limit: TRANSACTION_LIMIT, complete: items.length < TRANSACTION_LIMIT,
+        result[section] = { items, checkedAt: new Date(now()).toISOString(), limit: TRANSACTION_LIMIT, complete: items.length < TRANSACTION_LIMIT,
           limitReached: items.length === TRANSACTION_LIMIT,
           coverage: section === 'trades' ? 'Current pending trades visible to the selected owned team.' : 'Most recent league adds, drops, and completed trades; excludes pending claims and pending trades.' };
       }

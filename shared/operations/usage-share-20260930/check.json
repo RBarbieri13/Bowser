@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "command": "npm run check",
+  "exitCode": 0,
+  "uiTests": 173,
+  "sourceDataChanged": false,
+  "checksOutputSummary": [
+    "Test Files  21 passed (21)",
+    "Tests  173 passed (173)",
+    "Test Files  2 passed (2)",
+    "Tests  20 passed (20)",
+    "Test Files  1 passed (1)",
+    "Tests  12 passed (12)"
+  ]
+}

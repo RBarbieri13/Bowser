@@ -74,20 +74,57 @@ export function OwnershipMark({value}){
  if(!value||value.owned==null)return <span className="lhq-ownership-mark unknown">—</span>;
  return <Tip text={`Yahoo ownership response: ${value.ownershipType||'unavailable'}`}><span className={`lhq-ownership-mark ${value.owned?'owned':'available'}`}>{value.owned?'✓':'×'}</span></Tip>;
 }
+// Yahoo exposes league transactions, not site-wide add/drop totals. This index
+// describes only the returned, successful league events and never enters storage.
 export function transactionSummary(research,row){
- const key=publicIdentityKey(row);
- if(!research?.transactions||!key)return null;
+ const key=publicIdentityKey(row),transactions=research?.transactions;
+ if(!transactions||!key)return null;
+ const events=(transactions.items||[]).filter(item=>item.status==='successful'&&typeof item.key==='string'&&item.key.length>0);
+ const matches=events.flatMap(item=>(item.players||[]).filter(player=>publicIdentityKey(player)===key));
+ const keys=new Set(matches.map(player=>player.key).filter(Boolean));
+ const own=(research.ownership?.matches||[]).find(item=>item.id===key&&item.match!=='ambiguous'&&item.playerKey);
+ if(keys.size>1||own&&keys.size&& !keys.has(own.playerKey))return null;
+ if(matches.some(player=>!['add','drop','trade'].includes(player.action)))return null;
+ // Absence from a bounded transaction response does not prove zero activity.
+ if(!matches.length&&!(own&&transactions.complete===true))return null;
  let adds=0,drops=0;
- for(const transaction of research.transactions.items||[]){
+ const seen=new Set();
+ for(const transaction of events){
+  if(!transaction.key||seen.has(transaction.key))continue;
+  seen.add(transaction.key);
+  const actions=new Set();
   for(const player of transaction.players||[]){
    if(publicIdentityKey(player)!==key)continue;
-   const action=String(player.action||transaction.type||'').toLowerCase();
-   if(action.includes('add'))adds++;
-   if(action.includes('drop'))drops++;
+   const actionKey=`${player.key||key}:${player.action}`;
+   if(actions.has(actionKey))continue;
+   actions.add(actionKey);
+   // An add/drop transaction has one add player and one drop player; the
+   // transaction-level type cannot stand in for a missing per-player action.
+   if(player.action==='add')adds++;
+   if(player.action==='drop')drops++;
   }
  }
- return {adds,drops,net:adds-drops,coverage:research.transactions.coverage||'Most recent league transactions'};
+ return {adds,drops,total:adds+drops,net:adds-drops,complete:transactions.complete===true,coverage:transactions.coverage||'Most recent league transactions'};
 }
+export function transactionCoverage(research){
+ const data=research?.transactions;
+ if(!data)return 'Yahoo league transactions unavailable; read the selected league.';
+ const dates=(data.items||[]).map(item=>item.timestamp).filter(value=>Number.isFinite(value)&&value>0);
+ const range=dates.length?`${stamp(Math.min(...dates)*1000)} – ${stamp(Math.max(...dates)*1000)}`:'event dates unavailable';
+ return `${data.items?.length||0} returned league transactions · ${data.complete?'complete returned history':`bounded to latest ${data.limit||50}; totals may be incomplete`} · ${range} · read ${data.checkedAt?stamp(data.checkedAt):'time unavailable'}. Adds/drops count successful player actions; Total = adds + drops; Net = adds − drops. Not Yahoo-wide popularity or the Sleeper time window.`;
+}
+export function YahooTransactionNote({research}){
+ return <p className="lhq-research-note">{transactionCoverage(research)}</p>;
+}
+export function yahooTransactionColumns(research,label='Selected league',suffix=''){
+ return [['adds','Adds'],['drops','Drops'],['total','Total'],['net','Net']].map(([field,labelText])=>({
+  key:`yahoo-${field}${suffix}`,label:labelText,width:58,group:`yahoo${suffix}`,groupLabel:`Yahoo · ${label} · observed`,
+  value:row=>transactionSummary(research,row)?.[field]??null,
+  help:transactionCoverage(research),
+  render:row=>{const summary=transactionSummary(research,row),value=summary?.[field];return <Tip text={summary?transactionCoverage(research):'Unavailable: no unique matched transaction identity or confirmed zero in complete history'}><span style={{color:field==='drops'?'#e8735a':field==='net'&&value<0?'#e8735a':undefined}}>{value==null?'—':`${field==='net'&&value>0?'+':''}${fmt(value)}`}</span></Tip>;},
+ }));
+}
+
 function optionLabel(teamItem,leagues){
  const league=leagues.find(l=>l.key===teamItem.leagueKey);
  return `${league?.name||teamItem.leagueKey||'Yahoo league'} · ${teamItem.name||teamItem.key}`;
@@ -121,6 +158,6 @@ export function LeagueResearchPanel({yahoo:y,season,rows=[],selectedTeamKey,onTe
   {view==='roster'&&<><p className="lhq-research-note">Roster week {weekLabel} · Yahoo league scoring.</p><div className="lhq-research-list">{roster.map(player=><div className="lhq-research-player" key={player.key}><div><PlayerName row={player} onOpen={onOpen}/><small>{player.slot||'—'} · {player.position||'—'} · {player.team||'—'}</small></div><span>{player.points==null?'—':fmt(player.points,1)}</span><MarkPickupButton row={player} name={player.name} pickups={pickups}/></div>)}</div>{!roster.length&&<p className="lhq-research-note">Roster is unavailable until the dashboard for this owned team loads.</p>}</>}
   {view==='free'&&<><p className="lhq-research-note">Projection: {projectionMeta.season} W{projectionMeta.week} · {projectionMeta.scoring} · captured {stamp(projectionMeta.capturedAt)}. Last verified source; not a current Yahoo league projection.</p><div className="lhq-panel-actions"><Field label="Position"><select value={positionFilter} onChange={e=>setPositionFilter(e.target.value)}>{['All','QB','RB','WR','TE','K','DEF'].map(p=><option key={p}>{p}</option>)}</select></Field><button className="lhq-mini lhq-outline" disabled={!research?.availability?.nextStart||y.researchBusy?.[teamKey]} onClick={next}>Next 25</button><button className="lhq-mini" disabled={scanBusy||y.researchBusy?.[teamKey]} onClick={scan}>{scanBusy?'Scanning…':'Scan top 2000'}</button></div><div className="lhq-research-list">{projected.map(player=><div className="lhq-research-player" key={player.key}><div><PlayerName row={player} onOpen={onOpen}/><small>{player.position||'—'} · {player.team||'—'} · Yahoo {research?.availability?.status||'FA'} pool</small></div><Tip text={player.projection?`${player.projection.source} · ${projectionMeta.season} W${player.projection.week} · ${player.projection.scoring}`:'No exact sourced projection match'}><span>{player.projection?.value==null?'—':fmt(player.projection.value,1)}</span></Tip><MarkPickupButton row={player} name={player.name} pickups={pickups}/></div>)}</div>{!projected.length&&<p className="lhq-research-note">Read a league to show the available free-agent pool, sorted by sourced projection when exactly matched.</p>}</>}
   {view==='pickups'&&<PickupList pickups={pickups} candidates={candidates} onOpen={onOpen}/>}
-  {view==='transactions'&&<div className="lhq-research-list">{(research?.transactions?.items||[]).map(item=><div className="lhq-transaction-row" key={item.key}><strong>{item.type||'transaction'} · {item.status||'—'}</strong><small>{item.players?.map(player=>`${player.action||item.type}: ${player.name}`).join(' · ')||'No player details returned'}</small></div>)}{!research?.transactions?.items?.length&&<p className="lhq-research-note">Read league transactions to show actual returned adds, drops and trades.</p>}</div>}
+  {view==='transactions'&&<div className="lhq-research-list"><YahooTransactionNote research={research}/>{(research?.transactions?.items||[]).map(item=><div className="lhq-transaction-row" key={item.key}><strong>{item.type||'transaction'} · {item.status||'—'}</strong><small>{Number.isFinite(item.timestamp)?stamp(item.timestamp*1000):'Event date unavailable'}</small><small>{item.players?.map(player=>`${player.action||item.type}: ${player.name}`).join(' · ')||'No player details returned'}</small></div>)}{!research?.transactions?.items?.length&&<p className="lhq-research-note">Read league transactions to show actual returned adds, drops and trades.</p>}</div>}
  </div>;
 }

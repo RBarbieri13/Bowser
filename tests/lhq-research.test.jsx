@@ -16,7 +16,7 @@ test('original image brand and contextual sidebar remain collapsed initially',as
  await screen.findByRole('button',{name:'Test Alpha',exact:true});
  expect(document.querySelector('.lhq-sidebar')).toBeNull();
  fireEvent.click(screen.getByRole('button',{name:'Research Test Alpha in sidebar'}));
- expect(screen.getByRole('button',{name:'Selected player · statistics −'})).toHaveAttribute('aria-expanded','true');
+ expect(screen.getByRole('tab',{name:'Selected player · statistics'})).toHaveAttribute('aria-selected','true');
  expect(screen.getByLabelText('Research player')).toHaveValue('test-a');
 });
 test('range finish displays aggregate rank, missing-week coverage, and independent three-week trend controls',async()=>{
