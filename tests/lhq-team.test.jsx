@@ -48,7 +48,8 @@ function statCell(name, position, label, ordinal = 0) {
 }
 function showSettings() {
   fireEvent.click(screen.getByRole('button', { name: /Show sidebar/ }));
-  fireEvent.click(screen.getByRole('button', { name: /^Filters & settings/ }));
+  fireEvent.click(screen.getByRole('button', { name: /More sidebar sections/ }));
+  fireEvent.click(screen.getByRole('menuitemradio', { name: 'Filters & settings' }));
 }
 beforeEach(() => {
   localStorage.clear(); sessionStorage.clear();
@@ -112,7 +113,7 @@ test('latest result and top scorer are sourced and position titles include count
   const aside = document.querySelector('.lhq-sidebar');
   expect(within(aside).getByText('Result').nextElementSibling).toHaveTextContent('W 24-17');
   expect(within(aside).getByText('Top scorer').nextElementSibling).toHaveTextContent('Runner Charlie · 8.0 pts');
-  fireEvent.click(within(aside).getByRole('button', { name: /^Position Totals/ }));
+  fireEvent.click(within(aside).getByRole('tab', { name: 'Position Totals' }));
   expect(within(aside).getByRole('columnheader', { name: 'Top scorer' })).toBeInTheDocument();
   expect(aside).toHaveTextContent('Runner Charlie · 24.0');
   expect(within(table('QB')).getAllByRole('columnheader').some(header => header.textContent.includes('Jan 3, 2025'))).toBe(true);

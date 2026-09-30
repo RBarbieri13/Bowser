@@ -1,0 +1,40 @@
+/* Scoped overrides keep every other research tab's existing contents intact. */
+.lhq-usage-share{container-type:inline-size;min-width:0;background:#181818;font:12px/1.5 'Helvetica Neue',Helvetica,Arial,sans-serif;color:#d8d8d8}
+.usage-share-controls{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.lhq .usage-share-controls select{flex:1;min-width:70px;width:0;font-size:13px;font-weight:700;background:#121212;color:#ededed;border:1px solid #3e3e3e;border-radius:3px;padding:4px 6px;height:auto;line-height:normal}
+.lhq .usage-share-controls select:nth-child(2){min-width:64px}
+.lhq .usage-share-follow{font-size:10px;font-weight:700;padding:4px 8px;border:1px solid #3ecf8e;border-radius:2px;white-space:nowrap;background:transparent;color:#3ecf8e;line-height:normal}
+.lhq .usage-share-follow[aria-pressed=true]{background:#3ecf8e;color:#06301c}
+.usage-share-context{display:flex;justify-content:space-between;gap:8px;font-size:10px;color:#9e9e9e;white-space:nowrap;overflow:hidden;margin:12px 0 10px}
+.usage-share-context>span{overflow:hidden;text-overflow:clip;min-width:0}
+.usage-share-context>span:first-child{font-weight:700;text-transform:uppercase;flex-shrink:1}
+.usage-share-context>span:last-child{flex-shrink:2}
+.lhq .usage-share-matrix{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed;line-height:normal}
+.usage-share-name-column{width:88px}.usage-share-total-column{width:42px}
+.lhq .usage-share-matrix thead th{height:26px;line-height:14px;padding:0;text-align:center;font-size:10px;font-weight:800;color:#fff;background:transparent;white-space:nowrap}
+.lhq .usage-share-matrix thead th:first-child{padding:0 4px;text-align:left;text-transform:uppercase}
+.lhq .usage-share-matrix thead th:last-child{text-align:right;padding-right:4px}
+.lhq .usage-share-matrix thead th.unavailable-week{color:#9e9e9e}
+.lhq .usage-share-matrix .usage-share-stat-band th{height:22px;line-height:0;padding:0;background:transparent}
+.usage-share-stat-band th>div{height:16px;box-sizing:border-box;margin-top:6px;padding:2px 4px;font-size:10px;line-height:11px;font-weight:700;text-transform:uppercase;text-align:left}
+.usage-share-stat-band th>div>span{font-weight:400;color:#707070;text-transform:none;margin-left:6px}
+.lhq .usage-share-matrix tbody tr:not(.usage-share-stat-band){height:22px}
+.lhq .usage-share-matrix tbody td{font-size:12px;height:22px;line-height:18px;padding:1px;text-align:center;background:transparent;overflow:hidden;white-space:nowrap}
+.lhq .usage-share-matrix tbody tr.focused td{background:#1c2b24}
+.lhq .usage-share-matrix tbody td:first-child{padding:0 4px;text-align:left}
+.lhq .usage-share-matrix td:first-child button{all:unset;display:block;width:100%;line-height:18px;white-space:nowrap;overflow:hidden;cursor:pointer}
+.lhq .usage-share-matrix td:first-child button:focus-visible{outline:2px solid #3ecf8e;outline-offset:-2px}
+.usage-share-depth{font-size:9px;font-weight:700;margin-right:4px}
+.usage-share-name{color:#d8d8d8;font-weight:400}
+.focused .usage-share-name{color:#3ecf8e;font-weight:700}
+.usage-share-chip{display:block;line-height:18px;border-radius:1px;color:#fff;font-weight:400;white-space:nowrap}
+.usage-share-chip.gap{background:#121212;color:#4a4a4a}
+.lhq .usage-share-matrix td.usage-share-total{text-align:right;padding:0 4px 0 0;font-weight:700;color:#d8d8d8}
+.lhq .usage-share-matrix tr.focused td.usage-share-total{color:#3ecf8e}
+.lhq .usage-share-more{font-size:11px;color:#3ecf8e;height:26px;border:0;background:none;padding:0}
+.usage-share-footnote{font-size:10px;color:#707070;line-height:1.5;margin:10px 0 0}
+.usage-share-message{font-size:12px;color:#9e9e9e;margin:10px 0}
+/* Narrow mode keeps full numbers legible inside the specified fixed week columns. */
+@container(max-width:271px){.usage-share-name-column{width:70px}.lhq .usage-share-matrix thead th:not(:first-child):not(:last-child){font-size:8px}.usage-share-chip{font-size:10px}.usage-share-chip[data-value-length="4"]{font-size:9px}.usage-share-chip[data-value-length="5"],.usage-share-chip[data-value-length="6"]{font-size:7.5px}}
+
+@container(max-width:271px){.lhq .usage-share-matrix thead th:first-child{font-size:9px}}

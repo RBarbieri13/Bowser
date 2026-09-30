@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "deploymentId": "dpl_7DnfMtKpqHPTWAskamuvDgsuwyZU",
+  "applicationCommit": "7b9c2a04edcc5c6149b9c8bfa96ef818a0d2b35c",
+  "urls": [
+    "https://bowser-fantasy-football.vercel.app",
+    "https://fantasy-football-stats-preview.vercel.app"
+  ],
+  "browser": [
+    "Usage share sourced NYG RB, six blocks, positive-snap eligibility",
+    "Tyrone Tracy -0.6 retained",
+    "Focus pinning works",
+    "Sidebar hidden on reload; selected tab restores",
+    "Yahoo unavailable without authenticated private league context"
+  ],
+  "privateYahooLiveTest": "Not performed; no private response saved"
+}

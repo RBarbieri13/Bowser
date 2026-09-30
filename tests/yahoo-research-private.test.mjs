@@ -78,3 +78,36 @@ test('ambiguous identity search stays unknown instead of inferring ownership', a
   assert.equal(result.data.ownership.matches[0].owned, null);
   assert.equal(result.data.ownership.matches[0].match, 'ambiguous');
 });
+
+
+test('transactions preserve source status, per-player actions, timestamps and private no-store headers', async () => {
+ const item={transaction_key:`${leagueKey}.tr.1`,type:'add/drop',status:'successful',timestamp:'1790000000',players:{count:2,
+  0:{player:[[{player_key:'999.p.1'},{name:{full:'Fixture Alpha'}},{display_position:'RB'},{editorial_team_abbr:'NYG'}],{transaction_data:{type:'add',destination_team_key:teamKey}}]},
+  1:{player:[[{player_key:'999.p.2'},{name:{full:'Fixture Beta'}},{display_position:'WR'},{editorial_team_abbr:'BUF'}],{transaction_data:{type:'drop',source_team_key:teamKey}}]},
+ }};
+ const result=await call(`league-research?season=2026&team=${teamKey}&include=transactions`,{headers:{cookie},fetcher:async url=>{
+  if(url.includes('/teams?'))return response(teams);
+  if(url.endsWith(`league/${leagueKey}?format=json`))return response(league);
+  if(url.includes('/transactions;types=add,drop,trade;count=50'))return response({fantasy_content:{league:[{league_key:leagueKey},{transactions:{count:1,0:{transaction:item}}}]}});
+  assert.fail('Unexpected provider request');
+ }});
+ assert.equal(result.status,200);
+ assert.match(result.headers.get('cache-control'),/private, no-store/);
+ assert.equal(result.headers.get('cdn-cache-control'),'no-store');
+ assert.equal(result.headers.get('vercel-cdn-cache-control'),'no-store');
+ assert.equal(result.data.transactions.complete,true);
+ assert.equal(result.data.transactions.checkedAt,new Date(now).toISOString());
+ assert.equal(result.data.transactions.items[0].timestamp,1790000000);
+ assert.equal(result.data.transactions.items[0].status,'successful');
+ assert.deepEqual(result.data.transactions.items[0].players.map(p=>p.action),['add','drop']);
+ assert(!result.body.includes('PRIVATE_ACCESS'));
+});
+
+test('transactions authorize the chosen team before any league transaction request', async () => {
+ const result=await call('league-research?season=2026&team=999.l.99.t.1&include=transactions',{headers:{cookie},fetcher:async url=>{
+  if(url.includes('/teams?'))return response(teams);
+  assert.fail('No transaction or league lookup for an unowned team');
+ }});
+ assert.equal(result.status,403);
+ assert.equal(result.data.error.code,'team_not_owned');
+});
