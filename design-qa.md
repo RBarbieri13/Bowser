@@ -227,3 +227,15 @@ Keyboard tabs support arrows/Home/End; More supports selection/Escape/outside cl
 Release gates: full `npm run check`, independent code/privacy review and candidate/public API regression verification. Detailed release evidence lives beside the four screenshots.
 
 Final release verification: `npm run check` PASS (173 UI tests); GitHub verify PASS; candidate499/499 and permanent production499/499 read-only regression assertions PASS. Production browser rendered six NYG RB players in six metric blocks and restored Usage share after a collapsed reload. Public Yahoo sections explicitly show unavailable without a signed-in league session. Both permanent aliases promoted to `dpl_7DnfMtKpqHPTWAskamuvDgsuwyZU`. The last shell review fix keeps the More chevron outside the truncated label.
+
+## Sidebar clarity follow-up — September 30, 2026
+
+User feedback supersedes the handoff's short-label/More-menu layout. Full section names now use a horizontally scrollable rail with persistent browse arrows. Long titles wrap inside their button at 240px. Browsing leaves the current panel unchanged; selection and keyboard navigation reveal the selected tab. All section contents and ordering remain intact.
+
+| Routes | Verification | Result |
+| --- | --- | --- |
+| Player Database | 400px Position Totals; 240px Selected player; scroll arrows; full-name wrapping; Usage share | PASS |
+| Waivers, Market Pulse, Team Box Scores, Opportunity Tracker | Route default, two browse arrows, full names, white panel text | PASS |
+| League Hub, Yahoo Connection | Same shell and readable unavailable state; no private account capture | PASS |
+
+Primary sidebar text is white, values weight 600, headers 800, actions 700 with green #3ecf8e; secondary context #ccc/600. Usage share remains excluded from these overrides. Main grids and data unchanged. Local screenshots and route readbacks: `shared/operations/sidebar-clarity-20260930/`. Full npm run check passed.

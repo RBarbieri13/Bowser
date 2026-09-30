@@ -19,62 +19,51 @@ export function Tip({text,children}){const {tips}=useContext(Preferences);const 
 export const Info=({text})=><Tip text={text}><button className="lhq-info" aria-label={text}>i</button></Tip>;
 export function Picker({label,value,onChange,options,wide=false}){const [open,setOpen]=useState(false),root=useRef(null);const full=['Team','League scope'].includes(label);useEffect(()=>{const close=e=>{if(e.key==='Escape'||e.type==='pointerdown'&&!root.current?.contains(e.target))setOpen(false);};document.addEventListener('pointerdown',close);document.addEventListener('keydown',close);return()=>{document.removeEventListener('pointerdown',close);document.removeEventListener('keydown',close);};},[]);const choices=options.map(o=>Array.isArray(o)?o:[o,o]);return <div ref={root} className={`lhq-stack ${wide?'wide':''}`}><span>{label}</span>{full?<><button className="lhq-picker-button" aria-label={label} aria-haspopup="listbox" aria-expanded={open} onClick={()=>setOpen(!open)}>{choices.find(([k])=>String(k)===String(value))?.[1]??value} ▼</button>{open&&<div className="lhq-full-menu" role="listbox" aria-label={label} style={{gridTemplateColumns:`repeat(${label==='Team'?8:5},minmax(0,1fr))`}}>{choices.map(([key,title])=><button role="option" aria-selected={String(key)===String(value)} key={key} onClick={()=>{onChange(String(key));setOpen(false);root.current?.querySelector('button')?.focus();}}>{title}{String(key)===String(value)?' ✓':''}</button>)}</div>}</>:<span className="lhq-stack-value"><select aria-label={label} value={value} onChange={e=>onChange(e.target.value)}>{choices.map(([key,title])=><option value={key} key={key}>{title}</option>)}</select><b>▼</b></span>}</div>;}
 export function Source({label,title,detail,help,onClick,children}){return <div className="lhq-source"><span className="lhq-source-label">{label}</span><button className="lhq-source-button" onClick={onClick} aria-label={`${label}: ${title}`} disabled={!onClick}><strong>{title}{onClick&&' ▼'}</strong><small>{detail}</small></button><Info text={help||`${title}. ${detail}`}/>{children}</div>;}
-// The strip has no fixed tab-count cap: each available 96px slot can hold a tab.
-export function sidebarVisibleCount(width, count) {
- const slots=Math.max(1,Math.floor(width/96));
- return count<=slots?count:Math.max(1,slots-1);
-}
+// Full-name tabs stay in a single, browsable horizontal rail at every width.
 export function SidebarTabs({page,panels,active,onSelect,width}) {
- const root=useRef(null),more=useRef(null),tabRefs=useRef({}),itemRefs=useRef([]);
- const [menuOpen,setMenuOpen]=useState(false),[measuredWidth,setMeasuredWidth]=useState(null);
- useEffect(()=>{
-  const element=root.current;if(!element)return;
-  const measure=()=>{const size=element.getBoundingClientRect().width;if(size>0)setMeasuredWidth(size);};
-  measure();if(typeof ResizeObserver==='undefined')return;
-  const observer=new ResizeObserver(measure);observer.observe(element);return()=>observer.disconnect();
- },[]);
- const availableWidth=measuredWidth||width,compact=width<300;
- const visibleCount=sidebarVisibleCount(availableWidth,panels.length);
- const visible=panels.slice(0,visibleCount),overflow=panels.slice(visibleCount);
+ const rail=useRef(null),tabRefs=useRef({});
+ const [edges,setEdges]=useState({left:false,right:false});
  const activePanel=panels.find(p=>p.id===active)||panels[0];
- const activeOverflow=overflow.some(p=>p.id===activePanel?.id);
- const label=p=>compact?(p.shortTitle||String(p.title).split(' ')[0]):p.title;
  const tabId=id=>`lhq-sidebar-tab-${page}-${id}`;
  const panelId=`lhq-sidebar-panel-${page}`;
- const closeMenu=(restore=false)=>{setMenuOpen(false);if(restore)more.current?.focus();};
+ const measure=()=>{const el=rail.current;if(el)setEdges({left:el.scrollLeft>1,right:el.scrollLeft+el.clientWidth<el.scrollWidth-1});};
+ const reveal=(id,smooth=false)=>{
+  const el=rail.current,tab=tabRefs.current[id];if(!el||!tab)return;
+  const r=el.getBoundingClientRect(),t=tab.getBoundingClientRect();
+  const delta=t.left<r.left?t.left-r.left:t.right>r.right?t.right-r.right:0;
+  if(delta)el.scrollTo?.({left:el.scrollLeft+delta,behavior:smooth&&!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'});
+  measure();
+ };
+ useEffect(()=>{reveal(activePanel?.id);},[activePanel?.id,width,page]);
  useEffect(()=>{
-  if(!menuOpen)return;
-  const outside=e=>{if(!root.current?.contains(e.target))setMenuOpen(false);};
-  document.addEventListener('pointerdown',outside);return()=>document.removeEventListener('pointerdown',outside);
- },[menuOpen]);
- useEffect(()=>{if(!overflow.length)setMenuOpen(false);},[overflow.length]);
- const select=(id,focus=false)=>{onSelect(id);setMenuOpen(false);if(focus)(tabRefs.current[id]||more.current)?.focus();};
+  const el=rail.current;if(!el)return;
+  const resize=()=>{reveal(activePanel?.id);measure();};
+  if(typeof ResizeObserver==='undefined')return;
+  const observer=new ResizeObserver(resize);observer.observe(el);return()=>observer.disconnect();
+ },[activePanel?.id]);
+ const browse=direction=>{
+  const el=rail.current;if(!el)return;const r=el.getBoundingClientRect();
+  const tabs=panels.map(p=>tabRefs.current[p.id]).filter(Boolean);
+  const next=direction>0?tabs.find(t=>t.getBoundingClientRect().right>r.right+1):tabs.reverse().find(t=>t.getBoundingClientRect().left<r.left-1);
+  if(next)reveal(next.dataset.section,true);
+ };
  const moveTab=e=>{
   if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
   e.preventDefault();const index=panels.findIndex(p=>p.id===activePanel?.id);
   const next=e.key==='Home'?0:e.key==='End'?panels.length-1:(index+(e.key==='ArrowRight'?1:-1)+panels.length)%panels.length;
-  select(panels[next].id,true);
- };
- const openMenu=(last=false)=>{setMenuOpen(true);requestAnimationFrame(()=>itemRefs.current[last?overflow.length-1:0]?.focus());};
- const menuKey=(e,index)=>{
-  if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closeMenu(true);return;}
-  if(e.key==='Tab'){setMenuOpen(false);return;}
-  if(['ArrowDown','ArrowUp','Home','End'].includes(e.key)){
-   e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?overflow.length-1:(index+(e.key==='ArrowDown'?1:-1)+overflow.length)%overflow.length;
-   itemRefs.current[next]?.focus();
-  }
+  onSelect(panels[next].id);tabRefs.current[panels[next].id]?.focus({preventScroll:true});
  };
  const clock=(Array.isArray(activePanel?.clock)?activePanel.clock:activePanel?.clock?[activePanel.clock]:[]).filter(Boolean).slice(0,3);
  return <>
-  <div className={`lhq-sidebar-tabs${compact?' compact':''}`} ref={root} role="tablist" aria-label="Sidebar sections">
-   {visible.map(p=><button type="button" key={p.id} ref={node=>{tabRefs.current[p.id]=node;}} className="lhq-sidebar-tab" role="tab" id={tabId(p.id)} aria-label={p.title} title={p.title} aria-selected={activePanel?.id===p.id} aria-controls={panelId} tabIndex={activePanel?.id===p.id?0:-1} onKeyDown={moveTab} onClick={()=>select(p.id)}>{label(p)}</button>)}
-   {!!overflow.length&&<div className="lhq-sidebar-overflow">
-    <button type="button" ref={more} className={`lhq-sidebar-more${activeOverflow?' active':''}`} id={tabId('more')} aria-haspopup="menu" aria-expanded={menuOpen} aria-controls={`lhq-sidebar-menu-${page}`} aria-label={activeOverflow?`${activePanel.title} — More sidebar sections`:'More sidebar sections'} title={activeOverflow?activePanel.title:'More sidebar sections'} onClick={()=>menuOpen?closeMenu():openMenu()} onKeyDown={e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();openMenu(e.key==='ArrowUp');}else if(e.key==='Escape'){e.preventDefault();closeMenu(true);}else moveTab(e);}}><span className="lhq-sidebar-more-label">{activeOverflow?label(activePanel):'More'}</span><span className="lhq-sidebar-more-arrow" aria-hidden="true">▾</span></button>
-    {menuOpen&&<div role="menu" aria-label="More sidebar sections" id={`lhq-sidebar-menu-${page}`} className="lhq-sidebar-menu">{overflow.map((p,index)=><button type="button" role="menuitemradio" aria-checked={p.id===activePanel?.id} key={p.id} ref={node=>{itemRefs.current[index]=node;}} tabIndex={-1} onKeyDown={e=>menuKey(e,index)} onClick={()=>select(p.id,true)}>{p.title}</button>)}</div>}
-   </div>}
+  <div className="lhq-sidebar-tab-navigation">
+   <button type="button" className="lhq-sidebar-tab-arrow" aria-label="Scroll sidebar tabs left" disabled={!edges.left} onClick={()=>browse(-1)}>‹</button>
+   <div className="lhq-sidebar-tabs" ref={rail} role="tablist" aria-label="Sidebar sections" onScroll={measure}>
+    {panels.map(p=><button type="button" key={p.id} data-section={p.id} ref={node=>{tabRefs.current[p.id]=node;}} className="lhq-sidebar-tab" role="tab" id={tabId(p.id)} aria-label={p.title} aria-selected={activePanel?.id===p.id} aria-controls={panelId} tabIndex={activePanel?.id===p.id?0:-1} onKeyDown={moveTab} onClick={()=>onSelect(p.id)}>{p.title}</button>)}
+   </div>
+   <button type="button" className="lhq-sidebar-tab-arrow" aria-label="Scroll sidebar tabs right" disabled={!edges.right} onClick={()=>browse(1)}>›</button>
   </div>
   {!!clock.length&&<div className="lhq-sidebar-clock">{clock.map((text,index)=><span key={index}>{text}</span>)}</div>}
-  {activePanel&&<div key={activePanel.id} className="lhq-panel-body lhq-sidebar-tab-body" id={panelId} role="tabpanel" aria-labelledby={tabId(activeOverflow?'more':activePanel.id)} tabIndex={0}>{activePanel.content}</div>}
+  {activePanel&&<div key={activePanel.id} className="lhq-panel-body lhq-sidebar-tab-body" id={panelId} role="tabpanel" aria-labelledby={tabId(activePanel.id)} tabIndex={0}>{activePanel.content}</div>}
  </>;
 }
 export function Shell({page,stacks,actions,sources,options,panels=[],defaultPanel,sidebarWidth=420,focusPanel,children}){const {rowHeight,setRowHeight,tips,setTips}=useContext(Preferences);const [menu,setMenu]=useState(false),[help,setHelp]=useState(false);const gear=useRef(null);const [hidden,setHidden]=useState(true),[sourcesHidden,setSourcesHidden]=useStored(`bowser:lhq:sources-hidden:${page}`,false),[width,setWidth]=useStored(`bowser:lhq:sidebar-width:${page}`,sidebarWidth,true),[savedPanel,setPanel]=useStored(`bowser:lhq:sidebar-tab:${page}`,defaultPanel||panels[0]?.id||'',true);const panel=panels.some(p=>p.id===savedPanel)?savedPanel:(defaultPanel||panels[0]?.id);useEffect(()=>{if(focusPanel?.key){setPanel(focusPanel.id);setHidden(false);}},[focusPanel?.key]);useEffect(()=>setHidden(true),[page]);useEffect(()=>{let prior=innerWidth,timer;if(prior<1100)setHidden(true);const adapt=()=>{clearTimeout(timer);timer=setTimeout(()=>{if(innerWidth<1100&&prior>=1100)setHidden(true);prior=innerWidth;},150);};addEventListener('resize',adapt);return()=>{clearTimeout(timer);removeEventListener('resize',adapt);};},[]);useEffect(()=>{const close=e=>{if(e.key==='Escape'||e.type==='pointerdown'&&!gear.current?.contains(e.target)){setMenu(false);setHelp(false);}};document.addEventListener('pointerdown',close);document.addEventListener('keydown',close);return()=>{document.removeEventListener('pointerdown',close);document.removeEventListener('keydown',close);};},[]);const resize=e=>{e.preventDefault();const x=e.clientX,w=width;const move=e=>setWidth(Math.max(240,Math.min(760,w+x-e.clientX)));const end=()=>{document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',end);document.removeEventListener('pointercancel',end);};document.addEventListener('pointermove',move);document.addEventListener('pointerup',end);document.addEventListener('pointercancel',end);};return <div className="lhq" style={{'--lhq-row':`${rowHeight}px`,'--lhq-font':`${rowHeight<=32?14.4:rowHeight===44?17.6:16}px`}}>

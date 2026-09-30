@@ -2,7 +2,7 @@
 import '@testing-library/jest-dom/vitest';
 import {cleanup, fireEvent, render, screen, within} from '@testing-library/react';
 import {afterEach, beforeEach, expect, test, vi} from 'vitest';
-import {LhqProvider, Shell, sidebarVisibleCount, Grid} from '../src/lhq/shared.jsx';
+import {LhqProvider, Shell, Grid} from '../src/lhq/shared.jsx';
 
 const panels=[
  {id:'filters',title:'Filters & settings',shortTitle:'Filters',content:<span>Filter content</span>},
@@ -19,12 +19,6 @@ const open=()=>fireEvent.click(screen.getByRole('button',{name:/Show sidebar/}))
 beforeEach(()=>{sessionStorage.clear();localStorage.clear();vi.stubGlobal('ResizeObserver',class{observe(){}disconnect(){}});vi.stubGlobal('requestAnimationFrame',fn=>{fn();return 1;});});
 afterEach(()=>{cleanup();vi.unstubAllGlobals();});
 
-test('available width determines visible count with no three-tab cap',()=>{
- expect(sidebarVisibleCount(400,8)).toBe(3);
- expect(sidebarVisibleCount(760,8)).toBe(6);
- expect(sidebarVisibleCount(240,8)).toBe(1);
- expect(sidebarVisibleCount(760,5)).toBe(5);
-});
 test('starts hidden and mounts only selected content, with route default and session restore',()=>{
  const view=render(harness());expect(screen.queryByRole('tablist')).not.toBeInTheDocument();open();
  expect(screen.getByRole('tab',{name:'Position Totals'})).toHaveAttribute('aria-selected','true');
@@ -35,31 +29,40 @@ test('starts hidden and mounts only selected content, with route default and ses
  fireEvent.click(screen.getByRole('button',{name:/Hide sidebar/}));open();expect(screen.getByText('Filter content')).toBeInTheDocument();
  view.unmount();render(harness());expect(screen.queryByRole('tablist')).not.toBeInTheDocument();open();expect(screen.getByText('Filter content')).toBeInTheDocument();
 });
-test('overflow selection has active name, clock, one body, and Escape restores focus',()=>{
- render(harness());open();const more=screen.getByRole('button',{name:'More sidebar sections'});
- fireEvent.click(more);fireEvent.click(screen.getByRole('menuitemradio',{name:'Usage share'}));
- expect(screen.queryByRole('menu')).not.toBeInTheDocument();expect(screen.getByText('Usage content')).toBeInTheDocument();
+test('all full-name tabs remain available at narrow widths without an overflow menu',()=>{
+ sessionStorage.setItem('bowser:lhq:sidebar-width:players','240');render(harness());open();
+ expect(screen.getAllByRole('tab')).toHaveLength(panels.length);
+ for(const panel of panels)expect(screen.getByRole('tab',{name:panel.title})).toHaveTextContent(panel.title);
+ expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+ fireEvent.click(screen.getByRole('tab',{name:'Usage share'}));
+ expect(screen.getByText('Usage content')).toBeInTheDocument();
  expect(screen.getByText('Depth: current')).toBeInTheDocument();
- const activeMore=screen.getByRole('button',{name:'Usage share — More sidebar sections'});
- expect(activeMore).toHaveClass('active');expect(activeMore).toHaveFocus();
- fireEvent.click(activeMore);fireEvent.keyDown(screen.getByRole('menuitemradio',{name:'Usage share'}),{key:'Escape'});
- expect(screen.queryByRole('menu')).not.toBeInTheDocument();expect(activeMore).toHaveFocus();
+ expect(screen.getAllByRole('tabpanel')).toHaveLength(1);
+ fireEvent.click(screen.getByRole('button',{name:'Expand sidebar width'}));
+ expect(screen.getByRole('tab',{name:'Usage share'})).toHaveAttribute('aria-selected','true');
 });
-test('arrow navigation traverses visible and overflow tabs while Home and End work',()=>{
+test('keyboard traverses every tab and restores focus while Home and End work',()=>{
  render(harness());open();let tab=screen.getByRole('tab',{name:'Position Totals'});
  fireEvent.keyDown(tab,{key:'ArrowRight'});expect(screen.getByText('Player content')).toBeInTheDocument();
  tab=screen.getByRole('tab',{name:'Selected player · statistics'});expect(tab).toHaveFocus();
- fireEvent.keyDown(tab,{key:'ArrowRight'});expect(screen.getByText('Usage content')).toBeInTheDocument();
- const more=screen.getByRole('button',{name:'Usage share — More sidebar sections'});expect(more).toHaveFocus();
- fireEvent.keyDown(more,{key:'End'});expect(screen.getByText('Lineup content')).toBeInTheDocument();
- fireEvent.keyDown(more,{key:'Home'});expect(screen.getByText('Filter content')).toBeInTheDocument();
+ fireEvent.keyDown(tab,{key:'End'});expect(screen.getByText('Lineup content')).toBeInTheDocument();
+ tab=screen.getByRole('tab',{name:'DraftKings lineup cards'});expect(tab).toHaveFocus();
+ fireEvent.keyDown(tab,{key:'Home'});expect(screen.getByText('Filter content')).toBeInTheDocument();
+ expect(screen.getByRole('tab',{name:'Filters & settings'})).toHaveFocus();
 });
-test('narrow widths use short labels and resize preserves active overflow section',()=>{
- sessionStorage.setItem('bowser:lhq:sidebar-width:players','240');render(harness());open();
- expect(screen.getByRole('tab',{name:'Filters & settings'})).toHaveTextContent('Filters');
- expect(screen.getByRole('button',{name:'Position Totals — More sidebar sections'})).toHaveTextContent('Totals');
- fireEvent.click(screen.getByRole('button',{name:'Expand sidebar width'}));
- expect(screen.getByRole('tab',{name:'Position Totals'})).toHaveAttribute('aria-selected','true');
+test('browse arrows reveal clipped tabs without changing the active panel and disable at ends',()=>{
+ render(harness());open();const rail=screen.getByRole('tablist');
+ Object.defineProperties(rail,{clientWidth:{value:200},scrollWidth:{value:900},scrollLeft:{value:0,writable:true}});
+ rail.getBoundingClientRect=()=>({left:0,right:200});
+ panels.forEach((p,i)=>{screen.getByRole('tab',{name:p.title}).getBoundingClientRect=()=>({left:i*100-rail.scrollLeft,right:(i+1)*100-rail.scrollLeft});});
+ rail.scrollTo=vi.fn();fireEvent.scroll(rail);
+ expect(screen.getByRole('button',{name:'Scroll sidebar tabs left'})).toBeDisabled();
+ fireEvent.click(screen.getByRole('button',{name:'Scroll sidebar tabs right'}));
+ expect(rail.scrollTo).toHaveBeenCalledWith(expect.objectContaining({left:100}));
+ expect(screen.getByText('Totals content')).toBeInTheDocument();
+ rail.scrollLeft=700;fireEvent.scroll(rail);
+ expect(screen.getByRole('button',{name:'Scroll sidebar tabs right'})).toBeDisabled();
+ expect(screen.getByRole('button',{name:'Scroll sidebar tabs left'})).toBeEnabled();
 });
 test('route restore is isolated, stale section falls back, and focus actions select hidden sections',()=>{
  sessionStorage.setItem('bowser:lhq:sidebar-tab:players','"removed"');

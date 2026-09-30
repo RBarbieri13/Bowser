@@ -192,8 +192,7 @@ test('League Hub never starts a different availability status at the previous st
   const yahoo = yahooFixture();
   show(<LeagueHub {...props} yahoo={yahoo} />);
   fireEvent.click(screen.getByRole('button', { name: /Show sidebar/ }));
-  fireEvent.click(screen.getByRole('button', { name: /More sidebar sections/ }));
-  fireEvent.click(screen.getByRole('menuitemradio', { name: 'League research' }));
+  fireEvent.click(screen.getByRole('tab', { name: 'League research' }));
   fireEvent.change(screen.getByLabelText('Availability'), { target: { value: 'FA' } });
   fireEvent.click(screen.getByRole('button', { name: 'Next 25' }));
   expect(yahoo.loadResearch).toHaveBeenLastCalledWith('999.l.1.t.1', expect.objectContaining({ availabilityStart: 25, availabilityStatus: 'FA' }));

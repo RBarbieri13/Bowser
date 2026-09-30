@@ -48,8 +48,7 @@ function statCell(name, position, label, ordinal = 0) {
 }
 function showSettings() {
   fireEvent.click(screen.getByRole('button', { name: /Show sidebar/ }));
-  fireEvent.click(screen.getByRole('button', { name: /More sidebar sections/ }));
-  fireEvent.click(screen.getByRole('menuitemradio', { name: 'Filters & settings' }));
+  fireEvent.click(screen.getByRole('tab', { name: 'Filters & settings' }));
 }
 beforeEach(() => {
   localStorage.clear(); sessionStorage.clear();
