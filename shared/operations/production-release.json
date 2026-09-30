@@ -1,27 +1,28 @@
 {
   "status": "PASS",
-  "verifiedAt": "2026-09-30T03:39:03.373881+00:00",
+  "verifiedAt": "2026-09-30T04:06:52.723Z",
   "publicUrl": "https://bowser-fantasy-football.vercel.app",
-  "candidateUrl": "https://bowser-fantasy-football-dbar77cr2-rbarbieri13s-projects.vercel.app",
-  "deploymentId": "dpl_5uBLjvNTc1ftVJ4JAu7wR3PLk7L9",
+  "candidateUrl": "https://bowser-fantasy-football-8a3zjre1l-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_571ZiciJY81SHAhuz2kEkNRLxEBg",
   "deploymentState": "READY",
-  "applicationCommit": "e14d639c3e172182ab0722704bf0d94497f42b54",
+  "applicationCommit": "f41df651b88d5bfa09ceba7e2ac7a874d09a18c5",
   "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-jev-20260926",
   "checks": {
     "npmRunCheck": "PASS",
-    "uiTests": 155,
+    "uiTests": 156,
+    "localWeek3Assertions": 2751,
+    "candidateWeek3Assertions": 2751,
+    "publicWeek3Assertions": 2751,
     "localRegressionAssertions": 499,
     "candidateRegressionAssertions": 499,
-    "candidateWindowAssertions": 12,
     "publicRegressionAssertions": 499,
+    "candidateWindowAssertions": 12,
     "publicWindowAssertions": 12,
     "previewAliasWindowAssertions": 12,
-    "secondVerifier": "PASS: 499 independent API data assertions and real-data browser sorting readback",
-    "publicBrowser": "PASS: Base-week targets descending; second historical week fantasy points ascending; complete six-metric blocks; header reversal; sidebar hidden after reload",
-    "warehouseAndArchivesUnchanged": true,
+    "publicBrowser": "PASS: Week 4 waivers, Week 3 statistics, 106 targets, sidebar hidden, no browser errors",
+    "historicalWarehouseAndDfsArchivesUnchanged": true,
     "yahooPrivateData": "Not accessed or changed in this release",
-    "evidenceDirectory": "shared/operations/usage-sorting-20260929",
-    "positionalUsage": "PASS: four position groups, 27 Rams players with five aligned slots, sourced Davante Week 3 receiving yards 137; independent roster 937 players"
+    "evidenceDirectory": "shared/operations/week3-refresh-20260929"
   },
   "dfs": {
     "season": 2026,
@@ -57,6 +58,12 @@
       "apiMatchedProjectionsPerRole": 21,
       "baseKey": "2026-w2-dk-153434",
       "captainKey": "2026-w2-dk-153434:cpt"
+    },
+    "latestRefreshAttempt": {
+      "changed": false,
+      "publishable": false,
+      "reason": "Projection source date outside current pregame week",
+      "lastGoodPreserved": true
     }
   },
   "automation": {
@@ -69,10 +76,10 @@
   },
   "githubSync": {
     "status": "Release branch pushed; PR is authoritative for merge status",
-    "branch": "codex/usage-week-sorting",
-    "applicationCommit": "e14d639c3e172182ab0722704bf0d94497f42b54",
-    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/21",
-    "originMainAtStart": "e51d0da3f677643998367fb512c6c3cfe2a6d301"
+    "branch": "codex/week3-waiver-refresh",
+    "applicationCommit": "f41df651b88d5bfa09ceba7e2ac7a874d09a18c5",
+    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/22",
+    "originMainAtStart": "f4771dc7860f46eb760cf9dac24dc22e7b214239"
   },
   "limitations": [
     "Missing source projections remain null. No fabricated historical DFS prices or projections.",
@@ -80,11 +87,11 @@
     "Market Pulse history uses provider observations rather than NFL game weeks.",
     "Yahoo tokens use an eight-hour encrypted HttpOnly browser session; no durable server-side account store or unattended imports.",
     "Latest verified DFS capture is 2026 Week 2. This release does not claim newer Week 3 salaries or projections.",
-    "Production browser Yahoo session is not connected. A fresh sign-in is required to verify live authorized league panels."
+    "No private Yahoo session was verified in this release."
   ],
-  "evidenceDirectory": "shared/operations/usage-sorting-20260929",
-  "releasePurpose": "Positional Usage sorting by statistic, any displayed historical week and direction; clickable week headers reorder full teammate blocks.",
-  "previousDeploymentId": "dpl_CXeJS8ouBdGcBiRAypJNtTXaQZyQ",
+  "evidenceDirectory": "shared/operations/week3-refresh-20260929",
+  "releasePurpose": "Complete all Week 3 actual statistics including Monday; publish sourced Week 4 waiver research with Week 3 actuals as the default.",
+  "previousDeploymentId": "dpl_75UEbVvf6gfiwu4VezBK6QoC1E7v",
   "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app",
   "credentialRedeployment": {
     "date": "2026-09-25",
@@ -119,10 +126,10 @@
     "liveAccountTest": "Pending fresh authorization of alternate application. Earlier app refreshed successfully but league read returned 403."
   },
   "previousVerifiedRelease": {
-    "deploymentId": "dpl_5ckzJgg72TBedwPyse2c3fVU2uWr",
-    "applicationCommit": "3f3cbec98a2111132c0c8459ab9637ad1d38017e",
-    "candidateUrl": "https://bowser-fantasy-football-ch84ht9y8-rbarbieri13s-projects.vercel.app",
-    "verifiedAt": "2026-09-29T23:59:17.299987+00:00"
+    "deploymentId": "dpl_5uBLjvNTc1ftVJ4JAu7wR3PLk7L9",
+    "applicationCommit": "e14d639c3e172182ab0722704bf0d94497f42b54",
+    "candidateUrl": "https://bowser-fantasy-football-dbar77cr2-rbarbieri13s-projects.vercel.app",
+    "verifiedAt": "2026-09-30T03:39:03.373881+00:00"
   },
   "commentary": {
     "capture": "2026-09-26T21:36:07.842Z",
@@ -143,9 +150,30 @@
       2,
       3
     ],
-    "completedGames": 47,
-    "playerStatRows": 1074,
-    "snapRows": 1247,
-    "preserved2025Sha256": "d3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869"
+    "completedGames": 48,
+    "playerStatRows": 1097,
+    "snapRows": 1273,
+    "preserved2025Sha256": "d3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869",
+    "playByPlayGames": 48,
+    "capturedAt": "2026-09-30T03:50:10.992360+00:00",
+    "rosterPlayers": 939
+  },
+  "waivers": {
+    "season": 2026,
+    "waiverWeek": 4,
+    "defaultStatisticsWeeks": [
+      3
+    ],
+    "targets": 106,
+    "individualPlayers": 93,
+    "defenses": 13,
+    "rankingPublishers": 5,
+    "faabPublishers": 6,
+    "distinctPublishers": 8,
+    "numericRankingCells": 181,
+    "primaryFaabCells": 112,
+    "capturedAt": "2026-09-30T03:52:19.871242+00:00",
+    "snapshot": "data/waivers-2026-week4.json",
+    "priorWeek2SnapshotPreserved": true
   }
 }
