@@ -49,7 +49,7 @@ test('manual team/position and comparison controls work, then a newly selected p
 
 test('sorts entire six-stat blocks by any week and metric, preserves ties, and keeps unavailable last',async()=>{
  const rows=[...people.slice(0,2),{...people[0],playerId:'c',name:'Receiver Missing',depthRank:3}];
- fetch.mockImplementation(async url=>String(url).includes('research-roster')?reply({data:rows}):reply({data:{groups:[{position:'WR',players:rows.map((p,i)=>({...p,history:slots.map((s,j)=>({...s,targets:i===2?null:(i===0?4:9),fantasyPoints:j===1?(i===0?0:i===1?-2:null):5}))}))}]},meta:{trendSlots:slots}}));
+ fetch.mockImplementation(async url=>String(url).includes('research-roster')?reply({data:rows}):reply({data:{groups:[{position:'WR',players:rows.map((p,i)=>({...p,history:slots.map((s,j)=>({...s,snaps:10,targets:i===2?null:(i===0?4:9),fantasyPoints:j===1?(i===0?0:i===1?-2:null):5}))}))}]},meta:{trendSlots:slots}}));
  render(<LhqProvider><PositionalUsage selected={rows[0]} season={2026} baseWeek={3}/></LhqProvider>);
  await screen.findByRole('button',{name:'Receiver Missing',exact:true});
  const names=()=>[...document.querySelectorAll('.lhq-usage-player>header .lhq-player')].map(n=>n.textContent);
@@ -85,4 +85,29 @@ test('week-header sorting works in comparison mode and survives view switches wi
  fireEvent.click(screen.getByRole('button',{name:'By player',exact:true}));
  expect(document.querySelector('.lhq-usage-player .lhq-player')).toHaveTextContent('Receiver Beta');
  expect(screen.getByRole('img',{name:/Receiver Beta: Targets/})).toHaveAccessibleName(/2025 W18: unavailable.*2026 W3: 0/);
+});
+
+
+test('hides zero-snap and missing-snap players in every metric and both views, but keeps partial-window participants',async()=>{
+ const rows=['Active','Zero','Missing','Outside'].map((name,i)=>({...people[0],playerId:String(i),name,depthRank:i+1}));
+ fetch.mockImplementation(async url=>String(url).includes('research-roster')?reply({data:rows}):reply({data:{groups:[{position:'WR',players:rows.map((p,i)=>({...p,history:[...slots.map((s,j)=>({...s,snaps:i===0&&j===4?1:i===2?null:0,targets:0,fantasyPoints:0})),{season:2025,week:16,snaps:70}]}))}]},meta:{trendSlots:slots}}));
+ render(<LhqProvider><PositionalUsage selected={rows[1]} season={2026} baseWeek={3}/></LhqProvider>);
+ await screen.findByRole('button',{name:'Active',exact:true});
+ expect(document.querySelectorAll('.lhq-usage-player')).toHaveLength(1);
+ expect(document.querySelectorAll('.lhq-usage-metric')).toHaveLength(6);
+ for(const name of ['Zero','Missing','Outside'])expect(screen.queryByRole('button',{name,exact:true})).not.toBeInTheDocument();
+ fireEvent.change(screen.getByLabelText('Usage sort statistic'),{target:{value:'targets'}});
+ fireEvent.click(screen.getByRole('button',{name:'Compare stat',exact:true}));
+ for(const metric of ['snaps','targets','receptions','receiving_yards','receiving_tds','fantasy_points']){
+  fireEvent.change(screen.getByLabelText('Usage comparison statistic'),{target:{value:metric}});
+  expect(document.querySelectorAll('.lhq-usage-comparison')).toHaveLength(1);
+  expect(screen.getAllByRole('img')).toHaveLength(1);
+ }
+});
+
+test('explains an empty position group when nobody recorded snaps in the displayed window',async()=>{
+ fetch.mockImplementation(async url=>String(url).includes('research-roster')?reply({data:people}):reply({data:{groups:[{position:'WR',players:[{...people[0],history:slots.map(s=>({...s,snaps:0}))}]}]},meta:{trendSlots:slots}}));
+ render(<LhqProvider><PositionalUsage selected={people[0]} baseWeek={3}/></LhqProvider>);
+ await screen.findByText('No LA WR players have recorded snaps in these five weeks.');
+ expect(screen.queryByRole('img')).not.toBeInTheDocument();
 });
