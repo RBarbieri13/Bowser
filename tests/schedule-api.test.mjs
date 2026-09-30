@@ -73,3 +73,25 @@ test('Vite schedule route shares the exact warehouse query contract', async () =
   await route({ method: 'GET', url: '/schedule?season=2026&week=3', headers: {} }, res, () => assert.fail('Schedule route must be handled'));
   assert.equal(res.statusCode, 200); assert.deepEqual(res.body, querySchedule(params('season=2026&week=3')));
 });
+
+test('research roster is public, read-only and independent of selected statistics weeks and DFS pool', () => {
+  const read = response(); handler({method:'GET',url:'/api/v1/meta?view=research-roster&season=2026&weeks=18&dfsSlate=none'},read);
+  assert.equal(read.statusCode,200);
+  assert.equal(read.body.meta.rosterSeason,2026);
+  assert(read.body.data.length>600);
+  assert.equal(new Set(read.body.data.map(r=>r.player_id)).size,read.body.data.length);
+  assert(new Set(read.body.data.map(r=>r.team)).size>=32);
+  assert(read.body.data.some(r=>r.player_display_name==='Puka Nacua'&&r.team==='LA'));
+  assert(read.body.data.some(r=>r.last_name));
+  const write=response();handler({method:'POST',url:'/api/v1/meta?view=research-roster'},write);assert.equal(write.statusCode,405);
+});
+
+test('requested positional usage anchor retains Week 3 and five shared slots across seasons', async () => {
+ const {queryOpportunityTracker}=await import('../server/stats-store.mjs');
+ const result=queryOpportunityTracker(params('season=2026&team=LA&weeks=3&games=5&historyAnchor=requested'));
+ assert.deepEqual(result.meta.trendSlots.map(s=>[s.season,s.week]),[[2025,17],[2025,18],[2026,1],[2026,2],[2026,3]]);
+ const adams=result.data.groups.find(g=>g.position==='WR').players.find(p=>p.name==='Davante Adams');
+ assert.equal(adams.history.at(-1).receivingYards,137); // Verified LA–DEN warehouse game, 2026 W3.
+ assert(result.data.groups.every(g=>g.players.every(p=>p.history.length===5)));
+ assert.throws(()=>queryOpportunityTracker(params('season=2026&team=LA&historyAnchor=invalid')),QueryValidationError);
+});

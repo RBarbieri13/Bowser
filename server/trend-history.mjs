@@ -21,9 +21,9 @@ export function completedRegularWeeks(db, season) {
   `).all(season).map((row) => row.week);
 }
 
-export function calendarSlots(sources, season, weeks, count) {
+export function calendarSlots(sources, season, weeks, count, requestedAnchor = false) {
   const ceiling = weeks.length ? Math.max(...weeks) : 18;
-  const anchorWeek = completedRegularWeeks(sources.find((source) => source.season === season).db, season)
+  const anchorWeek = requestedAnchor ? Math.min(18, ceiling) : completedRegularWeeks(sources.find((source) => source.season === season).db, season)
     .filter((week) => week <= ceiling).at(-1);
   if (!anchorWeek) return [];
   const slots = [];
@@ -75,8 +75,8 @@ export function readRankedWeeks(db, season, weeks, receptionBonus, seasonType = 
   `).all(receptionBonus, season, seasonType, seasonType, ...weeks);
 }
 
-export function alignedHistory(sources, { season, weeks = [], count = 10, receptionBonus = 1, seasonType = 'REG', exactWeeks = false }) {
-  const slots = exactWeeks ? [...new Set(weeks)].sort((a,b)=>a-b).map(week => ({key:`${season}-${week}`,season,week,seasonType:week>18?'POST':'REG',label:`${season} W${week}`})) : calendarSlots(sources, season, weeks, count);
+export function alignedHistory(sources, { season, weeks = [], count = 10, receptionBonus = 1, seasonType = 'REG', exactWeeks = false, requestedAnchor = false }) {
+  const slots = exactWeeks ? [...new Set(weeks)].sort((a,b)=>a-b).map(week => ({key:`${season}-${week}`,season,week,seasonType:week>18?'POST':'REG',label:`${season} W${week}`})) : calendarSlots(sources, season, weeks, count, requestedAnchor);
   const rows = sources.flatMap((source) => readRankedWeeks(source.db, source.season,
     slots.filter((slot) => slot.season === source.season).map((slot) => slot.week), receptionBonus, exactWeeks ? seasonType : 'REG'));
   const byPlayer = new Map();

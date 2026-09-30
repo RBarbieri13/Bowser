@@ -1,15 +1,15 @@
 {
   "status": "PASS",
-  "verifiedAt": "2026-09-29T03:53:04.882734+00:00",
+  "verifiedAt": "2026-09-29T23:59:17.299987+00:00",
   "publicUrl": "https://bowser-fantasy-football.vercel.app",
-  "candidateUrl": "https://bowser-fantasy-football-5p7c88kb0-rbarbieri13s-projects.vercel.app",
-  "deploymentId": "dpl_9vUmXh21CXKVgHsA6fBH1shCdpii",
+  "candidateUrl": "https://bowser-fantasy-football-ch84ht9y8-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_5ckzJgg72TBedwPyse2c3fVU2uWr",
   "deploymentState": "READY",
-  "applicationCommit": "80e6ea10ac2bd06c87f565ddaca7ad24c03c298b",
+  "applicationCommit": "3f3cbec98a2111132c0c8459ab9637ad1d38017e",
   "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-jev-20260926",
   "checks": {
     "npmRunCheck": "PASS",
-    "uiTests": 147,
+    "uiTests": 153,
     "localRegressionAssertions": 499,
     "localWindowAssertions": 12,
     "candidateRegressionAssertions": 499,
@@ -17,11 +17,12 @@
     "publicRegressionAssertions": 499,
     "publicWindowAssertions": 12,
     "previewAliasWindowAssertions": 12,
-    "secondVerifier": "PASS: independent read-only API verifier and real-data browser readback",
-    "publicBrowser": "PASS: Monday Week 2 53-player NYG/LA salary pool; Base 3 / count 3; exact three-week cumulative values and 3 bars; eligible game highlighted first; no alerts",
+    "secondVerifier": "PASS: independent read-only API verification plus sourced browser comparisons",
+    "publicBrowser": "PASS: Positional Usage By player and Compare stat; selected team/position; five common slots through Base week; hidden sidebar after reload; refined columns and depth selectors",
     "warehouseAndArchivesUnchanged": true,
     "yahooPrivateData": "Not accessed or changed in this release",
-    "evidenceDirectory": "shared/operations/independent-weeks-20260928"
+    "evidenceDirectory": "shared/operations/player-columns-20260929",
+    "positionalUsage": "PASS: four position groups, 27 Rams players with five aligned slots, sourced Davante Week 3 receiving yards 137; independent roster 937 players"
   },
   "dfs": {
     "season": 2026,
@@ -69,10 +70,10 @@
   },
   "githubSync": {
     "status": "Release branch pushed; PR is authoritative for merge status",
-    "branch": "codex/player-stat-dfs-windows",
-    "applicationCommit": "80e6ea10ac2bd06c87f565ddaca7ad24c03c298b",
-    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/19",
-    "originMainAtStart": "666478b414e31954b17a7efe371c6d7ca7f1a4c0"
+    "branch": "codex/player-columns-depth-controls",
+    "applicationCommit": "3f3cbec98a2111132c0c8459ab9637ad1d38017e",
+    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/20",
+    "originMainAtStart": "5318e1ab74122fe26a295625ed4e1d3290a9ee95"
   },
   "limitations": [
     "Missing source projections remain null. No fabricated historical DFS prices or projections.",
@@ -82,9 +83,9 @@
     "Latest verified DFS capture is 2026 Week 2. This release does not claim newer Week 3 salaries or projections.",
     "Production browser Yahoo session is not connected. A fresh sign-in is required to verify live authorized league panels."
   ],
-  "evidenceDirectory": "shared/operations/independent-weeks-20260928",
-  "releasePurpose": "Independent statistical Base week / Weeks back and DFS week / slate controls; exact source eligibility and intersecting matchup filters; statistics-only toggle.",
-  "previousDeploymentId": "dpl_9Sgw1ZU2gNsdEfiFi9etBVWGCne3",
+  "evidenceDirectory": "shared/operations/player-columns-20260929",
+  "releasePurpose": "Positional Usage sidebar with shared five-week teammate comparisons, refined Player Database columns and section controls, and independent depth-chart research selectors.",
+  "previousDeploymentId": "dpl_DJEqgAjEuKARmt81PsEaKQ31RA4y",
   "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app",
   "credentialRedeployment": {
     "date": "2026-09-25",
@@ -119,10 +120,10 @@
     "liveAccountTest": "Pending fresh authorization of alternate application. Earlier app refreshed successfully but league read returned 403."
   },
   "previousVerifiedRelease": {
-    "deploymentId": "dpl_9Sgw1ZU2gNsdEfiFi9etBVWGCne3",
-    "applicationCommit": "01e0a86265da9b0e9e9d917d317f3ee5b33a6a72",
-    "candidateUrl": "https://bowser-fantasy-football-g8tyfs1yy-rbarbieri13s-projects.vercel.app",
-    "verifiedAt": "2026-09-29T00:46:57.674173+00:00"
+    "deploymentId": "dpl_9vUmXh21CXKVgHsA6fBH1shCdpii",
+    "applicationCommit": "80e6ea10ac2bd06c87f565ddaca7ad24c03c298b",
+    "candidateUrl": "https://bowser-fantasy-football-5p7c88kb0-rbarbieri13s-projects.vercel.app",
+    "verifiedAt": "2026-09-29T03:53:04.882734+00:00"
   },
   "commentary": {
     "capture": "2026-09-26T21:36:07.842Z",

@@ -151,3 +151,23 @@ Production verification: the permanent Bowser URL passed 499 data assertions and
 | Layout | Browser confirmed no document overflow at 1920px and 750px; table scrolling remains internal. Selected-game visibility is preserved by placing eligible slate games first. |
 
 `npm run check` passed with 147 UI tests; exact-range API regression and three interaction tests cover coupled filters, role salaries, unmatched salary identities, DFS-off reset and unavailable future weeks. No warehouse, DFS archives, account credentials or private Yahoo data changed. Screenshots reside under ignored `artifacts/independent-weeks-20260928/`; public verifier evidence is stored in `shared/operations/independent-weeks-20260928/`.
+
+## Player Database refinement — September 29, 2026
+
+| Area | Verified behavior | Evidence |
+| --- | --- | --- |
+| Player Database game fields | No Kick column; Team/Opponent expose Base-week date and Eastern kickoff on hover/focus | Tooltip regression test; schedule-backed date readback |
+| Player Database derived metrics | Avg Fpts appears only with count > 1; selected-slot denominator; incomplete imports unavailable. DFS Value follows actual selected capture, immediately after Proj | 151 UI tests; Davante Adams W1–3 total 65.8 / 3 = 21.9; Week 2 Classic 13.3 / 5.9 = 2.25 |
+| Density and section controls | Team next to DST with matching 15px typography. 18px section restore rails, adjacent widths retained, subtle 1px group rules | Browser at measured CSS 1920×1080; collapse/restore regression |
+| Depth research | Team first, search next, player selector last. Independent public roster, surname sorting, scoped search, source season labeled | Rams + puka returns only Puka Nacua; all-team roster endpoint tests |
+| Shared grid / other routes | Section-boundary classes opt-in; existing week boundaries, pinning, sorting and resizing preserved | Full UI and production packaging suites |
+
+The comparison uses the established LineupHQ implementation and Robert's September 29 changes. No warehouse, DFS archives, private Yahoo data, credentials or Player Card v2 changes.
+
+### Positional Usage addition
+
+The new sidebar panel provides team/position selectors, follows the selected player's sourced roster context, and has two dense views: By player (all relevant metrics under official depth labels) and Compare stat (one metric for all teammates). Values are printed above compact shared-scale bars; five common week headings avoid repeating dates in every row. Missing/bye slots remain dashes and actual zeroes remain zero. Selected players are highlighted; other player blocks can collapse. The independent five-week history includes Week 3 even while another game in that NFL week is unfinished, without changing the Opportunity Tracker's default anchor.
+
+Full `npm run check` passed with 153 UI tests. Real-data browser readback verified both Positional Usage views, LA/WR selection, five aligned slots through Week 3, and 137 receiving yards for Davante Adams in the final slot. Independent local API verifiers passed 499 data and 12 window assertions.
+
+Production release: permanent Bowser passed 499 data assertions, 12 independent-window assertions, and the four-position/937-roster readback. Preview alias passed the window verifier. The live browser confirmed both usage layouts and hidden sidebar on reload. Evidence: `shared/operations/player-columns-20260929/`.

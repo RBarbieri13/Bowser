@@ -44,3 +44,31 @@ test('selected player statistics sum exact weeks including real zero and exclude
  expect(screen.queryByText('1,400')).toBeNull();
  expect(screen.getByText('2 sourced games in selected range')).toBeInTheDocument();
 });
+
+test('depth controls list all roster players by surname, filter team first, and search within it',async()=>{
+ const roster=[{player_id:'a',player_display_name:'Zach Adams',last_name:'Adams',position:'WR',team:'LA'},{player_id:'b',player_display_name:'Aaron Brown',last_name:'Brown',position:'WR',team:'BUF'},{player_id:'c',player_display_name:'Bob Young Jr.',last_name:'Young',position:'QB',team:'LA'}];
+ vi.stubGlobal('fetch',vi.fn(async url=>reply(String(url).includes('research-roster')?{data:roster,meta:{rosterSeason:2026}}:String(url).includes('opportunity-tracker')?{data:{groups:[]}}:{teams:['LA','BUF']})));
+ const onSelect=vi.fn();render(<LhqProvider><PlayerResearch kind="depth" rows={[player]} onSelect={onSelect} {...props}/></LhqProvider>);
+ const select=screen.getByLabelText('Research player');await waitFor(()=>expect(select.options).toHaveLength(4));
+ expect([...select.options].slice(1).map(o=>o.value)).toEqual(['a','b','c']);
+ expect([...document.querySelectorAll('.lhq-research-controls select')][0]).toBe(screen.getByLabelText('Research team'));
+ fireEvent.change(screen.getByLabelText('Research team'),{target:{value:'LA'}});
+ expect([...select.options].slice(1).map(o=>o.value)).toEqual(['a','c']);
+ fireEvent.change(screen.getByLabelText('Search depth players'),{target:{value:'young'}});
+ expect([...select.options].slice(1).map(o=>o.value)).toEqual(['c']);
+ fireEvent.change(select,{target:{value:'c'}});expect(onSelect).toHaveBeenLastCalledWith(roster[2]);
+ fireEvent.change(screen.getByLabelText('Research team'),{target:{value:'BUF'}});
+ expect(select.options).toHaveLength(1);expect(screen.getByText(/No available players match/)).toBeInTheDocument();
+});
+
+test('value and window averages preserve unknowns, genuine zero and incomplete coverage',async()=>{
+ const {dfsValue,windowAverage}=await import('../src/lhq/playerWorkspace.js');
+ expect(dfsValue({draft_kings_projection:16.2,draft_kings_price:5400})).toBeCloseTo(3);
+ expect(dfsValue({draft_kings_projection:0,draft_kings_price:5400})).toBe(0);
+ expect(dfsValue({draft_kings_projection:null,draft_kings_price:5400})).toBeNull();
+ expect(dfsValue({draft_kings_projection:16,draft_kings_price:0})).toBeNull();
+ expect(windowAverage({fantasy_points:60,games_played:2},3)).toBe(20);
+ expect(windowAverage({fantasy_points:60},3,[2])).toBeNull();
+ expect(windowAverage({fantasy_points:null},3)).toBeNull();
+ expect(windowAverage({fantasy_points:0},3)).toBe(0);
+});

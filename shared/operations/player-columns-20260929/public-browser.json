@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "url": "https://bowser-fantasy-football.vercel.app/#/players",
+  "checkedAt": "2026-09-29T23:59:17.343737+00:00",
+  "checks": [
+    "No Kick column; DFS uppercase and Value after Proj",
+    "Base 3 and Weeks back 3, separate DFS Week 2",
+    "Davante 65.8 cumulative points, 21.9 average, 2.25 DFS value",
+    "LA/WR context follows selected Davante Adams",
+    "By player includes snaps, targets, receptions, receiving yards, TDs and PPR with five common slots",
+    "Compare stat lists sourced WR depth order and shared scaled bars",
+    "2025 W17-W18 plus 2026 W1-W3; sourced Davante W3 receiving yards 137",
+    "Sidebar hidden after production reload",
+    "1920x1080 CSS viewport comparison capture"
+  ],
+  "screenshot": "artifacts/player-columns-20260929/public-usage-compare.png"
+}

@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "url": "https://bowser-fantasy-football.vercel.app",
+  "checkedAt": "2026-09-29T23:57:13.710314+00:00",
+  "groups": [
+    {
+      "position": "QB",
+      "players": 4
+    },
+    {
+      "position": "RB",
+      "players": 5
+    },
+    {
+      "position": "WR",
+      "players": 11
+    },
+    {
+      "position": "TE",
+      "players": 7
+    }
+  ],
+  "trendSlots": [
+    {
+      "key": "2025-17",
+      "season": 2025,
+      "week": 17,
+      "seasonType": "REG",
+      "label": "2025 W17"
+    },
+    {
+      "key": "2025-18",
+      "season": 2025,
+      "week": 18,
+      "seasonType": "REG",
+      "label": "2025 W18"
+    },
+    {
+      "key": "2026-1",
+      "season": 2026,
+      "week": 1,
+      "seasonType": "REG",
+      "label": "2026 W1"
+    },
+    {
+      "key": "2026-2",
+      "season": 2026,
+      "week": 2,
+      "seasonType": "REG",
+      "label": "2026 W2"
+    },
+    {
+      "key": "2026-3",
+      "season": 2026,
+      "week": 3,
+      "seasonType": "REG",
+      "label": "2026 W3"
+    }
+  ],
+  "davanteWeek3ReceivingYards": 137,
+  "researchRosterPlayers": 937
+}
