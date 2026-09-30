@@ -1,28 +1,20 @@
 {
   "status": "PASS",
-  "verifiedAt": "2026-09-30T04:06:52.723Z",
+  "verifiedAt": "2026-09-30T04:24:27.841Z",
   "publicUrl": "https://bowser-fantasy-football.vercel.app",
-  "candidateUrl": "https://bowser-fantasy-football-8a3zjre1l-rbarbieri13s-projects.vercel.app",
-  "deploymentId": "dpl_571ZiciJY81SHAhuz2kEkNRLxEBg",
+  "candidateUrl": "https://bowser-fantasy-football-jmiok41x3-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_6BBwoprqYciFoeJyifpg9Wz7KR6p",
   "deploymentState": "READY",
-  "applicationCommit": "f41df651b88d5bfa09ceba7e2ac7a874d09a18c5",
+  "applicationCommit": "1b12595f9abac3124329baf6b4cbe19bedeb3753",
   "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-jev-20260926",
   "checks": {
     "npmRunCheck": "PASS",
-    "uiTests": 156,
-    "localWeek3Assertions": 2751,
-    "candidateWeek3Assertions": 2751,
-    "publicWeek3Assertions": 2751,
-    "localRegressionAssertions": 499,
+    "uiTests": 158,
     "candidateRegressionAssertions": 499,
-    "publicRegressionAssertions": 499,
-    "candidateWindowAssertions": 12,
-    "publicWindowAssertions": 12,
-    "previewAliasWindowAssertions": 12,
-    "publicBrowser": "PASS: Week 4 waivers, Week 3 statistics, 106 targets, sidebar hidden, no browser errors",
-    "historicalWarehouseAndDfsArchivesUnchanged": true,
-    "yahooPrivateData": "Not accessed or changed in this release",
-    "evidenceDirectory": "shared/operations/week3-refresh-20260929"
+    "publicBrowser": "PASS: both usage views show seven Rams receivers with recorded snaps and exclude three without recorded snaps",
+    "warehouseAndArchivesUnchanged": true,
+    "yahooPrivateData": "Not accessed or changed",
+    "evidenceDirectory": "shared/operations/usage-active-20260929"
   },
   "dfs": {
     "season": 2026,
@@ -76,10 +68,10 @@
   },
   "githubSync": {
     "status": "Release branch pushed; PR is authoritative for merge status",
-    "branch": "codex/week3-waiver-refresh",
-    "applicationCommit": "f41df651b88d5bfa09ceba7e2ac7a874d09a18c5",
-    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/22",
-    "originMainAtStart": "f4771dc7860f46eb760cf9dac24dc22e7b214239"
+    "branch": "codex/usage-active-players",
+    "applicationCommit": "1b12595f9abac3124329baf6b4cbe19bedeb3753",
+    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/23",
+    "originMainAtStart": "ef03202d7a4545530d87d007bc446456b72618b1"
   },
   "limitations": [
     "Missing source projections remain null. No fabricated historical DFS prices or projections.",
@@ -89,9 +81,9 @@
     "Latest verified DFS capture is 2026 Week 2. This release does not claim newer Week 3 salaries or projections.",
     "No private Yahoo session was verified in this release."
   ],
-  "evidenceDirectory": "shared/operations/week3-refresh-20260929",
-  "releasePurpose": "Complete all Week 3 actual statistics including Monday; publish sourced Week 4 waiver research with Week 3 actuals as the default.",
-  "previousDeploymentId": "dpl_75UEbVvf6gfiwu4VezBK6QoC1E7v",
+  "evidenceDirectory": "shared/operations/usage-active-20260929",
+  "releasePurpose": "Hide Positional Usage players without recorded snaps in any of the five displayed weeks across all metrics and both views.",
+  "previousDeploymentId": "dpl_571ZiciJY81SHAhuz2kEkNRLxEBg",
   "additionalPublicUrl": "https://fantasy-football-stats-preview.vercel.app",
   "credentialRedeployment": {
     "date": "2026-09-25",
@@ -126,10 +118,10 @@
     "liveAccountTest": "Pending fresh authorization of alternate application. Earlier app refreshed successfully but league read returned 403."
   },
   "previousVerifiedRelease": {
-    "deploymentId": "dpl_5uBLjvNTc1ftVJ4JAu7wR3PLk7L9",
-    "applicationCommit": "e14d639c3e172182ab0722704bf0d94497f42b54",
-    "candidateUrl": "https://bowser-fantasy-football-dbar77cr2-rbarbieri13s-projects.vercel.app",
-    "verifiedAt": "2026-09-30T03:39:03.373881+00:00"
+    "deploymentId": "dpl_571ZiciJY81SHAhuz2kEkNRLxEBg",
+    "applicationCommit": "f41df651b88d5bfa09ceba7e2ac7a874d09a18c5",
+    "candidateUrl": "https://bowser-fantasy-football-8a3zjre1l-rbarbieri13s-projects.vercel.app",
+    "verifiedAt": "2026-09-30T04:06:52.723Z"
   },
   "commentary": {
     "capture": "2026-09-26T21:36:07.842Z",

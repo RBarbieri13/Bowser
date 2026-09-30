@@ -1,0 +1,19 @@
+{
+  "url": "http://127.0.0.1:5173/#/players",
+  "verifiedAt": "2026-09-30T04:18:31.786Z",
+  "players": [
+    "Puka Nacua",
+    "Davante Adams",
+    "Jordan Whittington",
+    "Konata Mumpfield",
+    "Xavier Smith",
+    "Tutu Atwell",
+    "Alex Bachman"
+  ],
+  "excluded": [
+    "CJ Daniels",
+    "Brennan Presley",
+    "Tru Edwards"
+  ],
+  "basis": "Five aligned NFL weeks ending 2026 W3; Rams WR; comparison and by-player views match sourced eligibility"
+}
