@@ -1,21 +1,21 @@
 {
   "status": "PASS",
-  "verifiedAt": "2026-09-30T05:07:26.387970+00:00",
+  "verifiedAt": "2026-09-30T06:14:48.134360+00:00",
   "publicUrl": "https://bowser-fantasy-football.vercel.app",
-  "candidateUrl": "https://bowser-fantasy-football-r8prl4tke-rbarbieri13s-projects.vercel.app",
-  "deploymentId": "dpl_7DnfMtKpqHPTWAskamuvDgsuwyZU",
+  "candidateUrl": "https://bowser-fantasy-football-cdukp7mec-rbarbieri13s-projects.vercel.app",
+  "deploymentId": "dpl_ABPNy6qTPQnmVbjLdcHL2W15rYCu",
   "deploymentState": "READY",
-  "applicationCommit": "7b9c2a04edcc5c6149b9c8bfa96ef818a0d2b35c",
+  "applicationCommit": "6584d58937960f2b7ec752b096db4e86cf92a9d8",
   "applicationWorktree": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-jev-20260926",
   "checks": {
     "npmRunCheck": "PASS",
-    "uiTests": 173,
+    "uiTests": 172,
     "candidateRegressionAssertions": 499,
     "productionRegressionAssertions": 499,
-    "publicBrowser": "PASS: six NYG RB players, six metric blocks, twelve-pixel cells, source gaps, pinning, hidden-after-reload and active-tab restore. Anonymous Yahoo source explicitly unavailable on both target pages.",
+    "publicBrowser": "PASS: full-name tabs, bright Position Totals, keyboard End selects final panel; default hidden on load. Local all-seven-route and 400/240px checks also passed.",
     "warehouseAndArchivesUnchanged": true,
-    "yahooPrivateData": "No private account response captured; privacy and transaction logic covered by tests",
-    "evidenceDirectory": "shared/operations/usage-share-20260930"
+    "yahooPrivateData": "No private account read or capture; unchanged authorization and data paths.",
+    "evidenceDirectory": "shared/operations/sidebar-clarity-20260930"
   },
   "dfs": {
     "season": 2026,
@@ -68,11 +68,9 @@
     "uiPreservation": "September 27 LineupHQ layout and current AGENTS.md; data-only refresh; schedule unchanged"
   },
   "githubSync": {
-    "status": "Verified release branch pushed; PR is authoritative for merge status",
-    "branch": "codex/usage-share-tabs",
-    "applicationCommit": "7b9c2a04edcc5c6149b9c8bfa96ef818a0d2b35c",
-    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/24",
-    "originMainAtStart": "06723bca10975dfb57115ba38dfbd2ea3fbfd547"
+    "status": "Release branch pushed; PR authoritative for merge status",
+    "branch": "fix/sidebar-clarity-navigation",
+    "pullRequest": "https://github.com/RBarbieri13/Bowser/pull/25"
   },
   "limitations": [
     "Missing source projections remain null. No fabricated historical DFS prices or projections.",
@@ -120,10 +118,10 @@
     "liveAccountTest": "Pending fresh authorization of alternate application. Earlier app refreshed successfully but league read returned 403."
   },
   "previousVerifiedRelease": {
-    "deploymentId": "dpl_GN9fhNi4V6cNgtdtC3wATcYNXzR5",
-    "applicationCommit": "06723bca10975dfb57115ba38dfbd2ea3fbfd547",
-    "candidateUrl": "https://bowser-fantasy-football-5h9rgex8w-rbarbieri13s-projects.vercel.app",
-    "verifiedAt": "2026-09-30T04:24:27.841Z"
+    "deploymentId": "dpl_7DnfMtKpqHPTWAskamuvDgsuwyZU",
+    "applicationCommit": "7b9c2a04edcc5c6149b9c8bfa96ef818a0d2b35c",
+    "candidateUrl": "https://bowser-fantasy-football-r8prl4tke-rbarbieri13s-projects.vercel.app",
+    "verifiedAt": "2026-09-30T05:07:26.387970+00:00"
   },
   "commentary": {
     "capture": "2026-09-26T21:36:07.842Z",

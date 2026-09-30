@@ -1,0 +1,79 @@
+[
+  {
+    "arrows": 2,
+    "color": "rgb(255, 255, 255)",
+    "panel": "lhq-sidebar-tab-waivers-favorites",
+    "tabs": [
+      "Favorites (0)",
+      "Waiver options",
+      "Yahoo league research",
+      "Depth chart",
+      "Sources",
+      "Filters & settings"
+    ]
+  },
+  {
+    "arrows": 2,
+    "color": "rgb(255, 255, 255)",
+    "panel": "lhq-sidebar-tab-market-pulse-most",
+    "tabs": [
+      "Most added · 24h",
+      "Watch list (0)",
+      "Yahoo league research",
+      "Filters & settings",
+      "Source history & news"
+    ]
+  },
+  {
+    "arrows": 2,
+    "color": "rgb(255, 255, 255)",
+    "panel": "lhq-sidebar-tab-team-box-scores-latest",
+    "tabs": [
+      "Latest game",
+      "Position Totals",
+      "Markers & leagues",
+      "Filters & settings",
+      "Selected player · statistics",
+      "Depth chart",
+      "Playing time tracker",
+      "Team schedule",
+      "Slate salaries & lineup cards"
+    ]
+  },
+  {
+    "arrows": 2,
+    "color": "rgb(255, 255, 255)",
+    "panel": "lhq-sidebar-tab-opportunity-tracker-movers",
+    "tabs": [
+      "Biggest movers",
+      "Filters & settings",
+      "Depth chart",
+      "Team schedule",
+      "DraftKings lineup cards",
+      "Reading the tracker"
+    ]
+  },
+  {
+    "arrows": 2,
+    "color": "rgb(255, 255, 255)",
+    "panel": "lhq-sidebar-tab-league-hub-needed",
+    "tabs": [
+      "Information needed",
+      "Player exposure",
+      "Standings snapshot",
+      "League research",
+      "Filters & settings"
+    ]
+  },
+  {
+    "arrows": 2,
+    "color": "rgb(255, 255, 255)",
+    "panel": "lhq-sidebar-tab-yahoo-status",
+    "tabs": [
+      "Status",
+      "Privacy & scope",
+      "What unlocks",
+      "Filters & settings"
+    ]
+  }
+]
