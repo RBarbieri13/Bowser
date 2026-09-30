@@ -49,6 +49,9 @@ def main():
     checks['stats_and_snaps_joined'] = connection.execute('SELECT COUNT(*) FROM player_week_stats WHERE source_player_stats=1 AND source_snap_counts=0').fetchone()[0] == 0
     checks['week1_complete'] = connection.execute('SELECT COUNT(*) FROM games WHERE week=1 AND home_score IS NOT NULL AND away_score IS NOT NULL AND play_by_play_available=1').fetchone()[0] == 16
     checks['week1_all_teams'] = connection.execute('SELECT COUNT(DISTINCT team) FROM player_week_stats WHERE week=1').fetchone()[0] == 32
+    for week in (1, 2, 3):
+        checks[f'week{week}_all_16_games_complete'] = connection.execute('SELECT COUNT(*) FROM games WHERE week=? AND home_score IS NOT NULL AND away_score IS NOT NULL AND play_by_play_available=1', (week,)).fetchone()[0] == 16
+        checks[f'week{week}_all_32_teams_with_stats_and_snaps'] = connection.execute('SELECT COUNT(DISTINCT team) FROM player_week_stats WHERE week=? AND source_player_stats=1 AND source_snap_counts=1', (week,)).fetchone()[0] == 32
     checks['no_wrong_season'] = connection.execute('SELECT COUNT(*) FROM player_week_stats WHERE season<>2026').fetchone()[0] == 0
     checks['unknown_participation_is_null'] = report['participation_available'] is False and connection.execute('SELECT COUNT(*) FROM player_game_segments WHERE snaps IS NOT NULL').fetchone()[0] == 0
     checks['future_games_no_fake_segments'] = connection.execute('SELECT COUNT(*) FROM game_team_segments JOIN games USING(game_id) WHERE play_by_play_available=0').fetchone()[0] == 0
