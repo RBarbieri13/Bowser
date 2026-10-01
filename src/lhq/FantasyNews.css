@@ -113,3 +113,16 @@
 @media(max-width:1050px){.fn-workspace.tiles .fn-pane{height:350px;min-height:300px}.fn-workspace.tiles .fn-pane:only-child{height:550px}.fn-workspace.tiles .fn-pane-resize{display:block}.fn-row-source{width:112px;font-size:11px}.fn-row-identities{font-size:11px}.fn-row-source time{font-size:10px}.fn-row-source .fn-evidence{font-size:9px}.fn-pane-actions button{min-width:27px}.fn-headline-text{font-size:15px!important;line-height:20px}}
 @media(max-width:760px){.fn-workspace.tiles{grid-template-columns:minmax(0,1fr)!important}.fn-workspace.tiles .fn-pane{height:360px;min-height:300px}.fn-workspace.tiles .fn-pane.feed{height:430px}.fn-workspace.tiles .fn-pane-resize{display:none}.fn-headline-row{min-height:52px}.fn-headline-text{font-size:15px!important;line-height:20px}.fn-row-source{width:100px;font-size:11px}.fn-row-identities{font-size:11px}.fn-row-source time{font-size:10px}.fn-window-buttons button{font-size:12px}.fn-article-detail p{font-size:15px;line-height:22px}.fn-timestamps{font-size:11px;line-height:16px}.fn-source-entry time,.fn-source-entry small{font-size:11px;line-height:16px}}
 @media(pointer:coarse){.fn-pane-actions button{min-width:44px;min-height:44px}.fn-headline-row{min-height:64px}.fn-workspace.tiles .fn-pane{min-height:300px}.fn-layout-label select{min-height:44px}}
+
+/* Rows respond to their own pane width when Columns or resized tiles get narrow. */
+.fn-stream{container-type:inline-size;container-name:fn-news-stream;min-width:0}
+.fn-headline-text{display:block;min-width:0;max-width:100%;width:100%;overflow-wrap:anywhere}
+.fn-headline-text i{margin-right:6px}
+.fn-row-identities{min-width:0;max-width:100%;width:100%;overflow-wrap:anywhere}
+@container fn-news-stream (max-width:460px){
+  .fn-headline-row{display:grid;grid-template-columns:minmax(0,1fr) 26px;align-items:start;gap:2px 8px}
+  .fantasy-news .fn-headline{grid-column:1;grid-row:1;width:100%;min-width:0}
+  .fn-row-source{grid-column:1;grid-row:2;display:flex;flex-direction:row;align-items:baseline;flex-wrap:wrap;gap:0 8px;width:auto;min-width:0;max-width:100%;overflow-wrap:anywhere}
+  .fantasy-news .fn-inspect{grid-column:2;grid-row:1 / span 2;align-self:center}
+  .fn-stream-columns span:last-child{display:none}
+}
