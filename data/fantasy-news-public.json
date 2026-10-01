@@ -1,0 +1,906 @@
+{
+  "version": 1,
+  "scope": "public_nfl_news",
+  "mode": "repository_public_snapshot",
+  "checkedAt": "2026-10-01T18:06:00Z",
+  "updatedAt": "2026-10-01T21:27:27Z",
+  "revision": "bowser-public-2026-10-01-initial-publication",
+  "events": [
+    {
+      "eventId": "bal-lamar-jackson-practice-2026-10-01",
+      "player": {
+        "playerId": null,
+        "name": "Lamar Jackson",
+        "team": "BAL",
+        "position": "QB"
+      },
+      "headline": "Jackson reportedly present for start of Thursday practice",
+      "summary": "RotoWire relays Cordell Woodland's report that Jackson was participating at the beginning of practice while dealing with a back issue.",
+      "fantasyAnalysis": "A positive participation signal, but the report does not establish full participation or game clearance. No replacement pickup or drop follows from it alone. The original linked X post could not be retrieved.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:20:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Back",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "2026-10-01 (publication clock and timezone unavailable)",
+          "publishedDate": "2026-10-01",
+          "url": "https://www.rotowire.com/football/headlines/lamar-jackson-injury-present-for-start-of-thursdays-practice-640139",
+          "isOriginalSource": false
+        }
+      ]
+    },
+    {
+      "eventId": "buf-coleman-dnp-20260930",
+      "player": {
+        "playerId": null,
+        "name": "Keon Coleman",
+        "team": "BUF",
+        "position": "WR"
+      },
+      "headline": "Coleman did not participate Wednesday",
+      "summary": "Buffalo lists Coleman DNP with an ankle injury in its Wednesday report. That practice designation does not itself rule him out.",
+      "fantasyAnalysis": null,
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:09:59Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "ankle",
+        "practiceStatus": "DNP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New England Patriots",
+          "url": "https://www.patriots.com/news/week-4-injury-report-patriots-at-bills2",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026, 5:12 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "author": "New England Patriots",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "buf-moore-limited-20260930",
+      "player": {
+        "playerId": null,
+        "name": "DJ Moore",
+        "team": "BUF",
+        "position": "WR"
+      },
+      "headline": "Moore limited Wednesday",
+      "summary": "Buffalo lists Moore limited with a shoulder injury. No final game status appears in this report.",
+      "fantasyAnalysis": null,
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:09:59Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "shoulder",
+        "practiceStatus": "LP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New England Patriots",
+          "url": "https://www.patriots.com/news/week-4-injury-report-patriots-at-bills2",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026, 5:12 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "author": "New England Patriots",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "gb-jayden-reed-ir-2026-09-30",
+      "player": {
+        "playerId": null,
+        "name": "Jayden Reed",
+        "team": "GB",
+        "position": "WR"
+      },
+      "headline": "Reed reportedly out for 2026 with season-ending neck surgery",
+      "summary": "September 30 reporting attributes season-ending neck surgery to Matt LaFleur. This corrects the earlier IR-only summary; an official press-conference transcript has not been verified.",
+      "fantasyAnalysis": "Do not add Reed for a return in 2026. Storing him is solely a keeper/dynasty decision under actual retention rules and roster cost. RotoWire relays Skyy Moore as the expected No. 3 receiver behind Christian Watson and Matthew Golden; verify continuing routes and targets before an add.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-10-01T18:16:47Z",
+      "checkedAt": "2026-10-01T18:06:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Neck",
+        "practiceStatus": null,
+        "gameStatus": "IR",
+        "expectedReturn": "Out for the remainder of the 2026 season; later recovery timeline unresolved"
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated September 30, 2026 at 11:25am (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "url": "https://www.rotowire.com/football/headlines/jayden-reed-injury-needs-neck-surgery-out-for-season-639975",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-01T18:06:00Z"
+        }
+      ]
+    },
+    {
+      "eventId": "hou-nico-collins-padded-practice-2026-10-01",
+      "player": {
+        "playerId": null,
+        "name": "Nico Collins",
+        "team": "HOU",
+        "position": "WR"
+      },
+      "headline": "Collins reportedly taking part in Thursday's padded practice",
+      "summary": "RotoWire cites ESPN's DJ Bien-Aime reporting Collins participating in padded practice with a hamstring issue. The official Thursday participation level was not established.",
+      "fantasyAnalysis": "Treat Collins as a conditional lineup option and retain a healthy backup until game availability and workload are clear. The original linked X post could not be retrieved.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T16:43:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "October 1, 2026 at 9:29 AM (timezone unspecified)",
+          "publishedDate": "2026-10-01",
+          "url": "https://www.rotowire.com/football/headlines/nico-collins-injury-practicing-again-thursday-640135",
+          "isOriginalSource": false
+        }
+      ]
+    },
+    {
+      "eventId": "la-nacua-expectation-20260930",
+      "player": {
+        "playerId": null,
+        "name": "Puka Nacua",
+        "team": "LA",
+        "position": "WR"
+      },
+      "headline": "McVay expects Nacua to play in Week 4",
+      "summary": "The head coach said he expects Nacua to play and planned limited Wednesday practice. This is a coach’s expectation, not an official active declaration.",
+      "fantasyAnalysis": null,
+      "eventType": "COACH_COMMENT",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:09:59Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "hip / groin",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Coach expects Week 4; not final clearance"
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Rams",
+          "url": "https://www.therams.com/news/rams-injury-updates-sean-mcvay-expects-puka-nacua-to-play-against-eagles-in-week-4-2026",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026, 2:56 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "author": "Stu Jackson",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "ne-maye-full-20260930",
+      "player": {
+        "playerId": null,
+        "name": "Drake Maye",
+        "team": "NE",
+        "position": "QB"
+      },
+      "headline": "Maye a full Wednesday participant",
+      "summary": "The official report lists full participation with a right-shoulder injury. This practice level is distinct from final game availability.",
+      "fantasyAnalysis": null,
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:09:59Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "right shoulder",
+        "practiceStatus": "FP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New England Patriots",
+          "url": "https://www.patriots.com/news/week-4-injury-report-patriots-at-bills2",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026, 5:12 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "author": "New England Patriots",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "nyj-breece-hall-wednesday-dnp-2026-09-30",
+      "player": {
+        "playerId": null,
+        "name": "Breece Hall",
+        "team": "NYJ",
+        "position": "RB"
+      },
+      "headline": "Hall's quad injury puts Allen and Davis in focus",
+      "summary": "Hall did not practice Wednesday with a quad injury. Jets reporting identifies Braelon Allen and Isaiah Davis as replacement options; Allen has third-down duties and Davis had no carries through three games.",
+      "fantasyAnalysis": "Allen is the clearer conditional beneficiary if Hall is ruled out, but Davis could share the work. A Wednesday absence is not a final out designation and does not establish a bell-cow replacement.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T16:03:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Quad",
+        "practiceStatus": "DNP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New York Jets",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026 at 7:46 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "url": "https://www.newyorkjets.com/news/jets-injury-report-week-4-vs-bears-wednesday-09-30-2026",
+          "isOriginalSource": true
+        },
+        {
+          "sourceName": "New York Jets",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026 at 4:00 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "url": "https://www.newyorkjets.com/news/braelon-allen-isaiah-davis-may-enter-the-spotlight-after-breece-hall-injury-09-30-2026",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "nyj-kenyon-sadiq-week3-performance-2026-09-27",
+      "player": {
+        "playerId": null,
+        "name": "Kenyon Sadiq",
+        "team": "NYJ",
+        "position": "TE"
+      },
+      "headline": "Sadiq's Week 3 performance puts continuing usage in focus",
+      "summary": "The Jets' October 1 article describes seven catches, 105 yards and a touchdown in the September 27 game. Wednesday's report lists him limited with a back injury.",
+      "fantasyAnalysis": "Monitor continuing routes, targets and health before a lineup or drop decision. One strong game is not proof of a permanent role. The article is newly published; the performance happened in Week 3.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T16:03:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Back",
+        "practiceStatus": "LP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New York Jets",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 1, 2026 at 11:05 AM (timezone unspecified)",
+          "publishedDate": "2026-10-01",
+          "url": "https://www.newyorkjets.com/news/kenyon-sadiq-pepsi-nfl-rookie-of-the-week-10-01-2026",
+          "isOriginalSource": true
+        },
+        {
+          "sourceName": "New York Jets",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026 at 7:46 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "url": "https://www.newyorkjets.com/news/jets-injury-report-week-4-vs-bears-wednesday-09-30-2026",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "phi-goedert-estimated-dnp-20260930",
+      "player": {
+        "playerId": null,
+        "name": "Dallas Goedert",
+        "team": "PHI",
+        "position": "TE"
+      },
+      "headline": "Goedert estimated DNP in a walkthrough",
+      "summary": "Philadelphia’s Wednesday report estimated nonparticipation for Goedert’s knee issue. The team held a walkthrough; this was not a full practice.",
+      "fantasyAnalysis": null,
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:09:59Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "knee",
+        "practiceStatus": "Estimated DNP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-injury-report-2026-nfl-week-4-devonta-smith-puka-nacua",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026, 7:25 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "author": "Chris McPherson",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "phi-smith-estimated-dnp-20260930",
+      "player": {
+        "playerId": null,
+        "name": "DeVonta Smith",
+        "team": "PHI",
+        "position": "WR"
+      },
+      "headline": "Smith estimated DNP in a walkthrough",
+      "summary": "Philadelphia estimated Smith would not have practiced Wednesday because of a hamstring issue. Actual later practice participation and final game status still require a separate check.",
+      "fantasyAnalysis": null,
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:09:59Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "hamstring",
+        "practiceStatus": "Estimated DNP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-injury-report-2026-nfl-week-4-devonta-smith-puka-nacua",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026, 7:25 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "author": "Chris McPherson",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "pit-rico-dowdle-week4-out-2026-09-30",
+      "player": {
+        "playerId": null,
+        "name": "Rico Dowdle",
+        "team": "PIT",
+        "position": "RB"
+      },
+      "headline": "Dowdle ruled out for the October 1 game",
+      "summary": "Pittsburgh's final injury report rules Dowdle out with a toe injury for the October 1 game against Cleveland.",
+      "fantasyAnalysis": "Jaylen Warren is the clearest likely workload beneficiary, without an established exclusive backfield or precise points projection. Dowdle is a bench or eligible-IR decision for this game, not an automatic permanent drop.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T16:03:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Toe",
+        "practiceStatus": null,
+        "gameStatus": "OUT",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Pittsburgh Steelers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026 at 3:05 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "url": "https://www.steelers.com/news/week-4-injury-report-browns",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "pit-warren-usage-20260930",
+      "player": {
+        "playerId": null,
+        "name": "Jaylen Warren",
+        "team": "PIT",
+        "position": "RB"
+      },
+      "headline": "Warren carried 17 times in Dowdle’s previous absence",
+      "summary": "The team recounts Warren’s Week 3 workload: 17 carries and three receptions with Dowdle absent. This describes the previous game; it does not guarantee the next game’s workload.",
+      "fantasyAnalysis": null,
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:09:59Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Pittsburgh Steelers",
+          "url": "https://www.steelers.com/news/week-4-injury-report-browns",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026, 3:05 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "author": "Teresa Varley",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "sea-zach-charbonnet-return-window-2026-10-01",
+      "player": {
+        "playerId": null,
+        "name": "Zach Charbonnet",
+        "team": "SEA",
+        "position": "RB"
+      },
+      "headline": "Charbonnet opens practice window; Week 4 remains unavailable",
+      "summary": "Seattle designated Charbonnet to return to practice, opening a 21-day window. The team says he must miss one more game before activation from PUP is possible.",
+      "fantasyAnalysis": "His eventual activation could reduce Jadarian Price's workload. Monitor activation and actual usage before a major downgrade; this creates no immediate Week 4 replacement. A stash depends on current availability and league eligibility.",
+      "eventType": "RETURN",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:19:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee",
+        "practiceStatus": null,
+        "gameStatus": "PUP",
+        "expectedReturn": "Must miss Week 4; activation date unresolved"
+      },
+      "sources": [
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 1, 2026 at 9:29 AM (timezone unspecified)",
+          "publishedDate": "2026-10-01",
+          "url": "https://www.seahawks.com/news/seahawks-rb-zach-charbonnet-designated-to-return-to-practice",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "tb-chris-godwin-practice-return-2026-10-01",
+      "player": {
+        "playerId": null,
+        "name": "Chris Godwin",
+        "team": "TB",
+        "position": "WR"
+      },
+      "headline": "Godwin reportedly returns to Thursday practice",
+      "summary": "RotoWire attributes Godwin's practice return to Greg Auman of Fox Sports. The report does not establish a full-versus-limited participation level for his ankle issue.",
+      "fantasyAnalysis": "A positive availability signal; wait for official participation and final designation before treating him as cleared. No replacement receiver is an automatic add or drop from this observation. The original linked X post did not load.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T16:16:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "2026-10-01 (publication clock and timezone unavailable)",
+          "publishedDate": "2026-10-01",
+          "url": "https://www.rotowire.com/football/headlines/chris-godwin-injury-returns-to-practice-thursday-640132",
+          "isOriginalSource": false
+        }
+      ]
+    },
+    {
+      "eventId": "tb-jalon-daniels-week4-start-2026-09-30",
+      "player": {
+        "playerId": null,
+        "name": "Jalon Daniels",
+        "team": "TB",
+        "position": "QB"
+      },
+      "headline": "Tampa Bay names Jalon Daniels to start while Mayfield is sidelined",
+      "summary": "The team's September 30 report says Jalon Daniels will start against Green Bay. Its October 1 preview says Baker Mayfield is expected to miss at least three games with his thumb injury.",
+      "fantasyAnalysis": "Daniels offers a short-term starting-quarterback opportunity in formats that value additional QBs. Rookie fantasy output is uncertain, and Mayfield's recovery expectation is not a guaranteed timetable.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T16:16:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026 at 4:39 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "url": "https://www.buccaneers.com/news/jalon-daniels-baker-mayfield-told-me-to-just-be-myself",
+          "isOriginalSource": true
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 1, 2026 at 9:00 AM (timezone unspecified)",
+          "publishedDate": "2026-10-01",
+          "url": "https://www.buccaneers.com/news/2026-game-preview-packers-buccaneers-week-4",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "ten-tony-pollard-practice-expectation-2026-10-01",
+      "player": {
+        "playerId": null,
+        "name": "Tony Pollard",
+        "team": "TEN",
+        "position": "RB"
+      },
+      "headline": "Pollard expected to practice Thursday",
+      "summary": "RotoWire attributes to head coach Robert Saleh, through Jim Wyatt, an expectation that Pollard will practice with his foot injury.",
+      "fantasyAnalysis": "Await actual participation before changing the backfield outlook. This expectation is not a full-practice designation or game clearance. The original linked X post could not be retrieved.",
+      "eventType": "COACH_COMMENT",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:20:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "October 1, 2026 at 9:53 AM (timezone unspecified)",
+          "publishedDate": "2026-10-01",
+          "url": "https://www.rotowire.com/football/headlines/tony-pollard-injury-set-to-practice-thursday-640137",
+          "isOriginalSource": false
+        }
+      ]
+    },
+    {
+      "eventId": "ten-tyjae-spears-practice-expectation-2026-10-01",
+      "player": {
+        "playerId": null,
+        "name": "Tyjae Spears",
+        "team": "TEN",
+        "position": "RB"
+      },
+      "headline": "Spears expected to practice Thursday",
+      "summary": "RotoWire attributes to Robert Saleh, through Jim Wyatt, an expectation that Spears and Tony Pollard will practice Thursday.",
+      "fantasyAnalysis": "A positive signal without a supported add/drop decision until actual participation and game availability are established. The original linked X post could not be retrieved.",
+      "eventType": "COACH_COMMENT",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:20:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "2026-10-01 (publication clock and timezone unavailable)",
+          "publishedDate": "2026-10-01",
+          "url": "https://www.rotowire.com/football/headlines/tyjae-spears-injury-expected-to-practice-thursday-640138",
+          "isOriginalSource": false
+        }
+      ]
+    },
+    {
+      "eventId": "was-daniels-limited-20260930",
+      "player": {
+        "playerId": null,
+        "name": "Jayden Daniels",
+        "team": "WAS",
+        "position": "QB"
+      },
+      "headline": "Daniels limited with a left-elbow issue",
+      "summary": "Washington lists limited Wednesday participation. Thursday and Friday participation and his final game-status cells were blank at this check.",
+      "fantasyAnalysis": null,
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:09:59Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "left elbow",
+        "practiceStatus": "LP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Washington Commanders",
+          "url": "https://www.commanders.com/news/commanders-colts-week-4-injury-report",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026, 3:59 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true
+        }
+      ]
+    },
+    {
+      "eventId": "was-rachaad-white-thursday-absence-2026-10-01",
+      "player": {
+        "playerId": null,
+        "name": "Rachaad White",
+        "team": "WAS",
+        "position": "RB"
+      },
+      "headline": "White reportedly remains out of Thursday practice",
+      "summary": "RotoWire relays Tashan Reed's report that White was not practicing Thursday with a shoulder injury.",
+      "fantasyAnalysis": "Treat White as an uncertain lineup option until official participation and game status are available. Any increased work for other Washington backs remains conditional; the report alone does not establish a final absence. The original linked X post did not load.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T16:03:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Shoulder",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "2026-10-01 (publication clock and timezone unavailable)",
+          "publishedDate": "2026-10-01",
+          "url": "https://www.rotowire.com/football/headlines/rachaad-white-injury-remains-sidelined-thursday-640131",
+          "isOriginalSource": false
+        }
+      ]
+    },
+    {
+      "eventId": "was-white-dnp-20260930",
+      "player": {
+        "playerId": null,
+        "name": "Rachaad White",
+        "team": "WAS",
+        "position": "RB"
+      },
+      "headline": "White missed Wednesday practice",
+      "summary": "Washington lists White DNP with a shoulder injury. The official Thursday participation and final game-status cells were blank at this check.",
+      "fantasyAnalysis": null,
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-01T17:09:59Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "shoulder",
+        "practiceStatus": "DNP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Washington Commanders",
+          "url": "https://www.commanders.com/news/commanders-colts-week-4-injury-report",
+          "publishedAt": null,
+          "publishedAtRaw": "September 30, 2026, 3:59 PM (timezone unspecified)",
+          "publishedDate": "2026-09-30",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true
+        }
+      ]
+    }
+  ],
+  "contentHash": "87f092b46f01d883be1b12842b00db76d9680ee5c0e57a0a0cc205bd35dd4316"
+}
