@@ -19,8 +19,10 @@ import sqlite3
 import shutil
 import sys
 import tempfile
+import urllib.error
 import urllib.request
 from collections import Counter, defaultdict
+from contextlib import closing
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
@@ -89,9 +91,10 @@ class Fetcher:
             require(response.status == 200, f'{name}: unexpected HTTP status')
             headers = {k.lower(): v for k, v in response.headers.items()}
             final_url = response.url
+            retrieved_at = iso(datetime.now(timezone.utc))
         self.raw_dir.mkdir(parents=True, exist_ok=True)
         (self.raw_dir / name).write_bytes(body)
-        self.sources[name] = {'url': url, 'resolvedUrl': final_url, 'retrievedAt': iso(self.now),
+        self.sources[name] = {'url': url, 'resolvedUrl': final_url, 'retrievedAt': retrieved_at,
                               'lastModified': headers.get('last-modified'), 'httpDate': headers.get('date'),
                               'sha256': digest(body), 'bytes': len(body)}
         return body.decode('utf-8-sig')
@@ -382,6 +385,9 @@ def content_fingerprint(snapshot):
     for key, slate in snapshot['slates'].items():
         slates[key] = {k: slate[k] for k in ('id', 'season', 'week', 'label', 'games', 'records', 'coverage')}
         slates[key]['records'] = [{k: v for k, v in r.items() if k not in ('projectionSourceDate','projectionCapturedAt')} for r in slate['records']]
+        for field in ('primaryProjectionStatus', 'projectionStatus'):
+            if field in slate:
+                slates[key][field] = {k:v for k,v in slate[field].items() if k not in ('checkedAt','retrievedAt')}
     return digest(json.dumps({'defaultSlate': snapshot['defaultSlate'], 'slates': slates}, sort_keys=True).encode())
 
 
@@ -413,8 +419,44 @@ def validate_snapshot(snapshot):
                     r['projectionSeason'] == slate['season'] and r['projectionWeek'] == slate['week'] and
                     r['projectionGameId'] == r['gameId'] and r['projectionSource'] and (r['projectionSourceDate'] or r.get('projectionCapturedAt')) and
                     r['projectionUrl'].startswith('https://') for r in projected), 'Invalid/mismatched snapshot projection')
-        require(all(any(r['team'] == t and r['position'] == p for r in projected) for t in teams for p in ('QB', 'RB', 'WR', 'TE')),
-                'Snapshot projection team/position coverage is incomplete')
+        projection_status = slate.get('projectionStatus', {})
+        if projection_status.get('refreshMode') == 'allow-partial-projections':
+            primary = slate.get('primaryProjectionStatus', {})
+            require(primary.get('status') == 'unavailable' and primary.get('source') == 'Fantasy Info Central' and
+                    primary.get('reason') and primary.get('checkedAt'), 'Partial projections require an explicit rejected primary source')
+            require(slate.get('projectionSourceDate') is None and projection_status.get('publicationTime') is None and
+                    projection_status.get('missingPlayers') == len(records) - len(projected) and
+                    projection_status.get('projectedPlayers') == len(projected) and
+                    projection_status.get('status') == ('partial' if projected else 'unavailable'), 'Invalid partial projection metadata')
+            supplemental_source = slate['sources'].get('supplemental-projections.html', {})
+            require(not projected or (slate.get('supplementalProjectionStatus', {}).get('status') == 'verified' and
+                    supplemental_source.get('url') == FSC), 'Partial capture lacks its verified supplemental source')
+            require(all(r['projectionSource'] == 'Fantasy Sports Central' and r['projectionUrl'] == FSC and r['projectionSourceDate'] is None and
+                        r.get('projectionCapturedAt') == supplemental_source.get('retrievedAt') and
+                        r.get('projectionSourceDateBasis') == 'Publication time unavailable; capture time retained separately' and
+                        (r.get('projectionSalaryValidationSlateId') and r.get('projectionSalaryValidationUrl') and
+                         r.get('projectionSalaryValidationSha256') if showdown else r['projectionSourceSalary'] == r['salary'])
+                        for r in projected), 'Partial capture may only use exact-salary-validated supplemental projections with unknown publication time')
+            if showdown:
+                for row in projected:
+                    classic = snapshot['slates'].get(f"{slate['season']}-w{slate['week']}-dk-{row['projectionSalaryValidationSlateId']}")
+                    require(classic is not None and not is_showdown(classic) and
+                            classic['salaryUrl'] == row['projectionSalaryValidationUrl'] and
+                            classic['sources'].get(f"dk-{classic['id']}.csv", {}).get('sha256') == row['projectionSalaryValidationSha256'],
+                            'Partial Showdown projection lacks official same-week Classic salary lineage')
+                    candidates = [r for r in classic['records'] if (name_key(r['name']),r['position'],r['team']) ==
+                                  (name_key(row['name']),row['position'],row['team'])]
+                    require(len(candidates) == 1 and candidates[0]['salary'] == row['projectionSourceSalary'] and
+                            candidates[0]['projection'] == row['projectionBase'] and
+                            candidates[0]['projectionCapturedAt'] == row['projectionCapturedAt'],
+                            'Partial Showdown projection differs from its verified Classic source base')
+            require(slate.get('projectionProvider') == ('Fantasy Sports Central' if projected else None),
+                    'Partial capture mislabels its projection provider')
+            require(all(r.get('projectionUnavailableReason') for r in records if r['projection'] is None),
+                    'Partial capture must explain missing projections')
+        else:
+            require(all(any(r['team'] == t and r['position'] == p for r in projected) for t in teams for p in ('QB', 'RB', 'WR', 'TE')),
+                    'Snapshot projection team/position coverage is incomplete')
         require(slate['coverage']['salaryPlayers'] == len(records) and slate['coverage']['projectedPlayers'] == len(projected), 'Snapshot coverage counters mismatch')
         require(slate['sources'] and all(s.get('sha256') and s.get('url') and s.get('retrievedAt') for s in slate['sources'].values()), 'Missing snapshot provenance')
     require(snapshot.get('contentFingerprint') == content_fingerprint(snapshot), 'Snapshot content fingerprint mismatch')
@@ -470,17 +512,17 @@ def publish_snapshot_and_archive(target, snapshot, archive_target, write_snapsho
         return result
 
 
-def refresh(target, raw_dir, now, dry_run=False, archive_path=None):
+def refresh(target, raw_dir, now, dry_run=False, archive_path=None, allow_partial_projections=False):
     lock_path = Path(tempfile.gettempdir()) / f'bowser-dfs-{digest(str(target.resolve()).encode())[:20]}.lock'
     with lock_path.open('a') as lock:
         try:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError as exc:
             raise PartialData('A refresh for this snapshot is already running') from exc
-        return _refresh(target, raw_dir, now, dry_run, archive_path)
+        return _refresh(target, raw_dir, now, dry_run, archive_path, allow_partial_projections)
 
 
-def _refresh(target, raw_dir, now, dry_run=False, archive_path=None):
+def _refresh(target, raw_dir, now, dry_run=False, archive_path=None, allow_partial_projections=False):
     previous = json.loads(target.read_text()) if target.exists() else None
     if previous:
         validate_snapshot(previous)
@@ -488,8 +530,18 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None):
     schedule = parse_schedule(fetch.get(SCHEDULE, 'schedule.csv'))
     (season, week), games = target_week(schedule, now)
     slates = discover_slates(json.loads(fetch.get(LOBBY, 'lobby.json')), games, now)
-    html = fetch.get(FIC, 'projections.html')
-    projections = parse_projections(html, season, week, games, fetch.sources['projections.html'], now)
+    primary_status = None
+    try:
+        html = fetch.get(FIC, 'projections.html')
+        projections = parse_projections(html, season, week, games, fetch.sources['projections.html'], now)
+    except (PartialData, ValueError, KeyError, urllib.error.URLError) as error:
+        if not allow_partial_projections:
+            raise
+        projections = {}
+        primary_source = fetch.sources.get('projections.html', {})
+        primary_status = {'status':'unavailable', 'source':'Fantasy Info Central', 'reason':str(error),
+                          'checkedAt':iso(datetime.now(timezone.utc)), 'lastModified':primary_source.get('lastModified'),
+                          'retrievedAt':primary_source.get('retrievedAt')}
     supplemental = {}
     try:
         secondary_html = fetch.get(FSC,'supplemental-projections.html')
@@ -512,7 +564,7 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None):
     database_path = ROOT / f'data/fantasy_football_{season}.sqlite'
     database_ids = set()
     if database_path.exists():
-        with sqlite3.connect(f'file:{database_path}?mode=ro', uri=True) as database:
+        with closing(sqlite3.connect(f'file:{database_path}?mode=ro', uri=True)) as database:
             database_ids = {r[0] for r in database.execute('SELECT player_id FROM players')}
     combined = dict(previous['slates']) if previous else {}
     updated_keys = []
@@ -535,20 +587,43 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None):
             require({r['draftKingsId'] for r in old['records']} <= {r['draftKingsId'] for r in records},
                     f"Salary population shrank for existing group {slate['id']}; preserve last good pending review")
         key = slate.pop('key')
-        combined[key] = {**slate, 'salarySource': 'DraftKings', 'salaryUrl': url, 'capturedAt': iso(now),
+        slate_coverage = coverage(records, projections, database_ids)
+        projection_metadata = {}
+        if primary_status:
+            missing_reason = f"Fantasy Info Central unavailable: {primary_status['reason']}. No exact-salary-matched Fantasy Sports Central projection for this player/team/week."
+            for record in records:
+                if record['projection'] is None:
+                    record['projectionUnavailableReason'] = missing_reason
+            projected_count = sum(r['projection'] is not None for r in records)
+            projection_metadata = {'primaryProjectionStatus':primary_status,
+                'projectionStatus':{'status':'partial' if projected_count else 'unavailable',
+                    'refreshMode':'allow-partial-projections', 'reason':primary_status['reason'],
+                    'projectedPlayers':projected_count, 'missingPlayers':len(records)-projected_count,
+                    'publicationTime':None,
+                    'publicationTimeBasis':'Supplemental provider publication time unavailable; per-row capture times are observations only.'},
+                'projectionProvider':'Fantasy Sports Central' if projected_count else None,
+                'projectionBasis':'Primary Fantasy Info Central projections rejected: ' + primary_status['reason'] +
+                    '. Only exact-salary-matched Fantasy Sports Central full-game estimates are included; publication time is unknown. Missing projections remain null.'}
+            slate_coverage['supplementalSourceProjectionRows'] = len(supplemental)
+            slate_coverage['projectionCoverageDefinition'] = 'Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null.' + (' CPT derives only the verified source base × 1.5.' if is_showdown(slate) else '')
+        combined[key] = {**slate, 'salarySource': 'DraftKings', 'salaryUrl': url, 'capturedAt': fetch.sources[filename]['retrievedAt'],
                          'projectionProvider': 'Fantasy Info Central; Fantasy Sports Central fills missing values' if supplemental else 'Fantasy Info Central',
                          'supplementalProjectionStatus': supplemental_status,
-                         'projectionSourceDate': projections[next(iter(projections))]['projectionSourceDate'],
+                         'projectionSourceDate': projections[next(iter(projections))]['projectionSourceDate'] if projections else None,
                          'rosterSeason': season, 'rosterWeek': roster_week, 'records': records,
-                         'coverage': coverage(records, projections, database_ids), 'sources': {**shared_sources, filename: fetch.sources[filename]},
-                         'identityAliasSource': fetch.sources['identity-aliases'], 'validation': {'status': 'verified'}}
+                         'coverage': slate_coverage, 'sources': {**shared_sources, filename: fetch.sources[filename]},
+                         **projection_metadata,
+                         'identityAliasSource': fetch.sources['identity-aliases'], 'validation': {'status': 'verified',
+                             **({'salaryStatus':'verified','projectionStatus':'partial' if projected_count else 'unavailable'} if primary_status else {})}}
         updated_keys.append(key)
     current = [(key, s) for key, s in combined.items() if s['season'] == season and s['week'] == week and not is_showdown(s)]
     require(bool(current), 'No verified Classic default for scheduled week; Showdown cannot replace weekly Classic context')
     default = min(current, key=lambda item: (-item[1]['gameCount'], item[1]['id']))[0]
-    snapshot = {'schemaVersion': 2, 'capturedAt': iso(now), 'defaultSlate': default, 'season': season, 'week': week,
-                'slates': combined, 'validation': {'status': 'verified', 'verifiedAt': iso(now)},
-                'notes': 'Official DraftKings Classic and full-game Showdown salaries, with FLEX/CPT roles kept separate. FIC pregame DraftKings points for matching week/game; verified FSC supplements. Showdown projects the same full game and explicitly applies 1.5× only to CPT. Missing projections are null; AvgPointsPerGame is never a projection. Historical Week 1 file is untouched.'}
+    verified_at = iso(datetime.now(timezone.utc))
+    snapshot = {'schemaVersion': 2, 'capturedAt': verified_at, 'importStartedAt':iso(now), 'defaultSlate': default, 'season': season, 'week': week,
+                'slates': combined, 'validation': {'status': 'verified', 'verifiedAt': verified_at},
+                'notes': 'Official DraftKings Classic and full-game Showdown salaries, with FLEX/CPT roles kept separate. FIC pregame DraftKings points for matching week/game; verified FSC supplements. Showdown projects the same full game and explicitly applies 1.5× only to CPT. Missing projections are null; AvgPointsPerGame is never a projection. Historical Week 1 file is untouched.' +
+                    (' Explicit partial projection refresh: FIC rejected; FSC publication time unknown and observation time stored separately.' if primary_status else '')}
     snapshot['contentFingerprint'] = content_fingerprint(snapshot)
     validate_snapshot(snapshot)
     changed = previous is None or previous['contentFingerprint'] != snapshot['contentFingerprint']
@@ -561,6 +636,8 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None):
             'written': changed and not dry_run, 'dryRun': dry_run, 'season': season, 'week': week, 'defaultSlate': default,
             'updatedSlates': updated_keys, 'snapshot': str(target), 'rawEvidence': str(raw_dir),
             'archive': archive,
+            **({'projectionRefresh':'partial', 'primaryProjectionStatus':primary_status,
+                'supplementalProjectionStatus':supplemental_status} if primary_status else {}),
             'coverage': {key: combined[key]['coverage'] for key in updated_keys}}
 
 
@@ -570,6 +647,8 @@ def main(argv=None):
     parser.add_argument('--raw-dir', type=Path)
     parser.add_argument('--archive', type=Path, help='Versioned SQLite archive; defaults beside the output snapshot')
     parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('--allow-partial-projections', action='store_true',
+                        help='Explicitly allow verified current official salaries with unavailable primary projections; only exact-salary-validated existing supplements may supply values')
     parser.add_argument('--verify', action='store_true', help='Validate saved snapshot offline; do not refresh or publish')
     args = parser.parse_args(argv)
     now = datetime.now(timezone.utc)
@@ -580,7 +659,7 @@ def main(argv=None):
             result = {'status': 'verified', 'changed': False, 'publishable': True, 'snapshot': str(args.output),
                       'archive': verify_archive(args.archive or args.output.with_name('dfs_archive.sqlite'))}
         else:
-            result = refresh(args.output, raw_dir, now, args.dry_run, args.archive)
+            result = refresh(args.output, raw_dir, now, args.dry_run, args.archive, args.allow_partial_projections)
         code = 0
     except NoData as exc:
         result, code = {'status': 'no-data', 'reason': str(exc)}, 4

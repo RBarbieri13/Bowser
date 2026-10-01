@@ -6,6 +6,7 @@ import { LhqProvider } from '../src/lhq/shared.jsx';
 import { LeagueResearchPanel, MarkPickupButton, ownershipRequests, transactionSummary, transactionCoverage, useLeaguePickups } from '../src/lhq/LeagueResearch.jsx';
 import { MarketPulse } from '../src/lhq/MarketPulse.jsx';
 import { Waivers } from '../src/lhq/Waivers.jsx';
+import dfsWeekly from '../data/dfs-weekly.json';
 
 const teamKey = '999.l.1.t.1';
 const yahoo = {
@@ -78,7 +79,11 @@ test('league research panel loads roster, availability, transactions and canonic
   fireEvent.click(screen.getByRole('button', { name: 'Read league' }));
   expect(yahoo.loadResearch).toHaveBeenCalledWith(teamKey, expect.objectContaining({ include: 'availability,transactions,ownership', players: [{ id: 'joshallen|QB|BUF', name: 'Josh Allen', team: 'BUF', position: 'QB' }] }));
   expect(screen.getByText(/transactions 2 actual returned of limit 50/i)).toBeInTheDocument();
-  expect(screen.getByText('23.9')).toBeInTheDocument();
+  const slate = dfsWeekly.slates[dfsWeekly.defaultSlate];
+  const sourcePlayer = slate.records.find(player => player.name === 'Josh Allen' && player.team === 'BUF' && player.position === 'QB');
+  expect(Number.isFinite(sourcePlayer.projection)).toBe(true);
+  expect(screen.getByText(sourcePlayer.projection.toFixed(1))).toBeInTheDocument();
+  expect(screen.getByText(/Source publication is separate from capture/)).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Mark pickup Josh Allen' }));
   const saved = Object.values(localStorage).join(' ');
   expect(saved).toContain('joshallen|QB|BUF');

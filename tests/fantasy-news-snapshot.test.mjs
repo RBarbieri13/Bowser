@@ -40,6 +40,26 @@ test("publication dates never come from verification or writer time", () => {
   }
 });
 
+test("explicitly undated checked official sources survive preparation with null publication fields", () => {
+  const input = event();
+  input.sources[0] = { ...input.sources[0], publishedAt: null, publishedDate: null, publishedAtRaw: "Publication and update clock not displayed", checkedAt: "2026-10-01T18:59:00Z" };
+  const result = prepareFantasyNewsSnapshot([input], OPTIONS);
+  assert.equal(result.changed, true);
+  assert.deepEqual(result.snapshot.events[0].sources[0], input.sources[0]);
+  assert.equal(result.snapshot.events[0].sources[0].publishedAt, null);
+  assert.equal(result.snapshot.events[0].sources[0].publishedDate, null);
+  const rechecked = structuredClone(result.snapshot.events);
+  rechecked[0].checkedAt = "2026-10-01T19:20:00Z";
+  rechecked[0].sources[0].checkedAt = "2026-10-01T19:19:00Z";
+  const unchanged = prepareFantasyNewsSnapshot(rechecked, { ...OPTIONS, previous: result.snapshot, checkedAt: "2026-10-01T19:20:00Z", updatedAt: "2026-10-01T19:21:00Z", revision: "test-2" });
+  assert.equal(unchanged.changed, false);
+  assert.equal(unchanged.snapshot, result.snapshot);
+  for (const values of [{ checkedAt: null }, { checkedAt: "future-or-malformed" }, { publishedDate: "2026-02-31" }, { publishedDate: "2026-10-02" }]) {
+    const invalid = structuredClone(input); Object.assign(invalid.sources[0], values);
+    assert.throws(() => prepareFantasyNewsSnapshot([invalid], OPTIONS), (error) => error.code === "repository_invalid_records");
+  }
+});
+
 test("stable event IDs are preserved and duplicate/missing/ambiguous IDs stop preparation", () => {
   const events = [event({ eventId: "z-public" }), event({ eventId: "a-public" })];
   assert.deepEqual(prepareFantasyNewsSnapshot(events, OPTIONS).snapshot.events.map((item) => item.eventId), ["a-public", "z-public"]);
@@ -66,6 +86,8 @@ test("report content, citations, publication and event-edit times remain materia
     (record) => { record.sources[0].publishedAtRaw = "September 30, 2026, 4 PM (timezone unspecified)"; },
     (record) => { record.lastUpdatedAt = "2026-10-01T19:05:00Z"; },
     (record) => { record.injury.practiceStatus = "FULL"; },
+    (record) => { record.urgency = { score: 3, basis: "Keep a healthy alternative until the final report.", method: "AI estimate from public reporting", estimatedAt: "2026-10-01T19:10:00Z" }; },
+    (record) => { record.affectedPlayers = [{ name: "Other Runner", team: "BUF", position: "RB", relationship: "potential_beneficiary", impact: "Could gain work if the starter misses the game." }]; },
   ];
   for (const mutate of mutations) {
     const record = structuredClone(previous.events[0]); mutate(record);
@@ -114,11 +136,20 @@ test("CLI writes only a changed validated local payload and leaves existing outp
     assert.equal(unchanged.status, 0, unchanged.stderr);
     assert.equal(JSON.parse(unchanged.stdout).changed, false);
     assert.equal(readFileSync(output, "utf8"), bytes);
+    record.sources[0] = { ...record.sources[0], publishedAt: null, publishedDate: null, publishedAtRaw: "Publication and update clock not displayed", checkedAt: record.checkedAt };
+    writeFileSync(input, JSON.stringify([record]));
+    const undated = spawnSync(process.execPath, args, { encoding: "utf8" });
+    assert.equal(undated.status, 0, undated.stderr);
+    const undatedBytes = readFileSync(output, "utf8");
+    const undatedSnapshot = JSON.parse(undatedBytes);
+    validateRepositorySnapshot(undatedSnapshot);
+    assert.equal(undatedSnapshot.events[0].sources[0].publishedAt, null);
+    assert.equal(undatedSnapshot.events[0].sources[0].publishedDate, null);
     writeFileSync(input, JSON.stringify([event({ yahooContext: { roster: "private-secret" } })]));
     const rejected = spawnSync(process.execPath, args, { encoding: "utf8" });
     assert.equal(rejected.status, 1);
     assert.equal(rejected.stderr.includes("private-secret"), false);
-    assert.equal(readFileSync(output, "utf8"), bytes);
+    assert.equal(readFileSync(output, "utf8"), undatedBytes);
   } finally { rmSync(directory, { recursive: true, force: true }); }
 });
 

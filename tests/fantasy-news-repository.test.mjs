@@ -108,6 +108,42 @@ test("nonnull malformed event clocks and record checks after the envelope are re
   }
 });
 
+test("repository validation accepts explicitly checked undated official citations without inventing publication dates", () => {
+  const report = snapshot().events[0];
+  report.sources = [{ ...report.sources[0], publishedAt: null, publishedDate: null, publishedAtRaw: "Publication and update clock not displayed", checkedAt: "2026-10-01T18:59:00Z" }];
+  const payload = snapshot({ events: [report] });
+  assert.equal(validateRepositorySnapshot(payload, { now: NOW }), payload);
+  assert.equal(payload.events[0].sources[0].publishedAt, null);
+  assert.equal(payload.events[0].sources[0].publishedDate, null);
+  for (const values of [{ checkedAt: null }, { checkedAt: "invalid" }, { checkedAt: "2026-10-02T00:00:00Z" }, { checkedAt: "2026-10-01T19:00:01Z" }, { publishedDate: "2026-02-31" }, { publishedDate: "2026-10-02" }, { publishedAt: "2026-02-31T00:00:00Z" }, { publishedAtRaw: null }]) {
+    const invalid = structuredClone(report); Object.assign(invalid.sources[0], values);
+    assert.throws(() => validateRepositorySnapshot(snapshot({ events: [invalid] }), { now: NOW }), (error) => error.code === "repository_invalid_records");
+  }
+  const privateCitation = structuredClone(report); privateCitation.sources[0].yahooContext = { roster: "private" };
+  assert.throws(() => validateRepositorySnapshot(snapshot({ events: [privateCitation] }), { now: NOW }), (error) => error.code === "repository_non_public");
+});
+
+test("urgency is a bounded public AI estimate whose time cannot follow the envelope writer", () => {
+  const report = snapshot().events[0];
+  report.urgency = { score: 4, basis: "Repeated absences warrant a backup plan before the final report.", method: "AI estimate from public reporting", estimatedAt: "2026-10-01T19:00:30Z" };
+  report.affectedPlayers = [{ name: "Other Runner", playerId: "public-id", team: "BUF", position: "RB", relationship: "potential_beneficiary", impact: "Could receive more touches if the reported absence continues." }];
+  assert.doesNotThrow(() => validateRepositorySnapshot(snapshot({ events: [report] }), { now: NOW }));
+  for (const values of [{ score: 0 }, { score: 6 }, { score: 3.5 }, { basis: "" }, { basis: "x".repeat(601) }, { basis: "<b>urgent</b>" }, { method: "AI guess" }, { estimatedAt: "invalid" }, { estimatedAt: "2026-10-02T00:00:00Z" }, { estimatedAt: "2026-10-01T19:01:01Z" }]) {
+    const invalid = structuredClone(report); Object.assign(invalid.urgency, values);
+    assert.throws(() => validateRepositorySnapshot(snapshot({ events: [invalid] }), { now: NOW }), (error) => error.code === "repository_invalid_records");
+  }
+  for (const values of [{ team: "BUF/private" }, { team: null }, { position: "K" }, { position: null }, { playerId: "" }, { relationship: "" }, { impact: "x".repeat(601) }]) {
+    const invalid = structuredClone(report); Object.assign(invalid.affectedPlayers[0], values);
+    assert.throws(() => validateRepositorySnapshot(snapshot({ events: [invalid] }), { now: NOW }), (error) => error.code === "repository_invalid_records");
+  }
+  for (const field of ["urgency", "affectedPlayers"]) {
+    const invalid = structuredClone(report);
+    if (field === "urgency") invalid.urgency.leagueKey = "private-secret";
+    else invalid.affectedPlayers[0].ownership = "private-secret";
+    assert.throws(() => validateRepositorySnapshot(snapshot({ events: [invalid] }), { now: NOW }), (error) => error.code === "repository_non_public");
+  }
+});
+
 test("oversized citation sets are rejected before any trailing citation can be silently discarded", () => {
   const input = snapshot().events[0];
   input.sources = Array.from({ length: 21 }, () => ({ ...input.sources[0] }));

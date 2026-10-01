@@ -1,38 +1,40 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Picker, PlayerName, Pool, Shell, Source } from './shared.jsx';
 import { publicIdentityKey } from './playerIdentity.js';
+import { newsArticleLeagueContext, newsPlayerLeagueContext, newsRosterMatches } from './fantasyNewsContext.js';
+export { newsRosterMatches } from './fantasyNewsContext.js';
 import { stamp } from './model.js';
 import './FantasyNews.css';
 
 export const NEWS_LAYOUT_KEY = 'bowser:fantasy-news:layout:v1';
 export const NEWS_PANES = {
-  feed: { title: 'News stream', label: 'ALL NEWS', width: 520 },
+  feed: { title: 'News workspace', label: 'NEWS / INJURIES / MY ROSTER', width: 560 },
   evidence: { title: 'Evidence desk', label: 'SOURCE DETAIL', width: 520 },
-  injuries: { title: 'Injuries & practice', label: 'HEALTH', width: 520 },
   roles: { title: 'Role & performance', label: 'ROLE & PERFORMANCE', width: 520 },
   player: { title: 'Player focus', label: 'PLAYER CONTEXT', width: 340 },
-  roster: { title: 'My roster angle', label: 'PRIVATE YAHOO', width: 340 },
   sources: { title: 'Source coverage', label: 'FEED HEALTH', width: 340 },
+  acquisition: { title: 'Acquisition Opportunities', label: 'PRIVATE YAHOO / PUBLIC REPORTS', width: 340 },
 };
 const CATEGORIES = { all: 'All news', injury: 'Injuries', practice: 'Practice', playing_time: 'Playing time', fantasy_news: 'Fantasy news' };
 const WINDOWS = [24, 72, 168, 720];
-const DEFAULT_PANES = ['feed', 'injuries', 'roles', 'evidence'];
+const DEFAULT_PANES = ['evidence', 'player'];
 const list = value => Array.isArray(value) ? value : [];
 const clean = value => typeof value === 'string' ? value : '';
 const paneWindows = new Map(); // Window handles only; news and account data never enter storage.
-const defaultLayout = () => ({ version: 1, mode: 'tiles', panes: DEFAULT_PANES.map(id => ({ id, width: NEWS_PANES[id].width, collapsed: false })) });
+const defaultLayout = () => ({ version: 1, mode: 'tiles', left: { enabled: true, width: Math.min(800, Math.max(360, Math.round((window.innerWidth - 40) / 3))), collapsed: false, activeTab: 'news' }, acquisition: { enabled: true, width: 340, collapsed: false }, panes: DEFAULT_PANES.map(id => ({ id, width: NEWS_PANES[id].width, collapsed: false })) });
 
 /** Project a saved preference onto code-owned pane IDs and bounded geometry. */
 export function validateNewsLayout(value) {
   if (value?.version !== 1 || !Array.isArray(value.panes)) return defaultLayout();
   const seen = new Set();
-  const panes = value.panes.filter(pane => pane && Object.hasOwn(NEWS_PANES, pane.id) && !seen.has(pane.id) && seen.add(pane.id)).slice(0, 7).map(pane => ({
+  const panes = value.panes.filter(pane => pane && Object.hasOwn(NEWS_PANES, pane.id) && !['feed', 'acquisition'].includes(pane.id) && !seen.has(pane.id) && seen.add(pane.id)).slice(0, 4).map(pane => ({
     id: pane.id,
     width: typeof pane.width === 'number' && Number.isFinite(pane.width) ? Math.min(1200, Math.max(280, Math.round(pane.width))) : NEWS_PANES[pane.id].width,
     collapsed: pane.collapsed === true,
   }));
-  if (!panes.some(pane => pane.id === 'feed')) panes.unshift({ id: 'feed', width: NEWS_PANES.feed.width, collapsed: false });
-  return { version: 1, mode: ['tiles', 'stacked', 'columns'].includes(value.mode) ? value.mode : 'tiles', panes };
+  const defaults = defaultLayout();
+  const dock = (saved, fallback) => ({ enabled: saved?.enabled !== false, width: Number.isFinite(saved?.width) ? Math.min(1000, Math.max(280, Math.round(saved.width))) : fallback.width, collapsed: saved?.collapsed === true });
+  return { version: 1, mode: ['tiles', 'stacked', 'columns'].includes(value.mode) ? value.mode : 'tiles', left: { ...dock(value.left, defaults.left), activeTab: ['news', 'injuries', 'roster'].includes(value.left?.activeTab) ? value.left.activeTab : 'news' }, acquisition: dock(value.acquisition, defaults.acquisition), panes };
 }
 
 export function closeFantasyNewsWindows() {
@@ -62,8 +64,8 @@ export function safeNewsUrl(value) {
 
 function articlePlayers(article) { return list(article?.players).filter(player => player && clean(player.name)); }
 function articleCategories(article) { return [...new Set([article?.category, ...list(article?.categories)].filter(category => Object.hasOwn(CATEGORIES, category) && category !== 'all'))]; }
-function articleTime(article) { return Date.parse(article?.publishedAt) || Date.parse(article?.publishedDate) || Date.parse(article?.updatedAt) || 0; }
-function publicationClock(item, compact = false) { return item?.publishedAt ? stamp(item.publishedAt) : compact && item?.publishedDate ? `${item.publishedDate} · TZ unknown` : item?.publishedAtRaw || 'Unavailable'; }
+function articleTime(article) { return Date.parse(article?.publishedAt) || Date.parse(article?.publishedDate) || 0; }
+function publicationClock(item, compact = false) { return item?.publishedAt ? stamp(item.publishedAt) : compact && item?.publishedDate ? `${item.publishedDate} · TZ unknown` : item?.publishedAtRaw || (item?.timestampStatus === 'unknown' ? 'Unknown' : 'Unavailable'); }
 function categoryLabel(article) { return articleCategories(article).map(category => CATEGORIES[category]).join(' · ') || 'Fantasy news'; }
 function sourceName(source) { return clean(source?.sourceName || source?.name) || 'Source unavailable'; }
 function articleSources(article) { return list(article?.sources).filter(source => source && typeof source === 'object'); }
@@ -71,22 +73,6 @@ function playerRow(player, season, scoring) { return { ...player, player_id: pla
 function samePlayer(left, right) {
   const a = left?.playerId || left?.player_id, b = right?.playerId || right?.player_id;
   return a && b ? a === b : Boolean(publicIdentityKey(left) && publicIdentityKey(left) === publicIdentityKey(right));
-}
-
-/** Affirmative roster matches only. Ambiguous identities stay unknown. */
-export function newsRosterMatches(article, yahoo, season) {
-  if (!yahoo?.account || yahoo.account.season && Number(yahoo.account.season) !== Number(season)) return [];
-  const matches = [];
-  for (const team of list(yahoo.teams)) {
-    const dashboard = yahoo.dashboards?.[team.key];
-    if (dashboard?.teamKey !== team.key || Number(dashboard.season) !== Number(season) || dashboard.roster?.week !== dashboard.week) continue;
-    const roster = list(dashboard.roster?.players);
-    for (const player of articlePlayers(article)) {
-      const found = roster.filter(candidate => samePlayer(player, candidate));
-      if (found.length === 1) matches.push({ player: found[0], teamName: team.name, teamKey: team.key, leagueName: list(yahoo.leagues).find(league => league.key === team.leagueKey)?.name || 'League', week: dashboard.week, checkedAt: dashboard.checkedAt });
-    }
-  }
-  return matches;
 }
 
 function usePublicNews(hours, refresh, autoRead) {
@@ -136,13 +122,14 @@ function ArticleDetail({ article, season, scoring, onOpen, compact = false }) {
   if (!article) return <div className="fn-empty"><strong>Select a headline</strong><p>Inspect its report, publication time, evidence and linked sources here.</p></div>;
   const players = articlePlayers(article);
   return <div className={`fn-article-detail ${compact ? 'compact' : ''}`}>
-    <div className="fn-detail-context"><EvidenceBadge article={article}/><span>{categoryLabel(article)}</span>{article.freshness?.state === 'stale' && <span className="fn-caution">Older report</span>}</div>
+    <div className="fn-detail-context"><EvidenceBadge article={article}/><span>{categoryLabel(article)}</span>{!article.publishedAt ? <span className="fn-caution">Publication age unknown</span> : article.freshness?.state === 'stale' && <span className="fn-caution">Older report</span>}</div>
     <h2>{article.headline}</h2>
     <div className="fn-detail-players">{players.map((player, index) => <span key={`${player.playerId || player.name}-${index}`}>{player.playerId || player.player_id ? <PlayerName row={playerRow(player, season, scoring)} onOpen={onOpen}/> : <strong>{player.name}</strong>}<small>{player.team || '—'} · {player.position || '—'}</small></span>)}</div>
     <div className="fn-timestamps"><span>{article.timestampBasis === 'observed_at' ? 'Observed' : 'Published'} <time dateTime={article.publishedAt || article.publishedDate || undefined}>{publicationClock(article)}</time></span><span>Record updated <time dateTime={article.updatedAt || undefined}>{stamp(article.updatedAt)}</time></span>{article.checkedAt && <span>Source checked {stamp(article.checkedAt)} · separate from publication</span>}{article.capturedAt && <span>Captured {stamp(article.capturedAt)}</span>}</div>
     <section><h3>Report</h3><p>{article.summary || 'No publisher summary was returned. Open the linked source for the report.'}</p></section>
     {article.fantasyAnalysis && <section><h3>Fantasy context</h3><p>{article.fantasyAnalysis}</p></section>}
     {article.injury?.isInjuryRelated && <dl className="fn-facts">{[['Body part', article.injury.bodyPart], ['Practice', article.injury.practiceStatus], ['Game status', article.injury.gameStatus], ['Expected return', article.injury.expectedReturn]].map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value || 'Unavailable'}</dd></div>)}</dl>}
+    {validUrgency(article) && <section><h3>AI estimated urgency · {article.urgency.score}/5</h3><p>{article.urgency.basis}</p><p className="fn-note">{article.urgency.method} · estimated {stamp(article.urgency.estimatedAt)} · public-news importance, not league fit.</p></section>}
     {article.evidence?.confidence != null && <p className="fn-note">Evidence confidence {article.evidence.confidence}% · source authority and corroboration; not a football outcome probability.</p>}
     <section className="fn-linked-sources"><h3>Linked evidence · {articleSources(article).length}</h3>{articleSources(article).length ? articleSources(article).map((source, index) => <NewsSourceLink source={source} key={`${source.url}-${index}`}/>) : <p>No source link returned. This report cannot be verified from this view.</p>}</section>
   </div>;
@@ -185,7 +172,7 @@ function SourceCoverage({ meta, articles, chooseSource, selectedSource }) {
     <h3>Report types in this window</h3><div className="fn-coverage-counts">{Object.entries(CATEGORIES).filter(([id]) => id !== 'all').map(([id, name]) => <div key={id}><strong>{name}</strong><span>{articles.filter(article => articleCategories(article).includes(id)).length}</span></div>)}</div>
     <h3>Linked publications</h3>{[...sources.values()].map(source => <button className={`fn-publication ${selectedSource === source.name ? 'active' : ''}`} key={source.name} onClick={() => chooseSource(selectedSource === source.name ? 'all' : source.name)} aria-pressed={selectedSource === source.name}><strong>{source.name}<span>{source.count}</span></strong><small>Latest report {source.clock}</small>{source.access && <small>{source.access}</small>}</button>)}{!sources.size && <p className="fn-note">No linked publications returned for this window.</p>}
     <h3>Provider readiness</h3>{list(meta?.sources).map(source => <div className="fn-provider" key={source.id || source.name}><div><strong>{source.name || source.id}</strong><span className={source.ready ? 'fn-positive' : 'fn-caution'}>{source.ready ? 'Configured' : 'Unavailable'}</span></div><p>{source.message || source.coverage || 'Coverage not verified'}</p></div>)}
-    <details className="fn-methodology"><summary>Freshness & methodology</summary><p>Refresh feed reads the latest stored reports. It does not run provider ingestion.</p><p>Publication, observation, update and read times describe different events. An older report remains labeled older even after a successful feed read.</p>{clean(meta?.timeFilterBasis).includes('overlapping_calendar_dates') && <p>Unknown-timezone publication dates are included when their possible calendar-day interval overlaps the target news window. Their precise age and inclusion within the last {meta.lookbackHours || 'selected'} hours are unverified.</p>}<p>Player identities require an exact stable ID or an unambiguous name, team and position match. Missing values remain unavailable.</p>{list(meta?.coverage?.limitations).map((limitation, index) => <p key={index}>{limitation}</p>)}{meta?.refresh && <p>Last successful ingestion: {stamp(meta.refresh.lastSuccessfulRunAt)}. Scheduler {meta.refresh.schedulerVerified ? 'verified' : 'not verified'}. {meta.refresh.ready ? 'Operator ingestion configured.' : 'Operator ingestion unavailable.'}</p>}</details>
+    <details className="fn-methodology"><summary>Freshness & methodology</summary><p>Refresh feed reads the latest stored reports. It does not run provider ingestion.</p><p>Publication, observation, update and read times describe different events. An older report remains labeled older even after a successful feed read.</p>{clean(meta?.timeFilterBasis).includes('overlapping_calendar_dates') && <p>Unknown-timezone publication dates are included when their possible calendar-day interval overlaps the target news window. Their precise age and inclusion within the last {meta.lookbackHours || 'selected'} hours are unverified.</p>}{clean(meta?.timeFilterBasis).includes('undated_reports') && <p>Undated cited reports are included with unknown publication age. Their presence does not prove that they fall within the selected hours.</p>}<p>Player identities require an exact stable ID or an unambiguous name, team and position match. Missing values remain unavailable.</p>{list(meta?.coverage?.limitations).map((limitation, index) => <p key={index}>{limitation}</p>)}{meta?.refresh && <p>Last successful ingestion: {stamp(meta.refresh.lastSuccessfulRunAt)}. Scheduler {meta.refresh.schedulerVerified ? 'verified' : 'not verified'}. {meta.refresh.ready ? 'Operator ingestion configured.' : 'Operator ingestion unavailable.'}</p>}</details>
   </div>;
 }
 
@@ -196,12 +183,55 @@ function PlayerFocus({ article, articles, season, scoring, onOpen, select }) {
     return <section key={`${player.name}-${index}`}><div className="fn-focus-player">{player.playerId || player.player_id ? <PlayerName row={playerRow(player, season, scoring)} onOpen={onOpen}/> : <strong>{player.name}</strong>}<span>{player.team || '—'} · {player.position || '—'}</span></div><div className="fn-focus-summary"><span>{related.length} returned reports</span><span>{new Set(related.flatMap(item => articleSources(item).map(sourceName))).size} linked publications</span></div>{!player.playerId && !player.player_id && <p className="fn-note">Warehouse player identity unavailable. No statistics are inferred.</p>}{related.map(item => <button className="fn-related" key={item.id} onClick={() => select(item.id)} aria-pressed={article.id === item.id}><strong>{item.headline}</strong><span>{item.source} · {publicationClock(item, true)}</span><EvidenceBadge article={item}/></button>)}</section>; })}<p className="fn-note">These are returned reports in the selected timestamp window. Source mentions do not prove role, opportunity or roster ownership.</p></div>;
 }
 
-function RosterAngle({ yahoo, articles, season, select, selectedId }) {
-  const connected = Boolean(yahoo?.account && (!yahoo.account.season || Number(yahoo.account.season) === Number(season)));
-  if (!connected) return <div className="fn-empty"><strong>Yahoo roster context unavailable</strong><p>Connect your account to identify reports about players in your loaded, authorized rosters.</p><a className="lhq-mini lhq-outline" href="#/yahoo">Open Yahoo Connection</a><p className="fn-note">NFL news remains public. Private league and roster responses stay in memory.</p></div>;
-  const loaded = list(yahoo.teams).filter(team => { const dashboard = yahoo.dashboards?.[team.key]; return dashboard?.teamKey === team.key && Number(dashboard.season) === Number(season) && Array.isArray(dashboard.roster?.players) && dashboard.roster.week === dashboard.week; });
-  const matches = articles.map(article => ({ article, owned: newsRosterMatches(article, yahoo, season) })).filter(item => item.owned.length);
-  return <div className="fn-roster"><div className="fn-coverage-summary"><strong>{loaded.length} of {list(yahoo.teams).length} owned rosters loaded</strong><p>{season} Yahoo · {matches.length} matched reports · partial coverage until every roster is loaded. A missing match does not prove a player is unowned.</p></div>{loaded.map(team => { const dashboard = yahoo.dashboards[team.key]; return <div className="fn-roster-context" key={team.key}><strong>{team.name}</strong><span>Week {dashboard.week} · read {stamp(dashboard.checkedAt)}</span></div>; })}{matches.map(({ article, owned }) => <button className="fn-related" key={article.id} onClick={() => select(article.id)} aria-pressed={selectedId === article.id}><strong>{article.headline}</strong><span>{article.source} · {publicationClock(article, true)}</span>{owned.map((match, index) => <small key={`${match.teamKey}-${index}`}>{match.player.name} · {match.player.slot || 'Slot unavailable'} · {match.teamName} / {match.leagueName} · W{match.week}</small>)}</button>)}{!matches.length && <div className="fn-empty"><strong>No exact roster reports returned</strong><p>No ownership or news absence is inferred from this partial window.</p></div>}{Object.keys(yahoo.errors || {}).length > 0 && <p className="fn-caution" role="alert">Some Yahoo reads are unavailable. Check Yahoo Connection for the current account state.</p>}<p className="fn-note">Yahoo lineup week and news publication window are independent. Only affirmative matches in the loaded owned roster are shown.</p></div>;
+function publicAffectedPlayers(article) {
+  return list(article?.affectedPlayers).filter(player => player && clean(player.name));
+}
+function displayedPlayers(article) {
+  const result = [...articlePlayers(article)];
+  for (const player of publicAffectedPlayers(article)) if (!result.some(item => samePlayer(item, player))) result.push(player);
+  return result;
+}
+function validUrgency(article) {
+  const value = article?.urgency;
+  return Number.isInteger(value?.score) && value.score >= 1 && value.score <= 5 && clean(value.basis) && value.method === 'AI estimate from public reporting' ? value : null;
+}
+function Urgency({ article }) {
+  const value = validUrgency(article);
+  return value ? <details className="fn-urgency"><summary aria-label={`AI estimated urgency ${value.score} of 5 for ${article.headline}`}>{value.score}<small>/5</small></summary><p>{value.basis}</p><small>{value.method} · estimated {stamp(value.estimatedAt)}. Public-news importance; league fit is not assessed.</small></details> : <span className="fn-unknown" title="No validated AI estimate supplied">—<span className="fn-sr-only">Urgency unavailable</span></span>;
+}
+function LeagueObservation({ observation, owned = false, compact = false }) {
+  const label = `${observation.leagueName}: ${owned ? 'Owned at read' : `${observation.status === 'W' ? 'Waivers' : observation.status === 'FA' ? 'Free agent' : 'Available'} at read`}`;
+  const detail = <><small>{owned && observation.week != null ? `W${observation.week} · ` : ''}{observation.checkedAt ? `Yahoo read ${stamp(observation.checkedAt)}` : 'Yahoo capture age unverified'}{observation.stale ? ' · stale loaded observation' : ''}{observation.coverage?.partial ? ' · partial page coverage' : ''}</small>{!owned && <small>Pool {observation.coverage?.status || observation.status} · {observation.method === 'ownership-response' ? 'bounded ownership lookup' : `page start ${observation.coverage?.start ?? 'unknown'} / size ${observation.coverage?.pageSize ?? 'unknown'}`} · confirm in Yahoo</small>}</>;
+  return compact ? <details className={`fn-league-observation compact ${owned ? 'owned' : 'available'}`}><summary>{label}{observation.stale ? ' · stale' : ''}</summary>{detail}</details> : <span className={`fn-league-observation ${owned ? 'owned' : 'available'}`}><strong>{label}</strong>{detail}</span>;
+}
+
+function PlayerLeagueCell({ player, yahoo, season, scoring, onOpen }) {
+  const context = newsPlayerLeagueContext(player, yahoo, season);
+  return <div className="fn-news-player">{player.playerId || player.player_id ? <PlayerName row={playerRow(player, season, scoring)} onOpen={onOpen}/> : <strong>{player.name}</strong>}<span>{player.team || 'Team unknown'} · {player.position || 'Position unknown'}</span>{player.relationship && <small>{player.relationship === 'potential_beneficiary' ? 'Potential beneficiary' : player.relationship === 'possible_workload_loss' ? 'Possible workload loss' : player.relationship.replaceAll('_', ' ')}</small>}{player.impact && <details className="fn-player-impact"><summary>Public impact ▾</summary><small>{player.impact}</small></details>}{context.owned.map(match => <LeagueObservation key={`owned-${match.teamKey}`} observation={match} owned compact/>)}{context.available.map(match => <LeagueObservation key={`available-${match.teamKey}`} observation={match} compact/>)}{context.connected && !context.relevant && <small className="fn-unknown">Ownership / availability unknown</small>}</div>;
+}
+function PrivateCoverage({ yahoo, season }) {
+  const context = newsArticleLeagueContext({ players: [] }, yahoo, season);
+  if (!context.connected) return <div className="fn-private-state"><strong>Yahoo league context unavailable</strong><span>Connect and load authorized rosters / availability.</span><a href="#/yahoo">Open Yahoo Connection ↗</a></div>;
+  return <div className="fn-private-state"><strong>{context.coverage?.totalLeagues ?? list(yahoo?.leagues).length} authorized leagues · {context.coverage?.loadedRosterCount ?? 0} rosters loaded</strong><span>Availability in {context.coverage?.loadedAvailabilityLeagues ?? 0} leagues · bounded loaded context. Missing players stay unknown.</span><span>Ownership, lineup week and availability have separate Yahoo read clocks. Confirm availability in Yahoo before acting.</span>{Object.keys(yahoo?.errors || {}).length > 0 && <span className="fn-caution">Some Yahoo reads failed; retained observations may be outdated. Open Yahoo Connection to recheck.</span>}</div>;
+}
+function confirmedInjury(article) {
+  return article.injury?.isInjuryRelated === true && ['official_report', 'report'].includes(article.evidence?.kind) && (article.status === 'CONFIRMED' || article.evidence?.status === 'CONFIRMED' || article.evidence?.kind === 'official_report');
+}
+function NewsTable({ articles, selectedId, select, expanded, toggle, season, scoring, onOpen, yahoo, loading, meta, tab }) {
+  const scroll = useRef(null);
+  const roster = tab === 'roster', injuries = tab === 'injuries';
+  const rows = injuries ? articles.filter(confirmedInjury) : roster ? articles.filter(article => displayedPlayers(article).some(player => newsPlayerLeagueContext(player, yahoo, season).relevant)) : articles;
+  return <>{roster && <PrivateCoverage yahoo={yahoo} season={season}/>}<div className="fn-table-scroll-tools"><button aria-label="Show earlier news columns" onClick={() => scroll.current?.scrollBy({left:-220,behavior:'smooth'})}>◀</button><span>All columns ↔ scroll or drag the green edge to widen</span><button aria-label="Show later news columns" onClick={() => scroll.current?.scrollBy({left:220,behavior:'smooth'})}>▶</button></div><div className="fn-news-table-scroll" ref={scroll}><table className={`fn-news-table ${injuries ? 'injury-table' : ''}`} aria-label={injuries ? 'Confirmed injury reports' : roster ? 'Owned or affirmatively available player reports' : 'Sourced news headlines'}><colgroup>{injuries ? <><col className="fn-col-player"/><col className="fn-col-status"/><col className="fn-col-time"/><col className="fn-col-source"/><col className="fn-col-arrow"/></> : <><col className="fn-col-headline"/><col className="fn-col-summary"/><col className="fn-col-player"/><col className="fn-col-urgency"/><col className="fn-col-arrow"/></>}</colgroup><thead><tr>{injuries ? <><th>Player / position</th><th>Reported status</th><th>Newsbreak / source clock</th><th>Source / report</th></> : <><th>Headline</th><th>Summary</th><th>Affected player / league observation</th><th title="AI-estimated public-news importance, 1–5. Inspect each estimate for its supplied basis. League fit is not assessed.">AI urgency</th></>}<th><span className="fn-sr-only">Detail / source</span>↗</th></tr></thead><tbody>{rows.map(article => <FragmentRow key={article.id} article={article} injuries={injuries} selectedId={selectedId} select={select} expanded={expanded} toggle={toggle} season={season} scoring={scoring} onOpen={onOpen} yahoo={yahoo}/>)}</tbody></table></div>{!rows.length && !loading && <div className="fn-empty"><strong>{meta?.state === 'unavailable' ? 'News feed unavailable' : injuries ? 'No confirmed injury records returned' : roster ? 'No affirmative owned or available matches returned' : 'No reports match this view'}</strong><p>{roster ? 'Load the authorized Yahoo rosters and availability pages. Absence from a roster or bounded availability page proves neither ownership nor availability.' : 'Returned coverage is bounded. Open sources or adjust the news window to verify reporting.'}</p></div>}{loading && !rows.length && <div className="fn-loading"><span/>Reading sourced NFL reports…</div>}<p className="fn-pane-scope">{rows.length} reports · {injuries ? 'Confirmed injury reporting only; status comes from the cited source.' : 'AI urgency estimates public-news importance, not league fit. Open the score for its supplied basis.'}{roster && ' Availability is an observation at read, not a live transaction guarantee.'}</p></>;
+}
+function FragmentRow({ article, injuries, selectedId, select, expanded, toggle, season, scoring, onOpen, yahoo }) {
+  const open = expanded.has(article.id), id = `fn-table-detail-${article.id.replace(/\W/g, '')}`;
+  const headline = <button className="fn-table-headline" aria-label={`Expand ${article.headline}`} aria-expanded={open} aria-controls={id} onClick={() => { select(article.id); toggle(article.id); }}><span aria-hidden="true">{open ? '▾' : '▸'}</span>{article.headline}</button>;
+  return <><tr className={selectedId === article.id ? 'selected' : ''}>{injuries ? <><td>{articlePlayers(article).map((player, index) => <PlayerLeagueCell key={index} player={player} yahoo={yahoo} season={season} scoring={scoring} onOpen={onOpen}/>)}</td><td><strong>{article.injury?.gameStatus || article.injury?.practiceStatus || 'Status unavailable'}</strong><small>{article.injury?.bodyPart || 'Body part unavailable'}</small><EvidenceBadge article={article}/></td><td><time dateTime={article.firstReportedAt || article.publishedAt || undefined}>{article.firstReportedAt ? stamp(article.firstReportedAt) : publicationClock(article)}</time><small>{article.firstReportedAt ? 'First reported' : 'Source publication · exact newsbreak unverified'}</small></td><td><strong>{article.source || sourceName(articleSources(article)[0])}</strong>{headline}</td></> : <><td>{headline}<small>{article.source || sourceName(articleSources(article)[0])} · {publicationClock(article, true)}</small></td><td><span className="fn-summary-clamp" title={article.summary}>{article.summary || 'Publisher summary unavailable'}</span></td><td>{displayedPlayers(article).map((player, index) => <PlayerLeagueCell key={index} player={player} yahoo={yahoo} season={season} scoring={scoring} onOpen={onOpen}/>)}</td><td><Urgency article={article}/></td></>}<td><button className="fn-inspect" aria-label={`Inspect ${article.headline}`} title="Open details and cited sources" onClick={() => select(article.id, true)}>↗</button></td></tr>{open && <tr className="fn-table-expanded"><td colSpan={5}><div id={id}><ArticleDetail article={article} season={season} scoring={scoring} onOpen={onOpen} compact/></div></td></tr>}</>;
+}
+function AcquisitionOpportunities({ yahoo, articles, season, scoring, onOpen, select }) {
+  const context = newsArticleLeagueContext({ players: [] }, yahoo, season);
+  const opportunities = articles.flatMap(article => publicAffectedPlayers(article).filter(player => player.relationship === 'potential_beneficiary').map(player => ({ article, player, context: newsPlayerLeagueContext(player, yahoo, season) }))).filter(item => item.context.available.length);
+  return <div className="fn-acquisition"><PrivateCoverage yahoo={yahoo} season={season}/>{context.connected && <><p className="fn-note">Potential beneficiaries are explicitly identified in public reporting. Availability is affirmative loaded Yahoo context; confirm in Yahoo before any action.</p>{opportunities.map(({article, player, context}, index) => <article className="fn-opportunity" key={`${article.id}-${index}`}><div className="fn-opportunity-title">{player.playerId ? <PlayerName row={playerRow(player, season, scoring)} onOpen={onOpen}/> : <strong>{player.name}</strong>}<span>{player.team || '—'} · {player.position || '—'}</span></div><p>{player.impact || 'Public impact explanation unavailable'}</p>{context.available.map(match => <LeagueObservation key={match.teamKey} observation={match}/>)}<button className="fn-related" onClick={() => select(article.id, true)}><strong>{article.headline} ↗</strong><small>{article.source} · {publicationClock(article, true)}</small></button></article>)}{!opportunities.length && <div className="fn-empty"><strong>No affirmative acquisition opportunities returned</strong><p>No eligible beneficiary was matched to a loaded available-player observation. Roster absence, unreturned pages and speculative role changes do not create an opportunity.</p></div>}</>}</div>;
 }
 
 function routeOptions() {
@@ -218,6 +248,8 @@ export function FantasyNews({ season = 2026, scoring = 'ppr', onOpen, yahoo }) {
   const [layout, setLayout, storageError] = useNewsLayout(route.popout);
   const [windowStates, setWindowStates] = useState({}), [windowNotice, setWindowNotice] = useState('');
   const [clock, setClock] = useState(Date.now);
+  const stopResize = useRef(null);
+  useEffect(() => () => stopResize.current?.(), []);
   useEffect(() => { const timer = window.setInterval(() => setClock(Date.now()), 60000); return () => window.clearInterval(timer); }, []);
   const feed = usePublicNews(hours, refresh, autoRead);
   const meta = useMemo(() => {
@@ -230,7 +262,7 @@ export function FantasyNews({ season = 2026, scoring = 'ppr', onOpen, yahoo }) {
   const selected = articles.find(article => article.id === (pinned || selectedId)) || articles[0] || null;
   const latestSelection = useRef(''); latestSelection.current = selectedId || articles[0]?.id || '';
   const options = useMemo(() => ({ sources: [...new Set(articles.flatMap(article => articleSources(article).map(sourceName)))].sort() }), [articles]);
-  const connected = Boolean(yahoo?.account && (!yahoo.account.season || Number(yahoo.account.season) === Number(season)));
+  const connected = newsArticleLeagueContext({players:[]}, yahoo, season, {now:clock}).connected;
   useEffect(() => { if (!connected) setRosterOnly(false); }, [connected]);
   const previousAccount = useRef(yahoo?.account);
   useEffect(() => {
@@ -243,26 +275,42 @@ export function FantasyNews({ season = 2026, scoring = 'ppr', onOpen, yahoo }) {
   useEffect(() => { if (route.popout) return; window.addEventListener('pagehide', closeFantasyNewsWindows); return () => window.removeEventListener('pagehide', closeFantasyNewsWindows); }, [route.popout]);
   const effectiveSource = options.sources.includes(source) ? source : 'all';
   const filtered = articles.filter(article => (category === 'all' || articleCategories(article).includes(category)) && (effectiveSource === 'all' || articleSources(article).some(item => sourceName(item) === effectiveSource)) && (!rosterOnly || connected && newsRosterMatches(article, yahoo, season).length) && `${article.headline} ${article.summary || ''} ${articlePlayers(article).map(player => player.name).join(' ')}`.toLowerCase().includes(search.trim().toLowerCase()));
+  const dockKey = id => id === 'feed' ? 'left' : id === 'acquisition' ? 'acquisition' : null;
+  const enabled = id => dockKey(id) ? layout[dockKey(id)].enabled : layout.panes.some(pane => pane.id === id);
   const patchPane = (id, patch) => setLayout(old => {
+    const key = dockKey(id);
+    if (key) return { ...old, [key]: { ...old[key], ...patch } };
     const visible = old.panes.filter(pane => !pane.collapsed), index = visible.findIndex(pane => pane.id === id);
     const columnId = old.mode === 'tiles' && patch.width !== undefined ? visible[index % 2]?.id : null;
     return { ...old, panes: old.panes.map(pane => pane.id === id || pane.id === columnId ? { ...pane, ...patch } : pane) };
   });
-  const openPane = id => setLayout(old => ({ ...old, panes: old.panes.some(pane => pane.id === id) ? old.panes.map(pane => pane.id === id ? { ...pane, collapsed: false } : pane) : [...old.panes, { id, width: NEWS_PANES[id].width, collapsed: false }] }));
-  const closePane = id => { try { paneWindows.get(id)?.close(); } catch { /* Browser window may already be gone. */ } paneWindows.delete(id); setWindowStates(old => ({ ...old, [id]: 'closed' })); setLayout(old => ({ ...old, panes: old.panes.filter(pane => pane.id !== id) })); };
+  const openPane = id => {
+    const key = dockKey(id);
+    if (key) { patchPane(id, { enabled: true, collapsed: false }); return; }
+    setLayout(old => ({ ...old, panes: old.panes.some(pane => pane.id === id) ? old.panes.map(pane => pane.id === id ? { ...pane, collapsed: false } : pane) : [...old.panes, { id, width: NEWS_PANES[id].width, collapsed: false }] }));
+  };
+  const closePane = id => {
+    try { paneWindows.get(id)?.close(); } catch { /* Browser window may already be gone. */ }
+    paneWindows.delete(id); setWindowStates(old => ({ ...old, [id]: 'closed' }));
+    const key = dockKey(id);
+    if (key) patchPane(id, { enabled: false, collapsed: false });
+    else setLayout(old => ({ ...old, panes: old.panes.filter(pane => pane.id !== id) }));
+  };
   const select = (id, inspect = false) => { setSelectedId(id); if (inspect && !route.popout) openPane('evidence'); };
   const toggle = id => setExpanded(old => { const next = new Set(old); next.has(id) ? next.delete(id) : next.add(id); return next; });
   const movePane = (id, direction) => setLayout(old => {
-    const panes = [...old.panes], visible = old.mode === 'tiles' ? panes.filter(pane => !pane.collapsed) : panes;
+    const panes = [...old.panes], visible = panes.filter(pane => !pane.collapsed);
     const target = visible[visible.findIndex(pane => pane.id === id) + direction];
     if (target) { const from = panes.findIndex(pane => pane.id === id), to = panes.findIndex(pane => pane.id === target.id); [panes[from], panes[to]] = [panes[to], panes[from]]; }
     return { ...old, panes };
   });
   const resizePane = (event, pane) => {
     event.preventDefault();
+    stopResize.current?.();
     const start = event.clientX, width = pane.width;
-    const move = event => patchPane(pane.id, { width: Math.max(280, Math.min(1200, width + event.clientX - start)) });
-    const end = () => { document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', end); document.removeEventListener('pointercancel', end); };
+    const move = event => patchPane(pane.id, { width: Math.max(280, Math.min(dockKey(pane.id) ? 1000 : 1200, width + (event.clientX - start) * (pane.id === 'acquisition' ? -1 : 1))) });
+    const end = () => { document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', end); document.removeEventListener('pointercancel', end); window.removeEventListener('blur', end); stopResize.current = null; };
+    stopResize.current = end; window.addEventListener('blur', end);
     document.addEventListener('pointermove', move); document.addEventListener('pointerup', end); document.addEventListener('pointercancel', end);
   };
   const sendSelection = child => { try { child.postMessage({ type: 'bowser-fantasy-news-selection', articleId: latestSelection.current, hours }, window.location.origin); } catch { /* Independently opened window still reads its own feed. */ } };
@@ -335,41 +383,45 @@ export function FantasyNews({ season = 2026, scoring = 'ppr', onOpen, yahoo }) {
 
   const clearFilters = () => { setCategory('all'); setSource('all'); setSearch(''); setRosterOnly(false); };
   const streamProps = { selectedId: selectedId || articles[0]?.id, select, expanded, toggle, season, scoring, onOpen, yahoo, loading: feed.loading };
+  const tabContent = <NewsTable {...streamProps} articles={filtered} meta={meta} tab={layout.left.activeTab}/>;
   const content = id => {
-    if (id === 'feed') return <ArticleStream {...streamProps} articles={filtered} label="News stream" emptyText={meta?.state === 'unavailable' ? 'News feed unavailable' : undefined}/>;
-    if (id === 'injuries') return <><p className="fn-pane-scope">All loaded injuries and practice reports · {hours}h · independent of stream filters</p><ArticleStream {...streamProps} articles={articles.filter(article => articleCategories(article).some(category => ['injury', 'practice'].includes(category)))} label="Injuries and practice"/></>;
+    if (id === 'feed') return <><div className="fn-sidebar-tabs" role="tablist" aria-label="News workspace views">{[['news','News'], ['injuries','Injuries'], ['roster','My Roster']].map(([id,label], index) => <button key={id} id={`fn-tab-${id}`} role="tab" aria-selected={layout.left.activeTab === id} aria-controls="fn-news-tab-panel" tabIndex={layout.left.activeTab === id ? 0 : -1} onClick={() => patchPane('feed', { activeTab: id })} onKeyDown={event => { if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return; event.preventDefault(); const next = event.key === 'Home' ? 0 : event.key === 'End' ? 2 : (index + (event.key === 'ArrowRight' ? 1 : 2)) % 3; patchPane('feed', {activeTab:['news','injuries','roster'][next]}); event.currentTarget.parentNode.querySelectorAll('[role="tab"]')[next]?.focus(); }}>{label}</button>)}</div><div role="tabpanel" id="fn-news-tab-panel" aria-labelledby={`fn-tab-${layout.left.activeTab}`} className="fn-news-tab-panel">{tabContent}</div></>;
+    if (id === 'acquisition') return <AcquisitionOpportunities yahoo={yahoo} articles={articles} season={season} scoring={scoring} onOpen={onOpen} select={select}/>;
     if (id === 'roles') return <><p className="fn-pane-scope">Role / performance reports · {hours}h · future usage remains unconfirmed</p><ArticleStream {...streamProps} articles={articles.filter(article => articleCategories(article).includes('playing_time') || ['COACH_COMMENT', 'PERFORMANCE'].includes(article.eventType))} label="Playing time reports"/></>;
     if (id === 'evidence') return <><div className="fn-evidence-controls"><label>Report<select aria-label="Evidence report" value={selected?.id || ''} onChange={event => { setPinned(''); setSelectedId(event.target.value); }}><option value="">Select a report</option>{articles.map(article => <option value={article.id} key={article.id}>{article.headline}</option>)}</select></label><button aria-pressed={Boolean(pinned)} disabled={!selected} onClick={() => setPinned(pinned ? '' : selected.id)}>{pinned ? 'Unpin' : 'Pin report'}</button></div><ArticleDetail article={selected} season={season} scoring={scoring} onOpen={onOpen}/></>;
     if (id === 'player') return <PlayerFocus article={selected} articles={articles} season={season} scoring={scoring} onOpen={onOpen} select={select}/>;
-    if (id === 'roster') return <RosterAngle yahoo={yahoo} articles={articles} season={season} select={select} selectedId={selected?.id}/>;
     return <SourceCoverage meta={meta} articles={articles} chooseSource={setSource} selectedSource={source}/>;
   };
-  const allPanes = route.popout ? [{ id: route.pane, width: NEWS_PANES[route.pane].width, collapsed: false }] : layout.panes;
-  const panes = layout.mode === 'tiles' && !route.popout ? allPanes.filter(pane => !pane.collapsed) : allPanes;
-  const tileWeights = panes.slice(0, 2).map(pane => pane.width);
-  const tileColumns = !route.popout && layout.mode === 'tiles' && panes.length > 1 ? `minmax(280px,${tileWeights[0]}fr) minmax(280px,${tileWeights[1]}fr)` : undefined;
+  const panes = route.popout ? [{ id: route.pane, width: NEWS_PANES[route.pane].width, collapsed: false }] : layout.panes.filter(pane => !pane.collapsed);
+  const tileColumns = !route.popout && layout.mode === 'tiles' && panes.length > 1 ? `minmax(0,${panes[0].width}fr) minmax(0,${panes[1].width}fr)` : undefined;
   const statusText = feed.loading ? feed.data ? 'Reading latest stored feed…' : 'Reading sourced reports…' : feed.error ? feed.data ? 'Read failed · last successful feed retained' : 'News read unavailable' : `${filtered.length} visible / ${articles.length} returned · ${meta?.state || 'unavailable'}`;
+  const renderPane = (pane, index = 0, dock = false) => {
+    const definition = NEWS_PANES[pane.id], popped = !route.popout && windowStates[pane.id] === 'open';
+    const maximum = dockKey(pane.id) ? 1000 : 1200;
+    return <section key={pane.id} className={`fn-pane ${dock ? `fn-dock fn-${pane.id}-dock` : 'research'} ${popped ? 'popped' : ''}`} style={{ '--fn-pane-width': `${pane.width}px`, flexGrow: dock ? 0 : pane.width }} aria-label={definition.title}>
+      <header className="fn-window-title"><div><small>{definition.label}</small><h2>{definition.title}</h2></div>{!route.popout && <div className="fn-pane-actions"><button aria-label={`Collapse ${definition.title}`} aria-expanded="true" title="Collapse and reclaim space" onClick={() => patchPane(pane.id, { collapsed: true })}>▾</button>{!dock && <><button aria-label={`Move ${definition.title} left`} disabled={index === 0} onClick={() => movePane(pane.id, -1)}>←</button><button aria-label={`Move ${definition.title} right`} disabled={index === panes.length - 1} onClick={() => movePane(pane.id, 1)}>→</button></>}<button aria-label={`${windowStates[pane.id] === 'closed' ? 'Reopen' : popped ? 'Focus' : 'Pop out'} ${definition.title}${windowStates[pane.id] === 'closed' || popped ? ' window' : ''}`} title="Open in a browser window" onClick={() => popOut(pane.id)}>↗</button><button aria-label={`Close ${definition.title}`} title="Disable this pane" onClick={() => closePane(pane.id)}>×</button></div>}</header>
+      {popped ? <div className="fn-detached"><strong>Open in browser window</strong><p>{definition.title} reads the public feed and its own authorized Yahoo context.</p><button className="lhq-mini" onClick={() => popOut(pane.id)}>Focus window</button><button className="lhq-mini lhq-outline" onClick={() => dockPane(pane.id)}>Return to workspace</button><button className="fn-text-button" onClick={() => dockPane(pane.id)}>Close browser window</button></div> : <div className="fn-pane-content" tabIndex={0}>{content(pane.id)}</div>}
+      {!route.popout && !popped && <div className={`fn-pane-resize ${pane.id === 'acquisition' ? 'fn-resize-left' : ''}`} role="separator" aria-label={`Resize ${definition.title}`} title="Drag to resize · arrow keys adjust 20px" aria-orientation="vertical" aria-valuemin={280} aria-valuemax={maximum} aria-valuenow={pane.width} tabIndex={0} onPointerDown={event => resizePane(event, pane)} onKeyDown={event => { if (['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) { event.preventDefault(); const direction = pane.id === 'acquisition' ? -1 : 1; patchPane(pane.id, {width:event.key === 'Home' ? 280 : event.key === 'End' ? maximum : pane.width + (event.key === 'ArrowRight' ? 20 : -20) * direction}); } }}><span aria-hidden="true">⋮</span></div>}
+    </section>;
+  };
+  const dockPane = dock;
+  const renderDock = (id, preference) => !preference.enabled ? null : preference.collapsed ? <button className={`fn-dock-restore ${id}`} aria-label={`Expand ${NEWS_PANES[id].title}`} onClick={() => patchPane(id,{collapsed:false})}>▸ <span>{NEWS_PANES[id].title}</span></button> : renderPane({id,...preference},0,true);
   const body = <div className={`fantasy-news ${route.popout ? 'fn-popout' : ''}`}>
-    {route.popout && <div className="fn-popout-bar"><a href="#/fantasy-news" target="_blank" rel="noopener noreferrer">← Full workspace</a><strong>Bowser · {NEWS_PANES[route.pane].title}</strong><button className="lhq-mini lhq-outline" onClick={() => { if (window.opener && !window.opener.closed) { window.opener.postMessage({ type: 'bowser-fantasy-news-dock', pane: route.pane }, window.location.origin); window.close(); } else { window.location.hash = '/fantasy-news'; window.location.reload(); } }}>Return to workspace</button></div>}
-    <div className="fn-filter-row"><label className="fn-search"><span className="fn-sr-only">Search news</span><input aria-label="Search news" type="search" placeholder="Search player, headline or report" value={search} onChange={event => setSearch(event.target.value)}/></label><label>Source<select aria-label="News source" value={options.sources.includes(source) ? source : 'all'} onChange={event => setSource(event.target.value)}><option value="all">All sources</option>{options.sources.map(value => <option key={value}>{value}</option>)}</select></label><button className="fn-roster-filter" aria-pressed={rosterOnly} disabled={!connected} title={!connected ? 'Connect Yahoo and load authorized rosters' : 'Only affirmative matches in loaded rosters'} onClick={() => setRosterOnly(value => !value)}>My roster{!connected && ' · unavailable'}</button><button className="fn-reset-filter" onClick={clearFilters}>Clear filters</button></div>
-    <div className="fn-pool-row"><Pool tabs={Object.entries(CATEGORIES).map(([key, label]) => ({ key, label, count: key === 'all' ? articles.length : articles.filter(article => articleCategories(article).includes(key)).length }))} value={category} onChange={setCategory}/><span className="fn-read-status" role="status">{statusText}</span></div>
+    {route.popout && <div className="fn-popout-bar"><a href="#/fantasy-news" target="_blank" rel="noopener noreferrer">← Full workspace</a><strong>Bowser · {NEWS_PANES[route.pane].title}</strong><button className="lhq-mini lhq-outline" onClick={() => { if (window.opener && !window.opener.closed) { window.opener.postMessage({ type:'bowser-fantasy-news-dock',pane:route.pane },window.location.origin); window.close(); } else { window.location.hash='/fantasy-news'; window.location.reload(); } }}>Return to workspace</button></div>}
+    <div className="fn-filter-row"><label className="fn-search"><span className="fn-sr-only">Search news</span><input aria-label="Search news" type="search" placeholder="Search player, headline or report" value={search} onChange={event => setSearch(event.target.value)}/></label><label>Source<select aria-label="News source" value={effectiveSource} onChange={event => setSource(event.target.value)}><option value="all">All sources</option>{options.sources.map(value => <option key={value}>{value}</option>)}</select></label><button className="fn-reset-filter" onClick={clearFilters}>Clear filters</button><span className="fn-read-status" role="status">{statusText}</span></div>
+    <div className="fn-pool-row"><Pool tabs={Object.entries(CATEGORIES).map(([key,label]) => ({key,label,count:key === 'all' ? articles.length : articles.filter(article => articleCategories(article).includes(key)).length}))} value={category} onChange={setCategory}/></div>
     {feed.error && <div className="fn-notice error" role="alert">{feed.error} {feed.data ? 'Last successful feed retained in memory.' : 'No values substituted.'}<button onClick={() => setRefresh(value => value + 1)}>Try again</button></div>}
-    {!feed.loading && ['stale', 'partial', 'unavailable'].includes(meta?.state) && <div className="fn-notice caution">{meta.message || `Feed ${meta.state}.`}<span>Latest source {stamp(meta.freshness?.latestSourcePublishedAt)} · feed read {stamp(feed.readAt)}</span></div>}
+    {!feed.loading && ['stale','partial','unavailable'].includes(meta?.state) && <div className="fn-notice caution">{meta.message || `Feed ${meta.state}.`}<span>Latest source {stamp(meta.freshness?.latestSourcePublishedAt)} · feed read {stamp(feed.readAt)}</span></div>}
     {storageError && <div className="fn-notice caution" role="alert">Layout could not be saved in this browser. Pane controls still work for this visit.</div>}
     {windowNotice && <div className={`fn-notice ${windowNotice.includes('blocked') ? 'caution' : ''}`} role={windowNotice.includes('blocked') ? 'alert' : 'status'}>{windowNotice}<button aria-label="Dismiss window notice" onClick={() => setWindowNotice('')}>×</button></div>}
-    {!route.popout && <div className="fn-window-strip"><div><strong>WORKSPACE WINDOWS</strong><span>{layout.panes.length} open · {storageError ? 'layout save unavailable' : 'layout saved locally'}</span></div><div className="fn-window-buttons">{Object.entries(NEWS_PANES).filter(([id]) => id !== 'feed').map(([id, pane]) => <button key={id} aria-pressed={layout.panes.some(item => item.id === id && !item.collapsed)} onClick={() => openPane(id)}>{pane.title}<span>{layout.panes.some(item => item.id === id) ? windowStates[id] === 'open' ? ' ↗' : ' ✓' : ' +'}</span></button>)}</div><div className="fn-layout-controls"><label className="fn-layout-label">Arrange<select aria-label="Workspace arrangement" value={layout.mode} onChange={event => setLayout(old => ({ ...old, mode: event.target.value }))}><option value="tiles">Tiles</option><option value="columns">Columns</option><option value="stacked">Stack</option></select></label><button onClick={() => { for (const id of [...paneWindows.keys()]) dock(id); setLayout(defaultLayout()); setWindowNotice('Default window layout restored.'); }}>Reset layout</button></div></div>}
-    <div className="fn-restore-windows">{!route.popout && layout.mode === 'tiles' && allPanes.filter(pane => pane.collapsed).map(pane => <button key={pane.id} aria-label={`Expand ${NEWS_PANES[pane.id].title}`} onClick={() => patchPane(pane.id, {collapsed:false})}>▸ {NEWS_PANES[pane.id].title}</button>)}</div>
-    <div className={`fn-workspace ${!route.popout ? layout.mode : ''}`} style={{gridTemplateColumns:tileColumns}} aria-label="Fantasy news windows">
-      {panes.map((pane, index) => {
-        const definition = NEWS_PANES[pane.id], popped = !route.popout && windowStates[pane.id] === 'open';
-        return <section key={pane.id} className={`fn-pane ${pane.id === 'feed' ? 'feed' : 'research'} ${pane.collapsed ? 'collapsed' : ''} ${popped ? 'popped' : ''}`} style={{ '--fn-pane-width': `${pane.width}px`, flexGrow: pane.width }} aria-label={definition.title}>
-          <header className="fn-window-title"><div><small>{definition.label}</small><h2>{definition.title}</h2></div>{!route.popout && <div className="fn-pane-actions"><button aria-label={`${pane.collapsed ? 'Expand' : 'Collapse'} ${definition.title}`} aria-expanded={!pane.collapsed} onClick={() => patchPane(pane.id, { collapsed: !pane.collapsed })}>{pane.collapsed ? '▸' : '▾'}</button>{!pane.collapsed && <><button aria-label={`Move ${definition.title} left`} disabled={index === 0} onClick={() => movePane(pane.id, -1)}>←</button><button aria-label={`Move ${definition.title} right`} disabled={index === panes.length - 1} onClick={() => movePane(pane.id, 1)}>→</button><button aria-label={`${windowStates[pane.id] === 'closed' ? 'Reopen' : popped ? 'Focus' : 'Pop out'} ${definition.title}${windowStates[pane.id] === 'closed' || popped ? ' window' : ''}`} onClick={() => popOut(pane.id)}>↗</button>{pane.id !== 'feed' && <button aria-label={`Close ${definition.title}`} onClick={() => closePane(pane.id)}>×</button>}</>}</div>}</header>
-          {!pane.collapsed && (popped ? <div className="fn-detached"><strong>Open in browser window</strong><p>{definition.title} reads the same public feed independently.</p><button className="lhq-mini" onClick={() => popOut(pane.id)}>Focus window</button><button className="lhq-mini lhq-outline" onClick={() => dock(pane.id)}>Return to workspace</button><button className="fn-text-button" onClick={() => dock(pane.id)}>Close browser window</button></div> : <div className="fn-pane-content" tabIndex={0}>{content(pane.id)}</div>)}
-          {!route.popout && !pane.collapsed && !popped && <div className="fn-pane-resize" role="separator" aria-label={`Resize ${definition.title}`} aria-orientation="vertical" aria-valuemin={280} aria-valuemax={1200} aria-valuenow={pane.width} tabIndex={0} onPointerDown={event => resizePane(event, pane)} onKeyDown={event => { if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) { event.preventDefault(); patchPane(pane.id, { width: event.key === 'Home' ? 280 : event.key === 'End' ? 1200 : pane.width + (event.key === 'ArrowRight' ? 20 : -20) }); } }}/>}
-        </section>;
-      })}
-    </div>
-    <div className="fn-footer"><span>{clean(meta?.timeFilterBasis).includes('overlapping_calendar_dates') ? `Target window: ${hours}h · unknown-timezone dates may overlap this window` : `News window: last ${hours} hours`} · original source dates preserved · {meta?.coverage?.complete ? 'reported complete coverage' : 'partial or unverified coverage'}</span><span>Article and Yahoo response bodies stay in memory</span></div>
+    {!route.popout && <div className="fn-window-strip"><div><strong>WORKSPACE WINDOWS</strong><span>Docks stay independent of Arrange</span></div><div className="fn-window-buttons">{Object.entries(NEWS_PANES).map(([id,pane]) => <button key={id} aria-label={`Toggle ${pane.title}`} aria-pressed={enabled(id)} onClick={() => enabled(id) ? closePane(id) : openPane(id)}>{pane.title}<span>{enabled(id) ? windowStates[id] === 'open' ? ' ↗' : ' ✓' : ' +'}</span></button>)}</div><div className="fn-layout-controls"><label className="fn-layout-label">Arrange<select aria-label="Workspace arrangement" value={layout.mode} onChange={event => setLayout(old => ({...old,mode:event.target.value}))}><option value="tiles">Tiles</option><option value="columns">Columns</option><option value="stacked">Stack</option></select></label><button onClick={() => { closeFantasyNewsWindows(); setLayout(defaultLayout()); setWindowNotice('Default window layout restored.'); }}>Reset layout</button></div></div>}
+    {!route.popout && <div className="fn-restore-windows">{layout.panes.filter(pane => pane.collapsed).map(pane => <button key={pane.id} aria-label={`Expand ${NEWS_PANES[pane.id].title}`} onClick={() => patchPane(pane.id,{collapsed:false})}>▸ {NEWS_PANES[pane.id].title}</button>)}</div>}
+    {route.popout ? <div className="fn-workspace">{panes.map((pane,index) => renderPane(pane,index))}</div> : <div className="fn-frame" aria-label="Fantasy news workspace">
+      {renderDock('feed',layout.left)}
+      <div className="fn-central-workspace" role="region" aria-label="Central research panels"><div className={`fn-workspace ${layout.mode}`} style={{gridTemplateColumns:tileColumns}}>{panes.map((pane,index) => renderPane(pane,index))}</div>{!panes.length && <div className="fn-central-empty"><strong>Research panels hidden</strong><p>Enable Evidence desk, Player focus, Role & performance or Source coverage above.</p></div>}</div>
+      {renderDock('acquisition',layout.acquisition)}
+    </div>}
+    <div className="fn-footer"><span>{clean(meta?.timeFilterBasis).includes('undated_reports') ? `Target window: ${hours}h · undated reports have unverified age` : clean(meta?.timeFilterBasis).includes('overlapping_calendar_dates') ? `Target window: ${hours}h · unknown-timezone dates may overlap this window` : `News window: last ${hours} hours`} · original source clocks preserved · {meta?.coverage?.complete ? 'reported complete coverage' : 'partial or unverified coverage'}</span><span>Article and Yahoo response bodies stay in memory</span></div>
   </div>;
   const readControls = <><button className="lhq-mini" disabled={feed.loading} onClick={() => setRefresh(value => value + 1)}>{feed.loading ? 'Reading…' : 'Refresh feed'}</button><label className="fn-auto-read"><input type="checkbox" checked={autoRead} onChange={event => setAutoRead(event.target.checked)}/>Auto read stored feed · 60s</label></>;
   if (route.popout) return <div className="lhq fn-popout-shell"><div className="fn-popout-controls"><Picker label="News window" value={hours} onChange={value => setHours(Number(value))} options={WINDOWS.map(value => [value, value === 720 ? '30 days · historical' : `${value} hours`])}/>{readControls}</div>{body}</div>;

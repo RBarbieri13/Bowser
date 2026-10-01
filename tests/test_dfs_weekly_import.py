@@ -6,9 +6,9 @@ import json
 import sys
 import tempfile
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
@@ -18,6 +18,9 @@ SNAPSHOT = json.loads((ROOT / 'data/dfs-weekly.json').read_text())
 # Parser regressions pin a retained archive; the current default advances weekly.
 SLATE = SNAPSHOT['slates']['2026-w2-dk-153427']
 NOW = datetime(2026, 9, 16, 20, tzinfo=timezone.utc)
+PARTIAL_BASELINE = {**SNAPSHOT, 'season':2026, 'week':2, 'defaultSlate':'2026-w2-dk-153427',
+                    'slates':{key:slate for key,slate in SNAPSHOT['slates'].items() if slate['season']==2026 and slate['week']==2}}
+PARTIAL_BASELINE['contentFingerprint'] = module.content_fingerprint(PARTIAL_BASELINE)
 
 
 def salary_csv(records):
@@ -54,6 +57,134 @@ def projection_html(games, wrong_week=False, missing_position=None):
 
 
 class WeeklyDfsTests(unittest.TestCase):
+    def run_partial_fixture(self, directory, *, allow=False, supplemental=False):
+        now = datetime(2026, 10, 1, 22, tzinfo=timezone.utc)
+        target = Path(directory) / 'dfs.json'
+        if not target.exists(): target.write_text(json.dumps(PARTIAL_BASELINE))
+        discovered, pools = [], {}
+        for old_key in ('2026-w2-dk-153427', '2026-w2-dk-153434'):
+            slate = copy.deepcopy(SNAPSHOT['slates'][old_key])
+            slate['week'] = 4
+            slate['id'] += 1000
+            slate['key'] = f"2026-w4-dk-{slate['id']}"
+            for game in slate['games']:
+                game['week'] = 4
+                game['gameId'] = game['gameId'].replace('_02_', '_04_')
+                game['startsAt'] = module.iso(module.instant(game['startsAt']) + timedelta(days=14))
+            slate['startsAt'] = min(g['startsAt'] for g in slate['games'])
+            slate['endsAt'] = max(g['startsAt'] for g in slate['games'])
+            by_team = {t:g for g in slate['games'] for t in (g['away'],g['home'])}
+            for row in slate['records']:
+                game = by_team[row['team']]
+                date = module.instant(game['startsAt']).astimezone(module.ET)
+                row['gameId'] = game['gameId']
+                row['game'] = f"{game['away']}@{game['home']} {date:%m/%d/%Y %I:%M%p} ET"
+            pools[slate['id']] = slate['records']
+            discovered.append(slate)
+        games = discovered[0]['games']
+        fsc = {}
+        if supplemental:
+            sample = next(r for r in discovered[0]['records'] if r['team'] in ('DET','BUF') and
+                          r['projectionSource'] == 'Fantasy Sports Central')
+            value = {k:v for k,v in sample.items() if k.startswith('projection') and k != 'projectionUnavailableReason'}
+            value.update(projectionWeek=4, projectionGameId=sample['gameId'], projectionSourceDate=None,
+                         projectionCapturedAt=module.iso(now),
+                         projectionSourceDateBasis='Publication time unavailable; capture time retained separately')
+            fsc[(module.name_key(sample['name']),sample['position'],sample['team'])] = value
+            mismatch = next(r for r in discovered[0]['records'] if r['projectionSource'] == 'Fantasy Sports Central' and r['name'] != sample['name'])
+            fsc[(module.name_key(mismatch['name']),mismatch['position'],mismatch['team'])] = {
+                **value, 'projectionGameId':mismatch['gameId'], 'projectionSourceSalary':1}
+        class FakeFetcher:
+            def __init__(self, *_): self.sources = {}
+            def get(self, url, filename):
+                self.sources[filename] = {'url':url, 'sha256':'fixture-hash', 'retrievedAt':module.iso(now),
+                                          'lastModified':'Sun, 20 Sep 2026 07:41:01 GMT' if filename == 'projections.html' else None}
+                if filename.startswith('dk-'): return salary_csv(pools[int(filename[3:-4])])
+                if filename == 'projections.html':
+                    return projection_html(games).replace('Week 2 (2026)', 'Week 4 (2026)')
+                return '{}'
+        identities = {(module.name_key(r['name']),r['position'],r['team']):{r['playerId']}
+                      for r in pools[discovered[0]['id']] if r['playerId']}
+        with patch.object(module,'Fetcher',FakeFetcher), \
+             patch.object(module,'parse_schedule',return_value=games), \
+             patch.object(module,'discover_slates',return_value=discovered), \
+             patch.object(module,'roster_identities',return_value=(identities,4)), \
+             patch.object(module,'parse_supplemental_projections',return_value=fsc,
+                          side_effect=None if supplemental else module.PartialData('Supplemental source unavailable')):
+            result = module.refresh(target,Path(directory)/'raw',now,allow_partial_projections=allow)
+        return result, json.loads(target.read_text())
+
+    def test_explicit_partial_mode_publishes_current_salaries_and_nulls_without_weakening_default(self):
+        with tempfile.TemporaryDirectory() as temp:
+            target = Path(temp)/'dfs.json'
+            target.write_text(json.dumps(PARTIAL_BASELINE))
+            before = target.read_bytes()
+            with self.assertRaisesRegex(module.PartialData,'outside current pregame week'):
+                self.run_partial_fixture(temp)
+            self.assertEqual(target.read_bytes(),before)
+            result,snapshot = self.run_partial_fixture(temp,allow=True)
+            self.assertEqual(result['projectionRefresh'],'partial')
+            self.assertEqual((snapshot['season'],snapshot['week']),(2026,4))
+            self.assertEqual(snapshot['slates']['2026-w2-dk-153427'],SLATE)
+            for key in result['updatedSlates']:
+                slate=snapshot['slates'][key]
+                self.assertTrue(all(r['projection'] is None and r['projectionUnavailableReason'] for r in slate['records']))
+                self.assertIsNone(slate['projectionProvider'])
+                self.assertEqual(slate['projectionStatus']['missingPlayers'],len(slate['records']))
+                self.assertEqual(slate['primaryProjectionStatus']['lastModified'],'Sun, 20 Sep 2026 07:41:01 GMT')
+            module.validate_snapshot(snapshot)
+            self.assertEqual(module.verify_archive(Path(temp)/'dfs_archive.sqlite')['status'],'verified')
+
+    def test_explicit_partial_mode_still_preserves_last_good_on_official_salary_failure(self):
+        with tempfile.TemporaryDirectory() as temp:
+            target=Path(temp)/'dfs.json'
+            target.write_text(json.dumps(PARTIAL_BASELINE))
+            before=target.read_bytes()
+            with patch.object(module,'build_records',side_effect=module.PartialData('Official salary date mismatch')):
+                with self.assertRaisesRegex(module.PartialData,'Official salary date mismatch'):
+                    self.run_partial_fixture(temp,allow=True)
+            self.assertEqual(target.read_bytes(),before)
+            self.assertFalse((Path(temp)/'dfs_archive.sqlite').exists())
+
+    def test_partial_supplements_require_exact_official_salary_and_captain_source_lineage(self):
+        with tempfile.TemporaryDirectory() as temp:
+            result,snapshot = self.run_partial_fixture(temp,allow=True,supplemental=True)
+            classic=snapshot['slates'][snapshot['defaultSlate']]
+            projected=[r for r in classic['records'] if r['projection'] is not None]
+            self.assertEqual(len(projected),1)
+            self.assertEqual(projected[0]['projectionSource'],'Fantasy Sports Central')
+            self.assertIsNone(projected[0]['projectionSourceDate'])
+            self.assertEqual(projected[0]['projectionCapturedAt'],'2026-10-01T22:00:00Z')
+            showdown=snapshot['slates']['2026-w4-dk-154434']
+            roles={r['rosterPosition']:r for r in showdown['records'] if r['projection'] is not None}
+            self.assertEqual(set(roles),{'FLEX','CPT'})
+            self.assertEqual(roles['CPT']['projection'],round(roles['FLEX']['projection']*1.5,4))
+            module.validate_snapshot(snapshot)
+            for mutate in (
+                lambda s:s['slates'][s['defaultSlate']]['primaryProjectionStatus'].update(status='verified'),
+                lambda s:next(r for r in s['slates'][s['defaultSlate']]['records'] if r['projection'] is not None).update(projectionSource='Fantasy Info Central'),
+                lambda s:s['slates'][s['defaultSlate']]['projectionStatus'].update(missingPlayers=0),
+                lambda s:next(r for r in s['slates']['2026-w4-dk-154434']['records'] if r['projection'] is not None).update(projectionSalaryValidationSha256='wrong'),
+                lambda s:s['slates'][s['defaultSlate']]['records'][0].update(salary=1),
+            ):
+                damaged=copy.deepcopy(snapshot);mutate(damaged)
+                damaged['contentFingerprint']=module.content_fingerprint(damaged)
+                with self.assertRaises(module.PartialData):module.validate_snapshot(damaged)
+
+    def test_fetcher_records_actual_response_time_separately_from_import_start(self):
+        with tempfile.TemporaryDirectory() as temp:
+            response=MagicMock()
+            response.__enter__.return_value=response
+            response.status=200;response.url='https://source.test';response.headers={};response.read.return_value=b'public source'
+            before=datetime.now(timezone.utc)
+            with patch.object(module.urllib.request,'urlopen',return_value=response):
+                fetch=module.Fetcher(Path(temp),NOW)
+                fetch.get('https://source.test','source.txt')
+            retrieved=module.instant(fetch.sources['source.txt']['retrievedAt'])
+            self.assertLessEqual(before,retrieved)
+            self.assertLessEqual(retrieved,datetime.now(timezone.utc))
+            self.assertNotEqual(retrieved,NOW)
+
     def test_shipped_snapshot_is_verified_and_includes_current_rookies(self):
         module.validate_snapshot(SNAPSHOT)
         self.assertEqual((SLATE['season'], SLATE['week']), (2026, 2))

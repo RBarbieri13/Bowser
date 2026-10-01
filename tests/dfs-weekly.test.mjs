@@ -150,3 +150,39 @@ test('weekly snapshot reuse detects atomic refreshes and preserves invalid-file 
     assert.equal(isolated.getDfsSlate().records[0].salary, updated.salary);
   } finally { rmSync(temp, { recursive: true, force: true }); }
 });
+
+test('partial projection captures expose source limitations through Classic and Showdown lineup metadata', async () => {
+  const temp = mkdtempSync(join(tmpdir(), 'bowser-dfs-partial-'));
+  try {
+    mkdirSync(join(temp, 'server')); mkdirSync(join(temp, 'data'));
+    cpSync(new URL('../server/dfs-store.mjs', import.meta.url), join(temp, 'server/dfs-store.mjs'));
+    cpSync(pinnedPath, join(temp, 'data/dfs-week1-2026.json'));
+    const classicKey = '2026-w2-dk-153427', showdownKey = '2026-w2-dk-153434';
+    const slates = Object.fromEntries([classicKey,showdownKey].map(key => {
+      const slate = structuredClone(weekly.slates[key]);
+      slate.projectionProvider = null;
+      slate.projectionSourceDate = null;
+      slate.primaryProjectionStatus = {status:'unavailable',source:'Fantasy Info Central',reason:'Projection source is over 72 hours old'};
+      slate.projectionStatus = {refreshMode:'allow-partial-projections',status:'unavailable',projectedPlayers:0,missingPlayers:slate.records.length,publicationTime:null};
+      slate.projectionBasis = 'Primary projections rejected; supplemental publication time unknown.';
+      slate.records.forEach(row => { row.projection = null; row.projectionUnavailableReason = 'Primary source unavailable; no exact supplemental match'; });
+      return [key,slate];
+    }));
+    writeFileSync(join(temp, 'data/dfs-weekly.json'), JSON.stringify({schemaVersion:2,validation:{status:'verified'},defaultSlate:classicKey,slates}));
+    const isolated = await import(pathToFileURL(join(temp, 'server/dfs-store.mjs')));
+    for (const key of [classicKey,showdownKey,`${showdownKey}:cpt`]) {
+      const result = isolated.getDfsSlate(key);
+      assert.match(result.meta.availabilityMessage,/Official DraftKings salaries verified/);
+      assert.match(result.meta.availabilityMessage,/over 72 hours old/);
+      assert.match(result.meta.availabilityMessage,/publication time is unknown; capture times are observations/);
+      assert.equal(result.meta.projectionSourceDate,null);
+      assert.ok(result.records.every(row => row.projection === null));
+      if (key.includes('153434')) assert.match(result.meta.projectionBasis,/supplemental publication time unknown/);
+    }
+    const lineup = isolated.getDfsLineupSlate(showdownKey);
+    assert.match(lineup.meta.projectionBasis,/supplemental publication time unknown/);
+    assert.match(lineup.meta.availabilityMessage,/supplemental projection entries/);
+    assert.equal(lineup.records.length,slates[showdownKey].records.length);
+    assert.deepEqual(new Set(lineup.records.map(row=>row.rosterPosition)),new Set(['FLEX','CPT']));
+  } finally { rmSync(temp,{recursive:true,force:true}); }
+});

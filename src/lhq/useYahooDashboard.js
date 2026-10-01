@@ -55,26 +55,39 @@ const emptyData = season => ({ season, account: null, dashboards: {}, research: 
 const defaultNavigate = url => window.location.assign(url);
 function mergeResearch(previous, result) {
   const existing = previous?.research?.[result.teamKey] || {};
-  const next = { ...existing, ...result, errors: { ...(existing.errors || {}), ...(result.errors || {}) } };
-  if (result.availability && existing.availability && result.availability.status === existing.availability.status && result.availability.start > 0) {
+  // A research envelope can refresh one section while retaining older sections.
+  // Keep each affirmative player observation's actual Yahoo read clock in memory.
+  const clock = typeof result.checkedAt === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?(?:Z|[+-]\d{2}:\d{2})$/.test(result.checkedAt) && Number.isFinite(Date.parse(result.checkedAt)) && Date.parse(result.checkedAt) <= Date.now() ? result.checkedAt : null;
+  const receivedAt = new Date().toISOString();
+  const observation = item => ({ ...item, checkedAt: clock, receivedAt });
+  const availability = result.availability ? { ...result.availability, checkedAt: clock, receivedAt, players: (result.availability.players || []).map(observation) } : null;
+  const ownership = result.ownership ? { ...result.ownership, checkedAt: clock, receivedAt, matches: (result.ownership.matches || []).map(observation) } : null;
+  const sectionErrors = { ...(existing.errors || {}), ...(result.errors || {}) };
+  for (const section of ['availability', 'ownership', 'trades', 'transactions']) if (result[section] && !Object.hasOwn(result.errors || {}, section)) delete sectionErrors[section];
+  const next = { ...existing, ...result, availability, ownership, errors: sectionErrors };
+  if (availability && existing.availability && availability.status === existing.availability.status && availability.start > 0) {
     const players = [...(existing.availability.players || [])];
-    const seen = new Set(players.map(player => player.key));
-    for (const player of result.availability.players || []) if (!seen.has(player.key)) { seen.add(player.key); players.push(player); }
-    next.availability = { ...result.availability, players, accumulated: true, pages: (existing.availability.pages || 1) + 1 };
-  } else if (!result.availability && existing.availability && !Object.hasOwn(result.errors || {}, 'availability')) next.availability = existing.availability;
+    const indices = new Map(players.map((player, index) => [player.key, index]));
+    for (const player of availability.players) {
+      if (indices.has(player.key)) players[indices.get(player.key)] = player;
+      else { indices.set(player.key, players.length); players.push(player); }
+    }
+    next.availability = { ...availability, players, accumulated: true, pages: (existing.availability.pages || 1) + 1 };
+  } else if (!availability && existing.availability && !Object.hasOwn(result.errors || {}, 'availability')) next.availability = existing.availability;
   if (!result.trades && existing.trades && !Object.hasOwn(result.errors || {}, 'trades')) next.trades = existing.trades;
   if (!result.transactions && existing.transactions && !Object.hasOwn(result.errors || {}, 'transactions')) next.transactions = existing.transactions;
-  if (result.ownership && existing.ownership) {
-    const matches = new Map((existing.ownership.matches || []).map(item => [item.id, item]));
-    for (const item of result.ownership.matches || []) matches.set(item.id, item);
+  if (ownership && existing.ownership) {
+    const matches = new Map((existing.ownership.matches || []).map(item => [item.id, Object.hasOwn(item, 'checkedAt') ? item : { ...item, checkedAt: null }]));
+    for (const item of ownership.matches) matches.set(item.id, item);
     next.ownership = {
-      ...result.ownership,
+      ...ownership,
+      accumulated: true,
       requested: matches.size,
       matched: [...matches.values()].filter(item => item.owned !== null).length,
       complete: [...matches.values()].every(item => item.owned !== null),
       matches: [...matches.values()],
     };
-  } else if (!result.ownership && existing.ownership && !Object.hasOwn(result.errors || {}, 'ownership')) next.ownership = existing.ownership;
+  } else if (!ownership && existing.ownership && !Object.hasOwn(result.errors || {}, 'ownership')) next.ownership = existing.ownership;
   return { ...previous, research: { ...previous.research, [result.teamKey]: next } };
 }
 

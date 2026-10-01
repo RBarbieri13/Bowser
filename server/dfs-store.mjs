@@ -90,7 +90,7 @@ function selectRosterRole(slate, requestedRole) {
   const records = slate.records.filter(row => row.rosterPosition === role);
   return { records, meta: {...slate.meta, rosterPosition:role, label:`${slate.meta.label} · ${role}`,
     rosterPositions:['FLEX','CPT'], projectionMultiplier:role === 'CPT' ? 1.5 : 1,
-    projectionBasis:`Full-game DraftKings source projection${role === 'CPT' ? ' × 1.5 Captain multiplier' : '; unscaled FLEX scoring'}. Official ${role} salary.`,
+    projectionBasis:`Full-game DraftKings source projection${role === 'CPT' ? ' × 1.5 Captain multiplier' : '; unscaled FLEX scoring'}. Official ${role} salary.${slate.meta.projectionStatus ? ` ${slate.meta.projectionBasis || ''}` : ''}`,
     coverage:{...slate.meta.coverage,salaryEntries:slate.meta.coverage.salaryPlayers,
       salaryPlayers:slate.meta.coverage.distinctSalaryPlayers,
       projectedPlayers:slate.meta.coverage.projectedPlayers/2,
@@ -115,6 +115,9 @@ function resolveDfsSlate(key = 'current', { includeUnmatched = false, lineupPool
   const now = Date.now();
   const ended = new Date(meta.endsAt).getTime() + 4 * 60 * 60 * 1000 < now;
   const fallback = requestedKey === 'current' && (!weekly || ended);
+  const partialProjectionMessage = meta.projectionStatus?.refreshMode === 'allow-partial-projections'
+    ? `Official DraftKings salaries verified. Fantasy Info Central projections unavailable: ${meta.primaryProjectionStatus?.reason || meta.projectionStatus.reason}. ${meta.projectionStatus.projectedPlayers} supplemental projection entries; ${meta.projectionStatus.missingPlayers} unavailable. Fantasy Sports Central publication time is unknown; capture times are observations.`
+    : null;
   const options = [
     { key: 'current', label: `Current · ${slates[defaultKey].label}`, season: slates[defaultKey].season,
       week: slates[defaultKey].week, startsAt: slates[defaultKey].startsAt, endsAt: slates[defaultKey].endsAt, scoring:slates[defaultKey].scoring },
@@ -127,7 +130,7 @@ function resolveDfsSlate(key = 'current', { includeUnmatched = false, lineupPool
     meta: { ...meta, key: resolvedKey, requestedKey, defaultSlate: defaultKey, options,
       availability: fallback ? 'last-good' : ended ? 'archived' : 'available',
       currentSnapshotAvailable: Boolean(weekly) && !ended,
-      availabilityMessage: fallback ? `Showing last verified ${meta.season} Week ${meta.week} data; a newer verified slate is not available.` : null },
+      availabilityMessage: [fallback ? `Showing last verified ${meta.season} Week ${meta.week} data; a newer verified slate is not available.` : null, partialProjectionMessage].filter(Boolean).join(' ') || null },
     records: includeUnmatched ? records : records.filter(row => row.playerId),
   };
   if (lineupPool && meta.contestTypeId === 96) {
@@ -137,7 +140,7 @@ function resolveDfsSlate(key = 'current', { includeUnmatched = false, lineupPool
         ...payload.meta,
         rosterPositions: ['FLEX', 'CPT'],
         label: payload.meta.label.replace(/\s·\s(?:FLEX|CPT)$/, ''),
-        projectionBasis: 'Full-game DraftKings source projections; Captain rows use official CPT salary and a 1.5 projection multiplier while FLEX rows remain unscaled.',
+        projectionBasis: 'Full-game DraftKings source projections; Captain rows use official CPT salary and a 1.5 projection multiplier while FLEX rows remain unscaled.' + (meta.projectionStatus ? ` ${meta.projectionBasis || ''}` : ''),
       },
     };
   }

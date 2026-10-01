@@ -31,7 +31,7 @@ function normalizedEvents(input) {
     for (const source of Array.isArray(event.sources) ? event.sources : []) {
       if (!source || typeof source !== "object") continue;
       if (source.publishedAt == null && (source.publishedAtRaw == null || source.publishedAtRaw === "")) {
-        if (!calendarDate(source.publishedDate)) throw failure("source_publication_date_required", "An unavailable publication clock requires a known source publication date; verification and writer dates cannot substitute for it.");
+        if (!calendarDate(source.publishedDate)) throw failure("source_publication_date_required", "An unavailable publication date requires explicit null publication fields, a source-native unavailable-clock explanation and a valid citation check; verification and writer dates cannot substitute for publication dates.");
         source.publishedAt = null;
         source.publishedAtRaw = `${source.publishedDate} (publication clock and timezone unavailable)`;
       }

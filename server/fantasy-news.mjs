@@ -43,6 +43,39 @@ function calendarDate(value) {
   return month >= 1 && month <= 12 && day >= 1 && day <= new Date(Date.UTC(year, month, 0)).getUTCDate() ? value : null;
 }
 
+function plainText(value, maximum) {
+  return typeof value === "string" && value.trim() && value.length <= maximum && !/[\u0000-\u001f\u007f<>]/.test(value) ? value.trim() : null;
+}
+
+function supportedObject(value, keys) {
+  return value !== null && typeof value === "object" && !Array.isArray(value) && Object.keys(value).every((key) => keys.includes(key));
+}
+
+function projectUrgency(value, now) {
+  if (!supportedObject(value, ["score", "basis", "method", "estimatedAt"]) || !Number.isInteger(value.score) || value.score < 1 || value.score > 5
+    || !plainText(value.basis, 600) || value.method !== "AI estimate from public reporting" || !timestamp(value.estimatedAt, now)) return null;
+  return { score: value.score, basis: plainText(value.basis, 600), method: value.method, estimatedAt: value.estimatedAt };
+}
+
+function projectAffectedPlayers(value) {
+  if (!Array.isArray(value) || value.length > 12) return null;
+  const players = [];
+  for (const player of value) {
+    if (!supportedObject(player, ["name", "relationship", "impact", "playerId", "team", "position"]) || !plainText(player.name, 120)
+      || !plainText(player.relationship, 120) || !plainText(player.impact, 600)
+      || (player.playerId != null && !plainText(player.playerId, 120))
+      || (Object.hasOwn(player, "team") && (typeof player.team !== "string" || !/^[A-Z]{2,5}$/.test(player.team)))
+      || (Object.hasOwn(player, "position") && !FANTASY_NEWS_POSITIONS.includes(player.position))) return null;
+    players.push({
+      name: plainText(player.name, 120), relationship: plainText(player.relationship, 120), impact: plainText(player.impact, 600),
+      ...(Object.hasOwn(player, "playerId") ? { playerId: player.playerId ?? null } : {}),
+      ...(Object.hasOwn(player, "team") ? { team: player.team } : {}),
+      ...(Object.hasOwn(player, "position") ? { position: player.position } : {}),
+    });
+  }
+  return players;
+}
+
 function dateIntervalOverlaps(date, cutoff, now) {
   if (!date || date > new Date(now).toISOString().slice(0, 10)) return false;
   // With no timezone, retain the entire calendar day across UTC+14 through UTC-12.
@@ -87,15 +120,22 @@ function projectSource(source, now, marketSignal, archive) {
   const publishedAt = timestamp(source.publishedAt, now);
   const publishedAtRaw = archive ? text(source.publishedAtRaw, 120) : null;
   const publishedDate = archive ? calendarDate(source.publishedDate) : null;
+  const checkedAt = archive ? timestamp(source.checkedAt, now) : null;
+  // A checked dynamic source can explicitly have no publication date or clock.
+  // Missing fields and malformed non-null values are not this unknown state.
+  const publicationUnknown = archive && source.publishedAt === null && source.publishedDate === null
+    && plainText(source.publishedAtRaw, 120) && checkedAt;
   if (publishedDate && publishedDate > new Date(now).toISOString().slice(0, 10)) return null;
-  if (!url || !sourceName || !SOURCE_TYPES.includes(source.sourceType) || (source.publishedAt != null && !publishedAt) || (source.checkedAt != null && !timestamp(source.checkedAt, now)) || (!publishedAt && (!publishedAtRaw || !publishedDate))) return null;
+  if (!url || !sourceName || !SOURCE_TYPES.includes(source.sourceType) || (source.publishedAt != null && !publishedAt)
+    || (archive && source.publishedDate != null && !publishedDate) || (source.checkedAt != null && !timestamp(source.checkedAt, now))
+    || (!publishedAt && !publicationUnknown && (!publishedAtRaw || !publishedDate))) return null;
   const host = new URL(url).hostname.toLowerCase();
   const isX = ["x.com", "twitter.com"].some((domain) => host === domain || host.endsWith(`.${domain}`));
   return {
     sourceName, author: text(source.author, 120), xHandle: text(source.xHandle, 80), sourceType: source.sourceType,
-    publishedAt, publishedAtRaw, publishedDate, timestampStatus: publishedAt ? "known" : "timezone_unspecified",
+    publishedAt, publishedAtRaw, publishedDate, timestampStatus: publishedAt ? "known" : publicationUnknown ? "unknown" : "timezone_unspecified",
     timestampBasis: marketSignal ? "observed_at" : "published_at",
-    url, isOriginalSource: source.isOriginalSource === true, isX, checkedAt: archive ? timestamp(source.checkedAt, now) : null,
+    url, isOriginalSource: source.isOriginalSource === true, isX, checkedAt,
     ...sourceAccess(host, isX),
   };
 }
@@ -127,8 +167,13 @@ function projectArticle(event, now, archive, forceStale = false) {
   if (!archive && (!firstReportedAt || !updatedAt || Date.parse(updatedAt) < Date.parse(firstReportedAt))) return null;
   if (archive && ((event.firstReportedAt != null && !firstReportedAt) || (event.lastUpdatedAt != null && !updatedAt) || (firstReportedAt && updatedAt && Date.parse(updatedAt) < Date.parse(firstReportedAt)))) return null;
   if (archive && !timestamp(event.checkedAt, now)) return null;
+  if (archive && sources.some((source) => source.checkedAt && Date.parse(source.checkedAt) > Date.parse(event.checkedAt))) return null;
+  const urgency = event.urgency == null ? null : projectUrgency(event.urgency, now);
+  const affectedPlayers = event.affectedPlayers == null ? [] : projectAffectedPlayers(event.affectedPlayers);
+  if ((event.urgency != null && !urgency) || !affectedPlayers) return null;
+  const publicationUnknown = sources.some((source) => source.timestampStatus === "unknown");
   const datedSources = sources.filter((source) => source.publishedAt);
-  const publishedAt = datedSources.reduce((latest, source) => !latest || Date.parse(source.publishedAt) > Date.parse(latest) ? source.publishedAt : latest, null);
+  const publishedAt = publicationUnknown ? null : datedSources.reduce((latest, source) => !latest || Date.parse(source.publishedAt) > Date.parse(latest) ? source.publishedAt : latest, null);
   const ageSeconds = publishedAt ? Math.max(0, Math.floor((now - Date.parse(publishedAt)) / 1000)) : null;
   const primary = sources.find((source) => source.isOriginalSource) || sources[0];
   const confidence = typeof event.sourceQuality?.confidence === "number" && Number.isFinite(event.sourceQuality.confidence) && event.sourceQuality.confidence >= 0 && event.sourceQuality.confidence <= 100 ? event.sourceQuality.confidence : null;
@@ -138,10 +183,10 @@ function projectArticle(event, now, archive, forceStale = false) {
     id, headline, summary, fantasyAnalysis: text(event.fantasyAnalysis, 900),
     category: category(event), categories: [category(event)], eventType: event.eventType, status: event.status, fantasyImpact: event.fantasyImpact,
     players: [{ playerId: text(event.player.playerId, 120), name, team: text(event.player.team, 5) || "UNK", position: event.player.position }],
-    source: primary.sourceName, url: primary.url, sources,
-    publishedAt, publishedAtRaw: !publishedAt ? primary.publishedAtRaw : null,
-    publishedDate: !publishedAt ? primary.publishedDate : null,
-    timestampStatus: publishedAt ? "known" : "timezone_unspecified", timestampBasis: marketSignal ? "observed_at" : "published_at",
+    source: primary.sourceName, url: primary.url, sources, urgency, affectedPlayers,
+    publishedAt, publishedAtRaw: publicationUnknown ? sources.find((source) => source.timestampStatus === "unknown").publishedAtRaw : !publishedAt ? primary.publishedAtRaw : null,
+    publishedDate: !publishedAt && !publicationUnknown ? primary.publishedDate : null,
+    timestampStatus: publicationUnknown ? "unknown" : publishedAt ? "known" : "timezone_unspecified", timestampBasis: marketSignal ? "observed_at" : "published_at",
     firstReportedAt, updatedAt, capturedAt: null,
     checkedAt: archive ? timestamp(event.checkedAt, now) : null,
     evidence: { kind, label: marketSignal ? "Market signal; does not confirm football news" : STATUS_LABELS[event.status], status: event.status, confidence },
@@ -198,6 +243,18 @@ function publicProviders(status) {
   });
 }
 
+function publicationWindow(article, cutoff, now) {
+  const hasUndatedSources = article.sources.some((source) => source.timestampStatus === "unknown");
+  if (hasUndatedSources) return { basis: "unknown_publication_date", withinWindow: null, hasUndatedSources: true };
+  if (article.sources.some((source) => source.publishedAt && Date.parse(source.publishedAt) >= cutoff)) return { basis: "exact_source_timestamp", withinWindow: true, hasUndatedSources: false };
+  if (article.sources.some((source) => dateIntervalOverlaps(source.publishedDate, cutoff, now))) return { basis: "overlapping_calendar_date", withinWindow: null, hasUndatedSources: false };
+  return null;
+}
+
+function publicationSortTime(article) {
+  return article.publishedAt ? Date.parse(article.publishedAt) : article.publishedDate ? Date.parse(`${article.publishedDate}T00:00:00Z`) : -Infinity;
+}
+
 function response(feed, filter, options) {
   const { now, status, database, tokenConfigured, readFailure } = options;
   const archive = feed?.meta?.snapshotMode === "archived_public_baseline";
@@ -215,18 +272,20 @@ function response(feed, filter, options) {
   const valid = [...validById.values()];
   const discarded = raw.length - valid.length;
   const cutoff = now - filter.hours * 3600 * 1000;
+  const unknownPublicationDates = valid.filter((article) => article.timestampStatus === "unknown").length;
   const matching = valid.filter((article) => {
     const player = article.players[0];
-    if (article.publishedAt ? Date.parse(article.publishedAt) < cutoff : !(archive || repository) || !dateIntervalOverlaps(article.publishedDate, cutoff, now)) return false;
+    if (!publicationWindow(article, cutoff, now)) return false;
     return (!filter.positions.length || filter.positions.includes(player.position))
       && (!filter.teams.length || filter.teams.includes(player.team))
       && (!filter.statuses.length || filter.statuses.includes(article.status))
       && (!filter.impacts.length || filter.impacts.includes(article.fantasyImpact))
       && (!filter.eventTypes.length || filter.eventTypes.includes(article.eventType))
       && (!filter.search || [player.name, player.team, article.headline, article.summary, article.fantasyAnalysis].filter(Boolean).join(" ").toLowerCase().includes(filter.search));
-  }).sort((a, b) => (b.publishedAt ? Date.parse(b.publishedAt) : Date.parse(`${b.publishedDate}T00:00:00Z`)) - (a.publishedAt ? Date.parse(a.publishedAt) : Date.parse(`${a.publishedDate}T00:00:00Z`)) || a.id.localeCompare(b.id));
+  }).map((article) => ({ ...article, timeFilter: publicationWindow(article, cutoff, now) }))
+    .sort((a, b) => publicationSortTime(b) - publicationSortTime(a) || a.id.localeCompare(b.id));
   const articles = matching.slice(0, filter.limit);
-  const latestSourcePublishedAt = valid.reduce((latest, article) => article.publishedAt && (!latest || Date.parse(article.publishedAt) > Date.parse(latest)) ? article.publishedAt : latest, null);
+  const latestSourcePublishedAt = valid.flatMap((article) => article.sources).reduce((latest, source) => source.publishedAt && (!latest || Date.parse(source.publishedAt) > Date.parse(latest)) ? source.publishedAt : latest, null);
   const latestEventUpdatedAt = valid.reduce((latest, article) => article.updatedAt && (!latest || Date.parse(article.updatedAt) > Date.parse(latest)) ? article.updatedAt : latest, null);
   const ageSeconds = latestSourcePublishedAt ? Math.max(0, Math.floor((now - Date.parse(latestSourcePublishedAt)) / 1000)) : null;
   const sourceCheckedAt = repository ? timestamp(feed.meta.repository?.checkedAt, now) : null;
@@ -248,13 +307,14 @@ function response(feed, filter, options) {
   if (discarded) limitations.push(`${discarded} malformed, duplicate or non-public record${discarded === 1 ? " was" : "s were"} excluded.`);
   if (incompleteRead) limitations.push("The upstream public read is bounded to 100 records; this response does not establish exhaustive coverage.");
   if (archive || repository) limitations.push("Unknown publication clocks/timezones are included when their possible calendar-date interval across UTC+14 through UTC-12 overlaps the requested window. These dates may fall outside the exact requested hours; exact-hour inclusion and publication age cannot be established. Future calendar dates are excluded.");
+  if (unknownPublicationDates) limitations.push("Reports with explicitly unknown publication dates and clocks are retained after a valid original-source check, including in narrow lookbacks. Whether these reports were published within the requested window and their publication age cannot be established. Source-check, practice-event and writer dates never substitute for publication dates; dated citations retain their own clocks.");
   if (archive) limitations.push("This is a sourced public archive, not a live ingestion result.");
   if (repository) limitations.push("Git stores the public snapshot. Server memory is a bounded disposable read cache. Source-check time and writer time do not establish source publication time.");
   if (repositoryOutage) limitations.push("The repository read failed; the previously verified public snapshot is retained and marked stale.");
   let message = state === "unavailable" ? "Current public news is unavailable. No verified durable public snapshot is available."
     : state === "stale" ? "Public source reports are stale; verify the original reporting before a lineup decision."
       : state === "partial" ? "A partial public snapshot is available; consult source and coverage limits."
-        : state === "empty" ? "No sourced public reports match this exact time window and filters." : "Recent public source observations are available; coverage remains bounded.";
+        : state === "empty" ? "No sourced public reports match the selected publication window and filters." : "Recent public source observations are available; coverage remains bounded.";
   if (readFailure) message = "Public news storage could not be read. No fallback reports were substituted.";
   if (archive) message = "Archived public reporting only. Unattended ingestion is unavailable; verify the original sources for current status.";
   if (repository && state === "current") message = "Public sources were checked recently. Publication clocks and bounded coverage remain separately labeled.";
@@ -269,7 +329,7 @@ function response(feed, filter, options) {
     meta: {
       version: 1, scope: "public_nfl_news", readAt: new Date(now).toISOString(), live: false,
       snapshotMode: acceptedSnapshot ? feed.meta.snapshotMode : "unavailable", state, message,
-      lookbackHours: filter.hours, timeFilterBasis: archive || repository ? "exact_timestamps_and_overlapping_calendar_dates" : "exact_source_timestamps", total: matching.length, returned: articles.length, discarded,
+      lookbackHours: filter.hours, timeFilterBasis: unknownPublicationDates ? "exact_timestamps_and_overlapping_calendar_dates_with_undated_reports" : archive || repository ? "exact_timestamps_and_overlapping_calendar_dates" : "exact_source_timestamps", total: matching.length, returned: articles.length, discarded,
       refresh: {
         readPollSeconds: 60, ingestionEndpoint: "/api/v1/intelligence-runs", requiredAuthorization: "operator_bearer_token",
         persistence: repository ? "public_git_repository" : archive ? "static_public_archive" : "existing_intelligence_database",
@@ -279,7 +339,8 @@ function response(feed, filter, options) {
       },
       freshness: { staleAfterHours: STALE_AFTER_HOURS, basis: repository ? "source_check" : "source_publication_or_observation", latestSourcePublishedAt, latestEventUpdatedAt, ageSeconds, sourceCheckedAt, sourceCheckAgeSeconds },
       repository: repositoryMeta,
-      coverage: { positions: [...FANTASY_NEWS_POSITIONS], byPosition, complete: false, loaded: raw.length, valid: valid.length, undated: valid.filter((article) => !article.publishedAt).length, limitations },
+      coverage: { positions: [...FANTASY_NEWS_POSITIONS], byPosition, complete: false, loaded: raw.length, valid: valid.length, undated: valid.filter((article) => !article.publishedAt).length,
+        unknownPublicationDates, includedWithoutPublicationDate: matching.filter((article) => article.timeFilter.basis === "unknown_publication_date").length, limitations },
       sources,
       methodology: {
         evidence: "Provider reporting status and source-authority confidence describe evidence, not certainty or a calibrated injury probability.",

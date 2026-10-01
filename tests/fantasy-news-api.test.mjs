@@ -215,6 +215,116 @@ test("unknown same-day and boundary dates stay visible with uncertain exact-hour
   assert.equal(projectFantasyNewsFeed(feed([futureCheck], { snapshotMode: "archived_public_baseline" }), new URLSearchParams(), OPTIONS).articles.length, 0);
 });
 
+function checkedUndatedEvent(overrides = {}) {
+  const report = event({ firstReportedAt: null, lastUpdatedAt: null, checkedAt: "2026-10-01T19:55:00Z", ...overrides });
+  report.sources = [{ ...report.sources[0], publishedAt: null, publishedDate: null, publishedAtRaw: "Publication and update clock not displayed", checkedAt: "2026-10-01T19:50:00Z" }];
+  return report;
+}
+
+function repositoryFeed(events) {
+  return feed(events, { snapshotMode: "repository_public_snapshot", repository: { checkedAt: "2026-10-01T19:55:00Z", updatedAt: "2026-10-01T19:56:00Z", lastReadState: "verified" } });
+}
+
+test("checked all-undated official reports remain visible without claiming publication age or lookback inclusion", () => {
+  const report = checkedUndatedEvent();
+  for (const hours of ["1", "24", "168"]) {
+    const result = projectFantasyNewsFeed(repositoryFeed([report]), new URLSearchParams({ hours }), OPTIONS);
+    assert.equal(result.meta.state, "current");
+    assert.equal(result.meta.freshness.basis, "source_check");
+    assert.equal(result.meta.freshness.sourceCheckAgeSeconds, 300);
+    assert.equal(result.meta.freshness.latestSourcePublishedAt, null);
+    assert.equal(result.meta.freshness.ageSeconds, null);
+    assert.equal(result.meta.discarded, 0);
+    assert.equal(result.meta.timeFilterBasis, "exact_timestamps_and_overlapping_calendar_dates_with_undated_reports");
+    assert.equal(result.meta.coverage.unknownPublicationDates, 1);
+    assert.equal(result.meta.coverage.includedWithoutPublicationDate, 1);
+    assert.match(result.meta.coverage.limitations.join(" "), /Whether these reports were published within the requested window and their publication age cannot be established/);
+    const article = result.articles[0];
+    assert.equal(article.evidence.kind, "official_report");
+    assert.equal(article.publishedAt, null);
+    assert.equal(article.publishedDate, null);
+    assert.equal(article.timestampStatus, "unknown");
+    assert.equal(article.checkedAt, "2026-10-01T19:55:00Z");
+    assert.equal(article.freshness.state, "stale");
+    assert.equal(article.freshness.ageSeconds, null);
+    assert.equal(article.sources[0].checkedAt, "2026-10-01T19:50:00Z");
+    assert.equal(article.sources[0].timestampStatus, "unknown");
+    assert.deepEqual(article.timeFilter, { basis: "unknown_publication_date", withinWindow: null, hasUndatedSources: true });
+  }
+});
+
+test("mixed dated and undated citations preserve each clock but cannot date the aggregate report", () => {
+  const mixed = checkedUndatedEvent({ eventId: "a-unknown-report" });
+  mixed.sources.push({ ...event().sources[0], sourceName: "Earlier reporting", isOriginalSource: false, publishedAt: "2026-09-29T19:00:00Z", publishedDate: "2026-09-29", checkedAt: "2026-10-01T19:45:00Z" });
+  mixed.sources.push({ ...event().sources[0], sourceName: "Dated reporting", isOriginalSource: false, publishedAt: null, publishedAtRaw: "October 1, 2026 (clock unavailable)", publishedDate: "2026-10-01", checkedAt: "2026-10-01T19:45:00Z" });
+  const known = event({ eventId: "z-known-report", checkedAt: "2026-10-01T19:45:00Z" });
+  const result = projectFantasyNewsFeed(repositoryFeed([mixed, known]), new URLSearchParams({ hours: "1" }), OPTIONS);
+  assert.deepEqual(result.articles.map((article) => article.id), ["z-known-report", "a-unknown-report"]);
+  const article = result.articles[1];
+  assert.equal(article.timestampStatus, "unknown");
+  assert.equal(article.publishedAt, null);
+  assert.equal(article.publishedDate, null);
+  assert.equal(article.freshness.ageSeconds, null);
+  assert.equal(article.sources[1].publishedAt, "2026-09-29T19:00:00Z");
+  assert.equal(article.sources[1].publishedDate, "2026-09-29");
+  assert.equal(article.sources[2].publishedDate, "2026-10-01");
+  assert.equal(article.sources[2].timestampStatus, "timezone_unspecified");
+  assert.deepEqual(article.timeFilter, { basis: "unknown_publication_date", withinWindow: null, hasUndatedSources: true });
+  assert.equal(result.articles[0].timeFilter.withinWindow, true);
+  // A dated citation still follows its own exact/calendar rule when no undated citation is present.
+  const datedOnly = structuredClone(mixed); datedOnly.sources.shift();
+  const datedResult = projectFantasyNewsFeed(repositoryFeed([datedOnly]), new URLSearchParams({ hours: "1" }), OPTIONS);
+  assert.equal(datedResult.articles.length, 1);
+  assert.equal(datedResult.articles[0].timeFilter.basis, "overlapping_calendar_date");
+  assert.equal(datedResult.articles[0].timeFilter.withinWindow, null);
+});
+
+test("unknown publication support never accepts absent checks, implicit missing fields or malformed dates", () => {
+  const mutations = [
+    (source) => { delete source.checkedAt; }, (source) => { source.checkedAt = null; },
+    (source) => { source.checkedAt = "2026-10-02T19:00:00Z"; },
+    (source) => { source.checkedAt = "2026-10-01T19:59:00Z"; },
+    (source) => { delete source.publishedDate; }, (source) => { delete source.publishedAt; },
+    (source) => { source.publishedAtRaw = ""; }, (source) => { source.publishedDate = "2026-02-31"; },
+    (source) => { source.publishedDate = "2026-10-02"; }, (source) => { source.publishedAt = "bad-clock"; },
+    (source) => { source.publishedAt = "2026-10-02T19:00:00Z"; },
+    (source) => { source.scope = "private"; },
+  ];
+  for (const mutate of mutations) {
+    const report = checkedUndatedEvent(); mutate(report.sources[0]);
+    const result = projectFantasyNewsFeed(repositoryFeed([report]), new URLSearchParams(), OPTIONS);
+    assert.equal(result.meta.discarded, 1);
+    assert.deepEqual(result.articles, []);
+  }
+  assert.deepEqual(project([checkedUndatedEvent()]).articles, []);
+});
+
+test("public AI urgency estimates and explicitly supplied affected identities project without inference", () => {
+  const urgency = { score: 4, basis: "Repeated missed practices require a healthy replacement plan.", method: "AI estimate from public reporting", estimatedAt: "2026-10-01T19:30:00Z" };
+  const affectedPlayers = [{ name: "Other Runner", playerId: null, team: "BUF", position: "RB", relationship: "potential_beneficiary", impact: "Could gain work if the starter misses the game; the role is not confirmed." }, { name: "Name Only", relationship: "possible_workload_loss", impact: "A returning teammate may reduce opportunities." }];
+  const result = project([event({ urgency, affectedPlayers })]);
+  assert.deepEqual(result.articles[0].urgency, urgency);
+  assert.deepEqual(result.articles[0].affectedPlayers, affectedPlayers);
+  const missing = project([event()]).articles[0];
+  assert.equal(missing.urgency, null);
+  assert.deepEqual(missing.affectedPlayers, []);
+  const invalid = [
+    { urgency: { ...urgency, score: 1.5 } }, { urgency: { ...urgency, score: 6 } },
+    { urgency: { ...urgency, estimatedAt: "2026-10-02T00:00:00Z" } },
+    { urgency: { ...urgency, method: "Provider ranking" } }, { urgency: { ...urgency, basis: "<script>private</script>" } },
+    { urgency: { ...urgency, leagueKey: "private-secret" } },
+    { affectedPlayers: [{ ...affectedPlayers[0], roster: "private-secret" }] },
+    { affectedPlayers: [{ ...affectedPlayers[0], position: "DST" }] },
+    { affectedPlayers: [{ ...affectedPlayers[0], team: "BUF/private-secret" }] },
+    { affectedPlayers: [{ ...affectedPlayers[0], impact: "" }] },
+  ];
+  for (const fields of invalid) {
+    const rejected = project([event(fields)]);
+    assert.deepEqual(rejected.articles, []);
+    assert.equal(JSON.stringify(rejected).includes("private-secret"), false);
+  }
+});
+
 test("serverless endpoint is GET-only and sends no-store on rejected requests", async () => {
   const response = { headers: {}, statusCode: null, body: null, setHeader(key, value) { this.headers[key] = value; }, status(code) { this.statusCode = code; return this; }, json(body) { this.body = body; return this; } };
   await handler({ method: "POST", url: "/api/v1/fantasy-news", body: { yahoo: "private" } }, response);

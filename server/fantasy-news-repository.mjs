@@ -6,7 +6,7 @@ const CACHE_MS = 60_000;
 const MAX_BYTES = 512 * 1024;
 const MAX_EVENTS = 500;
 const PRIVATE_KEY = /^(?:yahoo(?:Data|Context)?|private(?:Data|Payload)?|isPrivate|league(?:Key|Id|Name)?|teamKey|roster|ownership|account|session|accessToken|refreshToken|authorization|password|credentials?)$/i;
-const EVENT_KEYS = new Set(["eventId", "player", "headline", "summary", "fantasyAnalysis", "eventType", "status", "fantasyImpact", "firstReportedAt", "lastUpdatedAt", "checkedAt", "sourceQuality", "sources", "injury", "sentiment", "buzz", "affectedPlayers"]);
+const EVENT_KEYS = new Set(["eventId", "player", "headline", "summary", "fantasyAnalysis", "eventType", "status", "fantasyImpact", "firstReportedAt", "lastUpdatedAt", "checkedAt", "sourceQuality", "sources", "injury", "sentiment", "buzz", "affectedPlayers", "urgency"]);
 const ENVELOPE_KEYS = new Set(["version", "scope", "mode", "checkedAt", "updatedAt", "revision", "contentHash", "events"]);
 
 function canonical(value) {
@@ -44,7 +44,8 @@ function strictEvent(event) {
   if (event.sourceQuality && !supportedKeys(event.sourceQuality, new Set(["confidence", "modelConfidence", "primarySourceType", "corroboratingSourceCount"]))) return false;
   if (event.sentiment && !supportedKeys(event.sentiment, new Set(["score", "direction", "expertSentiment", "beatWriterSentiment", "socialSentiment", "reason"]))) return false;
   if (event.buzz && !supportedKeys(event.buzz, new Set(["score", "direction"]))) return false;
-  if (event.affectedPlayers && (!Array.isArray(event.affectedPlayers) || event.affectedPlayers.some((player) => !supportedKeys(player, new Set(["name", "relationship", "impact"]))))) return false;
+  if (event.urgency != null && !supportedKeys(event.urgency, new Set(["score", "basis", "method", "estimatedAt"]))) return false;
+  if (event.affectedPlayers != null && (!Array.isArray(event.affectedPlayers) || event.affectedPlayers.some((player) => !supportedKeys(player, new Set(["name", "relationship", "impact", "playerId", "team", "position"]))))) return false;
   return true;
 }
 
@@ -59,7 +60,8 @@ export function validateRepositorySnapshot(snapshot, { now = Date.now() } = {}) 
   if (repositorySnapshotHash(snapshot) !== snapshot.contentHash) throw failure("repository_checksum_mismatch", "The public snapshot checksum does not match its content.");
   if (!validatePublicFantasyNewsEvents(snapshot.events, milliseconds)) throw failure("repository_invalid_records", "The public repository snapshot contains invalid or non-public reports.");
   if (snapshot.events.some((event) => Date.parse(event.checkedAt) > Date.parse(snapshot.checkedAt)
-    || event.sources.some((source) => source.checkedAt != null && Date.parse(source.checkedAt) > Date.parse(event.checkedAt)))) throw failure("repository_invalid_records", "Record source checks must precede the snapshot source-check and writer times.");
+    || (event.urgency && Date.parse(event.urgency.estimatedAt) > Date.parse(snapshot.updatedAt))
+    || event.sources.some((source) => source.checkedAt != null && Date.parse(source.checkedAt) > Date.parse(event.checkedAt)))) throw failure("repository_invalid_records", "Record checks and estimates must precede their allowed source-check and writer times.");
   return snapshot;
 }
 
