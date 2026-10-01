@@ -2,6 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run vercel-build",
   "outputDirectory": "dist/client",
+  "git": {
+    "deploymentEnabled": {
+      "fantasy-news-data": false
+    }
+  },
   "functions": {
     "api/**/*.mjs": {
       "includeFiles": "{data/*.{sqlite,json},db/migrations/*.sql}",
@@ -9,6 +14,10 @@
     }
   },
   "rewrites": [
+    {
+      "source": "/api/v1/fantasy-news",
+      "destination": "/api/v1/intelligence-feed?resource=fantasy-news"
+    },
     {
       "source": "/api/v1/schedule",
       "destination": "/api/v1/meta?resource=schedule"

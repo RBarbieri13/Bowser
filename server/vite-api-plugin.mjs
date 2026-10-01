@@ -1,4 +1,5 @@
 import { yahooHandler } from "./yahoo-auth.mjs";
+import { fantasyNewsHandler } from "./fantasy-news.mjs";
 import { querySchedule, queryPlayerIdentity, queryDfsArchive, getMeta, queryGameBreakdown, queryOpportunityTracker, queryPlayerProfile, queryPlayers, queryTeamBoxScores, QueryValidationError } from "./stats-store.mjs";
 import { queryDfsLineup } from "./dfs-lineups.mjs";
 import { getIntelligenceRegistry, queryPersistedIntelligenceFeed, IntelligenceQueryError } from "./intelligence-store.mjs";
@@ -23,6 +24,7 @@ export function fantasyStatsApiPlugin() {
     name: "local-fantasy-stats-api",
     configureServer(server) {
       server.middlewares.use((request, response, next) => {
+        if (request.url?.split('?')[0] === '/api/v1/fantasy-news') return fantasyNewsHandler(request, response);
         if (request.url?.startsWith("/api/v1/auth/yahoo/") || request.url?.startsWith("/api/v1/yahoo?")) return yahooHandler(request, response);
         return next();
       });

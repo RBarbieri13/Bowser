@@ -6,7 +6,7 @@ import { useYahooDashboard } from '../src/lhq/useYahooDashboard.js';
 import { isReserveSlot, leagueHealth, leagueSummaries, rosterExposure, teamMatchup, teamStanding } from '../src/lhq/yahooModel.js';
 
 const teamA = '999.l.1.t.1', teamB = '999.l.2.t.1';
-const connected = { configured: true, connected: true, expiresAt: '2026-09-27T23:00:00Z', connectionUrl: 'https://bowser-fantasy-football.vercel.app/#/yahoo' };
+const connected = { configured: true, connected: true, expiresAt: new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString(), connectionUrl: 'https://bowser-fantasy-football.vercel.app/#/yahoo' };
 const account = {
   season: 2026, checkedAt: '2026-09-27T12:00:00Z',
   leagues: [{ key: '999.l.1', name: 'Private League One', season: 2026 }, { key: '999.l.2', name: 'Private League Two', season: 2026 }],
@@ -48,7 +48,7 @@ function mockReads(handler = () => undefined) {
 const settle = result => waitFor(() => expect(result.current.busy).toBe(false));
 function deferred() { let resolve; const promise = new Promise(r => { resolve = r; }); return { promise, resolve }; }
 beforeEach(() => { localStorage.clear(); sessionStorage.clear(); window.location.hash = '#/yahoo'; });
-afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); window.location.hash = ''; });
+afterEach(() => { cleanup(); vi.useRealTimers(); vi.restoreAllMocks(); vi.unstubAllGlobals(); window.location.hash = ''; });
 
 test('health counts exact required starter slots, excludes reserve slots, and preserves unknowns', () => {
   const health = leagueHealth(dashboard());
@@ -139,6 +139,23 @@ test('disconnect clears all private data and rejects late in-flight dashboard re
   expect(result.current.status.connected).toBe(false); expect(result.current.dashboards).toEqual({});
   expect(calls.filter(call => call.url.includes('/dashboard?'))).toHaveLength(1);
   expect(calls.find(call => call.url.endsWith('/disconnect')).options.method).toBe('POST');
+});
+test('absolute session expiry clears private memory and rejects queued dashboard reads', async () => {
+  vi.useFakeTimers();
+  const hold = deferred();
+  const expiry = new Date(Date.now() + 10000).toISOString();
+  const calls = mockReads(url => url.endsWith('/status') ? response({ ...connected, expiresAt: expiry }) : url.includes('/dashboard?') && url.includes(teamA) ? hold.promise : undefined);
+  const { result } = renderHook(() => useYahooDashboard());
+  await vi.waitFor(() => expect(calls.some(call => call.url.includes('/dashboard?'))).toBe(true));
+  expect(result.current.account).not.toBeNull();
+  await act(async () => { await vi.advanceTimersByTimeAsync(10000); });
+  expect(result.current.status.connected).toBe(false);
+  expect(result.current.account).toBeNull();
+  expect(result.current.dashboards).toEqual({});
+  expect(result.current.errors.connection).toMatch(/expired/i);
+  await act(async () => { hold.resolve(response(dashboard())); });
+  expect(result.current.dashboards).toEqual({});
+  expect(calls.filter(call => call.url.includes('/dashboard?'))).toHaveLength(1);
 });
 test('refresh performs POST then verifies status, discovery and fresh dashboards', async () => {
   const calls = mockReads(); const { result } = renderHook(() => useYahooDashboard()); await settle(result);

@@ -1,5 +1,12 @@
 # Bowser development instructions
 
+## Fantasy News workspace (October 1, 2026)
+
+- Fantasy News belongs in the official Bowser LineupHQ navigation between League Hub and Yahoo Connection. Existing Bowser typography, colors, shell, compact data display and native research windows are authoritative. Keep it dense and full width, with independently collapsible panes and deeper details on demand. Preserve visible head-mouse controls and clear keyboard focus.
+- The news workspace may depart from other pages' filter bar and main-table/side-table anatomy. Optimize for news: tight readable headline rows and summary lines, many stories visible, progressive details, and a tiled multi-pane workspace that reclaims collapsed space. Avoid large story headers/cards, inherited position/DFS slate filters and empty default panels. Keep Bowser's visual language and legible body text.
+- Public news and private league context remain separate. Preserve source event, publication and check times, evidence labels, access limits and stale states. A dated Yahoo browser snapshot is never live data; bounded availability absence never proves ownership. Persist only validated layout preferences, never private response bodies or article content.
+- Keep the existing native Page and scheduled updates unchanged until authenticated Bowser ingestion/readback and a deployed UI are verified. No new credentials, storage services, OAuth grants or security changes without per-action approval; draft PR and preview delivery remain the current release scope.
+
 Run the local server yourself and open the preview in the browser available to this environment. Do not give the user server-start instructions when you can run it.
 
 Before making substantial visual changes, use the Product Design plugin's `get-context` skill when the visual source is unclear or no longer matches the current goal. When the user gives durable prototype-specific design feedback, preferences, or decisions, record them in `AGENTS.md`.

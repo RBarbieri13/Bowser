@@ -1,4 +1,5 @@
 import { yahooHandler } from "./server/yahoo-auth.mjs";
+import { fantasyNewsHandler } from "./server/fantasy-news.mjs";
 import express from "express";
 import { waiversHandler } from "./server/waivers-store.mjs";
 import { marketPulseHandler } from "./server/market-pulse.mjs";
@@ -19,6 +20,7 @@ const indexHtml = readFileSync(indexPath, "utf8");
 
 const app = express();
 app.all('/api/v1/market-pulse', marketPulseHandler);
+app.all('/api/v1/fantasy-news', fantasyNewsHandler);
 app.all('/api/v1/waivers', waiversHandler);
 app.all("/api/v1/auth/yahoo/:action", yahooHandler);
 app.all("/api/v1/yahoo", yahooHandler);

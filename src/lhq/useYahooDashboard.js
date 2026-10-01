@@ -159,6 +159,19 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
     return () => { revision.current++; };
   }, [load]);
 
+  // Private browser memory must expire with the existing absolute Yahoo session,
+  // including independently opened research windows. This does not extend it.
+  useEffect(() => {
+    const deadline = Date.parse(status?.expiresAt || '');
+    if (!status?.connected || !Number.isFinite(deadline)) return;
+    const timer = setTimeout(() => {
+      revision.current++; clear(); setBusy(false);
+      setStatus(previous => ({ ...previous, connected: false, expiresAt: null }));
+      setErrors(previous => ({ ...previous, connection: MESSAGES.authorization_expired }));
+    }, Math.max(0, deadline - Date.now()));
+    return () => clearTimeout(timer);
+  }, [status?.connected, status?.expiresAt, clear]);
+
   const setWeek = useCallback(value => {
     if (!validWeek(value)) { setErrors(previous => ({ ...previous, week: MESSAGES.invalid_week })); return; }
     if (String(value) === week) return;
