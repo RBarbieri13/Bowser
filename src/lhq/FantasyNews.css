@@ -207,3 +207,5 @@
 .fn-league-observation.compact{margin-top:2px;gap:0}.fn-league-observation.compact summary{cursor:pointer;font-size:12px;line-height:16px;font-weight:700;color:#83e4ad;list-style:none}.fn-league-observation.compact summary:after{content:' ▾';font-size:10px;color:#95b8a2}.fn-league-observation.available.compact summary{color:#b5d6f4}.fn-league-observation.compact>small{display:block;padding-top:2px}.fn-player-impact{font-size:12px;line-height:16px;color:#bbd4c5}.fn-player-impact summary{cursor:pointer;font-weight:700;list-style:none;color:#3ecf8e}.fn-player-impact small{font-size:12px;line-height:17px;color:#d7e0da}
 .fn-central-workspace .fn-workspace.tiles:not(:has(.fn-pane:nth-child(3))){grid-template-rows:minmax(0,1fr)}
 @container fn-center (max-width:700px){.fn-central-workspace .fn-workspace.tiles:has(.fn-pane:nth-child(2)){grid-template-rows:repeat(2,minmax(0,1fr))}}
+.fn-layout-note{margin:0 0 6px;font-size:12px;line-height:18px;color:#bdcec3}
+.fn-frame .fn-pane.fn-full-width .fn-pane-content{padding-left:0;padding-right:0}

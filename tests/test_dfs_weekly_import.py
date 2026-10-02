@@ -57,6 +57,18 @@ def projection_html(games, wrong_week=False, missing_position=None):
 
 
 class WeeklyDfsTests(unittest.TestCase):
+    def test_current_default_excludes_retained_locked_classic_and_preserves_history(self):
+        locked = {**SLATE, 'id':1, 'gameCount':16}
+        upcoming = {**SLATE, 'id':2, 'gameCount':14}
+        main = {**SLATE, 'id':3, 'gameCount':12}
+        showdown = SNAPSHOT['slates']['2026-w2-dk-153434']
+        combined = {'locked':locked, 'upcoming':upcoming, 'main':main, 'showdown':showdown}
+        before = copy.deepcopy(combined)
+        self.assertEqual(module.refreshed_classic_default(combined, ['upcoming','main','showdown'], 2026, 2), 'upcoming')
+        self.assertEqual(combined, before)
+        with self.assertRaisesRegex(module.PartialData, 'unlocked Classic default'):
+            module.refreshed_classic_default(combined, ['showdown'], 2026, 2)
+
     def run_partial_fixture(self, directory, *, allow=False, supplemental=False):
         now = datetime(2026, 10, 1, 22, tzinfo=timezone.utc)
         target = Path(directory) / 'dfs.json'
@@ -248,6 +260,25 @@ class WeeklyDfsTests(unittest.TestCase):
         lobby['GameSets'][0]['Competitions'][0]['Description'] = 'DET @ TEN'
         with self.assertRaisesRegex(module.PartialData, 'different week/date/matchup'):
             module.discover_slates(lobby, games, NOW)
+
+    def test_verified_cross_week_classic_is_excluded_but_unknown_games_still_fail(self):
+        game = SLATE['games'][0]
+        next_game = {**game, 'gameId':'2026_03_DET_BUF', 'week':3,
+                     'startsAt':module.iso(module.instant(game['startsAt'])+timedelta(days=7))}
+        competition = lambda g,id: {'Description':g['away']+' @ '+g['home'],'StartDate':g['startsAt'],'GameId':id}
+        base = {'Sport':'NFL','ContestTypeId':21,'GameTypeId':1,'StartDate':game['startsAt'],'ContestStartTimeSuffix':'(Test)'}
+        lobby = {'SelectedSport':'NFL', 'DraftGroups':[
+            {**base,'DraftGroupId':1,'GameCount':1,'GameSetKey':'single'},
+            {**base,'DraftGroupId':2,'GameCount':2,'GameSetKey':'mixed'}],
+            'GameSets':[{'GameSetKey':'single','Competitions':[competition(game,1)]},
+                        {'GameSetKey':'mixed','Competitions':[competition(game,1),competition(next_game,2)]}]}
+        result = module.discover_slates(lobby,[game],NOW,schedule=[game,next_game])
+        self.assertEqual([s['id'] for s in result],[1])
+        with self.assertRaisesRegex(module.PartialData,'different week/date/matchup'):
+            module.discover_slates(lobby,[game],NOW)
+        lobby['GameSets'][1]['Competitions'][1]['Description']='DET @ TEN'
+        with self.assertRaisesRegex(module.PartialData,'different week/date/matchup'):
+            module.discover_slates(lobby,[game],NOW,schedule=[game,next_game])
 
     def test_projection_rejects_wrong_week_stale_dates_and_missing_team_position(self):
         games = SLATE['games'][:1]

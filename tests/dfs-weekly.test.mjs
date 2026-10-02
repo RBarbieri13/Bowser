@@ -4,7 +4,7 @@ import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, cpSync, rmSync, re
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { getDfsSlate } from '../server/dfs-store.mjs';
+import { getDfsSlate, dfsSlateTiming } from '../server/dfs-store.mjs';
 
 const weekly = JSON.parse(readFileSync(new URL('../data/dfs-weekly.json', import.meta.url)));
 const pinnedPath = new URL('../data/dfs-week1-2026.json', import.meta.url);
@@ -12,7 +12,8 @@ const pinned = JSON.parse(readFileSync(pinnedPath));
 
 test('current chooses the verified weekly default; every archived and current slate has dated options', () => {
   const current = getDfsSlate();
-  assert.equal(current.meta.key, weekly.defaultSlate);
+  const upcoming = Object.entries(weekly.slates).filter(([,s]) => s.season === weekly.season && s.week === weekly.week && s.contestTypeId !== 96 && dfsSlateTiming(s).slateState === 'upcoming').sort(([,a],[,b])=>b.gameCount-a.gameCount || a.id-b.id);
+  assert.equal(current.meta.key, upcoming[0]?.[0] || weekly.defaultSlate);
   assert.equal(current.meta.week, weekly.slates[weekly.defaultSlate].week);
   assert.equal(current.meta.season, weekly.slates[weekly.defaultSlate].season);
   assert.equal(current.meta.scoring, 'DraftKings Classic');
@@ -25,6 +26,38 @@ test('current chooses the verified weekly default; every archived and current sl
     assert.ok(getDfsSlate(option.key));
   }
   assert.equal(getDfsSlate('not-a-slate'), null);
+});
+
+test('lock follows first kickoff and archive window is explicitly a schedule estimate', () => {
+  const single = {startsAt:'2026-10-02T00:15:00Z',endsAt:'2026-10-02T00:15:00Z'};
+  const timing = iso => dfsSlateTiming(single,Date.parse(iso));
+  assert.equal(timing('2026-10-02T00:14:59Z').slateState,'upcoming');
+  assert.equal(timing('2026-10-02T00:15:00Z').availability,'locked');
+  assert.equal(timing('2026-10-02T03:45:00Z').slateState,'in-progress');
+  assert.equal(timing('2026-10-02T04:15:00Z').slateState,'archived');
+  assert.match(timing('2026-10-02T04:15:00Z').archiveTimeBasis,/not a verified game completion/);
+  const multi = {...single,endsAt:'2026-10-06T00:15:00Z',games:[{startsAt:single.startsAt},{startsAt:'2026-10-06T00:15:00Z'}]};
+  assert.equal(dfsSlateTiming(multi,Date.parse('2026-10-02T04:15:00Z')).slateState,'locked');
+  assert.equal(dfsSlateTiming(multi,Date.parse('2026-10-06T01:00:00Z')).slateState,'in-progress');
+  assert.equal(dfsSlateTiming(multi,Date.parse('2026-10-06T04:15:00Z')).availability,'archived');
+});
+
+test('current skips a locked all-week slate while explicit selection keeps its historical rows', t => {
+  t.mock.method(Date,'now',()=>Date.parse('2026-10-02T03:45:00Z'));
+  const current=getDfsSlate();
+  assert.equal(current.meta.id,154080);
+  assert.equal(current.meta.slateState,'upcoming');
+  assert.equal(current.meta.currentSnapshotAvailable,true);
+  for(const key of ['2026-w4-dk-154077','2026-w4-dk-154084']){
+    const historical=getDfsSlate(key);
+    assert.equal(historical.meta.availability,'locked');
+    assert.equal(historical.meta.slateState,'in-progress');
+    assert.equal(historical.meta.isLocked,true);
+    assert.equal(historical.meta.currentSnapshotAvailable,false);
+    assert.ok(historical.records.length>0);
+    assert.match(historical.meta.availabilityMessage,/historical review and local drafts/);
+    assert.equal(current.meta.options.find(o=>o.key===key).isLocked,true);
+  }
 });
 
 test('week1 and main are immutable historical aliases', () => {

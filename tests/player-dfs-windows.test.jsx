@@ -21,6 +21,19 @@ beforeEach(()=>{
 afterEach(()=>{cleanup();vi.unstubAllGlobals();});
 const grid=()=>screen.getByRole('table',{name:'Player statistics'});
 const choose=(label,value)=>fireEvent.change(screen.getByLabelText(label),{target:{value:String(value)}});
+test('locked slate notice stays visible with complete projections and disappears when DFS is off',async()=>{
+ const existingFetch=fetch;
+ vi.stubGlobal('fetch',vi.fn(async input=>{
+  const result=await existingFetch(input),data=await result.json();
+  if(new URL(input,'https://test.invalid').searchParams.get('view')==='dfs-lineup')data.meta={...data.meta,availability:'locked',slateState:'in-progress',projectionStatus:{status:'complete'},availabilityMessage:'Slate locked at the sourced kickoff. Retained pregame capture for historical review and local drafts.'};
+  return response(data);
+ }));
+ render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
+ await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
+ await screen.findByText(/Slate locked at the sourced kickoff/);
+ fireEvent.click(screen.getByRole('checkbox',{name:'DFS',exact:true}));
+ expect(screen.queryByText(/Slate locked at the sourced kickoff/)).not.toBeInTheDocument();
+});
 test('base/count and DFS windows remain independent; Monday slate includes only eligible teams and missing-stat identities',async()=>{
  render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
  await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});

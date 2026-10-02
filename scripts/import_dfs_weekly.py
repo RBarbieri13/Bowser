@@ -125,10 +125,11 @@ def target_week(schedule, now):
     return key, sorted(games, key=lambda g: (g['startsAt'], g['gameId']))
 
 
-def discover_slates(lobby, games, now):
+def discover_slates(lobby, games, now, schedule=None):
     require(lobby.get('SelectedSport') == 'NFL', 'DraftKings lobby is not NFL')
     game_sets = {g['GameSetKey']: g for g in lobby.get('GameSets', [])}
     expected = {(g['away'], g['home'], instant(g['startsAt'])): g for g in games}
+    calendar = {(g['away'], g['home'], instant(g['startsAt'])): g for g in (schedule or games)}
     slates = []
     for group in lobby.get('DraftGroups', []):
         format_ids = (group.get('ContestTypeId'), group.get('GameTypeId'))
@@ -140,6 +141,20 @@ def discover_slates(lobby, games, now):
             raise PartialData(f"Classic group {group['DraftGroupId']} has no game metadata")
         # Other weeks in the lobby are deliberately excluded, never relabeled.
         if not any(instant(g['StartDate']) == instant(e['startsAt']) for g in competitions for e in games):
+            continue
+        # A verified Mon–Thu slate can span two NFL weeks. It is outside this
+        # single-week snapshot, rather than malformed. Unknown games still fail.
+        calendar_games = []
+        for game in competitions:
+            matchup = re.fullmatch(r'([A-Z]{2,3}) @ ([A-Z]{2,3})', game['Description'])
+            require(matchup is not None, 'Unknown DraftKings game description')
+            calendar_key = (team_key(matchup[1]), team_key(matchup[2]), instant(game['StartDate']))
+            require(calendar_key in calendar, f"Classic group {group['DraftGroupId']} contains a different week/date/matchup")
+            calendar_games.append(calendar[calendar_key])
+        if len({(g['season'],g['week']) for g in calendar_games}) > 1:
+            require(not showdown, 'Full-game Showdown must contain exactly one game')
+            require(len(calendar_games) == group['GameCount'] == len({g['gameId'] for g in calendar_games}), 'DraftKings game count mismatch')
+            require(instant(group['StartDate']) == min(instant(g['startsAt']) for g in calendar_games), 'DraftKings start metadata mismatch')
             continue
         selected = []
         for game in competitions:
@@ -522,6 +537,15 @@ def refresh(target, raw_dir, now, dry_run=False, archive_path=None, allow_partia
         return _refresh(target, raw_dir, now, dry_run, archive_path, allow_partial_projections)
 
 
+def refreshed_classic_default(combined, updated_keys, season, week):
+    # Retained locked slates are historical choices, never the current default.
+    current = [(key, combined[key]) for key in updated_keys
+               if combined[key]['season'] == season and combined[key]['week'] == week
+               and not is_showdown(combined[key])]
+    require(bool(current), 'No verified unlocked Classic default for scheduled week; Showdown cannot replace weekly Classic context')
+    return min(current, key=lambda item: (-item[1]['gameCount'], item[1]['id']))[0]
+
+
 def _refresh(target, raw_dir, now, dry_run=False, archive_path=None, allow_partial_projections=False):
     previous = json.loads(target.read_text()) if target.exists() else None
     if previous:
@@ -529,7 +553,7 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None, allow_parti
     fetch = Fetcher(raw_dir, now)
     schedule = parse_schedule(fetch.get(SCHEDULE, 'schedule.csv'))
     (season, week), games = target_week(schedule, now)
-    slates = discover_slates(json.loads(fetch.get(LOBBY, 'lobby.json')), games, now)
+    slates = discover_slates(json.loads(fetch.get(LOBBY, 'lobby.json')), games, now, schedule=schedule)
     primary_status = None
     try:
         html = fetch.get(FIC, 'projections.html')
@@ -616,9 +640,7 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None, allow_parti
                          'identityAliasSource': fetch.sources['identity-aliases'], 'validation': {'status': 'verified',
                              **({'salaryStatus':'verified','projectionStatus':'partial' if projected_count else 'unavailable'} if primary_status else {})}}
         updated_keys.append(key)
-    current = [(key, s) for key, s in combined.items() if s['season'] == season and s['week'] == week and not is_showdown(s)]
-    require(bool(current), 'No verified Classic default for scheduled week; Showdown cannot replace weekly Classic context')
-    default = min(current, key=lambda item: (-item[1]['gameCount'], item[1]['id']))[0]
+    default = refreshed_classic_default(combined, updated_keys, season, week)
     verified_at = iso(datetime.now(timezone.utc))
     snapshot = {'schemaVersion': 2, 'capturedAt': verified_at, 'importStartedAt':iso(now), 'defaultSlate': default, 'season': season, 'week': week,
                 'slates': combined, 'validation': {'status': 'verified', 'verifiedAt': verified_at},

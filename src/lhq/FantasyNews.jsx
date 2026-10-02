@@ -246,6 +246,23 @@ export function FantasyNews({ season = 2026, scoring = 'ppr', onOpen, yahoo }) {
   const [category, setCategory] = useState('all'), [source, setSource] = useState('all'), [search, setSearch] = useState(''), [rosterOnly, setRosterOnly] = useState(false);
   const [selectedId, setSelectedId] = useState(route.article), [expanded, setExpanded] = useState(new Set()), [pinned, setPinned] = useState('');
   const [layout, setLayout, storageError] = useNewsLayout(route.popout);
+  const [narrowWorkspace, setNarrowWorkspace] = useState(() => window.innerWidth <= 1000);
+  const centralWorkspace = useRef(null);
+  const [centralWidth, setCentralWidth] = useState(0);
+  useEffect(() => {
+    const element = centralWorkspace.current;
+    if (!element) return;
+    const measure = () => setCentralWidth(element.getBoundingClientRect().width);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+  useEffect(() => {
+    const resized = () => setNarrowWorkspace(window.innerWidth <= 1000);
+    window.addEventListener('resize', resized);
+    return () => window.removeEventListener('resize', resized);
+  }, []);
   const [windowStates, setWindowStates] = useState({}), [windowNotice, setWindowNotice] = useState('');
   const [clock, setClock] = useState(Date.now);
   const stopResize = useRef(null);
@@ -398,15 +415,17 @@ export function FantasyNews({ season = 2026, scoring = 'ppr', onOpen, yahoo }) {
   const renderPane = (pane, index = 0, dock = false) => {
     const definition = NEWS_PANES[pane.id], popped = !route.popout && windowStates[pane.id] === 'open';
     const maximum = dockKey(pane.id) ? 1000 : 1200;
-    return <section key={pane.id} className={`fn-pane ${dock ? `fn-dock fn-${pane.id}-dock` : 'research'} ${popped ? 'popped' : ''}`} style={{ '--fn-pane-width': `${pane.width}px`, flexGrow: dock ? 0 : pane.width }} aria-label={definition.title}>
+    const resizable = dock ? !narrowWorkspace : layout.mode === 'columns' || (layout.mode === 'tiles' && !narrowWorkspace && centralWidth > 700 && panes.length > 1);
+    return <section key={pane.id} className={`fn-pane ${dock ? `fn-dock fn-${pane.id}-dock` : 'research'} ${popped ? 'popped' : ''} ${resizable ? '' : 'fn-full-width'}`} style={{ '--fn-pane-width': `${pane.width}px`, flexGrow: dock ? 0 : pane.width }} aria-label={definition.title}>
       <header className="fn-window-title"><div><small>{definition.label}</small><h2>{definition.title}</h2></div>{!route.popout && <div className="fn-pane-actions"><button aria-label={`Collapse ${definition.title}`} aria-expanded="true" title="Collapse and reclaim space" onClick={() => patchPane(pane.id, { collapsed: true })}>▾</button>{!dock && <><button aria-label={`Move ${definition.title} left`} disabled={index === 0} onClick={() => movePane(pane.id, -1)}>←</button><button aria-label={`Move ${definition.title} right`} disabled={index === panes.length - 1} onClick={() => movePane(pane.id, 1)}>→</button></>}<button aria-label={`${windowStates[pane.id] === 'closed' ? 'Reopen' : popped ? 'Focus' : 'Pop out'} ${definition.title}${windowStates[pane.id] === 'closed' || popped ? ' window' : ''}`} title="Open in a browser window" onClick={() => popOut(pane.id)}>↗</button><button aria-label={`Close ${definition.title}`} title="Disable this pane" onClick={() => closePane(pane.id)}>×</button></div>}</header>
       {popped ? <div className="fn-detached"><strong>Open in browser window</strong><p>{definition.title} reads the public feed and its own authorized Yahoo context.</p><button className="lhq-mini" onClick={() => popOut(pane.id)}>Focus window</button><button className="lhq-mini lhq-outline" onClick={() => dockPane(pane.id)}>Return to workspace</button><button className="fn-text-button" onClick={() => dockPane(pane.id)}>Close browser window</button></div> : <div className="fn-pane-content" tabIndex={0}>{content(pane.id)}</div>}
-      {!route.popout && !popped && <div className={`fn-pane-resize ${pane.id === 'acquisition' ? 'fn-resize-left' : ''}`} role="separator" aria-label={`Resize ${definition.title}`} title="Drag to resize · arrow keys adjust 20px" aria-orientation="vertical" aria-valuemin={280} aria-valuemax={maximum} aria-valuenow={pane.width} tabIndex={0} onPointerDown={event => resizePane(event, pane)} onKeyDown={event => { if (['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) { event.preventDefault(); const direction = pane.id === 'acquisition' ? -1 : 1; patchPane(pane.id, {width:event.key === 'Home' ? 280 : event.key === 'End' ? maximum : pane.width + (event.key === 'ArrowRight' ? 20 : -20) * direction}); } }}><span aria-hidden="true">⋮</span></div>}
+      {!route.popout && !popped && resizable && <div className={`fn-pane-resize ${pane.id === 'acquisition' ? 'fn-resize-left' : ''}`} role="separator" aria-label={`Resize ${definition.title}`} title="Drag to resize · arrow keys adjust 20px" aria-orientation="vertical" aria-valuemin={280} aria-valuemax={maximum} aria-valuenow={pane.width} tabIndex={0} onPointerDown={event => resizePane(event, pane)} onKeyDown={event => { if (['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) { event.preventDefault(); const direction = pane.id === 'acquisition' ? -1 : 1; patchPane(pane.id, {width:event.key === 'Home' ? 280 : event.key === 'End' ? maximum : pane.width + (event.key === 'ArrowRight' ? 20 : -20) * direction}); } }}><span aria-hidden="true">⋮</span></div>}
     </section>;
   };
   const dockPane = dock;
   const renderDock = (id, preference) => !preference.enabled ? null : preference.collapsed ? <button className={`fn-dock-restore ${id}`} aria-label={`Expand ${NEWS_PANES[id].title}`} onClick={() => patchPane(id,{collapsed:false})}>▸ <span>{NEWS_PANES[id].title}</span></button> : renderPane({id,...preference},0,true);
   const body = <div className={`fantasy-news ${route.popout ? 'fn-popout' : ''}`}>
+    {!route.popout && narrowWorkspace && <p className="fn-layout-note">Full-width tablet panels · collapse or pop out to reclaim space. Center windows resize in Columns.</p>}
     {route.popout && <div className="fn-popout-bar"><a href="#/fantasy-news" target="_blank" rel="noopener noreferrer">← Full workspace</a><strong>Bowser · {NEWS_PANES[route.pane].title}</strong><button className="lhq-mini lhq-outline" onClick={() => { if (window.opener && !window.opener.closed) { window.opener.postMessage({ type:'bowser-fantasy-news-dock',pane:route.pane },window.location.origin); window.close(); } else { window.location.hash='/fantasy-news'; window.location.reload(); } }}>Return to workspace</button></div>}
     <div className="fn-filter-row"><label className="fn-search"><span className="fn-sr-only">Search news</span><input aria-label="Search news" type="search" placeholder="Search player, headline or report" value={search} onChange={event => setSearch(event.target.value)}/></label><label>Source<select aria-label="News source" value={effectiveSource} onChange={event => setSource(event.target.value)}><option value="all">All sources</option>{options.sources.map(value => <option key={value}>{value}</option>)}</select></label><button className="fn-reset-filter" onClick={clearFilters}>Clear filters</button><span className="fn-read-status" role="status">{statusText}</span></div>
     <div className="fn-pool-row"><Pool tabs={Object.entries(CATEGORIES).map(([key,label]) => ({key,label,count:key === 'all' ? articles.length : articles.filter(article => articleCategories(article).includes(key)).length}))} value={category} onChange={setCategory}/></div>
@@ -418,7 +437,7 @@ export function FantasyNews({ season = 2026, scoring = 'ppr', onOpen, yahoo }) {
     {!route.popout && <div className="fn-restore-windows">{layout.panes.filter(pane => pane.collapsed).map(pane => <button key={pane.id} aria-label={`Expand ${NEWS_PANES[pane.id].title}`} onClick={() => patchPane(pane.id,{collapsed:false})}>▸ {NEWS_PANES[pane.id].title}</button>)}</div>}
     {route.popout ? <div className="fn-workspace">{panes.map((pane,index) => renderPane(pane,index))}</div> : <div className="fn-frame" aria-label="Fantasy news workspace">
       {renderDock('feed',layout.left)}
-      <div className="fn-central-workspace" role="region" aria-label="Central research panels"><div className={`fn-workspace ${layout.mode}`} style={{gridTemplateColumns:tileColumns}}>{panes.map((pane,index) => renderPane(pane,index))}</div>{!panes.length && <div className="fn-central-empty"><strong>Research panels hidden</strong><p>Enable Evidence desk, Player focus, Role & performance or Source coverage above.</p></div>}</div>
+      <div ref={centralWorkspace} className="fn-central-workspace" role="region" aria-label="Central research panels"><div className={`fn-workspace ${layout.mode}`} style={{gridTemplateColumns:tileColumns}}>{panes.map((pane,index) => renderPane(pane,index))}</div>{!panes.length && <div className="fn-central-empty"><strong>Research panels hidden</strong><p>Enable Evidence desk, Player focus, Role & performance or Source coverage above.</p></div>}</div>
       {renderDock('acquisition',layout.acquisition)}
     </div>}
     <div className="fn-footer"><span>{clean(meta?.timeFilterBasis).includes('undated_reports') ? `Target window: ${hours}h · undated reports have unverified age` : clean(meta?.timeFilterBasis).includes('overlapping_calendar_dates') ? `Target window: ${hours}h · unknown-timezone dates may overlap this window` : `News window: last ${hours} hours`} · original source clocks preserved · {meta?.coverage?.complete ? 'reported complete coverage' : 'partial or unverified coverage'}</span><span>Article and Yahoo response bodies stay in memory</span></div>

@@ -34,7 +34,7 @@ function yahoo(label='Private Account A') {
   return {status:{connected:true,expiresAt:new Date(Date.now()+3600000).toISOString()},account:{season:2026,teams,leagues,privateSecret:label},teams,leagues,dashboards,research,coverage:{loadedTeams:3},errors:{}};
 }
 function childWindow(){const child={closed:false,focus:vi.fn(),postMessage:vi.fn(),close:vi.fn()};child.close.mockImplementation(()=>{child.closed=true;});return child;}
-beforeEach(()=>{localStorage.clear();sessionStorage.clear();window.history.replaceState(null,'','/#/fantasy-news');vi.stubGlobal('fetch',vi.fn(async()=>reply(payload())));vi.stubGlobal('PointerEvent',MouseEvent);props.onOpen.mockClear();});
+beforeEach(()=>{localStorage.clear();sessionStorage.clear();window.history.replaceState(null,'','/#/fantasy-news');vi.stubGlobal('fetch',vi.fn(async()=>reply(payload())));vi.stubGlobal('PointerEvent',MouseEvent);vi.stubGlobal('ResizeObserver',class {observe(){} disconnect(){}});props.onOpen.mockClear();});
 afterEach(()=>{cleanup();closeFantasyNewsWindows();vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();});
 
 test('left news table, central research and right acquisition are distinct Bowser workspaces',async()=>{
@@ -206,6 +206,43 @@ test('visible central neighbors reorder across collapsed panels while docks rema
 test('unknown-date reports keep source order after dated reports without borrowing edit or check clocks',async()=>{
   const unknown={...articles[0],id:'unknown',headline:'Undated fixture report',publishedAt:null,publishedDate:null,publishedAtRaw:null,timestampStatus:'unknown',updatedAt:'2099-01-01T00:00:00Z',checkedAt:'2099-01-01T00:00:00Z'};fetch.mockResolvedValue(reply(payload([unknown,articles[1]])));renderPage();await within(left()).findByRole('button',{name:'Expand Undated fixture report'});expect(rows().map(row=>row.textContent)).toEqual([expect.stringContaining('Fixture Beta'),expect.stringContaining('Undated')]);
   fireEvent.click(within(left()).getByRole('button',{name:'Inspect Undated fixture report'}));expect(pane('Evidence desk')).toHaveTextContent('Publication age unknown');expect(pane('Evidence desk')).not.toHaveTextContent('Older report');
+});
+
+test('tablet full-width mode preserves desktop widths without offering ineffective resize handles',async()=>{
+  vi.stubGlobal('innerWidth',820);renderPage();await ready();
+  expect(screen.getByText(/Full-width tablet panels/)).toBeInTheDocument();
+  expect(screen.queryByRole('separator',{name:'Resize News workspace'})).not.toBeInTheDocument();
+  expect(screen.queryByRole('separator',{name:'Resize Acquisition Opportunities'})).not.toBeInTheDocument();
+  const saved=JSON.parse(localStorage.getItem(NEWS_LAYOUT_KEY));
+  fireEvent.click(screen.getByRole('button',{name:'Collapse News workspace'}));
+  fireEvent.click(screen.getByRole('button',{name:'Expand News workspace'}));
+  fireEvent.change(screen.getByLabelText('Workspace arrangement'),{target:{value:'columns'}});
+  expect(screen.getByRole('separator',{name:'Resize Evidence desk'})).toBeInTheDocument();
+  expect(JSON.parse(localStorage.getItem(NEWS_LAYOUT_KEY)).left.width).toBe(saved.left.width);
+  vi.stubGlobal('innerWidth',1440);fireEvent(window,new Event('resize'));
+  expect(screen.getByRole('separator',{name:'Resize News workspace'})).toHaveAttribute('aria-valuenow',String(saved.left.width));
+  expect(screen.queryByText(/Full-width tablet panels/)).not.toBeInTheDocument();
+});
+
+test('center handles follow actual tile geometry and disappear in full-width Stack',async()=>{
+  let measure;
+  vi.stubGlobal('innerWidth',1440);
+  vi.stubGlobal('ResizeObserver',class {constructor(callback){measure=callback;} observe(){} disconnect(){}});
+  renderPage();await ready();
+  const center=screen.getByRole('region',{name:'Central research panels'});
+  const geometry=vi.spyOn(center,'getBoundingClientRect').mockReturnValue({width:650});
+  act(()=>measure());
+  expect(screen.queryByRole('separator',{name:'Resize Evidence desk'})).not.toBeInTheDocument();
+  geometry.mockReturnValue({width:850});act(()=>measure());
+  expect(screen.getByRole('separator',{name:'Resize Evidence desk'})).toBeInTheDocument();
+  vi.stubGlobal('innerWidth',750);fireEvent(window,new Event('resize'));
+  expect(screen.queryByRole('separator',{name:'Resize Evidence desk'})).not.toBeInTheDocument();
+  vi.stubGlobal('innerWidth',1440);fireEvent(window,new Event('resize'));
+  fireEvent.change(screen.getByLabelText('Workspace arrangement'),{target:{value:'stacked'}});
+  expect(screen.queryByRole('separator',{name:'Resize Evidence desk'})).not.toBeInTheDocument();
+  expect(screen.getByRole('separator',{name:'Resize News workspace'})).toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText('Workspace arrangement'),{target:{value:'columns'}});
+  expect(screen.getByRole('separator',{name:'Resize Evidence desk'})).toBeInTheDocument();
 });
 
 test('poll recovers an orphan open window even when a close notification is missed',async()=>{
