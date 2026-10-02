@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-02T21:43:05.000Z",
-  "updatedAt": "2026-10-02T21:48:02.660Z",
-  "revision": "bowser-public-news-20261002T214802660Z",
+  "checkedAt": "2026-10-02T22:17:34.000Z",
+  "updatedAt": "2026-10-02T22:20:09.190Z",
+  "revision": "bowser-public-news-20261002T222009190Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -3383,22 +3383,22 @@
         "team": "SF",
         "position": "WR"
       },
-      "headline": "Evans is a game-time decision; questionable designation reported",
-      "summary": "Tafur's original post directly reports Shanahan calls Evans a game-time decision. RotoWire attributes a QUESTIONABLE designation to Cam Inman; the fresh team table still lacked Friday/final entries.",
+      "headline": "Evans officially limited Friday and questionable",
+      "summary": "San Francisco's final table confirms limited Friday participation and a QUESTIONABLE designation for Evans' rib injury. This corroborates the earlier report; Shanahan's reported game-time decision outlook remains.",
       "fantasyAnalysis": "Keep a viable late-game receiver alternative before earlier players lock. Samuel and Cooks remain conditional opportunity candidates without confirmed target shares.",
       "eventType": "PRACTICE",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T21:39:00Z",
+      "checkedAt": "2026-10-02T22:17:34Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Ribs",
-        "practiceStatus": null,
+        "practiceStatus": "LP",
         "gameStatus": "QUESTIONABLE",
         "expectedReturn": "Game-time decision per Shanahan, reported by Vic Tafur"
       },
@@ -3462,6 +3462,18 @@
           "sourceType": "OFFICIAL",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T21:36:51Z"
+        },
+        {
+          "sourceName": "San Francisco 49ers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; Friday LP and QUESTIONABLE observed",
+          "publishedDate": null,
+          "url": "https://www.49ers.com/team/injury-report/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T22:17:34Z"
         }
       ]
     },
@@ -4118,5 +4130,5 @@
       ]
     }
   ],
-  "contentHash": "70a92242c531755b3420d6a3b8a786b9fb46b2128c294a06082dad62264bfe96"
+  "contentHash": "c0bc4703617c601b59ac177940cb826f781a0d0ddbef27ec2305522113d1f3f5"
 }
