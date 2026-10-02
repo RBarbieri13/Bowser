@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-02T20:56:36.000Z",
-  "updatedAt": "2026-10-02T21:11:29.666Z",
-  "revision": "bowser-public-news-20261002T211129666Z",
+  "checkedAt": "2026-10-02T21:43:05.000Z",
+  "updatedAt": "2026-10-02T21:48:02.660Z",
+  "revision": "bowser-public-news-20261002T214802660Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -175,15 +175,15 @@
         "team": "BUF",
         "position": "WR"
       },
-      "headline": "Coleman questionable; coach optimistic",
-      "summary": "Buffalo's table lists Coleman questionable. The team article reports Friday limited participation and Brady's optimism for Sunday.",
-      "fantasyAnalysis": "Check final availability despite the encouraging comments; an active designation would not establish normal usage.",
+      "headline": "Coleman's official reports disagree on game designation",
+      "summary": "Bills PR's original Friday image shows Coleman limited with no game designation. The Bills website table still showed QUESTIONABLE. Unknown update order leaves the official-source discrepancy unresolved.",
+      "fantasyAnalysis": "Coach optimism and the PR image are encouraging, but keep a healthy fallback and reconfirm final availability. The questionable contingency is retained while the official sources disagree.",
       "eventType": "PRACTICE",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T18:44:00Z",
+      "checkedAt": "2026-10-02T21:43:05Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -192,7 +192,7 @@
         "bodyPart": "ankle",
         "practiceStatus": "LP",
         "gameStatus": "QUESTIONABLE",
-        "expectedReturn": null
+        "expectedReturn": "Official PR image has no designation; website lists QUESTIONABLE. Recheck final availability."
       },
       "sources": [
         {
@@ -241,6 +241,42 @@
           "url": "https://www.buffalobills.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T18:44:00Z"
+        },
+        {
+          "sourceName": "Buffalo Bills",
+          "url": "https://www.buffalobills.com/team/injury-report/",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; LP Friday and QUESTIONABLE observed",
+          "publishedDate": null,
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:38:14Z"
+        },
+        {
+          "sourceName": "Buffalo Bills PR (X)",
+          "url": "https://x.com/BuffaloBillsPR/status/2106099343375626547",
+          "publishedAt": null,
+          "publishedAtRaw": "12:09 PM · Oct 2, 2026; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "author": null,
+          "xHandle": "BuffaloBillsPR",
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:43:05Z"
+        },
+        {
+          "sourceName": "Buffalo Bills",
+          "url": "https://www.buffalobills.com/news/buffalo-bills-injury-report-vs-patriots-week-4",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 2:08 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "author": "Alec White",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:38:21Z"
         }
       ]
     },
@@ -1365,15 +1401,15 @@
         "team": "LA",
         "position": "TE"
       },
-      "headline": "Ferguson officially out against Philadelphia",
-      "summary": "The Rams' final table confirms Ferguson DNP Friday and OUT with an ankle injury.",
-      "fantasyAnalysis": "Use a healthy tight end alternative. Parkinson's own questionable status prevents assuming he inherits the vacated workload.",
+      "headline": "Ferguson placed on injured reserve",
+      "summary": "The Rams' original announcement confirms Ferguson on Reserve/Injured, superseding his earlier Week 4 OUT status. Ordinary roster and transaction webpages had not yet reflected the move.",
+      "fantasyAnalysis": "Plan a multiweek replacement with at least four missed games. Parkinson is questionable; Allen, Higbee and Klare are opportunity candidates without confirmed target shares. No exact Ferguson return date is established.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:55:16Z",
+      "checkedAt": "2026-10-02T21:42:30Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1381,8 +1417,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Ankle",
         "practiceStatus": "DNP",
-        "gameStatus": "OUT",
-        "expectedReturn": null
+        "gameStatus": "IR",
+        "expectedReturn": "At least four missed games; no exact return date"
       },
       "sources": [
         {
@@ -1420,6 +1456,54 @@
           "url": "https://www.therams.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:55:16Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "url": "https://www.rotowire.com/football/headlines/terrance-ferguson-injury-placed-on-injured-reserve-640343",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated October 2, 2026 at 2:17 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-02T21:37:00Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams (X)",
+          "url": "https://x.com/RamsNFL/status/2106126052502405135",
+          "publishedAt": null,
+          "publishedAtRaw": "1:55 PM · Oct 2, 2026; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "author": null,
+          "xHandle": "RamsNFL",
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:42:30Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams",
+          "url": "https://www.therams.com/team/players-roster/",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; still listed Active at this observation",
+          "publishedDate": null,
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:37:41Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams",
+          "url": "https://www.therams.com/team/depth-chart",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed",
+          "publishedDate": null,
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:39:00Z"
         }
       ]
     },
@@ -2999,6 +3083,48 @@
       ]
     },
     {
+      "eventId": "sea-george-holani-week4-cleared-2026-10-02",
+      "player": {
+        "playerId": null,
+        "name": "George Holani",
+        "team": "SEA",
+        "position": "RB"
+      },
+      "headline": "Holani limited Friday without a game designation",
+      "summary": "Seattle confirms Holani limited all three days with a rib injury and no game designation, while Price is OUT.",
+      "fantasyAnalysis": "Holani is available to share the replacement backfield with Wilson. His clearance does not establish an exact workload or make him the guaranteed lead back.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-02T21:39:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Rib",
+        "practiceStatus": "LP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Seattle Seahawks",
+          "url": "https://www.seahawks.com/team/injury-report/",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; Friday final report observed",
+          "publishedDate": null,
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:39:00Z"
+        }
+      ]
+    },
+    {
       "eventId": "sea-jadarian-price-thursday-dnp-2026-10-01",
       "player": {
         "playerId": null,
@@ -3006,22 +3132,22 @@
         "team": "SEA",
         "position": "RB"
       },
-      "headline": "Price reportedly ruled out against the Chargers",
-      "summary": "Macdonald ruled Price out for Week 4, according to Curtis Crabtree via RotoWire. The original X was inaccessible and Seattle's fresh official table still lacked Friday/final entries.",
-      "fantasyAnalysis": "Emanuel Wilson is the likely workload beneficiary as the next back on Seattle's depth chart. Holani's health and the actual split remain unresolved; Charbonnet remains ineligible for Week 4. Plan a healthy alternative for Price.",
+      "headline": "Price officially out; Holani available alongside Wilson",
+      "summary": "Seattle confirms Price DNP Friday and OUT, while Holani is limited without a game designation. Bell expects Wilson, Holani and practice-squad Velus Jones Jr. in the replacement group.",
+      "fantasyAnalysis": "Wilson is the likely main beneficiary, with Holani cleared to share work. Bell's expected group does not guarantee a split or confirm a Jones elevation. No specific carry total is established.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:56:36Z",
+      "checkedAt": "2026-10-02T21:39:10Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Chest",
-        "practiceStatus": null,
+        "practiceStatus": "DNP",
         "gameStatus": "OUT",
         "expectedReturn": null
       },
@@ -3073,6 +3199,30 @@
           "url": "https://www.seahawks.com/team/depth-chart/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:56:00Z"
+        },
+        {
+          "sourceName": "Seattle Seahawks",
+          "url": "https://www.seahawks.com/team/injury-report/",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; Friday final report observed",
+          "publishedDate": null,
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:39:00Z"
+        },
+        {
+          "sourceName": "Gregg Bell (X)",
+          "url": "https://x.com/gbellseattle/status/2106120395145531831",
+          "publishedAt": null,
+          "publishedAtRaw": "1:33 PM · Oct 2, 2026; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "author": "Gregg Bell",
+          "xHandle": "gbellseattle",
+          "sourceType": "NEWS_OUTLET",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:39:10Z"
         }
       ]
     },
@@ -3084,15 +3234,15 @@
         "team": "SEA",
         "position": "RB"
       },
-      "headline": "Charbonnet opens practice window; Week 4 remains unavailable",
-      "summary": "Seattle opened Charbonnet's 21-day practice window October 1 and listed him limited Thursday. He remains ineligible for Week 4 under the PUP minimum absence.",
-      "fantasyAnalysis": "His eventual activation could reduce Jadarian Price's workload. Monitor activation and actual usage before a major downgrade; this creates no immediate Week 4 replacement. A stash depends on current availability and league eligibility.",
+      "headline": "Charbonnet limited Friday; Week 4 remains unavailable",
+      "summary": "Seattle's final table lists Charbonnet limited Thursday and Friday and OUT. His return-to-practice window does not change his Week 4 PUP ineligibility.",
+      "fantasyAnalysis": "Monitor activation and usage for future weeks. Limited practices do not guarantee a Week 5 return, and he cannot replace Price this Sunday.",
       "eventType": "RETURN",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:07:00Z",
+      "checkedAt": "2026-10-02T21:39:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3126,6 +3276,18 @@
           "url": "https://www.seahawks.com/news/week-4-injury-report-seahawks-vs-chargers",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:07:00Z"
+        },
+        {
+          "sourceName": "Seattle Seahawks",
+          "url": "https://www.seahawks.com/team/injury-report/",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; Friday final report observed",
+          "publishedDate": null,
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:39:00Z"
         }
       ]
     },
@@ -3172,6 +3334,48 @@
       ]
     },
     {
+      "eventId": "sf-christian-kirk-practice-window-target-2026-10-02",
+      "player": {
+        "playerId": null,
+        "name": "Christian Kirk",
+        "team": "SF",
+        "position": "WR"
+      },
+      "headline": "Kirk practice window targeted in two weeks",
+      "summary": "Barrows' original post says Shanahan hopes to open Kirk's return-to-practice window in two weeks as he recovers from the calf injury on IR.",
+      "fantasyAnalysis": "This is a practice target, not confirmed activation or a game-return date. No immediate Week 4 role is established.",
+      "eventType": "COACH_COMMENT",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-02T21:39:20Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Calf",
+        "practiceStatus": null,
+        "gameStatus": "IR",
+        "expectedReturn": "Coach hopes to open practice window in two weeks; no guaranteed game return"
+      },
+      "sources": [
+        {
+          "sourceName": "Matt Barrows (X)",
+          "url": "https://x.com/mattbarrows/status/2106126930332557338?s=20",
+          "publishedAt": null,
+          "publishedAtRaw": "1:59 PM · Oct 2, 2026; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "author": "Matt Barrows",
+          "xHandle": "mattbarrows",
+          "sourceType": "NEWS_OUTLET",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:39:20Z"
+        }
+      ]
+    },
+    {
       "eventId": "sf-mike-evans-thursday-dnp-2026-10-01",
       "player": {
         "playerId": null,
@@ -3179,15 +3383,15 @@
         "team": "SF",
         "position": "WR"
       },
-      "headline": "Evans reportedly runs on side Friday",
-      "summary": "Nick Wagoner, via RotoWire, observed Evans in uniform doing side work during Friday's media period. The original X was unreadable and the official final table remains unposted.",
-      "fantasyAnalysis": "Keep a healthy receiver fallback. Side work does not establish an official practice grade, participation in drills or game clearance.",
+      "headline": "Evans is a game-time decision; questionable designation reported",
+      "summary": "Tafur's original post directly reports Shanahan calls Evans a game-time decision. RotoWire attributes a QUESTIONABLE designation to Cam Inman; the fresh team table still lacked Friday/final entries.",
+      "fantasyAnalysis": "Keep a viable late-game receiver alternative before earlier players lock. Samuel and Cooks remain conditional opportunity candidates without confirmed target shares.",
       "eventType": "PRACTICE",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:36:00Z",
+      "checkedAt": "2026-10-02T21:39:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3195,8 +3399,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Ribs",
         "practiceStatus": null,
-        "gameStatus": null,
-        "expectedReturn": null
+        "gameStatus": "QUESTIONABLE",
+        "expectedReturn": "Game-time decision per Shanahan, reported by Vic Tafur"
       },
       "sources": [
         {
@@ -3222,6 +3426,42 @@
           "url": "https://www.rotowire.com/football/headlines/mike-evans-injury-suited-up-for-fridays-practice-640329",
           "isOriginalSource": false,
           "checkedAt": "2026-10-02T20:36:00Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "url": "https://www.rotowire.com/football/headlines/mike-evans-injury-game-time-decision-incoming-640339",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated October 2, 2026 at 2:09 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "author": "RotoWire Staff; reporting attributed to Vic Tafur and Cam Inman",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-02T21:37:00Z"
+        },
+        {
+          "sourceName": "Vic Tafur (X)",
+          "url": "https://x.com/VicTafur/status/2106126091492696376",
+          "publishedAt": null,
+          "publishedAtRaw": "1:56 PM · Oct 2, 2026; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "author": "Vic Tafur",
+          "xHandle": "VicTafur",
+          "sourceType": "NEWS_OUTLET",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:39:00Z"
+        },
+        {
+          "sourceName": "San Francisco 49ers",
+          "url": "https://www.49ers.com/team/injury-report/",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; Friday/final fields unset",
+          "publishedDate": null,
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T21:36:51Z"
         }
       ]
     },
@@ -3878,5 +4118,5 @@
       ]
     }
   ],
-  "contentHash": "99c76886cf0a464a9957134ad67e65cf3e638eb07bbe10dffe6e4972f8d27c83"
+  "contentHash": "70a92242c531755b3420d6a3b8a786b9fb46b2128c294a06082dad62264bfe96"
 }
