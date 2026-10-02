@@ -6,7 +6,7 @@ import { useYahooDashboard } from '../src/lhq/useYahooDashboard.js';
 import { isReserveSlot, leagueHealth, leagueSummaries, rosterExposure, teamMatchup, teamStanding } from '../src/lhq/yahooModel.js';
 
 const teamA = '999.l.1.t.1', teamB = '999.l.2.t.1';
-const connected = { configured: true, connected: true, expiresAt: '2026-09-27T23:00:00Z', connectionUrl: 'https://bowser-fantasy-football.vercel.app/#/yahoo' };
+const connected = { configured: true, connected: true, expiresAt: new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString(), connectionUrl: 'https://bowser-fantasy-football.vercel.app/#/yahoo' };
 const account = {
   season: 2026, checkedAt: '2026-09-27T12:00:00Z',
   leagues: [{ key: '999.l.1', name: 'Private League One', season: 2026 }, { key: '999.l.2', name: 'Private League Two', season: 2026 }],
@@ -48,7 +48,7 @@ function mockReads(handler = () => undefined) {
 const settle = result => waitFor(() => expect(result.current.busy).toBe(false));
 function deferred() { let resolve; const promise = new Promise(r => { resolve = r; }); return { promise, resolve }; }
 beforeEach(() => { localStorage.clear(); sessionStorage.clear(); window.location.hash = '#/yahoo'; });
-afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); window.location.hash = ''; });
+afterEach(() => { cleanup(); vi.useRealTimers(); vi.restoreAllMocks(); vi.unstubAllGlobals(); window.location.hash = ''; });
 
 test('health counts exact required starter slots, excludes reserve slots, and preserves unknowns', () => {
   const health = leagueHealth(dashboard());
@@ -140,6 +140,23 @@ test('disconnect clears all private data and rejects late in-flight dashboard re
   expect(calls.filter(call => call.url.includes('/dashboard?'))).toHaveLength(1);
   expect(calls.find(call => call.url.endsWith('/disconnect')).options.method).toBe('POST');
 });
+test('absolute session expiry clears private memory and rejects queued dashboard reads', async () => {
+  vi.useFakeTimers();
+  const hold = deferred();
+  const expiry = new Date(Date.now() + 10000).toISOString();
+  const calls = mockReads(url => url.endsWith('/status') ? response({ ...connected, expiresAt: expiry }) : url.includes('/dashboard?') && url.includes(teamA) ? hold.promise : undefined);
+  const { result } = renderHook(() => useYahooDashboard());
+  await vi.waitFor(() => expect(calls.some(call => call.url.includes('/dashboard?'))).toBe(true));
+  expect(result.current.account).not.toBeNull();
+  await act(async () => { await vi.advanceTimersByTimeAsync(10000); });
+  expect(result.current.status.connected).toBe(false);
+  expect(result.current.account).toBeNull();
+  expect(result.current.dashboards).toEqual({});
+  expect(result.current.errors.connection).toMatch(/expired/i);
+  await act(async () => { hold.resolve(response(dashboard())); });
+  expect(result.current.dashboards).toEqual({});
+  expect(calls.filter(call => call.url.includes('/dashboard?'))).toHaveLength(1);
+});
 test('refresh performs POST then verifies status, discovery and fresh dashboards', async () => {
   const calls = mockReads(); const { result } = renderHook(() => useYahooDashboard()); await settle(result);
   const before = calls.length;
@@ -171,7 +188,8 @@ test('research is on demand, owned-team gated and retains pagination and complet
   await act(async () => { await result.current.loadResearch('999.l.9.t.1'); });
   expect(calls.some(call => call.url.includes('/league-research?'))).toBe(false);
   await act(async () => { await result.current.loadResearch(teamA, { availabilityStart: 25 }); });
-  expect(result.current.research[teamA].availability).toEqual(page.availability);
+  expect(result.current.research[teamA].availability).toMatchObject(page.availability);
+  expect(result.current.research[teamA].availability.players[0].checkedAt).toBe(page.checkedAt);
   expect(result.current.summaries[0].availability.complete).toBe(false);
   expect(result.current.summaries[0].pendingTrades.count).toBe(0);
   expect(calls.find(call => call.url.includes('/league-research?')).url).toContain('availabilityStart=25');
@@ -188,6 +206,42 @@ test('partial research refreshes preserve existing ownership and transaction sec
   expect(result.current.research[teamA].availability.players).toHaveLength(1);
   expect(result.current.research[teamA].transactions.items).toHaveLength(1);
   expect(result.current.research[teamA].ownership.matches[0].id).toBe('fixture|RB|NYG');
+});
+test('availability and ownership observations keep their individual read clocks across pages and unrelated refreshes', async () => {
+  let read = 0;
+  const clocks = ['2026-09-27T12:00:00Z', '2026-09-27T12:05:00Z', '2026-09-27T12:10:00Z'];
+  const envelope = (index, sections) => ({ season: 2026, teamKey: teamA, leagueKey: '999.l.1', errors: {}, checkedAt: clocks[index], ...sections });
+  const pages = [
+    envelope(0, { availability: { status: 'FA', start: 0, players: [{ key: '999.p.100', name: 'First observation' }] }, ownership: { matches: [{ id: 'first|RB|NYG', owned: false, ownershipType: 'freeagents' }] } }),
+    envelope(1, { availability: { status: 'FA', start: 25, players: [{ key: '999.p.101', name: 'Second observation' }] }, ownership: { matches: [{ id: 'second|WR|BUF', owned: false, ownershipType: 'waivers' }] } }),
+    envelope(2, { transactions: { items: [], complete: true }, availability: null, ownership: null }),
+  ];
+  mockReads(url => url.includes('/league-research?') ? response(pages[read++]) : undefined);
+  const { result } = renderHook(() => useYahooDashboard()); await settle(result);
+  await act(async () => { await result.current.loadResearch(teamA); });
+  await act(async () => { await result.current.loadResearch(teamA, { availabilityStart: 25 }); });
+  await act(async () => { await result.current.loadResearch(teamA, { include: 'transactions' }); });
+  const current = result.current.research[teamA];
+  expect(current.checkedAt).toBe(clocks[2]);
+  expect(current.availability.checkedAt).toBe(clocks[1]);
+  expect(current.availability.players.map(player => player.checkedAt)).toEqual(clocks.slice(0, 2));
+  expect(current.ownership.matches.map(player => player.checkedAt)).toEqual(clocks.slice(0, 2));
+  expect(current.availability.players[0].receivedAt).not.toBe(clocks[2]);
+  expect(Object.values(localStorage).join(' ')).not.toContain('First observation');
+});
+test('a successful section read clears its prior error without assigning a missing source read clock', async () => {
+  let read = 0;
+  const pages = [
+    { season: 2026, teamKey: teamA, leagueKey: '999.l.1', errors: { availability: 'Unavailable' }, transactions: { items: [] }, checkedAt: account.checkedAt },
+    { season: 2026, teamKey: teamA, leagueKey: '999.l.1', errors: {}, availability: { status: 'W', start: 0, players: [{ key: '999.p.100', name: 'Recovered observation' }] }, checkedAt: null },
+  ];
+  mockReads(url => url.includes('/league-research?') ? response(pages[read++]) : undefined);
+  const { result } = renderHook(() => useYahooDashboard()); await settle(result);
+  await act(async () => { await result.current.loadResearch(teamA); });
+  await act(async () => { await result.current.loadResearch(teamA); });
+  expect(result.current.research[teamA].errors).not.toHaveProperty('availability');
+  expect(result.current.research[teamA].availability.players[0].checkedAt).toBeNull();
+  expect(result.current.research[teamA].availability.checkedAt).toBeNull();
 });
 test('research failures never leave a stale successful availability claim', async () => {
   let fail = false;

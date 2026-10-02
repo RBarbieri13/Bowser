@@ -90,7 +90,7 @@ function selectRosterRole(slate, requestedRole) {
   const records = slate.records.filter(row => row.rosterPosition === role);
   return { records, meta: {...slate.meta, rosterPosition:role, label:`${slate.meta.label} · ${role}`,
     rosterPositions:['FLEX','CPT'], projectionMultiplier:role === 'CPT' ? 1.5 : 1,
-    projectionBasis:`Full-game DraftKings source projection${role === 'CPT' ? ' × 1.5 Captain multiplier' : '; unscaled FLEX scoring'}. Official ${role} salary.`,
+    projectionBasis:`Full-game DraftKings source projection${role === 'CPT' ? ' × 1.5 Captain multiplier' : '; unscaled FLEX scoring'}. Official ${role} salary.${slate.meta.projectionStatus ? ` ${slate.meta.projectionBasis || ''}` : ''}`,
     coverage:{...slate.meta.coverage,salaryEntries:slate.meta.coverage.salaryPlayers,
       salaryPlayers:slate.meta.coverage.distinctSalaryPlayers,
       projectedPlayers:slate.meta.coverage.projectedPlayers/2,
@@ -100,10 +100,30 @@ function selectRosterRole(slate, requestedRole) {
       unmatchedSalaryPlayers:slate.meta.coverage.unmatchedSalaryPlayers/2} } };
 }
 
+export function dfsSlateTiming(meta, now = Date.now()) {
+  const lockAt = new Date(meta.startsAt).getTime();
+  const lastStart = new Date(meta.endsAt).getTime();
+  const archiveAfter = lastStart + 4 * 60 * 60 * 1000;
+  const upcoming = Number.isFinite(lockAt) && now < lockAt;
+  const archived = Number.isFinite(archiveAfter) && now >= archiveAfter;
+  const activeGame = (meta.games || [{startsAt:meta.startsAt}]).some(game => {
+    const start = new Date(game.startsAt).getTime();
+    return now >= start && now < start + 4 * 60 * 60 * 1000;
+  });
+  return {slateState: upcoming ? 'upcoming' : archived ? 'archived' : activeGame ? 'in-progress' : 'locked',
+    lockAt:meta.startsAt, archiveAfter:Number.isFinite(archiveAfter) ? new Date(archiveAfter).toISOString() : null,
+    archiveTimeBasis:'Last scheduled kickoff plus four hours; not a verified game completion time.',
+    isLocked:!upcoming, availability:upcoming ? 'available' : archived ? 'archived' : 'locked'};
+}
+
 function resolveDfsSlate(key = 'current', { includeUnmatched = false, lineupPool = false } = {}) {
   const weekly = readWeekly();
   const slates = { ...historical.slates, ...(weekly?.slates || {}), ...archiveSlates() };
-  const defaultKey = weekly?.defaultSlate || historical.defaultSlate;
+  const now = Date.now();
+  const unlocked = Object.entries(weekly?.slates || {}).filter(([,s]) => s.season === weekly.season && s.week === weekly.week
+    && s.contestTypeId !== 96 && dfsSlateTiming(s,now).slateState === 'upcoming')
+    .sort(([,a],[,b]) => b.gameCount-a.gameCount || a.id-b.id);
+  const defaultKey = unlocked[0]?.[0] || weekly?.defaultSlate || historical.defaultSlate;
   const requestedKey = key || 'current';
   const isCaptain = requestedKey.endsWith(':cpt');
   const resolvedKey = requestedKey === 'current' ? defaultKey : isCaptain ? requestedKey.slice(0,-4) : requestedKey;
@@ -112,22 +132,28 @@ function resolveDfsSlate(key = 'current', { includeUnmatched = false, lineupPool
   if (!selected) return null;
   const { records, ...meta } = selected;
   if (isCaptain && meta.contestTypeId !== 96) return null;
-  const now = Date.now();
-  const ended = new Date(meta.endsAt).getTime() + 4 * 60 * 60 * 1000 < now;
-  const fallback = requestedKey === 'current' && (!weekly || ended);
+  const timing = dfsSlateTiming(meta,now);
+  const fallback = requestedKey === 'current' && (!weekly || timing.isLocked);
+  const stateMessage = timing.isLocked
+    ? `Slate locked at ${meta.startsAt}. Retained pregame salary/projection capture for historical review and local drafts. ${timing.slateState === 'in-progress' ? 'A scheduled game is within its four-hour kickoff window.' : timing.slateState === 'archived' ? 'Last scheduled kickoff plus four hours has elapsed.' : 'Later games may remain upcoming, but this slate has already started.'}`
+    : null;
+  const partialProjectionMessage = meta.projectionStatus?.refreshMode === 'allow-partial-projections'
+    ? `Official DraftKings salaries verified. Fantasy Info Central projections unavailable: ${meta.primaryProjectionStatus?.reason || meta.projectionStatus.reason}. ${meta.projectionStatus.projectedPlayers} supplemental projection entries; ${meta.projectionStatus.missingPlayers} unavailable. Fantasy Sports Central publication time is unknown; capture times are observations.`
+    : null;
   const options = [
     { key: 'current', label: `Current · ${slates[defaultKey].label}`, season: slates[defaultKey].season,
-      week: slates[defaultKey].week, startsAt: slates[defaultKey].startsAt, endsAt: slates[defaultKey].endsAt, scoring:slates[defaultKey].scoring },
+      week: slates[defaultKey].week, startsAt: slates[defaultKey].startsAt, endsAt: slates[defaultKey].endsAt, scoring:slates[defaultKey].scoring,
+      ...dfsSlateTiming(slates[defaultKey],now) },
     ...Object.entries(slates).sort(([, a], [, b]) => b.season - a.season || b.week - a.week || b.gameCount - a.gameCount || a.startsAt.localeCompare(b.startsAt))
       .flatMap(([key, s]) => (s.contestTypeId === 96 ? ['FLEX','CPT'] : [null]).map(role => ({key:role === 'CPT' ? `${key}:cpt` : key,
-        label:s.label + (role ? ` · ${role}` : ''), season:s.season,week:s.week,startsAt:s.startsAt,endsAt:s.endsAt,
-        scoring:s.scoring,rosterPosition:role,contestTypeId:s.contestTypeId}))),
+        label:s.label + (role ? ` · ${role}` : '') + (dfsSlateTiming(s,now).isLocked ? ` · ${dfsSlateTiming(s,now).slateState}` : ''), season:s.season,week:s.week,startsAt:s.startsAt,endsAt:s.endsAt,
+        scoring:s.scoring,rosterPosition:role,contestTypeId:s.contestTypeId,...dfsSlateTiming(s,now)}))),
   ];
   const payload = {
     meta: { ...meta, key: resolvedKey, requestedKey, defaultSlate: defaultKey, options,
-      availability: fallback ? 'last-good' : ended ? 'archived' : 'available',
-      currentSnapshotAvailable: Boolean(weekly) && !ended,
-      availabilityMessage: fallback ? `Showing last verified ${meta.season} Week ${meta.week} data; a newer verified slate is not available.` : null },
+      ...timing, availability: fallback ? 'last-good' : timing.availability,
+      currentSnapshotAvailable: Boolean(weekly) && !timing.isLocked,
+      availabilityMessage: [fallback ? `Showing last verified ${meta.season} Week ${meta.week} data; a newer verified unlocked slate is not available.` : null, stateMessage, partialProjectionMessage].filter(Boolean).join(' ') || null },
     records: includeUnmatched ? records : records.filter(row => row.playerId),
   };
   if (lineupPool && meta.contestTypeId === 96) {
@@ -137,7 +163,7 @@ function resolveDfsSlate(key = 'current', { includeUnmatched = false, lineupPool
         ...payload.meta,
         rosterPositions: ['FLEX', 'CPT'],
         label: payload.meta.label.replace(/\s·\s(?:FLEX|CPT)$/, ''),
-        projectionBasis: 'Full-game DraftKings source projections; Captain rows use official CPT salary and a 1.5 projection multiplier while FLEX rows remain unscaled.',
+        projectionBasis: 'Full-game DraftKings source projections; Captain rows use official CPT salary and a 1.5 projection multiplier while FLEX rows remain unscaled.' + (meta.projectionStatus ? ` ${meta.projectionBasis || ''}` : ''),
       },
     };
   }

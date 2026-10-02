@@ -1,6 +1,10 @@
 import { queryPersistedIntelligenceFeed, IntelligenceQueryError } from "../../server/intelligence-store.mjs";
+import { fantasyNewsHandler } from "../../server/fantasy-news.mjs";
 
 export default async function handler(request, response) {
+  const resource = request.query?.resource || new URLSearchParams(String(request.url || "").split("?").slice(1).join("?")).get("resource");
+  // Public news shares the existing feed function within the hosting plan's function limit.
+  if (resource === "fantasy-news" || String(request.url || "").split("?")[0].endsWith("/fantasy-news")) return fantasyNewsHandler(request, response);
   if (request.method !== "GET") return response.status(405).json({ error: { code: "read_only", message: "This API is read-only" } });
   try {
     const url = new URL(request.url, "https://local.invalid");

@@ -59,7 +59,16 @@ test('team box scores and game breakdown use real outcomes and never invent part
   assert.equal(scores.meta.weeks[2].homeScore, null);
   assert.equal(scores.meta.weeks[2].result, null);
   assert.ok(scores.data.filter(row => row.stats_available).every((row) => [1, 2].includes(row.week)));
-  assert.equal(scores.data.some(row => row.week === 4), false);
+  const pregame = scores.data.filter(row => row.week === 4);
+  assert.ok(pregame.length > 0, 'verified Week 4 salaries supply pregame roster rows');
+  const actualMetrics = ['snaps', 'snap_pct', 'completions', 'passing_attempts', 'passing_yards', 'passing_tds', 'interceptions', 'carries', 'rushing_yards', 'rushing_tds', 'targets', 'receptions', 'receiving_yards', 'receiving_tds', 'fantasy_points'];
+  for (const row of pregame) {
+    assert.equal(row.played, false);
+    assert.equal(row.stats_available, false);
+    assert.equal(row.record_source, 'Verified pregame DFS roster');
+    assert.equal(row.position_finish, null);
+    for (const metric of actualMetrics) assert.equal(row[metric], null, metric);
+  }
   const game = queryGameBreakdown(params('gameId=2026_01_DAL_NYG'));
   assert.equal(game.data.game.homeScore, 28);
   assert.equal(game.data.game.awayScore, 20);

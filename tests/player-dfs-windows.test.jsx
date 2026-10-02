@@ -21,6 +21,32 @@ beforeEach(()=>{
 afterEach(()=>{cleanup();vi.unstubAllGlobals();});
 const grid=()=>screen.getByRole('table',{name:'Player statistics'});
 const choose=(label,value)=>fireEvent.change(screen.getByLabelText(label),{target:{value:String(value)}});
+test('initial DFS slate follows the verified current default ahead of a larger locked Classic',async()=>{
+ const existingFetch=fetch;
+ vi.stubGlobal('fetch',vi.fn(async input=>{
+  const result=await existingFetch(input),data=await result.json();
+  if(data.dfsOptions)data.dfsOptions=[{key:'locked',label:'All-week Classic · locked',season:2026,week:2,contestTypeId:1,isLocked:true},...data.dfsOptions];
+  return response(data);
+ }));
+ render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
+ await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
+ expect(screen.getByLabelText('DFS slate')).toHaveValue('classic');
+ choose('DFS slate','locked');
+ expect(screen.getByLabelText('DFS slate')).toHaveValue('locked');
+});
+test('locked slate notice stays visible with complete projections and disappears when DFS is off',async()=>{
+ const existingFetch=fetch;
+ vi.stubGlobal('fetch',vi.fn(async input=>{
+  const result=await existingFetch(input),data=await result.json();
+  if(new URL(input,'https://test.invalid').searchParams.get('view')==='dfs-lineup')data.meta={...data.meta,availability:'locked',slateState:'in-progress',projectionStatus:{status:'complete'},availabilityMessage:'Slate locked at the sourced kickoff. Retained pregame capture for historical review and local drafts.'};
+  return response(data);
+ }));
+ render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
+ await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
+ await screen.findByText(/Slate locked at the sourced kickoff/);
+ fireEvent.click(screen.getByRole('checkbox',{name:'DFS',exact:true}));
+ expect(screen.queryByText(/Slate locked at the sourced kickoff/)).not.toBeInTheDocument();
+});
 test('base/count and DFS windows remain independent; Monday slate includes only eligible teams and missing-stat identities',async()=>{
  render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
  await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
