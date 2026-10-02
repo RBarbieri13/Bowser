@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-02T22:17:34.000Z",
-  "updatedAt": "2026-10-02T22:20:09.190Z",
-  "revision": "bowser-public-news-20261002T222009190Z",
+  "checkedAt": "2026-10-02T23:37:23.000Z",
+  "updatedAt": "2026-10-02T23:40:14.876Z",
+  "revision": "bowser-public-news-20261002T234014876Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -1324,15 +1324,15 @@
         "team": "LA",
         "position": "WR"
       },
-      "headline": "Nacua officially full Friday without a game designation",
-      "summary": "The Rams' final table confirms full participation and no designation against Philadelphia, corroborating McVay's previously reported decision.",
-      "fantasyAnalysis": "His clearance supports returning to lineups if no later restriction emerges. Exact workload remains unconfirmed; do not upgrade replacement receivers on an assumed absence.",
+      "headline": "Nacua cleared; McVay will assess snap count",
+      "summary": "Nacua was full Friday with no game designation. In the Rams' Friday feature, McVay said the team must navigate his snap count on his return against Philadelphia.",
+      "fantasyAnalysis": "His clearance supports returning to lineups, with a coach-stated workload consideration. No fixed snap limit or replacement receiver's target share is established.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:55:16Z",
+      "checkedAt": "2026-10-02T23:37:23Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1390,6 +1390,18 @@
           "url": "https://www.therams.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:55:16Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": "Zach Edwards",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 2:21 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.therams.com/news/i-can-t-think-of-anything-else-but-smiling-puka-nacua-back-in-action-for-rams-in-week-4-at-eagles",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T23:37:23Z"
         }
       ]
     },
@@ -4130,5 +4142,5 @@
       ]
     }
   ],
-  "contentHash": "c0bc4703617c601b59ac177940cb826f781a0d0ddbef27ec2305522113d1f3f5"
+  "contentHash": "5c71c11d1c0e266c7e05cde4cb914601a4a5851745c4b2d056888be12d20afd6"
 }
