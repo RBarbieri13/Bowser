@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-02T20:38:00Z",
-  "updatedAt": "2026-10-02T20:54:34.519Z",
-  "revision": "bowser-public-news-20261002T203800Z",
+  "checkedAt": "2026-10-02T20:56:36.000Z",
+  "updatedAt": "2026-10-02T21:11:29.666Z",
+  "revision": "bowser-public-news-20261002T211129666Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -1222,22 +1222,22 @@
         "team": "LA",
         "position": "TE"
       },
-      "headline": "Parkinson reportedly questionable against Philadelphia",
-      "summary": "RotoWire attributes to Stu Jackson a QUESTIONABLE designation for Parkinson. The original X was inaccessible and the Rams' table still lacks Friday/final entries.",
-      "fantasyAnalysis": "Keep a healthy tight end alternative. His own uncertain availability prevents treating him as an automatic beneficiary of Ferguson's reported absence.",
+      "headline": "Parkinson officially questionable after Friday DNP",
+      "summary": "The Rams' final table confirms Parkinson DNP Friday and QUESTIONABLE with knee and shoulder injuries.",
+      "fantasyAnalysis": "Retain a healthy tight end alternative. His uncertain availability prevents treating him as an automatic beneficiary of Ferguson's absence.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:05:49Z",
+      "checkedAt": "2026-10-02T20:55:16Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Knee/Shoulder",
-        "practiceStatus": null,
+        "practiceStatus": "DNP",
         "gameStatus": "QUESTIONABLE",
         "expectedReturn": null
       },
@@ -1265,6 +1265,18 @@
           "url": "https://www.therams.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:04:46Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; Friday final grades observed",
+          "publishedDate": null,
+          "url": "https://www.therams.com/team/injury-report/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T20:55:16Z"
         }
       ]
     },
@@ -1276,24 +1288,24 @@
         "team": "LA",
         "position": "WR"
       },
-      "headline": "Nacua reportedly without a Week 4 designation",
-      "summary": "Adam Grosbard reports McVay says Nacua has no game designation against Philadelphia. The Rams' retrieved final table is still pending.",
-      "fantasyAnalysis": "This supports a return, while the exact workload remains unconfirmed. Do not upgrade replacement receivers based on an assumed absence.",
+      "headline": "Nacua officially full Friday without a game designation",
+      "summary": "The Rams' final table confirms full participation and no designation against Philadelphia, corroborating McVay's previously reported decision.",
+      "fantasyAnalysis": "His clearance supports returning to lineups if no later restriction emerges. Exact workload remains unconfirmed; do not upgrade replacement receivers on an assumed absence.",
       "eventType": "PRACTICE",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-10-02T18:32:19.756Z",
-      "checkedAt": "2026-10-02T19:20:35Z",
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-02T20:55:16Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Hip",
-        "practiceStatus": null,
+        "practiceStatus": "FP",
         "gameStatus": null,
-        "expectedReturn": "No Week 4 game designation reported by Grosbard via McVay"
+        "expectedReturn": null
       },
       "sources": [
         {
@@ -1330,6 +1342,18 @@
           "url": "https://bsky.app/profile/adamgrosbard.bsky.social/post/3mwvz2dugrk2h",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T19:20:35Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; Friday final grades observed",
+          "publishedDate": null,
+          "url": "https://www.therams.com/team/injury-report/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T20:55:16Z"
         }
       ]
     },
@@ -1341,22 +1365,22 @@
         "team": "LA",
         "position": "TE"
       },
-      "headline": "Ferguson reportedly out against Philadelphia",
-      "summary": "RotoWire's October 2 feed attributes to Nate Atkins that Ferguson is OUT with an ankle injury. The direct item and original X did not load; the Rams' final table remains unposted.",
-      "fantasyAnalysis": "Plan a healthy alternative. Parkinson's own unresolved status prevents assuming he inherits the vacated workload.",
+      "headline": "Ferguson officially out against Philadelphia",
+      "summary": "The Rams' final table confirms Ferguson DNP Friday and OUT with an ankle injury.",
+      "fantasyAnalysis": "Use a healthy tight end alternative. Parkinson's own questionable status prevents assuming he inherits the vacated workload.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T19:22:00Z",
+      "checkedAt": "2026-10-02T20:55:16Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Ankle",
-        "practiceStatus": null,
+        "practiceStatus": "DNP",
         "gameStatus": "OUT",
         "expectedReturn": null
       },
@@ -1384,6 +1408,144 @@
           "url": "https://www.therams.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T19:20:35Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; Friday final grades observed",
+          "publishedDate": null,
+          "url": "https://www.therams.com/team/injury-report/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T20:55:16Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lac-brenen-thompson-week4-out-2026-10-02",
+      "player": {
+        "playerId": null,
+        "name": "Brenen Thompson",
+        "team": "LAC",
+        "position": "WR"
+      },
+      "headline": "Thompson out against Seattle",
+      "summary": "The Chargers list Thompson DNP Friday and OUT with a quadricep injury.",
+      "fantasyAnalysis": "Use an available alternative if needed. His absence alone does not establish another receiver's workload.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-02T20:56:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Quadricep",
+        "practiceStatus": "DNP",
+        "gameStatus": "OUT",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 1:30 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.chargers.com/news/seahawks-injury-report-week-4",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T20:56:15Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lac-charlie-kolar-week4-out-2026-10-02",
+      "player": {
+        "playerId": null,
+        "name": "Charlie Kolar",
+        "team": "LAC",
+        "position": "TE"
+      },
+      "headline": "Kolar out following forearm surgery",
+      "summary": "The Chargers list Kolar limited Friday and OUT; the team says he underwent forearm surgery last Monday.",
+      "fantasyAnalysis": "Use an available alternative if relying on Kolar. No replacement snap or target share is established by the designation alone.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-02T20:56:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Forearm",
+        "practiceStatus": "LP",
+        "gameStatus": "OUT",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 1:30 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.chargers.com/news/seahawks-injury-report-week-4",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T20:56:15Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lac-keaton-mitchell-friday-cleared-2026-10-02",
+      "player": {
+        "playerId": null,
+        "name": "Keaton Mitchell",
+        "team": "LAC",
+        "position": "RB"
+      },
+      "headline": "Mitchell full Friday without a game designation",
+      "summary": "The Chargers' Friday release confirms full participation and no game designation for Mitchell's ankle issue.",
+      "fantasyAnalysis": "Clearance improves availability but does not establish a workload increase.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-02T20:56:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "FP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 1:30 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.chargers.com/news/seahawks-injury-report-week-4",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T20:56:15Z"
         }
       ]
     },
@@ -1395,23 +1557,23 @@
         "team": "LAC",
         "position": "WR"
       },
-      "headline": "McConkey reportedly returns to Friday practice",
-      "summary": "Kris Rhim, via RotoWire, reports McConkey present Friday. The original X was inaccessible; the official table still lacks Friday participation and final status.",
-      "fantasyAnalysis": "Retain a healthy receiver fallback. Presence is encouraging but does not establish a practice grade, game clearance or unrestricted snaps.",
+      "headline": "McConkey officially limited Friday and questionable",
+      "summary": "The Chargers' Friday release confirms limited participation and a QUESTIONABLE designation with the foot injury. Fresh browser content was current while web extraction returned Thursday's version.",
+      "fantasyAnalysis": "Keep a healthy late-game receiver fallback and verify active status. A questionable designation does not establish normal usage.",
       "eventType": "PRACTICE",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:05:49Z",
+      "checkedAt": "2026-10-02T20:56:15Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Foot",
-        "practiceStatus": null,
-        "gameStatus": null,
+        "practiceStatus": "LP",
+        "gameStatus": "QUESTIONABLE",
         "expectedReturn": null
       },
       "sources": [
@@ -1450,6 +1612,60 @@
           "url": "https://www.chargers.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:04:46Z"
+        },
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 1:30 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.chargers.com/news/seahawks-injury-report-week-4",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T20:56:15Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lac-trey-lance-week4-questionable-2026-10-02",
+      "player": {
+        "playerId": null,
+        "name": "Trey Lance",
+        "team": "LAC",
+        "position": "QB"
+      },
+      "headline": "Lance limited Friday and questionable",
+      "summary": "The Chargers list Lance limited Friday and QUESTIONABLE with a groin injury.",
+      "fantasyAnalysis": "Check active status if relying on the backup quarterback; this designation does not change the starting quarterback role.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-02T20:56:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "practiceStatus": "LP",
+        "gameStatus": "QUESTIONABLE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 1:30 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.chargers.com/news/seahawks-injury-report-week-4",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T20:56:15Z"
         }
       ]
     },
@@ -1759,6 +1975,48 @@
       ]
     },
     {
+      "eventId": "no-barion-brown-friday-limited-2026-10-02",
+      "player": {
+        "playerId": null,
+        "name": "Barion Brown",
+        "team": "NO",
+        "position": "WR"
+      },
+      "headline": "Brown remains limited Friday",
+      "summary": "New Orleans' Friday report lists Brown limited again with a hamstring issue after Thursday limited participation.",
+      "fantasyAnalysis": "Monitor the final report for Monday's game. No receiving workload shift is established by limited practice alone.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-02T20:56:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": "LP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New Orleans Saints",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 3:20 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.neworleanssaints.com/news/injury-report-atlanta-falcons-vs-new-orleans-saints-2026-nfl-week-4-friday",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T20:56:00Z"
+        }
+      ]
+    },
+    {
       "eventId": "no-jordyn-tyson-recovery-2026-10-01",
       "player": {
         "playerId": null,
@@ -1797,6 +2055,48 @@
           "url": "https://www.rotowire.com/football/headlines/jordyn-tyson-injury-not-expected-to-practice-next-week-640177",
           "isOriginalSource": false,
           "checkedAt": "2026-10-02T17:11:00Z"
+        }
+      ]
+    },
+    {
+      "eventId": "no-noah-fant-friday-limited-2026-10-02",
+      "player": {
+        "playerId": null,
+        "name": "Noah Fant",
+        "team": "NO",
+        "position": "TE"
+      },
+      "headline": "Fant remains limited Friday",
+      "summary": "New Orleans' Friday report lists Fant limited again with an abdomen issue after Thursday limited participation.",
+      "fantasyAnalysis": "Monday's game leaves a final report pending. Retain a healthy fallback; this practice grade does not establish an absence.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-02T20:56:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Abdomen",
+        "practiceStatus": "LP",
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New Orleans Saints",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 3:20 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.neworleanssaints.com/news/injury-report-atlanta-falcons-vs-new-orleans-saints-2026-nfl-week-4-friday",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T20:56:00Z"
         }
       ]
     },
@@ -2706,23 +3006,23 @@
         "team": "SEA",
         "position": "RB"
       },
-      "headline": "Price downgraded to DNP Thursday",
-      "summary": "Seattle lists Price absent with a chest issue October 1 after limited Wednesday participation.",
-      "fantasyAnalysis": "Keep a healthy alternative. George Holani also carries a rib issue, so no replacement's workload is guaranteed.",
-      "eventType": "PRACTICE",
-      "status": "CONFIRMED",
+      "headline": "Price reportedly ruled out against the Chargers",
+      "summary": "Macdonald ruled Price out for Week 4, according to Curtis Crabtree via RotoWire. The original X was inaccessible and Seattle's fresh official table still lacked Friday/final entries.",
+      "fantasyAnalysis": "Emanuel Wilson is the likely workload beneficiary as the next back on Seattle's depth chart. Holani's health and the actual split remain unresolved; Charbonnet remains ineligible for Week 4. Plan a healthy alternative for Price.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:07:00Z",
+      "checkedAt": "2026-10-02T20:56:36Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Chest",
-        "practiceStatus": "DNP",
-        "gameStatus": null,
+        "practiceStatus": null,
+        "gameStatus": "OUT",
         "expectedReturn": null
       },
       "sources": [
@@ -2737,6 +3037,42 @@
           "url": "https://www.seahawks.com/news/week-4-injury-report-seahawks-vs-chargers",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:07:00Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Curtis Crabtree",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated October 2, 2026 at 1:44 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.rotowire.com/football/headlines/jadarian-price-injury-ruled-out-for-week-4-640334",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-02T20:55:36Z"
+        },
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; Friday/final fields unset",
+          "publishedDate": null,
+          "url": "https://www.seahawks.com/team/injury-report/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T20:56:36Z"
+        },
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.seahawks.com/team/depth-chart/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T20:56:00Z"
         }
       ]
     },
@@ -3542,5 +3878,5 @@
       ]
     }
   ],
-  "contentHash": "a60576777011cb9c552eb81c0b8f3d1f59cf239e3d8ea75fb83ee5c3174c91b5"
+  "contentHash": "99c76886cf0a464a9957134ad67e65cf3e638eb07bbe10dffe6e4972f8d27c83"
 }
