@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-02T23:37:23.000Z",
-  "updatedAt": "2026-10-02T23:40:14.876Z",
-  "revision": "bowser-public-news-20261002T234014876Z",
+  "checkedAt": "2026-10-02T23:50:51.000Z",
+  "updatedAt": "2026-10-02T23:53:33.428Z",
+  "revision": "bowser-public-news-20261002T235333428Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -857,15 +857,15 @@
         "team": "CHI",
         "position": "QB"
       },
-      "headline": "Bagent reportedly took first-team reps",
-      "summary": "Florio reports Bagent received Chicago's first-team practice reps.",
-      "fantasyAnalysis": "The report improves his starting candidacy, but seek the team's decision before relying on Bagent or Case Keenum.",
+      "headline": "Bagent reportedly expected to start Sunday",
+      "summary": "Ian Rapoport reports Bagent is expected to start against the Jets after taking first-team reps. Ben Johnson has not confirmed the choice.",
+      "fantasyAnalysis": "Bagent is a conditional quarterback option if available, with stronger reporting behind his candidacy. Keep a confirmed-starter alternative until Chicago announces its plan; a normal workload and production are not guaranteed.",
       "eventType": "DEPTH_CHART",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T14:22:00Z",
+      "checkedAt": "2026-10-02T23:50:51Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -888,6 +888,18 @@
           "url": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/signs-point-to-tyson-bagent-for-the-bears-on-sunday",
           "isOriginalSource": false,
           "checkedAt": "2026-10-02T14:22:00Z"
+        },
+        {
+          "sourceName": "Ian Rapoport (X)",
+          "author": "Ian Rapoport",
+          "xHandle": "RapSheet",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "4:13 PM · Oct 2, 2026; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "url": "https://x.com/RapSheet/status/2106160724406100305",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T23:50:51Z"
         }
       ]
     },
@@ -4142,5 +4154,5 @@
       ]
     }
   ],
-  "contentHash": "5c71c11d1c0e266c7e05cde4cb914601a4a5851745c4b2d056888be12d20afd6"
+  "contentHash": "74e1af83bb431514f3fe8bf76d910825fa429a0c6af296b4336e7e3a07a3bc31"
 }
