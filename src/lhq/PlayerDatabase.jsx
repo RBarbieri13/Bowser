@@ -23,7 +23,7 @@ export function PlayerDatabase({season,setSeason,scoring,setScoring,onOpen}){
  const dfsOptions=(metadata.data?.dfsOptions||[]).filter(o=>o.key!=='current'&&o.season===season);
  const defaultDfs=dfsOptions.find(o=>o.key===metadata.data?.dfsDefault);
  const dfsWeek=chosenDfsWeek??defaultDfs?.week??Math.max(1,...(metadata.data?.availableWeeks||[])),weekSlates=dfsOptions.filter(o=>o.week===dfsWeek);
- const slate=chosenSlate==='none'?'':weekSlates.some(o=>o.key===chosenSlate)?chosenSlate:weekSlates.find(o=>o.contestTypeId!==96)?.key||weekSlates[0]?.key||'';
+ const slate=chosenSlate==='none'?'':weekSlates.some(o=>o.key===chosenSlate)?chosenSlate:weekSlates.find(o=>o.key===metadata.data?.dfsDefault)?.key||weekSlates.find(o=>o.contestTypeId!==96&&!o.isLocked)?.key||weekSlates.find(o=>o.contestTypeId!==96)?.key||weekSlates[0]?.key||'';
  const activeSlate=dfsEnabled&&!!slate;
  const changeDfsWeek=value=>{setDfsWeek(Number(value));setSlate(null);setGames([]);setTeam('All');};
  const changeSlate=value=>{setSlate(value);setGames([]);setTeam('All');};
