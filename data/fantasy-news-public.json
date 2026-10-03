@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T19:18:44.000Z",
-  "updatedAt": "2026-10-03T19:20:34.432Z",
-  "revision": "bowser-public-news-20261003T192034432Z",
+  "checkedAt": "2026-10-03T20:00:01.000Z",
+  "updatedAt": "2026-10-03T20:05:57.247Z",
+  "revision": "bowser-public-news-20261003T200557247Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -2937,6 +2937,60 @@
       ]
     },
     {
+      "eventId": "nyj-sterling-shepard-week4-elevation-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Sterling Shepard",
+        "team": "NYJ",
+        "position": "WR"
+      },
+      "headline": "Shepard reportedly being elevated for Chicago",
+      "summary": "Will Parkinson reports that the Jets are elevating Shepard from the practice squad for Sunday's game in Chicago. The official team transaction log had not yet corroborated the October 3 move.",
+      "fantasyAnalysis": "The reported elevation would add receiving depth with Adonai Mitchell out. It does not confirm game-day active status, a larger role or a target share.",
+      "eventType": "TRANSACTION",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T20:00:01Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Will Parkinson (X)",
+          "author": "Will Parkinson",
+          "xHandle": "@Willpa11",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "10:13 AM · Oct 3, 2026; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://x.com/Willpa11/status/2106432415153418566",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:00:01Z"
+        },
+        {
+          "sourceName": "New York Jets",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "No publication/update clock; transaction log ends September 29 and does not yet confirm the October 3 elevation",
+          "publishedDate": null,
+          "url": "https://www.newyorkjets.com/team/transactions/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T19:58:48Z"
+        }
+      ]
+    },
+    {
       "eventId": "phi-goedert-estimated-dnp-20260930",
       "player": {
         "playerId": null,
@@ -4520,5 +4574,5 @@
       ]
     }
   ],
-  "contentHash": "960daeb2da5b2eb41a8723fd7ae8fddf0d68a728ba129a5d02ac46cf757736db"
+  "contentHash": "f703a13e3434f47b89514fbe0bcb2e1122838ebcee8895b0efae9e8af9d4a3a1"
 }
