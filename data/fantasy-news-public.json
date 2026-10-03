@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T22:19:27.000Z",
-  "updatedAt": "2026-10-03T22:21:06.570Z",
-  "revision": "bowser-public-news-20261003T222106570Z",
+  "checkedAt": "2026-10-03T22:49:49.000Z",
+  "updatedAt": "2026-10-03T22:51:36.865Z",
+  "revision": "bowser-public-news-20261003T225136865Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -2002,6 +2002,72 @@
           "url": "https://www.chargers.com/news/seahawks-injury-report-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:56:15Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lv-aidan-oconnell-week4-status-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Aidan O'Connell",
+        "team": "LV",
+        "position": "QB"
+      },
+      "headline": "O'Connell reportedly has game designation removed",
+      "summary": "Ryan McFadden reports O'Connell's designation for Sunday's Kansas City game was removed Saturday after a personal absence. The retrieved Raiders injury table and Friday article still list QUESTIONABLE; team-site corroboration remains pending.",
+      "fantasyAnalysis": "This is a depth-quarterback availability report, not a starting assignment or confirmation of game-day active status. RotoWire places Kirk Cousins and Fernando Mendoza ahead of him; no new fantasy starting opportunity is established.",
+      "eventType": "RETURN",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T22:49:49Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": "DNP",
+        "gameStatus": "QUESTIONABLE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Ryan McFadden (X)",
+          "author": "Ryan McFadden",
+          "xHandle": "ryanmcfadden_",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "12:35 PM · Oct 3, 2026; timezone not displayed",
+          "publishedDate": "2026-10-03",
+          "url": "https://x.com/ryanmcfadden_/status/2106468202196976030?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T22:49:49Z"
+        },
+        {
+          "sourceName": "Las Vegas Raiders",
+          "author": "Raiders.com Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 02, 2026 at 12:20 PM; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.raiders.com/news/las-vegas-raiders-kansas-city-chiefs-week-4-injury-report-2026-season-nfl",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T22:49:49Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "October 3, 2026; publication clock unavailable",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.rotowire.com/football/headlines/aidan-oconnell-news-clear-for-week-4-640468",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-03T22:49:49Z"
         }
       ]
     },
@@ -5012,5 +5078,5 @@
       ]
     }
   ],
-  "contentHash": "f72b91f01e98587ea012f81ac837c9fb6a3ab5543d6689dd8b7e220d044f5af3"
+  "contentHash": "07b6281903a6c2b60a3e75ebc4509722c531e87a66133c473af16c974c2ee672"
 }
