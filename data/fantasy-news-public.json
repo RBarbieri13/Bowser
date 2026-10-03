@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T15:04:28.000Z",
-  "updatedAt": "2026-10-03T15:06:17.835Z",
-  "revision": "bowser-public-news-20261003T150617835Z",
+  "checkedAt": "2026-10-03T15:16:06.000Z",
+  "updatedAt": "2026-10-03T15:17:41.888Z",
+  "revision": "bowser-public-news-20261003T151741888Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -4174,15 +4174,15 @@
         "team": "WAS",
         "position": "WR"
       },
-      "headline": "McLaurin newly limited Friday and questionable",
-      "summary": "Washington's October 2 report newly lists McLaurin limited Friday with a hamstring issue and questionable for Indianapolis.",
-      "fantasyAnalysis": "Prepare a backup for the early London kickoff. A Friday addition does not establish the exact injury-onset time or a confirmed absence.",
+      "headline": "McLaurin reportedly likely to miss London game",
+      "summary": "Ben Standig reports multiple sources now expect McLaurin to miss Sunday's game against Indianapolis with his hamstring injury. Washington's official table still lists him QUESTIONABLE; no official OUT downgrade was verified.",
+      "fantasyAnalysis": "Prepare a healthy replacement before the early London kickoff. If McLaurin misses, Stefon Diggs, Antonio Williams and other Washington receivers could gain work, but no fixed target share or new receiver order is confirmed.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:10:00Z",
+      "checkedAt": "2026-10-03T15:16:06Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4205,6 +4205,54 @@
           "url": "https://www.commanders.com/news/game-status-commanders-colts-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:10:00Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Ben Standig",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 3, 2026; exact clock and timezone not displayed",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.rotowire.com/football/headlines/terry-mclaurin-injury-likely-to-miss-sundays-game-640448",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-03T15:15:05Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; McLaurin remains Friday LP and QUESTIONABLE",
+          "publishedDate": null,
+          "url": "https://www.commanders.com/team/injury-report/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T15:15:05Z"
+        },
+        {
+          "sourceName": "Ben Standig (X)",
+          "author": "Ben Standig",
+          "xHandle": "BenStandig",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "7:37 AM · Oct 3, 2026; timezone unspecified. Original post directly read in cloud browser.",
+          "publishedDate": "2026-10-03",
+          "url": "https://x.com/BenStandig/status/2106393295073198313?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T15:15:30Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Sep 29, 2026 at 06:01 PM; timezone unspecified. Dated unofficial depth chart, not a newly announced replacement order.",
+          "publishedDate": "2026-09-29",
+          "url": "https://www.commanders.com/news/commanders-release-2026-week-4-depth-chart",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T15:15:55Z"
         }
       ]
     },
@@ -4274,5 +4322,5 @@
       ]
     }
   ],
-  "contentHash": "7e3586be40c07927e41284de2c60c88732d6d4a29e1292d5dcf7a055d66e6f72"
+  "contentHash": "7f9b487713acfb57df332bcbc9a9e32a7973ad90bfb379ab51675d41c8645752"
 }
