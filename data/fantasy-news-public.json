@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T20:18:02.000Z",
-  "updatedAt": "2026-10-03T20:20:51.606Z",
-  "revision": "bowser-public-news-20261003T202051606Z",
+  "checkedAt": "2026-10-03T20:30:34.000Z",
+  "updatedAt": "2026-10-03T20:32:58.029Z",
+  "revision": "bowser-public-news-20261003T203258029Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -598,6 +598,48 @@
       ]
     },
     {
+      "eventId": "car-ja-seem-reed-week4-elevation-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Ja'seem Reed",
+        "team": "CAR",
+        "position": "WR"
+      },
+      "headline": "Panthers elevate Reed for Sunday night",
+      "summary": "Carolina gave Reed a standard practice-squad elevation for the Lions game, his first this season, while placing Xavier Legette on injured reserve.",
+      "fantasyAnalysis": "The team describes Reed as depth and cover for still-questionable Jalen Coker. The elevation does not mean Coker is out or establish Reed's snap or target share.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T20:30:34Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 03, 2026 at 04:00 PM; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.panthers.com/news/panthers-place-wide-receiver-xavier-legette-on-injured-reserve-lions-sunday-night-football-jalen-coker-status",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:30:34Z"
+        }
+      ]
+    },
+    {
       "eventId": "car-jalen-coker-thursday-limited-2026-10-01",
       "player": {
         "playerId": null,
@@ -659,15 +701,15 @@
         "team": "CAR",
         "position": "WR"
       },
-      "headline": "Legette ruled out for Week 4",
-      "summary": "Carolina's October 2 final report lists Legette out after a missed Friday practice.",
-      "fantasyAnalysis": "Replace him for the Sunday-night game. No replacement receiver's target share is established.",
+      "headline": "Legette placed on injured reserve",
+      "summary": "Carolina placed Legette on injured reserve Saturday after previously ruling him out for Week 4 with a knee injury. The team says he will miss at least the next four weeks.",
+      "fantasyAnalysis": "Plan for a multiweek replacement. McMillan and the remaining receivers could gain opportunities, but no target allocation is confirmed. Coker remains questionable, so retain a viable late-game alternative.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
-      "fantasyImpact": "MEDIUM",
+      "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:07:00Z",
+      "checkedAt": "2026-10-03T20:30:34Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -675,8 +717,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Knee",
         "practiceStatus": "DNP",
-        "gameStatus": "OUT",
-        "expectedReturn": null
+        "gameStatus": "IR",
+        "expectedReturn": "At least four weeks; return date unconfirmed"
       },
       "sources": [
         {
@@ -702,6 +744,18 @@
           "url": "https://www.panthers.com/news/week-4-friday-injury-report-two-ruled-out-for-lions-game-xavier-legette-damien-lewis-questionable-jalen-coker",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:07:00Z"
+        },
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 03, 2026 at 04:00 PM; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.panthers.com/news/panthers-place-wide-receiver-xavier-legette-on-injured-reserve-lions-sunday-night-football-jalen-coker-status",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:30:34Z"
         }
       ]
     },
@@ -1822,6 +1876,48 @@
           "url": "https://www.chargers.com/news/seahawks-injury-report-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:56:15Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lac-patrick-herbert-week4-elevation-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Patrick Herbert",
+        "team": "LAC",
+        "position": "TE"
+      },
+      "headline": "Chargers elevate Patrick Herbert for Week 4",
+      "summary": "The Chargers elevated tight end Patrick Herbert from the practice squad for Sunday's game against Seattle.",
+      "fantasyAnalysis": "Herbert adds tight-end depth with Charlie Kolar out. The elevation alone does not establish a receiving workload or fantasy starting role.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T20:30:34Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 03, 2026 at 01:00 PM; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.chargers.com/news/elevate-patrick-herbert-and-caleb-murphy-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:30:34Z"
         }
       ]
     },
@@ -4736,5 +4832,5 @@
       ]
     }
   ],
-  "contentHash": "0cc71182fcbfa3ef47965864d2b2ffed6ee743a7fbcadfe65d79767affd2d965"
+  "contentHash": "1f6a20c493f1b92050c9b2e0eb3e22a1718c2d5f93d2925a34539b71faee5ce0"
 }
