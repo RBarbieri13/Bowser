@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-02T23:50:51.000Z",
-  "updatedAt": "2026-10-02T23:53:33.428Z",
-  "revision": "bowser-public-news-20261002T235333428Z",
+  "checkedAt": "2026-10-03T00:48:25.000Z",
+  "updatedAt": "2026-10-03T00:50:00.549Z",
+  "revision": "bowser-public-news-20261003T005000549Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -2338,13 +2338,13 @@
       },
       "headline": "Mitchell officially ruled out against Chicago",
       "summary": "The Jets' final table lists Adonai Mitchell DNP Friday and OUT, corroborating the earlier official coach announcement.",
-      "fantasyAnalysis": "Use a healthy replacement. Sadiq and Ruckert's final statuses remain unverified; do not assume either is automatically healthy or inherits a fixed workload.",
+      "fantasyAnalysis": "Use a healthy replacement. The final Friday report lists Sadiq questionable and Ruckert full without a game designation. Neither is guaranteed to inherit a fixed target share.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:38:00Z",
+      "checkedAt": "2026-10-03T00:48:25Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2391,6 +2391,18 @@
           "url": "https://www.newyorkjets.com/news/jets-notebook-demario-davis-breaks-down-bears-rushing-game-dandre-swift-kyle-monangai-10-02-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T19:38:50Z"
+        },
+        {
+          "sourceName": "New York Jets",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 4:00 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.newyorkjets.com/news/jets-injury-report-week-4-vs-bears-friday-10-02-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T00:48:25Z"
         }
       ]
     },
@@ -2640,13 +2652,13 @@
       },
       "headline": "Taylor officially ruled out against Chicago",
       "summary": "The Jets' final table lists Mason Taylor DNP Friday and OUT, corroborating the earlier official coach announcement.",
-      "fantasyAnalysis": "Use a healthy replacement. Sadiq and Ruckert's final statuses remain unverified; do not assume either is automatically healthy or inherits a fixed workload.",
+      "fantasyAnalysis": "Use a healthy replacement. The final Friday report lists Sadiq questionable and Ruckert full without a game designation. Neither is guaranteed to inherit a fixed target share.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:38:00Z",
+      "checkedAt": "2026-10-03T00:48:25Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2693,6 +2705,18 @@
           "url": "https://www.newyorkjets.com/news/jets-notebook-demario-davis-breaks-down-bears-rushing-game-dandre-swift-kyle-monangai-10-02-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T19:38:50Z"
+        },
+        {
+          "sourceName": "New York Jets",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 4:00 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.newyorkjets.com/news/jets-injury-report-week-4-vs-bears-friday-10-02-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T00:48:25Z"
         }
       ]
     },
@@ -2849,13 +2873,13 @@
       },
       "headline": "DeVonta Smith officially out against the Rams",
       "summary": "Philadelphia's Friday table lists DeVonta Smith DNP and OUT for Week 4.",
-      "fantasyAnalysis": "Use a healthy receiver replacement. Makai Lemon and Dontayvion Wicks could gain opportunity; no target or snap allocation is confirmed.",
+      "fantasyAnalysis": "Use a healthy receiver replacement. Philadelphia's Friday article explicitly expects increased roles for Makai Lemon and Dontayvion Wicks, but confirms no target or snap allocation.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:15:00Z",
+      "checkedAt": "2026-10-03T00:48:25Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2925,6 +2949,18 @@
           "url": "https://www.philadelphiaeagles.com/team/depth-chart",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:15:00Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": "Chris McPherson",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 4:09 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-injury-report-2026-nfl-week-4-devonta-smith-puka-nacua",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T00:48:25Z"
         }
       ]
     },
@@ -4154,5 +4190,5 @@
       ]
     }
   ],
-  "contentHash": "74e1af83bb431514f3fe8bf76d910825fa429a0c6af296b4336e7e3a07a3bc31"
+  "contentHash": "aa9f67c9dcbb19e3bdf1bf8c42af035b6a7f1714a005dfd3947474266eff3ee0"
 }
