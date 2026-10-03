@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T20:30:34.000Z",
-  "updatedAt": "2026-10-03T20:32:58.029Z",
-  "revision": "bowser-public-news-20261003T203258029Z",
+  "checkedAt": "2026-10-03T20:53:37.000Z",
+  "updatedAt": "2026-10-03T20:56:08.938Z",
+  "revision": "bowser-public-news-20261003T205608938Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -954,6 +954,48 @@
           "url": "https://x.com/RapSheet/status/2106160724406100305",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T23:50:51Z"
+        }
+      ]
+    },
+    {
+      "eventId": "den-lil-jordan-humphrey-practice-squad-signing-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Lil'Jordan Humphrey",
+        "team": "DEN",
+        "position": "WR"
+      },
+      "headline": "Broncos sign Humphrey to practice squad",
+      "summary": "Denver signed Humphrey to its practice squad Saturday after releasing him from the 53-man roster Friday.",
+      "fantasyAnalysis": "Practice-squad membership does not establish game-day eligibility, an elevation or a receiving workload.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T20:53:37Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Denver Broncos",
+          "author": "Aric DiLalla",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 03, 2026 at 02:29 PM; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.denverbroncos.com/news/broncos-promote-fb-adam-prentice-to-active-roster-x4028",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:53:37Z"
         }
       ]
     },
@@ -3964,6 +4006,48 @@
       ]
     },
     {
+      "eventId": "sf-malik-turner-week4-elevation-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Malik Turner",
+        "team": "SF",
+        "position": "WR"
+      },
+      "headline": "49ers elevate Turner for Denver game",
+      "summary": "San Francisco used a standard practice-squad elevation for Turner ahead of its Week 4 game against Denver.",
+      "fantasyAnalysis": "The move adds receiving depth. It does not establish a target share or change Mike Evans' questionable designation.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T20:53:37Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "San Francisco 49ers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 03, 2026 at 01:19 PM; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.49ers.com/news/49ers-announce-roster-moves-ahead-of-denvssf",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:53:37Z"
+        }
+      ]
+    },
+    {
       "eventId": "sf-mike-evans-thursday-dnp-2026-10-01",
       "player": {
         "playerId": null,
@@ -4181,6 +4265,48 @@
           "url": "https://www.buccaneers.com/news/buccaneers-packers-injury-report-oct-2-week-4-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:05:00Z"
+        }
+      ]
+    },
+    {
+      "eventId": "tb-easton-stick-week4-elevation-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Easton Stick",
+        "team": "TB",
+        "position": "QB"
+      },
+      "headline": "Buccaneers elevate Stick as Daniels' backup",
+      "summary": "Tampa Bay gave Stick his first standard practice-squad elevation for Sunday's Packers game and explicitly identified him as the backup to Jalon Daniels.",
+      "fantasyAnalysis": "This confirms reserve quarterback depth. Daniels remains the announced starter; the elevation does not make Stick a fantasy starting option.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T20:53:37Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": "Scott Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 03, 2026 at 03:59 PM; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.buccaneers.com/news/bucs-elevate-qb-easton-stick-lb-caden-fordham-for-packers-game",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:53:37Z"
         }
       ]
     },
@@ -4832,5 +4958,5 @@
       ]
     }
   ],
-  "contentHash": "1f6a20c493f1b92050c9b2e0eb3e22a1718c2d5f93d2925a34539b71faee5ce0"
+  "contentHash": "599c22b5bfb73472b5251758d24ee11a2aa1677160e0ccf398dda824ce8c11ff"
 }
