@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T14:45:09.000Z",
-  "updatedAt": "2026-10-03T14:47:00.929Z",
-  "revision": "bowser-public-news-20261003T144700929Z",
+  "checkedAt": "2026-10-03T15:04:28.000Z",
+  "updatedAt": "2026-10-03T15:06:17.835Z",
+  "revision": "bowser-public-news-20261003T150617835Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -1085,14 +1085,14 @@
         "position": "WR"
       },
       "headline": "Keenan Allen downgraded to out for London game",
-      "summary": "The Colts announced October 3 that Allen is OUT against Washington with a groin injury, superseding Friday's questionable designation. The team website table still shows the older status.",
+      "summary": "The Colts announced October 3 that Allen is OUT against Washington with a groin injury, superseding Friday's questionable designation. The official website table now corroborates OUT.",
       "fantasyAnalysis": "Use a healthy replacement for the London game. Josh Downs and other Indianapolis pass catchers could gain work, but no target allocation is confirmed. Ashton Dulin remains questionable in the retrieved official report.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T14:45:09Z",
+      "checkedAt": "2026-10-03T15:04:28Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1187,6 +1187,18 @@
           "url": "https://x.com/Colts/status/2106391764156158320?s=20",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T14:45:09Z"
+        },
+        {
+          "sourceName": "Indianapolis Colts",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; official website table now lists Allen OUT, while Dulin remains QUESTIONABLE",
+          "publishedDate": null,
+          "url": "https://www.colts.com/team/injury-report/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T15:04:28Z"
         }
       ]
     },
@@ -4262,5 +4274,5 @@
       ]
     }
   ],
-  "contentHash": "7a5a8a3ceb78ca30902d3517e56dfad5961adb8ac8b978f109c4a0df5973f7ce"
+  "contentHash": "7e3586be40c07927e41284de2c60c88732d6d4a29e1292d5dcf7a055d66e6f72"
 }
