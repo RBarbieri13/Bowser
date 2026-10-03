@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T18:22:19.000Z",
-  "updatedAt": "2026-10-03T18:24:08.228Z",
-  "revision": "bowser-public-news-20261003T182408228Z",
+  "checkedAt": "2026-10-03T19:18:44.000Z",
+  "updatedAt": "2026-10-03T19:20:34.432Z",
+  "revision": "bowser-public-news-20261003T192034432Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -2258,22 +2258,22 @@
         "team": "NO",
         "position": "WR"
       },
-      "headline": "Brown remains limited Friday",
-      "summary": "New Orleans' Friday report lists Brown limited again with a hamstring issue after Thursday limited participation.",
-      "fantasyAnalysis": "Monitor the final report for Monday's game. No receiving workload shift is established by limited practice alone.",
+      "headline": "Brown clears final report after full practice",
+      "summary": "New Orleans lists Brown full Saturday after two limited sessions for a hamstring issue, with no game-status designation for Monday against Atlanta.",
+      "fantasyAnalysis": "The final report resolves the practice-related availability concern. It does not establish a larger receiving role or guaranteed target volume.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
-      "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:56:00Z",
+      "lastUpdatedAt": "2026-10-03T19:03:41.802Z",
+      "checkedAt": "2026-10-03T19:18:44Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Hamstring",
-        "practiceStatus": "LP",
+        "practiceStatus": "FP",
         "gameStatus": null,
         "expectedReturn": null
       },
@@ -2289,6 +2289,18 @@
           "url": "https://www.neworleanssaints.com/news/injury-report-atlanta-falcons-vs-new-orleans-saints-2026-nfl-week-4-friday",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:56:00Z"
+        },
+        {
+          "sourceName": "New Orleans Saints",
+          "author": "New Orleans Saints",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-10-03T18:55:42.311Z",
+          "publishedAtRaw": "Oct 03, 2026 at 01:55 PM; displayed timezone unspecified. Article JSON-LD datePublished 2026-10-03T18:55:42.311Z and dateModified 2026-10-03T19:03:41.802Z.",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.neworleanssaints.com/news/injury-report-atlanta-falcons-vs-new-orleans-saints-2026-nfl-week-4-saturday",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T19:18:44Z"
         }
       ]
     },
@@ -2342,15 +2354,15 @@
         "team": "NO",
         "position": "TE"
       },
-      "headline": "Fant reportedly questionable for Monday",
-      "summary": "Matthew Paras reports Fant is questionable for Monday against Atlanta with an abdomen injury. The retrieved Saints table still has Friday limited participation and no Saturday or final designation.",
+      "headline": "Fant officially questionable for Monday",
+      "summary": "New Orleans' Saturday final report confirms Fant is questionable against Atlanta with an abdomen injury after limited practice all three days. This corroborates the earlier Paras report and resolves the prior team-table lag.",
       "fantasyAnalysis": "Retain a healthy tight-end fallback before earlier games lock if relying on Fant. Questionable does not establish an absence, and no replacement's workload is confirmed.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
-      "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T18:22:19Z",
+      "lastUpdatedAt": "2026-10-03T19:03:41.802Z",
+      "checkedAt": "2026-10-03T19:18:44Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2397,6 +2409,18 @@
           "url": "https://www.neworleanssaints.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T18:22:19Z"
+        },
+        {
+          "sourceName": "New Orleans Saints",
+          "author": "New Orleans Saints",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-10-03T18:55:42.311Z",
+          "publishedAtRaw": "Oct 03, 2026 at 01:55 PM; displayed timezone unspecified. Article JSON-LD datePublished 2026-10-03T18:55:42.311Z and dateModified 2026-10-03T19:03:41.802Z.",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.neworleanssaints.com/news/injury-report-atlanta-falcons-vs-new-orleans-saints-2026-nfl-week-4-saturday",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T19:18:44Z"
         }
       ]
     },
@@ -4496,5 +4520,5 @@
       ]
     }
   ],
-  "contentHash": "24275fb3f9dd9b1d7183ca230476d98afbbc952d2c63fd36684acd7b144ae1c3"
+  "contentHash": "960daeb2da5b2eb41a8723fd7ae8fddf0d68a728ba129a5d02ac46cf757736db"
 }
