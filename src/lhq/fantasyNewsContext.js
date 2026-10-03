@@ -203,3 +203,9 @@ export function newsArticleLeagueContext(article, yahoo, season, options) {
 export function newsRosterMatches(article, yahoo, season, options) {
   return newsArticleLeagueContext(article, yahoo, season, options).owned;
 }
+
+/** Validated, memory-only inputs for the News league desk; never a new data source. */
+export function newsLeagueDeskContext(yahoo, season, {now=Date.now()}={}) {
+  const scope=authorizedContext(yahoo,season,Number(now));
+  return {...scope, teams:scope.teams.map(team=>({...team,dashboard:dashboardFor(yahoo,team,season),research:researchFor(yahoo,team,season)}))};
+}

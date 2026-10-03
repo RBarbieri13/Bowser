@@ -273,18 +273,21 @@ def parse_supplemental_projections(html, season, week, games, source, now):
     for row, _ in parser.rows:
         if len(row) != 8 or not row[0].isdigit():
             continue
-        if row[3] == 'D':
-            continue
-        require(row[3] in ('QB','RB','WR','TE'), 'Unknown supplemental position')
-        parts = row[1].split(', ')
-        require(len(parts) == 2, 'Supplemental name format changed')
-        name = parts[1] + ' ' + parts[0]
+        position = 'DEF' if row[3] == 'D' else row[3]
+        require(position in POSITIONS, 'Unknown supplemental position')
+        if position == 'DEF':
+            require(bool(row[1].strip()), 'Supplemental defense name missing')
+            name = row[1]
+        else:
+            parts = row[1].split(', ')
+            require(len(parts) == 2, 'Supplemental name format changed')
+            name = parts[1] + ' ' + parts[0]
         team, opponent = team_key(row[2]),team_key(row[4].lstrip('@'))
         require(team in by_team and opponent in (by_team[team]['away'],by_team[team]['home']) and opponent != team,
                 'Supplemental player matchup mismatch')
         value = float(row[6]); salary = int(row[5].replace('$','').replace(',',''))
         require(math.isfinite(value) and 0 <= value <= 70 and 2000 <= salary <= 15000, 'Invalid supplemental projection or salary')
-        key = (name_key(name),row[3],team)
+        key = (f'def:{team}' if position == 'DEF' else name_key(name),position,team)
         require(key not in result, 'Ambiguous supplemental identity')
         result[key] = {'projection':value,'projectionSource':'Fantasy Sports Central','projectionUrl':FSC,
             'projectionSourceDate':None,'projectionCapturedAt':source['retrievedAt'],
@@ -328,7 +331,13 @@ def build_records(text, slate, projections, identities, supplemental=None, verif
         if not projection and showdown:
             projection = (verified_classic_projections or {}).get(identity)
         if not projection and not showdown:
-            candidate = (supplemental or {}).get(identity)
+            candidate = (supplemental or {}).get((f'def:{team}',position,team) if position == 'DEF' else identity)
+            if not candidate and player_id and position != 'DEF':
+                # Join verified roster aliases through one stable ID, never fuzzy names.
+                aliases = [v for k,v in (supplemental or {}).items()
+                           if k[1:] == identity[1:] and identities.get(k) == {player_id}]
+                if len(aliases) == 1:
+                    candidate = {**aliases[0], 'projectionIdentityBasis':'unique current nflverse stable-ID alias, same position and team'}
             if candidate and candidate['projectionSourceSalary'] == salary:
                 projection = candidate
         if projection and showdown:

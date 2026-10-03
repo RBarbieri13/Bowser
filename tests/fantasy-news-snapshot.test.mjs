@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 import test from "node:test";
 
@@ -126,7 +127,7 @@ test("CLI writes only a changed validated local payload and leaves existing outp
     const output = path.join(directory, "snapshot.json");
     writeFileSync(input, JSON.stringify([record]));
     const script = new URL("../scripts/prepare-fantasy-news-snapshot.mjs", import.meta.url);
-    const args = [script.pathname, "--events", input, "--checked-at", checkedAt, "--updated-at", updatedAt, "--revision", "cli-1", "--out", output];
+    const args = [fileURLToPath(script), "--events", input, "--checked-at", checkedAt, "--updated-at", updatedAt, "--revision", "cli-1", "--out", output];
     const first = spawnSync(process.execPath, args, { encoding: "utf8" });
     assert.equal(first.status, 0, first.stderr);
     assert.equal(JSON.parse(first.stdout).changed, true);

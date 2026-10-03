@@ -57,6 +57,46 @@ def projection_html(games, wrong_week=False, missing_position=None):
 
 
 class WeeklyDfsTests(unittest.TestCase):
+    def test_supplemental_defense_requires_schedule_team_and_exact_official_salary(self):
+        games = SLATE['games']
+        html = ['<title>DraftKings DFS Cheatsheet - Week 2</title>',
+                '<table><th>DraftKings Salary</th><th>Proj Pts</th>']
+        for g in games:
+            date = module.instant(g['startsAt']).astimezone(module.ET).strftime('%m/%d/%Y %I:%M:%S %p')
+            html.append(f"{g['away']}@{g['home']} {date}")
+            for team,opp in ((g['away'],g['home']),(g['home'],g['away'])):
+                for pos in ('QB','RB','WR','TE','D'):
+                    salary = next((r['salary'] for r in SLATE['records'] if r['team']==team and r['position']=='DEF'),3000)
+                    cells = ['1',f'{team} Defense' if pos=='D' else f'Test, {team}{pos}',team,pos,opp,str(salary),'8.25','1']
+                    html.append('<tr>'+''.join(f'<td>{v}</td>' for v in cells)+'</tr>')
+        html = ''.join(html)+'</table>'
+        values = module.parse_supplemental_projections(html,2026,2,games,{'retrievedAt':module.iso(NOW)},NOW)
+        records = module.build_records(salary_csv(SLATE['records']),SLATE,{}, {},supplemental=values)
+        defenses = [r for r in records if r['position']=='DEF']
+        self.assertEqual(len(defenses),len(games)*2)
+        self.assertTrue(all(r['projection']==8.25 and r['projectionSource']=='Fantasy Sports Central' for r in defenses))
+        team=defenses[0]['team'];values[(f'def:{team}','DEF',team)]['projectionSourceSalary']+=100
+        changed=module.build_records(salary_csv(SLATE['records']),SLATE,{}, {},supplemental=values)
+        self.assertIsNone(next(r for r in changed if r['team']==team and r['position']=='DEF')['projection'])
+        first=games[0];bad=html.replace(f"<td>{first['away']}</td><td>D</td><td>{first['home']}</td>",f"<td>{first['away']}</td><td>D</td><td>{first['away']}</td>")
+        with self.assertRaisesRegex(module.PartialData,'matchup mismatch'):
+            module.parse_supplemental_projections(bad,2026,2,games,{'retrievedAt':module.iso(NOW)},NOW)
+
+    def test_supplemental_alias_requires_unique_current_stable_id_and_exact_salary(self):
+        sample=next(r for r in SLATE['records'] if r['position']=='RB' and r['playerId'])
+        identity=(module.name_key(sample['name']),'RB',sample['team'])
+        alias=('verifiedlegalname','RB',sample['team'])
+        value={'projection':6.62,'projectionSourceSalary':sample['salary']}
+        identities={identity:{sample['playerId']},alias:{sample['playerId']}}
+        def read(values,ids):
+            return next(r for r in module.build_records(salary_csv(SLATE['records']),SLATE,{},ids,supplemental=values) if r['draftKingsId']==sample['draftKingsId'])
+        self.assertEqual(read({alias:value},identities)['projection'],6.62)
+        self.assertIsNone(read({alias:value},{**identities,alias:{sample['playerId'],'ambiguous'}})['projection'])
+        self.assertIsNone(read({alias:{**value,'projectionSourceSalary':sample['salary']+100}},identities)['projection'])
+        self.assertIsNone(read({('verifiedlegalname','WR',sample['team']):value},identities)['projection'])
+        second=('secondsourcealias','RB',sample['team'])
+        self.assertIsNone(read({alias:value,second:value},{**identities,second:{sample['playerId']}})['projection'])
+
     def test_current_default_excludes_retained_locked_classic_and_preserves_history(self):
         locked = {**SLATE, 'id':1, 'gameCount':16}
         upcoming = {**SLATE, 'id':2, 'gameCount':14}

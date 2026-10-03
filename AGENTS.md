@@ -166,3 +166,15 @@ Robert's supplied `LINEUPHQ-APP-CONVERSION-HANDOFF.md` and seven prototypes gove
 
 - Robert's latest feedback replaces More overflow and shortened labels: show complete section names in one horizontally scrollable tab rail, with persistent left/right browse buttons, native scrolling, keyboard selection and automatic selected-tab reveal. Long names may wrap within one button at narrow widths; never ellipsize them or switch to a vertical menu.
 - All sidebar panels use Usage share's crisp white primary text, heavier label/value weights and bright green actions. Preserve meaningful stat/status colors and readable secondary source context. Keep Usage share's measured matrix, main-table styling, route contents, data and collapsed-on-entry behavior unchanged.
+
+## Fantasy News Command Center v2 (October 3, 2026)
+
+Robert's Command Center v2 prototype and handoff supersede older Fantasy News layout rules only. Keep other routes and Player Card v2 unchanged.
+
+- Use the 48px app bar, 34px navigation/title bars, 44px taskbar, independent Status/Wire/Evidence/Role/Health windows, and hidden right League desk. Poppins prose and Source Code Pro numerical/status text are scoped to this news route; no gradients.
+- Row expansion is local. Only an explicit inspect action loads Evidence; pin blocks external selection. Filter-only messages must not reset a detached Evidence selection. Validate sender origin/registered window and public message fields; queue league ordinals until local Yahoo discovery resolves them.
+- Text uses page --p/--d and per-window --t/--k/--r without changing widths. Persist only the validated bowser:news-cc:layout:v2 preference shape, never article bodies, filters, Yahoo keys, rosters or other account data.
+- Global filters apply across windows. Status-only DFS schedule/game filters remain independent. Missing daily practice grades, urgency, confidence, affectedPlayers and playerId are explicitly unavailable; a source-check clock is never a publication clock.
+- League desk uses authorized in-memory Yahoo observations, never prototype fixtures. A returned unresolved roster occupant is not an empty slot. Unknown ownership and unloaded opponent rosters remain unknown.
+- The public writer's dated ROLE_CHAINS companion is source-linked editorial interpretation until affectedPlayers is populated. No new news endpoint, ingestion or secrets are part of this conversion.
+- Acceptance requires page regression tests, npm test, npm run lint, npm run check, independent review, real-feed browser checks, candidate verification and permanent production readback. Preserve the last-good release on failed validation.

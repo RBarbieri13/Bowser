@@ -1,0 +1,11 @@
+{
+  "status": "verified",
+  "changed": false,
+  "publishable": true,
+  "snapshot": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-news-cc-v2-20261003/data/dfs-weekly.json",
+  "archive": {
+    "status": "verified",
+    "captures": 214,
+    "rows": 50058
+  }
+}

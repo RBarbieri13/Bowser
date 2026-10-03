@@ -1,0 +1,394 @@
+{
+  "status": "updated",
+  "changed": true,
+  "publishable": true,
+  "written": true,
+  "dryRun": false,
+  "season": 2026,
+  "week": 4,
+  "defaultSlate": "2026-w4-dk-154080",
+  "updatedSlates": [
+    "2026-w4-dk-154080",
+    "2026-w4-dk-154078",
+    "2026-w4-dk-154079",
+    "2026-w4-dk-154081",
+    "2026-w4-dk-154082",
+    "2026-w4-dk-154083",
+    "2026-w4-dk-154085",
+    "2026-w4-dk-154086",
+    "2026-w4-dk-154087",
+    "2026-w4-dk-154088",
+    "2026-w4-dk-154089",
+    "2026-w4-dk-154090",
+    "2026-w4-dk-154091",
+    "2026-w4-dk-154092",
+    "2026-w4-dk-154093",
+    "2026-w4-dk-154094",
+    "2026-w4-dk-154095",
+    "2026-w4-dk-154096",
+    "2026-w4-dk-154097",
+    "2026-w4-dk-154098",
+    "2026-w4-dk-154099"
+  ],
+  "snapshot": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-news-cc-v2-20261003/data/dfs-weekly.json",
+  "rawEvidence": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-news-cc-v2-20261003/artifacts/dfs-weekly/20261003T222433.827647Z",
+  "archive": {
+    "path": "/Users/robert.barbieri/.claude/projects-workspace/Fantasy Football/Bowser-news-cc-v2-20261003/data/dfs_archive.sqlite",
+    "insertedCaptures": 21,
+    "captures": 214,
+    "rows": 50058,
+    "weeks": [
+      {
+        "season": 2026,
+        "week": 1
+      },
+      {
+        "season": 2026,
+        "week": 2
+      },
+      {
+        "season": 2026,
+        "week": 4
+      }
+    ],
+    "changed": true,
+    "headsChanged": 21
+  },
+  "projectionRefresh": "partial",
+  "primaryProjectionStatus": {
+    "status": "unavailable",
+    "source": "Fantasy Info Central",
+    "reason": "Projection source date outside current pregame week",
+    "checkedAt": "2026-10-03T22:24:37.147952Z",
+    "lastModified": "Sun, 20 Sep 2026 07:41:01 GMT",
+    "retrievedAt": "2026-10-03T22:24:37.146979Z"
+  },
+  "supplementalProjectionStatus": {
+    "status": "verified",
+    "source": "Fantasy Sports Central",
+    "rows": 477
+  },
+  "coverage": {
+    "2026-w4-dk-154080": {
+      "salaryPlayers": 729,
+      "projectedPlayers": 411,
+      "databasePlayersWithSalary": 669,
+      "databasePlayersWithProjection": 381,
+      "rosterPlayersWithSalary": 672,
+      "unmatchedSalaryPlayers": 57,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154078": {
+      "salaryPlayers": 629,
+      "projectedPlayers": 354,
+      "databasePlayersWithSalary": 575,
+      "databasePlayersWithProjection": 328,
+      "rosterPlayersWithSalary": 577,
+      "unmatchedSalaryPlayers": 52,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154079": {
+      "salaryPlayers": 411,
+      "projectedPlayers": 239,
+      "databasePlayersWithSalary": 377,
+      "databasePlayersWithProjection": 221,
+      "rosterPlayersWithSalary": 378,
+      "unmatchedSalaryPlayers": 33,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154081": {
+      "salaryPlayers": 214,
+      "projectedPlayers": 115,
+      "databasePlayersWithSalary": 198,
+      "databasePlayersWithProjection": 107,
+      "rosterPlayersWithSalary": 199,
+      "unmatchedSalaryPlayers": 15,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154082": {
+      "salaryPlayers": 164,
+      "projectedPlayers": 88,
+      "databasePlayersWithSalary": 151,
+      "databasePlayersWithProjection": 82,
+      "rosterPlayersWithSalary": 152,
+      "unmatchedSalaryPlayers": 12,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154083": {
+      "salaryPlayers": 101,
+      "projectedPlayers": 57,
+      "databasePlayersWithSalary": 94,
+      "databasePlayersWithProjection": 53,
+      "rosterPlayersWithSalary": 95,
+      "unmatchedSalaryPlayers": 6,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154085": {
+      "salaryPlayers": 112,
+      "salaryEntries": 112,
+      "distinctSalaryPlayers": 56,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 0,
+      "databasePlayersWithSalary": 98,
+      "databasePlayersWithProjection": 0,
+      "rosterPlayersWithSalary": 102,
+      "unmatchedSalaryPlayers": 10,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154086": {
+      "salaryPlayers": 112,
+      "salaryEntries": 112,
+      "distinctSalaryPlayers": 56,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 60,
+      "databasePlayersWithSalary": 100,
+      "databasePlayersWithProjection": 56,
+      "rosterPlayersWithSalary": 104,
+      "unmatchedSalaryPlayers": 8,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154087": {
+      "salaryPlayers": 104,
+      "salaryEntries": 104,
+      "distinctSalaryPlayers": 52,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 60,
+      "databasePlayersWithSalary": 88,
+      "databasePlayersWithProjection": 54,
+      "rosterPlayersWithSalary": 92,
+      "unmatchedSalaryPlayers": 12,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154088": {
+      "salaryPlayers": 108,
+      "salaryEntries": 108,
+      "distinctSalaryPlayers": 54,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 56,
+      "databasePlayersWithSalary": 96,
+      "databasePlayersWithProjection": 52,
+      "rosterPlayersWithSalary": 102,
+      "unmatchedSalaryPlayers": 6,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154089": {
+      "salaryPlayers": 104,
+      "salaryEntries": 104,
+      "distinctSalaryPlayers": 52,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 64,
+      "databasePlayersWithSalary": 94,
+      "databasePlayersWithProjection": 60,
+      "rosterPlayersWithSalary": 98,
+      "unmatchedSalaryPlayers": 6,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154090": {
+      "salaryPlayers": 110,
+      "salaryEntries": 110,
+      "distinctSalaryPlayers": 55,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 62,
+      "databasePlayersWithSalary": 96,
+      "databasePlayersWithProjection": 58,
+      "rosterPlayersWithSalary": 100,
+      "unmatchedSalaryPlayers": 10,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154091": {
+      "salaryPlayers": 102,
+      "salaryEntries": 102,
+      "distinctSalaryPlayers": 51,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 60,
+      "databasePlayersWithSalary": 92,
+      "databasePlayersWithProjection": 54,
+      "rosterPlayersWithSalary": 96,
+      "unmatchedSalaryPlayers": 6,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154092": {
+      "salaryPlayers": 110,
+      "salaryEntries": 110,
+      "distinctSalaryPlayers": 55,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 54,
+      "databasePlayersWithSalary": 92,
+      "databasePlayersWithProjection": 50,
+      "rosterPlayersWithSalary": 100,
+      "unmatchedSalaryPlayers": 10,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154093": {
+      "salaryPlayers": 110,
+      "salaryEntries": 110,
+      "distinctSalaryPlayers": 55,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 62,
+      "databasePlayersWithSalary": 96,
+      "databasePlayersWithProjection": 58,
+      "rosterPlayersWithSalary": 100,
+      "unmatchedSalaryPlayers": 10,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154094": {
+      "salaryPlayers": 106,
+      "salaryEntries": 106,
+      "distinctSalaryPlayers": 53,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 54,
+      "databasePlayersWithSalary": 94,
+      "databasePlayersWithProjection": 50,
+      "rosterPlayersWithSalary": 98,
+      "unmatchedSalaryPlayers": 8,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154095": {
+      "salaryPlayers": 116,
+      "salaryEntries": 116,
+      "distinctSalaryPlayers": 58,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 58,
+      "databasePlayersWithSalary": 100,
+      "databasePlayersWithProjection": 54,
+      "rosterPlayersWithSalary": 104,
+      "unmatchedSalaryPlayers": 12,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154096": {
+      "salaryPlayers": 110,
+      "salaryEntries": 110,
+      "distinctSalaryPlayers": 55,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 58,
+      "databasePlayersWithSalary": 100,
+      "databasePlayersWithProjection": 54,
+      "rosterPlayersWithSalary": 104,
+      "unmatchedSalaryPlayers": 6,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154097": {
+      "salaryPlayers": 116,
+      "salaryEntries": 116,
+      "distinctSalaryPlayers": 58,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 60,
+      "databasePlayersWithSalary": 102,
+      "databasePlayersWithProjection": 56,
+      "rosterPlayersWithSalary": 110,
+      "unmatchedSalaryPlayers": 6,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154098": {
+      "salaryPlayers": 100,
+      "salaryEntries": 100,
+      "distinctSalaryPlayers": 50,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 60,
+      "databasePlayersWithSalary": 90,
+      "databasePlayersWithProjection": 56,
+      "rosterPlayersWithSalary": 96,
+      "unmatchedSalaryPlayers": 4,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    },
+    "2026-w4-dk-154099": {
+      "salaryPlayers": 112,
+      "salaryEntries": 112,
+      "distinctSalaryPlayers": 56,
+      "rosterPositions": [
+        "FLEX",
+        "CPT"
+      ],
+      "projectedPlayers": 54,
+      "databasePlayersWithSalary": 98,
+      "databasePlayersWithProjection": 50,
+      "rosterPlayersWithSalary": 104,
+      "unmatchedSalaryPlayers": 8,
+      "sourceProjectionRows": 0,
+      "projectionCoverageDefinition": "Explicit partial refresh: complete official salary, game, team, position and roster-role validation remains required. Primary FIC projections were rejected. FSC full-game values require exact name, position, team, game and official Classic salary matches; publication time is unknown. Other projections remain null. CPT derives only the verified source base \u00d7 1.5.",
+      "supplementalSourceProjectionRows": 477
+    }
+  }
+}

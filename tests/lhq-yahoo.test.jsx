@@ -146,7 +146,7 @@ test('absolute session expiry clears private memory and rejects queued dashboard
   const expiry = new Date(Date.now() + 10000).toISOString();
   const calls = mockReads(url => url.endsWith('/status') ? response({ ...connected, expiresAt: expiry }) : url.includes('/dashboard?') && url.includes(teamA) ? hold.promise : undefined);
   const { result } = renderHook(() => useYahooDashboard());
-  await vi.waitFor(() => expect(calls.some(call => call.url.includes('/dashboard?'))).toBe(true));
+  await act(async () => { await vi.waitFor(() => expect(calls.some(call => call.url.includes('/dashboard?'))).toBe(true)); });
   expect(result.current.account).not.toBeNull();
   await act(async () => { await vi.advanceTimersByTimeAsync(10000); });
   expect(result.current.status.connected).toBe(false);
