@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T17:43:09.000Z",
-  "updatedAt": "2026-10-03T17:44:44.836Z",
-  "revision": "bowser-public-news-20261003T174444836Z",
+  "checkedAt": "2026-10-03T17:59:08.000Z",
+  "updatedAt": "2026-10-03T18:01:10.367Z",
+  "revision": "bowser-public-news-20261003T180110367Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -4086,14 +4086,14 @@
         "team": "WAS",
         "position": "RB"
       },
-      "headline": "Reynolds listed as elevated",
-      "summary": "NFL.com lists Craig Reynolds among Washington's Week 4 game-day elevations.",
-      "fantasyAnalysis": "No carry share or fantasy starting role is established. The retrieved team news index and transaction log have not yet corroborated this entry.",
+      "headline": "Washington confirms Reynolds elevation",
+      "summary": "The Commanders' original announcement confirms Craig Reynolds was elevated from the practice squad for Week 4.",
+      "fantasyAnalysis": "This adds backfield depth; no carry share, fantasy starting role or change to the existing backfield order is established.",
       "eventType": "TRANSACTION",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T15:46:30Z",
+      "checkedAt": "2026-10-03T17:59:08Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4104,7 +4104,7 @@
         "gameStatus": null,
         "expectedReturn": null
       },
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "sources": [
         {
           "sourceName": "NFL.com",
@@ -4129,6 +4129,18 @@
           "url": "https://www.commanders.com/team/transactions/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T15:45:01Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": "@Commanders",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "8:00 AM · Oct 3, 2026 (timezone unspecified)",
+          "publishedDate": "2026-10-03",
+          "url": "https://x.com/Commanders/status/2106398921283035482?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T17:59:08Z"
         }
       ]
     },
@@ -4460,5 +4472,5 @@
       ]
     }
   ],
-  "contentHash": "bc7a5dd0532eb95f05934b1d2bd96575fa5569e03cc6e1491aa0b79f8bc5d43f"
+  "contentHash": "c2d9cddef76cf3a8e24174b5cffcf516fac1c46a3ad0bcd901d1d2e37035a388"
 }
