@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T20:00:01.000Z",
-  "updatedAt": "2026-10-03T20:05:57.247Z",
-  "revision": "bowser-public-news-20261003T200557247Z",
+  "checkedAt": "2026-10-03T20:18:02.000Z",
+  "updatedAt": "2026-10-03T20:20:51.606Z",
+  "revision": "bowser-public-news-20261003T202051606Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -2944,15 +2944,15 @@
         "team": "NYJ",
         "position": "WR"
       },
-      "headline": "Shepard reportedly being elevated for Chicago",
-      "summary": "Will Parkinson reports that the Jets are elevating Shepard from the practice squad for Sunday's game in Chicago. The official team transaction log had not yet corroborated the October 3 move.",
-      "fantasyAnalysis": "The reported elevation would add receiving depth with Adonai Mitchell out. It does not confirm game-day active status, a larger role or a target share.",
+      "headline": "Jets confirm Shepard elevation for Chicago",
+      "summary": "The Jets officially elevated Shepard from the practice squad for Week 4 at Chicago, corroborating the earlier Parkinson report.",
+      "fantasyAnalysis": "The elevation adds receiving depth with Adonai Mitchell out. It does not confirm game-day active status, a larger role or a target share.",
       "eventType": "TRANSACTION",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T20:00:01Z",
+      "checkedAt": "2026-10-03T20:18:02Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2987,6 +2987,18 @@
           "url": "https://www.newyorkjets.com/team/transactions/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T19:58:48Z"
+        },
+        {
+          "sourceName": "New York Jets",
+          "author": "Eric Allen",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 03, 2026 at 04:01 PM; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.newyorkjets.com/news/jets-elevate-sterling-shepard-jaden-keller-to-active-roster-bears-game-10-03-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:18:02Z"
         }
       ]
     },
@@ -3064,6 +3076,48 @@
           "url": "https://www.philadelphiaeagles.com/team/depth-chart",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:15:00Z"
+        }
+      ]
+    },
+    {
+      "eventId": "phi-josiah-deguara-week4-elevation-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Josiah Deguara",
+        "team": "PHI",
+        "position": "TE"
+      },
+      "headline": "Eagles elevate Deguara for the Rams game",
+      "summary": "Philadelphia officially elevated Deguara from the practice squad for Sunday's game against the Rams.",
+      "fantasyAnalysis": "Deguara adds tight-end depth with Dallas Goedert out. The elevation alone does not establish a fantasy-relevant workload.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T20:18:02Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles (X)",
+          "author": null,
+          "xHandle": "@Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "1:00 PM · Oct 3, 2026; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://x.com/Eagles/status/2106474485134106693",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:18:02Z"
         }
       ]
     },
@@ -3289,6 +3343,48 @@
       ]
     },
     {
+      "eventId": "phi-zach-ertz-week4-elevation-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Zach Ertz",
+        "team": "PHI",
+        "position": "TE"
+      },
+      "headline": "Eagles elevate Ertz for the Rams game",
+      "summary": "Philadelphia officially elevated Ertz from the practice squad for Sunday's game against the Rams.",
+      "fantasyAnalysis": "Ertz adds tight-end depth with Dallas Goedert out. The elevation alone does not establish a larger snap or target share.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T20:18:02Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles (X)",
+          "author": null,
+          "xHandle": "@Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "1:00 PM · Oct 3, 2026; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://x.com/Eagles/status/2106474485134106693",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:18:02Z"
+        }
+      ]
+    },
+    {
       "eventId": "pit-rico-dowdle-week4-out-2026-09-30",
       "player": {
         "playerId": null,
@@ -3462,15 +3558,15 @@
         "team": "SEA",
         "position": "RB"
       },
-      "headline": "Price officially out; Holani available alongside Wilson",
-      "summary": "Seattle confirms Price DNP Friday and OUT, while Holani is limited without a game designation. Bell expects Wilson, Holani and practice-squad Velus Jones Jr. in the replacement group.",
-      "fantasyAnalysis": "Wilson is the likely main beneficiary, with Holani cleared to share work. Bell's expected group does not guarantee a split or confirm a Jones elevation. No specific carry total is established.",
+      "headline": "Price placed on IR; minimum four-game absence",
+      "summary": "Seattle placed Price on injured reserve after he aggravated his chest injury at practice. The team confirms he must miss at least four games and signed Velus Jones Jr. to the 53-man roster.",
+      "fantasyAnalysis": "Plan for a multiweek absence. Wilson and Holani are the near-term beneficiaries, but no fixed split is confirmed. Charbonnet's possible later activation adds uncertainty beyond Week 4; no return date for Price is assured.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T21:39:10Z",
+      "checkedAt": "2026-10-03T20:18:02Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3478,8 +3574,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Chest",
         "practiceStatus": "DNP",
-        "gameStatus": "OUT",
-        "expectedReturn": null
+        "gameStatus": "IR",
+        "expectedReturn": "At least four games; return date unconfirmed"
       },
       "sources": [
         {
@@ -3553,6 +3649,72 @@
           "sourceType": "NEWS_OUTLET",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T21:39:10Z"
+        },
+        {
+          "sourceName": "Adam Schefter (X)",
+          "author": "Adam Schefter",
+          "xHandle": "@AdamSchefter",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "12:54 PM · Oct 3, 2026; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://x.com/AdamSchefter/status/2106472895392190588",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:18:02Z"
+        },
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": "John Boyle",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 03, 2026 at 01:14 PM; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.seahawks.com/news/seahawks-make-roster-moves-ahead-of-week-4-game-vs-chargers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:18:02Z"
+        }
+      ]
+    },
+    {
+      "eventId": "sea-velus-jones-jr-active-roster-signing-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Velus Jones Jr.",
+        "team": "SEA",
+        "position": "RB"
+      },
+      "headline": "Seattle signs Jones to the 53-man roster",
+      "summary": "Seattle signed Jones from the practice squad to the 53-man roster while placing Jadarian Price on injured reserve.",
+      "fantasyAnalysis": "Jones adds backfield depth behind the available Wilson and Holani. This signing is distinct from his September 26 elevation and does not establish a carry share or starting role.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T20:18:02Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": "John Boyle",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 03, 2026 at 01:14 PM; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.seahawks.com/news/seahawks-make-roster-moves-ahead-of-week-4-game-vs-chargers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T20:18:02Z"
         }
       ]
     },
@@ -4574,5 +4736,5 @@
       ]
     }
   ],
-  "contentHash": "f703a13e3434f47b89514fbe0bcb2e1122838ebcee8895b0efae9e8af9d4a3a1"
+  "contentHash": "0cc71182fcbfa3ef47965864d2b2ffed6ee743a7fbcadfe65d79767affd2d965"
 }
