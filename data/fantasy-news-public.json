@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T00:48:25.000Z",
-  "updatedAt": "2026-10-03T00:50:00.549Z",
-  "revision": "bowser-public-news-20261003T005000549Z",
+  "checkedAt": "2026-10-03T13:50:21.000Z",
+  "updatedAt": "2026-10-03T13:52:38.915Z",
+  "revision": "bowser-public-news-20261003T135238915Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -1947,15 +1947,15 @@
         "team": "MIN",
         "position": "WR"
       },
-      "headline": "Jefferson officially out against Miami",
-      "summary": "Minnesota's final October 2 table lists Jefferson OUT for October 4 following three ankle DNPs, superseding the earlier reported Friday absence.",
-      "fantasyAnalysis": "Use a healthy replacement. Addison and Jennings are possible target beneficiaries, but the distribution is uncertain.",
+      "headline": "Jefferson out Week 4; Vikings reportedly hope for Week 5 return",
+      "summary": "Minnesota officially ruled Jefferson out against Miami after three ankle DNPs. Jeremy Fowler reports the Vikings are hopeful he can return next week; that is a recovery outlook, not confirmed Week 5 availability.",
+      "fantasyAnalysis": "Use a healthy Week 4 replacement. Addison and Jennings remain possible target beneficiaries, with no fixed target share established. Reassess Jefferson's Week 5 practice and game status before returning him to a lineup.",
       "eventType": "PRACTICE",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T18:44:00Z",
+      "checkedAt": "2026-10-03T13:50:21Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1964,7 +1964,7 @@
         "bodyPart": "Ankle",
         "practiceStatus": "DNP",
         "gameStatus": "OUT",
-        "expectedReturn": null
+        "expectedReturn": "Week 5 is a reported hope; return and workload are not confirmed"
       },
       "sources": [
         {
@@ -2014,6 +2014,42 @@
           "url": "https://www.vikings.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T18:44:00Z"
+        },
+        {
+          "sourceName": "ESPN",
+          "author": "Jeremy Fowler",
+          "xHandle": "@JFowlerESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "6:11 AM · Oct 3, 2026; timezone unspecified. Original X text directly read in cloud browser; embedded video was unavailable.",
+          "publishedDate": "2026-10-03",
+          "url": "https://x.com/JFowlerESPN/status/2106371467420320000",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T13:49:42Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Jeremy Fowler",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 3, 2026; exact clock and timezone not displayed",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.rotowire.com/football/headlines/justin-jefferson-injury-aiming-to-return-week-5-640446",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-03T13:49:58Z"
+        },
+        {
+          "sourceName": "Minnesota Vikings",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Final Friday report remains OUT; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.vikings.com/team/injury-report/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T13:49:58Z"
         }
       ]
     },
@@ -4190,5 +4226,5 @@
       ]
     }
   ],
-  "contentHash": "aa9f67c9dcbb19e3bdf1bf8c42af035b6a7f1714a005dfd3947474266eff3ee0"
+  "contentHash": "8614268ede4d1d531804aafc3cb50a68bf044dd32984e80f13898ec6a751c801"
 }
