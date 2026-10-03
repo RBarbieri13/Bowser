@@ -32,22 +32,27 @@
     "test:jev": "node --test tests/jev.test.mjs",
     "market:commentary:refresh": "node --env-file-if-exists=.env.local scripts/refresh_market_commentary.mjs",
     "data:waivers:week4": "python3 scripts/import_waivers_week4.py",
-    "news:prepare": "node scripts/prepare-fantasy-news-snapshot.mjs"
+    "news:prepare": "node scripts/prepare-fantasy-news-snapshot.mjs",
+    "lint": "eslint src/lhq/FantasyNews.jsx src/lhq/news*.js src/lhq/news*.jsx src/lhq/usePublicNews.js src/lhq/fantasyNewsContext.js scripts/news/*.js tests/fantasy-news-ui.test.jsx"
   },
   "dependencies": {
+    "@neondatabase/serverless": "1.1.0",
     "@phosphor-icons/react": "2.1.10",
     "@vitejs/plugin-react": "5.0.4",
     "express": "5.2.1",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "vite": "6.4.2",
-    "@neondatabase/serverless": "1.1.0"
+    "vite": "6.4.2"
   },
   "devDependencies": {
+    "@eslint/js": "9.39.5",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
     "@testing-library/user-event": "14.6.3",
+    "eslint": "9.39.5",
+    "eslint-plugin-react": "7.37.5",
     "fake-indexeddb": "6.2.5",
+    "globals": "17.13.0",
     "jsdom": "26.1.0",
     "vitest": "3.2.7"
   },

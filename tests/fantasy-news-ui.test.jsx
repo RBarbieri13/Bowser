@@ -9,7 +9,7 @@ const props = { season: 2026, scoring: 'half', onOpen: vi.fn() };
 const source = { sourceName: 'Official Fixture', url: 'https://example.test/report', publishedAt: '2026-09-30T12:00:00Z', sourceType: 'OFFICIAL', isOriginalSource: true, access: 'public', accessLabel: 'Public source', timestampBasis: 'published_at' };
 const report = (id, name, category, position, extra = {}) => ({ id, headline: `${name} fixture report`, summary: `${name} exact sourced summary`, fantasyAnalysis: `${name} source context`, category, categories: [category], players: [{ playerId: `id-${id}`, name, team: 'NYG', position }], source: source.sourceName, url: source.url, publishedAt: '2026-09-30T12:00:00Z', updatedAt: '2026-09-30T13:00:00Z', sources: [source], status: 'CONFIRMED', evidence: { kind: 'official_report', label: 'Confirmed report', confidence: 92 }, freshness: { state: 'stale' }, urgency: {score:4,basis:'A confirmed injury may affect the next lineup decision.',method:'AI estimate from public reporting',estimatedAt:'2026-10-01T12:00:00Z'}, ...extra });
 const articles = [
-  report('a', 'Fixture Alpha', 'injury', 'RB', { injury: { isInjuryRelated: true, bodyPart: 'ankle', practiceStatus: 'DNP', gameStatus: null, expectedReturn: null }, affectedPlayers:[{name:'Fixture Gamma',team:'NYG',position:'WR',relationship:'potential_beneficiary',impact:'Additional work is possible; the role remains unconfirmed.'}] }),
+  report('a', 'Fixture Alpha', 'injury', 'RB', { injury: { isInjuryRelated: true, bodyPart: 'ankle', practiceStatus: 'DNP', gameStatus: 'OUT', expectedReturn: null }, affectedPlayers:[{name:'Fixture Gamma',team:'NYG',position:'WR',relationship:'potential_beneficiary',impact:'Additional work is possible; the role remains unconfirmed.'}] }),
   report('b', 'Fixture Beta', 'practice', 'QB', { publishedAt: '2026-09-30T11:00:00Z', sources: [{ ...source, sourceName: 'Second Publication', url: 'https://example.test/beta' }],urgency:null }),
   report('c', 'Fixture Gamma', 'playing_time', 'WR', { publishedAt: '2026-09-30T10:00:00Z', players: [{ name: 'Fixture Gamma', team: 'NYG', position: 'WR' }] }),
   report('d', 'Fixture Delta', 'fantasy_news', 'TE', { publishedAt: '2026-09-30T09:00:00Z', evidence: { kind: 'rumor', label: 'Rumor', confidence: null },urgency:{score:99,basis:'bad',method:'AI estimate from public reporting'} }),
@@ -18,7 +18,7 @@ const payload = (rows = articles, patch = {}) => ({ articles: rows, meta: {versi
 const reply = data => ({ok:true,json:async()=>data});
 const renderPage = (overrides={}) => render(<LhqProvider><FantasyNews {...props} {...overrides}/></LhqProvider>);
 const pane = name => screen.getByRole('region',{name,exact:true});
-const left = () => pane('News workspace');
+const left = () => pane('Status table');
 const rows = () => within(left()).queryAllByRole('button',{name:/^Expand .* fixture report$/});
 const ready = () => within(left()).findByRole('button',{name:'Expand Fixture Alpha fixture report'});
 const togglePane = name => screen.getByRole('button',{name:`Toggle ${name}`});
@@ -34,218 +34,98 @@ function yahoo(label='Private Account A') {
   return {status:{connected:true,expiresAt:new Date(Date.now()+3600000).toISOString()},account:{season:2026,teams,leagues,privateSecret:label},teams,leagues,dashboards,research,coverage:{loadedTeams:3},errors:{}};
 }
 function childWindow(){const child={closed:false,focus:vi.fn(),postMessage:vi.fn(),close:vi.fn()};child.close.mockImplementation(()=>{child.closed=true;});return child;}
-beforeEach(()=>{localStorage.clear();sessionStorage.clear();window.history.replaceState(null,'','/#/fantasy-news');vi.stubGlobal('fetch',vi.fn(async()=>reply(payload())));vi.stubGlobal('PointerEvent',MouseEvent);vi.stubGlobal('ResizeObserver',class {observe(){} disconnect(){}});props.onOpen.mockClear();});
+beforeEach(()=>{localStorage.clear();sessionStorage.clear();window.history.replaceState(null,'','/#/fantasy-news');vi.stubGlobal('fetch',vi.fn(async url=>reply(String(url).includes('/schedule')?{data:[{gameId:'NYG-LA',awayTeam:'NYG',homeTeam:'LA',gameday:'2026-10-04',gametime:'13:00'},{gameId:'MIA-MIN',awayTeam:'MIA',homeTeam:'MIN',gameday:'2026-10-04',gametime:'16:05'}]}:payload())));vi.stubGlobal('PointerEvent',MouseEvent);vi.stubGlobal('ResizeObserver',class {observe(){} disconnect(){}});props.onOpen.mockClear();});
 afterEach(()=>{cleanup();closeFantasyNewsWindows();vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();});
 
-test('left news table, central research and right acquisition are distinct Bowser workspaces',async()=>{
-  renderPage();await ready();expect(rows()).toHaveLength(4);
-  expect(within(left()).getByRole('table',{name:'Sourced news headlines'})).toBeInTheDocument();
-  for(const name of ['Headline','Summary','Affected player / league observation','AI urgency'])expect(within(left()).getByRole('columnheader',{name})).toBeInTheDocument();
-  expect(within(left()).getByText('Fixture Beta exact sourced summary')).toBeInTheDocument();
-  expect(pane('Evidence desk')).toBeInTheDocument();expect(pane('Player focus')).toBeInTheDocument();expect(pane('Acquisition Opportunities')).toBeInTheDocument();
-  expect(screen.queryByRole('region',{name:'News stream'})).not.toBeInTheDocument();expect(screen.queryByRole('region',{name:'Injuries & practice'})).not.toBeInTheDocument();
-  const headline=within(left()).getByRole('button',{name:'Expand Fixture Alpha fixture report'});fireEvent.click(headline);expect(headline).toHaveAttribute('aria-expanded','true');
-  const link=within(left()).getByRole('link',{name:'Official Fixture ↗'});expect(link).toHaveAttribute('href',source.url);expect(link).toHaveAttribute('rel','noopener noreferrer');
-  fireEvent.click(headline);expect(headline).toHaveAttribute('aria-expanded','false');
-  fireEvent.click(within(pane('Evidence desk')).getByRole('button',{name:'Fixture Alpha',exact:true}));expect(props.onOpen.mock.calls[0][0]).toMatchObject({player_id:'id-a',season:2026,scoring:'half'});
+const allTab=()=>fireEvent.click(within(left()).getByRole('tab',{name:/^All/}));
+const openLeague=()=>fireEvent.click(togglePane('League desk'));
+const pop=id=>{const target=pane(id);fireEvent.click(within(target).getByLabelText(`${id} window menu`));fireEvent.click(within(target).getByRole('button',{name:'Open browser window ↗'}));};
+test('v2 independent windows render source data and Status rows expand without selecting Evidence',async()=>{
+ renderPage();await ready();expect(rows()).toHaveLength(1);for(const n of ['Wire','Evidence desk','Role board','Feed health & sources'])expect(pane(n)).toBeInTheDocument();expect(screen.queryByRole('region',{name:'League desk'})).not.toBeInTheDocument();allTab();expect(rows()).toHaveLength(4);
+ fireEvent.click(within(left()).getByRole('button',{name:'Expand Fixture Beta fixture report'}));expect(left()).toHaveTextContent('Fixture Beta exact sourced summary');expect(pane('Evidence desk')).toHaveTextContent('Fixture Alpha exact sourced summary');fireEvent.click(within(left()).getByRole('button',{name:'Inspect Fixture Beta fixture report'}));expect(pane('Evidence desk')).toHaveTextContent('Fixture Beta exact sourced summary');
+ fireEvent.click(within(pane('Evidence desk')).getByRole('button',{name:'Fixture Beta',exact:true}));expect(props.onOpen.mock.calls[0][0]).toMatchObject({player_id:'id-b',season:2026,scoring:'half'});
+});
+test('Status tabs are keyboard operable; confirmed injuries exclude rumor; daily grades are gaps',async()=>{
+ const rumor=report('rumor','Fixture Rumor','injury','RB',{status:'REPORTED',injury:{isInjuryRelated:true,practiceStatus:'DNP'},evidence:{kind:'rumor'}});fetch.mockImplementation(async()=>reply(payload([...articles,rumor])));renderPage();await ready();expect(rows()).toHaveLength(1);const row=within(left()).getByRole('button',{name:'Expand Fixture Alpha fixture report'}).closest('[role=row]');expect(row.querySelectorAll('[title="Per-day practice grades not supplied"]')).toHaveLength(2);expect(row).toHaveTextContent('DNP');
+ const tab=within(left()).getByRole('tab',{name:/Injuries/});fireEvent.keyDown(tab,{key:'ArrowRight'});expect(within(left()).getByRole('tab',{name:/Practice/})).toHaveFocus();expect(rows()).toHaveLength(1);fireEvent.keyDown(within(left()).getByRole('tab',{name:/Practice/}),{key:'End'});expect(within(left()).getByRole('tab',{name:/Sources/})).toHaveFocus();
+});
+test('global Teams + Pos + Status + search intersect all windows; clearing restores',async()=>{
+ renderPage();await ready();allTab();fireEvent.click(screen.getByRole('button',{name:'Teams ▾'}));fireEvent.click(screen.getByRole('checkbox',{name:/^NYG \d+$/}));fireEvent.click(screen.getByRole('button',{name:'Pos ▾'}));fireEvent.click(screen.getByRole('checkbox',{name:/^RB \d+$/}));expect(rows()).toHaveLength(1);expect(within(pane('Wire')).queryAllByRole('button',{name:/^Expand/})).toHaveLength(1);fireEvent.click(screen.getByRole('button',{name:'Status ▾'}));fireEvent.click(screen.getByRole('checkbox',{name:/^OUT \d+$/}));fireEvent.change(screen.getByLabelText('Search news'),{target:{value:'missing'}});expect(rows()).toHaveLength(0);expect(pane('Wire')).toHaveTextContent('No reports match');fireEvent.click(screen.getByRole('button',{name:'Clear all filters'}));expect(rows()).toHaveLength(4);
+});
+test('DFS matchup and source filters affect only Status; week change clears games and no schedule stays unfiltered',async()=>{
+ renderPage();await ready();allTab();fireEvent.click(within(left()).getByRole('button',{name:/MIA @ MIN/}));expect(rows()).toHaveLength(0);expect(within(pane('Wire')).getAllByRole('button',{name:/^Expand/})).toHaveLength(4);fireEvent.change(screen.getByLabelText('DFS week'),{target:{value:'5'}});await waitFor(()=>expect(rows()).toHaveLength(4));expect(fetch).toHaveBeenCalledWith('/api/v1/schedule?season=2026&week=5',expect.objectContaining({cache:'no-store'}));fireEvent.change(screen.getByLabelText('News source'),{target:{value:'Second Publication'}});expect(rows()).toHaveLength(1);expect(within(pane('Wire')).getAllByRole('button',{name:/^Expand/})).toHaveLength(4);
+});
+test('Evidence history, pin and selector remain independent; arrows follow Wire order',async()=>{
+ renderPage();await ready();allTab();fireEvent.click(within(left()).getByRole('button',{name:'Inspect Fixture Beta fixture report'}));fireEvent.click(within(pane('Evidence desk')).getByRole('button',{name:'PIN',exact:true}));fireEvent.click(within(left()).getByRole('button',{name:'Inspect Fixture Gamma fixture report'}));expect(screen.getByLabelText('Evidence report')).toHaveValue('b');fireEvent.change(screen.getByLabelText('Evidence report'),{target:{value:'c'}});expect(screen.getByLabelText('Evidence report')).toHaveValue('c');fireEvent.click(screen.getByRole('button',{name:'Evidence back'}));expect(screen.getByLabelText('Evidence report')).toHaveValue('b');fireEvent.click(screen.getByRole('button',{name:'Next evidence'}));expect(screen.getByLabelText('Evidence report')).toHaveValue('c');fireEvent.change(screen.getByLabelText('Search news'),{target:{value:'Alpha'}});expect(screen.getByLabelText('Evidence report')).toHaveValue('c');expect(within(pane('Evidence desk')).getByRole('option',{name:/Outside filters/})).toBeInTheDocument();
+});
+test('Wire category, group and check sort work; only one inline report expands',async()=>{
+ renderPage();await ready();const w=within(pane('Wire'));fireEvent.click(w.getByRole('button',{name:'Role 1'}));expect(w.getAllByRole('button',{name:/^Expand/})).toHaveLength(1);fireEvent.click(screen.getByRole('button',{name:'Next evidence'}));expect(screen.getByLabelText('Evidence report')).toHaveValue('c');fireEvent.click(w.getByRole('button',{name:'All 4'}));fireEvent.click(w.getByRole('button',{name:'By team'}));expect(w.getByText('NYG',{exact:true})).toBeInTheDocument();fireEvent.click(w.getByRole('button',{name:'Checked',exact:true}));fireEvent.click(w.getByRole('button',{name:'Expand Fixture Alpha fixture report'}));fireEvent.click(w.getByRole('button',{name:'Expand Fixture Beta fixture report'}));expect(w.getByRole('button',{name:'Expand Fixture Alpha fixture report'})).toHaveAttribute('aria-expanded','false');expect(w.getByRole('button',{name:'Expand Fixture Beta fixture report'})).toHaveAttribute('aria-expanded','true');
+});
+test('window scales and page scales clamp, preserve widths and store only validated preferences',async()=>{
+ renderPage();await ready();const width=screen.getByRole('separator',{name:'Resize Status table'}).getAttribute('aria-valuenow');for(let i=0;i<9;i++)fireEvent.click(screen.getByRole('button',{name:'Increase Wire text'}));expect(pane('Wire').style.getPropertyValue('--t')).toBe('1.5');expect(pane('Evidence desk').style.getPropertyValue('--t')).toBe('1');expect(pane('Wire').style.getPropertyValue('--k')).toBe('0.5');for(let i=0;i<12;i++)fireEvent.click(screen.getByRole('button',{name:'Increase page text'}));fireEvent.click(screen.getByRole('button',{name:'Compact',exact:true}));expect(screen.getByRole('main').style.getPropertyValue('--p')).toBe('1.4');expect(screen.getByRole('main').style.getPropertyValue('--d')).toBe('0.84');expect(screen.getByRole('separator',{name:'Resize Status table'})).toHaveAttribute('aria-valuenow',width);const saved=JSON.parse(localStorage.getItem(NEWS_LAYOUT_KEY));expect(saved.ts.wire).toBe(1.5);expect(JSON.stringify(saved)).not.toContain('Fixture');
+});
+test('strict layout shape rejects payloads and unknown keys, clamps fractions/widths/scales',()=>{
+ const v=validateNewsLayout({version:2,leftW:99999,pfW:-2,pageScale:9,ts:{wire:-1,private:'payload'},colFr:[NaN,999],rowFr:[-1],colW:{name:999,private:500},order:['wire','wire','private'],show:{wire:false,private:true},articles,account:yahoo(),tab:'bad'});expect(v.leftW).toBe(1100);expect(v.pfW).toBe(400);expect(v.ts.wire).toBe(.8);expect(v.colFr.slice(0,2)).toEqual([1,5]);expect(v.rowFr[0]).toBe(.3);expect(v.colW).toEqual({name:420});expect(v.order).toEqual(['wire','evidence','role','health']);expect(JSON.stringify(v)).not.toMatch(/Fixture|Private|payload/);expect(v.tab).toBe('injuries');expect(validateNewsLayout({version:1}).version).toBe(2);
+});
+test('drag and keyboard resizing persist, sort stays DESC-first, reset returns geometry',async()=>{
+ renderPage();await ready();allTab();const grip=screen.getByRole('separator',{name:'Resize Player column'});fireEvent.pointerDown(grip,{clientX:100});fireEvent.pointerMove(document,{clientX:140});fireEvent.pointerUp(document);expect(grip).toHaveAttribute('aria-valuenow','170');fireEvent.keyDown(grip,{key:'ArrowRight'});expect(grip).toHaveAttribute('aria-valuenow','178');fireEvent.click(within(left()).getByRole('button',{name:'Player',exact:true}));expect(within(left()).getByRole('columnheader',{name:/Player/})).toHaveAttribute('aria-sort','descending');fireEvent.click(within(left()).getByRole('button',{name:'Player ▾'}));expect(within(left()).getByRole('columnheader',{name:/Player/})).toHaveAttribute('aria-sort','ascending');const g=screen.getByRole('separator',{name:'Resize center column 1'});fireEvent.keyDown(g,{key:'ArrowRight'});expect(JSON.parse(localStorage.getItem(NEWS_LAYOUT_KEY)).colFr[0]).toBe(1.1);fireEvent.keyDown(screen.getByRole('separator',{name:'Resize center row 1'}),{key:'ArrowDown'});expect(JSON.parse(localStorage.getItem(NEWS_LAYOUT_KEY)).rowFr[0]).toBe(1.1);fireEvent.click(screen.getByRole('button',{name:'Columns',exact:true}));expect(JSON.parse(localStorage.getItem(NEWS_LAYOUT_KEY)).colFr[0]).toBe(1);fireEvent.click(screen.getByRole('button',{name:'Reset layout'}));expect(JSON.parse(localStorage.getItem(NEWS_LAYOUT_KEY)).colW).toEqual({});
+});
+test('window close, rail, maximize, move and taskbar reopen are independent and persist',async()=>{
+ const view=renderPage();await ready();fireEvent.click(screen.getByRole('button',{name:'Collapse Status table'}));expect(screen.queryByRole('region',{name:'Status table'})).not.toBeInTheDocument();fireEvent.click(screen.getByRole('button',{name:'Expand Status table'}));fireEvent.click(screen.getByRole('button',{name:'Maximize Wire'}));expect(screen.queryByRole('region',{name:'Evidence desk'})).not.toBeInTheDocument();expect(left()).toBeInTheDocument();fireEvent.click(screen.getByRole('button',{name:'Restore Wire'}));fireEvent.click(screen.getByRole('button',{name:'Move Evidence desk left'}));expect(JSON.parse(localStorage.getItem(NEWS_LAYOUT_KEY)).order[0]).toBe('evidence');fireEvent.click(screen.getByRole('button',{name:'Close Wire'}));expect(togglePane('Wire')).toHaveAttribute('aria-pressed','false');view.unmount();renderPage();await ready();expect(screen.queryByRole('region',{name:'Wire'})).not.toBeInTheDocument();fireEvent.click(togglePane('Wire'));expect(pane('Wire')).toBeInTheDocument();fireEvent.click(screen.getByRole('button',{name:'Stack',exact:true}));expect(screen.queryByRole('separator',{name:'Resize center column 1'})).not.toBeInTheDocument();
+});
+test('role board uses returned affectedPlayers and hides unsourced curated chains',async()=>{
+ renderPage();await ready();expect(pane('Role board')).toHaveTextContent('Fixture Gamma');expect(pane('Role board')).not.toHaveTextContent('Breece Hall');fireEvent.click(within(pane('Role board')).getByRole('button',{name:'Fixture Alpha fixture report'}));expect(pane('Role board')).toHaveTextContent('Additional work is possible');fireEvent.click(within(pane('Role board')).getByRole('button',{name:'Inspect role NYG RB'}));expect(screen.getByLabelText('Evidence report')).toHaveValue('a');
+});
+test('health names all unsupplied fields, sources scope Status only and unknown clocks stay distinct',async()=>{
+ const unknown={...articles[0],publishedAt:null,publishedDate:null,publishedAtRaw:null,updatedAt:null,urgency:null,evidence:{confidence:null},players:[{name:'Fixture Alpha',team:'NYG',position:'RB'}],affectedPlayers:[],checkedAt:nowClock()};fetch.mockImplementation(async()=>reply(payload([unknown,articles[1]])));renderPage();await ready();fireEvent.click(within(left()).getByRole('button',{name:'Inspect Fixture Alpha fixture report'}));expect(pane('Evidence desk')).toHaveTextContent('publication age unknown');expect(pane('Evidence desk')).toHaveTextContent('record updated Unavailable');for(const k of ['urgency','confidence','affectedPlayers','playerId','per-day practice grades'])expect(pane('Feed health & sources')).toHaveTextContent(`${k}: not supplied`);fireEvent.click(within(pane('Feed health & sources')).getByRole('button',{name:/Second Publication/}));expect(rows()).toHaveLength(1);expect(within(pane('Wire')).getAllByRole('button',{name:/^Expand/})).toHaveLength(2);
+});
+test('league desk disconnected state has no fixture teams and no private persistence',async()=>{
+ renderPage();await ready();openLeague();expect(pane('League desk')).toHaveTextContent('Yahoo not connected');expect(pane('League desk')).not.toHaveTextContent('LOEG');expect(within(pane('League desk')).getByRole('link',{name:/Open Yahoo/})).toHaveAttribute('href','#/yahoo');expect(localStorage.getItem(NEWS_LAYOUT_KEY)).not.toMatch(/Fixture|Yahoo|summary/);
+});
+test('league tabs, matchup, rosters, availability and news hits use authorized observations',async()=>{
+ renderPage({yahoo:yahoo()});await ready();openLeague();const l=within(pane('League desk'));expect(l.getAllByRole('tab',{name:/Private Account A League/})).toHaveLength(3);expect(pane('League desk')).toHaveTextContent('Fixture Alpha');expect(pane('League desk')).toHaveTextContent('Opponent player rosters');fireEvent.click(l.getByRole('tab',{name:/^Rosters/}));expect(l.getByTitle('Fixture Alpha · OUT')).toBeInTheDocument();fireEvent.click(l.getByRole('tab',{name:/News hits/}));expect(pane('League desk')).toHaveTextContent('Fixture Alpha fixture report');fireEvent.click(l.getByRole('tab',{name:/Private Account A League 2/}));fireEvent.click(l.getByRole('tab',{name:/Free agents/}));expect(pane('League desk')).toHaveTextContent('Fixture Gamma');expect(pane('League desk')).not.toHaveTextContent('Fixture Beta');expect(pane('League desk')).toHaveTextContent('absence does not imply owned');expect(localStorage.getItem(NEWS_LAYOUT_KEY)).not.toMatch(/Private Account|461\.l|Fixture/);
+});
+test('stale or unknown Yahoo observation age is explicit; expiry and account replacement clear context',async()=>{
+ const y=yahoo();delete y.dashboards[y.teams[0].key].checkedAt;y.research[y.teams[1].key].availability.stale=true;const v=renderPage({yahoo:y});await ready();expect(left().querySelector('.cc-league-badge').title).toContain('capture age unverified');openLeague();v.rerender(<LhqProvider><FantasyNews {...props} yahoo={{...y,status:{connected:true,expiresAt:new Date(Date.now()-1).toISOString()}}}/></LhqProvider>);expect(pane('League desk')).toHaveTextContent('Yahoo not connected');expect(pane('League desk')).not.toHaveTextContent('Private Account');
+});
+test('malformed feed scope and unsafe source links fail closed',async()=>{
+ expect(safeNewsUrl('javascript:alert(1)')).toBeNull();expect(safeNewsUrl('https://example.test/report')).toBe('https://example.test/report');fetch.mockResolvedValue(reply({articles,meta:{scope:'private_yahoo'}}));renderPage();expect(await screen.findByRole('alert')).toHaveTextContent('unexpected response');expect(rows()).toHaveLength(0);
+});
+test('failed refresh retains last good feed labeled stale, then recovers',async()=>{
+ renderPage();await ready();fetch.mockRejectedValueOnce(new Error('Temporary read failure'));fireEvent.click(screen.getByRole('button',{name:'Refresh feed'}));expect(await screen.findByRole('alert')).toHaveTextContent('Last successful feed retained');expect(rows()).toHaveLength(1);expect(pane('Feed health & sources')).toHaveTextContent('stale');fireEvent.click(screen.getByRole('button',{name:'Refresh feed'}));await waitFor(()=>expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+});
+test('blocked storage still allows controls',async()=>{
+ vi.spyOn(Storage.prototype,'setItem').mockImplementation(()=>{throw Error('blocked')});renderPage();await ready();expect(screen.getByRole('alert')).toHaveTextContent('Layout could not be saved');fireEvent.click(screen.getByRole('button',{name:'Collapse Status table'}));fireEvent.click(screen.getByRole('button',{name:'Expand Status table'}));expect(rows()).toHaveLength(1);
+});
+test('popups are deduplicated, blocked popup stays docked, dock messages authenticate source',async()=>{
+ const child=childWindow(),open=vi.spyOn(window,'open').mockReturnValueOnce(null).mockReturnValue(child);renderPage();await ready();pop('Evidence desk');expect(await screen.findByRole('alert')).toHaveTextContent('browser blocked');expect(pane('Evidence desk')).toHaveTextContent('Fixture Alpha');pop('Evidence desk');expect(pane('Evidence desk')).toHaveTextContent('Open in browser window');fireEvent.click(within(pane('Evidence desk')).getByRole('button',{name:'Focus window'}));expect(open).toHaveBeenCalledTimes(2);expect(child.focus).toHaveBeenCalled();act(()=>window.dispatchEvent(new MessageEvent('message',{origin:'https://attacker.test',source:child,data:{type:'bowser-fantasy-news-dock',pane:'evidence'}})));expect(child.close).not.toHaveBeenCalled();act(()=>window.dispatchEvent(new MessageEvent('message',{origin:window.location.origin,source:child,data:{type:'bowser-fantasy-news-dock',pane:'evidence'}})));expect(child.close).toHaveBeenCalled();expect(pane('Evidence desk')).toHaveTextContent('Fixture Alpha');expect(open.mock.calls[1][0]).not.toMatch(/Private|summary/);for(const [m] of child.postMessage.mock.calls){expect(Object.keys(m).sort()).toEqual(m.type==='bowser-fantasy-news-selection'?['articleId','hours','type']:['filters','type']);expect(JSON.stringify(m)).not.toMatch(/Private Account|461\.l|summary/);}
+});
+test('logout closes detached league window and removes private context',async()=>{
+ const child=childWindow();vi.spyOn(window,'open').mockReturnValue(child);const v=renderPage({yahoo:yahoo()});await ready();openLeague();pop('League desk');v.rerender(<LhqProvider><FantasyNews {...props} yahoo={{account:null,status:{connected:false}}}/></LhqProvider>);expect(child.close).toHaveBeenCalledTimes(1);expect(pane('League desk')).toHaveTextContent('Yahoo not connected');
+});
+test('standalone window accepts only same-origin opener public IDs; never writes layout',async()=>{
+ window.history.replaceState(null,'','/#/fantasy-news?pane=evidence&popout=1');const opener=childWindow();vi.stubGlobal('opener',opener);renderPage();await within(pane('Evidence desk')).findByText('Fixture Alpha exact sourced summary');expect(localStorage.getItem(NEWS_LAYOUT_KEY)).toBeNull();const before=fetch.mock.calls.length;act(()=>window.dispatchEvent(new MessageEvent('message',{origin:'https://attacker.test',source:opener,data:{type:'bowser-fantasy-news-selection',hours:24,articleId:'b'}})));expect(fetch).toHaveBeenCalledTimes(before);expect(screen.getByLabelText('Evidence report')).toHaveValue('a');act(()=>window.dispatchEvent(new MessageEvent('message',{origin:window.location.origin,source:opener,data:{type:'bowser-fantasy-news-selection',hours:24,articleId:'b'}})));await waitFor(()=>expect(fetch.mock.calls.some(([url])=>url.includes('hours=24'))).toBe(true));expect(localStorage.getItem(NEWS_LAYOUT_KEY)).toBeNull();
+});
+test('window registry poll recovers closed and orphaned browser windows',async()=>{
+ const child=childWindow();vi.spyOn(window,'open').mockReturnValue(child);renderPage();await ready();pop('Evidence desk');const dispatch=vi.spyOn(window,'dispatchEvent').mockImplementation(()=>true);act(()=>closeFantasyNewsWindows());dispatch.mockRestore();await waitFor(()=>expect(pane('Evidence desk')).toHaveTextContent('Fixture Alpha'),{timeout:2200});
+});
+test('60-second stored-feed polling can be paused without starting ingestion',async()=>{
+ renderPage();await ready();vi.useFakeTimers();fireEvent.click(screen.getByRole('checkbox',{name:'60s'}));fireEvent.click(screen.getByRole('checkbox',{name:'60s'}));const before=fetch.mock.calls.filter(([u])=>u.includes('fantasy-news')).length;await act(async()=>{await vi.advanceTimersByTimeAsync(60000)});expect(fetch.mock.calls.filter(([u])=>u.includes('fantasy-news')).length).toBe(before+1);fireEvent.click(screen.getByRole('checkbox',{name:'60s'}));await act(async()=>{await vi.advanceTimersByTimeAsync(60000)});expect(fetch.mock.calls.filter(([u])=>u.includes('fantasy-news')).length).toBe(before+1);expect(fetch.mock.calls.every(([,opts])=>!opts.method||opts.method==='GET')).toBe(true);
 });
 
-test('tabs support keyboard selection and injuries include only confirmed injury records',async()=>{
-  const rumor=report('rumor','Fixture Rumor','injury','RB',{injury:{isInjuryRelated:true,practiceStatus:'DNP'},evidence:{kind:'rumor',label:'Rumor'}});
-  fetch.mockResolvedValue(reply(payload([...articles,rumor])));renderPage();await ready();
-  const news=within(left()).getByRole('tab',{name:'News'});news.focus();fireEvent.keyDown(news,{key:'ArrowRight'});
-  expect(within(left()).getByRole('tab',{name:'Injuries'})).toHaveFocus();expect(within(left()).getByRole('tab',{name:'Injuries'})).toHaveAttribute('aria-selected','true');
-  expect(rows()).toHaveLength(1);expect(within(left()).getByRole('table',{name:'Confirmed injury reports'})).toBeInTheDocument();expect(within(left()).getByText('DNP')).toBeInTheDocument();
-  expect(within(left()).getByText('Source publication · exact newsbreak unverified')).toBeInTheDocument();
-  fireEvent.keyDown(within(left()).getByRole('tab',{name:'Injuries'}),{key:'End'});expect(within(left()).getByRole('tab',{name:'My Roster'})).toHaveFocus();
-  expect(within(left()).getByText('Yahoo league context unavailable')).toBeInTheDocument();
+test('returned but unresolved roster occupant is never reported as an empty slot',async()=>{
+ const y=yahoo();const d=y.dashboards[y.teams[0].key];d.settings={rosterPositions:[{position:'RB',count:2}]};delete d.roster.players[0].team;
+ renderPage({yahoo:y});await ready();openLeague();expect(pane('League desk')).toHaveTextContent('Player identity unavailable');expect(within(pane('League desk')).getAllByText('empty slot')).toHaveLength(1);
+ fireEvent.click(within(pane('League desk')).getByRole('tab',{name:/^Rosters/}));expect(within(pane('League desk')).getByTitle('Player identity unavailable · —')).toBeInTheDocument();expect(within(pane('League desk')).getAllByText('empty',{exact:true})).toHaveLength(1);
 });
-
-test('search, source and category compose without inherited player filters',async()=>{
-  renderPage();await ready();fireEvent.change(screen.getByLabelText('News source'),{target:{value:'Second Publication'}});expect(rows()).toHaveLength(1);expect(rows()[0]).toHaveTextContent('Fixture Beta');
-  fireEvent.click(screen.getByRole('button',{name:'Clear filters'}));fireEvent.change(screen.getByLabelText('Search news'),{target:{value:'Delta'}});expect(rows()).toHaveLength(1);
-  fireEvent.click(screen.getByRole('button',{name:'Clear filters'}));fireEvent.click(screen.getByRole('button',{name:'Injuries (1)',exact:true}));expect(rows()).toHaveLength(1);
-  expect(screen.queryByLabelText('News position')).not.toBeInTheDocument();expect(screen.queryByLabelText('News team')).not.toBeInTheDocument();expect(screen.queryByLabelText('Player scoring')).not.toBeInTheDocument();
+test('global status uses public designation in League desk rather than Yahoo badge',async()=>{
+ const y=yahoo();y.dashboards[y.teams[0].key].roster.players[0].status='Q';renderPage({yahoo:y});await ready();openLeague();fireEvent.click(screen.getByRole('button',{name:'Status ▾'}));fireEvent.click(screen.getByRole('checkbox',{name:/^OUT \d+$/}));const player=within(pane('League desk')).getByRole('button',{name:'Fixture Alpha',exact:true});expect(player.parentElement).not.toHaveClass('cc-dimmed');expect(pane('League desk')).toHaveTextContent('OUT');
 });
-
-test('urgency uses supplied public AI estimates and exposes its basis; invalid and missing stay unavailable',async()=>{
-  renderPage();await ready();const summary=within(left()).getByLabelText('AI estimated urgency 4 of 5 for Fixture Alpha fixture report');
-  expect(summary.closest('details')).toHaveTextContent('A confirmed injury may affect the next lineup decision.');expect(summary.closest('details')).toHaveTextContent('league fit is not assessed');
-  const beta=within(left()).getByRole('button',{name:'Expand Fixture Beta fixture report'}).closest('tr');expect(beta).toHaveTextContent('Urgency unavailable');
-  const delta=within(left()).getByRole('button',{name:'Expand Fixture Delta fixture report'}).closest('tr');expect(delta).toHaveTextContent('Urgency unavailable');expect(delta).not.toHaveTextContent('99');
+test('filter-only changes do not resend Evidence selection to independent popouts',async()=>{
+ const child=childWindow();vi.spyOn(window,'open').mockReturnValue(child);renderPage();await ready();pop('Evidence desk');act(()=>window.dispatchEvent(new MessageEvent('message',{origin:window.location.origin,source:child,data:{type:'bowser-fantasy-news-ready',pane:'evidence'}})));child.postMessage.mockClear();fireEvent.change(screen.getByLabelText('Search news'),{target:{value:'Beta'}});expect(child.postMessage.mock.calls.length).toBeGreaterThan(0);expect(child.postMessage.mock.calls.every(([m])=>m.type==='bowser-fantasy-news-filters')).toBe(true);
 });
-
-test('dock resize and collapse are independent of all central arrangements and preserve preferences',async()=>{
-  const view=renderPage();await ready();const resize=screen.getByRole('separator',{name:'Resize News workspace'}), start=Number(resize.getAttribute('aria-valuenow'));
-  expect(resize).toHaveAttribute('aria-orientation','vertical');fireEvent.pointerDown(resize,{clientX:100});fireEvent.pointerMove(document,{clientX:180});fireEvent.pointerUp(document);expect(resize).toHaveAttribute('aria-valuenow',String(start+80));
-  fireEvent.keyDown(resize,{key:'ArrowRight'});expect(resize).toHaveAttribute('aria-valuenow',String(start+100));
-  const acquisition=screen.getByRole('separator',{name:'Resize Acquisition Opportunities'});fireEvent.pointerDown(acquisition,{clientX:600});fireEvent.pointerMove(document,{clientX:560});fireEvent.pointerUp(document);expect(acquisition).toHaveAttribute('aria-valuenow','380');
-  for(const mode of ['columns','stacked','tiles']){fireEvent.change(screen.getByLabelText('Workspace arrangement'),{target:{value:mode}});expect(screen.getByRole('separator',{name:'Resize News workspace'})).toHaveAttribute('aria-valuenow',String(start+100));expect(pane('Acquisition Opportunities')).toBeInTheDocument();}
-  fireEvent.click(screen.getByRole('button',{name:'Collapse News workspace'}));expect(screen.queryByRole('region',{name:'News workspace'})).not.toBeInTheDocument();expect(togglePane('News workspace')).toHaveAttribute('aria-pressed','true');
-  fireEvent.click(screen.getByRole('button',{name:'Collapse Acquisition Opportunities'}));expect(screen.queryByRole('region',{name:'Acquisition Opportunities'})).not.toBeInTheDocument();
-  view.unmount();renderPage();await within(pane('Evidence desk')).findByText('Fixture Alpha exact sourced summary');
-  fireEvent.click(screen.getByRole('button',{name:'Expand News workspace'}));await ready();expect(screen.getByRole('separator',{name:'Resize News workspace'})).toHaveAttribute('aria-valuenow',String(start+100));
-  fireEvent.click(screen.getByRole('button',{name:'Expand Acquisition Opportunities'}));expect(screen.getByRole('separator',{name:'Resize Acquisition Opportunities'})).toHaveAttribute('aria-valuenow','380');
-});
-
-test('workspace selector toggles panes off and on; close turns off while collapse remains enabled',async()=>{
-  renderPage();await ready();for(const name of ['News workspace','Acquisition Opportunities','Evidence desk','Player focus']){
-    expect(togglePane(name)).toHaveAttribute('aria-pressed','true');fireEvent.click(togglePane(name));expect(togglePane(name)).toHaveAttribute('aria-pressed','false');expect(screen.queryByRole('region',{name,exact:true})).not.toBeInTheDocument();
-    fireEvent.click(togglePane(name));expect(togglePane(name)).toHaveAttribute('aria-pressed','true');expect(pane(name)).toBeInTheDocument();
-  }
-  fireEvent.click(screen.getByRole('button',{name:'Collapse Evidence desk'}));expect(togglePane('Evidence desk')).toHaveAttribute('aria-pressed','true');expect(screen.queryByRole('region',{name:'Evidence desk'})).not.toBeInTheDocument();
-  fireEvent.click(togglePane('Evidence desk'));expect(togglePane('Evidence desk')).toHaveAttribute('aria-pressed','false');fireEvent.click(togglePane('Evidence desk'));expect(pane('Evidence desk')).toBeInTheDocument();
-  fireEvent.click(screen.getByRole('button',{name:'Close Acquisition Opportunities'}));expect(togglePane('Acquisition Opportunities')).toHaveAttribute('aria-pressed','false');
-});
-
-test('saved preferences strip private fields, migrate old duplicate panes and bound geometry',async()=>{
-  localStorage.setItem(NEWS_LAYOUT_KEY,JSON.stringify({version:1,mode:'private-mode',left:{width:99999,activeTab:'bad',account:'PRIVATE'},acquisition:{width:-3,private:'PRIVATE'},panes:[{id:'feed',article:articles[0]},{id:'injuries'},{id:'evidence',width:-2,private:'PRIVATE'},{id:'evidence',width:500},{id:'unknown'}]}));
-  renderPage();await ready();const saved=JSON.parse(localStorage.getItem(NEWS_LAYOUT_KEY));expect(saved.left.width).toBe(1000);expect(saved.left.activeTab).toBe('news');expect(saved.acquisition.width).toBe(280);expect(saved.panes).toEqual([{id:'evidence',width:280,collapsed:false}]);
-  expect(JSON.stringify(saved)).not.toContain('PRIVATE');expect(JSON.stringify(saved)).not.toContain('headline');expect(validateNewsLayout({version:9,panes:[]}).panes.map(p=>p.id)).toEqual(['evidence','player']);
-  fireEvent.click(screen.getByRole('button',{name:'Reset layout'}));expect(JSON.parse(localStorage.getItem(NEWS_LAYOUT_KEY)).panes.map(p=>p.id)).toEqual(['evidence','player']);
-});
-
-test('My Roster uses owned OR affirmative available observations across authorized leagues without absence inference',async()=>{
-  renderPage({yahoo:yahoo()});await ready();fireEvent.click(within(left()).getByRole('tab',{name:'My Roster'}));expect(rows()).toHaveLength(3);expect(rows().some(row=>row.textContent.includes('Fixture Beta'))).toBe(false);
-  expect(within(left()).getByText(/Private Account A League 1: Owned at read/)).toBeInTheDocument();expect(within(left()).getAllByText(/Private Account A League 2: Free agent at read/).length).toBeGreaterThan(0);
-  expect(within(left()).getAllByText(/Private Account A League 3: Waivers at read/).length).toBeGreaterThan(0);expect(within(left()).getByText(/3 authorized leagues/)).toBeInTheDocument();
-  expect(localStorage.getItem(NEWS_LAYOUT_KEY)).not.toContain('Private Account');expect(Object.values(sessionStorage).join(' ')).not.toContain('Private Account');
-});
-
-test('acquisition requires a public beneficiary and affirmative availability with source and private read clocks',async()=>{
-  renderPage({yahoo:yahoo()});await ready();const acquisition=pane('Acquisition Opportunities');expect(within(acquisition).getByText('Fixture Gamma')).toBeInTheDocument();expect(within(acquisition).getByText('Additional work is possible; the role remains unconfirmed.')).toBeInTheDocument();
-  expect(within(acquisition).getByText(/League 2: Free agent at read/)).toBeInTheDocument();expect(within(acquisition).getByText(/League 3: Waivers at read/)).toBeInTheDocument();expect(acquisition).toHaveTextContent('Yahoo read');expect(acquisition).toHaveTextContent('partial page coverage');expect(acquisition).toHaveTextContent('page start 0 / size 25');
-  expect(within(acquisition).queryByText('Fixture Delta')).not.toBeInTheDocument();expect(within(acquisition).queryByText('Fixture Alpha')).not.toBeInTheDocument();
-  fireEvent.click(within(acquisition).getByRole('button',{name:/Fixture Alpha fixture report/}));expect(within(pane('Evidence desk')).getByText('Fixture Alpha exact sourced summary')).toBeInTheDocument();
-});
-
-test('unresolved beneficiaries and absent availability never become acquisition suggestions',async()=>{
-  const account=yahoo();for(const item of Object.values(account.research))item.availability.players=[];
-  fetch.mockResolvedValue(reply(payload([{...articles[0],affectedPlayers:[{name:'Fixture Gamma',relationship:'potential_beneficiary',impact:'Unresolved public identity'}]}])));renderPage({yahoo:account});await ready();
-  expect(within(pane('Acquisition Opportunities')).getByText('No affirmative acquisition opportunities returned')).toBeInTheDocument();
-  expect(within(pane('Acquisition Opportunities')).queryByText('Fixture Gamma')).not.toBeInTheDocument();
-});
-
-test('unknown capture age and stale loaded context are explicit; account changes remove private observations',async()=>{
-  const account=yahoo();for(const item of Object.values(account.research)){delete item.availability.checkedAt;item.availability.stale=true;for(const player of item.availability.players)delete player.checkedAt;}
-  const view=renderPage({yahoo:account});await ready();expect(pane('Acquisition Opportunities')).toHaveTextContent('Yahoo capture age unverified');expect(pane('Acquisition Opportunities')).toHaveTextContent('stale loaded observation');
-  const next=yahoo('Private Account B');view.rerender(<LhqProvider><FantasyNews {...props} yahoo={next}/></LhqProvider>);expect(screen.queryByText(/Private Account A League 1: Owned/)).not.toBeInTheDocument();expect(pane('Acquisition Opportunities')).toHaveTextContent('Private Account B League 2');
-  view.rerender(<LhqProvider><FantasyNews {...props} yahoo={{account:null,status:{connected:false}}}/></LhqProvider>);expect(pane('Acquisition Opportunities')).toHaveTextContent('Yahoo league context unavailable');expect(screen.queryByText(/Private Account B League/)).not.toBeInTheDocument();expect(rows()).toHaveLength(4);
-  expect(localStorage.getItem(NEWS_LAYOUT_KEY)).not.toContain('Private');
-});
-
-test('loading, unavailable feed, failed read and retry preserve honest states',async()=>{
-  let resolveRead;fetch.mockImplementationOnce(()=>new Promise(resolve=>{resolveRead=resolve;}));renderPage();expect(left()).toHaveTextContent('Reading sourced NFL reports…');expect(screen.getByRole('button',{name:'Reading…'})).toBeDisabled();
-  await act(async()=>resolveRead(reply(payload([],{state:'unavailable',message:'No verified public snapshot exists.'}))));expect(left()).toHaveTextContent('News feed unavailable');
-  fetch.mockRejectedValueOnce(new Error('Network offline'));fireEvent.click(screen.getByRole('button',{name:'Refresh feed'}));expect(await screen.findByRole('alert')).toHaveTextContent('Network offline');fireEvent.click(screen.getByRole('button',{name:'Try again'}));await ready();expect(rows()).toHaveLength(4);
-});
-
-test('last good feed survives a failed refresh in memory and loses its current claim',async()=>{
-  fetch.mockResolvedValue(reply(payload(articles,{state:'current',freshness:{basis:'source_check',sourceCheckedAt:nowClock(),staleAfterHours:6}})));renderPage();await ready();fireEvent.click(togglePane('Source coverage'));expect(pane('Source coverage')).toHaveTextContent('Current returned snapshot');
-  fetch.mockRejectedValueOnce(new Error('Provider unreachable'));fireEvent.click(screen.getByRole('button',{name:'Refresh feed'}));expect(await screen.findByRole('alert')).toHaveTextContent('Last successful feed retained in memory');expect(rows()).toHaveLength(4);expect(pane('Source coverage')).toHaveTextContent('Stale returned snapshot');expect(screen.queryByText('Current returned snapshot')).not.toBeInTheDocument();expect(localStorage.getItem(NEWS_LAYOUT_KEY)).not.toContain('Fixture');
-  expect(fetch.mock.calls[0][1]).toMatchObject({credentials:'same-origin',cache:'no-store'});
-});
-
-test('old time-window responses cannot replace a newer query',async()=>{
-  let resolveOld;fetch.mockImplementation(url=>String(url).includes('hours=168')?new Promise(resolve=>{resolveOld=resolve;}):Promise.resolve(reply(payload([articles[1]]))));renderPage();fireEvent.change(screen.getByLabelText('News window'),{target:{value:'24'}});await within(left()).findByRole('button',{name:'Expand Fixture Beta fixture report'});await act(async()=>resolveOld(reply(payload())));expect(rows()).toHaveLength(1);
-});
-
-test('publication, unknown clocks and source/write/read clocks stay distinct',async()=>{
-  const raw='September 30, 2026 at 12:30 PM · source timezone unspecified';const row={...articles[0],publishedAt:null,publishedDate:'2026-09-30',publishedAtRaw:raw,timestampStatus:'timezone_unspecified',updatedAt:null,sources:[{...source,publishedAt:null,publishedDate:'2026-09-30',publishedAtRaw:raw}]};
-  fetch.mockResolvedValue(reply(payload([row],{snapshotMode:'repository_public_snapshot',timeFilterBasis:'exact_timestamps_and_overlapping_calendar_dates_with_undated_reports',repository:{checkedAt:nowClock(60000),updatedAt:nowClock(40000),fetchedAt:nowClock(20000),revision:'abcdef0123456789',lastReadState:'verified',cacheState:'fetched'},freshness:{basis:'source_check',sourceCheckedAt:nowClock(60000)}})));renderPage();await ready();expect(pane('Evidence desk')).toHaveTextContent('Publication age unknown');expect(pane('Evidence desk').querySelector('.fn-timestamps')).toHaveTextContent(`Published ${raw}`);expect(pane('Evidence desk').querySelector('.fn-timestamps')).toHaveTextContent('Record updated Unavailable');
-  fireEvent.click(togglePane('Source coverage'));const coverage=pane('Source coverage');for(const label of ['Sources checked','Repository updated','Repository read'])expect(coverage).toHaveTextContent(label);expect(coverage).toHaveTextContent('abcdef012345');expect(coverage).toHaveTextContent('Undated cited reports are included with unknown publication age');expect(screen.getByText(/Target window: 168h · undated reports/)).toBeInTheDocument();
-  fetch.mockResolvedValue(reply(payload([{...row,publishedDate:null,publishedAtRaw:null,timestampStatus:'unknown'}])));fireEvent.click(screen.getByRole('button',{name:'Refresh feed'}));await waitFor(()=>expect(pane('Evidence desk').querySelector('.fn-timestamps')).toHaveTextContent('Published Unknown'));
-});
-
-test('pinning and opening public player context remain independent of selected news',async()=>{
-  renderPage();await ready();fireEvent.click(within(pane('Evidence desk')).getByRole('button',{name:'Pin report'}));fireEvent.click(within(left()).getByRole('button',{name:'Inspect Fixture Beta fixture report'}));expect(pane('Evidence desk')).toHaveTextContent('Fixture Alpha exact sourced summary');
-  fireEvent.click(within(pane('Evidence desk')).getByRole('button',{name:'Unpin'}));expect(pane('Evidence desk')).toHaveTextContent('Fixture Beta exact sourced summary');expect(within(pane('Player focus')).getByRole('button',{name:'Fixture Beta',exact:true})).toBeInTheDocument();
-});
-
-test('blocked popup retains content and repeated popout, dock and close cannot duplicate or strand it',async()=>{
-  const first=childWindow(),second=childWindow();const open=vi.spyOn(window,'open').mockReturnValueOnce(null).mockReturnValueOnce(first).mockReturnValueOnce(second);renderPage();await ready();
-  fireEvent.click(screen.getByRole('button',{name:'Pop out Acquisition Opportunities'}));expect(await screen.findByRole('alert')).toHaveTextContent('browser blocked');expect(pane('Acquisition Opportunities')).toHaveTextContent('Yahoo league context unavailable');
-  fireEvent.click(screen.getByRole('button',{name:'Pop out Acquisition Opportunities'}));expect(pane('Acquisition Opportunities')).toHaveTextContent('Open in browser window');fireEvent.click(screen.getByRole('button',{name:'Focus Acquisition Opportunities window'}));expect(open).toHaveBeenCalledTimes(2);expect(first.focus).toHaveBeenCalled();
-  act(()=>window.dispatchEvent(new MessageEvent('message',{origin:window.location.origin,source:first,data:{type:'bowser-fantasy-news-dock',pane:'acquisition'}})));expect(first.close).toHaveBeenCalledTimes(1);expect(pane('Acquisition Opportunities')).toHaveTextContent('Yahoo league context unavailable');
-  fireEvent.click(screen.getByRole('button',{name:'Pop out Acquisition Opportunities'}));fireEvent.click(screen.getByRole('button',{name:'Close Acquisition Opportunities'}));expect(second.close).toHaveBeenCalledTimes(1);expect(togglePane('Acquisition Opportunities')).toHaveAttribute('aria-pressed','false');fireEvent.click(togglePane('Acquisition Opportunities'));expect(screen.getAllByRole('region',{name:'Acquisition Opportunities',exact:true})).toHaveLength(1);
-  expect(open.mock.calls[1][0]).toContain('pane=acquisition');expect(open.mock.calls[1][0]).not.toContain('Private');
-});
-
-test('browser close and app-wide close recover content and reopen state without private messages',async()=>{
-  const first=childWindow(),second=childWindow();vi.spyOn(window,'open').mockReturnValueOnce(first).mockReturnValueOnce(second);renderPage({yahoo:yahoo()});await ready();fireEvent.click(screen.getByRole('button',{name:'Pop out Acquisition Opportunities'}));first.closed=true;
-  await waitFor(()=>expect(screen.getByRole('button',{name:'Reopen Acquisition Opportunities window'})).toBeInTheDocument(),{timeout:2200});expect(pane('Acquisition Opportunities')).toHaveTextContent('Fixture Gamma');fireEvent.click(screen.getByRole('button',{name:'Reopen Acquisition Opportunities window'}));act(()=>closeFantasyNewsWindows());expect(second.close).toHaveBeenCalledTimes(1);expect(pane('Acquisition Opportunities')).toHaveTextContent('Fixture Gamma');
-  for(const child of [first,second])expect(child.postMessage.mock.calls.every(([message])=>Object.keys(message).every(key=>['type','articleId','hours'].includes(key)))).toBe(true);
-});
-
-test('logout closes private acquisition popout and removes old-account observations',async()=>{
-  const child=childWindow();vi.spyOn(window,'open').mockReturnValue(child);const view=renderPage({yahoo:yahoo()});await ready();fireEvent.click(screen.getByRole('button',{name:'Pop out Acquisition Opportunities'}));view.rerender(<LhqProvider><FantasyNews {...props} yahoo={{account:null,status:{connected:false}}}/></LhqProvider>);
-  expect(child.close).toHaveBeenCalledTimes(1);expect(pane('Acquisition Opportunities')).toHaveTextContent('Yahoo league context unavailable');expect(pane('Acquisition Opportunities')).not.toHaveTextContent('Private Account');
-});
-
-test('standalone popout authenticates messages and never writes layout or private selection to storage',async()=>{
-  window.history.replaceState(null,'','/#/fantasy-news?pane=acquisition&popout=1');const opener=childWindow();vi.stubGlobal('opener',opener);renderPage({yahoo:yahoo()});await within(pane('Acquisition Opportunities')).findByText('Fixture Gamma');expect(screen.queryByRole('region',{name:'News workspace'})).not.toBeInTheDocument();expect(localStorage.getItem(NEWS_LAYOUT_KEY)).toBeNull();
-  act(()=>window.dispatchEvent(new MessageEvent('message',{origin:'https://attacker.test',source:opener,data:{type:'bowser-fantasy-news-selection',hours:24}})));expect(screen.getByLabelText('News window')).toHaveValue('168');
-  act(()=>window.dispatchEvent(new MessageEvent('message',{origin:window.location.origin,source:opener,data:{type:'bowser-fantasy-news-selection',hours:24}})));expect(screen.getByLabelText('News window')).toHaveValue('24');
-  vi.spyOn(window,'close').mockImplementation(()=>{});fireEvent.click(screen.getByRole('button',{name:'Return to workspace'}));expect(opener.postMessage).toHaveBeenCalledWith({type:'bowser-fantasy-news-dock',pane:'acquisition'},window.location.origin);
-});
-
-test('malformed public scope and unsafe source links fail closed',async()=>{
-  expect(safeNewsUrl('javascript:alert(1)')).toBeNull();expect(safeNewsUrl('https://example.test/report')).toBe('https://example.test/report');fetch.mockResolvedValue(reply({articles,meta:{scope:'private_yahoo'}}));renderPage();expect(await screen.findByRole('alert')).toHaveTextContent('unexpected response');expect(rows()).toHaveLength(0);
-});
-
-test('blocked preference storage does not prevent collapse and restore controls',async()=>{
-  vi.spyOn(Storage.prototype,'setItem').mockImplementation(()=>{throw new Error('Blocked');});renderPage();await ready();expect(screen.getByRole('alert')).toHaveTextContent('Layout could not be saved');fireEvent.click(screen.getByRole('button',{name:'Collapse News workspace'}));fireEvent.click(screen.getByRole('button',{name:'Expand News workspace'}));expect(rows()).toHaveLength(4);
-});
-
-test('visible central neighbors reorder across collapsed panels while docks remain fixed',async()=>{
-  renderPage();await ready();fireEvent.click(togglePane('Role & performance'));fireEvent.click(screen.getByRole('button',{name:'Collapse Player focus'}));fireEvent.click(screen.getByRole('button',{name:'Move Role & performance left'}));const panels=screen.getByRole('region',{name:'Central research panels'});
-  expect([...panels.querySelectorAll('section.fn-pane')].map(p=>p.getAttribute('aria-label'))).toEqual(['Role & performance','Evidence desk']);expect(pane('News workspace')).toBeInTheDocument();expect(pane('Acquisition Opportunities')).toBeInTheDocument();
-});
-
-
-test('unknown-date reports keep source order after dated reports without borrowing edit or check clocks',async()=>{
-  const unknown={...articles[0],id:'unknown',headline:'Undated fixture report',publishedAt:null,publishedDate:null,publishedAtRaw:null,timestampStatus:'unknown',updatedAt:'2099-01-01T00:00:00Z',checkedAt:'2099-01-01T00:00:00Z'};fetch.mockResolvedValue(reply(payload([unknown,articles[1]])));renderPage();await within(left()).findByRole('button',{name:'Expand Undated fixture report'});expect(rows().map(row=>row.textContent)).toEqual([expect.stringContaining('Fixture Beta'),expect.stringContaining('Undated')]);
-  fireEvent.click(within(left()).getByRole('button',{name:'Inspect Undated fixture report'}));expect(pane('Evidence desk')).toHaveTextContent('Publication age unknown');expect(pane('Evidence desk')).not.toHaveTextContent('Older report');
-});
-
-test('tablet full-width mode preserves desktop widths without offering ineffective resize handles',async()=>{
-  vi.stubGlobal('innerWidth',820);renderPage();await ready();
-  expect(screen.getByText(/Full-width tablet panels/)).toBeInTheDocument();
-  expect(screen.queryByRole('separator',{name:'Resize News workspace'})).not.toBeInTheDocument();
-  expect(screen.queryByRole('separator',{name:'Resize Acquisition Opportunities'})).not.toBeInTheDocument();
-  const saved=JSON.parse(localStorage.getItem(NEWS_LAYOUT_KEY));
-  fireEvent.click(screen.getByRole('button',{name:'Collapse News workspace'}));
-  fireEvent.click(screen.getByRole('button',{name:'Expand News workspace'}));
-  fireEvent.change(screen.getByLabelText('Workspace arrangement'),{target:{value:'columns'}});
-  expect(screen.getByRole('separator',{name:'Resize Evidence desk'})).toBeInTheDocument();
-  expect(JSON.parse(localStorage.getItem(NEWS_LAYOUT_KEY)).left.width).toBe(saved.left.width);
-  vi.stubGlobal('innerWidth',1440);fireEvent(window,new Event('resize'));
-  expect(screen.getByRole('separator',{name:'Resize News workspace'})).toHaveAttribute('aria-valuenow',String(saved.left.width));
-  expect(screen.queryByText(/Full-width tablet panels/)).not.toBeInTheDocument();
-});
-
-test('center handles follow actual tile geometry and disappear in full-width Stack',async()=>{
-  let measure;
-  vi.stubGlobal('innerWidth',1440);
-  vi.stubGlobal('ResizeObserver',class {constructor(callback){measure=callback;} observe(){} disconnect(){}});
-  renderPage();await ready();
-  const center=screen.getByRole('region',{name:'Central research panels'});
-  const geometry=vi.spyOn(center,'getBoundingClientRect').mockReturnValue({width:650});
-  act(()=>measure());
-  expect(screen.queryByRole('separator',{name:'Resize Evidence desk'})).not.toBeInTheDocument();
-  geometry.mockReturnValue({width:850});act(()=>measure());
-  expect(screen.getByRole('separator',{name:'Resize Evidence desk'})).toBeInTheDocument();
-  vi.stubGlobal('innerWidth',750);fireEvent(window,new Event('resize'));
-  expect(screen.queryByRole('separator',{name:'Resize Evidence desk'})).not.toBeInTheDocument();
-  vi.stubGlobal('innerWidth',1440);fireEvent(window,new Event('resize'));
-  fireEvent.change(screen.getByLabelText('Workspace arrangement'),{target:{value:'stacked'}});
-  expect(screen.queryByRole('separator',{name:'Resize Evidence desk'})).not.toBeInTheDocument();
-  expect(screen.getByRole('separator',{name:'Resize News workspace'})).toBeInTheDocument();
-  fireEvent.change(screen.getByLabelText('Workspace arrangement'),{target:{value:'columns'}});
-  expect(screen.getByRole('separator',{name:'Resize Evidence desk'})).toBeInTheDocument();
-});
-
-test('poll recovers an orphan open window even when a close notification is missed',async()=>{
-  const child=childWindow();vi.spyOn(window,'open').mockReturnValue(child);renderPage();await ready();fireEvent.click(screen.getByRole('button',{name:'Pop out Evidence desk'}));const dispatch=vi.spyOn(window,'dispatchEvent').mockImplementation(()=>true);act(()=>closeFantasyNewsWindows());dispatch.mockRestore();expect(pane('Evidence desk')).toHaveTextContent('Open in browser window');
-  await waitFor(()=>expect(screen.getByRole('button',{name:'Reopen Evidence desk window'})).toBeInTheDocument(),{timeout:2200});expect(pane('Evidence desk')).toHaveTextContent('Fixture Alpha exact sourced summary');
+test('child retains pending league ordinal through Yahoo account hydration without clearing parent scope',async()=>{
+ window.history.replaceState(null,'','/#/fantasy-news?pane=wire&popout=1');const opener=childWindow();vi.stubGlobal('opener',opener);const v=renderPage({yahoo:{status:{connected:false}}});await within(pane('Wire')).findByRole('button',{name:'Expand Fixture Alpha fixture report'});
+ const filters={search:'',teams:[],pos:[],status:[],league:{mode:'mine-league',index:0}};act(()=>window.dispatchEvent(new MessageEvent('message',{origin:window.location.origin,source:opener,data:{type:'bowser-fantasy-news-filters',filters}})));expect(opener.postMessage.mock.calls.filter(([m])=>m.type==='bowser-fantasy-news-filters')).toHaveLength(0);
+ v.rerender(<LhqProvider><FantasyNews {...props} yahoo={yahoo()}/></LhqProvider>);await waitFor(()=>expect(within(pane('Wire')).getAllByRole('button',{name:/^Expand/})).toHaveLength(1));expect(screen.getByRole('button',{name:'Leagues 1 ▾'})).toBeInTheDocument();for(const [m] of opener.postMessage.mock.calls.filter(([m])=>m.type==='bowser-fantasy-news-filters'))expect(m.filters.league).toEqual({mode:'mine-league',index:0});expect(localStorage.getItem(NEWS_LAYOUT_KEY)).toBeNull();
 });

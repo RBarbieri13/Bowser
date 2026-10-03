@@ -121,3 +121,20 @@ The existing refresh implementation requires `INTELLIGENCE_REFRESH_TOKEN` and `D
 `meta.refresh.ready` reports only the existing token-protected database configuration capability; `persistence` distinguishes `public_git_repository`, `static_public_archive` and `existing_intelligence_database`. `schedulerVerified` remains false and last-run timestamps remain null because the public feed contract does not establish scheduled execution. Do not describe polling as unattended ingestion. At implementation time the selected environment and independently inspected production environment had no configured durable database or refresh token; the legacy database ingestion path remains unavailable. The public repository alternative uses the separately approved existing GitHub connection. This change provisions nothing.
 
 Validation: `node --test tests/fantasy-news-api.test.mjs tests/fantasy-news-repository.test.mjs tests/fantasy-news-snapshot.test.mjs` covers stale/unavailable states, publication/check/writer clocks, all-undated official reports and mixed dated/undated citations, lookback uncertainty, missing checks and malformed/future/calendar-invalid dates, bounded public urgency and affected identities, evidence/access limits, private field/URL rejection, filters, protected-ingestion separation, bounded reads, archive clocks, repository hash/size/redirect/ETag/regression/outage handling, GET-only/no-store behavior, material-change preparation, CLI undated support/local writes and the data-only deployment setting.
+
+## Command Center v2 presentation (October 3, 2026)
+
+The public GET contract, stored-feed 60-second polling, source clocks and privacy boundaries are unchanged. The page now has independent Status, Wire, Evidence, Role board and Feed health windows plus a private League desk overlay. Status-only source/DFS matchup filters use the existing schedule route. Global public filters and conservative Yahoo context operate in memory across windows.
+
+`newsCommandModel.js` validates preference storage. `newsWindows.jsx` authenticates same-origin registered popup handles; messages carry public article IDs, bounded lookback and validated filter codes. Private league identities are represented only by bounded ordinal preferences and resolved against each window's own authorized account. A child queues scope during account discovery and never broadcasts its unhydrated defaults. Report bodies, Yahoo response payloads and private keys are not messaged or persisted.
+
+`newsCommandViews.jsx` maps the existing public report fields. `newsLeagueDesk.jsx` maps existing authorized dashboard/research reads. Missing opponent/all-manager rosters are unavailable; an ambiguous returned occupant is distinguished from an actually empty starting slot. Availability is bounded affirmative observation, never an absence-based ownership claim. The prototype's private fixture is not imported.
+
+Fields explicitly labeled **not supplied** when absent:
+- `urgency`: requires score 1–5, basis, method and estimate timestamp; no locally invented urgency.
+- `evidence.confidence`: no probability inferred from a confirmation badge.
+- `affectedPlayers`: no beneficiary list inferred as structured provider data.
+- `players[].playerId`: unmatched names cannot open a fabricated player ID.
+- Per-day practice grades: Wednesday/Thursday stay gaps; Friday is explicitly labeled the latest supplied `injury.practiceStatus`, with its actual day unavailable.
+
+The writer exports `ROLE_CHAINS` from `scripts/news/role-chains.js`. These 22 dated editorial chains originate in the supplied public-news prototype, render only while linked report IDs exist, and state their October 2 basis. They do not forecast workloads. Future updates should be curated from checked official injury reports, coach/depth-chart statements and gamebooks, then replaced by source-attributed `affectedPlayers` in the existing public writer. League rosters should come from the authenticated Yahoo dashboard/league-research read path with affirmative membership, per-observation clocks and complete player identity. The UI does not add endpoints or invent other managers' rosters.

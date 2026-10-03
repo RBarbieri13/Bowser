@@ -5,6 +5,9 @@ import { fileURLToPath } from "node:url";
 
 import { repositorySnapshotHash, validateRepositorySnapshot } from "../server/fantasy-news-repository.mjs";
 
+// Editorial companion remains separate from the immutable public GET envelope.
+export { ROLE_CHAINS } from "./news/role-chains.js";
+
 const MAX_BYTES = 512 * 1024;
 const USAGE = "Usage: node scripts/prepare-fantasy-news-snapshot.mjs --events public-events.json --checked-at ISO --updated-at ISO --revision ID [--previous previous-snapshot.json] [--out prepared-snapshot.json]";
 
