@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T15:16:06.000Z",
-  "updatedAt": "2026-10-03T15:17:41.888Z",
-  "revision": "bowser-public-news-20261003T151741888Z",
+  "checkedAt": "2026-10-03T15:46:30.000Z",
+  "updatedAt": "2026-10-03T15:47:55.653Z",
+  "revision": "bowser-public-news-20261003T154755653Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -1253,6 +1253,48 @@
           "url": "https://www.colts.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T18:27:00Z"
+        }
+      ]
+    },
+    {
+      "eventId": "ind-nick-westbrook-ikhine-week4-elevation-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Nick Westbrook-Ikhine",
+        "team": "IND",
+        "position": "WR"
+      },
+      "headline": "Westbrook-Ikhine elevated for Week 4",
+      "summary": "Indianapolis elevated Nick Westbrook-Ikhine from its practice squad for Sunday's game against Washington.",
+      "fantasyAnalysis": "This adds receiver depth but does not establish a starting role, meaningful offensive snaps or a target share.",
+      "eventType": "TRANSACTION",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T15:46:30Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "status": "CONFIRMED",
+      "sources": [
+        {
+          "sourceName": "Indianapolis Colts",
+          "author": "Colts Communications",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 03, 2026 at 10:36 AM; timezone unspecified",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.colts.com/news/colts-elevate-wr-nick-westbrook-ikhine-from-practice-squad",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T15:44:19Z"
         }
       ]
     },
@@ -3995,6 +4037,60 @@
       ]
     },
     {
+      "eventId": "was-craig-reynolds-week4-elevation-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Craig Reynolds",
+        "team": "WAS",
+        "position": "RB"
+      },
+      "headline": "Reynolds listed as elevated",
+      "summary": "NFL.com lists Craig Reynolds among Washington's Week 4 game-day elevations.",
+      "fantasyAnalysis": "No carry share or fantasy starting role is established. The retrieved team news index and transaction log have not yet corroborated this entry.",
+      "eventType": "TRANSACTION",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T15:46:30Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "status": "REPORTED",
+      "sources": [
+        {
+          "sourceName": "NFL.com",
+          "author": "Around the NFL Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Saturday, Oct. 3, 2026 roundup; Published field has no visible clock",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.nfl.com/news/nfl-news-roundup-latest-league-updates-from-saturday-oct-3",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-03T15:44:04Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "No publication/update clock; retrieved transaction log ends September 19 and does not corroborate the October 3 entry",
+          "publishedDate": null,
+          "url": "https://www.commanders.com/team/transactions/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T15:45:01Z"
+        }
+      ]
+    },
+    {
       "eventId": "was-daniels-limited-20260930",
       "player": {
         "playerId": null,
@@ -4322,5 +4418,5 @@
       ]
     }
   ],
-  "contentHash": "7f9b487713acfb57df332bcbc9a9e32a7973ad90bfb379ab51675d41c8645752"
+  "contentHash": "8a527a5637fcd3510d6c1870dceae54fd4901f498f99d5bcb35eccef56c16047"
 }
