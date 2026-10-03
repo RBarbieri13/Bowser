@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T21:30:12.000Z",
-  "updatedAt": "2026-10-03T21:32:06.626Z",
-  "revision": "bowser-public-news-20261003T213206626Z",
+  "checkedAt": "2026-10-03T22:19:27.000Z",
+  "updatedAt": "2026-10-03T22:21:06.570Z",
+  "revision": "bowser-public-news-20261003T222106570Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -2450,15 +2450,15 @@
         "team": "NO",
         "position": "WR"
       },
-      "headline": "Tyson not expected to practice next week",
-      "summary": "RotoWire relays Matthew Paras that Kellen Moore does not expect Tyson to practice the following week during his existing hamstring recovery on IR.",
-      "fantasyAnalysis": "Do not plan on an immediate activation. This is a recovery update, not a newly sustained injury.",
-      "eventType": "COACH_COMMENT",
+      "headline": "Tyson reportedly sprinting during separate rehab work",
+      "summary": "Nick Underhill observed Tyson sprinting off to the side and working on stopping and starting Saturday. The earlier report that Kellen Moore did not expect a practice return next week remains the latest stated timetable.",
+      "fantasyAnalysis": "Rehab work is a progress observation, not an opened practice window, official participation grade or clearance to play. Tyson remains on IR; no return date or immediate activation is established.",
+      "eventType": "PRACTICE",
       "status": "REPORTED",
-      "fantasyImpact": "MEDIUM",
+      "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:11:00Z",
+      "checkedAt": "2026-10-03T22:19:27Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2481,6 +2481,18 @@
           "url": "https://www.rotowire.com/football/headlines/jordyn-tyson-injury-not-expected-to-practice-next-week-640177",
           "isOriginalSource": false,
           "checkedAt": "2026-10-02T17:11:00Z"
+        },
+        {
+          "sourceName": "Nick Underhill (X)",
+          "author": "Nick Underhill",
+          "xHandle": "nick_underhill",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "10:57 AM · Oct 3, 2026; timezone not displayed",
+          "publishedDate": "2026-10-03",
+          "url": "https://x.com/nick_underhill/status/2106443612607123790?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T22:19:27Z"
         }
       ]
     },
@@ -5000,5 +5012,5 @@
       ]
     }
   ],
-  "contentHash": "86ae2fe9ea3f5143cee6ad0b6ee57e1000a7f2ee59002c7cc3dc017126606071"
+  "contentHash": "f72b91f01e98587ea012f81ac837c9fb6a3ab5543d6689dd8b7e220d044f5af3"
 }
