@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T15:46:30.000Z",
-  "updatedAt": "2026-10-03T15:47:55.653Z",
-  "revision": "bowser-public-news-20261003T154755653Z",
+  "checkedAt": "2026-10-03T17:43:09.000Z",
+  "updatedAt": "2026-10-03T17:44:44.836Z",
+  "revision": "bowser-public-news-20261003T174444836Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -1918,6 +1918,48 @@
           "url": "https://www.miamidolphins.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:38:00Z"
+        }
+      ]
+    },
+    {
+      "eventId": "mia-carlos-washington-jr-active-roster-signing-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Carlos Washington Jr.",
+        "team": "MIA",
+        "position": "RB"
+      },
+      "headline": "Miami signs Washington to active roster",
+      "summary": "Miami's October 3 transaction log confirms Carlos Washington Jr. signed to the active roster from the practice squad.",
+      "fantasyAnalysis": "This adds backfield depth without establishing a starting role, carry share or a change in the existing backfield order.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-03T17:43:09Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Miami Dolphins",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Transaction entry dated 10/03; publication and update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.miamidolphins.com/team/transactions/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T17:43:09Z"
         }
       ]
     },
@@ -4418,5 +4460,5 @@
       ]
     }
   ],
-  "contentHash": "8a527a5637fcd3510d6c1870dceae54fd4901f498f99d5bcb35eccef56c16047"
+  "contentHash": "bc7a5dd0532eb95f05934b1d2bd96575fa5569e03cc6e1491aa0b79f8bc5d43f"
 }
