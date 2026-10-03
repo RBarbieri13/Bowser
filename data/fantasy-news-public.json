@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T13:50:21.000Z",
-  "updatedAt": "2026-10-03T13:52:38.915Z",
-  "revision": "bowser-public-news-20261003T135238915Z",
+  "checkedAt": "2026-10-03T14:45:09.000Z",
+  "updatedAt": "2026-10-03T14:47:00.929Z",
+  "revision": "bowser-public-news-20261003T144700929Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -1084,15 +1084,15 @@
         "team": "IND",
         "position": "WR"
       },
-      "headline": "Allen officially questionable after Friday DNP",
-      "summary": "The Colts' final October 2 report confirms Keenan Allen DNP Friday and questionable for October 4 against Washington, corroborating the earlier attributed report.",
-      "fantasyAnalysis": "Prepare a healthy alternative before the London game. A questionable designation is not a confirmed absence or a guaranteed role increase for another receiver.",
-      "eventType": "PRACTICE",
+      "headline": "Keenan Allen downgraded to out for London game",
+      "summary": "The Colts announced October 3 that Allen is OUT against Washington with a groin injury, superseding Friday's questionable designation. The team website table still shows the older status.",
+      "fantasyAnalysis": "Use a healthy replacement for the London game. Josh Downs and other Indianapolis pass catchers could gain work, but no target allocation is confirmed. Ashton Dulin remains questionable in the retrieved official report.",
+      "eventType": "INJURY",
       "status": "CONFIRMED",
-      "fantasyImpact": "MEDIUM",
+      "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T18:27:00Z",
+      "checkedAt": "2026-10-03T14:45:09Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1100,7 +1100,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Groin",
         "practiceStatus": "DNP",
-        "gameStatus": "QUESTIONABLE",
+        "gameStatus": "OUT",
         "expectedReturn": null
       },
       "sources": [
@@ -1151,6 +1151,42 @@
           "url": "https://www.colts.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T18:27:00Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 3, 2026; exact clock and timezone not displayed",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.rotowire.com/football/headlines/keenan-allen-injury-ruled-out-for-sunday-640447",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-03T14:44:21Z"
+        },
+        {
+          "sourceName": "Indianapolis Colts",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication/update clock not displayed; retrieved table still shows Friday QUESTIONABLE for Allen and Dulin",
+          "publishedDate": null,
+          "url": "https://www.colts.com/team/injury-report/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T14:44:42Z"
+        },
+        {
+          "sourceName": "Indianapolis Colts (X)",
+          "author": "Indianapolis Colts",
+          "xHandle": "Colts",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "7:31 AM · Oct 3, 2026; timezone unspecified. Original announcement directly read in cloud browser.",
+          "publishedDate": "2026-10-03",
+          "url": "https://x.com/Colts/status/2106391764156158320?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-03T14:45:09Z"
         }
       ]
     },
@@ -4226,5 +4262,5 @@
       ]
     }
   ],
-  "contentHash": "8614268ede4d1d531804aafc3cb50a68bf044dd32984e80f13898ec6a751c801"
+  "contentHash": "7a5a8a3ceb78ca30902d3517e56dfad5961adb8ac8b978f109c4a0df5973f7ce"
 }
