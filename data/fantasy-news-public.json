@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T23:28:34.000Z",
-  "updatedAt": "2026-10-04T23:30:32.533Z",
-  "revision": "bowser-public-news-20261004T233032533Z",
+  "checkedAt": "2026-10-04T23:50:38.000Z",
+  "updatedAt": "2026-10-04T23:52:26.340Z",
+  "revision": "bowser-public-news-20261004T235226340Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2117,15 +2117,15 @@
         "team": "DEN",
         "position": "WR"
       },
-      "headline": "Bryant questionable to return with ankle injury",
-      "summary": "NFL.com's official roundup identifies Bryant's injury as ankle-related, lists him questionable to return and says he was carted to the locker room. This corroborates Chris Tomasson's direct report and resolves the earlier unspecified body part and cart observation.",
-      "fantasyAnalysis": "Other Broncos receivers could gain opportunities if Bryant remains unavailable. Await the team assessment and actual return status before future decisions; no severity or absence length is established.",
+      "headline": "Bryant did not return with ankle injury",
+      "summary": "NFL.com's updated official roundup explicitly says Bryant was carted to the locker room in the third quarter and did not return to Denver's loss against San Francisco. This resolves the earlier questionable-to-return outcome without adding severity or a recovery timetable.",
+      "fantasyAnalysis": "Other Broncos receivers could gain opportunities if Bryant remains unavailable. Monitor postgame evaluation and practice before future decisions; no future absence or fixed target share is established.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T23:20:53Z",
+      "checkedAt": "2026-10-04T23:50:38Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2133,8 +2133,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Ankle",
         "practiceStatus": null,
-        "gameStatus": "QUESTIONABLE TO RETURN",
-        "expectedReturn": "Return status and longer-term prognosis unconfirmed."
+        "gameStatus": "DID NOT RETURN",
+        "expectedReturn": "Week 4 non-return confirmed; future availability and timetable unknown."
       },
       "sources": [
         {
@@ -2172,6 +2172,18 @@
           "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T23:19:38Z"
+        },
+        {
+          "sourceName": "NFL.com",
+          "author": "Around the NFL Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication and update fields blank in the live roundup; no exact clock verified",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T23:49:58Z"
         }
       ]
     },
@@ -3178,15 +3190,15 @@
         "team": "KC",
         "position": "WR"
       },
-      "headline": "Rice downgraded to doubtful with hamstring injury",
-      "summary": "Rice's latest verified official status remains doubtful to return with a hamstring injury, with no actual return or final nonreturn outcome verified. The Chiefs now officially rule Thornton out with an ankle injury, resolving that separate receiving contingency.",
-      "fantasyAnalysis": "Thornton is unavailable for the rest of the game, so any added opportunities fall to other available pass catchers while Rice remains doubtful. No future absence, fixed target share or recovery timetable is confirmed.",
+      "headline": "Rice did not return after hamstring injury",
+      "summary": "NFL.com's updated official roundup confirms Rice injured his hamstring in the first quarter and did not return to Kansas City's win over Las Vegas. This resolves the earlier doubtful-to-return outcome. Thornton was separately carted off and ruled out with an ankle injury.",
+      "fantasyAnalysis": "Reassess both receivers after evaluation. Other available pass catchers could gain opportunities if either remains limited or unavailable, but no future absence, fixed target share or recovery timetable is confirmed.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T23:28:34Z",
+      "checkedAt": "2026-10-04T23:50:38Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3194,8 +3206,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Hamstring",
         "practiceStatus": null,
-        "gameStatus": "DOUBTFUL TO RETURN",
-        "expectedReturn": "Current-game return doubtful; future availability and recovery timetable unconfirmed."
+        "gameStatus": "DID NOT RETURN",
+        "expectedReturn": "Week 4 non-return confirmed; future availability and timetable unknown."
       },
       "sources": [
         {
@@ -3257,6 +3269,18 @@
           "url": "https://x.com/Chiefs/status/2106888351169265736",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T23:27:42Z"
+        },
+        {
+          "sourceName": "NFL.com",
+          "author": "Around the NFL Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication and update fields blank in the live roundup; no exact clock verified",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T23:49:58Z"
         }
       ]
     },
@@ -3268,15 +3292,15 @@
         "team": "KC",
         "position": "WR"
       },
-      "headline": "Thornton officially out with ankle injury",
-      "summary": "The Chiefs' original team announcement rules Thornton OUT with an ankle injury against Las Vegas, resolving his previously unconfirmed formal return status. The team supplies no side, severity assessment or recovery timetable.",
-      "fantasyAnalysis": "With Thornton out and Rice still doubtful to return, other available Chiefs pass catchers could gain opportunities. No fixed share or future absence is established; reassess after evaluation.",
+      "headline": "Thornton carted off and ruled out with ankle injury",
+      "summary": "NFL.com's official postgame roundup says Thornton was carted off in the fourth quarter and ruled out with an ankle injury. This adds a verified exit detail to the earlier Chiefs OUT announcement. No side, severity assessment or recovery timetable is supplied.",
+      "fantasyAnalysis": "With both Thornton and Rice leaving the completed game, monitor evaluations before future receiving decisions. Opportunities for other pass catchers remain conditional, without a fixed share or confirmed future absence.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T23:28:34Z",
+      "checkedAt": "2026-10-04T23:50:38Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3285,7 +3309,7 @@
         "bodyPart": "Ankle",
         "practiceStatus": null,
         "gameStatus": "OUT FOR GAME",
-        "expectedReturn": "Out for the remainder of Week 4; future availability and timetable unconfirmed."
+        "expectedReturn": "Week 4 exit and OUT decision confirmed; future availability and timetable unknown."
       },
       "sources": [
         {
@@ -3311,6 +3335,18 @@
           "url": "https://x.com/Chiefs/status/2106888351169265736",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T23:27:42Z"
+        },
+        {
+          "sourceName": "NFL.com",
+          "author": "Around the NFL Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication and update fields blank in the live roundup; no exact clock verified",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T23:49:58Z"
         }
       ]
     },
@@ -9500,5 +9536,5 @@
       ]
     }
   ],
-  "contentHash": "fb423c2f10a7993eaf91d7d90710a22c827e1764093e6e80135f0df6afcd52c2"
+  "contentHash": "c2cfe483806a4fcfa836c76fcca1a1cc5ef6aef4853d64cf328c0802e8c583f8"
 }
