@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T12:31:37.000Z",
-  "updatedAt": "2026-10-04T12:33:11.115Z",
-  "revision": "bowser-public-news-20261004T123311115Z",
+  "checkedAt": "2026-10-04T13:00:20.000Z",
+  "updatedAt": "2026-10-04T13:02:18.415Z",
+  "revision": "bowser-public-news-20261004T130218415Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -121,15 +121,15 @@
         "team": "BAL",
         "position": "WR"
       },
-      "headline": "Flowers expected to play; official questionable tag remains",
-      "summary": "Ian Rapoport reports that Flowers is expected to play against Tennessee despite the hamstring issue. Baltimore's final designation remains QUESTIONABLE; Friday limited work was attributed to rest.",
-      "fantasyAnalysis": "The reported outlook is encouraging, but verify the official inactive list before relying on him. Expected availability does not guarantee a normal snap count or target share.",
-      "eventType": "INJURY",
+      "headline": "Flowers reportedly expected to play without a hard pitch count",
+      "summary": "Fowler reports that a hard pitch count is not expected for Flowers against Tennessee, unlike last week. This adds a workload-plan update to Rapoport's expected-to-play report. Baltimore's official hamstring-related QUESTIONABLE designation remains.",
+      "fantasyAnalysis": "The reported plan improves his workload outlook, but verify the inactive list. No hard pitch count does not guarantee normal or unrestricted snaps, targets, or a game without an in-game limitation.",
+      "eventType": "ROLE_CHANGE",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T12:31:37Z",
+      "checkedAt": "2026-10-04T13:00:20Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -176,6 +176,18 @@
           "url": "https://x.com/RapSheet/status/2106700957283184679",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T12:28:53Z"
+        },
+        {
+          "sourceName": "Jeremy Fowler (X)",
+          "author": "Jeremy Fowler",
+          "xHandle": "JFowlerESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "4:31 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/JFowlerESPN/status/2106708690208231466?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:58:59Z"
         }
       ]
     },
@@ -4583,15 +4595,15 @@
         "team": "TB",
         "position": "QB"
       },
-      "headline": "Mayfield reportedly pushing for an earlier return",
-      "summary": "Pelissero's original October 3 post says Mayfield is scheduled for thumb-stitch removal Monday and hopes to beat the initial three-week timeline. Steelers Depot attributes a possible Week 6 return target to Pelissero's paid column; that section was not directly accessible. Mayfield remains officially OUT for Week 4.",
-      "fantasyAnalysis": "Keep a Week 4 replacement. A possible earlier return adds uncertainty to the duration of Jalon Daniels' starting opportunity; no clearance or firm return date is established.",
-      "eventType": "RETURN",
+      "headline": "Mayfield reportedly faces three-to-six-week recovery range",
+      "summary": "Schefter's October 4 report gives a three-to-six-week absence range, depending on when Mayfield can grip a football, and says Tampa Bay did not place him on IR Saturday. This is broader than the earlier optimistic report: Pelissero described an effort to beat the initial three-week timeline, with a possible Week 6 target attributed by a secondary outlet to his inaccessible paid column. Mayfield remains officially OUT for Week 4; no firm return date or new setback is confirmed.",
+      "fantasyAnalysis": "Plan for a multiweek quarterback alternative and reassess recovery rather than relying on a Week 6 return. Jalon Daniels is confirmed for Week 4 and could continue while Mayfield is unavailable, but neither a fixed number of starts nor rookie production is guaranteed.",
+      "eventType": "INJURY",
       "status": "REPORTED",
-      "fantasyImpact": "MEDIUM",
+      "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T01:01:02Z",
+      "lastUpdatedAt": "2026-10-04T12:15:00Z",
+      "checkedAt": "2026-10-04T13:00:20Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4600,7 +4612,7 @@
         "bodyPart": "Right thumb",
         "practiceStatus": "DNP",
         "gameStatus": "OUT",
-        "expectedReturn": "Week 6 is a reported possible target, not a confirmed return date."
+        "expectedReturn": "Reported three-to-six-week range dependent on grip recovery; no confirmed return date."
       },
       "sources": [
         {
@@ -4650,6 +4662,30 @@
           "url": "https://www.buccaneers.com/news/2026-game-preview-packers-buccaneers-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T01:00:33Z"
+        },
+        {
+          "sourceName": "Adam Schefter (X)",
+          "author": "Adam Schefter",
+          "xHandle": "AdamSchefter",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "5:22 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/AdamSchefter/status/2106721621918572647?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:58:40Z"
+        },
+        {
+          "sourceName": "ESPN",
+          "author": "Adam Schefter",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-04T12:15:00Z",
+          "publishedAtRaw": "Oct 4, 2026, 08:15 AM ET",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.espn.com/nfl/story/_/id/50090537/sources-baker-mayfield-return-hinges-qb-grip-football",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:59:40Z"
         }
       ]
     },
@@ -4822,15 +4858,15 @@
         "team": "TB",
         "position": "QB"
       },
-      "headline": "Daniels starts Week 4; later opportunity depends on Mayfield",
-      "summary": "Tampa Bay confirms Daniels will start against Green Bay. Its October 1 preview expected Mayfield to miss at least three games. Pelissero's October 3 post now describes Mayfield trying to beat the initial timeline, so that earlier expectation does not guarantee three Daniels starts.",
-      "fantasyAnalysis": "Daniels has a confirmed short-term starting opportunity for Week 4. Reassess subsequent weeks as Mayfield recovers; rookie production and the duration of this opportunity remain uncertain.",
+      "headline": "Daniels starts Week 4; Mayfield report suggests multiweek opportunity",
+      "summary": "Tampa Bay confirms Daniels starts against Green Bay. Schefter's October 4 report now describes a three-to-six-week Mayfield absence range dependent on grip recovery. That is broader than Pelissero's earlier report of Mayfield trying to beat the initial timeline; the number of subsequent Daniels starts remains uncertain.",
+      "fantasyAnalysis": "Daniels has a confirmed Week 4 start and could remain the replacement during Mayfield's recovery. Reassess the role weekly; neither a fixed number of starts nor reliable rookie production is established.",
       "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T01:01:02Z",
+      "lastUpdatedAt": "2026-10-04T12:15:00Z",
+      "checkedAt": "2026-10-04T13:00:20Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4887,6 +4923,18 @@
           "url": "https://steelersdepot.com/2026/10/tough-but-not-impossible-insider-says-baker-mayfield-eyes-aggressive-return-versus-steelers/",
           "isOriginalSource": false,
           "checkedAt": "2026-10-04T01:00:20Z"
+        },
+        {
+          "sourceName": "ESPN",
+          "author": "Adam Schefter",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-04T12:15:00Z",
+          "publishedAtRaw": "Oct 4, 2026, 08:15 AM ET",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.espn.com/nfl/story/_/id/50090537/sources-baker-mayfield-return-hinges-qb-grip-football",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:59:40Z"
         }
       ]
     },
@@ -5552,5 +5600,5 @@
       ]
     }
   ],
-  "contentHash": "bcaf7e3bab454b6bee22dbbcc569e303ee1db720b604abe6cd8b84537b2da7bd"
+  "contentHash": "7d82d7bcc6b89ef2265b4edce799516be81764668c7eccd942c523526f2ba704"
 }
