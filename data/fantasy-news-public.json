@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T23:20:53.000Z",
-  "updatedAt": "2026-10-04T23:23:01.450Z",
-  "revision": "bowser-public-news-20261004T232301450Z",
+  "checkedAt": "2026-10-04T23:28:34.000Z",
+  "updatedAt": "2026-10-04T23:30:32.533Z",
+  "revision": "bowser-public-news-20261004T233032533Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -3179,14 +3179,14 @@
         "position": "WR"
       },
       "headline": "Rice downgraded to doubtful with hamstring injury",
-      "summary": "Rice's latest verified official status remains doubtful to return with a hamstring injury. No subsequent return or OUT outcome is verified. Charles Goldman separately reports an apparent Thornton ankle injury, adding uncertainty to the receiving group.",
-      "fantasyAnalysis": "Reassess the available receiving group with both injury situations unresolved. Other pass catchers could gain opportunities, but Thornton should not be assumed a healthy Rice replacement. No future absence, fixed target share or recovery timetable is confirmed.",
+      "summary": "Rice's latest verified official status remains doubtful to return with a hamstring injury, with no actual return or final nonreturn outcome verified. The Chiefs now officially rule Thornton out with an ankle injury, resolving that separate receiving contingency.",
+      "fantasyAnalysis": "Thornton is unavailable for the rest of the game, so any added opportunities fall to other available pass catchers while Rice remains doubtful. No future absence, fixed target share or recovery timetable is confirmed.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T23:20:53Z",
+      "checkedAt": "2026-10-04T23:28:34Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3245,6 +3245,18 @@
           "url": "https://x.com/goldmctNFL/status/2106884383189635507",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T23:18:25Z"
+        },
+        {
+          "sourceName": "Kansas City Chiefs",
+          "author": null,
+          "xHandle": "Chiefs",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "4:25 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Chiefs/status/2106888351169265736",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T23:27:42Z"
         }
       ]
     },
@@ -3256,24 +3268,24 @@
         "team": "KC",
         "position": "WR"
       },
-      "headline": "Thornton has apparent ankle injury, Goldman reports",
-      "summary": "Charles Goldman reports Thornton appeared to injure his ankle after a catch against Las Vegas. The original post supplies no formal return designation or confirmed severity; no direct official OUT decision is verified in this check.",
-      "fantasyAnalysis": "With Rice already doubtful to return, another receiving injury increases uncertainty. Other available Chiefs pass catchers could gain opportunities, but no fixed share is established. Await assessment before future decisions; no absence length is confirmed.",
+      "headline": "Thornton officially out with ankle injury",
+      "summary": "The Chiefs' original team announcement rules Thornton OUT with an ankle injury against Las Vegas, resolving his previously unconfirmed formal return status. The team supplies no side, severity assessment or recovery timetable.",
+      "fantasyAnalysis": "With Thornton out and Rice still doubtful to return, other available Chiefs pass catchers could gain opportunities. No fixed share or future absence is established; reassess after evaluation.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T23:20:53Z",
+      "checkedAt": "2026-10-04T23:28:34Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Apparent ankle injury; diagnosis unconfirmed",
+        "bodyPart": "Ankle",
         "practiceStatus": null,
-        "gameStatus": null,
-        "expectedReturn": "Formal return status, severity and timetable unconfirmed."
+        "gameStatus": "OUT FOR GAME",
+        "expectedReturn": "Out for the remainder of Week 4; future availability and timetable unconfirmed."
       },
       "sources": [
         {
@@ -3287,6 +3299,18 @@
           "url": "https://x.com/goldmctNFL/status/2106884383189635507",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T23:18:25Z"
+        },
+        {
+          "sourceName": "Kansas City Chiefs",
+          "author": null,
+          "xHandle": "Chiefs",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "4:25 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Chiefs/status/2106888351169265736",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T23:27:42Z"
         }
       ]
     },
@@ -9476,5 +9500,5 @@
       ]
     }
   ],
-  "contentHash": "f3dbaf663399427cf12161bb6091864af1b93fedf3e41e8f3bac1d063f3b1053"
+  "contentHash": "fb423c2f10a7993eaf91d7d90710a22c827e1764093e6e80135f0df6afcd52c2"
 }
