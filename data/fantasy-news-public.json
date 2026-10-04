@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T19:18:47.000Z",
-  "updatedAt": "2026-10-04T19:20:12.266Z",
-  "revision": "bowser-public-news-20261004T192012266Z",
+  "checkedAt": "2026-10-04T19:37:05.000Z",
+  "updatedAt": "2026-10-04T19:40:14.336Z",
+  "revision": "bowser-public-news-20261004T194014336Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -3638,6 +3638,48 @@
       ]
     },
     {
+      "eventId": "mia-brady-cook-week4-emergency-qb-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Brady Cook",
+        "team": "MIA",
+        "position": "QB"
+      },
+      "headline": "Brady Cook inactive as emergency third QB",
+      "summary": "The official matchup list includes Brady Cook as the inactive emergency third quarterback.",
+      "fantasyAnalysis": "Emergency eligibility is not ordinary active-backup availability or an established playing role.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:37:05Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE (EMERGENCY THIRD QB)",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Minnesota Vikings",
+          "author": "Craig Peters",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 01:35 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.vikings.com/news/vikings-dolphins-inactives-week-4-2026-nfl-season",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:35:51Z"
+        }
+      ]
+    },
+    {
       "eventId": "mia-caleb-douglas-week4-out-2026-10-02",
       "player": {
         "playerId": null,
@@ -3645,15 +3687,15 @@
         "team": "MIA",
         "position": "WR"
       },
-      "headline": "Douglas officially out against Minnesota",
-      "summary": "Miami's final table confirms Douglas DNP Friday and OUT with his ankle issue.",
-      "fantasyAnalysis": "Use a healthy receiver alternative. Chris Bell is cleared, but no replacement target allocation is confirmed.",
+      "headline": "Douglas inactive against Minnesota",
+      "summary": "The complete matchup list confirms Douglas inactive after his previously announced ankle-related OUT designation.",
+      "fantasyAnalysis": "He is unavailable this game. Bell is eligible, with no confirmed replacement target allocation.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:38:00Z",
+      "checkedAt": "2026-10-04T19:37:05Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3661,7 +3703,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Ankle",
         "practiceStatus": "DNP",
-        "gameStatus": "OUT",
+        "gameStatus": "INACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -3688,6 +3730,18 @@
           "url": "https://www.miamidolphins.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:38:00Z"
+        },
+        {
+          "sourceName": "Minnesota Vikings",
+          "author": "Craig Peters",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 01:35 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.vikings.com/news/vikings-dolphins-inactives-week-4-2026-nfl-season",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:35:51Z"
         }
       ]
     },
@@ -3699,15 +3753,15 @@
         "team": "MIA",
         "position": "RB"
       },
-      "headline": "Miami signs Washington to active roster",
-      "summary": "Miami's October 3 transaction log confirms Carlos Washington Jr. signed to the active roster from the practice squad.",
-      "fantasyAnalysis": "This adds backfield depth without establishing a starting role, carry share or a change in the existing backfield order.",
-      "eventType": "TRANSACTION",
+      "headline": "Washington active following roster signing",
+      "summary": "Following his roster signing, Washington is absent from Miami's complete inactive list.",
+      "fantasyAnalysis": "Game-day eligibility adds backfield depth without establishing carries or changing the committee order.",
+      "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T17:43:09Z",
+      "checkedAt": "2026-10-04T19:37:05Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3715,7 +3769,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -3730,6 +3784,18 @@
           "url": "https://www.miamidolphins.com/team/transactions/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T17:43:09Z"
+        },
+        {
+          "sourceName": "Minnesota Vikings",
+          "author": "Craig Peters",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 01:35 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.vikings.com/news/vikings-dolphins-inactives-week-4-2026-nfl-season",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:35:51Z"
         }
       ]
     },
@@ -3741,15 +3807,15 @@
         "team": "MIA",
         "position": "WR"
       },
-      "headline": "Bell full Friday without game designation",
-      "summary": "Miami's final table lists Bell full Friday with no designation.",
-      "fantasyAnalysis": "Bell is healthy enough to consider for opportunity with Douglas out, but his workload is not established.",
+      "headline": "Bell active; Douglas inactive",
+      "summary": "Bell is absent from Miami's complete inactive list, while Douglas is listed inactive.",
+      "fantasyAnalysis": "Bell is eligible for receiving work. No specific targets or snap share are established by the list.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:38:00Z",
+      "checkedAt": "2026-10-04T19:37:05Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3757,7 +3823,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Knee",
         "practiceStatus": "FP",
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -3772,6 +3838,18 @@
           "url": "https://www.miamidolphins.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:38:00Z"
+        },
+        {
+          "sourceName": "Minnesota Vikings",
+          "author": "Craig Peters",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 01:35 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.vikings.com/news/vikings-dolphins-inactives-week-4-2026-nfl-season",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:35:51Z"
         }
       ]
     },
@@ -3783,15 +3861,15 @@
         "team": "MIA",
         "position": "RB"
       },
-      "headline": "Wright full Friday without game designation",
-      "summary": "Miami's final table lists Wright full Friday with no designation against Minnesota.",
-      "fantasyAnalysis": "Do not assume Gordon has an absence-driven workload increase. Miami's exact committee split remains uncertain.",
-      "eventType": "COACH_COMMENT",
+      "headline": "Wright active against Minnesota",
+      "summary": "Wright is absent from Miami's complete inactive list after his Friday clearance.",
+      "fantasyAnalysis": "His eligibility removes the unresolved active-status question, but Miami's committee split remains uncertain. No absence-driven Gordon workload increase should be assumed.",
+      "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:38:00Z",
+      "checkedAt": "2026-10-04T19:37:05Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3799,7 +3877,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Stinger / Foot",
         "practiceStatus": "FP",
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -3838,6 +3916,60 @@
           "url": "https://www.fantasypros.com/nfl/news/611841/jaylen-wright-foot-expected-to-play-sunday.php",
           "isOriginalSource": false,
           "checkedAt": "2026-10-02T17:07:00Z"
+        },
+        {
+          "sourceName": "Minnesota Vikings",
+          "author": "Craig Peters",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 01:35 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.vikings.com/news/vikings-dolphins-inactives-week-4-2026-nfl-season",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:35:51Z"
+        }
+      ]
+    },
+    {
+      "eventId": "mia-justin-joly-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Justin Joly",
+        "team": "MIA",
+        "position": "TE"
+      },
+      "headline": "Justin Joly inactive",
+      "summary": "The official matchup list includes Justin Joly among the inactives.",
+      "fantasyAnalysis": "He is unavailable for this game; no replacement target or snap share is established.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:37:05Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Minnesota Vikings",
+          "author": "Craig Peters",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 01:35 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.vikings.com/news/vikings-dolphins-inactives-week-4-2026-nfl-season",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:35:51Z"
         }
       ]
     },
@@ -3849,15 +3981,15 @@
         "team": "MIN",
         "position": "WR"
       },
-      "headline": "Jefferson out Week 4; Vikings reportedly hope for Week 5 return",
-      "summary": "Minnesota officially ruled Jefferson out against Miami after three ankle DNPs. Jeremy Fowler reports the Vikings are hopeful he can return next week; that is a recovery outlook, not confirmed Week 5 availability.",
-      "fantasyAnalysis": "Use a healthy Week 4 replacement. Addison and Jennings remain possible target beneficiaries, with no fixed target share established. Reassess Jefferson's Week 5 practice and game status before returning him to a lineup.",
+      "headline": "Jefferson inactive; Week 5 remains a reported hope",
+      "summary": "The Vikings list Jefferson inactive, confirming his previously announced ankle-related absence. Fowler's earlier Week 5 hope remains unconfirmed.",
+      "fantasyAnalysis": "A healthy replacement is needed for this game. Addison and Jennings are conditional target beneficiaries, without a fixed share. Reassess next week's practice and status before relying on a return.",
       "eventType": "PRACTICE",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T13:50:21Z",
+      "checkedAt": "2026-10-04T19:37:05Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3865,7 +3997,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Ankle",
         "practiceStatus": "DNP",
-        "gameStatus": "OUT",
+        "gameStatus": "INACTIVE",
         "expectedReturn": "Week 5 is a reported hope; return and workload are not confirmed"
       },
       "sources": [
@@ -3952,6 +4084,60 @@
           "url": "https://www.vikings.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T13:49:58Z"
+        },
+        {
+          "sourceName": "Minnesota Vikings",
+          "author": "Craig Peters",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 01:35 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.vikings.com/news/vikings-dolphins-inactives-week-4-2026-nfl-season",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:35:51Z"
+        }
+      ]
+    },
+    {
+      "eventId": "min-max-brosmer-week4-emergency-qb-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Max Brosmer",
+        "team": "MIN",
+        "position": "QB"
+      },
+      "headline": "Max Brosmer inactive as emergency third QB",
+      "summary": "The official matchup list includes Max Brosmer as the inactive emergency third quarterback.",
+      "fantasyAnalysis": "Emergency eligibility is not ordinary active-backup availability or an established playing role.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:37:05Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE (EMERGENCY THIRD QB)",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Minnesota Vikings",
+          "author": "Craig Peters",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 01:35 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.vikings.com/news/vikings-dolphins-inactives-week-4-2026-nfl-season",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:35:51Z"
         }
       ]
     },
@@ -8240,5 +8426,5 @@
       ]
     }
   ],
-  "contentHash": "5be48c8496911798fde395e4fcd1dec892cd5dd3ea88d5f154e79e40d8544827"
+  "contentHash": "edc0b588c422298f15f3d29e24ab1ec4acb82087142ab9abb757d177e1e755df"
 }
