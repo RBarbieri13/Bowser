@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T17:28:59.000Z",
-  "updatedAt": "2026-10-04T17:30:43.274Z",
-  "revision": "bowser-public-news-20261004T173043274Z",
+  "checkedAt": "2026-10-04T17:49:52.000Z",
+  "updatedAt": "2026-10-04T17:51:30.012Z",
+  "revision": "bowser-public-news-20261004T175130012Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -7138,15 +7138,15 @@
         "team": "WAS",
         "position": "WR"
       },
-      "headline": "McLaurin officially inactive for London game",
-      "summary": "Washington's official October 4 inactive list confirms Terry McLaurin will not play against Indianapolis, resolving the earlier questionable designation and likely-absence report.",
-      "fantasyAnalysis": "Use a healthy replacement before the 9:30 a.m. ET London kickoff. Stefon Diggs, Antonio Williams and other remaining pass catchers may gain opportunities, but no target allocation is confirmed.",
+      "headline": "McLaurin missed London; next status update expected Wednesday",
+      "summary": "Tashan Reed reports Dan Quinn said McLaurin pushed to play before being held inactive with his hamstring issue, and Quinn expects to update his status Wednesday. This does not establish a Week 5 return.",
+      "fantasyAnalysis": "Reassess later-week alternatives after the next health update. Neither a return nor another absence is established, and future target shares for the remaining Washington receivers remain uncertain.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T12:12:15Z",
+      "checkedAt": "2026-10-04T17:49:52Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -7155,7 +7155,7 @@
         "bodyPart": "Hamstring",
         "practiceStatus": "LP",
         "gameStatus": "INACTIVE",
-        "expectedReturn": null
+        "expectedReturn": "Status update expected Wednesday; Week 5 availability unconfirmed."
       },
       "sources": [
         {
@@ -7229,6 +7229,18 @@
           "url": "https://www.commanders.com/news/inactives-commanders-vs-colts-week-4-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T12:07:56Z"
+        },
+        {
+          "sourceName": "Tashan Reed (X)",
+          "author": "Tashan Reed",
+          "xHandle": "tashanreed",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "10:33 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/tashanreed/status/2106799834359607577?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:48:51Z"
         }
       ]
     },
@@ -7298,5 +7310,5 @@
       ]
     }
   ],
-  "contentHash": "b69d16bec4f7b68631dbd86beed2bf7c9329c42c9fb16d6973881ea542bf8873"
+  "contentHash": "e511fc7aed45cabd61681d41a92807ef530ed60d1d8da406b5d097853d616a1a"
 }
