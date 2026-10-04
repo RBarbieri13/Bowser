@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T22:37:29.000Z",
-  "updatedAt": "2026-10-04T22:39:29.631Z",
-  "revision": "bowser-public-news-20261004T223929631Z",
+  "checkedAt": "2026-10-04T23:00:18.000Z",
+  "updatedAt": "2026-10-04T23:03:02.947Z",
+  "revision": "bowser-public-news-20261004T230302947Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -1001,15 +1001,15 @@
         "team": "CAR",
         "position": "QB"
       },
-      "headline": "Young practices fully Friday without a game designation",
-      "summary": "Carolina lists Young full Friday and without a Week 4 injury designation.",
-      "fantasyAnalysis": "The final report resolves the injury-status concern, without guaranteeing workload or points.",
-      "eventType": "PRACTICE",
+      "headline": "Young active against Detroit",
+      "summary": "Young is absent from Carolina's complete six-player inactive list and eligible to play Sunday night, following Friday's full participation without a game designation.",
+      "fantasyAnalysis": "Game-day eligibility is confirmed, without a guarantee of unrestricted snaps, touches or targets.",
+      "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:07:00Z",
+      "checkedAt": "2026-10-04T23:00:18Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1017,7 +1017,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Knee",
         "practiceStatus": "FP",
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -1044,6 +1044,18 @@
           "url": "https://www.panthers.com/news/week-4-friday-injury-report-two-ruled-out-for-lions-game-xavier-legette-damien-lewis-questionable-jalen-coker",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:07:00Z"
+        },
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 06:55 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.panthers.com/news/week-4-inactives-vs-detroit-jalen-coker-out-this-week-sunday-night-football-lions",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:57:41Z"
         }
       ]
     },
@@ -1055,15 +1067,15 @@
         "team": "CAR",
         "position": "RB"
       },
-      "headline": "Hubbard practices fully Friday without a game designation",
-      "summary": "Carolina lists Hubbard full Friday and without a Week 4 injury designation.",
-      "fantasyAnalysis": "The final report resolves the injury-status concern, without guaranteeing workload or points.",
-      "eventType": "PRACTICE",
+      "headline": "Hubbard active against Detroit",
+      "summary": "Hubbard is absent from Carolina's complete six-player inactive list and eligible to play Sunday night, following Friday's full participation without a game designation.",
+      "fantasyAnalysis": "Game-day eligibility is confirmed, without a guarantee of unrestricted snaps, touches or targets.",
+      "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:07:00Z",
+      "checkedAt": "2026-10-04T23:00:18Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1071,7 +1083,7 @@
         "isInjuryRelated": false,
         "bodyPart": "Not injury-related / rest",
         "practiceStatus": "FP",
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -1098,6 +1110,18 @@
           "url": "https://www.panthers.com/news/week-4-friday-injury-report-two-ruled-out-for-lions-game-xavier-legette-damien-lewis-questionable-jalen-coker",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:07:00Z"
+        },
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 06:55 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.panthers.com/news/week-4-inactives-vs-detroit-jalen-coker-out-this-week-sunday-night-football-lions",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:57:41Z"
         }
       ]
     },
@@ -1109,15 +1133,15 @@
         "team": "CAR",
         "position": "TE"
       },
-      "headline": "Waller practices fully Friday without a game designation",
-      "summary": "Carolina lists Waller full Friday and without a Week 4 injury designation.",
-      "fantasyAnalysis": "The final report resolves the injury-status concern, without guaranteeing workload or points.",
-      "eventType": "PRACTICE",
+      "headline": "Waller active against Detroit",
+      "summary": "Waller is absent from Carolina's complete six-player inactive list and eligible to play Sunday night, following Friday's full participation without a game designation.",
+      "fantasyAnalysis": "Game-day eligibility is confirmed, without a guarantee of unrestricted snaps, touches or targets.",
+      "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:07:00Z",
+      "checkedAt": "2026-10-04T23:00:18Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1125,7 +1149,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Vet rest / toe",
         "practiceStatus": "FP",
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -1152,6 +1176,60 @@
           "url": "https://www.panthers.com/news/week-4-friday-injury-report-two-ruled-out-for-lions-game-xavier-legette-damien-lewis-questionable-jalen-coker",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:07:00Z"
+        },
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 06:55 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.panthers.com/news/week-4-inactives-vs-detroit-jalen-coker-out-this-week-sunday-night-football-lions",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:57:41Z"
+        }
+      ]
+    },
+    {
+      "eventId": "car-haynes-king-week4-emergency-qb-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Haynes King",
+        "team": "CAR",
+        "position": "QB"
+      },
+      "headline": "King inactive as emergency third quarterback",
+      "summary": "The Panthers' complete Week 4 inactive list explicitly designates King as the emergency third quarterback against Detroit.",
+      "fantasyAnalysis": "Emergency eligibility is distinct from ordinary active status and does not establish a routine playing role or future start.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T23:00:18Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE / EMERGENCY THIRD QB",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 06:55 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.panthers.com/news/week-4-inactives-vs-detroit-jalen-coker-out-this-week-sunday-night-football-lions",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:57:41Z"
         }
       ]
     },
@@ -1163,15 +1241,15 @@
         "team": "CAR",
         "position": "WR"
       },
-      "headline": "Panthers elevate Reed for Sunday night",
-      "summary": "Carolina gave Reed a standard practice-squad elevation for the Lions game, his first this season, while placing Xavier Legette on injured reserve.",
-      "fantasyAnalysis": "The team describes Reed as depth and cover for still-questionable Jalen Coker. The elevation does not mean Coker is out or establish Reed's snap or target share.",
-      "eventType": "TRANSACTION",
+      "headline": "Reed active after elevation; Coker inactive",
+      "summary": "Carolina explicitly includes Reed in its available wide receiver group after his standard practice-squad elevation. Coker is inactive and Legette remains on injured reserve.",
+      "fantasyAnalysis": "Reed is available as receiving depth. The confirmed absences may create opportunities, but his elevation and active status do not establish a starting role, snap count or target share.",
+      "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T20:30:34Z",
+      "checkedAt": "2026-10-04T23:00:18Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1179,7 +1257,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -1194,6 +1272,18 @@
           "url": "https://www.panthers.com/news/panthers-place-wide-receiver-xavier-legette-on-injured-reserve-lions-sunday-night-football-jalen-coker-status",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T20:30:34Z"
+        },
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 06:55 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.panthers.com/news/week-4-inactives-vs-detroit-jalen-coker-out-this-week-sunday-night-football-lions",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:57:41Z"
         }
       ]
     },
@@ -1205,15 +1295,15 @@
         "team": "CAR",
         "position": "WR"
       },
-      "headline": "Coker reportedly unlikely to play Sunday night",
-      "summary": "ESPN reports sources told Adam Schefter that Jalen Coker is unlikely to play against Detroit with his quadriceps injury. His official designation remains QUESTIONABLE. The article retains its October 3 publication clock; the Coker update's insertion time is not displayed.",
-      "fantasyAnalysis": "Use a healthy earlier option or retain a viable Sunday-night or Monday fallback. Canales said John Metchie took some of Coker's practice reps and is ready if needed, but no target share or starting order is guaranteed.",
+      "headline": "Coker officially inactive for Sunday night",
+      "summary": "Carolina's official inactive list confirms Coker will not play against Detroit, resolving his quadriceps-related questionable designation and earlier reported unlikely-to-play outlook. The club lists McMillan, Tremayne, Metchie III, David Moore and Ja'seem Reed as available receivers.",
+      "fantasyAnalysis": "Replace Coker in any still-open lineup before the scheduled 8:20 p.m. EDT kickoff. McMillan and the other active receivers could gain opportunities with Coker unavailable and Legette on IR, but no target share or replacement starting order is guaranteed.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T12:12:15Z",
+      "checkedAt": "2026-10-04T23:00:18Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1221,8 +1311,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Quadriceps",
         "practiceStatus": "LP",
-        "gameStatus": "QUESTIONABLE",
-        "expectedReturn": null
+        "gameStatus": "INACTIVE",
+        "expectedReturn": "Unavailable for Week 4; later availability unconfirmed."
       },
       "sources": [
         {
@@ -1260,6 +1350,60 @@
           "url": "https://www.espn.com/nfl/story/_/id/50093238/panthers-place-wr-xavier-legette-ir-knee-injury",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T12:10:56Z"
+        },
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 06:55 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.panthers.com/news/week-4-inactives-vs-detroit-jalen-coker-out-this-week-sunday-night-football-lions",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:57:41Z"
+        }
+      ]
+    },
+    {
+      "eventId": "car-jatavion-sanders-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Ja'Tavion Sanders",
+        "team": "CAR",
+        "position": "TE"
+      },
+      "headline": "Sanders inactive against Detroit",
+      "summary": "Carolina's official six-player inactive list includes Sanders. The list does not give an injury cause for his absence.",
+      "fantasyAnalysis": "Sanders is unavailable for this game. Do not infer an injury or a guaranteed receiving share for another tight end from the inactive decision alone.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T23:00:18Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 06:55 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.panthers.com/news/week-4-inactives-vs-detroit-jalen-coker-out-this-week-sunday-night-football-lions",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:57:41Z"
         }
       ]
     },
@@ -1966,6 +2110,48 @@
       ]
     },
     {
+      "eventId": "den-pat-bryant-week4-injury-concern-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Pat Bryant",
+        "team": "DEN",
+        "position": "WR"
+      },
+      "headline": "Cart called for Bryant after tackle, reporter says",
+      "summary": "Jennifer Lee Chan's original report says a cart was coming onto the field for Bryant after he was tackled against San Francisco. The post does not specify a body part, formal return designation or prognosis.",
+      "fantasyAnalysis": "Other Broncos receivers could gain opportunities if Bryant remains unavailable. Await the team assessment and actual return status before future decisions; no severity or absence length is established.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T23:00:18Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Undisclosed; assessment unconfirmed",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Return status and prognosis unconfirmed."
+      },
+      "sources": [
+        {
+          "sourceName": "NBC Sports Bay Area (Jennifer Lee Chan on X)",
+          "author": "Jennifer Lee Chan",
+          "xHandle": "jenniferleechan",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "3:42 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/jenniferleechan/status/2106877595853951162?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:58:54Z"
+        }
+      ]
+    },
+    {
       "eventId": "den-sam-ehlinger-week4-emergency-qb-2026-10-04",
       "player": {
         "playerId": null,
@@ -2016,6 +2202,48 @@
           "url": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/f_auto/broncos/ecwimlv7vpe90vnfouxe.jpg",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T19:17:59Z"
+        }
+      ]
+    },
+    {
+      "eventId": "det-tyler-conklin-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Tyler Conklin",
+        "team": "DET",
+        "position": "TE"
+      },
+      "headline": "Conklin a healthy scratch against Carolina",
+      "summary": "Detroit's official inactive article lists Conklin among five healthy scratches for the Panthers game.",
+      "fantasyAnalysis": "Conklin is unavailable for Week 4. The decision does not establish a fixed target or snap share for another tight end.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T23:00:18Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Detroit Lions",
+          "author": "Tim Twentyman",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 06:50 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.detroitlions.com/news/inactives-lions-at-panthers-bartch-reed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:58:29Z"
         }
       ]
     },
@@ -9170,5 +9398,5 @@
       ]
     }
   ],
-  "contentHash": "8b3ba6f59d53eda487dc9aaee5fe326d7cb320db9d0c04a5a07297979d83c6f8"
+  "contentHash": "c7414b9a8e88f70c4c206771d88b7d2b216bd76df2fd661a95fbdb5d774e20f1"
 }
