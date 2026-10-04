@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T20:19:23.000Z",
-  "updatedAt": "2026-10-04T20:21:51.884Z",
-  "revision": "bowser-public-news-20261004T202151884Z",
+  "checkedAt": "2026-10-04T20:36:20.000Z",
+  "updatedAt": "2026-10-04T20:38:21.247Z",
+  "revision": "bowser-public-news-20261004T203821247Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -1368,6 +1368,48 @@
           "url": "https://x.com/ChicagoBears/status/2106769313143353807",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:47:53Z"
+        }
+      ]
+    },
+    {
+      "eventId": "chi-kyle-monangai-week4-thumb-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Kyle Monangai",
+        "team": "CHI",
+        "position": "RB"
+      },
+      "headline": "Monangai has thumb injury, per reported coach update",
+      "summary": "Kevin Fishbain reports Ben Johnson said Monangai has a thumb injury following Chicago's game. The original report provides no severity, game designation or recovery timetable.",
+      "fantasyAnalysis": "Reassess Monangai after evaluation and upcoming practice reports before next-week decisions. Swift could gain work if Monangai is restricted, but no absence, fixed share or workload increase is established.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T20:36:20Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Severity, future availability and recovery timetable unconfirmed."
+      },
+      "sources": [
+        {
+          "sourceName": "The Athletic (Kevin Fishbain on X)",
+          "author": "Kevin Fishbain",
+          "xHandle": "kfishbain",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "1:18 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/kfishbain/status/2106841455981658585?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:34:04Z"
         }
       ]
     },
@@ -6044,15 +6086,15 @@
         "team": "PHI",
         "position": "RB"
       },
-      "headline": "Bigsby hurt late; injury details and return outcome unconfirmed",
-      "summary": "The Eagles' live recap records Bigsby getting hurt in the fourth quarter. Jimmy Kempski reported a trip to the medical tent. No body part, official return designation, later return or prognosis is verified.",
-      "fantasyAnalysis": "With Barkley already out, Shipley could gain opportunities while Bigsby is unavailable. Check both players' evaluations before treating either replacement's future role as settled; no fixed workload or absence length is established.",
+      "headline": "Bigsby injury details unresolved after Rams game",
+      "summary": "The Eagles' final recap confirms the game is complete and records Bigsby getting hurt late. His body part, whether he returned, and recovery outlook remain unconfirmed. Kempski's earlier medical-tent report remains attributed reporting.",
+      "fantasyAnalysis": "Shipley's future opportunity depends on both Barkley's and Bigsby's evaluations. Bigsby is not established as a healthy replacement; no fixed future role, workload or absence length is confirmed.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T20:19:23Z",
+      "checkedAt": "2026-10-04T20:36:20Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -6061,7 +6103,7 @@
         "bodyPart": "Undisclosed",
         "practiceStatus": null,
         "gameStatus": null,
-        "expectedReturn": "Return outcome and longer-term prognosis unconfirmed."
+        "expectedReturn": "Game finished; return outcome and future availability unconfirmed."
       },
       "sources": [
         {
@@ -6087,6 +6129,18 @@
           "url": "https://x.com/JimmyKempski/status/2106835909056303246",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T20:16:20Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 04:22 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-game-recap-october-4-2026-nfl-week-4-regular-season-jalen-hurts-matthew-stafford",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:33:19Z"
         }
       ]
     },
@@ -8606,5 +8660,5 @@
       ]
     }
   ],
-  "contentHash": "daa7cb06c06cc9a08388f9c11223d0f712a2a52d5c42c7995ff36d7388e4d227"
+  "contentHash": "c9d71e2dbf79acf0f9a5d241fa628021f9a7a86a77e7293d53ffd20bf8a0facb"
 }
