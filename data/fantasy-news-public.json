@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T17:58:40.000Z",
-  "updatedAt": "2026-10-04T18:00:16.663Z",
-  "revision": "bowser-public-news-20261004T180016663Z",
+  "checkedAt": "2026-10-04T18:19:20.000Z",
+  "updatedAt": "2026-10-04T18:21:13.886Z",
+  "revision": "bowser-public-news-20261004T182113886Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -1324,6 +1324,48 @@
       ]
     },
     {
+      "eventId": "cin-jamarr-chase-week4-concussion-evaluation-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Ja'Marr Chase",
+        "team": "CIN",
+        "position": "WR"
+      },
+      "headline": "Chase under concussion evaluation; return questionable",
+      "summary": "The Bengals officially say Chase is being evaluated for a possible concussion and is questionable to return against Jacksonville. No clearance, return or out announcement was verified in the latest official-feed check. Evaluation does not establish a concussion diagnosis.",
+      "fantasyAnalysis": "Other receivers could absorb opportunities while Chase is unavailable, but no target allocation is assured. Monitor the evaluation and return decision before later-week plans; no fixed absence length or post-kickoff swap is assumed.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T18:19:20Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Head; possible concussion under evaluation",
+        "practiceStatus": null,
+        "gameStatus": "QUESTIONABLE TO RETURN",
+        "expectedReturn": "Evaluation pending; no confirmed concussion diagnosis or recovery timetable."
+      },
+      "sources": [
+        {
+          "sourceName": "Cincinnati Bengals",
+          "author": null,
+          "xHandle": "Bengals",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "10:52 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Bengals/status/2106804542033515004?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T18:18:50Z"
+        }
+      ]
+    },
+    {
       "eventId": "den-lil-jordan-humphrey-practice-squad-signing-2026-10-03",
       "player": {
         "playerId": null,
@@ -1416,6 +1458,60 @@
           "url": "https://www.rotowire.com/football/headlines/joe-mixon-news-meeting-on-tap-with-seattle-640581",
           "isOriginalSource": false,
           "checkedAt": "2026-10-04T17:06:16Z"
+        }
+      ]
+    },
+    {
+      "eventId": "gb-chris-brooks-week4-ankle-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Chris Brooks",
+        "team": "GB",
+        "position": "RB"
+      },
+      "headline": "Brooks questionable to return with ankle injury",
+      "summary": "Green Bay's official post lists Brooks questionable to return with an ankle injury against Tampa Bay. No later return, downgrade, severity or recovery timetable is established.",
+      "fantasyAnalysis": "MarShawn Lloyd could receive additional work while Brooks is unavailable, but an exclusive role or fixed split is not established. Monitor return and later evaluation before future roster decisions.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T18:19:20Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": null,
+        "gameStatus": "QUESTIONABLE TO RETURN",
+        "expectedReturn": "In-game return uncertain; longer-term prognosis unknown."
+      },
+      "sources": [
+        {
+          "sourceName": "Green Bay Packers",
+          "author": null,
+          "xHandle": "packers",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "10:51 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/packers/status/2106804518298190192",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T18:17:39Z"
+        },
+        {
+          "sourceName": "FantasyPros",
+          "author": "Jesse Garcia",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-04T17:59:00Z",
+          "publishedAtRaw": "Sun, Oct 4th 2026, 1:59pm EDT",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.fantasypros.com/nfl/news/612032/chris-brooks-ankle-questionable-to-return.php?mp_feature=news&mp_platform=x&mp_sport=NFL",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-04T18:17:15Z"
         }
       ]
     },
@@ -4917,15 +5013,15 @@
         "team": "PHI",
         "position": "RB"
       },
-      "headline": "Barkley questionable to return with hamstring injury",
-      "summary": "Philadelphia's official in-game announcement lists Barkley questionable to return with a hamstring injury against the Rams. Olivia Reiner's original report corroborates the status. No return, downgrade, severity or recovery timetable has been confirmed.",
-      "fantasyAnalysis": "Tank Bigsby and Will Shipley are conditional options for additional work while Barkley is unavailable, without an established split. Monitor the return decision and subsequent injury evaluation before later-week moves; the game is already underway.",
+      "headline": "Barkley downgraded to out with hamstring injury",
+      "summary": "The Eagles' official live recap says Barkley has been downgraded to out with his hamstring injury, resolving the earlier questionable-to-return status. No recovery timetable or injury severity is announced.",
+      "fantasyAnalysis": "Bigsby and Shipley remain conditional options for additional work with Barkley out, without an established split. Reassess next-week contingencies after evaluation; no longer-term absence or locked-game lineup swap is assumed.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T17:28:59Z",
+      "checkedAt": "2026-10-04T18:19:20Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4933,8 +5029,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Hamstring",
         "practiceStatus": null,
-        "gameStatus": "QUESTIONABLE TO RETURN",
-        "expectedReturn": "In-game return uncertain; longer-term prognosis unknown."
+        "gameStatus": "OUT FOR GAME",
+        "expectedReturn": "Ruled out for the remainder of Week 4; longer-term prognosis unknown."
       },
       "sources": [
         {
@@ -4960,6 +5056,18 @@
           "url": "https://x.com/Eagles/status/2106796589465649446",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T17:28:49Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 02:10 PM; timezone not displayed; separate injury-entry clock absent",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-game-recap-october-4-2026-nfl-week-4-regular-season-jalen-hurts-matthew-stafford",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T18:15:47Z"
         }
       ]
     },
@@ -7322,5 +7430,5 @@
       ]
     }
   ],
-  "contentHash": "c64c296fd0ea8946d656d5960b9e41ec0e211e059ee2c9ba76ccbe2efc59d359"
+  "contentHash": "cf4d7b625935c2d899ab08b03ff1144589b40f4d6d4feba0679c868b5a7f222e"
 }
