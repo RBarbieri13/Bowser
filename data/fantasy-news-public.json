@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T16:29:38.000Z",
-  "updatedAt": "2026-10-04T16:31:23.126Z",
-  "revision": "bowser-public-news-20261004T163123126Z",
+  "checkedAt": "2026-10-04T16:53:19.000Z",
+  "updatedAt": "2026-10-04T16:54:55.002Z",
+  "revision": "bowser-public-news-20261004T165455002Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -6617,24 +6617,24 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Mariota ruled out for remainder of London game",
-      "summary": "Washington downgraded Mariota to OUT with his knee injury, resolving the earlier questionable-to-return status. Kaliakmanis had entered in relief, with passing participation corroborated by the official game page. No injury severity or longer-term recovery timetable was announced.",
-      "fantasyAnalysis": "Mariota will not return to this game. Kaliakmanis has the relief opportunity, but future starts depend on subsequent quarterback availability and team decisions. Reassess next-week alternatives after injury updates; the London game is already underway.",
+      "headline": "Mariota ruled out; MCL aggravation reported, testing pending",
+      "summary": "Washington officially ruled Mariota out with a knee injury. Nicki Jhabvala relays Molly McGrath's broadcast report of an aggravated preseason MCL injury. RotoWire attributes a right MCL aggravation and further tests to that broadcast. No team-confirmed severity or recovery timetable is established.",
+      "fantasyAnalysis": "Kaliakmanis has the relief opportunity, but a future start depends on Mariota's evaluation, Jayden Daniels' recovery and team decisions. Plan later-week contingencies without assuming another missed game or a fixed absence length.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T15:19:46Z",
+      "checkedAt": "2026-10-04T16:53:19Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Knee",
+        "bodyPart": "Knee; reported right MCL aggravation",
         "practiceStatus": null,
         "gameStatus": "OUT FOR GAME",
-        "expectedReturn": "Ruled out for the remainder of Week 4; longer-term prognosis unknown."
+        "expectedReturn": "Officially out for the game; further testing reported, longer-term timetable unknown."
       },
       "sources": [
         {
@@ -6696,6 +6696,30 @@
           "url": "https://x.com/Commanders/status/2106764269413167367",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:19:07Z"
+        },
+        {
+          "sourceName": "Nicki Jhabvala (X)",
+          "author": "Nicki Jhabvala; relaying Molly McGrath",
+          "xHandle": "NickiJhabvala",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication date and clock not exposed in the public post; report text appears in its title and heading",
+          "publishedDate": null,
+          "url": "https://x.com/NickiJhabvala/status/2106780904509055109",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-04T16:52:27Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Molly McGrath",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated October 4, 2026 at 9:47 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.rotowire.com/football/headlines/marcus-mariota-injury-aggravates-mcl-injury-in-week-4-640571",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-04T16:52:34Z"
         }
       ]
     },
@@ -6932,5 +6956,5 @@
       ]
     }
   ],
-  "contentHash": "1312f78bc1b48ce3f8cb2f24a96f5eee82d76d76f81883b936c1b40bd2b48574"
+  "contentHash": "b569a93e6ac2839aab1feb90b21ad378954c26d70b08effc3b34feefa10290cf"
 }
