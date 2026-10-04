@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T17:19:34.000Z",
-  "updatedAt": "2026-10-04T17:21:11.993Z",
-  "revision": "bowser-public-news-20261004T172111993Z",
+  "checkedAt": "2026-10-04T17:28:59.000Z",
+  "updatedAt": "2026-10-04T17:30:43.274Z",
+  "revision": "bowser-public-news-20261004T173043274Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -4910,6 +4910,60 @@
       ]
     },
     {
+      "eventId": "phi-saquon-barkley-week4-hamstring-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Saquon Barkley",
+        "team": "PHI",
+        "position": "RB"
+      },
+      "headline": "Barkley questionable to return with hamstring injury",
+      "summary": "Philadelphia's official in-game announcement lists Barkley questionable to return with a hamstring injury against the Rams. Olivia Reiner's original report corroborates the status. No return, downgrade, severity or recovery timetable has been confirmed.",
+      "fantasyAnalysis": "Tank Bigsby and Will Shipley are conditional options for additional work while Barkley is unavailable, without an established split. Monitor the return decision and subsequent injury evaluation before later-week moves; the game is already underway.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T17:28:59Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": null,
+        "gameStatus": "QUESTIONABLE TO RETURN",
+        "expectedReturn": "In-game return uncertain; longer-term prognosis unknown."
+      },
+      "sources": [
+        {
+          "sourceName": "Olivia Reiner (X)",
+          "author": "Olivia Reiner",
+          "xHandle": "ReinerOlivia",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "10:20 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/ReinerOlivia/status/2106796674287054910",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:27:32Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": null,
+          "xHandle": "Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "10:20 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Eagles/status/2106796589465649446",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:28:49Z"
+        }
+      ]
+    },
+    {
       "eventId": "phi-smith-estimated-dnp-20260930",
       "player": {
         "playerId": null,
@@ -7244,5 +7298,5 @@
       ]
     }
   ],
-  "contentHash": "1d0cd63e48ad56e57c8a5a96842977d7a4bf5d32ec4572f29199863fa0fa0a12"
+  "contentHash": "b69d16bec4f7b68631dbd86beed2bf7c9329c42c9fb16d6973881ea542bf8873"
 }
