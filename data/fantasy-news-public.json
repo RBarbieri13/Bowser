@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T19:06:55.000Z",
-  "updatedAt": "2026-10-04T19:09:12.845Z",
-  "revision": "bowser-public-news-20261004T190912845Z",
+  "checkedAt": "2026-10-04T19:18:47.000Z",
+  "updatedAt": "2026-10-04T19:20:12.266Z",
+  "revision": "bowser-public-news-20261004T192012266Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -1468,6 +1468,126 @@
       ]
     },
     {
+      "eventId": "den-dallen-bentley-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Dallen Bentley",
+        "team": "DEN",
+        "position": "TE"
+      },
+      "headline": "Dallen Bentley inactive",
+      "summary": "Denver's complete official five-player inactive graphic lists Dallen Bentley. The article identifies Dondrea Tillman as the only injury-related inactive.",
+      "fantasyAnalysis": "He is unavailable for this game. No specific replacement receiving or snap share follows from the list alone.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:18:47Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Denver Broncos",
+          "author": "Aric DiLalla",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 12:55 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.denverbroncos.com/news/broncos-announce-inactives-for-week-4-game-vs-49ers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:17:59Z"
+        },
+        {
+          "sourceName": "Denver Broncos",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "No separate publication clock displayed on the official Week 4 inactive graphic",
+          "publishedDate": null,
+          "url": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/f_auto/broncos/ecwimlv7vpe90vnfouxe.jpg",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:17:59Z"
+        }
+      ]
+    },
+    {
+      "eventId": "den-jaylen-waddle-week4-active-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Jaylen Waddle",
+        "team": "DEN",
+        "position": "WR"
+      },
+      "headline": "Waddle active against San Francisco",
+      "summary": "Waddle is absent from Denver's complete five-player inactive list and eligible to play. Denver's Friday report listed him full with a foot injury and no game designation; that Friday information is earlier context, not a new Sunday injury.",
+      "fantasyAnalysis": "Active eligibility supports availability for the late game but does not guarantee normal snaps or targets. No replacement receiver's workload increase is established.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:18:47Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot",
+        "practiceStatus": "FP",
+        "gameStatus": "ACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Denver Broncos",
+          "author": "Aric DiLalla",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 02, 2026 at 03:30 PM; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.denverbroncos.com/news/injuryreport/injury-report-olb-dondrea-tillman-lone-player-ruled-out-for-broncos-week-4-game-vs-49ers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:18:34Z"
+        },
+        {
+          "sourceName": "Denver Broncos",
+          "author": "Aric DiLalla",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 12:55 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.denverbroncos.com/news/broncos-announce-inactives-for-week-4-game-vs-49ers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:17:59Z"
+        },
+        {
+          "sourceName": "Denver Broncos",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "No separate publication clock displayed on the official Week 4 inactive graphic",
+          "publishedDate": null,
+          "url": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/f_auto/broncos/ecwimlv7vpe90vnfouxe.jpg",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:17:59Z"
+        }
+      ]
+    },
+    {
       "eventId": "den-lil-jordan-humphrey-practice-squad-signing-2026-10-03",
       "player": {
         "playerId": null,
@@ -1506,6 +1626,60 @@
           "url": "https://www.denverbroncos.com/news/broncos-promote-fb-adam-prentice-to-active-roster-x4028",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T20:53:37Z"
+        }
+      ]
+    },
+    {
+      "eventId": "den-sam-ehlinger-week4-emergency-qb-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Sam Ehlinger",
+        "team": "DEN",
+        "position": "QB"
+      },
+      "headline": "Sam Ehlinger inactive as emergency third QB",
+      "summary": "Denver's complete official five-player inactive graphic lists Sam Ehlinger with the emergency-third-quarterback exception. The article identifies Dondrea Tillman as the only injury-related inactive.",
+      "fantasyAnalysis": "This is not ordinary active-backup eligibility and does not establish routine playing time.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:18:47Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE (EMERGENCY THIRD QB)",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Denver Broncos",
+          "author": "Aric DiLalla",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 12:55 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.denverbroncos.com/news/broncos-announce-inactives-for-week-4-game-vs-49ers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:17:59Z"
+        },
+        {
+          "sourceName": "Denver Broncos",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "No separate publication clock displayed on the official Week 4 inactive graphic",
+          "publishedDate": null,
+          "url": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/f_auto/broncos/ecwimlv7vpe90vnfouxe.jpg",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:17:59Z"
         }
       ]
     },
@@ -8066,5 +8240,5 @@
       ]
     }
   ],
-  "contentHash": "c7fcf2fd4c3b1b450d221c57413785c546fa4476f6f6d679ea2278bea7b059a4"
+  "contentHash": "5be48c8496911798fde395e4fcd1dec892cd5dd3ea88d5f154e79e40d8544827"
 }
