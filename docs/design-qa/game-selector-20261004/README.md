@@ -54,3 +54,5 @@ Implementation uses the two supplied inline prototypes. Screenshots are 1920×10
 - Independent read-only review: PASS, no remaining findings.
 - No warehouse, API contract, endpoint, credentials, Yahoo storage, news poll interval or detached-message changes.
 - Deployed candidate and permanent production verification are recorded separately with exact release IDs after publication.
+
+Release probe correction: after Sunday kickoff, the existing app selects the largest unlocked Classic slate (Primetime 154083 at verification). The verifier now independently checks that time-based rule and every current identity, then explicitly requests stored default 154080 for the unchanged >250-player broad coverage gate. Candidate passed 496 checks with 359 broad-slate identity joins. No application behavior or source values changed.

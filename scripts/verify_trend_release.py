@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Read-only release probe. Use --vercel for protected candidate deployments."""
 import argparse
+from datetime import datetime, timezone
 import json
 import subprocess
 import urllib.request
@@ -41,8 +42,28 @@ try:
     check(cam['position_finish'] == 18 and tracy['position_finish'] == 107, 'NFL PPR weekly positional finishes retained')
     check(len(players['meta']['trendDomains']) == 19 and players['meta']['trendDomains']['fantasy_points']['min'] < 0, 'Shared metric domains preserve negative points')
     weekly = json.loads((root / 'data/dfs-weekly.json').read_text())
+    # Current intentionally advances to the largest unlocked Classic slate as
+    # kickoff passes. Verify that policy separately from broad stored-slate joins.
+    now = datetime.now(timezone.utc)
+    unlocked = [(key, slate) for key, slate in weekly['slates'].items()
+                if slate['season'] == weekly['season'] and slate['week'] == weekly['week']
+                and slate.get('contestTypeId') != 96
+                and datetime.fromisoformat(slate['startsAt'].replace('Z', '+00:00')) > now]
+    unlocked.sort(key=lambda item: (-item[1]['gameCount'], item[1]['id']))
+    current_key = unlocked[0][0] if unlocked else weekly['defaultSlate']
+    current = weekly['slates'][current_key]
+    check(players['meta']['dfs']['key'] == current_key and players['meta']['dfs']['id'] == current['id']
+          and players['meta']['dfs']['week'] == current['week'], 'Hosted current DFS follows largest unlocked Classic slate at verification time')
+    for salary in current['records']:
+        player = by_id.get(salary.get('playerId'))
+        if player:
+            check(player['draft_kings_price'] == salary['salary'] and player['draft_kings_projection'] == salary['projection'],
+                  f'Current DFS identity join {salary["playerId"]}')
     expected = weekly['slates'][weekly['defaultSlate']]
-    check(players['meta']['dfs']['id'] == expected['id'] and players['meta']['dfs']['week'] == expected['week'], 'Hosted DFS current slate matches verified local candidate')
+    stored = get('/api/v1/player-stats?season=2026&weeks=1&limit=all&includeTrends=0&dfsSlate=' + weekly['defaultSlate'])
+    check(stored['meta']['dfs']['key'] == weekly['defaultSlate'] and stored['meta']['dfs']['id'] == expected['id']
+          and stored['meta']['dfs']['week'] == expected['week'], 'Explicit stored DFS default matches verified local candidate')
+    by_id = {p['player_id']: p for p in stored['data']}
     joined = 0
     for salary in expected['records']:
         player = by_id.get(salary.get('playerId'))
