@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T17:49:52.000Z",
-  "updatedAt": "2026-10-04T17:51:30.012Z",
-  "revision": "bowser-public-news-20261004T175130012Z",
+  "checkedAt": "2026-10-04T17:58:40.000Z",
+  "updatedAt": "2026-10-04T18:00:16.663Z",
+  "revision": "bowser-public-news-20261004T180016663Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -6774,15 +6774,15 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Daniels expected at Wednesday practice; Week 5 return unsettled",
-      "summary": "Washington's postgame report says Daniels is expected at practice Wednesday after missing the London game. Mariota left that game with a knee injury, and his Week 5 status is also undetermined.",
-      "fantasyAnalysis": "Expected practice participation does not establish a grade, medical clearance or a Week 5 starting decision. Reassess the quarterback plan after the next health updates.",
+      "headline": "Daniels reportedly expected to practice fully for Week 5",
+      "summary": "Tashan Reed attributes to Dan Quinn that Daniels will be a full practice participant this week, with Reed describing him as on track for the Giants. This follows the team's Wednesday-practice expectation. Daniels' last completed practice grade was limited before his Week 4 absence.",
+      "fantasyAnalysis": "A future full-practice plan is not an observed FP grade or Week 5 clearance. Keep a quarterback contingency until actual participation and availability are confirmed; Kaliakmanis' future role remains conditional.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T17:09:12Z",
+      "checkedAt": "2026-10-04T17:58:40Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -6791,7 +6791,7 @@
         "bodyPart": "left elbow",
         "practiceStatus": "LP",
         "gameStatus": "OUT",
-        "expectedReturn": "Expected at Wednesday practice; Week 5 return not confirmed."
+        "expectedReturn": "Full practice planned per Quinn report; Week 5 return targeted, not confirmed."
       },
       "sources": [
         {
@@ -6840,6 +6840,18 @@
           "url": "https://www.commanders.com/news/instant-analysis-commanders-colts-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T17:07:12Z"
+        },
+        {
+          "sourceName": "Tashan Reed (X)",
+          "author": "Tashan Reed",
+          "xHandle": "tashanreed",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "10:36 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/tashanreed/status/2106800528403378459",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:58:04Z"
         }
       ]
     },
@@ -7310,5 +7322,5 @@
       ]
     }
   ],
-  "contentHash": "e511fc7aed45cabd61681d41a92807ef530ed60d1d8da406b5d097853d616a1a"
+  "contentHash": "c64c296fd0ea8946d656d5960b9e41ec0e211e059ee2c9ba76ccbe2efc59d359"
 }
