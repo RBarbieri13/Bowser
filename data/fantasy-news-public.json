@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T21:00:04.000Z",
-  "updatedAt": "2026-10-04T21:02:19.266Z",
-  "revision": "bowser-public-news-20261004T210219266Z",
+  "checkedAt": "2026-10-04T21:20:53.000Z",
+  "updatedAt": "2026-10-04T21:22:46.194Z",
+  "revision": "bowser-public-news-20261004T212246194Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -248,15 +248,15 @@
         "team": "BAL",
         "position": "QB"
       },
-      "headline": "Jackson did not return; coach optimism reported",
-      "summary": "Baltimore's updated official article explicitly confirms Jackson did not return after his ankle injury. Minter had no further update. Jonas Shaffer describes Minter as sounding optimistic, citing discussions about a second-half return; this is a reporter characterization, not a confirmed prognosis.",
+      "headline": "Jackson leaves stadium in walking boot, reporter says",
+      "summary": "Brian Wacker reports Jackson left M&T Bank Stadium wearing a walking boot on his left foot. Baltimore confirms he did not return after his ankle injury. The boot observation adds no diagnosis or absence timetable; earlier coach optimism remains Jonas Shaffer's characterization, not clearance.",
       "fantasyAnalysis": "Monitor evaluation and upcoming practice before relying on Jackson next week. Huntley remains a conditional replacement; neither a future Jackson absence nor another Huntley start is confirmed.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T20:46:35Z",
+      "checkedAt": "2026-10-04T21:20:53Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -386,6 +386,18 @@
           "url": "https://x.com/jonas_shaffer/status/2106842354694951377",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T20:45:43Z"
+        },
+        {
+          "sourceName": "The Baltimore Sun (Brian Wacker on X)",
+          "author": "Brian Wacker",
+          "xHandle": "brianwacker1",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "1:56 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/brianwacker1/status/2106850981669372254",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T21:20:11Z"
         }
       ]
     },
@@ -2836,24 +2848,24 @@
         "team": "KC",
         "position": "WR"
       },
-      "headline": "Rice limps off with reported hamstring concern",
-      "summary": "James Palmer reports Rice limped to the sideline, grabbed his hamstring and went to the training table against Las Vegas. No official return designation, confirmed diagnosis or subsequent return is verified in this check.",
+      "headline": "Rice questionable to return with hamstring injury",
+      "summary": "The Chiefs officially list Rice questionable to return with a hamstring injury against Las Vegas, following James Palmer's earlier observation of him limping off and going to the training table. No subsequent return or downgrade is verified in this check.",
       "fantasyAnalysis": "Other Chiefs pass catchers could receive additional opportunities if Rice remains unavailable, but no specific target share is established. Monitor return status and evaluation before next-week decisions; no future absence or recovery timetable is confirmed.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T21:00:04Z",
+      "checkedAt": "2026-10-04T21:20:53Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Apparent hamstring concern; diagnosis unconfirmed",
+        "bodyPart": "Hamstring",
         "practiceStatus": null,
-        "gameStatus": null,
-        "expectedReturn": "Current return status and longer-term prognosis unconfirmed."
+        "gameStatus": "QUESTIONABLE TO RETURN",
+        "expectedReturn": "Return to the current game and future availability remain unconfirmed."
       },
       "sources": [
         {
@@ -2867,6 +2879,18 @@
           "url": "https://x.com/JamesPalmerTV/status/2106847737509757175",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T20:57:33Z"
+        },
+        {
+          "sourceName": "Kansas City Chiefs",
+          "author": null,
+          "xHandle": "Chiefs",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "1:58 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Chiefs/status/2106851530733449219?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T21:19:59Z"
         }
       ]
     },
@@ -8816,5 +8840,5 @@
       ]
     }
   ],
-  "contentHash": "b6a4f78dd4fd6b9f48861375e15872a2098d235bceaf30faafdc10ab458554ad"
+  "contentHash": "22eeb267d717b5baae5c296def357f7b1d8e6331891699431d8001ec0abc2fd6"
 }
