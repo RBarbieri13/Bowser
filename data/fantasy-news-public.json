@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T13:17:41.000Z",
-  "updatedAt": "2026-10-04T13:19:17.470Z",
-  "revision": "bowser-public-news-20261004T131917470Z",
+  "checkedAt": "2026-10-04T14:08:06.000Z",
+  "updatedAt": "2026-10-04T14:10:13.081Z",
+  "revision": "bowser-public-news-20261004T141013081Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -5195,6 +5195,60 @@
       ]
     },
     {
+      "eventId": "was-athan-kaliakmanis-relief-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Athan Kaliakmanis",
+        "team": "WAS",
+        "position": "QB"
+      },
+      "headline": "Kaliakmanis enters after Mariota's reported injury exit",
+      "summary": "CBS reporter Zachary Pereles says Kaliakmanis entered the London game after Marcus Mariota left injured and was deemed questionable to return. Washington's official game page independently records Kaliakmanis pass attempts. Jayden Daniels is inactive.",
+      "fantasyAnalysis": "Kaliakmanis has an immediate relief opportunity while Mariota is unavailable. The duration is uncertain, and neither a future start nor a specific workload is established. Reassess after return-status and postgame updates.",
+      "eventType": "ROLE_CHANGE",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-10-04T13:58:00Z",
+      "lastUpdatedAt": "2026-10-04T13:58:00Z",
+      "checkedAt": "2026-10-04T14:08:06Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "CBS Sports",
+          "author": "Zachary Pereles",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-04T13:58:00Z",
+          "publishedAtRaw": "October 4, 2026, 9:58 a.m. EDT entry; 9:53 a.m. injury exit; header 9:59 a.m. ET",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.cbssports.com/nfl/news/commanders-vs-colts-live-updates-score-highlights/live/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T14:07:30Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Live game page; no publication or wall-clock update timestamp displayed",
+          "publishedDate": null,
+          "url": "https://www.commanders.com/game-day/indianapolis-colts-at-washington-commanders/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T14:05:54Z"
+        }
+      ]
+    },
+    {
       "eventId": "was-chig-okonkwo-week4-return-2026-10-02",
       "player": {
         "playerId": null,
@@ -5417,24 +5471,24 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Mariota confirmed as the Week 4 starter",
-      "summary": "Washington confirms Mariota starts against Indianapolis with Jayden Daniels ruled out.",
-      "fantasyAnalysis": "A short-term starting-quarterback option; no particular points total or receiver workload follows automatically.",
-      "eventType": "DEPTH_CHART",
-      "status": "CONFIRMED",
+      "headline": "Mariota reportedly exits London game; return questionable",
+      "summary": "Mariota started against Indianapolis with Jayden Daniels inactive. CBS reporter Zachary Pereles says Mariota left injured and is questionable to return; Athan Kaliakmanis entered. Washington's official game page records pass attempts for both quarterbacks. No injury type or later return was verified at this check.",
+      "fantasyAnalysis": "Kaliakmanis is the immediate replacement while Mariota is unavailable, with no assured role beyond this game. Monitor Mariota's return and subsequent recovery updates; the London game has already begun, so this is not pre-kickoff replacement advice.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:10:00Z",
+      "lastUpdatedAt": "2026-10-04T13:58:00Z",
+      "checkedAt": "2026-10-04T14:08:06Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
-        "isInjuryRelated": false,
+        "isInjuryRelated": true,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
-        "expectedReturn": null
+        "gameStatus": "QUESTIONABLE TO RETURN",
+        "expectedReturn": "Reported questionable to return; injury type and later availability unverified."
       },
       "sources": [
         {
@@ -5448,6 +5502,30 @@
           "url": "https://www.commanders.com/news/game-status-commanders-colts-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:10:00Z"
+        },
+        {
+          "sourceName": "CBS Sports",
+          "author": "Zachary Pereles",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-04T13:58:00Z",
+          "publishedAtRaw": "October 4, 2026, 9:58 a.m. EDT entry; 9:53 a.m. injury exit; header 9:59 a.m. ET",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.cbssports.com/nfl/news/commanders-vs-colts-live-updates-score-highlights/live/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T14:07:30Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Live game page; no publication or wall-clock update timestamp displayed",
+          "publishedDate": null,
+          "url": "https://www.commanders.com/game-day/indianapolis-colts-at-washington-commanders/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T14:05:54Z"
         }
       ]
     },
@@ -5684,5 +5762,5 @@
       ]
     }
   ],
-  "contentHash": "a3134402977221ca85ea302689716d653838ee43abefca4151b5c4519f1d48da"
+  "contentHash": "1515ac3a3b45165d5df8a3506ae202ab2f4603907fa64c5d9dd0eea2ae9ca8ef"
 }
