@@ -2,10 +2,94 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T15:38:40.000Z",
-  "updatedAt": "2026-10-04T15:41:48.352Z",
-  "revision": "bowser-public-news-20261004T154148352Z",
+  "checkedAt": "2026-10-04T15:50:26.000Z",
+  "updatedAt": "2026-10-04T15:53:18.989Z",
+  "revision": "bowser-public-news-20261004T155318989Z",
   "events": [
+    {
+      "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Carson Beck",
+        "team": "ARI",
+        "position": "QB"
+      },
+      "headline": "Beck designated third quarterback against Giants",
+      "summary": "The official Giants joint report lists Arizona quarterback Carson Beck inactive with a third-quarterback designation.",
+      "fantasyAnalysis": "This is a game-day availability decision. The list alone establishes no injury cause, longer-term absence or guaranteed replacement workload.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T15:50:26Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE (third quarterback)",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New York Giants",
+          "author": "Dan Salomone",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 4, 2026 at 11:30 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.giants.com/news/nfl-week-4-inactive-list-who-s-in-who-s-out-for-giants-vs-cardinals",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:46:28Z"
+        }
+      ]
+    },
+    {
+      "eventId": "ari-reggie-virgil-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Reggie Virgil",
+        "team": "ARI",
+        "position": "WR"
+      },
+      "headline": "Virgil inactive against the Giants",
+      "summary": "The official joint inactive report lists Arizona receiver Reggie Virgil inactive without assigning an injury cause.",
+      "fantasyAnalysis": "This is a game-day availability decision. The list alone establishes no injury cause, longer-term absence or guaranteed replacement workload.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T15:50:26Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New York Giants",
+          "author": "Dan Salomone",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 4, 2026 at 11:30 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.giants.com/news/nfl-week-4-inactive-list-who-s-in-who-s-out-for-giants-vs-cardinals",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:46:28Z"
+        }
+      ]
+    },
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
       "player": {
@@ -1025,15 +1109,15 @@
         "team": "CHI",
         "position": "RB"
       },
-      "headline": "Swift officially full Friday with no designation",
-      "summary": "Chicago's final injury table lists Swift full Friday and without a game designation against the Jets, confirming the earlier report.",
-      "fantasyAnalysis": "There is no current absence-based reason to expect Monangai's workload to increase. Swift's exact Sunday workload is not established by a practice grade.",
+      "headline": "Swift active against the Jets",
+      "summary": "Swift is absent from Chicago's complete official inactive graphic after clearing Friday's knee-related report.",
+      "fantasyAnalysis": "Do not assume a Monangai workload boost based on a Swift absence. Actual touch shares remain uncertain.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T19:37:00Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1041,7 +1125,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Knee",
         "practiceStatus": "FP",
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -1092,6 +1176,18 @@
           "url": "https://www.rotowire.com/football/headlines/dandre-swift-news-clear-for-sunday-640313",
           "isOriginalSource": false,
           "checkedAt": "2026-10-02T19:19:00Z"
+        },
+        {
+          "sourceName": "Chicago Bears",
+          "author": null,
+          "xHandle": "ChicagoBears",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "8:32 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/ChicagoBears/status/2106769313143353807",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:47:53Z"
         }
       ]
     },
@@ -1103,15 +1199,15 @@
         "team": "CHI",
         "position": "QB"
       },
-      "headline": "Bagent reportedly expected to start Sunday",
-      "summary": "Ian Rapoport reports Bagent is expected to start against the Jets after taking first-team reps. Ben Johnson has not confirmed the choice.",
-      "fantasyAnalysis": "Bagent is a conditional quarterback option if available, with stronger reporting behind his candidacy. Keep a confirmed-starter alternative until Chicago announces its plan; a normal workload and production are not guaranteed.",
+      "headline": "Bagent active; starting assignment still reported",
+      "summary": "Bagent and Case Keenum are absent from Chicago's complete inactive list and game-active. Rapoport expects Bagent to start, but the official list does not announce the starter and no separate team confirmation was verified.",
+      "fantasyAnalysis": "Being active does not settle the quarterback order. Retain the reported expected-start label pending a team announcement or actual game evidence.",
       "eventType": "DEPTH_CHART",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T23:50:51Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1119,7 +1215,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -1146,6 +1242,18 @@
           "url": "https://x.com/RapSheet/status/2106160724406100305",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T23:50:51Z"
+        },
+        {
+          "sourceName": "Chicago Bears",
+          "author": null,
+          "xHandle": "ChicagoBears",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "8:32 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/ChicagoBears/status/2106769313143353807",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:47:53Z"
         }
       ]
     },
@@ -1157,22 +1265,22 @@
         "team": "CIN",
         "position": "WR"
       },
-      "headline": "Colbie Young inactive against Jacksonville",
-      "summary": "Cincinnati lists receiver Colbie Young among its seven inactives, without assigning an injury cause.",
-      "fantasyAnalysis": "This is a game-day availability decision. No injury cause, longer-term absence or replacement workload is established by the list alone.",
-      "eventType": "DEPTH_CHART",
+      "headline": "Colbie Young inactive with knee injury",
+      "summary": "The Bengals' Friday report identifies Young's knee injury, three DNP practices and OUT designation; Sunday's inactive list confirms his absence. This newly reviewed older report supplies the injury context omitted from the inactive list.",
+      "fantasyAnalysis": "Young is unavailable for Week 4. No longer-term recovery date or replacement target share is established.",
+      "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T15:38:40Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
-        "isInjuryRelated": false,
-        "bodyPart": null,
-        "practiceStatus": null,
+        "isInjuryRelated": true,
+        "bodyPart": "Knee",
+        "practiceStatus": "DNP",
         "gameStatus": "INACTIVE",
         "expectedReturn": null
       },
@@ -1188,6 +1296,18 @@
           "url": "https://www.bengals.com/news/bengals-jaguars-inactives-week-4-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:34:31Z"
+        },
+        {
+          "sourceName": "Cincinnati Bengals",
+          "author": "Bengals Communications",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 3:55 PM; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.bengals.com/news/jaguars-bengals-injury-report-week-4-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:48:36Z"
         }
       ]
     },
@@ -1936,15 +2056,15 @@
         "team": "LA",
         "position": "TE"
       },
-      "headline": "Parkinson officially questionable after Friday DNP",
-      "summary": "The Rams' final table confirms Parkinson DNP Friday and QUESTIONABLE with knee and shoulder injuries.",
-      "fantasyAnalysis": "Retain a healthy tight end alternative. His uncertain availability prevents treating him as an automatic beneficiary of Ferguson's absence.",
+      "headline": "Parkinson inactive against Philadelphia",
+      "summary": "The Rams' complete official inactive post lists Parkinson inactive, resolving his knee/shoulder-related questionable designation. Ferguson is already on injured reserve.",
+      "fantasyAnalysis": "Use another eligible tight end for this game. Higbee and the remaining tight ends could gain opportunities, but no snap or target allocation is established.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
-      "fantasyImpact": "MEDIUM",
+      "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:55:16Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1952,7 +2072,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Knee/Shoulder",
         "practiceStatus": "DNP",
-        "gameStatus": "QUESTIONABLE",
+        "gameStatus": "INACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -1991,6 +2111,18 @@
           "url": "https://www.therams.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:55:16Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": null,
+          "xHandle": "RamsNFL",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "8:46 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/RamsNFL/status/2106773017535950943",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:48:24Z"
         }
       ]
     },
@@ -2002,15 +2134,15 @@
         "team": "LA",
         "position": "WR"
       },
-      "headline": "Rams reportedly plan no snap limit for Nacua",
-      "summary": "Adam Schefter reports the Rams do not intend to limit Puka Nacua's workload against Philadelphia. His conditioning once on the field could still affect his snap count. He has no game designation after full Friday practice.",
-      "fantasyAnalysis": "The reported plan strengthens his return outlook beyond the earlier coaching consideration, but actual snaps and targets remain uncertain. No replacement receiver's workload is established.",
+      "headline": "Nacua active for Week 4 return",
+      "summary": "Nacua is absent from the Rams' complete inactive list and is active against Philadelphia. Schefter's earlier report says the team does not plan to limit his workload, while conditioning could still affect his snaps.",
+      "fantasyAnalysis": "Active status resolves game-day availability. The reported plan does not guarantee actual snaps, targets or freedom from an in-game limitation.",
       "eventType": "ROLE_CHANGE",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-10-04T11:40:00Z",
-      "checkedAt": "2026-10-04T12:12:15Z",
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2018,7 +2150,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Hip",
         "practiceStatus": "FP",
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -2092,6 +2224,18 @@
           "url": "https://www.espn.com/nfl/story/_/id/50098838/sources-rams-intend-limit-puka-nacua-workload",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T12:10:40Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": null,
+          "xHandle": "RamsNFL",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "8:46 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/RamsNFL/status/2106773017535950943",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:48:24Z"
         }
       ]
     },
@@ -2517,15 +2661,15 @@
         "team": "LAR",
         "position": "WR"
       },
-      "headline": "Rams sign Bachman; McVay names him next punt returner",
-      "summary": "The Rams announced October 2 that Bachman signed from the practice squad to the active roster. McVay had named him the next punt returner after Xavier Smith's waiver. The NFL transaction ledger dates the signing October 3; this is older news newly added to the feed.",
-      "fantasyAnalysis": "This is a full-roster signing, with a specifically identified special-teams role. It does not establish receiving targets, an expanded offensive workload or game-day active status.",
+      "headline": "Bachman active after roster signing",
+      "summary": "Bachman is absent from the Rams' complete inactive list after his active-roster signing. McVay previously identified him as the next punt returner.",
+      "fantasyAnalysis": "Game-day eligibility is supported; the punt-return assignment does not establish a meaningful receiving workload.",
       "eventType": "TRANSACTION",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T00:08:23Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2533,7 +2677,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -2572,6 +2716,102 @@
           "url": "https://www.nfl.com/transactions/league/signings/2026/10",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T00:08:23Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": null,
+          "xHandle": "RamsNFL",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "8:46 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/RamsNFL/status/2106773017535950943",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:48:24Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lar-cj-daniels-jr-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "C.J. Daniels Jr.",
+        "team": "LAR",
+        "position": "WR"
+      },
+      "headline": "C.J. Daniels Jr. inactive against Philadelphia",
+      "summary": "The Rams' official complete post lists receiver C.J. Daniels Jr. inactive without an injury cause specified.",
+      "fantasyAnalysis": "This is a game-day availability decision. The list alone establishes no injury cause, longer-term absence or guaranteed replacement workload.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T15:50:26Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": null,
+          "xHandle": "RamsNFL",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "8:46 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/RamsNFL/status/2106773017535950943",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:48:24Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lar-ty-simpson-week4-third-quarterback-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Ty Simpson",
+        "team": "LAR",
+        "position": "QB"
+      },
+      "headline": "Simpson designated emergency third quarterback",
+      "summary": "The Rams list Ty Simpson among their inactives with an explicit emergency-third-quarterback designation.",
+      "fantasyAnalysis": "This is a game-day availability decision. The list alone establishes no injury cause, longer-term absence or guaranteed replacement workload.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T15:50:26Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE (emergency third quarterback)",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": null,
+          "xHandle": "RamsNFL",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "8:46 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/RamsNFL/status/2106773017535950943",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:48:24Z"
         }
       ]
     },
@@ -3469,22 +3709,22 @@
       ]
     },
     {
-      "eventId": "nyg-jake-haener-week4-elevation-2026-10-03",
+      "eventId": "nyg-devin-singletary-week4-inactive-2026-10-04",
       "player": {
         "playerId": null,
-        "name": "Jake Haener",
+        "name": "Devin Singletary",
         "team": "NYG",
-        "position": "QB"
+        "position": "RB"
       },
-      "headline": "Giants elevate Haener for Cardinals game",
-      "summary": "The Giants' Saturday tracker confirms Haener was activated from the practice squad through a standard elevation for the Week 4 Arizona game.",
-      "fantasyAnalysis": "This adds quarterback depth. The transaction does not change Jameis Winston's announced starting status or establish the backup order between Haener and J.J. McCarthy.",
-      "eventType": "TRANSACTION",
+      "headline": "Singletary inactive against Arizona",
+      "summary": "The Giants list Singletary inactive without assigning an injury cause. Tracy is absent from the complete list and active.",
+      "fantasyAnalysis": "This is a game-day availability decision. The list alone establishes no injury cause, longer-term absence or guaranteed replacement workload.",
+      "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T21:30:12Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3492,7 +3732,49 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New York Giants",
+          "author": "Dan Salomone",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 4, 2026 at 11:30 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.giants.com/news/nfl-week-4-inactive-list-who-s-in-who-s-out-for-giants-vs-cardinals",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:46:28Z"
+        }
+      ]
+    },
+    {
+      "eventId": "nyg-jake-haener-week4-elevation-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Jake Haener",
+        "team": "NYG",
+        "position": "QB"
+      },
+      "headline": "Haener active after Week 4 elevation",
+      "summary": "Haener is absent from the Giants' complete inactive list after his practice-squad elevation. The team reiterates Jameis Winston's starting assignment.",
+      "fantasyAnalysis": "This establishes eligibility, not a change of starter or a settled backup order between Haener and J.J. McCarthy.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T15:50:26Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -3507,6 +3789,60 @@
           "url": "https://www.giants.com/news/week-4-tracker-latest-news-notes-roster-moves",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T21:30:12Z"
+        },
+        {
+          "sourceName": "New York Giants",
+          "author": "Dan Salomone",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 4, 2026 at 11:30 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.giants.com/news/nfl-week-4-inactive-list-who-s-in-who-s-out-for-giants-vs-cardinals",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:46:28Z"
+        }
+      ]
+    },
+    {
+      "eventId": "nyg-thomas-fidone-ii-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Thomas Fidone II",
+        "team": "NYG",
+        "position": "TE"
+      },
+      "headline": "Fidone inactive against Arizona",
+      "summary": "The Giants' complete inactive list includes tight end Thomas Fidone II without an injury cause specified.",
+      "fantasyAnalysis": "This is a game-day availability decision. The list alone establishes no injury cause, longer-term absence or guaranteed replacement workload.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T15:50:26Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New York Giants",
+          "author": "Dan Salomone",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 4, 2026 at 11:30 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.giants.com/news/nfl-week-4-inactive-list-who-s-in-who-s-out-for-giants-vs-cardinals",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:46:28Z"
         }
       ]
     },
@@ -3518,15 +3854,15 @@
         "team": "NYG",
         "position": "RB"
       },
-      "headline": "Tracy full Friday without game designation",
-      "summary": "The Giants' final table lists Tracy full Friday with no designation after Wednesday DNP and Thursday limited.",
-      "fantasyAnalysis": "Tracy can be considered in lineups, subject to later news. Clearance does not guarantee a particular workload.",
+      "headline": "Tracy active against Arizona",
+      "summary": "Tracy is absent from the Giants' complete seven-player inactive list after clearing Friday's knee-related injury report. Devin Singletary is inactive.",
+      "fantasyAnalysis": "Tracy is eligible to play. Singletary's absence does not by itself establish an exclusive role or precise carry split.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:15:00Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3534,7 +3870,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Knee",
         "practiceStatus": "FP",
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -3549,6 +3885,18 @@
           "url": "https://www.giants.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:15:00Z"
+        },
+        {
+          "sourceName": "New York Giants",
+          "author": "Dan Salomone",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 4, 2026 at 11:30 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.giants.com/news/nfl-week-4-inactive-list-who-s-in-who-s-out-for-giants-vs-cardinals",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:46:28Z"
         }
       ]
     },
@@ -4054,15 +4402,15 @@
         "team": "PHI",
         "position": "QB"
       },
-      "headline": "Dalton reportedly drops to Eagles' No. 3 quarterback",
-      "summary": "Mike Garafolo reports that Dalton moves to Philadelphia's No. 3 quarterback role against the Rams, with Tanner McKee becoming the top backup to Jalen Hurts.",
-      "fantasyAnalysis": "Dalton's path to playing time becomes more remote if the reported order holds. Hurts remains the starter; the report alone does not establish Dalton's inactive or emergency-quarterback designation.",
+      "headline": "Dalton active; QB3 role remains reported",
+      "summary": "The corrected Eagles article now supplies all eight inactives and says three quarterbacks are active. Dalton is absent from the complete list, supporting active status. Garafolo separately reported Dalton would be QB3 behind Hurts and McKee.",
+      "fantasyAnalysis": "Dalton is game-active; the reported backup order does not create a starting opportunity. No emergency-third-quarterback designation is shown.",
       "eventType": "DEPTH_CHART",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T13:17:41Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4070,7 +4418,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -4085,6 +4433,18 @@
           "url": "https://x.com/MikeGarafolo/status/2106724561710453100",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T13:17:07Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": "PhiladelphiaEagles.com",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 4, 2026 at 11:32 AM; timezone not displayed; list-correction clock unknown",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-inactives-week-4-2026-zack-baun-devonta-smith",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:45:43Z"
         }
       ]
     },
@@ -4096,15 +4456,15 @@
         "team": "PHI",
         "position": "QB"
       },
-      "headline": "Payton inactive against the Rams",
-      "summary": "Philadelphia explicitly lists quarterback Cole Payton inactive. Its article says eight inactives but displays seven names, omitting Lane Johnson despite confirming him out in the body. Payton's listed status is explicit; Dalton's precise designation remains unresolved.",
-      "fantasyAnalysis": "This is a game-day availability decision. No injury cause, longer-term absence or replacement workload is established by the list alone.",
+      "headline": "Payton inactive; Eagles list discrepancy corrected",
+      "summary": "Payton remains explicitly inactive. Philadelphia has added Lane Johnson to the displayed list, bringing it to the stated eight players and resolving the earlier count discrepancy. Dalton is absent from the complete list and is active.",
+      "fantasyAnalysis": "Payton is unavailable for this game. No injury cause, longer-term absence or future quarterback-order change is established.",
       "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T15:38:40Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4127,6 +4487,18 @@
           "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-inactives-week-4-2026-zack-baun-devonta-smith",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:36:45Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": "PhiladelphiaEagles.com",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 4, 2026 at 11:32 AM; timezone not displayed; list-correction clock unknown",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-inactives-week-4-2026-zack-baun-devonta-smith",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:45:43Z"
         }
       ]
     },
@@ -4215,15 +4587,15 @@
         "team": "PHI",
         "position": "TE"
       },
-      "headline": "Eagles elevate Deguara for the Rams game",
-      "summary": "Philadelphia officially elevated Deguara from the practice squad for Sunday's game against the Rams.",
-      "fantasyAnalysis": "Deguara adds tight-end depth with Dallas Goedert out. The elevation alone does not establish a fantasy-relevant workload.",
+      "headline": "Deguara active after elevation",
+      "summary": "Deguara is absent from the Eagles' now-complete inactive list after his Week 4 elevation.",
+      "fantasyAnalysis": "Deguara is eligible with Goedert inactive; no individual workload or receiving role is guaranteed.",
       "eventType": "TRANSACTION",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T20:18:02Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4231,7 +4603,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -4246,6 +4618,18 @@
           "url": "https://x.com/Eagles/status/2106474485134106693",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T20:18:02Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": "PhiladelphiaEagles.com",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 4, 2026 at 11:32 AM; timezone not displayed; list-correction clock unknown",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-inactives-week-4-2026-zack-baun-devonta-smith",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:45:43Z"
         }
       ]
     },
@@ -4436,15 +4820,15 @@
         "team": "PHI",
         "position": "QB"
       },
-      "headline": "McKee active; QB2 order remains reported",
-      "summary": "Philadelphia explicitly says McKee is active for the first time this season. Garafolo had reported he would be the top backup to Jalen Hurts. The article's eight-player inactive count versus seven displayed names leaves Dalton's exact designation unresolved.",
-      "fantasyAnalysis": "Active status is confirmed, while the QB2 order remains attributed to Garafolo. No starting opportunity or Dalton emergency-quarterback designation is inferred.",
+      "headline": "McKee active; corrected Eagles list resolves discrepancy",
+      "summary": "Philadelphia explicitly confirms McKee active. The article now lists all eight inactives, adding Lane Johnson and resolving the earlier seven-name discrepancy. Dalton is also absent from the complete list; Garafolo's reported QB2/QB3 order remains separately attributed.",
+      "fantasyAnalysis": "McKee's eligibility is confirmed. No starting assignment or Dalton emergency-quarterback designation is inferred.",
       "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T15:38:40Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4479,6 +4863,18 @@
           "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-inactives-week-4-2026-zack-baun-devonta-smith",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:36:45Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": "PhiladelphiaEagles.com",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 4, 2026 at 11:32 AM; timezone not displayed; list-correction clock unknown",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-inactives-week-4-2026-zack-baun-devonta-smith",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:45:43Z"
         }
       ]
     },
@@ -4490,15 +4886,15 @@
         "team": "PHI",
         "position": "RB"
       },
-      "headline": "Shipley full Friday with no adverse designation shown",
-      "summary": "Philadelphia's populated Friday table lists Shipley full; no OUT, DOUBTFUL or QUESTIONABLE status is shown.",
-      "fantasyAnalysis": "The improved health outlook does not establish an expanded backfield role.",
+      "headline": "Shipley active against the Rams",
+      "summary": "Shipley is absent from the Eagles' now-complete eight-player inactive list after full Friday practice without a game designation.",
+      "fantasyAnalysis": "Active status establishes eligibility, not a guaranteed snap count, target share or unrestricted workload.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:14:00Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4506,7 +4902,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Foot",
         "practiceStatus": "FP",
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -4533,6 +4929,18 @@
           "url": "https://www.philadelphiaeagles.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:14:00Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": "PhiladelphiaEagles.com",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 4, 2026 at 11:32 AM; timezone not displayed; list-correction clock unknown",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-inactives-week-4-2026-zack-baun-devonta-smith",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:45:43Z"
         }
       ]
     },
@@ -4544,15 +4952,15 @@
         "team": "PHI",
         "position": "TE"
       },
-      "headline": "Eagles elevate Ertz for the Rams game",
-      "summary": "Philadelphia officially elevated Ertz from the practice squad for Sunday's game against the Rams.",
-      "fantasyAnalysis": "Ertz adds tight-end depth with Dallas Goedert out. The elevation alone does not establish a larger snap or target share.",
+      "headline": "Ertz active after elevation",
+      "summary": "Ertz is absent from the Eagles' now-complete inactive list after his Week 4 practice-squad elevation.",
+      "fantasyAnalysis": "Ertz is eligible with Goedert inactive, but the elevation and active status establish no specific snap or target share.",
       "eventType": "TRANSACTION",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T20:18:02Z",
+      "checkedAt": "2026-10-04T15:50:26Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4560,7 +4968,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -4575,6 +4983,18 @@
           "url": "https://x.com/Eagles/status/2106474485134106693",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T20:18:02Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": "PhiladelphiaEagles.com",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 4, 2026 at 11:32 AM; timezone not displayed; list-correction clock unknown",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-inactives-week-4-2026-zack-baun-devonta-smith",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:45:43Z"
         }
       ]
     },
@@ -6404,5 +6824,5 @@
       ]
     }
   ],
-  "contentHash": "b6bb02ba984ff18fb8fbb4fb60d631bb6e846a374238c6069e0fc1957dbcb355"
+  "contentHash": "17f52808147bfdbc79580e0e8b9fc1df7dc6cc80f069b4e8e0ec7413627439fb"
 }
