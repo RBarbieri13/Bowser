@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T18:37:08.000Z",
-  "updatedAt": "2026-10-04T18:38:31.478Z",
-  "revision": "bowser-public-news-20261004T183831478Z",
+  "checkedAt": "2026-10-04T18:46:52.000Z",
+  "updatedAt": "2026-10-04T18:48:42.055Z",
+  "revision": "bowser-public-news-20261004T184842055Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -486,15 +486,15 @@
         "team": "BUF",
         "position": "WR"
       },
-      "headline": "DJ Moore questionable to return with shoulder injury",
-      "summary": "Buffalo's official in-game update lists Moore questionable to return with a shoulder injury against New England. This supersedes his earlier active-eligibility status. No later return, downgrade, severity or recovery timetable is verified.",
-      "fantasyAnalysis": "Coleman and the remaining pass catchers could receive additional opportunities while Moore is unavailable, but no target share is guaranteed. Monitor the return decision and subsequent evaluation before later-week moves; no locked-game swap is implied.",
+      "headline": "DJ Moore downgraded to doubtful with shoulder injury",
+      "summary": "Buffalo's official in-game update downgrades Moore from questionable to doubtful to return with a shoulder injury against New England. No later return or out announcement, severity or recovery timetable is verified.",
+      "fantasyAnalysis": "Coleman and the remaining pass catchers could receive additional opportunities while Moore is unavailable, but no target share is guaranteed. Monitor the return decision and postgame evaluation before later-week plans; no locked-game swap is implied.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T18:37:08Z",
+      "checkedAt": "2026-10-04T18:46:52Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -502,8 +502,8 @@
         "isInjuryRelated": true,
         "bodyPart": "shoulder",
         "practiceStatus": "LP",
-        "gameStatus": "QUESTIONABLE TO RETURN",
-        "expectedReturn": "In-game return uncertain; longer-term prognosis unknown."
+        "gameStatus": "DOUBTFUL TO RETURN",
+        "expectedReturn": "Return doubtful in the current game; longer-term prognosis unknown."
       },
       "sources": [
         {
@@ -576,6 +576,18 @@
           "url": "https://x.com/BuffaloBillsPR/status/2106810617973600584",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T18:36:54Z"
+        },
+        {
+          "sourceName": "Buffalo Bills PR",
+          "author": null,
+          "xHandle": "BuffaloBillsPR",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "11:40 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/BuffaloBillsPR/status/2106816785253093776",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T18:46:17Z"
         }
       ]
     },
@@ -1343,15 +1355,15 @@
         "team": "CIN",
         "position": "WR"
       },
-      "headline": "Chase under concussion evaluation; return questionable",
-      "summary": "The Bengals officially say Chase is being evaluated for a possible concussion and is questionable to return against Jacksonville. No clearance, return or out announcement was verified in the latest official-feed check. Evaluation does not establish a concussion diagnosis.",
-      "fantasyAnalysis": "Other receivers could absorb opportunities while Chase is unavailable, but no target allocation is assured. Monitor the evaluation and return decision before later-week plans; no fixed absence length or post-kickoff swap is assumed.",
+      "headline": "Chase ruled out after possible-concussion evaluation",
+      "summary": "The Bengals officially rule Chase out of the game against Jacksonville after their earlier possible-concussion evaluation announcement. The new post gives no diagnosis or recovery timetable; being evaluated does not establish a confirmed concussion.",
+      "fantasyAnalysis": "Other receivers could absorb opportunities for the remainder of the game, but no target allocation is assured. Monitor postgame findings before next-week plans and prepare alternatives if needed; no fixed absence length or post-kickoff swap is assumed.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T18:19:20Z",
+      "checkedAt": "2026-10-04T18:46:52Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1359,8 +1371,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Head; possible concussion under evaluation",
         "practiceStatus": null,
-        "gameStatus": "QUESTIONABLE TO RETURN",
-        "expectedReturn": "Evaluation pending; no confirmed concussion diagnosis or recovery timetable."
+        "gameStatus": "OUT FOR GAME",
+        "expectedReturn": "No return this game; diagnosis and longer-term recovery timetable unconfirmed."
       },
       "sources": [
         {
@@ -1374,6 +1386,18 @@
           "url": "https://x.com/Bengals/status/2106804542033515004?s=20",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T18:18:50Z"
+        },
+        {
+          "sourceName": "Cincinnati Bengals",
+          "author": null,
+          "xHandle": "Bengals",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "11:42 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Bengals/status/2106817199478575119",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T18:46:17Z"
         }
       ]
     },
@@ -7442,5 +7466,5 @@
       ]
     }
   ],
-  "contentHash": "315d6fc4d0bff377f36f2eab9e1634917f2d90b2ab17dd6546cfd3d132f0b6ae"
+  "contentHash": "c28fbc7fecb710145adfcc701ac298378a012664df7516e66622ecc136fd2827"
 }
