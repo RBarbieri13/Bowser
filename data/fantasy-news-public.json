@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T20:36:20.000Z",
-  "updatedAt": "2026-10-04T20:38:21.247Z",
-  "revision": "bowser-public-news-20261004T203821247Z",
+  "checkedAt": "2026-10-04T20:46:35.000Z",
+  "updatedAt": "2026-10-04T20:49:01.255Z",
+  "revision": "bowser-public-news-20261004T204901255Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -248,15 +248,15 @@
         "team": "BAL",
         "position": "QB"
       },
-      "headline": "Jackson ankle status unresolved after Ravens game",
-      "summary": "Baltimore's game is confirmed finished. Jackson's last official in-game designation was questionable to return with an ankle injury, and Huntley relieved him after halftime. No explicit Jackson return or non-return outcome, new diagnosis or future absence is verified.",
-      "fantasyAnalysis": "Reassess Jackson after postgame evaluation and upcoming practice reports. Huntley remains a conditional future replacement; the relief appearance does not establish another start.",
+      "headline": "Jackson did not return; coach optimism reported",
+      "summary": "Baltimore's updated official article explicitly confirms Jackson did not return after his ankle injury. Minter had no further update. Jonas Shaffer describes Minter as sounding optimistic, citing discussions about a second-half return; this is a reporter characterization, not a confirmed prognosis.",
+      "fantasyAnalysis": "Monitor evaluation and upcoming practice before relying on Jackson next week. Huntley remains a conditional replacement; neither a future Jackson absence nor another Huntley start is confirmed.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T20:19:23Z",
+      "checkedAt": "2026-10-04T20:46:35Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -264,8 +264,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Ankle; earlier back listing",
         "practiceStatus": null,
-        "gameStatus": "QUESTIONABLE TO RETURN (LAST IN-GAME REPORT)",
-        "expectedReturn": "Game finished; explicit return outcome and future availability unconfirmed."
+        "gameStatus": "DID NOT RETURN",
+        "expectedReturn": "Week 4 non-return confirmed; future availability and recovery timetable unconfirmed."
       },
       "sources": [
         {
@@ -362,6 +362,30 @@
           "url": "https://x.com/ryanmink/status/2106838750529479129",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T20:15:29Z"
+        },
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Ryan Mink",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 02:56 PM; timezone not displayed; postgame addition has no separate update clock",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.baltimoreravens.com/news/lamar-jackson-ankle-injury-ravens-titans-tyler-huntley",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:44:46Z"
+        },
+        {
+          "sourceName": "The Baltimore Banner (Jonas Shaffer on X)",
+          "author": "Jonas Shaffer",
+          "xHandle": "jonas_shaffer",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "1:22 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/jonas_shaffer/status/2106842354694951377",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:45:43Z"
         }
       ]
     },
@@ -374,14 +398,14 @@
         "position": "QB"
       },
       "headline": "Huntley relieved Jackson; future starting role unconfirmed",
-      "summary": "Huntley replaced injured Lamar Jackson for the opening second-half drive in Baltimore's now-completed game. The reviewed sources do not establish Jackson's final return outcome or a future starting assignment.",
+      "summary": "Huntley replaced Lamar Jackson after halftime, and Baltimore now explicitly confirms Jackson did not return from the ankle injury. This resolves the previously unverified return outcome, without assigning Huntley a future start.",
       "fantasyAnalysis": "Huntley's next opportunity depends on Jackson's evaluation and subsequent team decisions. Do not turn this relief appearance into a confirmed future start.",
       "eventType": "ROLE_CHANGE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T20:19:23Z",
+      "checkedAt": "2026-10-04T20:46:35Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -416,6 +440,18 @@
           "url": "https://x.com/ryanmink/status/2106838750529479129",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T20:15:29Z"
+        },
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Ryan Mink",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 02:56 PM; timezone not displayed; postgame addition has no separate update clock",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.baltimoreravens.com/news/lamar-jackson-ankle-injury-ravens-titans-tyler-huntley",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:44:46Z"
         }
       ]
     },
@@ -1554,14 +1590,14 @@
         "position": "WR"
       },
       "headline": "Chase ruled out after possible-concussion evaluation",
-      "summary": "The Bengals officially rule Chase out of the game against Jacksonville after their earlier possible-concussion evaluation announcement. The new post gives no diagnosis or recovery timetable; being evaluated does not establish a confirmed concussion.",
-      "fantasyAnalysis": "Other receivers could absorb opportunities for the remainder of the game, but no target allocation is assured. Monitor postgame findings before next-week plans and prepare alternatives if needed; no fixed absence length or post-kickoff swap is assumed.",
+      "summary": "Chase was officially ruled out after evaluation for a possible concussion in the completed Jacksonville game. No newer official diagnosis or recovery timetable is verified. Ben Baby also reports a late adductor injury for Tee Higgins.",
+      "fantasyAnalysis": "Higgins' separate reported injury adds uncertainty to the receiving group. Prepare healthy alternatives pending both evaluations; no next-week absence, automatic beneficiary or fixed target share is established.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T18:46:52Z",
+      "checkedAt": "2026-10-04T20:46:35Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1596,6 +1632,60 @@
           "url": "https://x.com/Bengals/status/2106817199478575119",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T18:46:17Z"
+        },
+        {
+          "sourceName": "ESPN (Ben Baby on X)",
+          "author": "Ben Baby",
+          "xHandle": "Ben_Baby",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "1:31 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Ben_Baby/status/2106844565936177465",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:45:26Z"
+        }
+      ]
+    },
+    {
+      "eventId": "cin-tee-higgins-week4-adductor-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Tee Higgins",
+        "team": "CIN",
+        "position": "WR"
+      },
+      "headline": "Higgins unable to continue with reported adductor injury",
+      "summary": "Ben Baby reports Higgins suffered an adductor injury late in the Jacksonville loss and tried to continue but could not. No severity, official future designation or recovery timetable is established.",
+      "fantasyAnalysis": "Prepare a healthy receiver alternative pending evaluation. With Chase also having left injured, other Bengals receivers could gain opportunities if either remains restricted, but no next-week absence or target allocation is confirmed.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T20:46:35Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Adductor",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Future availability and recovery timetable unconfirmed."
+      },
+      "sources": [
+        {
+          "sourceName": "ESPN (Ben Baby on X)",
+          "author": "Ben Baby",
+          "xHandle": "Ben_Baby",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "1:31 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Ben_Baby/status/2106844565936177465",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:45:26Z"
         }
       ]
     },
@@ -8660,5 +8750,5 @@
       ]
     }
   ],
-  "contentHash": "c9d71e2dbf79acf0f9a5d241fa628021f9a7a86a77e7293d53ffd20bf8a0facb"
+  "contentHash": "5ee2d6f045fef37a9b3269fd2aea861b9368b2dc443f64cf7fb7ca98c5a05176"
 }
