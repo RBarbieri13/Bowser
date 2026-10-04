@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T21:49:04.000Z",
-  "updatedAt": "2026-10-04T21:51:01.775Z",
-  "revision": "bowser-public-news-20261004T215101775Z",
+  "checkedAt": "2026-10-04T21:58:36.000Z",
+  "updatedAt": "2026-10-04T22:00:45.515Z",
+  "revision": "bowser-public-news-20261004T220045515Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -45,6 +45,48 @@
           "url": "https://www.giants.com/news/nfl-week-4-inactive-list-who-s-in-who-s-out-for-giants-vs-cardinals",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:46:28Z"
+        }
+      ]
+    },
+    {
+      "eventId": "ari-hunter-long-week4-knee-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Hunter Long",
+        "team": "ARI",
+        "position": "TE"
+      },
+      "headline": "Hunter Long did not return with knee injury",
+      "summary": "NFL.com's official Sunday roundup states Long did not return to Arizona's loss to the Giants with a knee injury. No further severity or future availability detail is supplied.",
+      "fantasyAnalysis": "Arizona's other tight ends could absorb depth work if Long remains unavailable; no receiving or snap share is established.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T21:58:36Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee",
+        "practiceStatus": null,
+        "gameStatus": "DID NOT RETURN",
+        "expectedReturn": "Future availability and recovery timetable unknown."
+      },
+      "sources": [
+        {
+          "sourceName": "NFL.com",
+          "author": "Around the NFL Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication and update fields blank in the live roundup; no exact clock verified",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T21:57:59Z"
         }
       ]
     },
@@ -702,24 +744,24 @@
         "team": "BUF",
         "position": "WR"
       },
-      "headline": "DJ Moore downgraded to doubtful with shoulder injury",
-      "summary": "Buffalo's official in-game update downgrades Moore from questionable to doubtful to return with a shoulder injury against New England. No later return or out announcement, severity or recovery timetable is verified.",
-      "fantasyAnalysis": "Coleman and the remaining pass catchers could receive additional opportunities while Moore is unavailable, but no target share is guaranteed. Monitor the return decision and postgame evaluation before later-week plans; no locked-game swap is implied.",
+      "headline": "DJ Moore did not return with shoulder injury",
+      "summary": "NFL.com's official Sunday roundup explicitly says Moore did not return to the loss against New England with a shoulder injury, resolving the earlier doubtful-to-return outcome. No future availability decision or recovery timetable is supplied.",
+      "fantasyAnalysis": "Coleman and other receivers could gain opportunities if Moore remains limited or unavailable, but no future target share is established. Monitor evaluation and practice before next-week decisions.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T18:46:52Z",
+      "checkedAt": "2026-10-04T21:58:36Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "shoulder",
-        "practiceStatus": "LP",
-        "gameStatus": "DOUBTFUL TO RETURN",
-        "expectedReturn": "Return doubtful in the current game; longer-term prognosis unknown."
+        "practiceStatus": null,
+        "gameStatus": "DID NOT RETURN",
+        "expectedReturn": "Week 4 non-return confirmed; future availability and recovery timetable unknown."
       },
       "sources": [
         {
@@ -804,6 +846,18 @@
           "url": "https://x.com/BuffaloBillsPR/status/2106816785253093776",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T18:46:17Z"
+        },
+        {
+          "sourceName": "NFL.com",
+          "author": "Around the NFL Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication and update fields blank in the live roundup; no exact clock verified",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T21:57:59Z"
         }
       ]
     },
@@ -1625,21 +1679,21 @@
         "team": "CIN",
         "position": "WR"
       },
-      "headline": "Chase ruled out; concussion attributed to original report",
-      "summary": "The Bengals officially ruled Chase out after possible-concussion evaluation. In his earlier in-game post, Ben Baby explicitly reported a concussion; this is attributed reporting, not a newly verified official postgame diagnosis. No recovery timetable or Week 5 status is confirmed.",
-      "fantasyAnalysis": "Higgins' separate reported injury adds uncertainty to the receiving group. Prepare healthy alternatives pending both evaluations; no next-week absence, automatic beneficiary or fixed target share is established.",
+      "headline": "Chase ruled out with concussion, NFL.com reports",
+      "summary": "NFL.com's official Sunday roundup states Chase was ruled out after suffering a concussion, corroborating Ben Baby's earlier report. The Bengals' original posts documented evaluation and the OUT decision. No recovery timetable or Week 5 status is confirmed.",
+      "fantasyAnalysis": "Higgins' separate reported adductor injury adds uncertainty to the receiving group. Prepare healthy alternatives pending both evaluations; no next-week absence or fixed target share is established.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T21:00:04Z",
+      "checkedAt": "2026-10-04T21:58:36Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Head; concussion reported by Ben Baby",
+        "bodyPart": "Concussion, reported by NFL.com and Ben Baby",
         "practiceStatus": null,
         "gameStatus": "OUT FOR GAME",
         "expectedReturn": "Week 5 status and recovery timetable unconfirmed."
@@ -1692,6 +1746,18 @@
           "url": "https://x.com/Ben_Baby/status/2106817393511072240",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T20:58:41Z"
+        },
+        {
+          "sourceName": "NFL.com",
+          "author": "Around the NFL Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication and update fields blank in the live roundup; no exact clock verified",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T21:57:59Z"
         }
       ]
     },
@@ -3746,6 +3812,48 @@
       ]
     },
     {
+      "eventId": "lar-konata-mumpfield-week4-shoulder-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Konata Mumpfield",
+        "team": "LAR",
+        "position": "WR"
+      },
+      "headline": "Konata Mumpfield did not return with shoulder injury",
+      "summary": "NFL.com's official Sunday roundup states Mumpfield did not return to the Rams' win over Philadelphia with a shoulder injury. No future timetable is supplied.",
+      "fantasyAnalysis": "Monitor evaluation before future roster decisions. Any redistribution among Rams receivers remains conditional, without a guaranteed target share.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T21:58:36Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Shoulder",
+        "practiceStatus": null,
+        "gameStatus": "DID NOT RETURN",
+        "expectedReturn": "Future availability and recovery timetable unknown."
+      },
+      "sources": [
+        {
+          "sourceName": "NFL.com",
+          "author": "Around the NFL Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication and update fields blank in the live roundup; no exact clock verified",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T21:57:59Z"
+        }
+      ]
+    },
+    {
       "eventId": "lar-ty-simpson-week4-third-quarterback-2026-10-04",
       "player": {
         "playerId": null,
@@ -4539,24 +4647,24 @@
         "team": "NE",
         "position": "TE"
       },
-      "headline": "Raridon active against Buffalo",
-      "summary": "Raridon is absent from New England's complete six-player inactive list, resolving his thigh-related questionable availability watch.",
-      "fantasyAnalysis": "Active status confirms game-day eligibility, not a guaranteed workload or freedom from an in-game limitation.",
-      "eventType": "DEPTH_CHART",
+      "headline": "Raridon did not return with ankle injury",
+      "summary": "After being active against Buffalo, Raridon left with an ankle injury and did not return, according to NFL.com's official Sunday roundup. This is a new injury description, distinct from his earlier thigh-related availability watch.",
+      "fantasyAnalysis": "Other Patriots tight ends could absorb work if Raridon remains limited or unavailable. The report gives no severity, future absence or fixed snap share.",
+      "eventType": "INJURY",
       "status": "CONFIRMED",
-      "fantasyImpact": "LOW",
+      "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T15:38:40Z",
+      "checkedAt": "2026-10-04T21:58:36Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Thigh",
+        "bodyPart": "Ankle; earlier thigh listing",
         "practiceStatus": null,
-        "gameStatus": "ACTIVE",
-        "expectedReturn": null
+        "gameStatus": "DID NOT RETURN",
+        "expectedReturn": "Future availability and recovery timetable unknown."
       },
       "sources": [
         {
@@ -4570,6 +4678,18 @@
           "url": "https://www.patriots.com/news/week-4-inactives-patriots-at-bills",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:36:27Z"
+        },
+        {
+          "sourceName": "NFL.com",
+          "author": "Around the NFL Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication and update fields blank in the live roundup; no exact clock verified",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T21:57:59Z"
         }
       ]
     },
@@ -4581,15 +4701,15 @@
         "team": "NE",
         "position": "WR"
       },
-      "headline": "Hollins questionable to return with calf injury",
-      "summary": "New England's official communications account lists Hollins questionable to return against Buffalo with a calf injury.",
-      "fantasyAnalysis": "Other Patriots receivers could receive additional opportunities while Hollins is unavailable, but no target share is established. Monitor his return and later evaluation before future decisions.",
+      "headline": "Hollins did not return with calf injury",
+      "summary": "NFL.com's official Sunday roundup confirms Hollins did not return to the win over Buffalo with a calf injury, resolving the earlier questionable-to-return outcome.",
+      "fantasyAnalysis": "Other Patriots receivers could gain opportunities if Hollins remains unavailable. Future status, severity and target allocation remain unconfirmed; reassess after evaluation and practice.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T19:06:55Z",
+      "checkedAt": "2026-10-04T21:58:36Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4597,8 +4717,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Calf",
         "practiceStatus": null,
-        "gameStatus": "QUESTIONABLE TO RETURN",
-        "expectedReturn": "In-game return uncertain; longer-term prognosis unknown."
+        "gameStatus": "DID NOT RETURN",
+        "expectedReturn": "Week 4 non-return confirmed; future availability and timetable unknown."
       },
       "sources": [
         {
@@ -4612,6 +4732,18 @@
           "url": "https://x.com/PatriotsComms/status/2106819913063252287?s=20",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T19:04:26Z"
+        },
+        {
+          "sourceName": "NFL.com",
+          "author": "Around the NFL Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication and update fields blank in the live roundup; no exact clock verified",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T21:57:59Z"
         }
       ]
     },
@@ -4995,6 +5127,48 @@
           "url": "https://www.neworleanssaints.com/news/new-orleans-saints-running-back-depth-being-tested-early",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:07:00Z"
+        }
+      ]
+    },
+    {
+      "eventId": "nyg-braxton-berrios-week4-foot-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Braxton Berrios",
+        "team": "NYG",
+        "position": "WR"
+      },
+      "headline": "Braxton Berrios ruled out with foot injury",
+      "summary": "NFL.com's official Sunday roundup states Berrios was ruled out of the Giants' win over Arizona with a foot injury. It provides no severity assessment or future absence timetable.",
+      "fantasyAnalysis": "Other Giants receivers and return options could absorb depth work if Berrios remains unavailable; no offensive target share is established.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T21:58:36Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot",
+        "practiceStatus": null,
+        "gameStatus": "OUT FOR GAME",
+        "expectedReturn": "Future availability and recovery timetable unknown."
+      },
+      "sources": [
+        {
+          "sourceName": "NFL.com",
+          "author": "Around the NFL Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication and update fields blank in the live roundup; no exact clock verified",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T21:57:59Z"
         }
       ]
     },
@@ -8918,5 +9092,5 @@
       ]
     }
   ],
-  "contentHash": "7a542853b55183e0701cf495d416b70f3ed1068680c282315c8f75927169e6ae"
+  "contentHash": "3ec41c3ae2aa60b43c135b7461af5d9d35ecabe467664d5685a7bb484770d016"
 }
