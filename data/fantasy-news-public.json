@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T13:00:20.000Z",
-  "updatedAt": "2026-10-04T13:02:18.415Z",
-  "revision": "bowser-public-news-20261004T130218415Z",
+  "checkedAt": "2026-10-04T13:17:41.000Z",
+  "updatedAt": "2026-10-04T13:19:17.470Z",
+  "revision": "bowser-public-news-20261004T131917470Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -3567,6 +3567,48 @@
       ]
     },
     {
+      "eventId": "phi-andy-dalton-qb3-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Andy Dalton",
+        "team": "PHI",
+        "position": "QB"
+      },
+      "headline": "Dalton reportedly drops to Eagles' No. 3 quarterback",
+      "summary": "Mike Garafolo reports that Dalton moves to Philadelphia's No. 3 quarterback role against the Rams, with Tanner McKee becoming the top backup to Jalen Hurts.",
+      "fantasyAnalysis": "Dalton's path to playing time becomes more remote if the reported order holds. Hurts remains the starter; the report alone does not establish Dalton's inactive or emergency-quarterback designation.",
+      "eventType": "DEPTH_CHART",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T13:17:41Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "NFL Network",
+          "author": "Mike Garafolo",
+          "xHandle": "MikeGarafolo",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "5:34 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/MikeGarafolo/status/2106724561710453100",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T13:17:07Z"
+        }
+      ]
+    },
+    {
       "eventId": "phi-goedert-estimated-dnp-20260930",
       "player": {
         "playerId": null,
@@ -3849,6 +3891,48 @@
           "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-injury-report-2026-nfl-week-4-devonta-smith-puka-nacua",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T00:48:25Z"
+        }
+      ]
+    },
+    {
+      "eventId": "phi-tanner-mckee-qb2-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Tanner McKee",
+        "team": "PHI",
+        "position": "QB"
+      },
+      "headline": "McKee reportedly moves to Eagles' No. 2 quarterback",
+      "summary": "Mike Garafolo reports that Philadelphia is changing its backup quarterback order for Sunday's Rams game: McKee moves to No. 2 behind Jalen Hurts, while Andy Dalton becomes No. 3.",
+      "fantasyAnalysis": "McKee becomes the reported next option if Hurts cannot continue. This is a backup-order change, not a starting opportunity or confirmed game-day active designation; await the official inactives.",
+      "eventType": "DEPTH_CHART",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T13:17:41Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "NFL Network",
+          "author": "Mike Garafolo",
+          "xHandle": "MikeGarafolo",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "5:34 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/MikeGarafolo/status/2106724561710453100",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T13:17:07Z"
         }
       ]
     },
@@ -5600,5 +5684,5 @@
       ]
     }
   ],
-  "contentHash": "7d82d7bcc6b89ef2265b4edce799516be81764668c7eccd942c523526f2ba704"
+  "contentHash": "a3134402977221ca85ea302689716d653838ee43abefca4151b5c4519f1d48da"
 }
