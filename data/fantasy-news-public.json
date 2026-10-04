@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T14:18:11.000Z",
-  "updatedAt": "2026-10-04T14:19:58.374Z",
-  "revision": "bowser-public-news-20261004T141958374Z",
+  "checkedAt": "2026-10-04T15:19:46.000Z",
+  "updatedAt": "2026-10-04T15:21:33.696Z",
+  "revision": "bowser-public-news-20261004T152133696Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -5214,15 +5214,15 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Kaliakmanis enters after Mariota's reported injury exit",
-      "summary": "CBS reporter Zachary Pereles says Kaliakmanis entered the London game after Marcus Mariota left injured and was deemed questionable to return. Washington's official game page independently records Kaliakmanis pass attempts. Jayden Daniels is inactive.",
-      "fantasyAnalysis": "Kaliakmanis has an immediate relief opportunity while Mariota is unavailable. The duration is uncertain, and neither a future start nor a specific workload is established. Reassess after return-status and postgame updates.",
+      "headline": "Kaliakmanis has relief opportunity with Mariota ruled out",
+      "summary": "Kaliakmanis entered after Mariota's knee injury, according to CBS original reporting, with pass attempts recorded by Washington's official game page. The Commanders have now ruled Mariota out for the rest of the game. This resolves Mariota's return status without establishing a future starter.",
+      "fantasyAnalysis": "Mariota cannot return today, extending the relief opportunity. Kaliakmanis is not guaranteed every remaining snap or a future start; reassess after updated quarterback health reports and team decisions.",
       "eventType": "ROLE_CHANGE",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": "2026-10-04T13:58:00Z",
-      "lastUpdatedAt": "2026-10-04T13:58:00Z",
-      "checkedAt": "2026-10-04T14:08:06Z",
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T15:19:46Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5257,6 +5257,18 @@
           "url": "https://www.commanders.com/game-day/indianapolis-colts-at-washington-commanders/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T14:05:54Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": "Commanders",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "8:11 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Commanders/status/2106764269413167367",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:19:07Z"
         }
       ]
     },
@@ -5483,15 +5495,15 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Mariota questionable to return with confirmed knee injury",
-      "summary": "Washington officially identifies Mariota's injury as a knee issue and lists him questionable to return against Indianapolis. This resolves the earlier unspecified-injury report. CBS reported his locker-room exit and Kaliakmanis entering; the official game page records Kaliakmanis pass attempts. No return, downgrade or injury severity was verified at this check.",
-      "fantasyAnalysis": "Kaliakmanis is the immediate replacement while Mariota is unavailable, with no assured role beyond this game. Monitor Mariota's return and subsequent recovery updates; the London game has already begun, so this is not pre-kickoff replacement advice.",
+      "headline": "Mariota ruled out for remainder of London game",
+      "summary": "Washington downgraded Mariota to OUT with his knee injury, resolving the earlier questionable-to-return status. Kaliakmanis had entered in relief, with passing participation corroborated by the official game page. No injury severity or longer-term recovery timetable was announced.",
+      "fantasyAnalysis": "Mariota will not return to this game. Kaliakmanis has the relief opportunity, but future starts depend on subsequent quarterback availability and team decisions. Reassess next-week alternatives after injury updates; the London game is already underway.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T14:18:11Z",
+      "checkedAt": "2026-10-04T15:19:46Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5499,8 +5511,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Knee",
         "practiceStatus": null,
-        "gameStatus": "QUESTIONABLE TO RETURN",
-        "expectedReturn": "Questionable to return; no severity or longer-term prognosis announced."
+        "gameStatus": "OUT FOR GAME",
+        "expectedReturn": "Ruled out for the remainder of Week 4; longer-term prognosis unknown."
       },
       "sources": [
         {
@@ -5550,6 +5562,18 @@
           "url": "https://x.com/Commanders/status/2106745766610170314",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T14:17:21Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": "Commanders",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "8:11 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Commanders/status/2106764269413167367",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T15:19:07Z"
         }
       ]
     },
@@ -5786,5 +5810,5 @@
       ]
     }
   ],
-  "contentHash": "d5bd5a67debf1d605497baa9799a5c71f9018d2b0864aacad5a16f1674193654"
+  "contentHash": "b30b60aa7bd62258687edfff70b73880f793fbaa9d8fa1595a914cbd89e645ff"
 }
