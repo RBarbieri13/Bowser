@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T18:19:20.000Z",
-  "updatedAt": "2026-10-04T18:21:13.886Z",
-  "revision": "bowser-public-news-20261004T182113886Z",
+  "checkedAt": "2026-10-04T18:37:08.000Z",
+  "updatedAt": "2026-10-04T18:38:31.478Z",
+  "revision": "bowser-public-news-20261004T183831478Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -486,15 +486,15 @@
         "team": "BUF",
         "position": "WR"
       },
-      "headline": "DJ Moore active against New England",
-      "summary": "Moore is absent from Buffalo's complete seven-player inactive list after limited Friday work without a game designation.",
-      "fantasyAnalysis": "Active status confirms game-day eligibility, not a guaranteed workload or freedom from an in-game limitation.",
-      "eventType": "PRACTICE",
+      "headline": "DJ Moore questionable to return with shoulder injury",
+      "summary": "Buffalo's official in-game update lists Moore questionable to return with a shoulder injury against New England. This supersedes his earlier active-eligibility status. No later return, downgrade, severity or recovery timetable is verified.",
+      "fantasyAnalysis": "Coleman and the remaining pass catchers could receive additional opportunities while Moore is unavailable, but no target share is guaranteed. Monitor the return decision and subsequent evaluation before later-week moves; no locked-game swap is implied.",
+      "eventType": "INJURY",
       "status": "CONFIRMED",
-      "fantasyImpact": "MEDIUM",
+      "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T15:38:40Z",
+      "checkedAt": "2026-10-04T18:37:08Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -502,8 +502,8 @@
         "isInjuryRelated": true,
         "bodyPart": "shoulder",
         "practiceStatus": "LP",
-        "gameStatus": "ACTIVE",
-        "expectedReturn": null
+        "gameStatus": "QUESTIONABLE TO RETURN",
+        "expectedReturn": "In-game return uncertain; longer-term prognosis unknown."
       },
       "sources": [
         {
@@ -564,6 +564,18 @@
           "url": "https://www.buffalobills.com/news/buffalo-bills-inactives-vs-patriots-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:32:36Z"
+        },
+        {
+          "sourceName": "Buffalo Bills PR",
+          "author": null,
+          "xHandle": "BuffaloBillsPR",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "11:16 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/BuffaloBillsPR/status/2106810617973600584",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T18:36:54Z"
         }
       ]
     },
@@ -7430,5 +7442,5 @@
       ]
     }
   ],
-  "contentHash": "cf4d7b625935c2d899ab08b03ff1144589b40f4d6d4feba0679c868b5a7f222e"
+  "contentHash": "315d6fc4d0bff377f36f2eab9e1634917f2d90b2ab17dd6546cfd3d132f0b6ae"
 }
