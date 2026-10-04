@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T15:50:26.000Z",
-  "updatedAt": "2026-10-04T15:53:18.989Z",
-  "revision": "bowser-public-news-20261004T155318989Z",
+  "checkedAt": "2026-10-04T16:07:56.000Z",
+  "updatedAt": "2026-10-04T16:09:49.960Z",
+  "revision": "bowser-public-news-20261004T160949960Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -6460,6 +6460,48 @@
       ]
     },
     {
+      "eventId": "was-jaylin-lane-week4-ankle-out-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Jaylin Lane",
+        "team": "WAS",
+        "position": "WR"
+      },
+      "headline": "Jaylin Lane ruled out with ankle injury",
+      "summary": "Washington's official in-game post rules Lane out with an ankle injury during the London game against Indianapolis. No severity or longer-term recovery timetable is announced.",
+      "fantasyAnalysis": "The remaining receivers could absorb opportunities, but no target allocation or future workload is established. Monitor postgame injury updates for later-week planning; the London game is already underway.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T16:07:56Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": null,
+        "gameStatus": "OUT FOR GAME",
+        "expectedReturn": "Ruled out in Week 4; longer-term prognosis unknown."
+      },
+      "sources": [
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": "Commanders",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "8:35 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Commanders/status/2106770287090082262",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T16:07:23Z"
+        }
+      ]
+    },
+    {
       "eventId": "was-luke-mccaffrey-week4-inactive-2026-10-04",
       "player": {
         "playerId": null,
@@ -6824,5 +6866,5 @@
       ]
     }
   ],
-  "contentHash": "17f52808147bfdbc79580e0e8b9fc1df7dc6cc80f069b4e8e0ec7413627439fb"
+  "contentHash": "c4afade6d2758e9bbbb6973622b3a2bad222bf8283f4b9918164991ba4727f53"
 }
