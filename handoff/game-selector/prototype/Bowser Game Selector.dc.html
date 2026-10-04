@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Source+Code+Pro:wght@600;700&display=swap" />
+<style>
+html, body { margin: 0; background: #0E0E0E; color: #EDEDED; font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: #3ECF8E; text-decoration: none; } a:hover { color: #72E3AD; }
+button { font-family: inherit; }
+::-webkit-scrollbar { height: 6px; } ::-webkit-scrollbar-thumb { background: #2E2E2E; border-radius: 3px; } ::-webkit-scrollbar-track { background: transparent; }
+</style>
+</helmet>
+<div style="padding: 28px 24px; display: flex; flex-direction: column; gap: 22px; max-width: 1400px;">
+
+  <div style="display: flex; align-items: baseline; gap: 14px;">
+    <div style="font-size: 15px; font-weight: 600; color: #EDEDED;">DFS game selector</div>
+    <div style="font-size: 12px; color: #8A8A8A;">{{ slateLabel }} · {{ selectedLabel }}</div>
+  </div>
+
+  <div style="display: flex; align-items: stretch; gap: 10px; overflow-x: auto; padding-bottom: 12px;">
+
+    <button onClick="{{ onAll }}" style="flex: 0 0 auto; width: 64px; border-radius: 10px; border: 1.5px solid {{ allBorder }}; background: {{ allBg }}; color: {{ allColor }}; font-family: inherit; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 0;" style-hover="background: #202020;">
+      <span>All</span>
+      <span style="font-size: 11px; font-weight: 500; color: #8A8A8A;">{{ gameCount }}</span>
+    </button>
+
+    <sc-for list="{{ games }}" as="g" hint-placeholder-count="8">
+      <button onClick="{{ g.onClick }}" title="{{ g.title }}" style="flex: 0 0 auto; width: 248px; text-align: left; border-radius: 10px; border: 1.5px solid {{ g.border }}; background: {{ g.bg }}; padding: 10px 12px 10px 10px; cursor: pointer; color: #EDEDED; font-family: inherit; position: relative; display: flex; flex-direction: column; gap: 6px; opacity: {{ g.opacity }};" style-hover="background: #202020;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span style="flex: 1 1 auto; min-width: 0; font-size: 12.5px; font-weight: 500; color: {{ g.statusColor }}; white-space: nowrap;">{{ g.status }}</span>
+          <sc-if value="{{ g.live }}" hint-placeholder-val="{{ false }}"><span style="width: 6px; height: 6px; border-radius: 50%; background: #3ECF8E; box-shadow: 0 0 0 3px rgba(62,207,142,.18); flex: 0 0 auto;"></span></sc-if>
+        </div>
+        <sc-for list="{{ g.teams }}" as="t" hint-placeholder-count="2">
+          <div style="display: grid; grid-template-columns: 4px 32px minmax(0,1fr) auto; align-items: center; gap: 8px; height: 26px;">
+            <span style="width: 3px; height: 14px; border-radius: 2px; background: {{ t.possBar }};"></span>
+            <span style="width: 32px; height: 24px; display: flex; align-items: center; justify-content: center;">
+              <sc-if value="{{ t.logo }}" hint-placeholder-val="{{ false }}"><img src="{{ t.logo }}" alt="{{ t.abbr }}" width="28" height="28" style="width: 28px; height: 28px; object-fit: contain; display: block;" /></sc-if>
+            </span>
+            <span style="font-size: 15px; font-weight: 600; color: #EDEDED; letter-spacing: .2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ t.abbr }}</span>
+            <span style="font-family: 'Source Code Pro', ui-monospace, monospace; font-size: 15px; font-weight: 700; color: {{ t.valueColor }}; min-width: 40px; text-align: right; white-space: nowrap;">{{ t.value }}</span>
+          </div>
+        </sc-for>
+      </button>
+    </sc-for>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px 18px; font-size: 12px; color: #8A8A8A; line-height: 1.5; max-width: 1100px;">
+    <div><span style="color: #EDEDED; font-weight: 600;">Click</span> a box to isolate that game. Click again (or All) to clear. Shift-click adds a second game. Selected = green border; non-selected fade when a filter is active.</div>
+    <div><span style="color: #EDEDED; font-weight: 600;">Pre-kick</span>: the favorite's row shows the spread (−3.5), the other row shows the total (o47.5). <span style="color: #EDEDED; font-weight: 600;">Live / final</span>: scores in mono, winner / leader in green, possession tick on the left edge.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:360}}">
+class Component extends DCLogic {
+  state = { selected: [] };
+  games() {
+    return [
+      { id: 'MIN@MIA', status: '4th Quarter 2:11', phase: 'live', poss: 'MIA', away: { abbr: 'MIN', fill: '#4F2683', stripe: '#FFC62F', val: 34 }, home: { abbr: 'MIA', fill: '#008E97', stripe: '#FC4C02', val: 13 } },
+      { id: 'DAL@PHI', status: '4th Quarter 2:00', phase: 'live', poss: 'DAL', away: { abbr: 'DAL', fill: '#003594', stripe: '#869397', val: 14 }, home: { abbr: 'PHI', fill: '#004C54', stripe: '#A5ACAF', val: 24 } },
+      { id: 'KC@LAC', status: 'Halftime', phase: 'live', poss: '', away: { abbr: 'KC', fill: '#E31837', stripe: '#FFB81C', val: 17 }, home: { abbr: 'LAC', fill: '#0080C6', stripe: '#FFC20E', val: 10 } },
+      { id: 'BUF@NYJ', status: 'Final', phase: 'final', poss: '', away: { abbr: 'BUF', fill: '#00338D', stripe: '#C60C30', val: 31 }, home: { abbr: 'NYJ', fill: '#125740', stripe: '#FFFFFF', val: 10 } },
+      { id: 'DET@GB', status: 'Final · OT', phase: 'final', poss: '', away: { abbr: 'DET', fill: '#0076B6', stripe: '#B0B7BC', val: 27 }, home: { abbr: 'GB', fill: '#203731', stripe: '#FFB612', val: 30 } },
+      { id: 'SF@SEA', status: 'Sun 4:25 PM', phase: 'pre', total: 'o47.5', spread: -3.5, favIsHome: false, away: { abbr: 'SF', fill: '#AA0000', stripe: '#B3995D' }, home: { abbr: 'SEA', fill: '#002244', stripe: '#69BE28' } },
+      { id: 'CIN@BAL', status: 'Sun 8:20 PM', phase: 'pre', total: 'o51.5', spread: -6.5, favIsHome: true, away: { abbr: 'CIN', fill: '#FB4F14', stripe: '#000000' }, home: { abbr: 'BAL', fill: '#241773', stripe: '#9E7C0C' } },
+      { id: 'LAR@ARI', status: 'Mon 8:15 PM', phase: 'pre', total: 'o44.5', spread: -2.5, favIsHome: false, away: { abbr: 'LAR', fill: '#003594', stripe: '#FFD100' }, home: { abbr: 'ARI', fill: '#97233F', stripe: '#FFB612' } },
+    ];
+  }
+  toggle(id, additive) {
+    this.setState(s => {
+      const has = s.selected.includes(id);
+      if (additive) return { selected: has ? s.selected.filter(x => x !== id) : [...s.selected, id] };
+      return { selected: has && s.selected.length === 1 ? [] : [id] };
+    });
+  }
+  renderVals() {
+    const sel = this.state.selected;
+    const src = this.games();
+    const active = sel.length > 0;
+    const games = src.map(g => {
+      const isSel = sel.includes(g.id);
+      const rows = [g.away, g.home].map((t, i) => {
+        const isHome = i === 1;
+        let value = '', valueColor = '#8A8A8A';
+        if (g.phase === 'pre') {
+          const fav = g.favIsHome === isHome;
+          value = fav ? String(g.spread) : g.total;
+          valueColor = '#8A8A8A';
+        } else {
+          value = String(t.val);
+          const other = isHome ? g.away.val : g.home.val;
+          const leads = t.val > other;
+          valueColor = g.phase === 'final' ? (leads ? '#3ECF8E' : '#8A8A8A') : (leads ? '#3ECF8E' : '#EDEDED');
+        }
+        return { abbr: t.abbr, logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/' + t.abbr.toLowerCase() + '.png', value, valueColor, possBar: g.poss === t.abbr ? '#3ECF8E' : 'transparent' };
+      });
+      return {
+        teams: rows, status: g.status, live: g.phase === 'live',
+        statusColor: g.phase === 'live' ? '#EDEDED' : '#8A8A8A',
+        border: isSel ? '#3ECF8E' : '#262626', bg: isSel ? '#15241D' : '#181818',
+        opacity: active && !isSel ? 0.45 : 1,
+        title: g.id, onClick: (e) => this.toggle(g.id, e.shiftKey || e.metaKey),
+      };
+    });
+    return {
+      games, gameCount: src.length + ' games', slateLabel: '2026 W5 · Main Classic',
+      selectedLabel: active ? sel.join(', ') : 'All games',
+      allBorder: active ? '#262626' : '#3ECF8E', allBg: active ? '#181818' : '#15241D', allColor: active ? '#8A8A8A' : '#3ECF8E',
+      onAll: () => this.setState({ selected: [] }),
+    };
+  }
+}
+</script>
+</body>
+</html>

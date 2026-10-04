@@ -18,11 +18,12 @@ function summarize(records) {
 }
 export function addCommentary(rows, snapshot, { hours = 72, topic = 'all', now = Date.now() } = {}) {
   const cutoff = now - hours * 3600000;
+  const topics = Array.isArray(topic) ? topic : topic === 'all' ? [] : [topic];
   const byPlayer = new Map();
   // The newest classification of an article/player replaces the earlier one; it is not a second mention.
   for (const record of new Map((snapshot.records || []).map(r => [r.id, r])).values()) {
     const at = Date.parse(record.publishedAt);
-    if (!Number.isFinite(at) || at > now || at < cutoff - hours * 3600000 || (topic !== 'all' && topicOf(record) !== topic)) continue;
+    if (!Number.isFinite(at) || at > now || at < cutoff - hours * 3600000 || (topics.length > 0 && !topics.includes(topicOf(record)))) continue;
     byPlayer.set(record.espnId, [...(byPlayer.get(record.espnId) || []), record]);
   }
   return rows.map(row => {

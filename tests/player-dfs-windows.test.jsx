@@ -58,7 +58,8 @@ test('base/count and DFS windows remain independent; Monday slate includes only 
  const statRequests=fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).map(([u])=>new URL(u,'https://test.invalid').searchParams);
  expect(statRequests.at(-1).get('weeks')).toBe('5,6,7');expect(statRequests.at(-1).get('trendRange')).toBe('selected');
  expect([...grid().querySelectorAll('.lhq-bars')].every(b=>b.children.length===3)).toBe(true);
- expect(screen.getByRole('button',{name:/NYG @ LA/})).toHaveAttribute('aria-pressed','true');
+ expect(screen.getByRole('button',{name:/NYG @ LA/})).toHaveAttribute('data-slate','true');
+ expect(screen.getByRole('button',{name:/NYG @ LA/})).toHaveAttribute('aria-pressed','false');
  expect(screen.getByRole('button',{name:/BUF @ NE/})).toBeDisabled();
  expect(within(grid()).getByRole('button',{name:'Unmatched Salary Player'}).closest('tr')).not.toHaveTextContent('WR2');
  choose('DFS slate','mon:cpt');
@@ -77,7 +78,7 @@ test('game filters intersect the slate; turning DFS off restores statistics-only
  expect(screen.queryByLabelText('DFS week')).not.toBeInTheDocument();expect(screen.queryByLabelText('DFS slate')).not.toBeInTheDocument();
  expect(within(grid()).queryByRole('button',{name:'Sal',exact:true})).not.toBeInTheDocument();
  expect(screen.queryByRole('button',{name:/NYG @ LA/})).not.toBeInTheDocument();
- choose('Player team','BUF');expect(within(grid()).queryByRole('button',{name:'Fixture Ram'})).not.toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:'Player team'}));fireEvent.click(screen.getByRole('option',{name:'BUF',exact:true}));expect(within(grid()).queryByRole('button',{name:'Fixture Ram'})).not.toBeInTheDocument();
 });
 test('unavailable future slates never fall back to another week and the statistics range stays fixed',async()=>{
  render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);

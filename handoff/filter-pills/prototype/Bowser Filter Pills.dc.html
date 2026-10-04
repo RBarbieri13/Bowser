@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+<style>
+html, body { margin: 0; background: #0E0E0E; color: #EDEDED; font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: #3ECF8E; text-decoration: none; } a:hover { color: #72E3AD; }
+button { font-family: inherit; }
+</style>
+</helmet>
+<div style="padding: 28px 24px; display: flex; flex-direction: column; gap: 30px; max-width: 1100px;">
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 12px; font-weight: 600; letter-spacing: .6px; text-transform: uppercase; color: #8A8A8A;">Toggle pills · multi-select</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <sc-for list="{{ toggles }}" as="p" hint-placeholder-count="4">
+        <button onClick="{{ p.onClick }}" style="height: 40px; padding: 0 20px; border-radius: 999px; border: 2px solid {{ p.border }}; background: {{ p.bg }}; color: {{ p.color }}; font-family: inherit; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;" style-hover="border-color: #EDEDED;">
+          <span>{{ p.label }}</span>
+          <sc-if value="{{ p.count }}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; font-weight: 600; color: {{ p.countColor }};">{{ p.count }}</span></sc-if>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 12px; font-weight: 600; letter-spacing: .6px; text-transform: uppercase; color: #8A8A8A;">Segmented pills · single-select</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <sc-for list="{{ singles }}" as="p" hint-placeholder-count="4">
+        <button onClick="{{ p.onClick }}" style="height: 40px; padding: 0 20px; border-radius: 999px; border: 2px solid {{ p.border }}; background: {{ p.bg }}; color: {{ p.color }}; font-family: inherit; font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap;" style-hover="border-color: #EDEDED;">{{ p.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 12px; font-weight: 600; letter-spacing: .6px; text-transform: uppercase; color: #8A8A8A;">Dropdown pill · opens a popover</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start;">
+      <div style="position: relative;">
+        <button onClick="{{ onToggleMenu }}" style="height: 40px; padding: 0 16px 0 20px; border-radius: 999px; border: 2px solid {{ menuBorder }}; background: #0E0E0E; color: #EDEDED; font-family: inherit; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;" style-hover="border-color: #EDEDED;">
+          <span>Teams</span>
+          <span style="font-size: 12px; font-weight: 600; color: #3ECF8E;">{{ teamCount }}</span>
+          <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1 L5 5 L9 1" stroke="#8A8A8A" stroke-width="1.6" fill="none" stroke-linecap="round"></path></svg>
+        </button>
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ true }}">
+          <div style="position: absolute; top: 48px; left: 0; width: 240px; background: #181818; border: 1px solid #2E2E2E; border-radius: 12px; padding: 8px; box-shadow: 0 12px 32px rgba(0,0,0,.5); display: flex; flex-direction: column; gap: 2px; z-index: 5;">
+            <sc-for list="{{ teamOpts }}" as="o" hint-placeholder-count="6">
+              <button onClick="{{ o.onClick }}" style="display: flex; align-items: center; gap: 10px; height: 32px; padding: 0 10px; border-radius: 8px; border: none; background: transparent; color: #EDEDED; font-family: inherit; font-size: 13px; cursor: pointer; text-align: left;" style-hover="background: #202020;">
+                <span style="width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid {{ o.boxBorder }}; background: {{ o.boxBg }}; display: inline-flex; align-items: center; justify-content: center;">
+                  <sc-if value="{{ o.on }}" hint-placeholder-val="{{ false }}"><svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4 L4 7 L9 1" stroke="#0E0E0E" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
+                </span>
+                <span style="flex: 1;">{{ o.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+      <button style="height: 40px; padding: 0 20px; border-radius: 999px; border: 2px solid #262626; background: #0E0E0E; color: #4A4A4A; font-family: inherit; font-size: 14px; font-weight: 500; cursor: not-allowed; white-space: nowrap;">Disabled</button>
+      <button style="height: 32px; padding: 0 14px; border-radius: 999px; border: 2px solid #3A3A3A; background: #0E0E0E; color: #EDEDED; font-family: inherit; font-size: 12.5px; font-weight: 500; cursor: pointer; white-space: nowrap;" style-hover="border-color: #EDEDED;">Small pill</button>
+      <button style="height: 32px; padding: 0 14px; border-radius: 999px; border: 2px solid #3ECF8E; background: #0E0E0E; color: #EDEDED; font-family: inherit; font-size: 12.5px; font-weight: 500; cursor: pointer; white-space: nowrap;">Small · on</button>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px 18px; font-size: 12px; color: #8A8A8A; line-height: 1.5;">
+    <div><span style="color: #EDEDED; font-weight: 600;">Off</span>: 2px #3A3A3A ring, page background fill, #EDEDED label. <span style="color: #EDEDED; font-weight: 600;">On</span>: ring turns #3ECF8E (green), fill stays dark, label stays #EDEDED. Hover brightens the ring to #EDEDED. No fills, no shadows: the ring is the entire state.</div>
+    <div>Fully rounded (999px), 40px tall, 20px side padding, 10px gap between pills, Poppins 14px/500. Counts ride inside the pill at 12px/600 in green. Small variant is 32px / 14px padding / 12.5px.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1000,&quot;height&quot;:520}}">
+class Component extends DCLogic {
+  state = { toggles: { 'Game Lines': true, 'Top 25': false, 'Primetime': false, 'Divisional': false }, single: 'This week', menuOpen: true, teams: { MIN: true, MIA: true, DAL: false, PHI: false, KC: false, LAC: false } };
+  renderVals() {
+    const s = this.state;
+    const counts = { 'Game Lines': '', 'Top 25': '', 'Primetime': '3', 'Divisional': '5' };
+    const toggles = Object.keys(s.toggles).map(k => {
+      const on = s.toggles[k];
+      return { label: k, count: counts[k], countColor: on ? '#3ECF8E' : '#8A8A8A', border: on ? '#3ECF8E' : '#3A3A3A', bg: '#0E0E0E', color: '#EDEDED', onClick: () => this.setState(p => ({ toggles: { ...p.toggles, [k]: !p.toggles[k] } })) };
+    });
+    const singles = ['This week', 'Season', 'Last 4', 'Last 8'].map(k => {
+      const on = s.single === k;
+      return { label: k, border: on ? '#3ECF8E' : '#3A3A3A', bg: '#0E0E0E', color: '#EDEDED', onClick: () => this.setState({ single: k }) };
+    });
+    const teamOpts = Object.keys(s.teams).map(k => {
+      const on = s.teams[k];
+      return { label: k, on, boxBorder: on ? '#3ECF8E' : '#4A4A4A', boxBg: on ? '#3ECF8E' : 'transparent', onClick: () => this.setState(p => ({ teams: { ...p.teams, [k]: !p.teams[k] } })) };
+    });
+    const n = Object.values(s.teams).filter(Boolean).length;
+    return { toggles, singles, teamOpts, teamCount: n ? String(n) : '', menuOpen: s.menuOpen, menuBorder: n ? '#3ECF8E' : '#3A3A3A', onToggleMenu: () => this.setState(p => ({ menuOpen: !p.menuOpen })) };
+  }
+}
+</script>
+</body>
+</html>
