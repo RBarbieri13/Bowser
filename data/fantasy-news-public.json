@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T01:01:02.000Z",
-  "updatedAt": "2026-10-04T01:03:24.967Z",
-  "revision": "bowser-public-news-20261004T010324967Z",
+  "checkedAt": "2026-10-04T12:12:15.000Z",
+  "updatedAt": "2026-10-04T12:14:04.952Z",
+  "revision": "bowser-public-news-20261004T121404952Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -647,15 +647,15 @@
         "team": "CAR",
         "position": "WR"
       },
-      "headline": "Coker questionable for Week 4",
-      "summary": "Carolina's October 2 final report lists Coker questionable after limited participation.",
-      "fantasyAnalysis": "Keep a viable late-game backup and check Sunday-night inactives before relying on normal usage.",
+      "headline": "Coker reportedly unlikely to play Sunday night",
+      "summary": "ESPN reports sources told Adam Schefter that Jalen Coker is unlikely to play against Detroit with his quadriceps injury. His official designation remains QUESTIONABLE. The article retains its October 3 publication clock; the Coker update's insertion time is not displayed.",
+      "fantasyAnalysis": "Use a healthy earlier option or retain a viable Sunday-night or Monday fallback. Canales said John Metchie took some of Coker's practice reps and is ready if needed, but no target share or starting order is guaranteed.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
-      "fantasyImpact": "MEDIUM",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:07:00Z",
+      "checkedAt": "2026-10-04T12:12:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -690,6 +690,18 @@
           "url": "https://www.panthers.com/news/week-4-friday-injury-report-two-ruled-out-for-lions-game-xavier-legette-damien-lewis-questionable-jalen-coker",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:07:00Z"
+        },
+        {
+          "sourceName": "ESPN",
+          "author": "Mike Kaye; reporting by Adam Schefter",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-03T21:12:00Z",
+          "publishedAtRaw": "Oct 3, 2026, 05:12 PM ET; later Coker insertion/update clock not displayed",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.espn.com/nfl/story/_/id/50093238/panthers-place-wr-xavier-legette-ir-knee-injury",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:10:56Z"
         }
       ]
     },
@@ -1126,15 +1138,15 @@
         "team": "IND",
         "position": "WR"
       },
-      "headline": "Dulin questionable despite full Friday practice",
-      "summary": "Indianapolis lists Ashton Dulin full Friday with an ankle injury but questionable for October 4 against Washington.",
-      "fantasyAnalysis": "Full participation does not remove his game uncertainty; verify early Sunday inactives before using him as a replacement.",
+      "headline": "Dulin active for London game",
+      "summary": "Ashton Dulin does not appear on Indianapolis's complete October 4 inactive list and is available against Washington after carrying an ankle-related questionable designation. Keenan Allen and Darius Slayton are inactive.",
+      "fantasyAnalysis": "His active status resolves the availability concern, but does not establish a starting assignment, target share or unrestricted workload.",
       "eventType": "RETURN",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T18:27:00Z",
+      "checkedAt": "2026-10-04T12:12:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1142,7 +1154,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Ankle",
         "practiceStatus": "FP",
-        "gameStatus": "QUESTIONABLE",
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -1169,6 +1181,102 @@
           "url": "https://www.colts.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T18:27:00Z"
+        },
+        {
+          "sourceName": "Indianapolis Colts",
+          "author": "JJ Stankevitz",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 08:02 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.colts.com/news/colts-announce-6-inactive-players-for-week-4-game-vs-commanders",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:08:40Z"
+        }
+      ]
+    },
+    {
+      "eventId": "ind-darius-slayton-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Darius Slayton",
+        "team": "IND",
+        "position": "WR"
+      },
+      "headline": "Slayton inactive for London game",
+      "summary": "Indianapolis names Darius Slayton on its official October 4 inactive list against Washington. The announcement does not identify an injury cause.",
+      "fantasyAnalysis": "He cannot serve as a replacement for inactive Keenan Allen today. Josh Downs, active Ashton Dulin and the remaining receivers have uncertain target shares.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T12:12:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Indianapolis Colts",
+          "author": "JJ Stankevitz",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 08:02 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.colts.com/news/colts-announce-6-inactive-players-for-week-4-game-vs-commanders",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:08:40Z"
+        }
+      ]
+    },
+    {
+      "eventId": "ind-dj-giddens-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "D.J. Giddens",
+        "team": "IND",
+        "position": "RB"
+      },
+      "headline": "Giddens inactive against Washington",
+      "summary": "Indianapolis names D.J. Giddens on its official October 4 inactive list against Washington. The announcement does not identify an injury cause.",
+      "fantasyAnalysis": "He is unavailable for this game; the list alone does not establish additional carries for any other running back.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T12:12:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Indianapolis Colts",
+          "author": "JJ Stankevitz",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 08:02 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.colts.com/news/colts-announce-6-inactive-players-for-week-4-game-vs-commanders",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:08:40Z"
         }
       ]
     },
@@ -1395,6 +1503,48 @@
       ]
     },
     {
+      "eventId": "ind-riley-leonard-week4-third-quarterback-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Riley Leonard",
+        "team": "IND",
+        "position": "QB"
+      },
+      "headline": "Leonard designated third quarterback for London",
+      "summary": "Indianapolis lists Riley Leonard among its October 4 inactives with the third-quarterback designation against Washington.",
+      "fantasyAnalysis": "The third-quarterback designation does not establish a starting opportunity or expected passing work.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T12:12:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE (third quarterback)",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Indianapolis Colts",
+          "author": "JJ Stankevitz",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 08:02 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.colts.com/news/colts-announce-6-inactive-players-for-week-4-game-vs-commanders",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:08:40Z"
+        }
+      ]
+    },
+    {
       "eventId": "jax-jakobi-meyers-week4-cleared-2026-10-02",
       "player": {
         "playerId": null,
@@ -1522,15 +1672,15 @@
         "team": "LA",
         "position": "WR"
       },
-      "headline": "Nacua cleared; McVay will assess snap count",
-      "summary": "Nacua was full Friday with no game designation. In the Rams' Friday feature, McVay said the team must navigate his snap count on his return against Philadelphia.",
-      "fantasyAnalysis": "His clearance supports returning to lineups, with a coach-stated workload consideration. No fixed snap limit or replacement receiver's target share is established.",
-      "eventType": "PRACTICE",
-      "status": "CONFIRMED",
+      "headline": "Rams reportedly plan no snap limit for Nacua",
+      "summary": "Adam Schefter reports the Rams do not intend to limit Puka Nacua's workload against Philadelphia. His conditioning once on the field could still affect his snap count. He has no game designation after full Friday practice.",
+      "fantasyAnalysis": "The reported plan strengthens his return outlook beyond the earlier coaching consideration, but actual snaps and targets remain uncertain. No replacement receiver's workload is established.",
+      "eventType": "ROLE_CHANGE",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
-      "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T23:37:23Z",
+      "lastUpdatedAt": "2026-10-04T11:40:00Z",
+      "checkedAt": "2026-10-04T12:12:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1600,6 +1750,18 @@
           "url": "https://www.therams.com/news/i-can-t-think-of-anything-else-but-smiling-puka-nacua-back-in-action-for-rams-in-week-4-at-eagles",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T23:37:23Z"
+        },
+        {
+          "sourceName": "ESPN",
+          "author": "Adam Schefter",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-04T11:40:00Z",
+          "publishedAtRaw": "Oct 4, 2026, 07:40 AM ET",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.espn.com/nfl/story/_/id/50098838/sources-rams-intend-limit-puka-nacua-workload",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:10:40Z"
         }
       ]
     },
@@ -4795,15 +4957,15 @@
         "team": "TEN",
         "position": "RB"
       },
-      "headline": "Spears full Friday but questionable",
-      "summary": "Tennessee's Friday table lists Spears full participation and QUESTIONABLE against Baltimore.",
-      "fantasyAnalysis": "Keep a healthy fallback and verify game-day availability. Full practice is not clearance, and Pollard's exact workload is not established.",
-      "eventType": "PRACTICE",
-      "status": "CONFIRMED",
+      "headline": "Spears reportedly expected to play against Baltimore",
+      "summary": "Ian Rapoport reports Tyjae Spears is expected to play October 4 despite the ankle-related questionable designation. This is a game-day expectation, not an official active declaration.",
+      "fantasyAnalysis": "Verify the inactive list before relying on Spears. The report does not guarantee his workload or justify an automatic increase in Tony Pollard's touches.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:16:00Z",
+      "checkedAt": "2026-10-04T12:12:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4849,6 +5011,18 @@
           "url": "https://www.rotowire.com/football/headlines/tyjae-spears-injury-looking-good-for-week-4-640288",
           "isOriginalSource": false,
           "checkedAt": "2026-10-02T16:18:00Z"
+        },
+        {
+          "sourceName": "Ian Rapoport (Bluesky)",
+          "author": "Ian Rapoport",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "4:44 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://bsky.app/profile/rapsheet.bsky.social/post/3mx2d76t5rc2z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:07:52Z"
         }
       ]
     },
@@ -5026,6 +5200,48 @@
       ]
     },
     {
+      "eventId": "was-luke-mccaffrey-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Luke McCaffrey",
+        "team": "WAS",
+        "position": "WR"
+      },
+      "headline": "Luke McCaffrey inactive against Indianapolis",
+      "summary": "Washington names Luke McCaffrey on its official October 4 inactive list against Indianapolis. The announcement does not identify an injury cause.",
+      "fantasyAnalysis": "He is unavailable for the London game. Remaining receivers may have opportunities, but the list establishes no replacement order or target share.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T12:12:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 08:02 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.commanders.com/news/inactives-commanders-vs-colts-week-4-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:07:56Z"
+        }
+      ]
+    },
+    {
       "eventId": "was-marcus-mariota-week4-start-2026-10-02",
       "player": {
         "playerId": null,
@@ -5140,15 +5356,15 @@
         "team": "WAS",
         "position": "WR"
       },
-      "headline": "McLaurin reportedly likely to miss London game",
-      "summary": "Ben Standig reports multiple sources now expect McLaurin to miss Sunday's game against Indianapolis with his hamstring injury. Washington's official table still lists him QUESTIONABLE; no official OUT downgrade was verified.",
-      "fantasyAnalysis": "Prepare a healthy replacement before the early London kickoff. If McLaurin misses, Stefon Diggs, Antonio Williams and other Washington receivers could gain work, but no fixed target share or new receiver order is confirmed.",
+      "headline": "McLaurin officially inactive for London game",
+      "summary": "Washington's official October 4 inactive list confirms Terry McLaurin will not play against Indianapolis, resolving the earlier questionable designation and likely-absence report.",
+      "fantasyAnalysis": "Use a healthy replacement before the 9:30 a.m. ET London kickoff. Stefon Diggs, Antonio Williams and other remaining pass catchers may gain opportunities, but no target allocation is confirmed.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T15:16:06Z",
+      "checkedAt": "2026-10-04T12:12:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5156,7 +5372,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Hamstring",
         "practiceStatus": "LP",
-        "gameStatus": "QUESTIONABLE",
+        "gameStatus": "INACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -5219,6 +5435,18 @@
           "url": "https://www.commanders.com/news/commanders-release-2026-week-4-depth-chart",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T15:15:55Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 08:02 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.commanders.com/news/inactives-commanders-vs-colts-week-4-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T12:07:56Z"
         }
       ]
     },
@@ -5288,5 +5516,5 @@
       ]
     }
   ],
-  "contentHash": "afb9c3b58a9df16f1ebfaf14d2fe27629642043d2c56a680724db3aa793a973c"
+  "contentHash": "2cad7fa3cd5938513ded9d8faef80a5a08fe31d58ebbedbc2ebae261700fdad8"
 }
