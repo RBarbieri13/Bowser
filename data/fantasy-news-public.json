@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T19:37:05.000Z",
-  "updatedAt": "2026-10-04T19:40:14.336Z",
-  "revision": "bowser-public-news-20261004T194014336Z",
+  "checkedAt": "2026-10-04T20:19:23.000Z",
+  "updatedAt": "2026-10-04T20:21:51.884Z",
+  "revision": "bowser-public-news-20261004T202151884Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -145,6 +145,60 @@
       ]
     },
     {
+      "eventId": "bal-durham-smythe-week4-achilles-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Durham Smythe",
+        "team": "BAL",
+        "position": "TE"
+      },
+      "headline": "Smythe ruled out with Achilles injury",
+      "summary": "Baltimore officially ruled Smythe out for the rest of the Tennessee game with an Achilles injury. The club report provides no tear diagnosis or future absence timetable.",
+      "fantasyAnalysis": "Other Ravens tight ends could absorb depth work, but no receiving or snap share is established. Monitor the subsequent evaluation before future roster decisions.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T20:19:23Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Achilles",
+        "practiceStatus": null,
+        "gameStatus": "OUT FOR GAME",
+        "expectedReturn": "No future timetable or tear diagnosis confirmed."
+      },
+      "sources": [
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Ryan Mink",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 03:39 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.baltimoreravens.com/news/ravens-injuries-durham-smythe-marlon-humphrey-andrew-vorhees-achilles-calf-sidelined",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:18:33Z"
+        },
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Ryan Mink",
+          "xHandle": "ryanmink",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Exact publication clock unverified; post viewed on reporter profile with relative label 7m",
+          "publishedDate": null,
+          "url": "https://x.com/ryanmink/status/2106838750529479129",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:15:29Z"
+        }
+      ]
+    },
+    {
       "eventId": "bal-joe-fagnano-week4-third-quarterback-2026-10-04",
       "player": {
         "playerId": null,
@@ -194,15 +248,15 @@
         "team": "BAL",
         "position": "QB"
       },
-      "headline": "Jackson questionable to return with ankle injury; Huntley in relief",
-      "summary": "Baltimore confirms Jackson suffered an ankle injury and is questionable to return against Tennessee. Tyler Huntley replaced him for Baltimore's opening drive of the second half. Jackson's presence on the sideline does not establish a return.",
-      "fantasyAnalysis": "Huntley has the immediate relief opportunity while Jackson is unavailable. Monitor the return decision and postgame evaluation before future plans; neither a next-week absence nor a future Huntley start is established.",
+      "headline": "Jackson ankle status unresolved after Ravens game",
+      "summary": "Baltimore's game is confirmed finished. Jackson's last official in-game designation was questionable to return with an ankle injury, and Huntley relieved him after halftime. No explicit Jackson return or non-return outcome, new diagnosis or future absence is verified.",
+      "fantasyAnalysis": "Reassess Jackson after postgame evaluation and upcoming practice reports. Huntley remains a conditional future replacement; the relief appearance does not establish another start.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T19:06:55Z",
+      "checkedAt": "2026-10-04T20:19:23Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -210,8 +264,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Ankle; earlier back listing",
         "practiceStatus": null,
-        "gameStatus": "QUESTIONABLE TO RETURN",
-        "expectedReturn": "Current-game return uncertain; longer-term status unconfirmed."
+        "gameStatus": "QUESTIONABLE TO RETURN (LAST IN-GAME REPORT)",
+        "expectedReturn": "Game finished; explicit return outcome and future availability unconfirmed."
       },
       "sources": [
         {
@@ -284,6 +338,30 @@
           "url": "https://www.baltimoreravens.com/news/lamar-jackson-ankle-injury-ravens-titans-tyler-huntley",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T19:05:19Z"
+        },
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Ryan Mink",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 03:39 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.baltimoreravens.com/news/ravens-injuries-durham-smythe-marlon-humphrey-andrew-vorhees-achilles-calf-sidelined",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:18:33Z"
+        },
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Ryan Mink",
+          "xHandle": "ryanmink",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Exact publication clock unverified; post viewed on reporter profile with relative label 7m",
+          "publishedDate": null,
+          "url": "https://x.com/ryanmink/status/2106838750529479129",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:15:29Z"
         }
       ]
     },
@@ -295,15 +373,15 @@
         "team": "BAL",
         "position": "QB"
       },
-      "headline": "Huntley replaces injured Jackson after halftime",
-      "summary": "Baltimore's official injury article confirms Huntley replaced Lamar Jackson for the opening drive of the second half against Tennessee after Jackson's ankle injury.",
-      "fantasyAnalysis": "Huntley has immediate relief work while Jackson is unavailable. A future start depends on Jackson's evaluation and later decisions; no multiweek assignment is confirmed.",
+      "headline": "Huntley relieved Jackson; future starting role unconfirmed",
+      "summary": "Huntley replaced injured Lamar Jackson for the opening second-half drive in Baltimore's now-completed game. The reviewed sources do not establish Jackson's final return outcome or a future starting assignment.",
+      "fantasyAnalysis": "Huntley's next opportunity depends on Jackson's evaluation and subsequent team decisions. Do not turn this relief appearance into a confirmed future start.",
       "eventType": "ROLE_CHANGE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T19:06:55Z",
+      "checkedAt": "2026-10-04T20:19:23Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -326,6 +404,18 @@
           "url": "https://www.baltimoreravens.com/news/lamar-jackson-ankle-injury-ravens-titans-tyler-huntley",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T19:05:19Z"
+        },
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Ryan Mink",
+          "xHandle": "ryanmink",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Exact publication clock unverified; post viewed on reporter profile with relative label 7m",
+          "publishedDate": null,
+          "url": "https://x.com/ryanmink/status/2106838750529479129",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:15:29Z"
         }
       ]
     },
@@ -1745,15 +1835,15 @@
         "team": "GB",
         "position": "RB"
       },
-      "headline": "Brooks questionable to return with ankle injury",
-      "summary": "Green Bay's official post lists Brooks questionable to return with an ankle injury against Tampa Bay. No later return, downgrade, severity or recovery timetable is established.",
-      "fantasyAnalysis": "MarShawn Lloyd could receive additional work while Brooks is unavailable, but an exclusive role or fixed split is not established. Monitor return and later evaluation before future roster decisions.",
+      "headline": "Brooks left with ankle injury; postgame status unresolved",
+      "summary": "Green Bay's final recap notes Brooks left with an ankle injury. His last in-game designation was questionable to return; the recap does not explicitly establish whether he returned. No severity or recovery timetable is verified.",
+      "fantasyAnalysis": "Reassess Brooks' evaluation before next-week plans. Lloyd remains a conditional contingency, with no future exclusive role or fixed touch split established.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T18:19:20Z",
+      "checkedAt": "2026-10-04T20:19:23Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1761,8 +1851,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Ankle",
         "practiceStatus": null,
-        "gameStatus": "QUESTIONABLE TO RETURN",
-        "expectedReturn": "In-game return uncertain; longer-term prognosis unknown."
+        "gameStatus": "QUESTIONABLE TO RETURN (LAST IN-GAME REPORT)",
+        "expectedReturn": "Game finished; explicit return outcome and future availability unconfirmed."
       },
       "sources": [
         {
@@ -1788,6 +1878,18 @@
           "url": "https://www.fantasypros.com/nfl/news/612032/chris-brooks-ankle-questionable-to-return.php?mp_feature=news&mp_platform=x&mp_sport=NFL",
           "isOriginalSource": false,
           "checkedAt": "2026-10-04T18:17:15Z"
+        },
+        {
+          "sourceName": "Green Bay Packers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 04:00 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.packers.com/news/in-game-updates-week-4-buccaneers-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:16:37Z"
         }
       ]
     },
@@ -5740,14 +5842,14 @@
         "position": "RB"
       },
       "headline": "Barkley downgraded to out with hamstring injury",
-      "summary": "The Eagles' official live recap says Barkley has been downgraded to out with his hamstring injury, resolving the earlier questionable-to-return status. No recovery timetable or injury severity is announced.",
-      "fantasyAnalysis": "Bigsby and Shipley remain conditional options for additional work with Barkley out, without an established split. Reassess next-week contingencies after evaluation; no longer-term absence or locked-game lineup swap is assumed.",
+      "summary": "Barkley was officially ruled out with a hamstring injury. The later live recap also records Tank Bigsby getting hurt, without a body part, return designation or prognosis for Bigsby.",
+      "fantasyAnalysis": "Bigsby's later injury adds uncertainty to the replacement backfield. Shipley's opportunity depends on both players' evaluations; neither a future lead role nor a longer-term absence or split is confirmed.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T18:19:20Z",
+      "checkedAt": "2026-10-04T20:19:23Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5794,6 +5896,30 @@
           "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-game-recap-october-4-2026-nfl-week-4-regular-season-jalen-hurts-matthew-stafford",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T18:15:47Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 04:13 PM; timezone not displayed; separate injury-entry clock absent",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-game-recap-october-4-2026-nfl-week-4-regular-season-jalen-hurts-matthew-stafford",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:16:51Z"
+        },
+        {
+          "sourceName": "Jimmy Kempski (PhillyVoice)",
+          "author": "Jimmy Kempski",
+          "xHandle": "JimmyKempski",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "12:56 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/JimmyKempski/status/2106835909056303246",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:16:20Z"
         }
       ]
     },
@@ -5907,6 +6033,60 @@
           "url": "https://x.com/MikeGarafolo/status/2106739257633046645",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T14:17:07Z"
+        }
+      ]
+    },
+    {
+      "eventId": "phi-tank-bigsby-week4-injury-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Tank Bigsby",
+        "team": "PHI",
+        "position": "RB"
+      },
+      "headline": "Bigsby hurt late; injury details and return outcome unconfirmed",
+      "summary": "The Eagles' live recap records Bigsby getting hurt in the fourth quarter. Jimmy Kempski reported a trip to the medical tent. No body part, official return designation, later return or prognosis is verified.",
+      "fantasyAnalysis": "With Barkley already out, Shipley could gain opportunities while Bigsby is unavailable. Check both players' evaluations before treating either replacement's future role as settled; no fixed workload or absence length is established.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T20:19:23Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Undisclosed",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Return outcome and longer-term prognosis unconfirmed."
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 04:13 PM; timezone not displayed; separate injury-entry clock absent",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-game-recap-october-4-2026-nfl-week-4-regular-season-jalen-hurts-matthew-stafford",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:16:51Z"
+        },
+        {
+          "sourceName": "Jimmy Kempski (PhillyVoice)",
+          "author": "Jimmy Kempski",
+          "xHandle": "JimmyKempski",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "12:56 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/JimmyKempski/status/2106835909056303246",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T20:16:20Z"
         }
       ]
     },
@@ -8426,5 +8606,5 @@
       ]
     }
   ],
-  "contentHash": "edc0b588c422298f15f3d29e24ab1ec4acb82087142ab9abb757d177e1e755df"
+  "contentHash": "daa7cb06c06cc9a08388f9c11223d0f712a2a52d5c42c7995ff36d7388e4d227"
 }
