@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T21:20:53.000Z",
-  "updatedAt": "2026-10-04T21:22:46.194Z",
-  "revision": "bowser-public-news-20261004T212246194Z",
+  "checkedAt": "2026-10-04T21:37:12.000Z",
+  "updatedAt": "2026-10-04T21:39:09.691Z",
+  "revision": "bowser-public-news-20261004T213909691Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -248,15 +248,15 @@
         "team": "BAL",
         "position": "QB"
       },
-      "headline": "Jackson leaves stadium in walking boot, reporter says",
-      "summary": "Brian Wacker reports Jackson left M&T Bank Stadium wearing a walking boot on his left foot. Baltimore confirms he did not return after his ankle injury. The boot observation adds no diagnosis or absence timetable; earlier coach optimism remains Jonas Shaffer's characterization, not clearance.",
-      "fantasyAnalysis": "Monitor evaluation and upcoming practice before relying on Jackson next week. Huntley remains a conditional replacement; neither a future Jackson absence nor another Huntley start is confirmed.",
+      "headline": "Jackson believed day-to-day, Rapoport reports",
+      "summary": "Ian Rapoport reports Jackson is believed to be day-to-day with the ankle injury and will be monitored and treated this week. This newly verified original report does not establish Week 5 clearance. Baltimore confirms he did not return against Tennessee; Brian Wacker also reports he left the stadium in a walking boot.",
+      "fantasyAnalysis": "Follow evaluation and practice before relying on Jackson next week. The reported day-to-day outlook leaves Huntley as a conditional contingency, with no confirmed future Jackson absence or Huntley start.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T21:20:53Z",
+      "checkedAt": "2026-10-04T21:37:12Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -265,7 +265,7 @@
         "bodyPart": "Ankle; earlier back listing",
         "practiceStatus": null,
         "gameStatus": "DID NOT RETURN",
-        "expectedReturn": "Week 4 non-return confirmed; future availability and recovery timetable unconfirmed."
+        "expectedReturn": "Reportedly day-to-day; future game availability remains unconfirmed."
       },
       "sources": [
         {
@@ -398,6 +398,18 @@
           "url": "https://x.com/brianwacker1/status/2106850981669372254",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T21:20:11Z"
+        },
+        {
+          "sourceName": "NFL Network (Ian Rapoport on X)",
+          "author": "Ian Rapoport",
+          "xHandle": "RapSheet",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "1:34 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/RapSheet/status/2106845407552659503",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T21:36:58Z"
         }
       ]
     },
@@ -8840,5 +8852,5 @@
       ]
     }
   ],
-  "contentHash": "22eeb267d717b5baae5c296def357f7b1d8e6331891699431d8001ec0abc2fd6"
+  "contentHash": "5f6f38f800b84df1fecb4277aebe39aac69ec02f6b7dd4408c87279b08f64008"
 }
