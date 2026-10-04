@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T21:58:36.000Z",
-  "updatedAt": "2026-10-04T22:00:45.515Z",
-  "revision": "bowser-public-news-20261004T220045515Z",
+  "checkedAt": "2026-10-04T22:16:35.000Z",
+  "updatedAt": "2026-10-04T22:18:26.584Z",
+  "revision": "bowser-public-news-20261004T221826584Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2926,15 +2926,15 @@
         "team": "KC",
         "position": "WR"
       },
-      "headline": "Rice questionable to return with hamstring injury",
-      "summary": "The Chiefs officially list Rice questionable to return with a hamstring injury against Las Vegas, following James Palmer's earlier observation of him limping off and going to the training table. No subsequent return or downgrade is verified in this check.",
-      "fantasyAnalysis": "Other Chiefs pass catchers could receive additional opportunities if Rice remains unavailable, but no specific target share is established. Monitor return status and evaluation before next-week decisions; no future absence or recovery timetable is confirmed.",
+      "headline": "Rice downgraded to doubtful with hamstring injury",
+      "summary": "The Chiefs officially downgraded Rice from questionable to doubtful to return against Las Vegas, quoting their original hamstring-injury announcement. No subsequent return or OUT confirmation is verified.",
+      "fantasyAnalysis": "Other Chiefs pass catchers could gain opportunities while Rice remains unavailable, but no target share is guaranteed. Keep future alternatives in mind pending evaluation; no recovery timetable or next-game absence is established.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T21:20:53Z",
+      "checkedAt": "2026-10-04T22:16:35Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2942,8 +2942,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Hamstring",
         "practiceStatus": null,
-        "gameStatus": "QUESTIONABLE TO RETURN",
-        "expectedReturn": "Return to the current game and future availability remain unconfirmed."
+        "gameStatus": "DOUBTFUL TO RETURN",
+        "expectedReturn": "Current-game return doubtful; future availability and recovery timetable unconfirmed."
       },
       "sources": [
         {
@@ -2969,6 +2969,18 @@
           "url": "https://x.com/Chiefs/status/2106851530733449219?s=20",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T21:19:59Z"
+        },
+        {
+          "sourceName": "Kansas City Chiefs",
+          "author": null,
+          "xHandle": "Chiefs",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "2:58 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Chiefs/status/2106866520429314123?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:15:34Z"
         }
       ]
     },
@@ -4078,6 +4090,48 @@
           "url": "https://www.raiders.com/news/las-vegas-raiders-week-4-inactives-vs-kansas-city-chiefs-100426",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T19:04:16Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lv-jalen-nailor-week4-concussion-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Jalen Nailor",
+        "team": "LV",
+        "position": "WR"
+      },
+      "headline": "Nailor ruled out with concussion against Chiefs",
+      "summary": "NFL.com's official Sunday injury roundup states Nailor was ruled out of the Raiders' game against Kansas City with a concussion. No future availability decision or recovery timetable is supplied.",
+      "fantasyAnalysis": "Other Raiders receivers could receive additional opportunities for the rest of the game, without a fixed target share. Reassess later availability after evaluation rather than assuming a future absence.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T22:16:35Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion",
+        "practiceStatus": null,
+        "gameStatus": "OUT FOR GAME",
+        "expectedReturn": "Future availability and recovery timetable unknown."
+      },
+      "sources": [
+        {
+          "sourceName": "NFL.com",
+          "author": "Around the NFL Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Publication and update fields blank in the live roundup; no exact clock verified",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:15:56Z"
         }
       ]
     },
@@ -9092,5 +9146,5 @@
       ]
     }
   ],
-  "contentHash": "3ec41c3ae2aa60b43c135b7461af5d9d35ecabe467664d5685a7bb484770d016"
+  "contentHash": "15f87d8ecc4211844275571f0b40a16987d03eaa8db559babd2cbdfdf768c5cc"
 }
