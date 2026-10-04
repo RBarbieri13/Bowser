@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T21:37:12.000Z",
-  "updatedAt": "2026-10-04T21:39:09.691Z",
-  "revision": "bowser-public-news-20261004T213909691Z",
+  "checkedAt": "2026-10-04T21:49:04.000Z",
+  "updatedAt": "2026-10-04T21:51:01.775Z",
+  "revision": "bowser-public-news-20261004T215101775Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -5347,6 +5347,60 @@
       ]
     },
     {
+      "eventId": "nyj-braelon-allen-week4-workload-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Braelon Allen",
+        "team": "NYJ",
+        "position": "RB"
+      },
+      "headline": "Allen handles every Jets carry with Hall out",
+      "summary": "The official completed box score credits Allen with all 14 Jets rush attempts for 59 yards and two receptions for eight yards against Chicago. Hall had been officially ruled out for Week 4.",
+      "fantasyAnalysis": "This confirms Allen received the rushing workload in this game. Future volume depends on Hall's availability and the team's plan; no continuing exclusive role or fixed split is guaranteed.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T21:49:04Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New York Jets",
+          "author": "Amanda Vogt",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "October 2, 2026 at 4:30 PM; timezone unspecified",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.newyorkjets.com/news/jets-notebook-demario-davis-breaks-down-bears-rushing-game-dandre-swift-kyle-monangai-10-02-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-02T19:38:50Z"
+        },
+        {
+          "sourceName": "Chicago Bears official game center",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "No publication/update clock displayed; completed October 4 game box score",
+          "publishedDate": null,
+          "url": "https://www.chicagobears.com/game-day/2026/reg-week4/jets-at-bears/box-score",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T21:48:42Z"
+        }
+      ]
+    },
+    {
       "eventId": "nyj-breece-hall-wednesday-dnp-2026-09-30",
       "player": {
         "playerId": null,
@@ -5354,15 +5408,15 @@
         "team": "NYJ",
         "position": "RB"
       },
-      "headline": "Hall officially ruled out against Chicago",
-      "summary": "The Jets' final table lists Breece Hall DNP Friday and OUT, corroborating the earlier official coach announcement.",
-      "fantasyAnalysis": "Braelon Allen is the clearer replacement candidate, with Isaiah Davis also in line for work. The backfield split remains uncertain.",
+      "headline": "Hall misses Week 4; Allen takes every Jets carry",
+      "summary": "Hall was officially ruled out against Chicago. The completed official box score shows Braelon Allen handled all 14 Jets rush attempts and caught two passes in Hall's absence.",
+      "fantasyAnalysis": "Allen's actual Week 4 workload strengthens his conditional replacement case if Hall remains unavailable. It does not establish Hall's return timetable or a permanent backfield split; reassess health and practice before next week's decisions.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:38:00Z",
+      "checkedAt": "2026-10-04T21:49:04Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5431,6 +5485,18 @@
           "url": "https://www.newyorkjets.com/news/jets-notebook-demario-davis-breaks-down-bears-rushing-game-dandre-swift-kyle-monangai-10-02-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T19:38:50Z"
+        },
+        {
+          "sourceName": "Chicago Bears official game center",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "No publication/update clock displayed; completed October 4 game box score",
+          "publishedDate": null,
+          "url": "https://www.chicagobears.com/game-day/2026/reg-week4/jets-at-bears/box-score",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T21:48:42Z"
         }
       ]
     },
@@ -8852,5 +8918,5 @@
       ]
     }
   ],
-  "contentHash": "5f6f38f800b84df1fecb4277aebe39aac69ec02f6b7dd4408c87279b08f64008"
+  "contentHash": "7a542853b55183e0701cf495d416b70f3ed1068680c282315c8f75927169e6ae"
 }
