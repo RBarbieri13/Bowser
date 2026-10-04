@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T22:16:35.000Z",
-  "updatedAt": "2026-10-04T22:18:26.584Z",
-  "revision": "bowser-public-news-20261004T221826584Z",
+  "checkedAt": "2026-10-04T22:37:29.000Z",
+  "updatedAt": "2026-10-04T22:39:29.631Z",
+  "revision": "bowser-public-news-20261004T223929631Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -3501,24 +3501,24 @@
         "team": "LAC",
         "position": "WR"
       },
-      "headline": "McConkey officially active at Seattle",
-      "summary": "The Chargers explicitly confirm McConkey active against Seattle after his foot-related questionable designation.",
-      "fantasyAnalysis": "McConkey is eligible to play. Availability does not guarantee unrestricted snaps or his usual target share, and no automatic replacement-receiver workload increase is established.",
+      "headline": "McConkey ruled out with foot injury at Seattle",
+      "summary": "The Chargers officially downgraded McConkey to OUT for the rest of the Seattle game, quoting their earlier foot-injury questionable notice. This supersedes his pregame active confirmation; no severity or future absence timetable is supplied.",
+      "fantasyAnalysis": "Other Chargers pass catchers could gain opportunities while McConkey is unavailable, but no fixed target share is established. Prepare a future alternative pending evaluation; no next-game absence or recovery date is confirmed.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T19:06:55Z",
+      "checkedAt": "2026-10-04T22:37:29Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Foot",
-        "practiceStatus": "LP",
-        "gameStatus": "ACTIVE",
-        "expectedReturn": null
+        "practiceStatus": null,
+        "gameStatus": "OUT FOR GAME",
+        "expectedReturn": "Out for the remainder of Week 4; future availability and timetable unknown."
       },
       "sources": [
         {
@@ -3592,6 +3592,18 @@
           "url": "https://www.chargers.com/news/seahawks-week-4-inactives-derwin-james",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T19:03:46Z"
+        },
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": null,
+          "xHandle": "chargers",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "3:31 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/chargers/status/2106874978654413288",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:36:06Z"
         }
       ]
     },
@@ -4102,14 +4114,14 @@
         "position": "WR"
       },
       "headline": "Nailor ruled out with concussion against Chiefs",
-      "summary": "NFL.com's official Sunday injury roundup states Nailor was ruled out of the Raiders' game against Kansas City with a concussion. No future availability decision or recovery timetable is supplied.",
+      "summary": "The Raiders' original team announcement confirms Nailor is OUT with a concussion against Kansas City, corroborating NFL.com's earlier roundup. No future availability decision or recovery timetable is supplied.",
       "fantasyAnalysis": "Other Raiders receivers could receive additional opportunities for the rest of the game, without a fixed target share. Reassess later availability after evaluation rather than assuming a future absence.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T22:16:35Z",
+      "checkedAt": "2026-10-04T22:37:29Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4132,6 +4144,18 @@
           "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T22:15:56Z"
+        },
+        {
+          "sourceName": "Las Vegas Raiders",
+          "author": null,
+          "xHandle": "Raiders",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "3:07 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/Raiders/status/2106868820321402986?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T22:36:42Z"
         }
       ]
     },
@@ -9146,5 +9170,5 @@
       ]
     }
   ],
-  "contentHash": "15f87d8ecc4211844275571f0b40a16987d03eaa8db559babd2cbdfdf768c5cc"
+  "contentHash": "8b3ba6f59d53eda487dc9aaee5fe326d7cb320db9d0c04a5a07297979d83c6f8"
 }
