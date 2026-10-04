@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-03T22:49:49.000Z",
-  "updatedAt": "2026-10-03T22:51:36.865Z",
-  "revision": "bowser-public-news-20261003T225136865Z",
+  "checkedAt": "2026-10-04T00:08:23.000Z",
+  "updatedAt": "2026-10-04T00:11:03.278Z",
+  "revision": "bowser-public-news-20261004T001103278Z",
   "events": [
     {
       "eventId": "bal-chris-moore-week4-questionable-2026-10-02",
@@ -2002,6 +2002,114 @@
           "url": "https://www.chargers.com/news/seahawks-injury-report-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:56:15Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lar-alex-bachman-active-roster-signing-2026-10-02",
+      "player": {
+        "playerId": null,
+        "name": "Alex Bachman",
+        "team": "LAR",
+        "position": "WR"
+      },
+      "headline": "Rams sign Bachman; McVay names him next punt returner",
+      "summary": "The Rams announced October 2 that Bachman signed from the practice squad to the active roster. McVay had named him the next punt returner after Xavier Smith's waiver. The NFL transaction ledger dates the signing October 3; this is older news newly added to the feed.",
+      "fantasyAnalysis": "This is a full-roster signing, with a specifically identified special-teams role. It does not establish receiving targets, an expanded offensive workload or game-day active status.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T00:08:23Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Rams (X)",
+          "author": null,
+          "xHandle": "RamsNFL",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "1:55 PM · Oct 2, 2026; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "url": "https://x.com/RamsNFL/status/2106126052502405135",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T00:08:23Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": "Stu Jackson",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Published Oct 2, 2026 at 9:01 AM; updated 11:43 AM; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.therams.com/news/rams-waive-wide-receiver-xavier-smith-week-4-2026-eagles",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T00:08:23Z"
+        },
+        {
+          "sourceName": "NFL",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "No publication/update clock; ledger transaction date is 10/03",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/transactions/league/signings/2026/10",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T00:08:23Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lar-xavier-smith-waived-2026-10-02",
+      "player": {
+        "playerId": null,
+        "name": "Xavier Smith",
+        "team": "LAR",
+        "position": "WR"
+      },
+      "headline": "Rams waive Smith and change punt returner",
+      "summary": "The Rams waived Smith on October 2 after he served as their primary punt returner through three games. McVay named Alex Bachman to take over the role. This is an earlier roster change newly added to the feed.",
+      "fantasyAnalysis": "Smith's departure changes the return assignment; it does not establish a redistribution of receiving targets or make Bachman a fantasy starter.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T00:08:23Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": "Stu Jackson",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Published Oct 2, 2026 at 9:01 AM; updated 11:43 AM; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.therams.com/news/rams-waive-wide-receiver-xavier-smith-week-4-2026-eagles",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T00:08:23Z"
         }
       ]
     },
@@ -5078,5 +5186,5 @@
       ]
     }
   ],
-  "contentHash": "07b6281903a6c2b60a3e75ebc4509722c531e87a66133c473af16c974c2ee672"
+  "contentHash": "ebde5280d299e7440f2b2a7ebcfe504c47da2dec816ca95dbb286a1cdec53b3d"
 }
