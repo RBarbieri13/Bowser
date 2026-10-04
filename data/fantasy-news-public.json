@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T16:07:56.000Z",
-  "updatedAt": "2026-10-04T16:09:49.960Z",
-  "revision": "bowser-public-news-20261004T160949960Z",
+  "checkedAt": "2026-10-04T16:20:07.000Z",
+  "updatedAt": "2026-10-04T16:22:21.919Z",
+  "revision": "bowser-public-news-20261004T162221919Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2920,6 +2920,60 @@
           "url": "https://www.rotowire.com/football/headlines/aidan-oconnell-news-clear-for-week-4-640468",
           "isOriginalSource": false,
           "checkedAt": "2026-10-03T22:49:49Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lv-brock-bowers-week4-illness-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Brock Bowers",
+        "team": "LV",
+        "position": "TE"
+      },
+      "headline": "Brock Bowers added with illness; game status reportedly unchanged",
+      "summary": "Paul Gutierrez reports a Sunday illness addition and includes a notice saying Bowers' game status has not changed. The Raiders' Friday table still lists knee, limited participation and no game designation; it has not incorporated the illness.",
+      "fantasyAnalysis": "The report does not establish an absence or a workload limit. Recheck the late inactive list; no automatic replacement or increased role for another tight end is supported.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T16:20:07Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Illness; earlier knee listing",
+        "practiceStatus": "LP",
+        "gameStatus": "NO DESIGNATION",
+        "expectedReturn": "Sunday game status reportedly unchanged; final active status pending."
+      },
+      "sources": [
+        {
+          "sourceName": "Paul Gutierrez",
+          "author": "Paul Gutierrez",
+          "xHandle": "PaulHGutierrez",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "8:50 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/PaulHGutierrez/status/2106773892400558572",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T16:19:30Z"
+        },
+        {
+          "sourceName": "Las Vegas Raiders",
+          "author": "Raiders.com Staff",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 02, 2026 at 12:20 PM; timezone not displayed",
+          "publishedDate": "2026-10-02",
+          "url": "https://www.raiders.com/news/las-vegas-raiders-kansas-city-chiefs-week-4-injury-report-2026-season-nfl",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T16:19:42Z"
         }
       ]
     },
@@ -6866,5 +6920,5 @@
       ]
     }
   ],
-  "contentHash": "c4afade6d2758e9bbbb6973622b3a2bad222bf8283f4b9918164991ba4727f53"
+  "contentHash": "88a57ec1e01b1a2ff8ff4779ab337735bab5676b6cbc5e75091c23775080c6d7"
 }
