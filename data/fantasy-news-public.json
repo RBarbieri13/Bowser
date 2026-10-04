@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T18:46:52.000Z",
-  "updatedAt": "2026-10-04T18:48:42.055Z",
-  "revision": "bowser-public-news-20261004T184842055Z",
+  "checkedAt": "2026-10-04T19:06:55.000Z",
+  "updatedAt": "2026-10-04T19:09:12.845Z",
+  "revision": "bowser-public-news-20261004T190912845Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -194,24 +194,24 @@
         "team": "BAL",
         "position": "QB"
       },
-      "headline": "Jackson active for Week 4",
-      "summary": "Jackson is absent from Baltimore's complete inactive list after clearing the final injury report.",
-      "fantasyAnalysis": "Active status confirms game-day eligibility, not a guaranteed workload or freedom from an in-game limitation.",
-      "eventType": "PRACTICE",
+      "headline": "Jackson questionable to return with ankle injury; Huntley in relief",
+      "summary": "Baltimore confirms Jackson suffered an ankle injury and is questionable to return against Tennessee. Tyler Huntley replaced him for Baltimore's opening drive of the second half. Jackson's presence on the sideline does not establish a return.",
+      "fantasyAnalysis": "Huntley has the immediate relief opportunity while Jackson is unavailable. Monitor the return decision and postgame evaluation before future plans; neither a next-week absence nor a future Huntley start is established.",
+      "eventType": "INJURY",
       "status": "CONFIRMED",
-      "fantasyImpact": "MEDIUM",
+      "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T15:38:40Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Back",
+        "bodyPart": "Ankle; earlier back listing",
         "practiceStatus": null,
-        "gameStatus": "ACTIVE",
-        "expectedReturn": null
+        "gameStatus": "QUESTIONABLE TO RETURN",
+        "expectedReturn": "Current-game return uncertain; longer-term status unconfirmed."
       },
       "sources": [
         {
@@ -260,6 +260,72 @@
           "url": "https://www.baltimoreravens.com/news/zay-flowers-ronnie-stanley-inactives-ravens-titans-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:35:23Z"
+        },
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Ryan Mink",
+          "xHandle": "ryanmink",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "11:47 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/ryanmink/status/2106818523221962995",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:04:09Z"
+        },
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Ryan Mink",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 02:56 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.baltimoreravens.com/news/lamar-jackson-ankle-injury-ravens-titans-tyler-huntley",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:05:19Z"
+        }
+      ]
+    },
+    {
+      "eventId": "bal-tyler-huntley-week4-relief-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Tyler Huntley",
+        "team": "BAL",
+        "position": "QB"
+      },
+      "headline": "Huntley replaces injured Jackson after halftime",
+      "summary": "Baltimore's official injury article confirms Huntley replaced Lamar Jackson for the opening drive of the second half against Tennessee after Jackson's ankle injury.",
+      "fantasyAnalysis": "Huntley has immediate relief work while Jackson is unavailable. A future start depends on Jackson's evaluation and later decisions; no multiweek assignment is confirmed.",
+      "eventType": "ROLE_CHANGE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:06:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Ryan Mink",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 02:56 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.baltimoreravens.com/news/lamar-jackson-ankle-injury-ravens-titans-tyler-huntley",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:05:19Z"
         }
       ]
     },
@@ -2247,6 +2313,90 @@
       ]
     },
     {
+      "eventId": "kc-garrett-nussmeier-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Garrett Nussmeier",
+        "team": "KC",
+        "position": "QB"
+      },
+      "headline": "Garrett Nussmeier inactive",
+      "summary": "The official complete Week 4 inactive list includes Garrett Nussmeier. No new injury cause is established by the list.",
+      "fantasyAnalysis": "He is unavailable for this game; no specific replacement workload follows from the list alone.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:06:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Las Vegas Raiders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:55 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.raiders.com/news/las-vegas-raiders-week-4-inactives-vs-kansas-city-chiefs-100426",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:04:16Z"
+        }
+      ]
+    },
+    {
+      "eventId": "kc-jared-wiley-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Jared Wiley",
+        "team": "KC",
+        "position": "TE"
+      },
+      "headline": "Jared Wiley inactive",
+      "summary": "The official complete Week 4 inactive list includes Jared Wiley. No new injury cause is established by the list.",
+      "fantasyAnalysis": "He is unavailable for this game; no specific replacement workload follows from the list alone.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:06:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Las Vegas Raiders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:55 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.raiders.com/news/las-vegas-raiders-week-4-inactives-vs-kansas-city-chiefs-100426",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:04:16Z"
+        }
+      ]
+    },
+    {
       "eventId": "la-colby-parkinson-week4-questionable-2026-10-02",
       "player": {
         "playerId": null,
@@ -2559,15 +2709,15 @@
         "team": "LAC",
         "position": "WR"
       },
-      "headline": "Thompson out against Seattle",
-      "summary": "The Chargers list Thompson DNP Friday and OUT with a quadricep injury.",
-      "fantasyAnalysis": "Use an available alternative if needed. His absence alone does not establish another receiver's workload.",
+      "headline": "Thompson inactive against Seattle",
+      "summary": "The Chargers' complete Week 4 list confirms Brenen Thompson inactive after the previously announced injury-related out designation.",
+      "fantasyAnalysis": "He is unavailable for this game. No replacement's receiving or snap share is guaranteed.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:56:15Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2575,7 +2725,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Quadricep",
         "practiceStatus": "DNP",
-        "gameStatus": "OUT",
+        "gameStatus": "INACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -2590,6 +2740,18 @@
           "url": "https://www.chargers.com/news/seahawks-injury-report-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:56:15Z"
+        },
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": "Eric Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:55 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.chargers.com/news/seahawks-week-4-inactives-derwin-james",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:03:46Z"
         }
       ]
     },
@@ -2601,15 +2763,15 @@
         "team": "LAC",
         "position": "TE"
       },
-      "headline": "Kolar out following forearm surgery",
-      "summary": "The Chargers list Kolar limited Friday and OUT; the team says he underwent forearm surgery last Monday.",
-      "fantasyAnalysis": "Use an available alternative if relying on Kolar. No replacement snap or target share is established by the designation alone.",
+      "headline": "Kolar inactive against Seattle",
+      "summary": "The Chargers' complete Week 4 list confirms Charlie Kolar inactive after the previously announced injury-related out designation.",
+      "fantasyAnalysis": "He is unavailable for this game. No replacement's receiving or snap share is guaranteed.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:56:15Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2617,7 +2779,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Forearm",
         "practiceStatus": "LP",
-        "gameStatus": "OUT",
+        "gameStatus": "INACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -2632,6 +2794,60 @@
           "url": "https://www.chargers.com/news/seahawks-injury-report-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:56:15Z"
+        },
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": "Eric Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:55 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.chargers.com/news/seahawks-week-4-inactives-derwin-james",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:03:46Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lac-dj-uiagalelei-week4-emergency-qb-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "DJ Uiagalelei",
+        "team": "LAC",
+        "position": "QB"
+      },
+      "headline": "DJ Uiagalelei inactive as emergency third QB",
+      "summary": "The official complete Week 4 inactive list includes DJ Uiagalelei with the emergency-third-quarterback exception. No new injury cause is established by the list.",
+      "fantasyAnalysis": "This is not ordinary active-backup eligibility and does not establish routine playing time.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:06:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE (EMERGENCY THIRD QB)",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": "Eric Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:55 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.chargers.com/news/seahawks-week-4-inactives-derwin-james",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:03:46Z"
         }
       ]
     },
@@ -2643,15 +2859,15 @@
         "team": "LAC",
         "position": "RB"
       },
-      "headline": "Mitchell full Friday without a game designation",
-      "summary": "The Chargers' Friday release confirms full participation and no game designation for Mitchell's ankle issue.",
-      "fantasyAnalysis": "Clearance improves availability but does not establish a workload increase.",
+      "headline": "Mitchell active against Seattle",
+      "summary": "Mitchell is absent from the Chargers' complete inactive list after clearing his ankle-related Friday report.",
+      "fantasyAnalysis": "Active eligibility does not establish a particular backfield share or workload increase.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:56:15Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2659,7 +2875,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Ankle",
         "practiceStatus": "FP",
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -2674,6 +2890,18 @@
           "url": "https://www.chargers.com/news/seahawks-injury-report-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:56:15Z"
+        },
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": "Eric Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:55 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.chargers.com/news/seahawks-week-4-inactives-derwin-james",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:03:46Z"
         }
       ]
     },
@@ -2685,15 +2913,15 @@
         "team": "LAC",
         "position": "WR"
       },
-      "headline": "McConkey likely to play; official questionable tag remains",
-      "summary": "Ian Rapoport reports that McConkey is likely to play against Seattle after managing a foot injury all week. The Chargers' final report lists limited Friday participation and QUESTIONABLE.",
-      "fantasyAnalysis": "Retain a healthy late-game receiver fallback and verify the official inactive list. Likely availability does not establish unrestricted snaps or his usual receiving workload.",
+      "headline": "McConkey officially active at Seattle",
+      "summary": "The Chargers explicitly confirm McConkey active against Seattle after his foot-related questionable designation.",
+      "fantasyAnalysis": "McConkey is eligible to play. Availability does not guarantee unrestricted snaps or his usual target share, and no automatic replacement-receiver workload increase is established.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T12:31:37Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2701,7 +2929,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Foot",
         "practiceStatus": "LP",
-        "gameStatus": "QUESTIONABLE",
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -2764,6 +2992,18 @@
           "url": "https://x.com/RapSheet/status/2106701827714556315",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T12:30:52Z"
+        },
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": "Eric Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:55 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.chargers.com/news/seahawks-week-4-inactives-derwin-james",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:03:46Z"
         }
       ]
     },
@@ -2775,15 +3015,15 @@
         "team": "LAC",
         "position": "TE"
       },
-      "headline": "Chargers elevate Patrick Herbert for Week 4",
-      "summary": "The Chargers elevated tight end Patrick Herbert from the practice squad for Sunday's game against Seattle.",
-      "fantasyAnalysis": "Herbert adds tight-end depth with Charlie Kolar out. The elevation alone does not establish a receiving workload or fantasy starting role.",
+      "headline": "Patrick Herbert active after Week 4 elevation",
+      "summary": "Following his standard practice-squad elevation, Herbert is absent from the complete Chargers inactive list and eligible to play.",
+      "fantasyAnalysis": "He adds tight-end depth with Charlie Kolar inactive. No receiving share or fantasy starting role is established.",
       "eventType": "TRANSACTION",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T20:30:34Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2791,7 +3031,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -2806,6 +3046,18 @@
           "url": "https://www.chargers.com/news/elevate-patrick-herbert-and-caleb-murphy-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T20:30:34Z"
+        },
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": "Eric Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:55 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.chargers.com/news/seahawks-week-4-inactives-derwin-james",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:03:46Z"
         }
       ]
     },
@@ -2817,15 +3069,15 @@
         "team": "LAC",
         "position": "QB"
       },
-      "headline": "Lance limited Friday and questionable",
-      "summary": "The Chargers list Lance limited Friday and QUESTIONABLE with a groin injury.",
-      "fantasyAnalysis": "Check active status if relying on the backup quarterback; this designation does not change the starting quarterback role.",
+      "headline": "Lance active after groin-related questionable tag",
+      "summary": "The Chargers explicitly confirm Lance active against Seattle. DJ Uiagalelei is the inactive emergency third quarterback.",
+      "fantasyAnalysis": "Lance is available for quarterback depth. Clearance does not establish a starting role or routine offensive snaps.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:56:15Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2833,7 +3085,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Groin",
         "practiceStatus": "LP",
-        "gameStatus": "QUESTIONABLE",
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -2848,6 +3100,18 @@
           "url": "https://www.chargers.com/news/seahawks-injury-report-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:56:15Z"
+        },
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": "Eric Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:55 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.chargers.com/news/seahawks-week-4-inactives-derwin-james",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:03:46Z"
         }
       ]
     },
@@ -3063,15 +3327,15 @@
         "team": "LV",
         "position": "QB"
       },
-      "headline": "O'Connell reportedly has game designation removed",
-      "summary": "Ryan McFadden reports O'Connell's designation for Sunday's Kansas City game was removed Saturday after a personal absence. The retrieved Raiders injury table and Friday article still list QUESTIONABLE; team-site corroboration remains pending.",
-      "fantasyAnalysis": "This is a depth-quarterback availability report, not a starting assignment or confirmation of game-day active status. RotoWire places Kirk Cousins and Fernando Mendoza ahead of him; no new fantasy starting opportunity is established.",
-      "eventType": "RETURN",
-      "status": "REPORTED",
+      "headline": "O'Connell inactive as emergency third quarterback",
+      "summary": "The Raiders list O'Connell inactive with the emergency-third-quarterback exception. This establishes game-day eligibility after the earlier reported removal of his questionable designation and lagging team report.",
+      "fantasyAnalysis": "He is not an ordinary active backup and has no established routine playing opportunity. The emergency designation does not establish a new injury.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T22:49:49Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3079,7 +3343,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": "DNP",
-        "gameStatus": "QUESTIONABLE",
+        "gameStatus": "INACTIVE (EMERGENCY THIRD QB)",
         "expectedReturn": null
       },
       "sources": [
@@ -3118,6 +3382,18 @@
           "url": "https://www.rotowire.com/football/headlines/aidan-oconnell-news-clear-for-week-4-640468",
           "isOriginalSource": false,
           "checkedAt": "2026-10-03T22:49:49Z"
+        },
+        {
+          "sourceName": "Las Vegas Raiders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:55 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.raiders.com/news/las-vegas-raiders-week-4-inactives-vs-kansas-city-chiefs-100426",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:04:16Z"
         }
       ]
     },
@@ -3129,15 +3405,15 @@
         "team": "LV",
         "position": "TE"
       },
-      "headline": "Brock Bowers added with illness; game status reportedly unchanged",
-      "summary": "Paul Gutierrez reports a Sunday illness addition and includes a notice saying Bowers' game status has not changed. The Raiders' Friday table still lists knee, limited participation and no game designation; it has not incorporated the illness.",
-      "fantasyAnalysis": "The report does not establish an absence or a workload limit. Recheck the late inactive list; no automatic replacement or increased role for another tight end is supported.",
+      "headline": "Bowers active after reported illness addition",
+      "summary": "Bowers is absent from the Raiders' complete inactive list and eligible to play. The earlier illness addition remains attributed to Paul Gutierrez; active status does not establish that the illness has resolved.",
+      "fantasyAnalysis": "His game-day availability is established, without a guaranteed snap or target load. No automatic replacement tight-end workload increase follows.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T16:20:07Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3145,8 +3421,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Illness; earlier knee listing",
         "practiceStatus": "LP",
-        "gameStatus": "NO DESIGNATION",
-        "expectedReturn": "Sunday game status reportedly unchanged; final active status pending."
+        "gameStatus": "ACTIVE",
+        "expectedReturn": null
       },
       "sources": [
         {
@@ -3172,6 +3448,18 @@
           "url": "https://www.raiders.com/news/las-vegas-raiders-kansas-city-chiefs-week-4-injury-report-2026-season-nfl",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T16:19:42Z"
+        },
+        {
+          "sourceName": "Las Vegas Raiders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:55 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.raiders.com/news/las-vegas-raiders-week-4-inactives-vs-kansas-city-chiefs-100426",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:04:16Z"
         }
       ]
     },
@@ -3586,6 +3874,48 @@
           "url": "https://www.patriots.com/news/week-4-inactives-patriots-at-bills",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:36:27Z"
+        }
+      ]
+    },
+    {
+      "eventId": "ne-mack-hollins-week4-calf-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Mack Hollins",
+        "team": "NE",
+        "position": "WR"
+      },
+      "headline": "Hollins questionable to return with calf injury",
+      "summary": "New England's official communications account lists Hollins questionable to return against Buffalo with a calf injury.",
+      "fantasyAnalysis": "Other Patriots receivers could receive additional opportunities while Hollins is unavailable, but no target share is established. Monitor his return and later evaluation before future decisions.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:06:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Calf",
+        "practiceStatus": null,
+        "gameStatus": "QUESTIONABLE TO RETURN",
+        "expectedReturn": "In-game return uncertain; longer-term prognosis unknown."
+      },
+      "sources": [
+        {
+          "sourceName": "New England Patriots Communications",
+          "author": null,
+          "xHandle": "PatriotsComms",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "11:53 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/PatriotsComms/status/2106819913063252287?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:04:26Z"
         }
       ]
     },
@@ -5538,15 +5868,15 @@
         "team": "SEA",
         "position": "RB"
       },
-      "headline": "Holani limited Friday without a game designation",
-      "summary": "Seattle confirms Holani limited all three days with a rib injury and no game designation, while Price is OUT.",
-      "fantasyAnalysis": "Holani is available to share the replacement backfield with Wilson. His clearance does not establish an exact workload or make him the guaranteed lead back.",
+      "headline": "Holani active in Seattle's replacement backfield",
+      "summary": "Holani is absent from Seattle's complete inactive list. The team says Velus Jones Jr. will provide depth behind Holani and Emanuel Wilson while Jadarian Price is on IR.",
+      "fantasyAnalysis": "Holani and Wilson are eligible for the replacement-backfield opportunity, with Jones available as depth. No fixed split or guaranteed lead back is established.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T21:39:00Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5554,7 +5884,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Rib",
         "practiceStatus": "LP",
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -5569,6 +5899,18 @@
           "sourceType": "OFFICIAL",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T21:39:00Z"
+        },
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": "John Boyle",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:54 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.seahawks.com/news/seahawks-vs-chargers-week-4-inactives",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:03:58Z"
         }
       ]
     },
@@ -5699,22 +6041,22 @@
       ]
     },
     {
-      "eventId": "sea-velus-jones-jr-active-roster-signing-2026-10-03",
+      "eventId": "sea-jalen-milroe-week4-emergency-qb-2026-10-04",
       "player": {
         "playerId": null,
-        "name": "Velus Jones Jr.",
+        "name": "Jalen Milroe",
         "team": "SEA",
-        "position": "RB"
+        "position": "QB"
       },
-      "headline": "Seattle signs Jones to the 53-man roster",
-      "summary": "Seattle signed Jones from the practice squad to the 53-man roster while placing Jadarian Price on injured reserve.",
-      "fantasyAnalysis": "Jones adds backfield depth behind the available Wilson and Holani. This signing is distinct from his September 26 elevation and does not establish a carry share or starting role.",
-      "eventType": "TRANSACTION",
+      "headline": "Jalen Milroe inactive as emergency third QB",
+      "summary": "The official complete Week 4 inactive list includes Jalen Milroe with the emergency-third-quarterback exception. No new injury cause is established by the list.",
+      "fantasyAnalysis": "This is not ordinary active-backup eligibility and does not establish routine playing time.",
+      "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T20:18:02Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5722,7 +6064,133 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "INACTIVE (EMERGENCY THIRD QB)",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": "John Boyle",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:54 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.seahawks.com/news/seahawks-vs-chargers-week-4-inactives",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:03:58Z"
+        }
+      ]
+    },
+    {
+      "eventId": "sea-montorie-foster-jr-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Montorie Foster Jr.",
+        "team": "SEA",
+        "position": "WR"
+      },
+      "headline": "Montorie Foster Jr. inactive",
+      "summary": "The official complete Week 4 inactive list includes Montorie Foster Jr.. No new injury cause is established by the list.",
+      "fantasyAnalysis": "He is unavailable for this game; no specific replacement workload follows from the list alone.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:06:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": "John Boyle",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:54 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.seahawks.com/news/seahawks-vs-chargers-week-4-inactives",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:03:58Z"
+        }
+      ]
+    },
+    {
+      "eventId": "sea-nick-kallerup-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Nick Kallerup",
+        "team": "SEA",
+        "position": "TE"
+      },
+      "headline": "Nick Kallerup inactive",
+      "summary": "The official complete Week 4 inactive list includes Nick Kallerup. No new injury cause is established by the list.",
+      "fantasyAnalysis": "He is unavailable for this game; no specific replacement workload follows from the list alone.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:06:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": "John Boyle",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:54 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.seahawks.com/news/seahawks-vs-chargers-week-4-inactives",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:03:58Z"
+        }
+      ]
+    },
+    {
+      "eventId": "sea-velus-jones-jr-active-roster-signing-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Velus Jones Jr.",
+        "team": "SEA",
+        "position": "RB"
+      },
+      "headline": "Jones active behind Holani and Wilson",
+      "summary": "After signing to Seattle's 53-man roster, Jones is absent from the complete inactive list. The official article describes him as depth behind George Holani and Emanuel Wilson.",
+      "fantasyAnalysis": "Jones is eligible for backfield work, but active status and a depth role do not establish a carry share or a starting assignment.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:06:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -5737,6 +6205,18 @@
           "url": "https://www.seahawks.com/news/seahawks-make-roster-moves-ahead-of-week-4-game-vs-chargers",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T20:18:02Z"
+        },
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": "John Boyle",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:54 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.seahawks.com/news/seahawks-vs-chargers-week-4-inactives",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:03:58Z"
         }
       ]
     },
@@ -5813,15 +6293,15 @@
         "team": "SF",
         "position": "WR"
       },
-      "headline": "49ers promote Cooks to the active roster",
-      "summary": "San Francisco announced Cooks' active-roster promotion October 1.",
-      "fantasyAnalysis": "A roster promotion creates eligibility for a role but does not establish routes, targets or a must-add recommendation.",
+      "headline": "Cooks active against Denver",
+      "summary": "Cooks is absent from San Francisco's complete inactive list following his previously announced roster move. Mike Evans is explicitly active.",
+      "fantasyAnalysis": "Game-day eligibility does not establish routes, targets or a starting role. No Evans-absence volume increase should be assumed.",
       "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:11:00Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5829,7 +6309,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -5844,6 +6324,18 @@
           "url": "https://www.49ers.com/news/49ers-promote-wr-cooks-to-active-roster-sign-wr-turner-to-practice-squad-more-moves",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:11:00Z"
+        },
+        {
+          "sourceName": "San Francisco 49ers",
+          "author": "Brooke Evans",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:54 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.49ers.com/news/romello-height-mike-evans-and-more-available-vs-broncos-inactives-for-week-4-denvssf",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:04:29Z"
         }
       ]
     },
@@ -5890,22 +6382,22 @@
       ]
     },
     {
-      "eventId": "sf-malik-turner-week4-elevation-2026-10-03",
+      "eventId": "sf-jordan-james-week4-inactive-2026-10-04",
       "player": {
         "playerId": null,
-        "name": "Malik Turner",
+        "name": "Jordan James",
         "team": "SF",
-        "position": "WR"
+        "position": "RB"
       },
-      "headline": "49ers elevate Turner for Denver game",
-      "summary": "San Francisco used a standard practice-squad elevation for Turner ahead of its Week 4 game against Denver.",
-      "fantasyAnalysis": "The move adds receiving depth. It does not establish a target share or change Mike Evans' questionable designation.",
-      "eventType": "TRANSACTION",
+      "headline": "Jordan James inactive",
+      "summary": "The official complete Week 4 inactive list includes Jordan James. No new injury cause is established by the list.",
+      "fantasyAnalysis": "He is unavailable for this game; no specific replacement workload follows from the list alone.",
+      "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T20:53:37Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5913,7 +6405,91 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "San Francisco 49ers",
+          "author": "Brooke Evans",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:54 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.49ers.com/news/romello-height-mike-evans-and-more-available-vs-broncos-inactives-for-week-4-denvssf",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:04:29Z"
+        }
+      ]
+    },
+    {
+      "eventId": "sf-kurtis-rourke-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Kurtis Rourke",
+        "team": "SF",
+        "position": "QB"
+      },
+      "headline": "Kurtis Rourke inactive",
+      "summary": "The official complete Week 4 inactive list includes Kurtis Rourke. No new injury cause is established by the list.",
+      "fantasyAnalysis": "He is unavailable for this game; no specific replacement workload follows from the list alone.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:06:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "San Francisco 49ers",
+          "author": "Brooke Evans",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:54 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.49ers.com/news/romello-height-mike-evans-and-more-available-vs-broncos-inactives-for-week-4-denvssf",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:04:29Z"
+        }
+      ]
+    },
+    {
+      "eventId": "sf-malik-turner-week4-elevation-2026-10-03",
+      "player": {
+        "playerId": null,
+        "name": "Malik Turner",
+        "team": "SF",
+        "position": "WR"
+      },
+      "headline": "Turner active against Denver",
+      "summary": "Turner is absent from San Francisco's complete inactive list following his previously announced roster move. Mike Evans is explicitly active.",
+      "fantasyAnalysis": "Game-day eligibility does not establish routes, targets or a starting role. No Evans-absence volume increase should be assumed.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T19:06:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "ACTIVE",
         "expectedReturn": null
       },
       "sources": [
@@ -5928,6 +6504,18 @@
           "url": "https://www.49ers.com/news/49ers-announce-roster-moves-ahead-of-denvssf",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T20:53:37Z"
+        },
+        {
+          "sourceName": "San Francisco 49ers",
+          "author": "Brooke Evans",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:54 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.49ers.com/news/romello-height-mike-evans-and-more-available-vs-broncos-inactives-for-week-4-denvssf",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:04:29Z"
         }
       ]
     },
@@ -5939,15 +6527,15 @@
         "team": "SF",
         "position": "WR"
       },
-      "headline": "Evans reportedly will play with protective rib covering",
-      "summary": "FOX's original post attributes to Jay Glazer that Evans will play against Denver with protective covering over fractured ribs. This is a stronger reported outlook than the earlier tentative optimism. San Francisco still lists him QUESTIONABLE; final active status is unconfirmed.",
-      "fantasyAnalysis": "Keep a viable late-game receiver alternative until the inactive list is confirmed. The play report does not guarantee normal snaps or targets. Samuel and Cooks remain conditional opportunity candidates if Evans cannot play or is limited, without a confirmed workload increase.",
+      "headline": "Evans officially active against Denver",
+      "summary": "San Francisco explicitly confirms Evans active after his rib-related questionable designation. His plan to play with protective rib covering remains attributed to Jay Glazer's earlier report.",
+      "fantasyAnalysis": "Evans is eligible to play, with no guaranteed normal workload or freedom from an in-game limitation. His active status does not establish a particular target share for the other receivers.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T16:29:38Z",
+      "checkedAt": "2026-10-04T19:06:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5955,8 +6543,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Ribs",
         "practiceStatus": "LP",
-        "gameStatus": "QUESTIONABLE",
-        "expectedReturn": "Reportedly will play Week 4 per Jay Glazer; official QUESTIONABLE, active confirmation pending."
+        "gameStatus": "ACTIVE",
+        "expectedReturn": null
       },
       "sources": [
         {
@@ -6054,6 +6642,18 @@
           "url": "https://x.com/NFLonFOX/status/2106779586008957014",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T16:28:44Z"
+        },
+        {
+          "sourceName": "San Francisco 49ers",
+          "author": "Brooke Evans",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:54 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.49ers.com/news/romello-height-mike-evans-and-more-available-vs-broncos-inactives-for-week-4-denvssf",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T19:04:29Z"
         }
       ]
     },
@@ -7466,5 +8066,5 @@
       ]
     }
   ],
-  "contentHash": "c28fbc7fecb710145adfcc701ac298378a012664df7516e66622ecc136fd2827"
+  "contentHash": "c7fcf2fd4c3b1b450d221c57413785c546fa4476f6f6d679ea2278bea7b059a4"
 }
