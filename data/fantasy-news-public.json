@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T17:09:12.000Z",
-  "updatedAt": "2026-10-04T17:10:51.615Z",
-  "revision": "bowser-public-news-20261004T171051615Z",
+  "checkedAt": "2026-10-04T17:19:34.000Z",
+  "updatedAt": "2026-10-04T17:21:11.993Z",
+  "revision": "bowser-public-news-20261004T172111993Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -1199,15 +1199,15 @@
         "team": "CHI",
         "position": "QB"
       },
-      "headline": "Bagent active; starting assignment still reported",
-      "summary": "Bagent and Case Keenum are absent from Chicago's complete inactive list and game-active. Rapoport expects Bagent to start, but the official list does not announce the starter and no separate team confirmation was verified.",
-      "fantasyAnalysis": "Being active does not settle the quarterback order. Retain the reported expected-start label pending a team announcement or actual game evidence.",
-      "eventType": "DEPTH_CHART",
-      "status": "REPORTED",
+      "headline": "Bagent operates Chicago's opening drive",
+      "summary": "NFL official play-by-play records a Bagent completion at Q1 14:18 and multiple passes on Chicago's opening possession. This verifies actual opening-drive participation beyond the earlier expected-start reports.",
+      "fantasyAnalysis": "Bagent is operating Chicago's offense in this game. The observation does not guarantee every remaining snap or establish a future start; no post-kickoff lineup swap is implied.",
+      "eventType": "ROLE_CHANGE",
+      "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T15:50:26Z",
+      "checkedAt": "2026-10-04T17:19:34Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1254,6 +1254,18 @@
           "url": "https://x.com/ChicagoBears/status/2106769313143353807",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:47:53Z"
+        },
+        {
+          "sourceName": "NFL",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Live play-by-play has game clocks only; publication and wall-clock update time not displayed",
+          "publishedDate": null,
+          "url": "https://www.nfl.com/games/jets-at-bears-2026-reg-4?tab=live",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:17:55Z"
         }
       ]
     },
@@ -3357,15 +3369,15 @@
         "team": "NE",
         "position": "QB"
       },
-      "headline": "Morton listed inactive against Buffalo",
-      "summary": "New England lists quarterback Behren Morton inactive. The article does not specify an emergency-third-quarterback designation, so that distinction remains unverified.",
-      "fantasyAnalysis": "This is a game-day availability decision. No injury cause, longer-term absence or replacement workload is established by the list alone.",
+      "headline": "Morton designated inactive emergency third quarterback",
+      "summary": "New England's official analysis explicitly identifies Morton as the emergency third quarterback. This resolves the emergency-label uncertainty left by the plain six-player inactive list.",
+      "fantasyAnalysis": "The emergency designation is distinct from ordinary active-backup eligibility. It does not establish an injury, a routine playing role or a future starting opportunity.",
       "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T15:38:40Z",
+      "checkedAt": "2026-10-04T17:19:34Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3373,7 +3385,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": "INACTIVE",
+        "gameStatus": "INACTIVE (EMERGENCY THIRD QB)",
         "expectedReturn": null
       },
       "sources": [
@@ -3388,6 +3400,18 @@
           "url": "https://www.patriots.com/news/week-4-inactives-patriots-at-bills",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:36:27Z"
+        },
+        {
+          "sourceName": "New England Patriots",
+          "author": "Evan Lazar",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:32 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.patriots.com/news/inactives-analysis-dre-mont-jones-craig-woodson-and-eli-raridon-return-for-sunday-s-afc-east-matchup-vs-the-bills",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:18:48Z"
         }
       ]
     },
@@ -6265,6 +6289,90 @@
       ]
     },
     {
+      "eventId": "ten-kylen-granson-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Kylen Granson",
+        "team": "TEN",
+        "position": "TE"
+      },
+      "headline": "Kylen Granson inactive against Baltimore",
+      "summary": "Tennessee's complete Week 4 inactive list includes Kylen Granson. The team does not give an injury or other cause for this designation.",
+      "fantasyAnalysis": "This establishes game-day unavailability only. No longer-term absence or specific replacement workload follows from the list alone.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T17:19:34Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Tennessee Titans",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 10:30 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.tennesseetitans.com/news/game-inactives-week-4-titans-at-ravens",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:18:34Z"
+        }
+      ]
+    },
+    {
+      "eventId": "ten-michael-carter-week4-inactive-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Michael Carter",
+        "team": "TEN",
+        "position": "RB"
+      },
+      "headline": "Michael Carter inactive against Baltimore",
+      "summary": "Tennessee's complete Week 4 inactive list includes Michael Carter. The team does not give an injury or other cause for this designation.",
+      "fantasyAnalysis": "This establishes game-day unavailability only. No longer-term absence or specific replacement workload follows from the list alone.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T17:19:34Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "INACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Tennessee Titans",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 10:30 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.tennesseetitans.com/news/game-inactives-week-4-titans-at-ravens",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:18:34Z"
+        }
+      ]
+    },
+    {
       "eventId": "ten-tony-pollard-practice-expectation-2026-10-01",
       "player": {
         "playerId": null,
@@ -7136,5 +7244,5 @@
       ]
     }
   ],
-  "contentHash": "c717f9c39a842bf0dcd8219db27fb94101be23ae75dc42db4ea1933059af0c2a"
+  "contentHash": "1d0cd63e48ad56e57c8a5a96842977d7a4bf5d32ec4572f29199863fa0fa0a12"
 }
