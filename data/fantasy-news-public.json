@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T16:53:19.000Z",
-  "updatedAt": "2026-10-04T16:54:55.002Z",
-  "revision": "bowser-public-news-20261004T165455002Z",
+  "checkedAt": "2026-10-04T17:09:12.000Z",
+  "updatedAt": "2026-10-04T17:10:51.615Z",
+  "revision": "bowser-public-news-20261004T171051615Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -1350,6 +1350,60 @@
           "url": "https://www.denverbroncos.com/news/broncos-promote-fb-adam-prentice-to-active-roster-x4028",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T20:53:37Z"
+        }
+      ]
+    },
+    {
+      "eventId": "fa-joe-mixon-seattle-visit-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Joe Mixon",
+        "team": "FA",
+        "position": "RB"
+      },
+      "headline": "Mixon reportedly set to visit Seattle",
+      "summary": "Lauren Helmbrecht relays Jay Glazer's FOX report that free-agent running back Joe Mixon is visiting Seattle. RotoWire places the visit in the coming week. No signing or assigned role is confirmed.",
+      "fantasyAnalysis": "A visit alone does not establish a contract, playing readiness or a workload change for Seattle's current backs. Monitor an actual transaction before changing the backfield outlook.",
+      "eventType": "OTHER",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T17:09:12Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Lauren Helmbrecht (X)",
+          "author": "Lauren Helmbrecht; relaying Jay Glazer",
+          "xHandle": "lmhelmbrecht",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "9:53 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/lmhelmbrecht/status/2106789901165637920",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-04T17:05:43Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Jay Glazer",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated October 4, 2026 at 10:03 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.rotowire.com/football/headlines/joe-mixon-news-meeting-on-tap-with-seattle-640581",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-04T17:06:16Z"
         }
       ]
     },
@@ -3812,15 +3866,15 @@
         "team": "NYG",
         "position": "QB"
       },
-      "headline": "Haener active after Week 4 elevation",
-      "summary": "Haener is absent from the Giants' complete inactive list after his practice-squad elevation. The team reiterates Jameis Winston's starting assignment.",
-      "fantasyAnalysis": "This establishes eligibility, not a change of starter or a settled backup order between Haener and J.J. McCarthy.",
-      "eventType": "TRANSACTION",
-      "status": "CONFIRMED",
+      "headline": "Haener active and reportedly Winston's backup",
+      "summary": "The Giants' complete inactive list establishes Haener's active eligibility. Ian Rapoport's original post explicitly says Jameis Winston starts with Haener as backup; the team article itself does not rank the backups.",
+      "fantasyAnalysis": "The backup order is now directly reported, while Winston remains the announced starter. Haener has no established starting opportunity.",
+      "eventType": "DEPTH_CHART",
+      "status": "REPORTED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T15:50:26Z",
+      "checkedAt": "2026-10-04T17:09:12Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3855,6 +3909,84 @@
           "url": "https://www.giants.com/news/nfl-week-4-inactive-list-who-s-in-who-s-out-for-giants-vs-cardinals",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:46:28Z"
+        },
+        {
+          "sourceName": "Ian Rapoport (X)",
+          "author": "Ian Rapoport",
+          "xHandle": "RapSheet",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "6:15 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/RapSheet/status/2106735023663546712?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:07:51Z"
+        }
+      ]
+    },
+    {
+      "eventId": "nyg-jj-mccarthy-week4-active-depth-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "J.J. McCarthy",
+        "team": "NYG",
+        "position": "QB"
+      },
+      "headline": "McCarthy active; Haener reported as Winston's backup",
+      "summary": "McCarthy is absent from the Giants' complete inactive list. Ian Rapoport explicitly names Winston as starter and Haener as backup. RotoBaller's live article now says McCarthy is active and third-string, correcting the stale inactive/emergency wording still present in search and its URL.",
+      "fantasyAnalysis": "McCarthy's active eligibility does not make him the starter or the first replacement. Use the current reported order and avoid treating the obsolete inactive/emergency wording as a live designation.",
+      "eventType": "DEPTH_CHART",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-04T17:09:12Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "ACTIVE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New York Giants",
+          "author": "Dan Salomone",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:30 AM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.giants.com/news/nfl-week-4-inactive-list-who-s-in-who-s-out-for-giants-vs-cardinals",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:06:48Z"
+        },
+        {
+          "sourceName": "Ian Rapoport (X)",
+          "author": "Ian Rapoport",
+          "xHandle": "RapSheet",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "6:15 AM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/RapSheet/status/2106735023663546712?s=20",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:07:51Z"
+        },
+        {
+          "sourceName": "RotoBaller",
+          "author": "Andersen Pickard",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-04T14:38:00Z",
+          "publishedAtRaw": "Oct 4, 2026, 10:38 AM ET; live text corrected, exact correction clock unavailable",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.rotoballer.com/player-news/j-j-mccarthy-serving-as-the-emergency-third-quarterback-for-week-4/1957794",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-04T17:06:48Z"
         }
       ]
     },
@@ -6294,15 +6426,15 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Kaliakmanis has relief opportunity with Mariota ruled out",
-      "summary": "Kaliakmanis entered after Mariota's knee injury, according to CBS original reporting, with pass attempts recorded by Washington's official game page. The Commanders have now ruled Mariota out for the rest of the game. This resolves Mariota's return status without establishing a future starter.",
-      "fantasyAnalysis": "Mariota cannot return today, extending the relief opportunity. Kaliakmanis is not guaranteed every remaining snap or a future start; reassess after updated quarterback health reports and team decisions.",
+      "headline": "Kaliakmanis finished London game in relief; future role unsettled",
+      "summary": "Washington's official postgame report confirms Kaliakmanis finished the game after Mariota left with a knee injury. Mariota's Week 5 status is undetermined, and Jayden Daniels is expected at Wednesday practice.",
+      "fantasyAnalysis": "The completed relief appearance does not establish a Week 5 start. Reassess after quarterback health updates and an announced team decision.",
       "eventType": "ROLE_CHANGE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": "2026-10-04T13:58:00Z",
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T15:19:46Z",
+      "checkedAt": "2026-10-04T17:09:12Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -6349,6 +6481,18 @@
           "url": "https://x.com/Commanders/status/2106764269413167367",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:19:07Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": "Zach Selby",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 12:59 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.commanders.com/news/instant-analysis-commanders-colts-week-4",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:07:12Z"
         }
       ]
     },
@@ -6468,15 +6612,15 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Daniels ruled out; Mariota starts Week 4",
-      "summary": "Washington confirms Daniels OUT against Indianapolis after three limited practices this week.",
-      "fantasyAnalysis": "Use a replacement quarterback. Next week's reevaluation is not a guaranteed Week 5 return.",
+      "headline": "Daniels expected at Wednesday practice; Week 5 return unsettled",
+      "summary": "Washington's postgame report says Daniels is expected at practice Wednesday after missing the London game. Mariota left that game with a knee injury, and his Week 5 status is also undetermined.",
+      "fantasyAnalysis": "Expected practice participation does not establish a grade, medical clearance or a Week 5 starting decision. Reassess the quarterback plan after the next health updates.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:10:00Z",
+      "checkedAt": "2026-10-04T17:09:12Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -6485,7 +6629,7 @@
         "bodyPart": "left elbow",
         "practiceStatus": "LP",
         "gameStatus": "OUT",
-        "expectedReturn": "Reevaluation next week; return not guaranteed"
+        "expectedReturn": "Expected at Wednesday practice; Week 5 return not confirmed."
       },
       "sources": [
         {
@@ -6522,6 +6666,18 @@
           "xHandle": null,
           "sourceType": "OFFICIAL",
           "isOriginalSource": true
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": "Zach Selby",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 12:59 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.commanders.com/news/instant-analysis-commanders-colts-week-4",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:07:12Z"
         }
       ]
     },
@@ -6534,14 +6690,14 @@
         "position": "WR"
       },
       "headline": "Jaylin Lane ruled out with ankle injury",
-      "summary": "Washington's official in-game post rules Lane out with an ankle injury during the London game against Indianapolis. No severity or longer-term recovery timetable is announced.",
-      "fantasyAnalysis": "The remaining receivers could absorb opportunities, but no target allocation or future workload is established. Monitor postgame injury updates for later-week planning; the London game is already underway.",
+      "summary": "Washington ruled Lane out with an ankle injury during the London game. The official postgame report adds that he was carted off with an apparent leg injury; it supplies no severity or longer-term recovery timetable.",
+      "fantasyAnalysis": "Monitor subsequent injury updates before making later-week roster decisions. The remaining receivers' future targets and roles are not established by this completed-game absence.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T16:07:56Z",
+      "checkedAt": "2026-10-04T17:09:12Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -6564,6 +6720,18 @@
           "url": "https://x.com/Commanders/status/2106770287090082262",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T16:07:23Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": "Zach Selby",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 12:59 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.commanders.com/news/instant-analysis-commanders-colts-week-4",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:07:12Z"
         }
       ]
     },
@@ -6617,15 +6785,15 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Mariota ruled out; MCL aggravation reported, testing pending",
-      "summary": "Washington officially ruled Mariota out with a knee injury. Nicki Jhabvala relays Molly McGrath's broadcast report of an aggravated preseason MCL injury. RotoWire attributes a right MCL aggravation and further tests to that broadcast. No team-confirmed severity or recovery timetable is established.",
-      "fantasyAnalysis": "Kaliakmanis has the relief opportunity, but a future start depends on Mariota's evaluation, Jayden Daniels' recovery and team decisions. Plan later-week contingencies without assuming another missed game or a fixed absence length.",
+      "headline": "Mariota's Week 5 status undetermined after London injury",
+      "summary": "Washington's postgame report confirms Mariota left with a knee injury and says his Week 5 status is undetermined. Earlier Jhabvala/McGrath and RotoWire reports described an MCL aggravation and further testing; the team has not confirmed that specific diagnosis or a recovery timetable.",
+      "fantasyAnalysis": "Kaliakmanis finished the London game in relief. Future starts depend on Mariota's evaluation, Jayden Daniels' recovery and team decisions; no additional missed game or fixed absence length is established.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T16:53:19Z",
+      "checkedAt": "2026-10-04T17:09:12Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -6634,7 +6802,7 @@
         "bodyPart": "Knee; reported right MCL aggravation",
         "practiceStatus": null,
         "gameStatus": "OUT FOR GAME",
-        "expectedReturn": "Officially out for the game; further testing reported, longer-term timetable unknown."
+        "expectedReturn": "Week 5 status undetermined per team; further testing reported."
       },
       "sources": [
         {
@@ -6720,6 +6888,18 @@
           "url": "https://www.rotowire.com/football/headlines/marcus-mariota-injury-aggravates-mcl-injury-in-week-4-640571",
           "isOriginalSource": false,
           "checkedAt": "2026-10-04T16:52:34Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": "Zach Selby",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 12:59 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.commanders.com/news/instant-analysis-commanders-colts-week-4",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-04T17:07:12Z"
         }
       ]
     },
@@ -6956,5 +7136,5 @@
       ]
     }
   ],
-  "contentHash": "b569a93e6ac2839aab1feb90b21ad378954c26d70b08effc3b34feefa10290cf"
+  "contentHash": "c717f9c39a842bf0dcd8219db27fb94101be23ae75dc42db4ea1933059af0c2a"
 }
