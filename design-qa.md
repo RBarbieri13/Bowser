@@ -239,3 +239,8 @@ User feedback supersedes the handoff's short-label/More-menu layout. Full sectio
 | League Hub, Yahoo Connection | Same shell and readable unavailable state; no private account capture | PASS |
 
 Primary sidebar text is white, values weight 600, headers 800, actions 700 with green #3ecf8e; secondary context #ccc/600. Usage share remains excluded from these overrides. Main grids and data unchanged. Local screenshots and route readbacks: `shared/operations/sidebar-clarity-20260930/`. Full npm run check passed.
+
+
+## October 4, 2026 — shared game selector and multi-filter pills
+
+See [the per-route comparison, all 15 acceptance items, and four 1920×1080 screenshots](docs/design-qa/game-selector-20261004/README.md). Full check and independent review passed.
