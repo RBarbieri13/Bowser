@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T16:06:15Z",
-  "updatedAt": "2026-10-05T16:08:47.305Z",
-  "revision": "bowser-public-news-20261005T160847305Z",
+  "checkedAt": "2026-10-05T16:47:30Z",
+  "updatedAt": "2026-10-05T16:52:00.951Z",
+  "revision": "bowser-public-news-20261005T165200951Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -1625,24 +1625,24 @@
         "team": "CHI",
         "position": "QB"
       },
-      "headline": "Williams officially ruled out for Week 4",
-      "summary": "Chicago's final injury table lists Williams DNP Friday and OUT against the Jets.",
-      "fantasyAnalysis": "Use a replacement if relying on Williams. The current team quarterback article still does not announce Bagent or Keenum as starter.",
-      "eventType": "PRACTICE",
-      "status": "CONFIRMED",
+      "headline": "Williams reportedly not ready to start Week 5",
+      "summary": "RotoWire attributes to Sean Hammond that Ben Johnson said Monday Williams will not be ready to start Week 5 and Bagent will lead the offense against Green Bay. This is a reported coach decision; no official weekly practice grade or return date is established.",
+      "fantasyAnalysis": "Plan a Williams replacement for Week 5. Bagent is a short-term superflex candidate only if available and suitable for the league; neither production nor starts beyond Week 5 are guaranteed.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T19:37:00Z",
+      "checkedAt": "2026-10-05T16:47:30Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Hamstring",
-        "practiceStatus": "DNP",
-        "gameStatus": "OUT",
-        "expectedReturn": null
+        "practiceStatus": null,
+        "gameStatus": "REPORTED NOT STARTING WEEK 5",
+        "expectedReturn": "Return date unconfirmed."
       },
       "sources": [
         {
@@ -1680,6 +1680,18 @@
           "url": "https://www.chicagobears.com/news/game-prep-a-group-effort-for-bears-quarterbacks",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T19:36:19Z"
+        },
+        {
+          "sourceName": "RotoWire, attributing Sean Hammond",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "October 5, 2026 in live injury feed; no exact publication clock displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/news.php?view=injuries",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T16:46:46Z"
         }
       ]
     },
@@ -1835,15 +1847,15 @@
         "team": "CHI",
         "position": "QB"
       },
-      "headline": "Bagent operates Chicago's opening drive",
-      "summary": "NFL official play-by-play records a Bagent completion at Q1 14:18 and multiple passes on Chicago's opening possession. This verifies actual opening-drive participation beyond the earlier expected-start reports.",
-      "fantasyAnalysis": "Bagent is operating Chicago's offense in this game. The observation does not guarantee every remaining snap or establish a future start; no post-kickoff lineup swap is implied.",
+      "headline": "Bagent reportedly named Week 5 starter against Green Bay",
+      "summary": "RotoWire attributes to Sean Hammond that Ben Johnson said Monday Williams will not be ready to start Week 5 and Bagent will lead the offense against Green Bay. This is a reported coach decision; no official weekly practice grade or return date is established.",
+      "fantasyAnalysis": "Plan a Williams replacement for Week 5. Bagent is a short-term superflex candidate only if available and suitable for the league; neither production nor starts beyond Week 5 are guaranteed.",
       "eventType": "ROLE_CHANGE",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T17:19:34Z",
+      "checkedAt": "2026-10-05T16:47:30Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1851,7 +1863,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": "ACTIVE",
+        "gameStatus": "REPORTED WEEK 5 STARTER",
         "expectedReturn": null
       },
       "sources": [
@@ -1902,6 +1914,18 @@
           "url": "https://www.nfl.com/games/jets-at-bears-2026-reg-4?tab=live",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T17:17:55Z"
+        },
+        {
+          "sourceName": "RotoWire, attributing Sean Hammond",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "October 5, 2026 in live injury feed; no exact publication clock displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/news.php?view=injuries",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T16:46:46Z"
         }
       ]
     },
@@ -2261,15 +2285,15 @@
         "team": "DEN",
         "position": "WR"
       },
-      "headline": "Bryant did not return with ankle injury",
-      "summary": "NFL.com's updated official roundup explicitly says Bryant was carted to the locker room in the third quarter and did not return to Denver's loss against San Francisco. This resolves the earlier questionable-to-return outcome without adding severity or a recovery timetable.",
-      "fantasyAnalysis": "Other Broncos receivers could gain opportunities if Bryant remains unavailable. Monitor postgame evaluation and practice before future decisions; no future absence or fixed target share is established.",
+      "headline": "Bryant reportedly expected to miss a few weeks with ankle sprain",
+      "summary": "Jon Heath relays Adam Schefter reporting Bryant is expected to miss a few weeks after his ankle sprain in the October 4 loss. No exact return date or injured-reserve transaction is verified.",
+      "fantasyAnalysis": "Prepare a receiver alternative if relying on Bryant. Mims, Franklin and other Denver receivers could gain opportunities, but no fixed target share or automatic add is established.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T23:50:38Z",
+      "checkedAt": "2026-10-05T16:47:30Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2278,7 +2302,7 @@
         "bodyPart": "Ankle",
         "practiceStatus": null,
         "gameStatus": "DID NOT RETURN",
-        "expectedReturn": "Week 4 non-return confirmed; future availability and timetable unknown."
+        "expectedReturn": "Reported few-week absence; exact return date and IR status unconfirmed."
       },
       "sources": [
         {
@@ -2328,6 +2352,18 @@
           "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T23:49:58Z"
+        },
+        {
+          "sourceName": "Broncos Wire via Yahoo Sports, attributing Adam Schefter",
+          "author": "Jon Heath",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-05T16:05:00Z",
+          "publishedAtRaw": "Mon, October 5, 2026 at 4:05 PM UTC",
+          "publishedDate": "2026-10-05",
+          "url": "https://sports.yahoo.com/articles/report-broncos-wr-pat-bryant-160528949.html",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T16:46:59Z"
         }
       ]
     },
@@ -9980,5 +10016,5 @@
       ]
     }
   ],
-  "contentHash": "6d141f038bee922327df83344de34f5ab423869a1dab256b8668f624a6a6432c"
+  "contentHash": "3555d69ee0284a4beddf29dec0da037df57b455d0e340ac9c4af7bdbcfb1660f"
 }
