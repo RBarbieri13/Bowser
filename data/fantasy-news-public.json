@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T22:43:15Z",
-  "updatedAt": "2026-10-05T22:45:13.820Z",
-  "revision": "bowser-public-news-20261005T224513820Z",
+  "checkedAt": "2026-10-05T22:58:05Z",
+  "updatedAt": "2026-10-05T22:59:27.615Z",
+  "revision": "bowser-public-news-20261005T225927615Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -5996,24 +5996,24 @@
         "team": "NO",
         "position": "TE"
       },
-      "headline": "Fant officially questionable for Monday",
-      "summary": "New Orleans' Saturday final report confirms Fant is questionable against Atlanta with an abdomen injury after limited practice all three days. This corroborates the earlier Paras report and resolves the prior team-table lag.",
-      "fantasyAnalysis": "Retain a healthy tight-end fallback before earlier games lock if relying on Fant. Questionable does not establish an absence, and no replacement's workload is confirmed.",
+      "headline": "Fant inactive for Monday night against Atlanta",
+      "summary": "New Orleans lists Noah Fant inactive for its October 5 Week 4 game against Atlanta, superseding his questionable abdomen designation.",
+      "fantasyAnalysis": "Replace Fant before kickoff if using him. Juwan Johnson could benefit, but no additional targets or fixed workload are assured.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-10-03T19:03:41.802Z",
-      "checkedAt": "2026-10-03T19:18:44Z",
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T22:58:05Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Abdomen",
-        "practiceStatus": "LP",
-        "gameStatus": "QUESTIONABLE",
-        "expectedReturn": null
+        "practiceStatus": null,
+        "gameStatus": "OUT",
+        "expectedReturn": "Inactive Week 4; subsequent availability unresolved"
       },
       "sources": [
         {
@@ -6063,6 +6063,30 @@
           "url": "https://www.neworleanssaints.com/news/injury-report-atlanta-falcons-vs-new-orleans-saints-2026-nfl-week-4-saturday",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T19:18:44Z"
+        },
+        {
+          "sourceName": "New Orleans Saints",
+          "author": "New Orleans Saints",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 05:45 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.neworleanssaints.com/news/new-orleans-saints-inactives-atlanta-falcons-2026-nfl-week-4-gameday",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T22:57:08Z"
+        },
+        {
+          "sourceName": "New Orleans Saints",
+          "author": "John DeShazier",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 03, 2026 at 01:30 PM; timezone not displayed. Existing tight-end role context, not a new October 5 usage report.",
+          "publishedDate": "2026-10-03",
+          "url": "https://www.neworleanssaints.com/news/new-orleans-saints-tight-ends-have-been-red-hot-in-the-red-zone-this-season",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T22:57:35Z"
         }
       ]
     },
@@ -6141,6 +6165,48 @@
           "url": "https://www.neworleanssaints.com/news/new-orleans-saints-running-back-depth-being-tested-early",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:07:00Z"
+        }
+      ]
+    },
+    {
+      "eventId": "no-zach-wilson-week4-emergency-qb-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Zach Wilson",
+        "team": "NO",
+        "position": "QB"
+      },
+      "headline": "Zach Wilson inactive as designated third quarterback",
+      "summary": "New Orleans lists Wilson inactive with the designated third-quarterback notation for its October 5 Week 4 game against Atlanta.",
+      "fantasyAnalysis": "Do not treat the emergency third-quarterback designation as a starting opportunity or routine fantasy option.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T22:58:05Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New Orleans Saints",
+          "author": "New Orleans Saints",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 05:45 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.neworleanssaints.com/news/new-orleans-saints-inactives-atlanta-falcons-2026-nfl-week-4-gameday",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T22:57:08Z"
         }
       ]
     },
@@ -10316,5 +10382,5 @@
       ]
     }
   ],
-  "contentHash": "fd168d5ef3b2f47547074171b9c5b32e2b1569d2e34c1a948a10c0ec03ce61bc"
+  "contentHash": "df2517c1e4785a6af2b27939fd3d534214134f2edee1eaff538937c98efca23e"
 }
