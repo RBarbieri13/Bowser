@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T21:06:00Z",
-  "updatedAt": "2026-10-05T21:07:45.540Z",
-  "revision": "bowser-public-news-20261005T210745540Z",
+  "checkedAt": "2026-10-05T22:05:00Z",
+  "updatedAt": "2026-10-05T22:06:45.790Z",
+  "revision": "bowser-public-news-20261005T220645790Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -6062,24 +6062,24 @@
         "team": "NYG",
         "position": "WR"
       },
-      "headline": "Braxton Berrios ruled out with foot injury",
-      "summary": "NFL.com's official Sunday roundup states Berrios was ruled out of the Giants' win over Arizona with a foot injury. It provides no severity assessment or future absence timetable.",
-      "fantasyAnalysis": "Other Giants receivers and return options could absorb depth work if Berrios remains unavailable; no offensive target share is established.",
+      "headline": "Berrios foot/ankle injury; IR decision not confirmed",
+      "summary": "RotoWire attributes to Paul Schwartz that Harbaugh confirmed Berrios has a foot/ankle injury but said an IR decision remains unresolved. Earlier reports described planned IR. The retrieved Giants transaction log stops at October 3 and does not corroborate a completed move.",
+      "fantasyAnalysis": "Monitor the roster decision and recovery timeline before relying on Berrios. No replacement receiving workload or fixed return date is established.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T21:58:36Z",
+      "checkedAt": "2026-10-05T22:05:00Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Foot",
+        "bodyPart": "Foot/ankle",
         "practiceStatus": null,
-        "gameStatus": "OUT FOR GAME",
-        "expectedReturn": "Future availability and recovery timetable unknown."
+        "gameStatus": null,
+        "expectedReturn": "Expected absence reported; IR decision and return date unconfirmed"
       },
       "sources": [
         {
@@ -6093,6 +6093,30 @@
           "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T21:57:59Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Paul Schwartz",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Injury feed entry dated October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/news.php?view=injuries",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T22:04:15Z"
+        },
+        {
+          "sourceName": "New York Giants",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Transaction log observed through October 3; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.giants.com/team/transactions/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T22:04:38Z"
         }
       ]
     },
@@ -7478,24 +7502,24 @@
         "team": "PHI",
         "position": "RB"
       },
-      "headline": "Eagles identify Bigsby's late-game injury as hip",
-      "summary": "Philadelphia's official postgame report identifies Bigsby's late injury against the Rams as a hip injury. It supplies no recovery timetable or future game designation. An explicit return/non-return outcome remains unverified.",
-      "fantasyAnalysis": "Shipley's future opportunity depends on both Barkley's and Bigsby's evaluations. Bigsby is not established as a healthy replacement; no fixed future role, workload or absence length is confirmed.",
+      "headline": "Bigsby reportedly needs core muscle surgery and planned IR",
+      "summary": "RotoWire relays Rapoport's Monday report that Bigsby will undergo core muscle surgery and be placed on injured reserve. This supplies a more specific diagnosis and planned multiweek absence after Sunday's earlier hip/lower-body reporting. A completed surgery or official IR transaction has not been verified.",
+      "fantasyAnalysis": "Do not treat Bigsby as healthy Barkley cover. Shipley is a conditional alternative to monitor if Barkley remains unavailable, but additions to the backfield and the workload split are unsettled.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T00:24:05Z",
+      "checkedAt": "2026-10-05T22:05:00Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Hip",
+        "bodyPart": "Core muscle; surgery reported",
         "practiceStatus": null,
         "gameStatus": null,
-        "expectedReturn": "Future availability and recovery timetable unconfirmed."
+        "expectedReturn": "Planned IR and multiweek absence reported; exact return unconfirmed"
       },
       "sources": [
         {
@@ -7545,6 +7569,18 @@
           "url": "https://www.philadelphiaeagles.com/news/nick-sirianni-reacts-to-sunday-24-20-loss-to-the-rams-2026-nfl-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-05T00:23:03Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Ian Rapoport",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/tank-bigsby-injury-set-for-ir-stint-640894",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T22:04:21Z"
         }
       ]
     },
@@ -10166,5 +10202,5 @@
       ]
     }
   ],
-  "contentHash": "533ce54f878df8adb93530ed0f27d6b328062680452574c89f7319545feda04e"
+  "contentHash": "15610c6ef16b05c477f0456879afb73190a1f8472509abbcf267d0fdabdf0011"
 }
