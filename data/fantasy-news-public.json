@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T03:28:10Z",
-  "updatedAt": "2026-10-05T03:30:18.987Z",
-  "revision": "bowser-public-news-20261005T033018987Z",
+  "checkedAt": "2026-10-05T04:13:45Z",
+  "updatedAt": "2026-10-05T04:15:25.616Z",
+  "revision": "bowser-public-news-20261005T041525616Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -1150,6 +1150,48 @@
       ]
     },
     {
+      "eventId": "car-chuba-hubbard-week4-usage-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Chuba Hubbard",
+        "team": "CAR",
+        "position": "RB"
+      },
+      "headline": "Hubbard carries 20 times for 122 yards in Week 4",
+      "summary": "Carolina's official recap credits Hubbard with 20 carries for 122 yards and a touchdown in the October 4 win over Detroit.",
+      "fantasyAnalysis": "The completed-game rushing workload supports his current involvement. One game does not guarantee a fixed future touch share or establish receiving usage.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T04:13:45Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:41 PM; timezone unspecified; full article text retrieved through search",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.panthers.com/news/rapid-reactions-panthers-deliver-in-prime-time-beating-lions-with-big-play-offense",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T04:13:17Z"
+        }
+      ]
+    },
+    {
       "eventId": "car-darren-waller-thursday-full-2026-10-01",
       "player": {
         "playerId": null,
@@ -1440,6 +1482,48 @@
           "url": "https://www.panthers.com/news/week-4-inactives-vs-detroit-jalen-coker-out-this-week-sunday-night-football-lions",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T22:57:41Z"
+        }
+      ]
+    },
+    {
+      "eventId": "car-tetairoa-mcmillan-week4-usage-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Tetairoa McMillan",
+        "team": "CAR",
+        "position": "WR"
+      },
+      "headline": "McMillan records 14 catches in Week 4 win",
+      "summary": "Carolina's official recap credits McMillan with 14 catches for 192 yards and two touchdowns in the October 4 win over Detroit.",
+      "fantasyAnalysis": "His completed-game receiving volume is a strong usage signal with Coker inactive and Legette on IR. Do not assume that exact volume repeats or infer future clearance for injured teammates.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T04:13:45Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 11:41 PM; timezone unspecified; full article text retrieved through search",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.panthers.com/news/rapid-reactions-panthers-deliver-in-prime-time-beating-lions-with-big-play-offense",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T04:13:17Z"
         }
       ]
     },
@@ -9800,5 +9884,5 @@
       ]
     }
   ],
-  "contentHash": "4158a6ee70619c455171fa4935b5490e1ef51e48ee7f8a03d1cacfceafd6a2df"
+  "contentHash": "132ab0d45dc591c4953d7bf7f073a452ce8bd93aea59ae39efc5e428c99cae64"
 }
