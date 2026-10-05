@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T02:19:01Z",
-  "updatedAt": "2026-10-05T02:40:35.198Z",
-  "revision": "bowser-public-news-20261005T024035198Z",
+  "checkedAt": "2026-10-05T03:28:10Z",
+  "updatedAt": "2026-10-05T03:30:18.987Z",
+  "revision": "bowser-public-news-20261005T033018987Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -4274,6 +4274,48 @@
       ]
     },
     {
+      "eventId": "lar-blake-corum-week4-usage-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Blake Corum",
+        "team": "LAR",
+        "position": "RB"
+      },
+      "headline": "Corum gets six touches behind Williams in Week 4",
+      "summary": "The official October 4 final box score credits Corum with five carries for 14 yards and one catch for seven yards against Philadelphia. Williams recorded 26 touches.",
+      "fantasyAnalysis": "Corum remained the lower-volume back in this game. Reserve value remains conditional on future role and health changes; one game's workload alone does not make him an automatic add or drop.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T03:28:10Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Official final Week 4 box score for October 4, 2026; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.philadelphiaeagles.com/game-day/2026/reg-week4/rams-at-eagles/box-score",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T03:27:30Z"
+        }
+      ]
+    },
+    {
       "eventId": "lar-cj-daniels-jr-week4-inactive-2026-10-04",
       "player": {
         "playerId": null,
@@ -4354,6 +4396,48 @@
           "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T21:57:59Z"
+        }
+      ]
+    },
+    {
+      "eventId": "lar-kyren-williams-week4-usage-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Kyren Williams",
+        "team": "LAR",
+        "position": "RB"
+      },
+      "headline": "Williams records 26 touches in Week 4 win",
+      "summary": "The official October 4 final box score credits Williams with 16 carries for 80 yards and two touchdowns, plus 10 catches for 67 yards against Philadelphia. Corum had five carries and one catch.",
+      "fantasyAnalysis": "Williams handled substantially more touches in this completed game. The result supports his lead role but does not guarantee the same workload or receiving volume next week.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T03:28:10Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Official final Week 4 box score for October 4, 2026; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.philadelphiaeagles.com/game-day/2026/reg-week4/rams-at-eagles/box-score",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T03:27:30Z"
         }
       ]
     },
@@ -9716,5 +9800,5 @@
       ]
     }
   ],
-  "contentHash": "3823e8ec58be822ef665667a38be2ec669bce3c685b1b2f45b4865f090798578"
+  "contentHash": "4158a6ee70619c455171fa4935b5490e1ef51e48ee7f8a03d1cacfceafd6a2df"
 }
