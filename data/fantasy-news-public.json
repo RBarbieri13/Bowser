@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T19:48:30Z",
-  "updatedAt": "2026-10-05T19:50:36.284Z",
-  "revision": "bowser-public-news-20261005T195036284Z",
+  "checkedAt": "2026-10-05T20:44:00Z",
+  "updatedAt": "2026-10-05T20:45:22.300Z",
+  "revision": "bowser-public-news-20261005T204522300Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -7227,15 +7227,15 @@
         "team": "PHI",
         "position": "RB"
       },
-      "headline": "Barkley reportedly facing tests with preliminary optimism",
-      "summary": "RotoWire attributes to Ian Rapoport a Monday report that Barkley will have further hamstring tests and the injury is not initially considered overly serious. His Week 4 exit is confirmed; no test result, next-game clearance or recovery timetable is established.",
-      "fantasyAnalysis": "Bigsby's later injury adds uncertainty to the replacement backfield. Shipley's opportunity depends on both players' evaluations; neither a future lead role nor a longer-term absence or split is confirmed.",
+      "headline": "Sirianni expects more Barkley answers Wednesday",
+      "summary": "Monday reporting attributes to Sirianni an expectation of more information Wednesday, October 7, while Barkley's response to treatment is assessed. No Week 5 availability decision or test result was supplied. Earlier Rapoport optimism remains preliminary.",
+      "fantasyAnalysis": "Keep alternatives available while awaiting Wednesday's update and actual participation. Both Barkley and Bigsby require evaluation; no replacement's health or workload is settled.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T14:41:30Z",
+      "checkedAt": "2026-10-05T20:44:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -7244,7 +7244,7 @@
         "bodyPart": "Hamstring",
         "practiceStatus": null,
         "gameStatus": "OUT FOR GAME",
-        "expectedReturn": "Further testing pending; preliminary reported optimism does not establish clearance."
+        "expectedReturn": "Week 5 availability unresolved; coach expects more information Wednesday October 7"
       },
       "sources": [
         {
@@ -7318,6 +7318,30 @@
           "url": "https://www.rotowire.com/football/headlines/saquon-barkley-injury-set-for-tests-on-injured-hamstring-640865",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T14:39:03Z"
+        },
+        {
+          "sourceName": "FantasyPros",
+          "author": "Ari Koslow; reporting attributed to Zach Berman",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-05T20:01:00Z",
+          "publishedAtRaw": "Mon, Oct 5th 2026, 4:01pm EDT",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.fantasypros.com/nfl/news/612337/saquon-barkley-hamstring-without-update-on-injury.php",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T20:43:55Z"
+        },
+        {
+          "sourceName": "Delaware News Journal via AOL",
+          "author": "Martin Frank",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-05T20:03:00Z",
+          "publishedAtRaw": "Mon, October 5, 2026 at 8:03 PM UTC",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.aol.com/articles/eagles-saquon-barkley-injury-cam-200344000.html",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T20:43:55Z"
         }
       ]
     },
@@ -10118,5 +10142,5 @@
       ]
     }
   ],
-  "contentHash": "cb1186ca31f4e212252b9f23dd52d52b172dcfa2d6b47ebe7bbfa89cfaafc23f"
+  "contentHash": "9e83531e4844b67d1679c90a74c2f3c02903c32fc539e44b3fc15c505ff6666f"
 }
