@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T00:51:55.000Z",
-  "updatedAt": "2026-10-05T00:54:01.373Z",
-  "revision": "bowser-public-news-20261005T005401373Z",
+  "checkedAt": "2026-10-05T01:03:39.000Z",
+  "updatedAt": "2026-10-05T01:05:23.972Z",
+  "revision": "bowser-public-news-20261005T010523972Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -7391,6 +7391,48 @@
       ]
     },
     {
+      "eventId": "sea-emanuel-wilson-week4-workload-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Emanuel Wilson",
+        "team": "SEA",
+        "position": "RB"
+      },
+      "headline": "Wilson leads Seattle backfield with 21 carries",
+      "summary": "Seattle's official recap records 21 carries for 81 yards and another 39 receiving yards for Wilson against the Chargers. Holani had seven carries for 18 yards. This establishes the Week 4 carry split while Price was on IR and Charbonnet remained on PUP.",
+      "fantasyAnalysis": "Wilson's observed lead workload supports monitoring his near-term role while Price is unavailable. Holani remains involved, and Charbonnet's possible activation can change future usage; this game does not guarantee another lead workload.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T01:03:39Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 04:57 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.seahawks.com/news/rapid-reactions-seahawks-ground-attack-pass-rush-highlight-30-23-win-over-chargers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T01:02:55Z"
+        }
+      ]
+    },
+    {
       "eventId": "sea-george-holani-week4-cleared-2026-10-02",
       "player": {
         "playerId": null,
@@ -7398,15 +7440,15 @@
         "team": "SEA",
         "position": "RB"
       },
-      "headline": "Holani active in Seattle's replacement backfield",
-      "summary": "Holani is absent from Seattle's complete inactive list. The team says Velus Jones Jr. will provide depth behind Holani and Emanuel Wilson while Jadarian Price is on IR.",
-      "fantasyAnalysis": "Holani and Wilson are eligible for the replacement-backfield opportunity, with Jones available as depth. No fixed split or guaranteed lead back is established.",
-      "eventType": "PRACTICE",
+      "headline": "Holani takes seven carries behind Wilson in Week 4",
+      "summary": "Seattle's official recap records Holani with seven carries for 18 yards against the Chargers, compared with Wilson's 21 carries. This establishes Holani's participation and the actual Week 4 rushing split after his earlier rib-related clearance.",
+      "fantasyAnalysis": "Holani remains part of Seattle's available backfield, but Wilson handled more carries in this game. Future shares depend on team plans and Charbonnet's potential activation; no fixed ongoing split or lead role is guaranteed.",
+      "eventType": "ROLE_CHANGE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T19:06:55Z",
+      "checkedAt": "2026-10-05T01:03:39Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -7441,6 +7483,18 @@
           "url": "https://www.seahawks.com/news/seahawks-vs-chargers-week-4-inactives",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T19:03:58Z"
+        },
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 04:57 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.seahawks.com/news/rapid-reactions-seahawks-ground-attack-pass-rush-highlight-30-23-win-over-chargers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T01:02:55Z"
         }
       ]
     },
@@ -9596,5 +9650,5 @@
       ]
     }
   ],
-  "contentHash": "af1d04d1c830c4ab8d82557988678611d5375dcdb1b0052dbc5fbfc030f43359"
+  "contentHash": "15c4a1848b97586e7ee356be4cacc5bfe9e78e31c2fa6433edd0a441a2a85aa9"
 }
