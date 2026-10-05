@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T16:47:30Z",
-  "updatedAt": "2026-10-05T16:52:00.951Z",
-  "revision": "bowser-public-news-20261005T165200951Z",
+  "checkedAt": "2026-10-05T17:20:00Z",
+  "updatedAt": "2026-10-05T17:22:53.827Z",
+  "revision": "bowser-public-news-20261005T172253827Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2819,6 +2819,48 @@
           "url": "https://www.houstontexans.com/news/texans-inactives-week-4-vs-dallas-cowboys",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:33:43Z"
+        }
+      ]
+    },
+    {
+      "eventId": "hou-tank-dell-practice-window-plan-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Tank Dell",
+        "team": "HOU",
+        "position": "WR"
+      },
+      "headline": "Ryans reportedly expects Dell practice window this week",
+      "summary": "RotoWire attributes to DeMeco Ryans, via Jonathan M. Alexander, an expectation that Houston will open Dell's 21-day practice window this week as he recovers from his knee injury. This is a plan, not a completed activation or observed practice grade.",
+      "fantasyAnalysis": "Monitor actual participation and an activation decision before relying on Dell. A practice window does not establish game readiness or a future target share.",
+      "eventType": "RETURN",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T17:20:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee",
+        "practiceStatus": null,
+        "gameStatus": "IR",
+        "expectedReturn": "Practice window expected this week; activation and game return unconfirmed"
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Jonathan M. Alexander",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/tank-dell-injury-expected-to-practice-week-5-640880",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T17:19:47Z"
         }
       ]
     },
@@ -8166,24 +8208,24 @@
         "team": "SEA",
         "position": "RB"
       },
-      "headline": "Charbonnet limited Friday; Week 4 remains unavailable",
-      "summary": "Seattle's final table lists Charbonnet limited Thursday and Friday and OUT. His return-to-practice window does not change his Week 4 PUP ineligibility.",
-      "fantasyAnalysis": "Monitor activation and usage for future weeks. Limited practices do not guarantee a Week 5 return, and he cannot replace Price this Sunday.",
+      "headline": "Charbonnet will not be activated for Week 5, coach reportedly says",
+      "summary": "RotoWire attributes to Mike Macdonald, via Gregg Bell, that Charbonnet will remain on PUP for Sunday's game against San Francisco. Planned team reps this week are a recovery step, not activation or game clearance.",
+      "fantasyAnalysis": "Do not rely on a Week 5 return. With Price on IR, Wilson is the likely primary beneficiary and Holani remains involved; no fixed workload split is guaranteed.",
       "eventType": "RETURN",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T21:39:00Z",
+      "checkedAt": "2026-10-05T17:20:00Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Knee",
-        "practiceStatus": "LP",
+        "practiceStatus": null,
         "gameStatus": "PUP",
-        "expectedReturn": "Must miss Week 4; activation date unresolved"
+        "expectedReturn": "Not being activated for Week 5 per reported coach comments; later return unresolved"
       },
       "sources": [
         {
@@ -8220,6 +8262,18 @@
           "sourceType": "OFFICIAL",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T21:39:00Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Gregg Bell",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated October 5, 2026 at 10:13 AM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/zach-charbonnet-injury-wont-debut-week-5-640882",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T17:19:24Z"
         }
       ]
     },
@@ -9653,24 +9707,24 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Mariota's Week 5 status undetermined after London injury",
-      "summary": "Washington's postgame report confirms Mariota left with a knee injury and says his Week 5 status is undetermined. Earlier Jhabvala/McGrath and RotoWire reports described an MCL aggravation and further testing; the team has not confirmed that specific diagnosis or a recovery timetable.",
-      "fantasyAnalysis": "Kaliakmanis finished the London game in relief. Future starts depend on Mariota's evaluation, Jayden Daniels' recovery and team decisions; no additional missed game or fixed absence length is established.",
+      "headline": "Mariota reportedly diagnosed with right MCL sprain",
+      "summary": "Monday reporting from Nicki Jhabvala, relayed by RotoWire, describes a right MCL sprain after the London injury. This follows Sunday's reported aggravation and team-confirmed knee-related exit. No exact absence length or Week 5 starting decision is established.",
+      "fantasyAnalysis": "Keep quarterback alternatives available while Mariota is evaluated and Daniels progresses. Kaliakmanis' opportunity depends on both quarterbacks' availability; Daniels' expected practice is not clearance.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T17:09:12Z",
+      "checkedAt": "2026-10-05T17:20:00Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Knee; reported right MCL aggravation",
+        "bodyPart": "Right knee; reported MCL sprain",
         "practiceStatus": null,
         "gameStatus": "OUT FOR GAME",
-        "expectedReturn": "Week 5 status undetermined per team; further testing reported."
+        "expectedReturn": "Exact absence length unconfirmed; Week 5 quarterback decision unresolved"
       },
       "sources": [
         {
@@ -9768,6 +9822,18 @@
           "url": "https://www.commanders.com/news/instant-analysis-commanders-colts-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T17:07:12Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Nicki Jhabvala",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated October 5, 2026 at 10:01 AM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/marcus-mariota-injury-sustains-mcl-sprain-in-london-640881",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T17:19:05Z"
         }
       ]
     },
@@ -10016,5 +10082,5 @@
       ]
     }
   ],
-  "contentHash": "3555d69ee0284a4beddf29dec0da037df57b455d0e340ac9c4af7bdbcfb1660f"
+  "contentHash": "0f01a04c6a8759543805be30aff16a7c3b8955626725a94eab1befc2ff7b44d0"
 }
