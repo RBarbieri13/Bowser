@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T15:34:52Z",
-  "updatedAt": "2026-10-05T15:36:56.880Z",
-  "revision": "bowser-public-news-20261005T153656880Z",
+  "checkedAt": "2026-10-05T16:06:15Z",
+  "updatedAt": "2026-10-05T16:08:47.305Z",
+  "revision": "bowser-public-news-20261005T160847305Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -5475,15 +5475,15 @@
         "team": "NE",
         "position": "WR"
       },
-      "headline": "Hollins did not return with calf injury",
-      "summary": "NFL.com's official Sunday roundup confirms Hollins did not return to the win over Buffalo with a calf injury, resolving the earlier questionable-to-return outcome.",
+      "headline": "Hollins practice availability uncertain after calf injury",
+      "summary": "RotoWire attributes to Phil Perry that Mike Vrabel expects more information later Monday and is uncertain whether Hollins can practice for a couple of days. This is an outlook, not an observed practice absence or final Week 5 designation.",
       "fantasyAnalysis": "Other Patriots receivers could gain opportunities if Hollins remains unavailable. Future status, severity and target allocation remain unconfirmed; reassess after evaluation and practice.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T21:58:36Z",
+      "checkedAt": "2026-10-05T16:06:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5492,7 +5492,7 @@
         "bodyPart": "Calf",
         "practiceStatus": null,
         "gameStatus": "DID NOT RETURN",
-        "expectedReturn": "Week 4 non-return confirmed; future availability and timetable unknown."
+        "expectedReturn": "Practice availability uncertain; further Monday evaluation pending, not ruled out for Week 5."
       },
       "sources": [
         {
@@ -5518,6 +5518,18 @@
           "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T21:57:59Z"
+        },
+        {
+          "sourceName": "RotoWire, attributing Phil Perry",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "October 5, 2026 in live injury feed; no exact publication clock displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/news.php?view=injuries",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T16:05:13Z"
         }
       ]
     },
@@ -9497,24 +9509,24 @@
         "team": "WAS",
         "position": "WR"
       },
-      "headline": "Jaylin Lane ruled out with ankle injury",
-      "summary": "Washington ruled Lane out with an ankle injury during the London game. The official postgame report adds that he was carted off with an apparent leg injury; it supplies no severity or longer-term recovery timetable.",
-      "fantasyAnalysis": "Monitor subsequent injury updates before making later-week roster decisions. The remaining receivers' future targets and roles are not established by this completed-game absence.",
+      "headline": "Lane reportedly suffered ankle fracture/dislocation; season likely over",
+      "summary": "RotoWire attributes to Ian Rapoport that Monday tests diagnosed a left-ankle fracture and dislocation, with Lane expected to miss the rest of the season. This updates the prior Week 4 ankle exit; no official season-ending transaction has been verified.",
+      "fantasyAnalysis": "Prepare a replacement if relying on Lane. Other Washington receivers may gain opportunities, but no single replacement, target share or current fantasy availability is established. Consider league retention rules before a drop.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
-      "fantasyImpact": "MEDIUM",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T17:09:12Z",
+      "checkedAt": "2026-10-05T16:06:15Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Ankle",
+        "bodyPart": "Left ankle; reported fracture and dislocation",
         "practiceStatus": null,
         "gameStatus": "OUT FOR GAME",
-        "expectedReturn": "Ruled out in Week 4; longer-term prognosis unknown."
+        "expectedReturn": "Reported likely season-ending absence; no exact recovery date or official transaction verified."
       },
       "sources": [
         {
@@ -9540,6 +9552,18 @@
           "url": "https://www.commanders.com/news/instant-analysis-commanders-colts-week-4",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T17:07:12Z"
+        },
+        {
+          "sourceName": "RotoWire, attributing Ian Rapoport",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "October 5, 2026 in live injury feed; no exact publication clock displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/news.php?view=injuries",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T16:05:13Z"
         }
       ]
     },
@@ -9956,5 +9980,5 @@
       ]
     }
   ],
-  "contentHash": "c3a0ffb23ce1f16cd475e3534da61f5d840f7fb0f0ef8ce4da5cd4a2639a8d35"
+  "contentHash": "6d141f038bee922327df83344de34f5ab423869a1dab256b8668f624a6a6432c"
 }
