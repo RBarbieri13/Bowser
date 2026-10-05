@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-04T23:50:38.000Z",
-  "updatedAt": "2026-10-04T23:52:26.340Z",
-  "revision": "bowser-public-news-20261004T235226340Z",
+  "checkedAt": "2026-10-05T00:24:05.000Z",
+  "updatedAt": "2026-10-05T00:25:33.498Z",
+  "revision": "bowser-public-news-20261005T002533498Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -6962,24 +6962,24 @@
         "team": "PHI",
         "position": "RB"
       },
-      "headline": "Bigsby injury details unresolved after Rams game",
-      "summary": "The Eagles' final recap confirms the game is complete and records Bigsby getting hurt late. His body part, whether he returned, and recovery outlook remain unconfirmed. Kempski's earlier medical-tent report remains attributed reporting.",
+      "headline": "Eagles identify Bigsby's late-game injury as hip",
+      "summary": "Philadelphia's official postgame report identifies Bigsby's late injury against the Rams as a hip injury. It supplies no recovery timetable or future game designation. An explicit return/non-return outcome remains unverified.",
       "fantasyAnalysis": "Shipley's future opportunity depends on both Barkley's and Bigsby's evaluations. Bigsby is not established as a healthy replacement; no fixed future role, workload or absence length is confirmed.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T20:36:20Z",
+      "checkedAt": "2026-10-05T00:24:05Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Undisclosed",
+        "bodyPart": "Hip",
         "practiceStatus": null,
         "gameStatus": null,
-        "expectedReturn": "Game finished; return outcome and future availability unconfirmed."
+        "expectedReturn": "Future availability and recovery timetable unconfirmed."
       },
       "sources": [
         {
@@ -7017,6 +7017,18 @@
           "url": "https://www.philadelphiaeagles.com/news/rams-vs-eagles-game-recap-october-4-2026-nfl-week-4-regular-season-jalen-hurts-matthew-stafford",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T20:33:19Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": "Dave Spadaro",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 04, 2026 at 05:48 PM; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://www.philadelphiaeagles.com/news/nick-sirianni-reacts-to-sunday-24-20-loss-to-the-rams-2026-nfl-week-4",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T00:23:03Z"
         }
       ]
     },
@@ -9536,5 +9548,5 @@
       ]
     }
   ],
-  "contentHash": "c2cfe483806a4fcfa836c76fcca1a1cc5ef6aef4853d64cf328c0802e8c583f8"
+  "contentHash": "be10c1f5a322afe05926a0750d3d22adb5bb91e952a001381ff7bad0a5f0ef34"
 }
