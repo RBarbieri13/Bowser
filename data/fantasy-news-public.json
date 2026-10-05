@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T01:54:05.000Z",
-  "updatedAt": "2026-10-05T01:55:47.457Z",
-  "revision": "bowser-public-news-20261005T015547457Z",
+  "checkedAt": "2026-10-05T02:19:01Z",
+  "updatedAt": "2026-10-05T02:40:35.198Z",
+  "revision": "bowser-public-news-20261005T024035198Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -3382,24 +3382,24 @@
         "team": "KC",
         "position": "WR"
       },
-      "headline": "Reid voices concern about Thornton's ankle, Derrick reports",
-      "summary": "Matt Derrick reports Andy Reid said Thornton's left ankle did not look good and expected him to travel home with the team. This is a reported coach assessment and travel plan, without a definitive diagnosis or recovery timetable. Thornton was officially ruled out after being carted off in the fourth quarter.",
-      "fantasyAnalysis": "Await the medical evaluation before assigning severity, absence length or replacement volume. With Rice also injured, remaining Kansas City receivers could gain opportunities, but no future role or workload is established.",
+      "headline": "Thornton out indefinitely with dislocated ankle, Rapoport reports",
+      "summary": "Ian Rapoport reports Thornton suffered a dislocated ankle that doctors put back in place, then traveled with the team. A full evaluation and second opinion are planned for the morning, and he is out indefinitely. No exact recovery length or season-ending determination is established.",
+      "fantasyAnalysis": "Prepare a receiver alternative while awaiting further evaluation. Remaining Kansas City pass catchers could gain opportunities, but Rice's availability remains unsettled and reported contact with Hill does not establish immediate cover or a fixed target share.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T00:51:55Z",
+      "checkedAt": "2026-10-05T02:19:01Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Ankle; reported left side",
+        "bodyPart": "Ankle; reported dislocation and earlier reported left side",
         "practiceStatus": null,
-        "gameStatus": "OUT FOR GAME",
-        "expectedReturn": "Officially out for Week 4; diagnosis and future availability unresolved."
+        "gameStatus": "REPORTED OUT INDEFINITELY",
+        "expectedReturn": "Reported indefinite absence; morning evaluation and second opinion pending, no exact timetable."
       },
       "sources": [
         {
@@ -3449,6 +3449,18 @@
           "url": "https://x.com/mattderrick/status/2106899656336691516",
           "isOriginalSource": true,
           "checkedAt": "2026-10-05T00:50:53Z"
+        },
+        {
+          "sourceName": "ESPN and NFL Network (Ian Rapoport on X)",
+          "author": "Ian Rapoport",
+          "xHandle": "RapSheet",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "6:47 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/RapSheet/status/2106924258366566766",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T02:18:28Z"
         }
       ]
     },
@@ -9704,5 +9716,5 @@
       ]
     }
   ],
-  "contentHash": "caaf07995441a9e6ecfb570b0e263eaf76a9b078207e8afffdb29a9c0d540a94"
+  "contentHash": "3823e8ec58be822ef665667a38be2ec669bce3c685b1b2f45b4865f090798578"
 }
