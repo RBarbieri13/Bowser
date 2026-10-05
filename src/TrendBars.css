@@ -1,0 +1,18 @@
+.bowser-trend-wrap{display:inline-flex;flex-direction:column;vertical-align:middle;max-width:none;overflow:visible}
+.bowser-trend.lhq-bars{display:inline-flex;width:max-content!important;height:26px!important;gap:4px!important;align-items:flex-end;font-family:Poppins,sans-serif;flex:none}
+.bowser-trend .bowser-trend-slot.lhq-bar-slot{width:var(--trend-slot-width,24px);min-width:var(--trend-slot-width,24px);flex:0 0 var(--trend-slot-width,24px);height:26px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:1px}
+.bowser-trend .bowser-trend-value{font-family:'Source Code Pro',monospace!important;font-size:12px!important;font-weight:600!important;line-height:12px!important;letter-spacing:0;white-space:nowrap}
+.bowser-trend .bowser-trend-plot.lhq-bar-plot{position:relative;display:block;width:var(--trend-slot-width,24px);min-width:var(--trend-slot-width,24px);flex:none;margin:0}
+.bowser-trend .bowser-trend-plot i{position:static;display:block;width:100%;border-radius:1px;min-height:1px}
+.bowser-trend .negative .bowser-trend-plot i{border-top:1px solid #EDEDED;box-sizing:border-box;transform:scaleY(-1)}
+.bowser-trend .missing .bowser-trend-plot{background:#121212}
+.bowser-trend .bowser-trend-arrow{width:16px;min-width:16px;flex:0 0 16px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-family:Poppins,sans-serif;font-weight:700;line-height:1;margin-left:2px}
+.bowser-trend-dates{display:flex;gap:4px;padding-right:22px}
+.bowser-trend-dates small{width:var(--trend-slot-width,24px);flex:0 0 var(--trend-slot-width,24px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;font:8px/11px 'Source Code Pro',monospace;color:#8A8A8A}
+.lhq-grid td:has(.bowser-trend){padding-top:0;padding-bottom:0;overflow:visible}
+.lhq-grid th .bowser-trend-heading{color:var(--trend-heading-color)!important}
+.lhq-research:has(.bowser-trend){overflow-x:auto}
+/* The 108px three-week column has 102px of contents and 3px padding per edge. */
+.lhq-grid td:has(.bowser-trend){padding-left:3px;padding-right:3px}
+.lhq-grid th .bowser-trend-heading{font-family:Poppins,sans-serif;font-size:11.5px;font-weight:600}
+.profile-trajectory:has(.bowser-trend){overflow-x:auto}

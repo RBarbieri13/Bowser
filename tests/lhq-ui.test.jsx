@@ -88,15 +88,16 @@ test('row identity remains stable when sorting players with the same display nam
   rerender(<Grid columns={columns} rows={[second, first]} />);
   expect(screen.getByRole('row', { name: /Same BUF/ })).toBe(buffalo);
 });
-test('bars share a supplied NFL scale, preserve gaps, and put negative points below zero', () => {
-  const domain = { min: -10, max: 50 };
-  const { container } = render(<LhqProvider><Bars metric="fantasy_points" domain={domain} history={[{ season: 2026, week: 1, fantasy_points: 20 }, { season: 2026, week: 2, fantasy_points: null }, { season: 2026, week: 3, fantasy_points: -5 }]} /><Bars metric="fantasy_points" domain={domain} history={[{ season: 2026, week: 1, fantasy_points: 10 }]} /></LhqProvider>);
-  const bars = [...container.querySelectorAll('.lhq-bar-plot i')];
-  expect(parseFloat(bars[0].style.height)).toBeCloseTo(2 * parseFloat(bars[3].style.height));
-  expect(bars[1]).toHaveClass('missing');
-  expect(parseFloat(bars[2].style.top)).toBeCloseTo(100 * 50 / 60);
-  expect(container.querySelectorAll('.lhq-bar-slot')).toHaveLength(4);
+test('bars share the visible-column scale and preserve sourced negative values and gaps', () => {
+  const { container } = render(<LhqProvider><Bars metric="fantasy_points" columnMax={20} history={[{ season: 2026, week: 1, fantasy_points: 20 }, { season: 2026, week: 2, fantasy_points: null }, { season: 2026, week: 3, fantasy_points: -5 }]} /><Bars metric="fantasy_points" columnMax={20} history={[{ season: 2026, week: 1, fantasy_points: 10 }]} /></LhqProvider>);
+  const slots = [...container.querySelectorAll('.lhq-bar-slot')];
+  expect(slots[0].querySelector('i')).toHaveStyle({height:'12px'});
+  expect(slots[1]).toHaveClass('missing'); expect(slots[1].querySelector('i')).toBeNull();
+  expect(slots[2]).toHaveClass('negative'); expect(slots[2]).toHaveAttribute('data-value','-5');
+  expect(slots[3].querySelector('i')).toHaveStyle({height:'7px'});
+  expect(slots).toHaveLength(4);
 });
+
 function Stored({ storageKey, fallback = [] }) {
   const [value] = useStored(storageKey, fallback);
   return <output data-testid="stored">{JSON.stringify(value)}</output>;

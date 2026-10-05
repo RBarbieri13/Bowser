@@ -1,3 +1,4 @@
+import {visibleTrendMax} from '../trendColumn.js';
 import {useState} from 'react';
 import {Bars,Field,PlayerName,Status,Tip,useJson} from './shared.jsx';
 import {stamp} from './model.js';
@@ -43,7 +44,7 @@ export function PositionalUsage({selected,season=2026,baseWeek=1,scoring='ppr',o
   setSortWeek(index);
  };
  const weekHeader=<div className={`lhq-usage-weeks ${view==='metric'?'comparing':''}`}><span>{view==='players'?'Statistic':'Player'}</span><div>{slots.map((s,index)=><Tip key={s.key||`${s.season}-${s.week}`} text={`Sort ${TREND_METRICS[activeSort||activeMetric].label} by ${s.season} NFL Week ${s.week}; click again to reverse`}><button className={activeSort&&index===weekIndex?'active':''} aria-label={`Sort usage by ${s.season} Week ${s.week}`} aria-pressed={!!activeSort&&index===weekIndex} onClick={()=>sortByWeek(index)}>{String(s.season).slice(-2)}·W{s.week}{activeSort&&index===weekIndex?<span>{sortDirection==='desc'?'▾':'▴'}</span>:null}</button></Tip>)}</div></div>;
- const plot=(player,key)=><div className="lhq-usage-bars" role="img" aria-label={`${player.name}: ${TREND_METRICS[key].label}. ${history(player).map(h=>`${h.season} W${h.week}: ${trendValue(h,key)??'unavailable'}`).join('; ')}`}><Bars history={history(player)} metric={key} domain={meta.trendDomains?.[key]} color={color(key)} large values/></div>;
+ const plot=(player,key)=><div className="lhq-usage-bars" role="img" aria-label={`${player.name}: ${TREND_METRICS[key].label}. ${history(player).map(h=>`${h.season} W${h.week}: ${trendValue(h,key)??'unavailable'}`).join('; ')}`}><Bars history={history(player)} metric={key} decorative columnMax={visibleTrendMax(activePlayers,history,key)} color={color(key)} large values/></div>;
  return <section className="lhq-positional-usage" aria-label="Positional Usage">
   <div className="lhq-usage-selectors"><Field label="Usage team"><select aria-label="Usage team" value={team||''} onChange={e=>setChoice({team:e.target.value})}><option value="">Choose team</option>{teams.map(t=><option key={t}>{t}</option>)}</select></Field><Field label="Usage position"><select aria-label="Usage position" value={position} onChange={e=>setChoice({position:e.target.value})}>{Object.keys(METRICS).map(p=><option key={p}>{p}</option>)}</select></Field></div>
   {sourced&&<p className="lhq-usage-follow">{choice?'Manual comparison':`Following ${sourced.player_display_name||sourced.name}`}{choice&&<button onClick={()=>setManual(null)}>Follow selected player</button>}</p>}

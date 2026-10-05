@@ -1,4 +1,6 @@
-import { TrendChart, TrendMetricSelect } from './TrendChart.jsx';
+import {trendRequestCount} from './trendColumn.js';
+import {TrendBars} from './TrendBars.jsx';
+import { TrendMetricSelect } from './TrendChart.jsx';
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChartLineUp, Fire, LinkBreak, ListBullets, User, UsersThree, X } from "@phosphor-icons/react";
 
@@ -133,7 +135,7 @@ function SnapMeter({ value }) {
 }
 
 function TrajectoryStrip({ profile, trendWeeks, onTrendWeeks, metric, onMetric }) {
-  return <section className="profile-trajectory" aria-labelledby="trajectory-title"><header><div><h3 id="trajectory-title">Season trajectory</h3><span>{profile.player.name} · aligned regular-season calendar weeks</span></div><div className="profile-trajectory-controls"><TrendMetricSelect metric={metric} onChange={onMetric} label="Player trajectory metric"/><label>History<select aria-label="Player trajectory history" value={trendWeeks} onChange={event=>onTrendWeeks(Number(event.target.value))}>{[5,8,10,18].map(n=><option key={n} value={n}>{n} calendar weeks</option>)}</select></label></div></header><TrendChart history={profile.history || []} metric={metric} domain={profile.meta?.trendDomains?.[metric]} playerName={profile.player.name} height={96}/></section>;
+  return <section className="profile-trajectory" aria-labelledby="trajectory-title"><header><div><h3 id="trajectory-title">Season trajectory</h3><span>{profile.player.name} · aligned regular-season calendar weeks</span></div><div className="profile-trajectory-controls"><TrendMetricSelect metric={metric} onChange={onMetric} label="Player trajectory metric"/><label>History<select aria-label="Player trajectory history" value={trendWeeks} onChange={event=>onTrendWeeks(Number(event.target.value))}>{[2,3,4,5,8,10,18].map(n=><option key={n} value={n}>{n} calendar weeks</option>)}</select></label></div></header><TrendBars history={(profile.history || []).slice(-trendWeeks)} metric={metric} playerName={profile.player.name} showLabels/></section>;
 }
 
 function GameLogHeader({ groups }) {
@@ -326,7 +328,7 @@ export function PlayerProfile({ player, season = 2026, scoring, initialTab = "lo
     setError("");
     setHeadshotFailed(false);
     setActiveTab(safeInitialTab);
-    fetch(`/api/v1/player-profile?${new URLSearchParams({ playerId: player.playerId, scoring, season: String(season), trendWeeks:String(trendWeeks) })}`, { signal: controller.signal })
+    fetch(`/api/v1/player-profile?${new URLSearchParams({ playerId: player.playerId, scoring, season: String(season), trendWeeks:String(trendRequestCount(trendWeeks)) })}`, { signal: controller.signal })
       .then(async (response) => {
         const payload = await response.json();
         if (!response.ok) throw new Error(payload.error?.message || "The player profile could not be loaded.");

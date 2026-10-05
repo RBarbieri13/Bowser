@@ -132,7 +132,7 @@ test('markers remain player-ID preferences and filtered CSV retains season-week 
   const pass = teamCsvColumns(['passing_line'], 'NYG', 'ppr').find(column => column.key === 'passing_line');
   expect(pass.value({ played: true, completions: 0, passing_attempts: 1 })).toBe('0-1');
 });
-test('anchored trends use historical calendar slots, aliases and shared domains', async () => {
+test('anchored trends use historical calendar slots, aliases and the visible-column scale', async () => {
   renderPage(); await screen.findByRole('button', { name: 'Runner Alpha', exact: true }); showSettings();
   fireEvent.change(screen.getByLabelText('Insert trend after'), { target: { value: '2025-2' } });
   await waitFor(() => expect(fetch.mock.calls.some(([url]) => url.includes('trendAnchors=2'))).toBe(true));
@@ -140,7 +140,9 @@ test('anchored trends use historical calendar slots, aliases and shared domains'
   expect(bodyRow('Runner Alpha').querySelectorAll('.missing')).toHaveLength(1);
   const alpha = parseFloat(bodyRow('Runner Alpha').querySelector('.lhq-bar-plot i').style.height);
   const beta = parseFloat(bodyRow('Runner Beta').querySelector('.lhq-bar-plot i').style.height);
-  expect(alpha).toBeCloseTo(beta * 21);
+  expect(alpha).toBe(12); expect(beta).toBe(2);
+  expect(bodyRow('Runner Alpha').querySelector('[data-scale-max]')).toHaveAttribute('data-scale-max','42');
+  expect(bodyRow('Runner Beta').querySelector('[data-scale-max]')).toHaveAttribute('data-scale-max','42');
   fireEvent.change(screen.getByLabelText('Trend metric'), { target: { value: 'rush_attempts' } });
   fireEvent.click(within(table('RB')).getByRole('button', { name: /^Trend/ }));
   expect([...table('RB').querySelectorAll('tbody tr')].filter(row=>row.querySelector('.lhq-player'))[1]).toHaveTextContent('Runner Charlie');
