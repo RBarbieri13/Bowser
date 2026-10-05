@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T01:03:39.000Z",
-  "updatedAt": "2026-10-05T01:05:23.972Z",
-  "revision": "bowser-public-news-20261005T010523972Z",
+  "checkedAt": "2026-10-05T01:54:05.000Z",
+  "updatedAt": "2026-10-05T01:55:47.457Z",
+  "revision": "bowser-public-news-20261005T015547457Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2370,6 +2370,60 @@
           "url": "https://www.rotowire.com/football/headlines/joe-mixon-news-meeting-on-tap-with-seattle-640581",
           "isOriginalSource": false,
           "checkedAt": "2026-10-04T17:06:16Z"
+        }
+      ]
+    },
+    {
+      "eventId": "fa-tyreek-hill-chiefs-contact-2026-10-04",
+      "player": {
+        "playerId": null,
+        "name": "Tyreek Hill",
+        "team": "FA",
+        "position": "WR"
+      },
+      "headline": "Chiefs contacted Hill's agent, Silver reports",
+      "summary": "Michael Silver reports Kansas City has contacted free-agent receiver Hill's agent, Drew Rosenhaus. His earlier post said Hill was believed to be targeting a November return when healthy enough. Reported contact and a recovery target do not establish a signing, medical clearance or assigned role.",
+      "fantasyAnalysis": "Monitor a verified contract and health update before treating Hill as a usable replacement. No immediate help for Kansas City's injured receiver group, guaranteed November return or future target share is established.",
+      "eventType": "RUMOR",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T01:54:05Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Reported November target only; medical clearance and a team agreement are unconfirmed."
+      },
+      "sources": [
+        {
+          "sourceName": "The Athletic (Michael Silver on X)",
+          "author": "Michael Silver",
+          "xHandle": "MikeSilver",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "5:42 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/MikeSilver/status/2106907956830929333",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T01:53:46Z"
+        },
+        {
+          "sourceName": "The Athletic (Michael Silver on X)",
+          "author": "Michael Silver",
+          "xHandle": "MikeSilver",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "6:31 PM · Oct 4, 2026; timezone not displayed",
+          "publishedDate": "2026-10-04",
+          "url": "https://x.com/MikeSilver/status/2106920267549425912",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T01:53:19Z"
         }
       ]
     },
@@ -9650,5 +9704,5 @@
       ]
     }
   ],
-  "contentHash": "15c4a1848b97586e7ee356be4cacc5bfe9e78e31c2fa6433edd0a441a2a85aa9"
+  "contentHash": "caaf07995441a9e6ecfb570b0e263eaf76a9b078207e8afffdb29a9c0d540a94"
 }
