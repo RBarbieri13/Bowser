@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T22:05:00Z",
-  "updatedAt": "2026-10-05T22:06:45.790Z",
-  "revision": "bowser-public-news-20261005T220645790Z",
+  "checkedAt": "2026-10-05T22:43:15Z",
+  "updatedAt": "2026-10-05T22:45:13.820Z",
+  "revision": "bowser-public-news-20261005T224513820Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -87,6 +87,60 @@
           "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T21:57:59Z"
+        }
+      ]
+    },
+    {
+      "eventId": "ari-jeremiyah-love-new-ankle-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Jeremiyah Love",
+        "team": "ARI",
+        "position": "RB"
+      },
+      "headline": "Love reportedly dealing with new ankle issue",
+      "summary": "RotoWire attributes to LaFleur via Dani Sureck a new ankle issue unrelated to August's high-ankle sprain. No severity or missed game is established. Arizona's official recap of usage says Allgeier's final-drive role was chiefly pass protection; it should not be treated as proof Love was removed by injury.",
+      "fantasyAnalysis": "Monitor Wednesday participation and keep an RB alternative. Allgeier could benefit if Love is limited, but no fixed future share or automatic lead role is established.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T22:43:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle; new issue reported",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Week 5 availability unresolved"
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Dani Sureck",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Entry dated October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/jeremiyah-love-injury-tending-to-new-ankle-injury-640901",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T22:42:38Z"
+        },
+        {
+          "sourceName": "Arizona Cardinals",
+          "author": "Darren Urban",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 11:08 AM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.azcardinals.com/news/jeremiyah-love-tyler-allgeier-and-the-snaps-in-new-york",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T22:43:07Z"
         }
       ]
     },
@@ -1637,15 +1691,15 @@
         "team": "CHI",
         "position": "QB"
       },
-      "headline": "Williams reportedly not ready to start Week 5",
-      "summary": "RotoWire attributes to Sean Hammond that Ben Johnson said Monday Williams will not be ready to start Week 5 and Bagent will lead the offense against Green Bay. This is a reported coach decision; no official weekly practice grade or return date is established.",
-      "fantasyAnalysis": "Plan a Williams replacement for Week 5. Bagent is a short-term superflex candidate only if available and suitable for the league; neither production nor starts beyond Week 5 are guaranteed.",
+      "headline": "Williams not expected to practice this week; remains week-to-week",
+      "summary": "RotoWire attributes to Johnson via Courtney Cronin that Williams will not practice during Week 5 and remains week-to-week. This is a future plan, not an observed DNP grade; Bagent was already named the Week 5 starter.",
+      "fantasyAnalysis": "Use an alternative for Week 5 and monitor later recovery. Bagent has the announced start, but no fixed number of additional starts is promised.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T16:47:30Z",
+      "checkedAt": "2026-10-05T22:43:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1653,8 +1707,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Hamstring",
         "practiceStatus": null,
-        "gameStatus": "REPORTED NOT STARTING WEEK 5",
-        "expectedReturn": "Return date unconfirmed."
+        "gameStatus": null,
+        "expectedReturn": "Week-to-week; no Week 5 practice planned"
       },
       "sources": [
         {
@@ -1704,6 +1758,18 @@
           "url": "https://www.rotowire.com/football/news.php?view=injuries",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T16:46:46Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Courtney Cronin",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Entry dated October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/news.php?view=injuries",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T22:42:18Z"
         }
       ]
     },
@@ -1805,15 +1871,15 @@
         "team": "CHI",
         "position": "RB"
       },
-      "headline": "Monangai thumb injury reported after 30-carry game",
-      "summary": "Chicago's official recap confirms Monangai handled a career-high 30 carries against the Jets. Kevin Fishbain reports Ben Johnson said Monangai has a thumb injury. Severity, future designation and recovery timetable remain unconfirmed.",
-      "fantasyAnalysis": "The heavy workload is an observation from this game, not a guaranteed future role. Reassess the thumb evaluation and practice reports; Swift could gain work if Monangai is restricted, without an established absence or fixed split.",
+      "headline": "Monangai day-to-day with right-thumb injury",
+      "summary": "RotoWire attributes to Johnson via Patrick Finley a day-to-day outlook after Monangai injured his right thumb against the Jets. No Week 5 clearance or confirmed absence was supplied.",
+      "fantasyAnalysis": "Monitor practice before relying on him. Any extra Swift work remains conditional; no permanent role change or fixed split is established.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T21:00:04Z",
+      "checkedAt": "2026-10-05T22:43:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1822,7 +1888,7 @@
         "bodyPart": "Thumb",
         "practiceStatus": null,
         "gameStatus": null,
-        "expectedReturn": "Severity, future availability and recovery timetable unconfirmed."
+        "expectedReturn": "Day-to-day; Week 5 availability unresolved"
       },
       "sources": [
         {
@@ -1848,6 +1914,18 @@
           "url": "https://www.chicagobears.com/news/game-recap-bears-ground-jets-improve-to-3-1",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T20:58:41Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Patrick Finley",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Entry dated October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/news.php?view=injuries",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T22:42:18Z"
         }
       ]
     },
@@ -5031,24 +5109,24 @@
         "team": "MIA",
         "position": "WR"
       },
-      "headline": "Douglas inactive against Minnesota",
-      "summary": "The complete matchup list confirms Douglas inactive after his previously announced ankle-related OUT designation.",
-      "fantasyAnalysis": "He is unavailable this game. Bell is eligible, with no confirmed replacement target allocation.",
+      "headline": "Douglas day-to-day heading into Week 5",
+      "summary": "RotoWire attributes to Hafley via Barry Jackson a day-to-day outlook for Douglas ankle injury ahead of the Bengals game. No completed practice grade or game clearance is supplied.",
+      "fantasyAnalysis": "Reassess after practice and final status before relying on Douglas; no replacement target share is confirmed.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T19:37:05Z",
+      "checkedAt": "2026-10-05T22:43:15Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Ankle",
-        "practiceStatus": "DNP",
-        "gameStatus": "INACTIVE",
-        "expectedReturn": null
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Day-to-day; Week 5 availability unresolved"
       },
       "sources": [
         {
@@ -5086,6 +5164,18 @@
           "url": "https://www.vikings.com/news/vikings-dolphins-inactives-week-4-2026-nfl-season",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T19:35:51Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Barry Jackson",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Entry dated October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/news.php?view=injuries",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T22:42:18Z"
         }
       ]
     },
@@ -9630,24 +9720,24 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Daniels reportedly expected to practice fully for Week 5",
-      "summary": "Tashan Reed attributes to Dan Quinn that Daniels will be a full practice participant this week, with Reed describing him as on track for the Giants. This follows the team's Wednesday-practice expectation. Daniels' last completed practice grade was limited before his Week 4 absence.",
-      "fantasyAnalysis": "A future full-practice plan is not an observed FP grade or Week 5 clearance. Keep a quarterback contingency until actual participation and availability are confirmed; Kaliakmanis' future role remains conditional.",
+      "headline": "Daniels targeting full practice week and Week 5 start",
+      "summary": "RotoWire attributes to Quinn via Zach Selby a plan for Daniels to have a full practice week and then start against the Giants. This is a conditional target, not observed full participation or game clearance.",
+      "fantasyAnalysis": "Keep quarterback cover until actual practice and a final availability decision. No automatic replacement start or normal workload is assured.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T17:58:40Z",
+      "checkedAt": "2026-10-05T22:43:15Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "left elbow",
-        "practiceStatus": "LP",
-        "gameStatus": "OUT",
-        "expectedReturn": "Full practice planned per Quinn report; Week 5 return targeted, not confirmed."
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Full practice week and Week 5 start targeted; clearance pending"
       },
       "sources": [
         {
@@ -9708,6 +9798,18 @@
           "url": "https://x.com/tashanreed/status/2106800528403378459",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T17:58:04Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Zach Selby",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Entry dated October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/news.php?view=injuries",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T22:42:18Z"
         }
       ]
     },
@@ -9827,15 +9929,15 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Mariota reportedly diagnosed with right MCL sprain",
-      "summary": "Monday reporting from Nicki Jhabvala, relayed by RotoWire, describes a right MCL sprain after the London injury. This follows Sunday's reported aggravation and team-confirmed knee-related exit. No exact absence length or Week 5 starting decision is established.",
-      "fantasyAnalysis": "Keep quarterback alternatives available while Mariota is evaluated and Daniels progresses. Kaliakmanis' opportunity depends on both quarterbacks' availability; Daniels' expected practice is not clearance.",
+      "headline": "Quinn reportedly confirms Mariota MCL sprain; timetable unresolved",
+      "summary": "RotoWire attributes to Quinn via Ben Standig confirmation of a right MCL sprain. The recovery timeline remains undetermined.",
+      "fantasyAnalysis": "Future quarterback roles depend on Mariota recovery, Daniels availability and team decisions; no guaranteed Kaliakmanis start.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T17:20:00Z",
+      "checkedAt": "2026-10-05T22:43:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -9843,8 +9945,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Right knee; reported MCL sprain",
         "practiceStatus": null,
-        "gameStatus": "OUT FOR GAME",
-        "expectedReturn": "Exact absence length unconfirmed; Week 5 quarterback decision unresolved"
+        "gameStatus": null,
+        "expectedReturn": "Recovery timeline undetermined per reported coach comments"
       },
       "sources": [
         {
@@ -9954,6 +10056,18 @@
           "url": "https://www.rotowire.com/football/headlines/marcus-mariota-injury-sustains-mcl-sprain-in-london-640881",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T17:19:05Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Ben Standig",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Entry dated October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/news.php?view=injuries",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T22:42:18Z"
         }
       ]
     },
@@ -10202,5 +10316,5 @@
       ]
     }
   ],
-  "contentHash": "15610c6ef16b05c477f0456879afb73190a1f8472509abbcf267d0fdabdf0011"
+  "contentHash": "fd168d5ef3b2f47547074171b9c5b32e2b1569d2e34c1a948a10c0ec03ce61bc"
 }
