@@ -57,7 +57,7 @@ test('base/count and DFS windows remain independent; Monday slate includes only 
  expect(screen.getByLabelText('Base week')).toHaveValue('7');expect(screen.getByLabelText('Weeks back')).toHaveValue('3');expect(screen.getByLabelText('DFS week')).toHaveValue('2');
  const statRequests=fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).map(([u])=>new URL(u,'https://test.invalid').searchParams);
  expect(statRequests.at(-1).get('weeks')).toBe('5,6,7');expect(statRequests.at(-1).get('trendRange')).toBe('selected');
- expect([...grid().querySelectorAll('.lhq-bars')].every(b=>b.children.length===3)).toBe(true);
+ expect([...grid().querySelectorAll('.lhq-bars')].every(b=>b.querySelectorAll('.lhq-bar-slot').length===3)).toBe(true);
  expect(screen.getByRole('button',{name:/NYG @ LA/})).toHaveAttribute('data-slate','true');
  expect(screen.getByRole('button',{name:/NYG @ LA/})).toHaveAttribute('aria-pressed','false');
  expect(screen.getByRole('button',{name:/BUF @ NE/})).toBeDisabled();

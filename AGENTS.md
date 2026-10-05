@@ -186,3 +186,10 @@ Robert's Command Center v2 prototype and handoff supersede older Fantasy News la
 - Poppins text and Source Code Pro game-box numbers are scoped to these controls; existing table fonts stay unchanged. One-time local official helmet assets and exact source/hashes live in public/logos/nfl; never hotlink or fabricate live clocks, odds, possession or missing historical values.
 - Team Box main-table salary/projection always use the exact archived Classic week, independent of sidebar research slate. DK$ precedes FPTS. Games shown exposes 1–22 chronological slots without inventing missing weeks.
 - Release gates: full npm run check, npm run lint, independent read-only review, keyboard + real-data browser evidence on all four selector routes, candidate verification, PR merge, permanent production readback. Preserve last-good release on failures; stop after three repetitions of the same failed correction. Review scope at 180 minutes.
+
+
+## Labeled trend columns (October 4, 2026)
+
+- The trend-column handoff supersedes older bar-only and NFL-wide visual scale rules for rendered trend cells. Use labeled 24px bars, one visible-column scale, category palettes and five graded direction arrows. Preserve aligned calendar gaps, signed values, exact source tooltips, metric/history dropdowns and descending-first header sorting. Sort trends by signed first-to-last change, latest value tie-break; unknown endpoints sort last. Never infer zero from a gap.
+- Preserve existing page/row geometry outside trend cells, sidebar matrix contents, data contracts and privacy rules. Widen trend columns to N×28+24; keep all history slots and horizontal scrolling. The prototype uses nonnegative fixtures only; signed source observations must remain labeled and visibly distinguished.
+- Completion: focused trend tests, full npm run check and lint, independent read-only PASS, real-data browser comparisons at 2–5 weeks, PR merge and permanent production readback. Stop after three repeated correction failures; review scope at 180 minutes.

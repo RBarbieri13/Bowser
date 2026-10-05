@@ -21,11 +21,11 @@ test('selected player follows sourced team and position with six aligned WR metr
  expect(screen.getByLabelText('Usage team')).toHaveValue('LA');expect(screen.getByLabelText('Usage position')).toHaveValue('WR');
  expect(document.querySelectorAll('.lhq-usage-player')).toHaveLength(2);
  expect(document.querySelectorAll('.lhq-usage-player.selected .lhq-usage-metric')).toHaveLength(6);
- expect([...document.querySelectorAll('.lhq-bars')].every(chart=>chart.children.length===5)).toBe(true);
+ expect([...document.querySelectorAll('.lhq-bars')].every(chart=>chart.querySelectorAll('.lhq-bar-slot').length===5)).toBe(true);
  const first=screen.getByRole('img',{name:/Receiver Alpha: Snaps/}),second=screen.getByRole('img',{name:/Receiver Beta: Snaps/});
  expect(first).toHaveAccessibleName(/2025 W18: unavailable/);
- expect(first.querySelector('.lhq-bar-plot i')).toHaveStyle({height:'50%'});
- expect(second.querySelector('.lhq-bar-plot i')).toHaveStyle({height:'2.5%'});
+ expect(first.querySelector('.lhq-bar-plot i')).toHaveStyle({height:'12px'});
+ expect(second.querySelector('.lhq-bar-plot i')).toHaveStyle({height:'3px'});
  expect(screen.getByRole('img',{name:/Receiver Beta: Targets/})).toHaveAccessibleName(/2026 W3: 0/);
  expect(screen.getByRole('img',{name:/Receiver Alpha: Fantasy points/})).toHaveAccessibleName(/2026 W3: -1/);
  expect(fetch.mock.calls.some(([url])=>String(url).includes('weeks=3&games=5'))).toBe(true);
