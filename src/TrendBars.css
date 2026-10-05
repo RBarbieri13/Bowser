@@ -6,7 +6,7 @@
 .bowser-trend .bowser-trend-plot i{position:static;display:block;width:100%;border-radius:1px;min-height:1px}
 .bowser-trend .negative .bowser-trend-plot i{border-top:1px solid #EDEDED;box-sizing:border-box;transform:scaleY(-1)}
 .bowser-trend .missing .bowser-trend-plot{background:#121212}
-.bowser-trend .bowser-trend-arrow{width:16px;min-width:16px;flex:0 0 16px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-family:Poppins,sans-serif;font-weight:700;line-height:1;margin-left:2px}
+.bowser-trend .bowser-trend-arrow{width:16px;min-width:16px;flex:0 0 16px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-family:Poppins,sans-serif;font-weight:900;font-size:18px;line-height:1;margin-left:2px}
 .bowser-trend-dates{display:flex;gap:4px;padding-right:22px}
 .bowser-trend-dates small{width:var(--trend-slot-width,24px);flex:0 0 var(--trend-slot-width,24px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;font:8px/11px 'Source Code Pro',monospace;color:#8A8A8A}
 .lhq-grid td:has(.bowser-trend){padding-top:0;padding-bottom:0;overflow:visible}
@@ -16,3 +16,5 @@
 .lhq-grid td:has(.bowser-trend){padding-left:3px;padding-right:3px}
 .lhq-grid th .bowser-trend-heading{font-family:Poppins,sans-serif;font-size:11.5px;font-weight:600}
 .profile-trajectory:has(.bowser-trend){overflow-x:auto}
+
+.bowser-trend-arrow svg{display:block;flex:none;width:16px;height:24px;overflow:visible}

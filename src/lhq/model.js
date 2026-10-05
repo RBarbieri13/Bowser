@@ -41,7 +41,7 @@ export function columnHelp(column){
  const labelKey=typeof column.label==='string'?column.label.toLowerCase().replace(/%/g,'pct').replace(/[\s/]+/g,'_'):'';
  const statistic=STAT_DEFINITIONS[key]||STAT_DEFINITIONS[labelKey];
  const isTrend=column.kind==='trend'||/_trend$|^trend:|^chart\d+$/.test(raw);
- const definition=isTrend?[statistic,'Aligned weekly trend — one bar per NFL calendar slot, with bye, DNP and missing-data gaps retained. Bars share the largest absolute value in the visible column for the same metric. Direction compares the first and latest values; missing endpoints remain unavailable.'].filter(Boolean).join(' '):/^avg\d+$/.test(raw)?`${column.label} average — mean of available values in the labeled calendar window. Missing weeks do not become zero; the value count is shown.`:statistic;
+ const definition=isTrend?[statistic,'Aligned weekly trend — one bar per NFL calendar slot, with bye, DNP and missing-data gaps retained. Bar heights and positive-value color intensity share the largest absolute value in the visible column for the same metric. Higher values are brighter; negative values stay subdued and retain signed labels. Direction compares the first and latest values; missing endpoints remain unavailable.'].filter(Boolean).join(' '):/^avg\d+$/.test(raw)?`${column.label} average — mean of available values in the labeled calendar window. Missing weeks do not become zero; the value count is shown.`:statistic;
  const week=String(column.weekKey||column.key||'').match(/^(\d{4})-(\d{1,2})(?::|$)/);
  const context=week?`${week[1]} Week ${week[2]}.`:'';
  return [definition,context,column.help].filter(Boolean).join(' ')||`${column.label} · ${typeof column.groupLabel==='string'?column.groupLabel:column.group||''}`;

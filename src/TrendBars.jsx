@@ -1,8 +1,16 @@
 import {createContext,useContext} from 'react';
 import {TREND_METRICS,trendValue} from './trendMetrics.js';
-import {metricGroup,TREND_PALETTES,trendGrade,trendWhole} from './trendColumn.js';
+import {metricGroup,TREND_PALETTES,trendGrade,trendWhole,trendIntensity} from './trendColumn.js';
 import './TrendBars.css';
 
+// Filled geometry remains crisp at the existing 16px arrow-slot width.
+const ARROW_PATHS={
+  'Strong up':'M10 1 20 11H13V25H7V11H0Z',
+  'Up':'M2 24 0 20 12 8H5V2H20V17H14V10Z',
+  'Flat':'M0 10H12V5L20 13 12 21V16H0Z',
+  'Down':'M2 2 0 6 12 18H5V24H20V9H14V16Z',
+  'Strong down':'M7 1H13V15H20L10 25 0 15H7Z',
+};
 export const TrendScaleContext = createContext(null);
 export function TrendBars({history=[],metric='snaps',columnMax,group,playerName,showLabels=false,showValues=true,decorative=false,slotWidth=24}) {
   const scope=useContext(TrendScaleContext);
@@ -22,10 +30,10 @@ export function TrendBars({history=[],metric='snaps',columnMax,group,playerName,
         const height=zero?1:2+Math.round((max>0?Math.abs(value)/max:0)*10);
         return <span className={`bowser-trend-slot lhq-bar-slot trend-bar-item${missing?' missing':value<0?' negative':zero?' zero':''}`} key={h.key||`${h.season}-${h.week}-${i}`} data-season={h.season} data-week={h.week} data-value={value??''} title={`${slotLabel(h)}${h.team?` · ${h.team}`:''}: ${exact(value)}`}>
           <b hidden={!showValues} className="bowser-trend-value" style={{color}}>{missing?'—':trendWhole(value)}</b>
-          <span className="bowser-trend-plot lhq-bar-plot" style={{height:missing?1:height}}>{!missing&&<i style={{height,background:zero?'#2A2A2A':palette[Math.min(2,Math.max(0,i-(history.length-3)))]}}/>}</span>
+          <span className="bowser-trend-plot lhq-bar-plot" style={{height:missing?1:height}}>{!missing&&<i style={{height,background:zero?'#2A2A2A':palette[2],opacity:zero?1:trendIntensity(value,max)}}/>}</span>
         </span>;
       })}
-      <span className="bowser-trend-arrow" title={title} aria-label={title} style={{color:grade.color,fontSize:grade.size}}>{grade.glyph}</span>
+      <span className="bowser-trend-arrow" title={title} aria-label={title} data-direction={grade.name} style={{color:grade.color}}>{ARROW_PATHS[grade.name]?<svg viewBox="0 0 20 26" width="16" height="24" aria-hidden="true" focusable="false"><path d={ARROW_PATHS[grade.name]} fill="currentColor"/></svg>:grade.glyph}</span>
     </span>
     {showLabels&&<span className="bowser-trend-dates" aria-hidden="true">{history.map((h,i)=><small key={h.key||i}>{h.shortLabel||(h.season!=null?`${String(h.season).slice(-2)}·${h.week}`:h.label)}</small>)}</span>}
   </span>;
