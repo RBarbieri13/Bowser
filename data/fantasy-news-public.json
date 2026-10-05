@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T22:58:05Z",
-  "updatedAt": "2026-10-05T22:59:27.615Z",
-  "revision": "bowser-public-news-20261005T225927615Z",
+  "checkedAt": "2026-10-05T23:14:05Z",
+  "updatedAt": "2026-10-05T23:15:04.608Z",
+  "revision": "bowser-public-news-20261005T231504608Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -4317,15 +4317,15 @@
         "team": "LAC",
         "position": "WR"
       },
-      "headline": "McConkey ruled out with foot injury at Seattle",
-      "summary": "The Chargers officially downgraded McConkey to OUT for the rest of the Seattle game, quoting their earlier foot-injury questionable notice. This supersedes his pregame active confirmation; no severity or future absence timetable is supplied.",
-      "fantasyAnalysis": "Other Chargers pass catchers could gain opportunities while McConkey is unavailable, but no fixed target share is established. Prepare a future alternative pending evaluation; no next-game absence or recovery date is confirmed.",
+      "headline": "McConkey reportedly week-to-week with foot injury",
+      "summary": "RotoWire attributes to Jim Harbaugh via Alex Insdorf a week-to-week outlook after McConkey left the Seattle game with his foot injury. No final Week 5 designation is established.",
+      "fantasyAnalysis": "Keep a healthy receiver alternative pending practice and final status. Quentin Johnston and Tre' Harris could gain opportunities if McConkey is limited or absent, without a guaranteed target split.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T22:37:29Z",
+      "checkedAt": "2026-10-05T23:14:05Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4333,8 +4333,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Foot",
         "practiceStatus": null,
-        "gameStatus": "OUT FOR GAME",
-        "expectedReturn": "Out for the remainder of Week 4; future availability and timetable unknown."
+        "gameStatus": null,
+        "expectedReturn": "Week-to-week per reported coach comments; Week 5 unresolved"
       },
       "sources": [
         {
@@ -4420,6 +4420,18 @@
           "url": "https://x.com/chargers/status/2106874978654413288",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T22:36:06Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Alex Insdorf",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/ladd-mcconkey-injury-termed-week-to-week-640907",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T23:13:02Z"
         }
       ]
     },
@@ -10145,24 +10157,24 @@
         "team": "WAS",
         "position": "RB"
       },
-      "headline": "White ruled out for Week 4",
-      "summary": "Washington's October 2 final table lists White OUT after three missed practices.",
-      "fantasyAnalysis": "Croskey-Merritt and Ekeler can absorb work, but the split is uncertain. Replace White for this game.",
+      "headline": "White expected to resume practice this week",
+      "summary": "RotoWire attributes to Dan Quinn via Tashan Reed an expectation that White should practice this week after missing Week 4 with a shoulder injury. This is a plan, not observed participation or game clearance.",
+      "fantasyAnalysis": "Keep an RB alternative until actual participation and final status. Any continuing extra work for other Washington backs remains conditional.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T17:10:00Z",
+      "checkedAt": "2026-10-05T23:14:05Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Shoulder",
-        "practiceStatus": "DNP",
-        "gameStatus": "OUT",
-        "expectedReturn": null
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Practice expected this week; no game clearance"
       },
       "sources": [
         {
@@ -10199,6 +10211,18 @@
           "url": "https://www.commanders.com/news/game-status-commanders-colts-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:10:00Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Tashan Reed",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 5, 2026 at 3:42pm; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/rachaad-white-injury-in-line-to-practice-this-week-640906",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T23:13:16Z"
         }
       ]
     },
@@ -10210,24 +10234,24 @@
         "team": "WAS",
         "position": "WR"
       },
-      "headline": "McLaurin missed London; next status update expected Wednesday",
-      "summary": "Tashan Reed reports Dan Quinn said McLaurin pushed to play before being held inactive with his hamstring issue, and Quinn expects to update his status Wednesday. This does not establish a Week 5 return.",
-      "fantasyAnalysis": "Reassess later-week alternatives after the next health update. Neither a return nor another absence is established, and future target shares for the remaining Washington receivers remain uncertain.",
+      "headline": "McLaurin Wednesday participation still being assessed",
+      "summary": "RotoWire attributes to Dan Quinn via John Keim that Washington is still assessing what McLaurin can do at Wednesday practice after the hamstring-related Week 4 absence. No practice grade or Week 5 clearance is established.",
+      "fantasyAnalysis": "Retain a healthy receiver alternative and reassess actual practice. No replacement receiver target split is confirmed.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T17:49:52Z",
+      "checkedAt": "2026-10-05T23:14:05Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Hamstring",
-        "practiceStatus": "LP",
-        "gameStatus": "INACTIVE",
-        "expectedReturn": "Status update expected Wednesday; Week 5 availability unconfirmed."
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Wednesday activity and Week 5 availability unresolved"
       },
       "sources": [
         {
@@ -10313,6 +10337,18 @@
           "url": "https://x.com/tashanreed/status/2106799834359607577?s=20",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T17:48:51Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to John Keim",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/terry-mclaurin-injury-wednesday-activity-tbd-640905",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T23:13:16Z"
         }
       ]
     },
@@ -10382,5 +10418,5 @@
       ]
     }
   ],
-  "contentHash": "df2517c1e4785a6af2b27939fd3d534214134f2edee1eaff538937c98efca23e"
+  "contentHash": "6349a83ac838b02f0c60baab82623278a99b9c2ecdd2254011d0fb6ecb94a48f"
 }
