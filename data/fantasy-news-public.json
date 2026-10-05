@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T20:44:00Z",
-  "updatedAt": "2026-10-05T20:45:22.300Z",
-  "revision": "bowser-public-news-20261005T204522300Z",
+  "checkedAt": "2026-10-05T21:06:00Z",
+  "updatedAt": "2026-10-05T21:07:45.540Z",
+  "revision": "bowser-public-news-20261005T210745540Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -3628,15 +3628,15 @@
         "team": "KC",
         "position": "WR"
       },
-      "headline": "Thornton out indefinitely with dislocated ankle, Rapoport reports",
-      "summary": "Ian Rapoport reports Thornton suffered a dislocated ankle that doctors put back in place, then traveled with the team. A full evaluation and second opinion are planned for the morning, and he is out indefinitely. No exact recovery length or season-ending determination is established.",
-      "fantasyAnalysis": "Prepare a receiver alternative while awaiting further evaluation. Remaining Kansas City pass catchers could gain opportunities, but Rice's availability remains unsettled and reported contact with Hill does not establish immediate cover or a fixed target share.",
+      "headline": "Thornton reportedly needs surgery; 12-to-16-week recovery estimate",
+      "summary": "Charles Goldman relays Rapoport's 12-to-16-week estimate and Zenitz's three-to-four-month estimate following Monday testing. Surgery is planned this week for Thornton's dislocated ankle. A late-season or playoff return is possible, not guaranteed; surgery has not been verified completed.",
+      "fantasyAnalysis": "Plan long-term receiver cover. Worthy, Royals and Allen could gain opportunities, with Rice's possible post-bye return and any roster additions affecting shares. A return within this season is not assured.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T02:19:01Z",
+      "checkedAt": "2026-10-05T21:06:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3645,7 +3645,7 @@
         "bodyPart": "Ankle; reported dislocation and earlier reported left side",
         "practiceStatus": null,
         "gameStatus": "REPORTED OUT INDEFINITELY",
-        "expectedReturn": "Reported indefinite absence; morning evaluation and second opinion pending, no exact timetable."
+        "expectedReturn": "Reported 12–16 weeks / three to four months after planned surgery; possible late-season or playoff return"
       },
       "sources": [
         {
@@ -3707,6 +3707,18 @@
           "url": "https://x.com/RapSheet/status/2106924258366566766",
           "isOriginalSource": true,
           "checkedAt": "2026-10-05T02:18:28Z"
+        },
+        {
+          "sourceName": "A to Z Sports",
+          "author": "Charles Goldman; reporting attributed to Ian Rapoport and Matt Zenitz",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-05T20:19:00Z",
+          "publishedAtRaw": "Oct 5, 2026 4:19 PM EDT",
+          "publishedDate": "2026-10-05",
+          "url": "https://atozsports.com/nfl/kansas-city-chiefs-news/chiefs-tyquan-thornton-injury-latest-update-dislocated-ankle-surgery-return-timeline/",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T21:05:31Z"
         }
       ]
     },
@@ -7730,15 +7742,15 @@
         "team": "PIT",
         "position": "RB"
       },
-      "headline": "Dowdle ruled out for the October 1 game",
-      "summary": "Pittsburgh's final injury report rules Dowdle out with a toe injury for the October 1 game against Cleveland.",
-      "fantasyAnalysis": "Jaylen Warren is the clearest likely workload beneficiary, without an established exclusive backfield or precise points projection. Dowdle is a bench or eligible-IR decision for this game, not an automatic permanent drop.",
+      "headline": "Dowdle progressing; Week 5 availability remains uncertain",
+      "summary": "RotoWire reports McCarthy described Dowdle's Friday workout positively and said he is making progress from his toe injury, while Week 5 availability remains uncertain. The standalone article attributes the report to Chris Adamski; its feed instead names Nick Farabaugh. No observed practice grade or clearance is established.",
+      "fantasyAnalysis": "Monitor participation and availability before assuming Warren retains his recent workload or Dowdle returns. Any backfield split depends on recovery and team plans.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-01T16:03:00Z",
+      "checkedAt": "2026-10-05T21:06:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -7746,8 +7758,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Toe",
         "practiceStatus": null,
-        "gameStatus": "OUT",
-        "expectedReturn": null
+        "gameStatus": null,
+        "expectedReturn": "Week 5 uncertain; positive Friday workout and progress reported Monday"
       },
       "sources": [
         {
@@ -7760,6 +7772,18 @@
           "publishedDate": "2026-09-30",
           "url": "https://www.steelers.com/news/week-4-injury-report-browns",
           "isOriginalSource": true
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; standalone article attributes Chris Adamski; feed names Nick Farabaugh",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/rico-dowdle-injury-progressing-could-play-week-5-640887",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T21:05:31Z"
         }
       ]
     },
@@ -10142,5 +10166,5 @@
       ]
     }
   ],
-  "contentHash": "9e83531e4844b67d1679c90a74c2f3c02903c32fc539e44b3fc15c505ff6666f"
+  "contentHash": "533ce54f878df8adb93530ed0f27d6b328062680452574c89f7319545feda04e"
 }
