@@ -31,6 +31,10 @@ test('initial DFS slate follows the verified current default ahead of a larger l
  render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
  await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
  expect(screen.getByLabelText('DFS slate')).toHaveValue('classic');
+ expect(screen.getByLabelText('Weeks back')).toHaveValue('3');
+ expect(fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).some(([u])=>new URL(u,'https://test.invalid').searchParams.get('weeks')==='1,2,3')).toBe(true);
+ choose('Base week',1);expect(screen.getByLabelText('Weeks back')).toHaveValue('1');
+ choose('Base week',3);expect(screen.getByLabelText('Weeks back')).toHaveValue('3');
  choose('DFS slate','locked');
  expect(screen.getByLabelText('DFS slate')).toHaveValue('locked');
 });
@@ -96,6 +100,7 @@ test('average follows the selected window, DFS value follows slate salary, and K
  render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
  await within(grid()).findByRole('button',{name:'Fixture Ram',exact:true});
  expect(within(grid()).queryByRole('button',{name:'Kick',exact:true})).not.toBeInTheDocument();
+ choose('Weeks back',1);
  expect(within(grid()).queryByRole('button',{name:'Avg Fpts',exact:true})).not.toBeInTheDocument();
  choose('Weeks back',3);
  const row=await within(grid()).findByRole('button',{name:'Fixture Ram',exact:true});

@@ -10,13 +10,16 @@ export const TREND_PALETTES = {
 export const TREND_THRESHOLDS = {strong: 0.35, moderate: 0.12};
 export const TREND_GRADES = {
   strongUp: {name:'Strong up', glyph:'⬆', size:15, color:'#16E27A'},
-  up: {name:'Up', glyph:'↗', size:14, color:'#8EE6B8'},
-  flat: {name:'Flat', glyph:'→', size:14, color:'#6B6B6B'},
-  down: {name:'Down', glyph:'↘', size:14, color:'#F39C94'},
+  up: {name:'Up', glyph:'↗', size:14, color:'#37E698'},
+  flat: {name:'Flat', glyph:'→', size:14, color:'#A8A8A8'},
+  down: {name:'Down', glyph:'↘', size:14, color:'#FF6258'},
   strongDown: {name:'Strong down', glyph:'⬇', size:15, color:'#FF2E2E'},
-  unavailable: {name:'Unavailable', glyph:'—', size:14, color:'#6B6B6B'},
+  unavailable: {name:'Unavailable', glyph:'—', size:14, color:'#A8A8A8'},
 };
 export const trendWidth = count => Math.max(1, count) * 28 + 24;
+// Color encodes the value, never its calendar position. Negative observations
+// keep their signed label/stripe but use the subdued end of the positive scale.
+export const trendIntensity = (value, columnMax) => 0.22 + 0.78 * Math.max(0, Math.min(1, columnMax > 0 ? value / columnMax : 0));
 export const trendWhole = value => String(Math.floor(value + 0.5));
 export const metricGroup = metric => /fantasy|position_finish/.test(metric) ? 'fantasy'
   : /^(pass|complet|interception)/.test(metric) ? 'passing'

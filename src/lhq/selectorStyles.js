@@ -49,9 +49,9 @@ export const prototypeInlineStyles = {
 };
 export const bowserGameSelector = Object.freeze({
  colors:{page:'#0E0E0E',panel:'#181818',border:'#262626',hover:'#202020',selected:'#15241D',green:'#3ECF8E',text:'#EDEDED',muted:'#8A8A8A'},
- box:{width:248,borderRadius:10,borderWidth:1.5,padding:'10px 12px 10px 10px',gap:6},
- row:{display:'grid',gridTemplateColumns:'4px 32px minmax(0,1fr) auto',alignItems:'center',gap:8,height:26},
- compact:{width:220,rowHeight:22},allWidth:64,logoSize:28,gap:10,fade:.45,
+ box:{width:140,borderRadius:7,borderWidth:1.5,padding:'6px 7px',gap:2},
+ row:{display:'grid',gridTemplateColumns:'3px 22px minmax(0,1fr) auto',alignItems:'center',gap:4,height:20},
+ compact:{width:128,rowHeight:20},allWidth:46,logoSize:22,gap:6,fade:.45,
 });
 export const bowserFilterPill = Object.freeze({
  base:{height:40,padding:'0 20px',borderRadius:999,borderWidth:2,borderStyle:'solid',fontFamily:"'Poppins',ui-sans-serif,system-ui,sans-serif",fontSize:14,fontWeight:500},

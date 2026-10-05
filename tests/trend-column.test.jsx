@@ -53,10 +53,25 @@ test('metric/history arrow remains separate from the descending-first sort heade
  fireEvent.click(screen.getByRole('button',{name:'Snap trend',exact:true}));
  expect(sort).toHaveBeenCalledWith({key:'trend',desc:true});
 });
-test.each(Object.entries(TREND_PALETTES))('%s palette uses early shade then the last three shades', (group,palette)=>{
- const {container}=render(<TrendBars history={history([1,2,3,4,5])} group={group}/>);
- const bars=container.querySelectorAll('i');
- [palette[0],palette[0],...palette].forEach((color,i)=>expect(bars[i]).toHaveStyle({background:color}));
+test.each(Object.entries(TREND_PALETTES))('%s color intensity follows values, not week order', (group,palette)=>{
+ const {container}=render(<TrendBars history={history([3,1,5,3,2])} group={group} columnMax={5}/>);
+ const bars=[...container.querySelectorAll('i')];
+ bars.forEach(bar=>expect(bar).toHaveStyle({background:palette[2]}));
+ const intensity=bars.map(bar=>Number(bar.style.opacity));
+ expect(intensity[2]).toBe(1);
+ expect(intensity[1]).toBeLessThan(intensity[4]);
+ expect(intensity[4]).toBeLessThan(intensity[0]);
+ expect(intensity[0]).toBeLessThan(intensity[2]);
+ expect(intensity[0]).toBe(intensity[3]);
+});
+test('equal values on different players and weeks share color intensity; negative and missing stay distinct',()=>{
+ const rows=[{key:'a',history:history([100,50,25])},{key:'b',history:history([25,50,-5])}];
+ const {container}=render(<Grid columns={[column(3)]} rows={rows}/>);
+ const bars=[...container.querySelectorAll('.bowser-trend-slot i')];
+ expect(bars[1].style.opacity).toBe(bars[4].style.opacity);
+ expect(bars[2].style.opacity).toBe(bars[3].style.opacity);
+ expect(Number(bars[5].style.opacity)).toBeLessThan(Number(bars[3].style.opacity));
+ expect(Number(bars[0].style.opacity)).toBe(1);
 });
 test('gaps, true zeros, exact negative values and fractional tooltips stay distinct',()=>{
  const {container}=render(<TrendBars metric="fantasy_points" history={[null,0,14.5,-2.4].map((fantasy_points,i)=>({season:2026,week:i+1,fantasy_points}))}/>);
