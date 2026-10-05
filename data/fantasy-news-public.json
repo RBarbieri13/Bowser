@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T04:13:45Z",
-  "updatedAt": "2026-10-05T04:15:25.616Z",
-  "revision": "bowser-public-news-20261005T041525616Z",
+  "checkedAt": "2026-10-05T04:35:03Z",
+  "updatedAt": "2026-10-05T04:36:45.376Z",
+  "revision": "bowser-public-news-20261005T043645376Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -1157,15 +1157,15 @@
         "team": "CAR",
         "position": "RB"
       },
-      "headline": "Hubbard carries 20 times for 122 yards in Week 4",
-      "summary": "Carolina's official recap credits Hubbard with 20 carries for 122 yards and a touchdown in the October 4 win over Detroit.",
+      "headline": "Hubbard carries 20 times for 122 yards and two TDs in Week 4",
+      "summary": "Correction: Hubbard scored two rushing touchdowns, on runs of 15 and two yards, per the official Panthers scoring summary. The earlier team prose recap credited one. He finished the October 4 win with 20 carries for 122 yards.",
       "fantasyAnalysis": "The completed-game rushing workload supports his current involvement. One game does not guarantee a fixed future touch share or establish receiving usage.",
       "eventType": "PERFORMANCE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T04:13:45Z",
+      "checkedAt": "2026-10-05T04:35:03Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -1188,6 +1188,18 @@
           "url": "https://www.panthers.com/news/rapid-reactions-panthers-deliver-in-prime-time-beating-lions-with-big-play-offense",
           "isOriginalSource": true,
           "checkedAt": "2026-10-05T04:13:17Z"
+        },
+        {
+          "sourceName": "Carolina Panthers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Official final Week 4 game center and scoring summary; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.panthers.com/gameday/2026/week4",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T04:34:54Z"
         }
       ]
     },
@@ -9884,5 +9896,5 @@
       ]
     }
   ],
-  "contentHash": "132ab0d45dc591c4953d7bf7f073a452ce8bd93aea59ae39efc5e428c99cae64"
+  "contentHash": "d90e8031aad62bf7d236ed6a2fe097df3baf391ca4c68081f5bdd012d28dbde4"
 }
