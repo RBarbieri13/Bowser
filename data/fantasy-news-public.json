@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T14:41:30Z",
-  "updatedAt": "2026-10-05T14:44:27.173Z",
-  "revision": "bowser-public-news-20261005T144427173Z",
+  "checkedAt": "2026-10-05T15:34:52Z",
+  "updatedAt": "2026-10-05T15:36:56.880Z",
+  "revision": "bowser-public-news-20261005T153656880Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2489,15 +2489,15 @@
         "team": "FA",
         "position": "WR"
       },
-      "headline": "Chiefs contacted Hill's agent, Silver reports",
-      "summary": "Michael Silver reports Kansas City has contacted free-agent receiver Hill's agent, Drew Rosenhaus. His earlier post said Hill was believed to be targeting a November return when healthy enough. Reported contact and a recovery target do not establish a signing, medical clearance or assigned role.",
+      "headline": "Hill agent reportedly planning multi-team negotiations",
+      "summary": "RotoWire attributes to Adam Schefter a Monday statement from agent Drew Rosenhaus that he plans talks with multiple teams and hopes to secure an agreement within days. Prior Chiefs contact and the reported November recovery target remain context; no signing or clearance is established.",
       "fantasyAnalysis": "Monitor a verified contract and health update before treating Hill as a usable replacement. No immediate help for Kansas City's injured receiver group, guaranteed November return or future target share is established.",
       "eventType": "RUMOR",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T01:54:05Z",
+      "checkedAt": "2026-10-05T15:34:52Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2532,6 +2532,18 @@
           "url": "https://x.com/MikeSilver/status/2106920267549425912",
           "isOriginalSource": true,
           "checkedAt": "2026-10-05T01:53:19Z"
+        },
+        {
+          "sourceName": "RotoWire, attributing Adam Schefter",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 5, 2026 at 7:58am; timezone unspecified",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/tyreek-hill-injury-could-land-with-new-team-soon-640870",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T15:34:43Z"
         }
       ]
     },
@@ -9944,5 +9956,5 @@
       ]
     }
   ],
-  "contentHash": "3fb51c29b52d8612f9837bcfdd80d89a94e97987fd1845810723d6c976aab0e4"
+  "contentHash": "c3a0ffb23ce1f16cd475e3534da61f5d840f7fb0f0ef8ce4da5cd4a2639a8d35"
 }
