@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T23:14:05Z",
-  "updatedAt": "2026-10-05T23:15:04.608Z",
-  "revision": "bowser-public-news-20261005T231504608Z",
+  "checkedAt": "2026-10-05T23:34:43Z",
+  "updatedAt": "2026-10-05T23:35:48.444Z",
+  "revision": "bowser-public-news-20261005T233548444Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -183,6 +183,90 @@
           "url": "https://www.giants.com/news/nfl-week-4-inactive-list-who-s-in-who-s-out-for-giants-vs-cardinals",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:46:28Z"
+        }
+      ]
+    },
+    {
+      "eventId": "atl-cooper-rush-week4-inactive-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Cooper Rush",
+        "team": "ATL",
+        "position": "QB"
+      },
+      "headline": "Cooper Rush inactive for Week 4 against Saints",
+      "summary": "Atlanta officially lists Cooper Rush inactive as designated emergency third quarterback for its October 5 Monday night game against New Orleans.",
+      "fantasyAnalysis": "No normal starting opportunity is established by this designation; do not treat this as an injury-related promotion for another quarterback.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T23:34:43Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Atlanta Falcons",
+          "author": "Tori McElhaney",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 06:44 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.atlantafalcons.com/news/atlanta-falcons-week-4-inactives-vs-new-orleans-saints-on-monday-night-football",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T23:33:48Z"
+        }
+      ]
+    },
+    {
+      "eventId": "atl-jack-strand-week4-inactive-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Jack Strand",
+        "team": "ATL",
+        "position": "QB"
+      },
+      "headline": "Jack Strand inactive for Week 4 against Saints",
+      "summary": "Atlanta officially lists Jack Strand inactive for its October 5 Monday night game against New Orleans.",
+      "fantasyAnalysis": "No normal starting opportunity is established by this designation; do not treat this as an injury-related promotion for another quarterback.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T23:34:43Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Atlanta Falcons",
+          "author": "Tori McElhaney",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 06:44 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.atlantafalcons.com/news/atlanta-falcons-week-4-inactives-vs-new-orleans-saints-on-monday-night-football",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T23:33:48Z"
         }
       ]
     },
@@ -1614,6 +1698,48 @@
           "url": "https://www.panthers.com/news/rapid-reactions-panthers-deliver-in-prime-time-beating-lions-with-big-play-offense",
           "isOriginalSource": true,
           "checkedAt": "2026-10-05T04:13:17Z"
+        }
+      ]
+    },
+    {
+      "eventId": "car-trevor-etienne-practice-return-plan-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Trevor Etienne",
+        "team": "CAR",
+        "position": "RB"
+      },
+      "headline": "Etienne expected to resume practice after Week 5 bye",
+      "summary": "Carolina reports Canales expects Trevor Etienne to resume practice after the Week 5 bye to work toward his return roles. The article distinguishes practice eligibility from activation; neither completed activation nor game clearance is established.",
+      "fantasyAnalysis": "Monitor actual practice and activation. The return-role plan does not establish offensive touches or an automatic reduction in Hubbard carries.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-05T23:34:43Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Practice return expected after Week 5 bye; activation unresolved"
+      },
+      "sources": [
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt and Kassidy Hill",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 06:18 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.panthers.com/news/monday-brew-light-at-the-end-of-the-bye-week-tunnel-after-a-big-win",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-05T23:34:06Z"
         }
       ]
     },
@@ -9899,15 +10025,15 @@
         "team": "WAS",
         "position": "WR"
       },
-      "headline": "Lane reportedly suffered ankle fracture/dislocation; season likely over",
-      "summary": "RotoWire attributes to Ian Rapoport that Monday tests diagnosed a left-ankle fracture and dislocation, with Lane expected to miss the rest of the season. This updates the prior Week 4 ankle exit; no official season-ending transaction has been verified.",
-      "fantasyAnalysis": "Prepare a replacement if relying on Lane. Other Washington receivers may gain opportunities, but no single replacement, target share or current fantasy availability is established. Consider league retention rules before a drop.",
+      "headline": "Quinn reportedly confirms Lane will miss rest of season",
+      "summary": "RotoWire attributes to Dan Quinn confirmation that Lane will miss the remainder of the season after his ankle injury, strengthening the earlier likely-season-ending prognosis. A completed roster transaction was not independently verified.",
+      "fantasyAnalysis": "Prepare a longer-term replacement if relying on Lane. Other Washington receivers and returners could gain opportunities, but no single beneficiary or workload is confirmed.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T16:06:15Z",
+      "checkedAt": "2026-10-05T23:34:43Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -9915,8 +10041,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Left ankle; reported fracture and dislocation",
         "practiceStatus": null,
-        "gameStatus": "OUT FOR GAME",
-        "expectedReturn": "Reported likely season-ending absence; no exact recovery date or official transaction verified."
+        "gameStatus": null,
+        "expectedReturn": "Rest of season unavailable per reported coach confirmation"
       },
       "sources": [
         {
@@ -9954,6 +10080,18 @@
           "url": "https://www.rotowire.com/football/news.php?view=injuries",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T16:05:13Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; confirmation attributed to Dan Quinn",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Entry dated October 5, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/news.php?view=injuries",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-05T23:33:40Z"
         }
       ]
     },
@@ -10418,5 +10556,5 @@
       ]
     }
   ],
-  "contentHash": "6349a83ac838b02f0c60baab82623278a99b9c2ecdd2254011d0fb6ecb94a48f"
+  "contentHash": "e08c997cb9e675a387320ffafbfb6ffabefd1064e17b89aa47ef68fd82407351"
 }
