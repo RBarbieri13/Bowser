@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T12:35:00Z",
-  "updatedAt": "2026-10-06T12:37:23.472Z",
-  "revision": "bowser-public-news-20261006T123723472Z",
+  "checkedAt": "2026-10-06T12:57:10Z",
+  "updatedAt": "2026-10-06T12:58:39.535Z",
+  "revision": "bowser-public-news-20261006T125839535Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -8031,15 +8031,15 @@
         "team": "PHI",
         "position": "RB"
       },
-      "headline": "Barkley reportedly week-to-week; injury not viewed as long term",
-      "summary": "RotoWire attributes to Ian Rapoport a week-to-week outlook for Barkley hamstring injury, with Philadelphia not viewing it as long term. No Week 5 out designation is established; Sirianni previously expected more answers Wednesday.",
+      "headline": "Barkley reportedly unlikely for Week 5; no final designation",
+      "summary": "Will Brady relays Jeff McLane reporting that Barkley is unlikely to play against Jacksonville in London in Week 5. This follows the reported week-to-week hamstring outlook, which was not viewed as long term. No final OUT decision is established; Sirianni previously expected more answers Wednesday.",
       "fantasyAnalysis": "Keep a healthy RB alternative. Shipley could benefit if Barkley is unavailable, with Bigsby expected to undergo surgery and go on IR; possible roster additions and workload remain unsettled.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T00:47:05Z",
+      "checkedAt": "2026-10-06T12:57:10Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -8048,7 +8048,7 @@
         "bodyPart": "Hamstring",
         "practiceStatus": null,
         "gameStatus": null,
-        "expectedReturn": "Reported week-to-week; no exact return or confirmed Week 5 absence"
+        "expectedReturn": "Reported unlikely for Week 5; no final designation or exact return"
       },
       "sources": [
         {
@@ -8158,6 +8158,18 @@
           "url": "https://www.rotowire.com/football/headlines/saquon-barkley-injury-deemed-week-to-week-due-to-hamstring-issue-640953",
           "isOriginalSource": false,
           "checkedAt": "2026-10-06T00:46:19Z"
+        },
+        {
+          "sourceName": "RotoBaller",
+          "author": "Will Brady; reporting attributed to Jeff McLane",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-06T01:18:00Z",
+          "publishedAtRaw": "Oct 5, 2026, 9:18 PM ET",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotoballer.com/player-news/saquon-barkley-unlikely-to-play-in-week-5/1959007",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-06T12:56:43Z"
         }
       ]
     },
@@ -11234,5 +11246,5 @@
       ]
     }
   ],
-  "contentHash": "a27e7dcaf82cdb0617726a62b7f191ecc58f1fcbe5c5ab3e5a397dec2bf816de"
+  "contentHash": "a8a1a312ea2da105e22a3e58a08f1e805b3e1e4b2745a4bdb9da02aa7802be8f"
 }
