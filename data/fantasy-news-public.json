@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T21:31:00Z",
-  "updatedAt": "2026-10-06T21:31:58.056Z",
-  "revision": "bowser-public-news-20261006T213158056Z",
+  "checkedAt": "2026-10-06T23:35:30Z",
+  "updatedAt": "2026-10-06T23:36:39.214Z",
+  "revision": "bowser-public-news-20261006T233639214Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -8588,15 +8588,15 @@
         "team": "PHI",
         "position": "RB"
       },
-      "headline": "Bigsby reportedly needs core muscle surgery and planned IR",
-      "summary": "RotoWire relays Rapoport's Monday report that Bigsby will undergo core muscle surgery and be placed on injured reserve. This supplies a more specific diagnosis and planned multiweek absence after Sunday's earlier hip/lower-body reporting. A completed surgery or official IR transaction has not been verified.",
+      "headline": "Bigsby reportedly placed on injured reserve",
+      "summary": "RotoWire attributes to Zach Berman that Philadelphia placed Bigsby on injured reserve Tuesday, October 6, following the earlier reported need for core muscle surgery. This advances the planned IR move to a reported completed transaction. The official team transaction log had not yet shown the move when checked.",
       "fantasyAnalysis": "Do not treat Bigsby as healthy Barkley cover. Shipley is a conditional alternative to monitor if Barkley remains unavailable, but additions to the backfield and the workload split are unsettled.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T22:05:00Z",
+      "checkedAt": "2026-10-06T23:35:30Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -8604,8 +8604,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Core muscle; surgery reported",
         "practiceStatus": null,
-        "gameStatus": null,
-        "expectedReturn": "Planned IR and multiweek absence reported; exact return unconfirmed"
+        "gameStatus": "IR",
+        "expectedReturn": "Reported IR placement requires at least four missed games; exact recovery and return unconfirmed"
       },
       "sources": [
         {
@@ -8667,6 +8667,18 @@
           "url": "https://www.rotowire.com/football/headlines/tank-bigsby-injury-set-for-ir-stint-640894",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T22:04:21Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Zach Berman",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 6, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.rotowire.com/football/headlines/tank-bigsby-injury-placed-on-ir-641081",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-06T23:35:20Z"
         }
       ]
     },
@@ -11870,5 +11882,5 @@
       ]
     }
   ],
-  "contentHash": "769e17179ea578c7163a8fe503cb8cddcb7044ea26261a036e684fccb4cd0b62"
+  "contentHash": "c02acf668b190c0201845be82f0d8bcd975be762a4c6ece473484eeef25a32aa"
 }
