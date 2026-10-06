@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T19:56:40Z",
-  "updatedAt": "2026-10-06T19:57:37.709Z",
-  "revision": "bowser-public-news-20261006T195737709Z",
+  "checkedAt": "2026-10-06T20:16:40Z",
+  "updatedAt": "2026-10-06T20:17:23.907Z",
+  "revision": "bowser-public-news-20261006T201723907Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -8981,6 +8981,48 @@
       ]
     },
     {
+      "eventId": "sea-jacardia-wright-practice-squad-ir-2026-10-06",
+      "player": {
+        "playerId": null,
+        "name": "Jacardia Wright",
+        "team": "SEA",
+        "position": "RB"
+      },
+      "headline": "Seattle places Wright on practice-squad injured reserve",
+      "summary": "Seattle officially placed running back Jacardia Wright on practice-squad injured reserve Tuesday, October 6. The announcement does not identify an injury type or recovery timetable.",
+      "fantasyAnalysis": "Wright is unavailable as an immediate practice-squad depth option. No specific extra workload for another back is established.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T20:16:40Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": "IR",
+        "expectedReturn": "No recovery timetable announced; practice-squad injured reserve"
+      },
+      "sources": [
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": "John Boyle",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 06, 2026 at 12:38 PM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.seahawks.com/news/seahawks-sign-rb-robert-henry-jr",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T20:16:23Z"
+        }
+      ]
+    },
+    {
       "eventId": "sea-jadarian-price-thursday-dnp-2026-10-01",
       "player": {
         "playerId": null,
@@ -9240,15 +9282,15 @@
         "team": "SEA",
         "position": "RB"
       },
-      "headline": "Henry reportedly joining Seattle active roster",
-      "summary": "RotoWire attributes to Jordan Schultz a Monday, October 5 signing of Henry from Washington's practice squad to Seattle's active roster. Official team transaction confirmation was not retrieved.",
-      "fantasyAnalysis": "Henry adds reported depth while Price is on IR and Charbonnet works toward a return. Monitor his game-day role; active-roster membership does not guarantee carries or establish fantasy availability.",
+      "headline": "Seattle confirms Henry signing to 53-man roster",
+      "summary": "Seattle officially signed Robert Henry Jr. from Washington's practice squad Tuesday, October 6, clearing a 53-man roster spot. This confirms the earlier reported move and establishes Tuesday as the completed transaction date, rather than Monday's report date.",
+      "fantasyAnalysis": "Henry joins Wilson, Holani and Velus Jones Jr. while Price is on IR and Charbonnet works back from PUP. Active-roster membership does not guarantee carries; monitor his game-day role and current fantasy availability.",
       "eventType": "TRANSACTION",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T12:35:00Z",
+      "checkedAt": "2026-10-06T20:16:40Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -9271,6 +9313,18 @@
           "url": "https://www.rotowire.com/football/headlines/robert-henry-news-moving-to-seattle-640974",
           "isOriginalSource": false,
           "checkedAt": "2026-10-06T12:34:31Z"
+        },
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": "John Boyle",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 06, 2026 at 12:38 PM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.seahawks.com/news/seahawks-sign-rb-robert-henry-jr",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T20:16:23Z"
         }
       ]
     },
@@ -11672,5 +11726,5 @@
       ]
     }
   ],
-  "contentHash": "15bf4e4ab892d8ca04a610eebcf6b25f835313f08c5fed992bae05b0afac881f"
+  "contentHash": "150295422e9817e34e0c4479496f26f2220a265102a1559955b33ecef922c9de"
 }
