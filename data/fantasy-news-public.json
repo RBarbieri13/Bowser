@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T12:16:53Z",
-  "updatedAt": "2026-10-06T12:18:23.552Z",
-  "revision": "bowser-public-news-20261006T121823552Z",
+  "checkedAt": "2026-10-06T12:35:00Z",
+  "updatedAt": "2026-10-06T12:37:23.472Z",
+  "revision": "bowser-public-news-20261006T123723472Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2891,15 +2891,15 @@
         "team": "FA",
         "position": "RB"
       },
-      "headline": "Mixon reportedly set to visit Seattle",
-      "summary": "Lauren Helmbrecht relays Jay Glazer's FOX report that free-agent running back Joe Mixon is visiting Seattle. RotoWire places the visit in the coming week. No signing or assigned role is confirmed.",
-      "fantasyAnalysis": "A visit alone does not establish a contract, playing readiness or a workload change for Seattle's current backs. Monitor an actual transaction before changing the backfield outlook.",
-      "eventType": "OTHER",
+      "headline": "Seattle processing Mixon practice-squad addition",
+      "summary": "NFL.com reports Mike Macdonald said Monday, October 5 that Seattle was processing a practice-squad signing after Mixon tried out. Mike Garafolo and Adam Schefter reported the move was contingent on completing his medical exam. This advances the earlier visit report; completed registration, elevation and a game role are not established by this source.",
+      "fantasyAnalysis": "Monitor the transaction and subsequent role before relying on Mixon. Wilson and Holani could face added competition, but no Week 5 touch split or immediate replacement starter is confirmed.",
+      "eventType": "TRANSACTION",
       "status": "REPORTED",
-      "fantasyImpact": "LOW",
+      "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T17:09:12Z",
+      "checkedAt": "2026-10-06T12:35:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2934,6 +2934,18 @@
           "url": "https://www.rotowire.com/football/headlines/joe-mixon-news-meeting-on-tap-with-seattle-640581",
           "isOriginalSource": false,
           "checkedAt": "2026-10-04T17:06:16Z"
+        },
+        {
+          "sourceName": "NFL.com",
+          "author": "Bobby Kownack; quoting Mike Macdonald and attributing Mike Garafolo and Adam Schefter",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Published Oct 05, 2026 at 06:50 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://amp.nfl.com/news/seahawks-going-through-process-of-signing-rb-joe-mixon-to-practice-squad",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T12:34:31Z"
         }
       ]
     },
@@ -9035,6 +9047,48 @@
       ]
     },
     {
+      "eventId": "sea-robert-henry-active-roster-report-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Robert Henry Jr.",
+        "team": "SEA",
+        "position": "RB"
+      },
+      "headline": "Henry reportedly joining Seattle active roster",
+      "summary": "RotoWire attributes to Jordan Schultz a Monday, October 5 signing of Henry from Washington's practice squad to Seattle's active roster. Official team transaction confirmation was not retrieved.",
+      "fantasyAnalysis": "Henry adds reported depth while Price is on IR and Charbonnet works toward a return. Monitor his game-day role; active-roster membership does not guarantee carries or establish fantasy availability.",
+      "eventType": "TRANSACTION",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T12:35:00Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; attributing Jordan Schultz",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 5, 2026; exact publication clock unavailable",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/robert-henry-news-moving-to-seattle-640974",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-06T12:34:31Z"
+        }
+      ]
+    },
+    {
       "eventId": "sea-velus-jones-jr-active-roster-signing-2026-10-03",
       "player": {
         "playerId": null,
@@ -11180,5 +11234,5 @@
       ]
     }
   ],
-  "contentHash": "b8380fb6e65ba70d694fbebd342ab775da762807987ae0a1f79f7d10eb355c0a"
+  "contentHash": "a27e7dcaf82cdb0617726a62b7f191ecc58f1fcbe5c5ab3e5a397dec2bf816de"
 }
