@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T11:59:15Z",
-  "updatedAt": "2026-10-06T12:01:20.172Z",
-  "revision": "bowser-public-news-20261006T120120172Z",
+  "checkedAt": "2026-10-06T12:16:53Z",
+  "updatedAt": "2026-10-06T12:18:23.552Z",
+  "revision": "bowser-public-news-20261006T121823552Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -6339,14 +6339,14 @@
         "position": "WR"
       },
       "headline": "Olave finishes with eight catches for 116 yards",
-      "summary": "Official final recap records eight catches for 116 yards.",
+      "summary": "Official final recap records eight catches for 116 yards. In official postgame comments, Kellen Moore said Olave was OK when asked about his condition; no future game designation was announced.",
       "fantasyAnalysis": "Strong output is a usage signal, not a guaranteed future target count.",
       "eventType": "PERFORMANCE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T03:50:15Z",
+      "checkedAt": "2026-10-06T12:16:53Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -6369,6 +6369,18 @@
           "url": "https://www.neworleanssaints.com/news/2026-nfl-week-4-atlanta-falcons-vs-new-orleans-saints-game-recap",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T03:49:13Z"
+        },
+        {
+          "sourceName": "New Orleans Saints",
+          "author": "New Orleans Saints",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 06, 2026 at 01:37 AM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.neworleanssaints.com/news/2026-nfl-week-4-atlanta-falcons-vs-new-orleans-saints-game-quotes",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T12:16:23Z"
         }
       ]
     },
@@ -6711,6 +6723,48 @@
           "url": "https://www.neworleanssaints.com/news/new-orleans-saints-running-back-depth-being-tested-early",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T17:07:00Z"
+        }
+      ]
+    },
+    {
+      "eventId": "no-tyler-shough-week4-hand-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Tyler Shough",
+        "team": "NO",
+        "position": "QB"
+      },
+      "headline": "Shough played through hand swelling Monday",
+      "summary": "In official postgame comments after the October 5 loss, Kellen Moore described hand swelling after a hit and said Shough seemed fine. Shough said he believed it was bruised, played the rest of the game, and said his right hand was unaffected. No future game designation was announced.",
+      "fantasyAnalysis": "Monitor subsequent practice reports; these postgame comments do not establish future clearance or a backup starting opportunity.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T12:16:53Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hand",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New Orleans Saints",
+          "author": "New Orleans Saints",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 06, 2026 at 01:37 AM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.neworleanssaints.com/news/2026-nfl-week-4-atlanta-falcons-vs-new-orleans-saints-game-quotes",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T12:16:23Z"
         }
       ]
     },
@@ -11126,5 +11180,5 @@
       ]
     }
   ],
-  "contentHash": "86c515586bae4ac2217612eb6ebf9926adb84147cb6efc259a39dbd1bc942135"
+  "contentHash": "b8380fb6e65ba70d694fbebd342ab775da762807987ae0a1f79f7d10eb355c0a"
 }
