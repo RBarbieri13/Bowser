@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T20:16:40Z",
-  "updatedAt": "2026-10-06T20:17:23.907Z",
-  "revision": "bowser-public-news-20261006T201723907Z",
+  "checkedAt": "2026-10-06T21:13:40Z",
+  "updatedAt": "2026-10-06T21:14:59.811Z",
+  "revision": "bowser-public-news-20261006T211459811Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2188,6 +2188,48 @@
       ]
     },
     {
+      "eventId": "chi-scotty-miller-practice-squad-2026-10-06",
+      "player": {
+        "playerId": null,
+        "name": "Scotty Miller",
+        "team": "CHI",
+        "position": "WR"
+      },
+      "headline": "Bears re-sign Miller to practice squad",
+      "summary": "Chicago officially lists a Tuesday, October 6 practice-squad signing of wide receiver Scotty Miller. The transaction log also records his September 24 release.",
+      "fantasyAnalysis": "Practice-squad membership does not establish elevation, a receiving role or a guaranteed workload. Monitor subsequent game-day decisions before fantasy use.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T21:13:40Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Chicago Bears",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Transaction row dated 10/06 in current 2026 log; publication date and clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.chicagobears.com/team/transactions/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T21:13:37Z"
+        }
+      ]
+    },
+    {
       "eventId": "chi-tyson-bagent-first-team-reps-2026-10-02",
       "player": {
         "playerId": null,
@@ -3839,6 +3881,48 @@
           "url": "https://www.colts.com/news/colts-elevate-wr-nick-westbrook-ikhine-from-practice-squad",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T15:44:19Z"
+        }
+      ]
+    },
+    {
+      "eventId": "ind-quez-watkins-practice-squad-2026-10-06",
+      "player": {
+        "playerId": null,
+        "name": "Quez Watkins",
+        "team": "IND",
+        "position": "WR"
+      },
+      "headline": "Colts sign Watkins to practice squad",
+      "summary": "Indianapolis officially signed wide receiver Quez Watkins to its practice squad Tuesday, October 6.",
+      "fantasyAnalysis": "Practice-squad membership does not establish elevation, a receiving role or a guaranteed workload. Monitor subsequent game-day decisions before fantasy use.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T21:13:40Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Indianapolis Colts",
+          "author": "Colts Communications",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 06, 2026 at 02:23 PM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.colts.com/news/colts-sign-wr-quez-watkins-to-practice-squad-release-cb-elijah-culp-from-practice-squad",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T21:13:18Z"
         }
       ]
     },
@@ -11726,5 +11810,5 @@
       ]
     }
   ],
-  "contentHash": "150295422e9817e34e0c4479496f26f2220a265102a1559955b33ecef922c9de"
+  "contentHash": "179c3ab2f460aa626c6797be50eba0eb8818b6bc20ef6f823e6c28fb0b0defbd"
 }
