@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T13:56:35Z",
-  "updatedAt": "2026-10-06T13:57:55.248Z",
-  "revision": "bowser-public-news-20261006T135755248Z",
+  "checkedAt": "2026-10-06T14:35:20Z",
+  "updatedAt": "2026-10-06T14:37:14.480Z",
+  "revision": "bowser-public-news-20261006T143714480Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -9251,15 +9251,15 @@
         "team": "SF",
         "position": "WR"
       },
-      "headline": "Cooks active against Denver",
-      "summary": "Cooks is absent from San Francisco's complete inactive list following his previously announced roster move. Mike Evans is explicitly active.",
-      "fantasyAnalysis": "Game-day eligibility does not establish routes, targets or a starting role. No Evans-absence volume increase should be assumed.",
+      "headline": "Cooks remains in backup role behind Samuel",
+      "summary": "In the official October 5 transcript, Shanahan said Cooks backed up Deebo Samuel in Week 4 and the plan going forward was the same. Fewer extended drives affected his opportunities.",
+      "fantasyAnalysis": "Roster membership does not guarantee targets. Monitor actual routes and usage before assuming a larger fantasy role.",
       "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T19:06:55Z",
+      "checkedAt": "2026-10-06T14:35:20Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -9267,7 +9267,7 @@
         "isInjuryRelated": false,
         "bodyPart": null,
         "practiceStatus": null,
-        "gameStatus": "ACTIVE",
+        "gameStatus": null,
         "expectedReturn": null
       },
       "sources": [
@@ -9294,6 +9294,18 @@
           "url": "https://www.49ers.com/news/romello-height-mike-evans-and-more-available-vs-broncos-inactives-for-week-4-denvssf",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T19:04:29Z"
+        },
+        {
+          "sourceName": "San Francisco 49ers",
+          "author": "Kyle Shanahan press conference transcript",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Press Conference – October 5, 2026; publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://49ers.1rmg.com/transcripts/head-coach-kyle-shanahan-press-conference_10-5-26/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T14:34:57Z"
         }
       ]
     },
@@ -9347,15 +9359,15 @@
         "team": "SF",
         "position": "WR"
       },
-      "headline": "Kirk practice window targeted in two weeks",
-      "summary": "Barrows' original post says Shanahan hopes to open Kirk's return-to-practice window in two weeks as he recovers from the calf injury on IR.",
-      "fantasyAnalysis": "This is a practice target, not confirmed activation or a game-return date. No immediate Week 4 role is established.",
+      "headline": "Kirk practice return still hoped for Week 6",
+      "summary": "In the official October 5 transcript, Shanahan said he was not expecting Kirk back at practice this week and hoped for the following week. This clarifies the earlier October 2 two-week target; no practice window or activation is confirmed.",
+      "fantasyAnalysis": "Keep a healthy receiver alternative. The Week 6 practice hope is not a guaranteed game return or target share.",
       "eventType": "COACH_COMMENT",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T21:39:20Z",
+      "checkedAt": "2026-10-06T14:35:20Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -9364,7 +9376,7 @@
         "bodyPart": "Calf",
         "practiceStatus": null,
         "gameStatus": "IR",
-        "expectedReturn": "Coach hopes to open practice window in two weeks; no guaranteed game return"
+        "expectedReturn": "Coach hopes for Week 6 practice return; no confirmed window or game activation"
       },
       "sources": [
         {
@@ -9378,6 +9390,18 @@
           "sourceType": "NEWS_OUTLET",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T21:39:20Z"
+        },
+        {
+          "sourceName": "San Francisco 49ers",
+          "author": "Kyle Shanahan press conference transcript",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Press Conference – October 5, 2026; publication clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://49ers.1rmg.com/transcripts/head-coach-kyle-shanahan-press-conference_10-5-26/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T14:34:57Z"
         }
       ]
     },
@@ -11354,5 +11378,5 @@
       ]
     }
   ],
-  "contentHash": "3456524a854881756a8d7092a0fc26383be53ecbbe0d39fc419b4f01b1901c58"
+  "contentHash": "f3849789331be6dc02468b9b5a01a0124acf70ee9176261a0571fda1f169dffc"
 }
