@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T00:28:49Z",
-  "updatedAt": "2026-10-06T00:29:20.340Z",
-  "revision": "bowser-public-news-20261006T002920340Z",
+  "checkedAt": "2026-10-06T00:47:05Z",
+  "updatedAt": "2026-10-06T00:50:42.863Z",
+  "revision": "bowser-public-news-20261006T005042863Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2340,6 +2340,90 @@
           "url": "https://www.rotowire.com/football/headlines/tee-higgins-injury-deemed-day-to-day-640886",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T19:47:47Z"
+        }
+      ]
+    },
+    {
+      "eventId": "dal-ceedee-lamb-monday-estimate-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "CeeDee Lamb",
+        "team": "DAL",
+        "position": "WR"
+      },
+      "headline": "CeeDee Lamb listed FP on Monday estimate",
+      "summary": "The official Week 5 Monday report lists CeeDee Lamb FP with a thigh issue. This is a walkthrough estimate, not observed full-speed practice or game clearance.",
+      "fantasyAnalysis": "Recheck later participation and final status before relying on availability or workload.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T00:47:05Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thigh",
+        "practiceStatus": "FP",
+        "gameStatus": null,
+        "expectedReturn": "Week 5 final status pending"
+      },
+      "sources": [
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": "Brianna Dix",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 05:12 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.buccaneers.com/news/buccaneers-cowboys-injury-report-oct-5-week-5-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T00:46:25Z"
+        }
+      ]
+    },
+    {
+      "eventId": "dal-tyler-goodson-monday-estimate-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Tyler Goodson",
+        "team": "DAL",
+        "position": "RB"
+      },
+      "headline": "Tyler Goodson listed FP on Monday estimate",
+      "summary": "The official Week 5 Monday report lists Tyler Goodson FP with a ankle issue. This is a walkthrough estimate, not observed full-speed practice or game clearance.",
+      "fantasyAnalysis": "Recheck later participation and final status before relying on availability or workload.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T00:47:05Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "FP",
+        "gameStatus": null,
+        "expectedReturn": "Week 5 final status pending"
+      },
+      "sources": [
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": "Brianna Dix",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 05:12 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.buccaneers.com/news/buccaneers-cowboys-injury-report-oct-5-week-5-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T00:46:25Z"
         }
       ]
     },
@@ -7593,15 +7677,15 @@
         "team": "PHI",
         "position": "RB"
       },
-      "headline": "Sirianni expects more Barkley answers Wednesday",
-      "summary": "Monday reporting attributes to Sirianni an expectation of more information Wednesday, October 7, while Barkley's response to treatment is assessed. No Week 5 availability decision or test result was supplied. Earlier Rapoport optimism remains preliminary.",
-      "fantasyAnalysis": "Keep alternatives available while awaiting Wednesday's update and actual participation. Both Barkley and Bigsby require evaluation; no replacement's health or workload is settled.",
+      "headline": "Barkley reportedly week-to-week; injury not viewed as long term",
+      "summary": "RotoWire attributes to Ian Rapoport a week-to-week outlook for Barkley hamstring injury, with Philadelphia not viewing it as long term. No Week 5 out designation is established; Sirianni previously expected more answers Wednesday.",
+      "fantasyAnalysis": "Keep a healthy RB alternative. Shipley could benefit if Barkley is unavailable, with Bigsby expected to undergo surgery and go on IR; possible roster additions and workload remain unsettled.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T20:44:00Z",
+      "checkedAt": "2026-10-06T00:47:05Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -7609,8 +7693,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Hamstring",
         "practiceStatus": null,
-        "gameStatus": "OUT FOR GAME",
-        "expectedReturn": "Week 5 availability unresolved; coach expects more information Wednesday October 7"
+        "gameStatus": null,
+        "expectedReturn": "Reported week-to-week; no exact return or confirmed Week 5 absence"
       },
       "sources": [
         {
@@ -7708,6 +7792,18 @@
           "url": "https://www.aol.com/articles/eagles-saquon-barkley-injury-cam-200344000.html",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T20:43:55Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Ian Rapoport",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 5, 2026; exact clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/saquon-barkley-injury-deemed-week-to-week-due-to-hamstring-issue-640953",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-06T00:46:19Z"
         }
       ]
     },
@@ -9107,15 +9203,15 @@
         "team": "TB",
         "position": "QB"
       },
-      "headline": "Mayfield reportedly faces three-to-six-week recovery range",
-      "summary": "Schefter's October 4 report gives a three-to-six-week absence range, depending on when Mayfield can grip a football, and says Tampa Bay did not place him on IR Saturday. This is broader than the earlier optimistic report: Pelissero described an effort to beat the initial three-week timeline, with a possible Week 6 target attributed by a secondary outlet to his inaccessible paid column. Mayfield remains officially OUT for Week 4; no firm return date or new setback is confirmed.",
-      "fantasyAnalysis": "Plan for a multiweek quarterback alternative and reassess recovery rather than relying on a Week 6 return. Jalon Daniels is confirmed for Week 4 and could continue while Mayfield is unavailable, but neither a fixed number of starts nor rookie production is guaranteed.",
+      "headline": "Baker Mayfield listed DNP on Monday estimate",
+      "summary": "The official Week 5 Monday report lists Baker Mayfield DNP with a right thumb issue. This is a walkthrough estimate, not observed full-speed practice or game clearance.",
+      "fantasyAnalysis": "Recheck later participation and final status before relying on availability or workload.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-10-04T12:15:00Z",
-      "checkedAt": "2026-10-04T13:00:20Z",
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T00:47:05Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -9123,8 +9219,8 @@
         "isInjuryRelated": true,
         "bodyPart": "Right thumb",
         "practiceStatus": "DNP",
-        "gameStatus": "OUT",
-        "expectedReturn": "Reported three-to-six-week range dependent on grip recovery; no confirmed return date."
+        "gameStatus": null,
+        "expectedReturn": "Earlier reported three-to-six-week range remains an estimate; no return clearance"
       },
       "sources": [
         {
@@ -9198,6 +9294,60 @@
           "url": "https://www.espn.com/nfl/story/_/id/50090537/sources-baker-mayfield-return-hinges-qb-grip-football",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T12:59:40Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": "Brianna Dix",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 05:12 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.buccaneers.com/news/buccaneers-cowboys-injury-report-oct-5-week-5-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T00:46:25Z"
+        }
+      ]
+    },
+    {
+      "eventId": "tb-bucky-irving-three-back-plan-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Bucky Irving",
+        "team": "TB",
+        "position": "RB"
+      },
+      "headline": "Bucky Irving part of Bowles three-back plan",
+      "summary": "Bowles wants Tucker more involved alongside Irving and Gainwell, with hot-hand flexibility rather than equal shares. The team article still describes Irving as the likely lead.",
+      "fantasyAnalysis": "Monitor actual distribution; this plan guarantees neither a promotion nor a fixed workload.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T00:47:05Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": "Scott Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 03:47 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.buccaneers.com/news/todd-bowles-bucs-need-to-split-backfield-reps-three-ways",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T00:46:25Z"
         }
       ]
     },
@@ -9487,6 +9637,48 @@
       ]
     },
     {
+      "eventId": "tb-kenny-gainwell-three-back-plan-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Kenny Gainwell",
+        "team": "TB",
+        "position": "RB"
+      },
+      "headline": "Kenny Gainwell part of Bowles three-back plan",
+      "summary": "Bowles wants Tucker more involved alongside Irving and Gainwell, with hot-hand flexibility rather than equal shares. The team article still describes Irving as the likely lead.",
+      "fantasyAnalysis": "Monitor actual distribution; this plan guarantees neither a promotion nor a fixed workload.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T00:47:05Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": "Scott Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 03:47 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.buccaneers.com/news/todd-bowles-bucs-need-to-split-backfield-reps-three-ways",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T00:46:25Z"
+        }
+      ]
+    },
+    {
       "eventId": "tb-ko-kieft-week4-out-2026-10-02",
       "player": {
         "playerId": null,
@@ -9494,24 +9686,24 @@
         "team": "TB",
         "position": "TE"
       },
-      "headline": "Kieft officially out against Green Bay",
-      "summary": "Tampa Bay's final report lists Kieft DNP Friday and OUT with an elbow injury.",
-      "fantasyAnalysis": "Use a healthy alternative if relying on Kieft. His absence alone does not establish another tight end's target increase.",
+      "headline": "Ko Kieft listed LP on Monday estimate",
+      "summary": "The official Week 5 Monday report lists Ko Kieft LP with a elbow issue. This is a walkthrough estimate, not observed full-speed practice or game clearance.",
+      "fantasyAnalysis": "Recheck later participation and final status before relying on availability or workload.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T20:05:00Z",
+      "checkedAt": "2026-10-06T00:47:05Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Elbow",
-        "practiceStatus": "DNP",
-        "gameStatus": "OUT",
-        "expectedReturn": null
+        "practiceStatus": "LP",
+        "gameStatus": null,
+        "expectedReturn": "Week 5 final status pending"
       },
       "sources": [
         {
@@ -9525,6 +9717,60 @@
           "url": "https://www.buccaneers.com/news/buccaneers-packers-injury-report-oct-2-week-4-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T20:05:00Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": "Brianna Dix",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 05:12 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.buccaneers.com/news/buccaneers-cowboys-injury-report-oct-5-week-5-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T00:46:25Z"
+        }
+      ]
+    },
+    {
+      "eventId": "tb-sean-tucker-three-back-plan-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Sean Tucker",
+        "team": "TB",
+        "position": "RB"
+      },
+      "headline": "Sean Tucker part of Bowles three-back plan",
+      "summary": "Bowles wants Tucker more involved alongside Irving and Gainwell, with hot-hand flexibility rather than equal shares. The team article still describes Irving as the likely lead.",
+      "fantasyAnalysis": "Monitor actual distribution; this plan guarantees neither a promotion nor a fixed workload.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T00:47:05Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": "Scott Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 03:47 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.buccaneers.com/news/todd-bowles-bucs-need-to-split-backfield-reps-three-ways",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T00:46:25Z"
         }
       ]
     },
@@ -10592,5 +10838,5 @@
       ]
     }
   ],
-  "contentHash": "bb6a68cbc51384691339b54a536a02a90668d6631abbd0f464b70a7fc9ad89e2"
+  "contentHash": "005a2ea166fd25da21d9fd6ae1df8251f51dfc26432698cf9cf35619d89624be"
 }
