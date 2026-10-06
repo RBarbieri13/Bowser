@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T12:57:10Z",
-  "updatedAt": "2026-10-06T12:58:39.535Z",
-  "revision": "bowser-public-news-20261006T125839535Z",
+  "checkedAt": "2026-10-06T13:16:15Z",
+  "updatedAt": "2026-10-06T13:18:20.277Z",
+  "revision": "bowser-public-news-20261006T131820277Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -10786,6 +10786,48 @@
       ]
     },
     {
+      "eventId": "was-jeremy-mcnichols-practice-window-decision-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Jeremy McNichols",
+        "team": "WAS",
+        "position": "RB"
+      },
+      "headline": "McNichols practice-window decision still pending in Monday update",
+      "summary": "Ivan Lambert relays Dan Quinn's Monday comments that McNichols had been working on the side and a decision on starting his return-to-practice window had not been finalized. Quinn anticipated a further update before Wednesday practice. No opened window or activation is confirmed by this report.",
+      "fantasyAnalysis": "Monitor a formal practice-window decision and later activation; no Week 5 availability or backfield workload is established.",
+      "eventType": "RETURN",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T13:16:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Practice-window decision pending; no confirmed activation date"
+      },
+      "sources": [
+        {
+          "sourceName": "Commanders Wire via AOL",
+          "author": "Ivan Lambert; quoting Dan Quinn",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-06T11:02:00Z",
+          "publishedAtRaw": "Tue, October 6, 2026 at 11:02 AM UTC",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.aol.com/articles/commanders-dan-quinn-multiple-injury-110224000.html",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T13:15:49Z"
+        }
+      ]
+    },
+    {
       "eventId": "was-luke-mccaffrey-week4-inactive-2026-10-04",
       "player": {
         "playerId": null,
@@ -11246,5 +11288,5 @@
       ]
     }
   ],
-  "contentHash": "a8a1a312ea2da105e22a3e58a08f1e805b3e1e4b2745a4bdb9da02aa7802be8f"
+  "contentHash": "aa8e98f7df8c44947a23d954db691c6002a33d40e9689e95c901b702a86e2129"
 }
