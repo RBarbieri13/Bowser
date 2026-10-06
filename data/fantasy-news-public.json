@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T14:35:20Z",
-  "updatedAt": "2026-10-06T14:37:14.480Z",
-  "revision": "bowser-public-news-20261006T143714480Z",
+  "checkedAt": "2026-10-06T15:20:50Z",
+  "updatedAt": "2026-10-06T15:22:38.277Z",
+  "revision": "bowser-public-news-20261006T152238277Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2717,15 +2717,15 @@
         "team": "DEN",
         "position": "WR"
       },
-      "headline": "Bryant reportedly expected to miss a few weeks with ankle sprain",
-      "summary": "Jon Heath relays Adam Schefter reporting Bryant is expected to miss a few weeks after his ankle sprain in the October 4 loss. No exact return date or injured-reserve transaction is verified.",
+      "headline": "Bryant reportedly receives reassuring MRI results",
+      "summary": "RotoWire attributes to Ian Rapoport that Monday's MRI yielded good news and Denver is confident Bryant avoided a long-term right ankle injury. Specific scan findings and a revised return date were not provided. The earlier Schefter report of a few-week absence remains part of the outlook; no Week 5 clearance or IR transaction is confirmed.",
       "fantasyAnalysis": "Prepare a receiver alternative if relying on Bryant. Mims, Franklin and other Denver receivers could gain opportunities, but no fixed target share or automatic add is established.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T16:47:30Z",
+      "checkedAt": "2026-10-06T15:20:50Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2796,6 +2796,18 @@
           "url": "https://sports.yahoo.com/articles/report-broncos-wr-pat-bryant-160528949.html",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T16:46:59Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Ian Rapoport",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 6, 2026 at 7:49am; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.rotowire.com/football/headlines/pat-bryant-injury-mri-yields-good-news-641058",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-06T15:20:18Z"
         }
       ]
     },
@@ -11378,5 +11390,5 @@
       ]
     }
   ],
-  "contentHash": "f3849789331be6dc02468b9b5a01a0124acf70ee9176261a0571fda1f169dffc"
+  "contentHash": "99bd70f8db96bfc568a9cd120e516532544eeac5bc944e13ad31abc5858cc0f5"
 }
