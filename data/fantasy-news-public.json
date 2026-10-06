@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T18:14:50Z",
-  "updatedAt": "2026-10-06T18:17:37.563Z",
-  "revision": "bowser-public-news-20261006T181737563Z",
+  "checkedAt": "2026-10-06T19:56:40Z",
+  "updatedAt": "2026-10-06T19:57:37.709Z",
+  "revision": "bowser-public-news-20261006T195737709Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2472,6 +2472,132 @@
           "url": "https://www.rotowire.com/football/headlines/tee-higgins-injury-deemed-day-to-day-640886",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T19:47:47Z"
+        }
+      ]
+    },
+    {
+      "eventId": "cle-dillon-gabriel-practice-return-2026-10-06",
+      "player": {
+        "playerId": null,
+        "name": "Dillon Gabriel",
+        "team": "CLE",
+        "position": "QB"
+      },
+      "headline": "Gabriel eligible to return to practice",
+      "summary": "Cleveland officially lists Gabriel as eligible to return to practice Tuesday, October 6, noting he was previously designated for return August 30. This is a practice-return step, not activation or a game-availability decision.",
+      "fantasyAnalysis": "Monitor practice, activation and the quarterback depth chart; no starting assignment or immediate fantasy role is established.",
+      "eventType": "RETURN",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T19:56:40Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Eligible to return to practice; game activation not confirmed"
+      },
+      "sources": [
+        {
+          "sourceName": "Cleveland Browns",
+          "author": "ClevelandBrowns.com",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 06, 2026 at 03:27 PM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.clevelandbrowns.com/news/dillon-gabriel-and-kalia-davis-eligible-to-return-to-practice",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T19:56:23Z"
+        }
+      ]
+    },
+    {
+      "eventId": "cle-eric-gray-practice-squad-release-2026-10-06",
+      "player": {
+        "playerId": null,
+        "name": "Eric Gray",
+        "team": "FA",
+        "position": "RB"
+      },
+      "headline": "Browns release Gray from practice squad",
+      "summary": "Cleveland officially released Eric Gray from its practice squad Tuesday, October 6.",
+      "fantasyAnalysis": "No immediate fantasy role is established; monitor a future signing before relying on Gray. No specific workload beneficiary is confirmed.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T19:56:40Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Cleveland Browns",
+          "author": "ClevelandBrowns.com",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 06, 2026 at 03:27 PM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.clevelandbrowns.com/news/dillon-gabriel-and-kalia-davis-eligible-to-return-to-practice",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T19:56:23Z"
+        }
+      ]
+    },
+    {
+      "eventId": "cle-james-proche-practice-squad-2026-10-06",
+      "player": {
+        "playerId": null,
+        "name": "James Proche II",
+        "team": "CLE",
+        "position": "WR"
+      },
+      "headline": "Browns sign Proche to practice squad",
+      "summary": "Cleveland officially signed James Proche II to its practice squad Tuesday, October 6.",
+      "fantasyAnalysis": "Practice-squad membership does not establish elevation, a receiving role or a guaranteed workload.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T19:56:40Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Cleveland Browns",
+          "author": "ClevelandBrowns.com",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 06, 2026 at 03:27 PM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.clevelandbrowns.com/news/dillon-gabriel-and-kalia-davis-eligible-to-return-to-practice",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T19:56:23Z"
         }
       ]
     },
@@ -11546,5 +11672,5 @@
       ]
     }
   ],
-  "contentHash": "1d16e8732ff3c3608c16fc29b0ae4531181ff05500a90777c14400c4b814907d"
+  "contentHash": "15bf4e4ab892d8ca04a610eebcf6b25f835313f08c5fed992bae05b0afac881f"
 }
