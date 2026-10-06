@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T03:50:15Z",
-  "updatedAt": "2026-10-06T03:51:17.854Z",
-  "revision": "bowser-public-news-20261006T035117854Z",
+  "checkedAt": "2026-10-06T11:59:15Z",
+  "updatedAt": "2026-10-06T12:01:20.172Z",
+  "revision": "bowser-public-news-20261006T120120172Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -195,14 +195,14 @@
         "position": "RB"
       },
       "headline": "Bijan Robinson finishes with 145 rushing yards, two scores",
-      "summary": "Official final recap records 145 rushing yards and two touchdowns.",
+      "summary": "Completed October 5 game: 19 carries for 145 yards and two touchdowns, plus one catch on two targets for two yards.",
       "fantasyAnalysis": "One game does not fix future workload or scoring opportunities.",
       "eventType": "PERFORMANCE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T03:50:15Z",
+      "checkedAt": "2026-10-06T11:59:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -225,6 +225,18 @@
           "url": "https://www.neworleanssaints.com/news/2026-nfl-week-4-atlanta-falcons-vs-new-orleans-saints-game-recap",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T03:49:13Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 5, 2026; exact clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/bijan-robinson-news-another-dominant-effort-monday-641032",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-06T11:59:13Z"
         }
       ]
     },
@@ -237,14 +249,14 @@
         "position": "RB"
       },
       "headline": "Brian Robinson scores three rushing touchdowns",
-      "summary": "Official final recap records 62 rushing yards and three touchdowns.",
+      "summary": "Completed October 5 game: 14 carries for 62 yards and three touchdowns, plus one catch on one target for five yards.",
       "fantasyAnalysis": "Touchdown output alone does not establish a new lead role or repeatable volume.",
       "eventType": "PERFORMANCE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T03:50:15Z",
+      "checkedAt": "2026-10-06T11:59:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -267,6 +279,18 @@
           "url": "https://www.neworleanssaints.com/news/2026-nfl-week-4-atlanta-falcons-vs-new-orleans-saints-game-recap",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T03:49:13Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 5, 2026; exact clock not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/brian-robinson-news-racks-up-three-tds-in-win-641048",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-06T11:59:13Z"
         }
       ]
     },
@@ -6207,14 +6231,14 @@
         "position": "RB"
       },
       "headline": "Kamara returned after knee injury",
-      "summary": "Official recap confirms Kamara briefly exited with a knee injury and returned.",
+      "summary": "Official recap confirms the knee exit and return. Completed October 5 game totals: seven carries for 23 yards and two touchdowns, plus five catches on seven targets for 35 yards.",
       "fantasyAnalysis": "Monitor practice; future absence is unconfirmed. Any Kendre Miller benefit remains conditional.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T03:50:15Z",
+      "checkedAt": "2026-10-06T11:59:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -6237,6 +6261,18 @@
           "url": "https://www.neworleanssaints.com/news/2026-nfl-week-4-atlanta-falcons-vs-new-orleans-saints-game-recap",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T03:49:13Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 5, 2026 at 11:05pm; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/alvin-kamara-news-two-rush-tds-in-return-to-lead-role-641053",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-06T11:59:13Z"
         }
       ]
     },
@@ -6333,6 +6369,48 @@
           "url": "https://www.neworleanssaints.com/news/2026-nfl-week-4-atlanta-falcons-vs-new-orleans-saints-game-recap",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T03:49:13Z"
+        }
+      ]
+    },
+    {
+      "eventId": "no-devaughn-vele-week4-production-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Devaughn Vele",
+        "team": "NO",
+        "position": "WR"
+      },
+      "headline": "Vele drew nine targets in completed Monday game",
+      "summary": "In the October 5 loss, Vele caught six of nine targets for 54 yards and a late touchdown. This is completed-game usage, not a new Tuesday role announcement.",
+      "fantasyAnalysis": "Monitor whether the target volume persists before treating him as a reliable weekly option; no availability or fixed future share is assumed.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T11:59:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 5, 2026 at 11:20pm; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.rotowire.com/football/headlines/devaughn-vele-news-six-receptions-in-week-4-loss-641056",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-06T11:58:53Z"
         }
       ]
     },
@@ -11048,5 +11126,5 @@
       ]
     }
   ],
-  "contentHash": "4f9c04355409246db084f5697e499ef090c50462868cbcf58e43f9b16860ea76"
+  "contentHash": "86c515586bae4ac2217612eb6ebf9926adb84147cb6efc259a39dbd1bc942135"
 }
