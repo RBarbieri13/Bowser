@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T21:13:40Z",
-  "updatedAt": "2026-10-06T21:14:59.811Z",
-  "revision": "bowser-public-news-20261006T211459811Z",
+  "checkedAt": "2026-10-06T21:31:00Z",
+  "updatedAt": "2026-10-06T21:31:58.056Z",
+  "revision": "bowser-public-news-20261006T213158056Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -548,15 +548,15 @@
         "team": "BAL",
         "position": "QB"
       },
-      "headline": "Jackson reportedly has only an outside Week 5 chance",
-      "summary": "RotoWire attributes to Ian Rapoport a Tuesday report that Jackson has only an outside chance to play Week 5 and could miss multiple games, though the ankle injury is not viewed as long term. This worsens the earlier optimistic outlook without establishing a final OUT decision or a fixed absence.",
+      "headline": "Jackson reportedly unlikely for Week 5 with unusual ankle sprain",
+      "summary": "RotoWire attributes to Ian Rapoport an unusual type of ankle sprain that makes Jackson unlikely for Week 5 and could cost multiple games. It is not characterized as necessarily a conventional low- or high-ankle sprain. A week-by-week assessment is expected; no final OUT decision or fixed absence is established.",
       "fantasyAnalysis": "Prepare a quarterback alternative before Baltimore's Sunday-night game. Huntley would be the conditional replacement if Jackson cannot play; verify the starter and fantasy availability before acting.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T13:34:05Z",
+      "checkedAt": "2026-10-06T21:31:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -758,6 +758,18 @@
           "url": "https://www.rotowire.com/football/headlines/lamar-jackson-injury-could-miss-multiple-games-641057",
           "isOriginalSource": false,
           "checkedAt": "2026-10-06T13:33:41Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Ian Rapoport",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 6, 2026 at 1:54pm; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.rotowire.com/football/headlines/lamar-jackson-injury-viewed-as-unlikely-for-week-5-641070",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-06T21:30:50Z"
         }
       ]
     },
@@ -2651,15 +2663,15 @@
         "team": "DAL",
         "position": "WR"
       },
-      "headline": "CeeDee Lamb listed FP on Monday estimate",
-      "summary": "The official Week 5 Monday report lists CeeDee Lamb FP with a thigh issue. This is a walkthrough estimate, not observed full-speed practice or game clearance.",
+      "headline": "CeeDee Lamb listed FP in Tuesday Week 5 report",
+      "summary": "The official Week 5 table lists CeeDee Lamb FP in the Tuesday, October 6 column, after the same grade in Monday's walkthrough estimate. Wednesday and final game-status fields remain unfilled; this does not establish game clearance.",
       "fantasyAnalysis": "Recheck later participation and final status before relying on availability or workload.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T00:47:05Z",
+      "checkedAt": "2026-10-06T21:31:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2682,6 +2694,18 @@
           "url": "https://www.buccaneers.com/news/buccaneers-cowboys-injury-report-oct-5-week-5-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T00:46:25Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 5 injury table with Monday, Tuesday and Wednesday columns; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T21:30:42Z"
         }
       ]
     },
@@ -2693,15 +2717,15 @@
         "team": "DAL",
         "position": "RB"
       },
-      "headline": "Tyler Goodson listed FP on Monday estimate",
-      "summary": "The official Week 5 Monday report lists Tyler Goodson FP with a ankle issue. This is a walkthrough estimate, not observed full-speed practice or game clearance.",
+      "headline": "Tyler Goodson listed FP in Tuesday Week 5 report",
+      "summary": "The official Week 5 table lists Tyler Goodson FP in the Tuesday, October 6 column, after the same grade in Monday's walkthrough estimate. Wednesday and final game-status fields remain unfilled; this does not establish game clearance.",
       "fantasyAnalysis": "Recheck later participation and final status before relying on availability or workload.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T00:47:05Z",
+      "checkedAt": "2026-10-06T21:31:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2724,6 +2748,18 @@
           "url": "https://www.buccaneers.com/news/buccaneers-cowboys-injury-report-oct-5-week-5-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T00:46:25Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 5 injury table with Monday, Tuesday and Wednesday columns; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T21:30:42Z"
         }
       ]
     },
@@ -10001,15 +10037,15 @@
         "team": "TB",
         "position": "QB"
       },
-      "headline": "Baker Mayfield listed DNP on Monday estimate",
-      "summary": "The official Week 5 Monday report lists Baker Mayfield DNP with a right thumb issue. This is a walkthrough estimate, not observed full-speed practice or game clearance.",
+      "headline": "Baker Mayfield listed DNP in Tuesday Week 5 report",
+      "summary": "The official Week 5 table lists Baker Mayfield DNP in the Tuesday, October 6 column, after the same grade in Monday's walkthrough estimate. Wednesday and final game-status fields remain unfilled; this does not establish game clearance.",
       "fantasyAnalysis": "Recheck later participation and final status before relying on availability or workload.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T00:47:05Z",
+      "checkedAt": "2026-10-06T21:31:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -10104,6 +10140,18 @@
           "url": "https://www.buccaneers.com/news/buccaneers-cowboys-injury-report-oct-5-week-5-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T00:46:25Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 5 injury table with Monday, Tuesday and Wednesday columns; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T21:30:42Z"
         }
       ]
     },
@@ -10562,15 +10610,15 @@
         "team": "TB",
         "position": "TE"
       },
-      "headline": "Ko Kieft listed LP on Monday estimate",
-      "summary": "The official Week 5 Monday report lists Ko Kieft LP with a elbow issue. This is a walkthrough estimate, not observed full-speed practice or game clearance.",
+      "headline": "Ko Kieft listed LP in Tuesday Week 5 report",
+      "summary": "The official Week 5 table lists Ko Kieft LP in the Tuesday, October 6 column, after the same grade in Monday's walkthrough estimate. Wednesday and final game-status fields remain unfilled; this does not establish game clearance.",
       "fantasyAnalysis": "Recheck later participation and final status before relying on availability or workload.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T00:47:05Z",
+      "checkedAt": "2026-10-06T21:31:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -10605,6 +10653,18 @@
           "url": "https://www.buccaneers.com/news/buccaneers-cowboys-injury-report-oct-5-week-5-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T00:46:25Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 5 injury table with Monday, Tuesday and Wednesday columns; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T21:30:42Z"
         }
       ]
     },
@@ -11810,5 +11870,5 @@
       ]
     }
   ],
-  "contentHash": "179c3ab2f460aa626c6797be50eba0eb8818b6bc20ef6f823e6c28fb0b0defbd"
+  "contentHash": "769e17179ea578c7163a8fe503cb8cddcb7044ea26261a036e684fccb4cd0b62"
 }
