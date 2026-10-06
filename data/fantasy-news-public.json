@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T13:34:05Z",
-  "updatedAt": "2026-10-06T13:37:15.838Z",
-  "revision": "bowser-public-news-20261006T133715838Z",
+  "checkedAt": "2026-10-06T13:56:35Z",
+  "updatedAt": "2026-10-06T13:57:55.248Z",
+  "revision": "bowser-public-news-20261006T135755248Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -9298,6 +9298,48 @@
       ]
     },
     {
+      "eventId": "sf-brayden-willis-fullback-role-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Brayden Willis",
+        "team": "SF",
+        "position": "TE"
+      },
+      "headline": "Willis expected to see more fullback-related opportunities",
+      "summary": "Shanahan said Monday that Willis should see more opportunities while Kyle Juszczyk misses a few weeks with a knee injury. The coach named Willis, Luke Farrell and George Kittle as interchangeable options for the role.",
+      "fantasyAnalysis": "The expected role increase does not guarantee receiving targets or fantasy production; monitor actual usage before a lineup or waiver decision.",
+      "eventType": "ROLE_CHANGE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T13:56:35Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "San Francisco 49ers",
+          "author": "Brooke Evans",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 06:28 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.49ers.com/news/kyle-shanahan-provides-injury-updates-following-week-4-win-over-broncos",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T13:56:12Z"
+        }
+      ]
+    },
+    {
       "eventId": "sf-christian-kirk-practice-window-target-2026-10-02",
       "player": {
         "playerId": null,
@@ -9485,23 +9527,23 @@
         "team": "SF",
         "position": "WR"
       },
-      "headline": "Evans officially active against Denver",
-      "summary": "San Francisco explicitly confirms Evans active after his rib-related questionable designation. His plan to play with protective rib covering remains attributed to Jay Glazer's earlier report.",
-      "fantasyAnalysis": "Evans is eligible to play, with no guaranteed normal workload or freedom from an in-game limitation. His active status does not establish a particular target share for the other receivers.",
+      "headline": "Evans finished Week 4 without a rib setback, Shanahan says",
+      "summary": "In the official Monday update, Shanahan said Evans finished Sunday's game while playing through his rib injury, caught five passes and had no setback following the win. This adds postgame evidence to his prior active designation; it does not establish Week 5 clearance.",
+      "fantasyAnalysis": "Monitor this week's participation and final status; completing Week 4 does not guarantee normal future usage or a target boost for another receiver.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T19:06:55Z",
+      "checkedAt": "2026-10-06T13:56:35Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Ribs",
-        "practiceStatus": "LP",
-        "gameStatus": "ACTIVE",
+        "practiceStatus": null,
+        "gameStatus": null,
         "expectedReturn": null
       },
       "sources": [
@@ -9612,6 +9654,18 @@
           "url": "https://www.49ers.com/news/romello-height-mike-evans-and-more-available-vs-broncos-inactives-for-week-4-denvssf",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T19:04:29Z"
+        },
+        {
+          "sourceName": "San Francisco 49ers",
+          "author": "Brooke Evans",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 06:28 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.49ers.com/news/kyle-shanahan-provides-injury-updates-following-week-4-win-over-broncos",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T13:56:12Z"
         }
       ]
     },
@@ -11300,5 +11354,5 @@
       ]
     }
   ],
-  "contentHash": "40e8014c052c12b669b99d618ef4257303fefd5d9ace3066fd2ed5296a8f61ea"
+  "contentHash": "3456524a854881756a8d7092a0fc26383be53ecbbe0d39fc419b4f01b1901c58"
 }
