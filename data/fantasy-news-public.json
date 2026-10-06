@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T13:16:15Z",
-  "updatedAt": "2026-10-06T13:18:20.277Z",
-  "revision": "bowser-public-news-20261006T131820277Z",
+  "checkedAt": "2026-10-06T13:34:05Z",
+  "updatedAt": "2026-10-06T13:37:15.838Z",
+  "revision": "bowser-public-news-20261006T133715838Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -536,15 +536,15 @@
         "team": "BAL",
         "position": "QB"
       },
-      "headline": "Minter still unsure of Jackson Week 5 availability",
-      "summary": "Myles Simmons reports Minter said Monday that Jackson's Week 5 chances remain unknown while the team gathers imaging and information, though he does not expect a lengthy absence. This does not establish an MRI result or settle earlier competing day-to-day and week-to-week reports.",
-      "fantasyAnalysis": "Keep a quarterback alternative pending actual participation and a team availability decision. Huntley's possible start remains conditional; optimism is not game clearance.",
+      "headline": "Jackson reportedly has only an outside Week 5 chance",
+      "summary": "RotoWire attributes to Ian Rapoport a Tuesday report that Jackson has only an outside chance to play Week 5 and could miss multiple games, though the ankle injury is not viewed as long term. This worsens the earlier optimistic outlook without establishing a final OUT decision or a fixed absence.",
+      "fantasyAnalysis": "Prepare a quarterback alternative before Baltimore's Sunday-night game. Huntley would be the conditional replacement if Jackson cannot play; verify the starter and fantasy availability before acting.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T19:48:30Z",
+      "checkedAt": "2026-10-06T13:34:05Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -553,7 +553,7 @@
         "bodyPart": "Ankle; earlier back listing",
         "practiceStatus": null,
         "gameStatus": "DID NOT RETURN",
-        "expectedReturn": "Week 5 chances unknown per Monday coach comments; further information pending"
+        "expectedReturn": "Reported outside chance for Week 5; possible multiple missed games, no final designation"
       },
       "sources": [
         {
@@ -734,6 +734,18 @@
           "url": "https://sports.yahoo.com/articles/jesse-minter-unsure-lamar-jacksons-192221476.html",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T19:48:21Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Ian Rapoport",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 6, 2026; exact publication clock unavailable",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.rotowire.com/football/headlines/lamar-jackson-injury-could-miss-multiple-games-641057",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-06T13:33:41Z"
         }
       ]
     },
@@ -11288,5 +11300,5 @@
       ]
     }
   ],
-  "contentHash": "aa8e98f7df8c44947a23d954db691c6002a33d40e9689e95c901b702a86e2129"
+  "contentHash": "40e8014c052c12b669b99d618ef4257303fefd5d9ace3066fd2ed5296a8f61ea"
 }
