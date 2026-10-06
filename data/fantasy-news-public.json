@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-05T23:34:43Z",
-  "updatedAt": "2026-10-05T23:35:48.444Z",
-  "revision": "bowser-public-news-20261005T233548444Z",
+  "checkedAt": "2026-10-06T00:16:42Z",
+  "updatedAt": "2026-10-06T00:17:39.584Z",
+  "revision": "bowser-public-news-20261006T001739584Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -4125,24 +4125,24 @@
         "team": "LA",
         "position": "TE"
       },
-      "headline": "Ferguson placed on injured reserve",
-      "summary": "The Rams' original announcement confirms Ferguson on Reserve/Injured, superseding his earlier Week 4 OUT status. Ordinary roster and transaction webpages had not yet reflected the move.",
-      "fantasyAnalysis": "Plan a multiweek replacement with at least four missed games. Parkinson is questionable; Allen, Higbee and Klare are opportunity candidates without confirmed target shares. No exact Ferguson return date is established.",
+      "headline": "Ferguson medial ankle sprain behind IR move; in-season return expected",
+      "summary": "The Rams report McVay attributed Ferguson IR placement to the severity of a medial ankle sprain. McVay expects him back before the season ends and does not want to rush the recovery. No exact return date or practice window is established.",
+      "fantasyAnalysis": "Keep multiweek tight-end cover; an in-season return expectation is not near-term clearance. Other Rams tight ends could gain opportunities, without a guaranteed workload.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-02T21:42:30Z",
+      "checkedAt": "2026-10-06T00:16:42Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Ankle",
-        "practiceStatus": "DNP",
-        "gameStatus": "IR",
-        "expectedReturn": "At least four missed games; no exact return date"
+        "bodyPart": "Medial ankle sprain",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "In-season return expected by coach; exact timing unresolved"
       },
       "sources": [
         {
@@ -4228,6 +4228,18 @@
           "sourceType": "OFFICIAL",
           "isOriginalSource": true,
           "checkedAt": "2026-10-02T21:39:00Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": "Stu Jackson",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 03:27 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.therams.com/news/rams-injury-updates-bills-week-5-2026-jaylen-watson-aaron-donald-terrance-ferguson-monday-night-football",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T00:15:37Z"
         }
       ]
     },
@@ -4839,24 +4851,24 @@
         "team": "LAR",
         "position": "WR"
       },
-      "headline": "Konata Mumpfield did not return with shoulder injury",
-      "summary": "NFL.com's official Sunday roundup states Mumpfield did not return to the Rams' win over Philadelphia with a shoulder injury. No future timetable is supplied.",
-      "fantasyAnalysis": "Monitor evaluation before future roster decisions. Any redistribution among Rams receivers remains conditional, without a guaranteed target share.",
+      "headline": "Mumpfield has rotator-cuff contusion; McVay not concerned about status",
+      "summary": "The Rams identify Mumpfield shoulder injury from the Eagles game as a rotator-cuff contusion. McVay indicated he was not concerned about Mumpfield status, with more information expected Thursday. No final game designation is supplied.",
+      "fantasyAnalysis": "Reassess practice and final status before relying on Mumpfield. Coach optimism does not guarantee unrestricted usage or establish a replacement target benefit.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T21:58:36Z",
+      "checkedAt": "2026-10-06T00:16:42Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Shoulder",
+        "bodyPart": "Shoulder; rotator-cuff contusion",
         "practiceStatus": null,
-        "gameStatus": "DID NOT RETURN",
-        "expectedReturn": "Future availability and recovery timetable unknown."
+        "gameStatus": null,
+        "expectedReturn": "Coach optimism; final Week 5 status unresolved"
       },
       "sources": [
         {
@@ -4870,6 +4882,18 @@
           "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T21:57:59Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams",
+          "author": "Stu Jackson",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 03:27 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.therams.com/news/rams-injury-updates-bills-week-5-2026-jaylen-watson-aaron-donald-terrance-ferguson-monday-night-football",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T00:15:37Z"
         }
       ]
     },
@@ -10556,5 +10580,5 @@
       ]
     }
   ],
-  "contentHash": "e08c997cb9e675a387320ffafbfb6ffabefd1064e17b89aa47ef68fd82407351"
+  "contentHash": "032db46a2f73b437ab746f00cb9f40a99d8c17c1c19b4ea9ab0e2718891ad137"
 }
