@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T00:16:42Z",
-  "updatedAt": "2026-10-06T00:17:39.584Z",
-  "revision": "bowser-public-news-20261006T001739584Z",
+  "checkedAt": "2026-10-06T00:28:49Z",
+  "updatedAt": "2026-10-06T00:29:20.340Z",
+  "revision": "bowser-public-news-20261006T002920340Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -6160,13 +6160,13 @@
       },
       "headline": "Fant inactive for Monday night against Atlanta",
       "summary": "New Orleans lists Noah Fant inactive for its October 5 Week 4 game against Atlanta, superseding his questionable abdomen designation.",
-      "fantasyAnalysis": "Replace Fant before kickoff if using him. Juwan Johnson could benefit, but no additional targets or fixed workload are assured.",
+      "fantasyAnalysis": "The game is underway, so the earlier pre-kickoff replacement instruction is historical. Juwan Johnson could benefit from Fant absence, but no additional targets or fixed workload are assured. Monitor subsequent availability for future lineup decisions.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T22:58:05Z",
+      "checkedAt": "2026-10-06T00:28:49Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -6249,6 +6249,18 @@
           "url": "https://www.neworleanssaints.com/news/new-orleans-saints-tight-ends-have-been-red-hot-in-the-red-zone-this-season",
           "isOriginalSource": true,
           "checkedAt": "2026-10-05T22:57:35Z"
+        },
+        {
+          "sourceName": "CBS Sports",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Live play-by-play shows first-quarter plays; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.cbssports.com/nfl/gametracker/live/NFL_20261005_ATL@NO/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T00:27:26Z"
         }
       ]
     },
@@ -10580,5 +10592,5 @@
       ]
     }
   ],
-  "contentHash": "032db46a2f73b437ab746f00cb9f40a99d8c17c1c19b4ea9ab0e2718891ad137"
+  "contentHash": "bb6a68cbc51384691339b54a536a02a90668d6631abbd0f464b70a7fc9ad89e2"
 }
