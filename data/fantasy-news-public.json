@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T00:47:05Z",
-  "updatedAt": "2026-10-06T00:50:42.863Z",
-  "revision": "bowser-public-news-20261006T005042863Z",
+  "checkedAt": "2026-10-06T03:50:15Z",
+  "updatedAt": "2026-10-06T03:51:17.854Z",
+  "revision": "bowser-public-news-20261006T035117854Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -183,6 +183,90 @@
           "url": "https://www.giants.com/news/nfl-week-4-inactive-list-who-s-in-who-s-out-for-giants-vs-cardinals",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:46:28Z"
+        }
+      ]
+    },
+    {
+      "eventId": "atl-bijan-robinson-week4-production-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Bijan Robinson",
+        "team": "ATL",
+        "position": "RB"
+      },
+      "headline": "Bijan Robinson finishes with 145 rushing yards, two scores",
+      "summary": "Official final recap records 145 rushing yards and two touchdowns.",
+      "fantasyAnalysis": "One game does not fix future workload or scoring opportunities.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T03:50:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New Orleans Saints",
+          "author": "New Orleans Saints",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 10:29 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.neworleanssaints.com/news/2026-nfl-week-4-atlanta-falcons-vs-new-orleans-saints-game-recap",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T03:49:13Z"
+        }
+      ]
+    },
+    {
+      "eventId": "atl-brian-robinson-week4-production-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Brian Robinson Jr.",
+        "team": "ATL",
+        "position": "RB"
+      },
+      "headline": "Brian Robinson scores three rushing touchdowns",
+      "summary": "Official final recap records 62 rushing yards and three touchdowns.",
+      "fantasyAnalysis": "Touchdown output alone does not establish a new lead role or repeatable volume.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T03:50:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New Orleans Saints",
+          "author": "New Orleans Saints",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 10:29 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.neworleanssaints.com/news/2026-nfl-week-4-atlanta-falcons-vs-new-orleans-saints-game-recap",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T03:49:13Z"
         }
       ]
     },
@@ -6115,6 +6199,48 @@
       ]
     },
     {
+      "eventId": "no-alvin-kamara-week4-knee-return-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Alvin Kamara",
+        "team": "NO",
+        "position": "RB"
+      },
+      "headline": "Kamara returned after knee injury",
+      "summary": "Official recap confirms Kamara briefly exited with a knee injury and returned.",
+      "fantasyAnalysis": "Monitor practice; future absence is unconfirmed. Any Kendre Miller benefit remains conditional.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T03:50:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Returned during Week 4; subsequent status unresolved"
+      },
+      "sources": [
+        {
+          "sourceName": "New Orleans Saints",
+          "author": "New Orleans Saints",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 10:29 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.neworleanssaints.com/news/2026-nfl-week-4-atlanta-falcons-vs-new-orleans-saints-game-recap",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T03:49:13Z"
+        }
+      ]
+    },
+    {
       "eventId": "no-barion-brown-friday-limited-2026-10-02",
       "player": {
         "playerId": null,
@@ -6165,6 +6291,48 @@
           "url": "https://www.neworleanssaints.com/news/injury-report-atlanta-falcons-vs-new-orleans-saints-2026-nfl-week-4-saturday",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T19:18:44Z"
+        }
+      ]
+    },
+    {
+      "eventId": "no-chris-olave-week4-production-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Chris Olave",
+        "team": "NO",
+        "position": "WR"
+      },
+      "headline": "Olave finishes with eight catches for 116 yards",
+      "summary": "Official final recap records eight catches for 116 yards.",
+      "fantasyAnalysis": "Strong output is a usage signal, not a guaranteed future target count.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T03:50:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New Orleans Saints",
+          "author": "New Orleans Saints",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 10:29 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.neworleanssaints.com/news/2026-nfl-week-4-atlanta-falcons-vs-new-orleans-saints-game-recap",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T03:49:13Z"
         }
       ]
     },
@@ -6231,6 +6399,48 @@
           "url": "https://sports.yahoo.com/articles/report-saints-rookie-wr-jordyn-131810954.html",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T14:38:29Z"
+        }
+      ]
+    },
+    {
+      "eventId": "no-juwan-johnson-week4-production-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Juwan Johnson",
+        "team": "NO",
+        "position": "TE"
+      },
+      "headline": "Johnson catches six passes with Fant inactive",
+      "summary": "Official final recap records six catches for 59 yards.",
+      "fantasyAnalysis": "Future role depends on team decisions and Fant availability; no fixed target share.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-06T03:50:15Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "New Orleans Saints",
+          "author": "New Orleans Saints",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 05, 2026 at 10:29 PM; timezone not displayed",
+          "publishedDate": "2026-10-05",
+          "url": "https://www.neworleanssaints.com/news/2026-nfl-week-4-atlanta-falcons-vs-new-orleans-saints-game-recap",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-06T03:49:13Z"
         }
       ]
     },
@@ -10838,5 +11048,5 @@
       ]
     }
   ],
-  "contentHash": "005a2ea166fd25da21d9fd6ae1df8251f51dfc26432698cf9cf35619d89624be"
+  "contentHash": "4f9c04355409246db084f5697e499ef090c50462868cbcf58e43f9b16860ea76"
 }
