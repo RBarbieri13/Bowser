@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T16:13:50Z",
-  "updatedAt": "2026-10-07T16:14:51.645Z",
-  "revision": "bowser-public-news-20261007T161451645Z",
+  "checkedAt": "2026-10-07T16:41:50Z",
+  "updatedAt": "2026-10-07T16:43:12.040Z",
+  "revision": "bowser-public-news-20261007T164312040Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -9260,15 +9260,15 @@
         "team": "PIT",
         "position": "RB"
       },
-      "headline": "Dowdle progressing; Week 5 availability remains uncertain",
-      "summary": "RotoWire reports McCarthy described Dowdle's Friday workout positively and said he is making progress from his toe injury, while Week 5 availability remains uncertain. The standalone article attributes the report to Chris Adamski; its feed instead names Nick Farabaugh. No observed practice grade or clearance is established.",
-      "fantasyAnalysis": "Monitor participation and availability before assuming Warren retains his recent workload or Dowdle returns. Any backfield split depends on recovery and team plans.",
+      "headline": "Dowdle reportedly works with rehab group Wednesday",
+      "summary": "RotoWire, citing Ray Fittipaldo, reports Dowdle remained to the side with the rehabilitation group at Wednesday, October 7 practice. McCarthy had said he would increase his work this week following earlier progress. This observation does not establish an official participation grade or Week 5 game designation.",
+      "fantasyAnalysis": "Keep an alternative ready and monitor the official report. Warren could retain greater opportunity if Dowdle misses another game; neither an absence nor a future split is confirmed.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T21:06:00Z",
+      "checkedAt": "2026-10-07T16:41:50Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -9277,7 +9277,7 @@
         "bodyPart": "Toe",
         "practiceStatus": null,
         "gameStatus": null,
-        "expectedReturn": "Week 5 uncertain; positive Friday workout and progress reported Monday"
+        "expectedReturn": "Week 5 uncertain; Wednesday side rehabilitation work reported"
       },
       "sources": [
         {
@@ -9302,6 +9302,18 @@
           "url": "https://www.rotowire.com/football/headlines/rico-dowdle-injury-progressing-could-play-week-5-640887",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T21:05:31Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Ray Fittipaldo of the Pittsburgh Post-Gazette",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 7, 2026 at 9:03am; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/rico-dowdle-injury-remains-in-rehab-group-wednesday-641165",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T16:41:05Z"
         }
       ]
     },
@@ -12380,5 +12392,5 @@
       ]
     }
   ],
-  "contentHash": "f958368f334ef31de1bb2de5fef3fc0f6aa9687d14a6da0de2b47de23d3a4aab"
+  "contentHash": "fed30868d4700412a5aab6f2917888951a5f44bbc4e4ac165c9962f3155a50dd"
 }
