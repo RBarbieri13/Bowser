@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T17:49:45Z",
-  "updatedAt": "2026-10-07T17:51:09.943Z",
-  "revision": "bowser-public-news-20261007T175109943Z",
+  "checkedAt": "2026-10-07T17:57:25Z",
+  "updatedAt": "2026-10-07T17:58:15.472Z",
+  "revision": "bowser-public-news-20261007T175815472Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -6717,15 +6717,15 @@
         "team": "NE",
         "position": "WR"
       },
-      "headline": "Hollins practice availability uncertain after calf injury",
-      "summary": "RotoWire attributes to Phil Perry that Mike Vrabel expects more information later Monday and is uncertain whether Hollins can practice for a couple of days. This is an outlook, not an observed practice absence or final Week 5 designation.",
+      "headline": "Vrabel reportedly expects Hollins to miss Wednesday practice",
+      "summary": "Josh Alper reports Vrabel said at Wednesday's press conference that Hollins is expected to miss the first Week 5 practice with the calf injury sustained against Buffalo. This clarifies the earlier wait-for-more-information outlook, without an official completed grade or final game designation.",
       "fantasyAnalysis": "Other Patriots receivers could gain opportunities if Hollins remains unavailable. Future status, severity and target allocation remain unconfirmed; reassess after evaluation and practice.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T16:06:15Z",
+      "checkedAt": "2026-10-07T17:57:25Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -6772,6 +6772,18 @@
           "url": "https://www.rotowire.com/football/news.php?view=injuries",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T16:05:13Z"
+        },
+        {
+          "sourceName": "ProFootballTalk via Yahoo Sports",
+          "author": "Josh Alper",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-07T17:17:00Z",
+          "publishedAtRaw": "Wed, October 7, 2026 at 5:17 PM UTC; article text available through current search index, direct open unavailable",
+          "publishedDate": "2026-10-07",
+          "url": "https://sports.yahoo.com/articles/rhamondre-stevenson-mack-hollins-set-171729385.html",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T17:57:05Z"
         }
       ]
     },
@@ -6861,14 +6873,14 @@
         "position": "RB"
       },
       "headline": "Stevenson reportedly not expected at Wednesday practice",
-      "summary": "RotoWire, citing Taylor Kyles, reports Stevenson is not expected to practice Wednesday, October 7 with an undisclosed issue, but still has a chance to play. No diagnosis, completed practice grade or final game designation is established.",
+      "summary": "Josh Alper reports Vrabel said at Wednesday's press conference that Stevenson is expected to miss the first Week 5 practice after an injury late in the Buffalo game. The coach did not specify its nature. Earlier reporting still left a chance to play; no diagnosis, official completed grade or final game designation is established.",
       "fantasyAnalysis": "Keep an RB alternative ready and monitor the official report. Henderson, listed second on the team-published unofficial depth chart, is a conditional beneficiary if Stevenson is limited or unavailable; no carry share is guaranteed.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-07T17:49:45Z",
+      "checkedAt": "2026-10-07T17:57:25Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -6903,6 +6915,18 @@
           "url": "https://www.patriots.com/team/depth-chart",
           "isOriginalSource": true,
           "checkedAt": "2026-10-07T17:49:23Z"
+        },
+        {
+          "sourceName": "ProFootballTalk via Yahoo Sports",
+          "author": "Josh Alper",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-07T17:17:00Z",
+          "publishedAtRaw": "Wed, October 7, 2026 at 5:17 PM UTC; article text available through current search index, direct open unavailable",
+          "publishedDate": "2026-10-07",
+          "url": "https://sports.yahoo.com/articles/rhamondre-stevenson-mack-hollins-set-171729385.html",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T17:57:05Z"
         }
       ]
     },
@@ -12620,5 +12644,5 @@
       ]
     }
   ],
-  "contentHash": "f28363fa6ab53e18b143dbe3fab370a74e5c0cd2bfebcd02a64249abf16310cd"
+  "contentHash": "ec1bb4417558f50efdba5ff9b00eb9ede5deb7f4b3beca9a87afdea70c0364aa"
 }
