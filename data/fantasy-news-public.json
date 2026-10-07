@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T16:05:44Z",
-  "updatedAt": "2026-10-07T16:06:36.512Z",
-  "revision": "bowser-public-news-20261007T160636512Z",
+  "checkedAt": "2026-10-07T16:13:50Z",
+  "updatedAt": "2026-10-07T16:14:51.645Z",
+  "revision": "bowser-public-news-20261007T161451645Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -10475,22 +10475,22 @@
         "team": "TB",
         "position": "QB"
       },
-      "headline": "Baker Mayfield listed DNP in Tuesday Week 5 report",
-      "summary": "The official Week 5 table lists Baker Mayfield DNP in the Tuesday, October 6 column, after the same grade in Monday's walkthrough estimate. Wednesday and final game-status fields remain unfilled; this does not establish game clearance.",
-      "fantasyAnalysis": "Recheck later participation and final status before relying on availability or workload.",
+      "headline": "Mayfield reported absent Wednesday; team preview points to Daniels start",
+      "summary": "Greg Auman, quoted by FantasyPros on October 7, reported Mayfield absent from Wednesday practice. Tampa Bay's official Week 5 preview describes Jalon Daniels' first road start Thursday. The official table still has no Wednesday grade or final designation; Monday and Tuesday DNP entries were walkthrough estimates.",
+      "fantasyAnalysis": "Plan another quarterback option for Thursday. Daniels is the team preview's starting replacement, but rookie production and the duration of Mayfield's absence remain uncertain.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T21:31:00Z",
+      "checkedAt": "2026-10-07T16:13:50Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Right thumb",
-        "practiceStatus": "DNP",
+        "practiceStatus": null,
         "gameStatus": null,
         "expectedReturn": "Earlier reported three-to-six-week range remains an estimate; no return clearance"
       },
@@ -10590,6 +10590,30 @@
           "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T21:30:42Z"
+        },
+        {
+          "sourceName": "FantasyPros",
+          "author": "Nate Miller, citing Greg Auman",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-07T14:50:00Z",
+          "publishedAtRaw": "Wed, Oct 7th 2026, 10:50am EDT; indexed article text read, direct article open unavailable",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.fantasypros.com/nfl/news/612578/baker-mayfield-thumb-misses-practice-again-wednesday.php?mp_feature=news&mp_platform=x&mp_sport=NFL",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T16:13:01Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": "Scott Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 07, 2026 at 08:00 AM; timezone not displayed; indexed article text read, direct article open unavailable",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.buccaneers.com/news/2026-game-preview-buccaneers-cowboys-week-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T16:13:36Z"
         }
       ]
     },
@@ -10894,15 +10918,15 @@
         "team": "TB",
         "position": "QB"
       },
-      "headline": "Bowles keeps Daniels as starter until Mayfield returns",
-      "summary": "Tampa Bay reports Bowles will keep Daniels starting until Mayfield returns from his thumb injury. Daniels played all 63 offensive snaps in Week 4. Earlier reported Mayfield recovery ranges remain estimates, not a fixed number of Daniels starts.",
-      "fantasyAnalysis": "Daniels has a confirmed Week 4 start and could remain the replacement during Mayfield's recovery. Reassess the role weekly; neither a fixed number of starts nor reliable rookie production is established.",
+      "headline": "Team preview identifies Daniels for Thursday road start",
+      "summary": "Tampa Bay's October 7 Week 5 preview describes Daniels' first road start Thursday at Dallas. This extends the earlier Bowles plan to keep him starting until Mayfield returns; it does not set the number of future starts.",
+      "fantasyAnalysis": "Daniels is a potential quarterback replacement in formats that need one, subject to availability and rookie production risk. Recheck final game status before kickoff.",
       "eventType": "DEPTH_CHART",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": "2026-10-04T12:15:00Z",
-      "checkedAt": "2026-10-06T16:05:00Z",
+      "checkedAt": "2026-10-07T16:13:50Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -10983,6 +11007,18 @@
           "url": "https://www.buccaneers.com/news/bucs-release-week-five-depth-chart-ifeatu-melifonwu-next-up-at-safety",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T16:04:30Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": "Scott Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 07, 2026 at 08:00 AM; timezone not displayed; indexed article text read, direct article open unavailable",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.buccaneers.com/news/2026-game-preview-buccaneers-cowboys-week-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T16:13:36Z"
         }
       ]
     },
@@ -11048,22 +11084,22 @@
         "team": "TB",
         "position": "TE"
       },
-      "headline": "Ko Kieft listed LP in Tuesday Week 5 report",
-      "summary": "The official Week 5 table lists Ko Kieft LP in the Tuesday, October 6 column, after the same grade in Monday's walkthrough estimate. Wednesday and final game-status fields remain unfilled; this does not establish game clearance.",
-      "fantasyAnalysis": "Recheck later participation and final status before relying on availability or workload.",
+      "headline": "Kieft reported practicing Wednesday; official grade pending",
+      "summary": "Greg Auman, quoted in FantasyPros' October 7 report, observed Kieft practicing Wednesday. The official Week 5 table still lacks Wednesday and final grades; Monday and Tuesday LP entries were walkthrough estimates. The observation does not establish full participation or game clearance.",
+      "fantasyAnalysis": "Wait for the official Wednesday grade and final designation before treating Kieft as available; no receiving workload increase is established.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T21:31:00Z",
+      "checkedAt": "2026-10-07T16:13:50Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Elbow",
-        "practiceStatus": "LP",
+        "practiceStatus": null,
         "gameStatus": null,
         "expectedReturn": "Week 5 final status pending"
       },
@@ -11103,6 +11139,30 @@
           "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T21:30:42Z"
+        },
+        {
+          "sourceName": "FantasyPros",
+          "author": "Nate Miller, citing Greg Auman",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-07T14:50:00Z",
+          "publishedAtRaw": "Wed, Oct 7th 2026, 10:50am EDT; indexed article text read, direct article open unavailable",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.fantasypros.com/nfl/news/612578/baker-mayfield-thumb-misses-practice-again-wednesday.php?mp_feature=news&mp_platform=x&mp_sport=NFL",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T16:13:01Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": "Scott Smith",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 07, 2026 at 08:00 AM; timezone not displayed; indexed article text read, direct article open unavailable",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.buccaneers.com/news/2026-game-preview-buccaneers-cowboys-week-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T16:13:36Z"
         }
       ]
     },
@@ -12320,5 +12380,5 @@
       ]
     }
   ],
-  "contentHash": "fb1132265d83f0ebc19d8e956083942f95a98daffd07bca977243d7b04dda0cd"
+  "contentHash": "f958368f334ef31de1bb2de5fef3fc0f6aa9687d14a6da0de2b47de23d3a4aab"
 }
