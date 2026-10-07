@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-06T23:35:30Z",
-  "updatedAt": "2026-10-06T23:36:39.214Z",
-  "revision": "bowser-public-news-20261006T233639214Z",
+  "checkedAt": "2026-10-07T00:44:30Z",
+  "updatedAt": "2026-10-07T00:45:19.010Z",
+  "revision": "bowser-public-news-20261007T004519010Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -9005,6 +9005,48 @@
       ]
     },
     {
+      "eventId": "sea-dontae-mcmillan-practice-squad-2026-10-06",
+      "player": {
+        "playerId": null,
+        "name": "Dontae McMillan",
+        "team": "SEA",
+        "position": "RB"
+      },
+      "headline": "Seattle signs McMillan to practice squad",
+      "summary": "An updated official Seahawks transaction article confirms running back Dontae McMillan signed to the practice squad Tuesday, October 6. The article retains its original publication line without a separate update clock.",
+      "fantasyAnalysis": "This adds practice-squad depth, not a confirmed elevation or game-day workload. Monitor subsequent roster and role decisions before fantasy use.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T00:44:30Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Seattle Seahawks",
+          "author": "John Boyle",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 06, 2026 at 12:38 PM; timezone not displayed; updated text includes McMillan signing, separate update clock absent",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.seahawks.com/news/seahawks-sign-rb-robert-henry-jr",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T00:44:11Z"
+        }
+      ]
+    },
+    {
       "eventId": "sea-emanuel-wilson-week4-workload-2026-10-04",
       "player": {
         "playerId": null,
@@ -11882,5 +11924,5 @@
       ]
     }
   ],
-  "contentHash": "c02acf668b190c0201845be82f0d8bcd975be762a4c6ece473484eeef25a32aa"
+  "contentHash": "fa559a03ef564a1ef336511104012868ed9e9852d96ab465a3424b138244966c"
 }
