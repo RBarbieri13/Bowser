@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T16:41:50Z",
-  "updatedAt": "2026-10-07T16:43:12.040Z",
-  "revision": "bowser-public-news-20261007T164312040Z",
+  "checkedAt": "2026-10-07T17:16:15Z",
+  "updatedAt": "2026-10-07T17:17:29.317Z",
+  "revision": "bowser-public-news-20261007T171729317Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -5961,15 +5961,15 @@
         "team": "MIA",
         "position": "WR"
       },
-      "headline": "Douglas day-to-day heading into Week 5",
-      "summary": "RotoWire attributes to Hafley via Barry Jackson a day-to-day outlook for Douglas ankle injury ahead of the Bengals game. No completed practice grade or game clearance is supplied.",
-      "fantasyAnalysis": "Reassess after practice and final status before relying on Douglas; no replacement target share is confirmed.",
+      "headline": "Douglas reportedly will miss Wednesday practice",
+      "summary": "RotoWire, citing Marcel Louis-Jacques, reports Douglas will not practice Wednesday, October 7 because of his ankle injury. Hafley described improvement, but Week 5 availability remains unresolved. This is a reported practice plan, not a completed official grade.",
+      "fantasyAnalysis": "Monitor later practice and final status. Malik Washington, Chris Bell and Kevin Coleman could retain opportunities if Douglas remains out; no target split is assured.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T22:43:15Z",
+      "checkedAt": "2026-10-07T17:16:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5978,7 +5978,7 @@
         "bodyPart": "Ankle",
         "practiceStatus": null,
         "gameStatus": null,
-        "expectedReturn": "Day-to-day; Week 5 availability unresolved"
+        "expectedReturn": "Week 5 availability unresolved"
       },
       "sources": [
         {
@@ -6028,6 +6028,18 @@
           "url": "https://www.rotowire.com/football/news.php?view=injuries",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T22:42:18Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Marcel Louis-Jacques",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 7, 2026 at 9:51am; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/caleb-douglas-injury-wont-practice-wednesday-641169",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T17:15:35Z"
         }
       ]
     },
@@ -7790,24 +7802,24 @@
         "team": "NYJ",
         "position": "WR"
       },
-      "headline": "Mitchell officially ruled out against Chicago",
-      "summary": "The Jets' final table lists Adonai Mitchell DNP Friday and OUT, corroborating the earlier official coach announcement.",
-      "fantasyAnalysis": "Use a healthy replacement. The final Friday report lists Sadiq questionable and Ruckert full without a game designation. Neither is guaranteed to inherit a fixed target share.",
+      "headline": "Mitchell remains week-to-week in Wednesday coach report",
+      "summary": "RotoWire attributes to Aaron Glenn via Brian Costello that Mitchell remains week-to-week with his finger injury on Wednesday, October 7. No final Week 5 designation is established.",
+      "fantasyAnalysis": "Keep a receiver alternative ready. Other Jets receivers could retain added opportunity if Mitchell remains out; no target share is guaranteed.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T00:48:25Z",
+      "checkedAt": "2026-10-07T17:16:15Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Finger",
-        "practiceStatus": "DNP",
-        "gameStatus": "OUT",
-        "expectedReturn": null
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Week 5 availability unresolved"
       },
       "sources": [
         {
@@ -7857,6 +7869,18 @@
           "url": "https://www.newyorkjets.com/news/jets-injury-report-week-4-vs-bears-friday-10-02-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T00:48:25Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Brian Costello",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 7, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/adonai-mitchell-injury-remains-week-to-week-641170",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T17:15:35Z"
         }
       ]
     },
@@ -7922,24 +7946,24 @@
         "team": "NYJ",
         "position": "RB"
       },
-      "headline": "Hall misses Week 4; Allen takes every Jets carry",
-      "summary": "Hall was officially ruled out against Chicago. The completed official box score shows Braelon Allen handled all 14 Jets rush attempts and caught two passes in Hall's absence.",
-      "fantasyAnalysis": "Allen's actual Week 4 workload strengthens his conditional replacement case if Hall remains unavailable. It does not establish Hall's return timetable or a permanent backfield split; reassess health and practice before next week's decisions.",
+      "headline": "Hall remains week-to-week in Wednesday coach report",
+      "summary": "RotoWire attributes to Aaron Glenn via Al Iannazzone that Hall remains week-to-week with his quadriceps injury on Wednesday, October 7. This is not a final Week 5 OUT designation.",
+      "fantasyAnalysis": "Keep an RB alternative ready. Braelon Allen is the conditional beneficiary if Hall remains unavailable; his previous workload does not guarantee the next split.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T21:49:04Z",
+      "checkedAt": "2026-10-07T17:16:15Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Quad",
-        "practiceStatus": "DNP",
-        "gameStatus": "OUT",
-        "expectedReturn": null
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Week 5 availability unresolved"
       },
       "sources": [
         {
@@ -8011,6 +8035,18 @@
           "url": "https://www.chicagobears.com/game-day/2026/reg-week4/jets-at-bears/box-score",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T21:48:42Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Al Iannazzone",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 7, 2026 at 9:38am; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/breece-hall-injury-remains-week-to-week-641167",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T17:15:35Z"
         }
       ]
     },
@@ -11981,15 +12017,15 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Quinn reportedly confirms Mariota MCL sprain; timetable unresolved",
-      "summary": "RotoWire attributes to Quinn via Ben Standig confirmation of a right MCL sprain. The recovery timeline remains undetermined.",
-      "fantasyAnalysis": "Future quarterback roles depend on Mariota recovery, Daniels availability and team decisions; no guaranteed Kaliakmanis start.",
+      "headline": "Mariota reportedly not headed to IR for now; recovery timetable unresolved",
+      "summary": "October 7 coverage attributes to Mike Garafolo that Washington does not currently plan to put Mariota on injured reserve after his reported right MCL sprain. The team reportedly worked out Jack Plummer without a current signing plan. Remaining off IR does not establish game clearance or a return date.",
+      "fantasyAnalysis": "Continue monitoring Mariota and Jayden Daniels before choosing a Washington quarterback. No new starting assignment or guaranteed Kaliakmanis opportunity follows from the reported roster plan.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T22:43:15Z",
+      "checkedAt": "2026-10-07T17:16:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -12120,6 +12156,42 @@
           "url": "https://www.rotowire.com/football/news.php?view=injuries",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T22:42:18Z"
+        },
+        {
+          "sourceName": "NFLTradeRumors.co",
+          "author": "Nate Bouda, citing Mike Garafolo",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "October 7, 2026; no exact publication clock displayed; article text retrieved through current search index, direct open unavailable",
+          "publishedDate": "2026-10-07",
+          "url": "https://nfltraderumors.co/commanders-working-qb-jack-plummer/",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T16:58:53Z"
+        },
+        {
+          "sourceName": "ClutchPoints via Yahoo Sports",
+          "author": "Malik Brown, citing Mike Garafolo",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-07T15:13:00Z",
+          "publishedAtRaw": "Wed, October 7, 2026 at 3:13 PM UTC; article text retrieved through current search index, direct open unavailable",
+          "publishedDate": "2026-10-07",
+          "url": "https://sports.yahoo.com/articles/why-commanders-isn-t-signing-151333189.html",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T16:58:53Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Nicki Jhabvala",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 7, 2026 at 9:35am; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/marcus-mariota-injury-avoids-ir-with-knee-sprain-641166",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T17:15:35Z"
         }
       ]
     },
@@ -12208,15 +12280,15 @@
         "team": "WAS",
         "position": "WR"
       },
-      "headline": "McLaurin Wednesday participation still being assessed",
-      "summary": "RotoWire attributes to Dan Quinn via John Keim that Washington is still assessing what McLaurin can do at Wednesday practice after the hamstring-related Week 4 absence. No practice grade or Week 5 clearance is established.",
-      "fantasyAnalysis": "Retain a healthy receiver alternative and reassess actual practice. No replacement receiver target split is confirmed.",
+      "headline": "McLaurin reportedly will work on side Wednesday",
+      "summary": "RotoWire, citing Tashan Reed, reports McLaurin will miss Wednesday practice and work to the side on October 7 with his hamstring injury. No official completed grade or final Week 5 designation is established.",
+      "fantasyAnalysis": "Keep a receiver alternative ready. Antonio Williams, Dyami Brown and Treylon Burks could see added opportunities if McLaurin remains out; quarterback availability and target distribution remain uncertain.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T23:14:05Z",
+      "checkedAt": "2026-10-07T17:16:15Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -12225,7 +12297,7 @@
         "bodyPart": "Hamstring",
         "practiceStatus": null,
         "gameStatus": null,
-        "expectedReturn": "Wednesday activity and Week 5 availability unresolved"
+        "expectedReturn": "Week 5 availability unresolved"
       },
       "sources": [
         {
@@ -12323,6 +12395,18 @@
           "url": "https://www.rotowire.com/football/headlines/terry-mclaurin-injury-wednesday-activity-tbd-640905",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T23:13:16Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Tashan Reed",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 7, 2026 at 9:42am; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/terry-mclaurin-injury-wont-practice-wednesday-641168",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T17:15:35Z"
         }
       ]
     },
@@ -12392,5 +12476,5 @@
       ]
     }
   ],
-  "contentHash": "fed30868d4700412a5aab6f2917888951a5f44bbc4e4ac165c9962f3155a50dd"
+  "contentHash": "ff0b24eecc0abd8696e51608f7d450af3d58c567969f655d1aa4dfbe07514293"
 }
