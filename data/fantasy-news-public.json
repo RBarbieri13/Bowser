@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T00:44:30Z",
-  "updatedAt": "2026-10-07T00:45:19.010Z",
-  "revision": "bowser-public-news-20261007T004519010Z",
+  "checkedAt": "2026-10-07T00:56:53Z",
+  "updatedAt": "2026-10-07T00:57:30.492Z",
+  "revision": "bowser-public-news-20261007T005730492Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -56,24 +56,24 @@
         "team": "ARI",
         "position": "TE"
       },
-      "headline": "Hunter Long did not return with knee injury",
-      "summary": "NFL.com's official Sunday roundup states Long did not return to Arizona's loss to the Giants with a knee injury. No further severity or future availability detail is supplied.",
-      "fantasyAnalysis": "Arizona's other tight ends could absorb depth work if Long remains unavailable; no receiving or snap share is established.",
+      "headline": "Hunter Long placed on injured reserve Tuesday",
+      "summary": "Arizona placed Long on injured reserve October 6 after his right-knee injury in the October 4 game. Teagan Quitoriano was promoted from the practice squad to replace his roster spot.",
+      "fantasyAnalysis": "Replace Long if relying on him. Quitoriano gains a roster opportunity, but no receiving volume or future return date for Long is confirmed.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T21:58:36Z",
+      "checkedAt": "2026-10-07T00:56:53Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Knee",
+        "bodyPart": "Right knee",
         "practiceStatus": null,
-        "gameStatus": "DID NOT RETURN",
-        "expectedReturn": "Future availability and recovery timetable unknown."
+        "gameStatus": "IR",
+        "expectedReturn": "No return date supplied by the team."
       },
       "sources": [
         {
@@ -87,6 +87,18 @@
           "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T21:57:59Z"
+        },
+        {
+          "sourceName": "Arizona Cardinals",
+          "author": "Darren Urban",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Published Oct 06, 2026 at 01:03 PM; Updated Oct 06, 2026 at 01:45 PM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.azcardinals.com/news/hunter-long-paris-johnson-jr-placed-on-injured-reserve",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T00:56:39Z"
         }
       ]
     },
@@ -145,6 +157,48 @@
       ]
     },
     {
+      "eventId": "ari-kenny-yeboah-practice-squad-2026-10-06",
+      "player": {
+        "playerId": null,
+        "name": "Kenny Yeboah",
+        "team": "ARI",
+        "position": "TE"
+      },
+      "headline": "Cardinals re-sign Kenny Yeboah to practice squad",
+      "summary": "Arizona re-signed Yeboah to its practice squad Tuesday, October 6.",
+      "fantasyAnalysis": "No active-roster elevation or receiving role is established.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T00:56:53Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Arizona Cardinals",
+          "author": "Darren Urban",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Published Oct 06, 2026 at 01:03 PM; Updated Oct 06, 2026 at 01:45 PM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.azcardinals.com/news/hunter-long-paris-johnson-jr-placed-on-injured-reserve",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T00:56:39Z"
+        }
+      ]
+    },
+    {
       "eventId": "ari-reggie-virgil-week4-inactive-2026-10-04",
       "player": {
         "playerId": null,
@@ -183,6 +237,48 @@
           "url": "https://www.giants.com/news/nfl-week-4-inactive-list-who-s-in-who-s-out-for-giants-vs-cardinals",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:46:28Z"
+        }
+      ]
+    },
+    {
+      "eventId": "ari-teagan-quitoriano-active-roster-2026-10-06",
+      "player": {
+        "playerId": null,
+        "name": "Teagan Quitoriano",
+        "team": "ARI",
+        "position": "TE"
+      },
+      "headline": "Teagan Quitoriano promoted to active roster",
+      "summary": "Arizona promoted Quitoriano from its practice squad October 6 after placing Hunter Long on injured reserve.",
+      "fantasyAnalysis": "This is a depth roster opportunity; the team supplies no target or snap allocation.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T00:56:53Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Arizona Cardinals",
+          "author": "Darren Urban",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Published Oct 06, 2026 at 01:03 PM; Updated Oct 06, 2026 at 01:45 PM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.azcardinals.com/news/hunter-long-paris-johnson-jr-placed-on-injured-reserve",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T00:56:39Z"
         }
       ]
     },
@@ -2764,6 +2860,48 @@
       ]
     },
     {
+      "eventId": "den-cam-ross-practice-squad-2026-10-06",
+      "player": {
+        "playerId": null,
+        "name": "Cam Ross",
+        "team": "DEN",
+        "position": "WR"
+      },
+      "headline": "Broncos sign Cam Ross to practice squad",
+      "summary": "Denver announced Ross signed to its practice squad Tuesday, October 6.",
+      "fantasyAnalysis": "Practice-squad depth does not establish elevation or a share of targets.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T00:56:53Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Denver Broncos",
+          "author": "Susanna Weir",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 06, 2026 at 04:51 PM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.denverbroncos.com/news/broncos-sign-wr-cam-ross-to-practice-squad",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T00:56:39Z"
+        }
+      ]
+    },
+    {
       "eventId": "den-dallen-bentley-week4-inactive-2026-10-04",
       "player": {
         "playerId": null,
@@ -3330,6 +3468,48 @@
           "url": "https://www.packers.com/news/in-game-updates-week-4-buccaneers-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T20:16:37Z"
+        }
+      ]
+    },
+    {
+      "eventId": "gb-damon-bankston-practice-squad-2026-10-06",
+      "player": {
+        "playerId": null,
+        "name": "Damon Bankston",
+        "team": "GB",
+        "position": "RB"
+      },
+      "headline": "Packers re-sign Damon Bankston to practice squad",
+      "summary": "Green Bay announced Tuesday, October 6 that Bankston rejoined its practice squad.",
+      "fantasyAnalysis": "No elevation or offensive workload is confirmed.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T00:56:53Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Green Bay Packers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 06, 2026 at 03:22 PM; timezone not displayed",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.packers.com/news/packers-place-lb-edgerrin-cooper-on-injured-reserve-oct-6-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T00:56:39Z"
         }
       ]
     },
@@ -11924,5 +12104,5 @@
       ]
     }
   ],
-  "contentHash": "fa559a03ef564a1ef336511104012868ed9e9852d96ab465a3424b138244966c"
+  "contentHash": "6d2dbc7243bf8e238dcfa4ff9e2bf6e5a0b86417e71600f614efd61b5b083115"
 }
