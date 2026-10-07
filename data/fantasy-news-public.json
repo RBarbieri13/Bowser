@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T18:12:20Z",
-  "updatedAt": "2026-10-07T18:14:01.555Z",
-  "revision": "bowser-public-news-20261007T181401555Z",
+  "checkedAt": "2026-10-07T18:46:55Z",
+  "updatedAt": "2026-10-07T19:19:37.996Z",
+  "revision": "bowser-public-news-20261007T191937996Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -644,15 +644,15 @@
         "team": "BAL",
         "position": "QB"
       },
-      "headline": "Jackson reportedly absent Wednesday; Huntley gets first-team reps",
-      "summary": "RotoWire, citing Jamison Hensley, reports Jackson is not practicing Wednesday with his ankle injury and Huntley took first-team reps. Earlier unlikely-to-play and possible-multiple-game reports remain estimates; no final Week 5 OUT designation is established.",
-      "fantasyAnalysis": "Maintain a quarterback alternative. Huntley is the conditional replacement if Jackson cannot play; practice reps do not guarantee the starting decision or fantasy production.",
+      "headline": "Ravens confirm Jackson absent from open practice",
+      "summary": "The Ravens confirm Jackson was absent from the early media-open portion of Wednesday practice. Earlier unlikely-to-play reporting remains attributed; no final Week 5 OUT designation is established.",
+      "fantasyAnalysis": "Maintain a quarterback alternative; neither an official full-session grade nor a final starting decision is established.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-07T17:49:45Z",
+      "checkedAt": "2026-10-07T18:46:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -878,8 +878,62 @@
           "url": "https://www.rotowire.com/football/headlines/lamar-jackson-injury-not-practicing-wednesday-641171",
           "isOriginalSource": false,
           "checkedAt": "2026-10-07T17:48:35Z"
+        },
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Clifton Brown",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 07, 2026 at 01:53 PM; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.baltimoreravens.com/news/lamar-jackson-not-at-first-practice-following-ankle-injury-ravens-falcons-week-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T18:46:20Z"
         }
       ]
+    },
+    {
+      "eventId": "bal-rashod-bateman-practice-absence-2026-10-07",
+      "player": {
+        "playerId": null,
+        "name": "Rashod Bateman",
+        "team": "BAL",
+        "position": "WR"
+      },
+      "eventType": "INJURY",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T18:46:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Clifton Brown",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 07, 2026 at 01:53 PM; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.baltimoreravens.com/news/lamar-jackson-not-at-first-practice-following-ankle-injury-ravens-falcons-week-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T18:46:20Z"
+        }
+      ],
+      "headline": "Rashod Bateman absent from early Wednesday practice",
+      "summary": "The Ravens list Rashod Bateman among players absent from the early media-open portion of Wednesday practice, without explaining his absence. No new injury diagnosis, full-session grade or game designation is established.",
+      "fantasyAnalysis": "Monitor the official report for the reason and participation level before changing lineup or target-share expectations.",
+      "status": "CONFIRMED"
     },
     {
       "eventId": "bal-tyler-huntley-week4-relief-2026-10-04",
@@ -889,15 +943,15 @@
         "team": "BAL",
         "position": "QB"
       },
-      "headline": "Huntley relieved Jackson; future starting role unconfirmed",
-      "summary": "Huntley replaced Lamar Jackson after halftime, and Baltimore now explicitly confirms Jackson did not return from the ankle injury. This resolves the previously unverified return outcome, without assigning Huntley a future start.",
-      "fantasyAnalysis": "Huntley's next opportunity depends on Jackson's evaluation and subsequent team decisions. Do not turn this relief appearance into a confirmed future start.",
+      "headline": "Huntley reportedly taking first-team reps; start unconfirmed",
+      "summary": "RotoWire reports Huntley took first-team reps Wednesday with Jackson unlikely to play. The linked Ravens article confirms Huntley present alongside Joe Fagnano but does not itself specify first-team reps. No Week 5 starter is officially announced.",
+      "fantasyAnalysis": "Huntley remains a conditional quarterback replacement if Jackson is unavailable; verify the starting decision and do not assume fantasy production.",
       "eventType": "ROLE_CHANGE",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T20:46:35Z",
+      "checkedAt": "2026-10-07T18:46:55Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -944,6 +998,18 @@
           "url": "https://www.baltimoreravens.com/news/lamar-jackson-ankle-injury-ravens-titans-tyler-huntley",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T20:44:46Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Clifton Brown",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 7, 2026; exact clock not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/tyler-huntley-news-appears-primed-for-week-5-start-641188",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T18:46:49Z"
         }
       ]
     },
@@ -955,23 +1021,23 @@
         "team": "BAL",
         "position": "WR"
       },
-      "headline": "Flowers active against Tennessee",
-      "summary": "Baltimore confirms Flowers is active, resolving his hamstring-related questionable designation. Fowler's earlier no-hard-pitch-count expectation remains a report about the plan, not a promise of normal snaps.",
-      "fantasyAnalysis": "Active status confirms game-day eligibility, not a guaranteed workload or freedom from an in-game limitation.",
+      "headline": "Zay Flowers absent from early Wednesday practice",
+      "summary": "The Ravens list Zay Flowers among players absent from the early media-open portion of Wednesday practice, without explaining his absence. No new injury diagnosis, full-session grade or game designation is established.",
+      "fantasyAnalysis": "Monitor the official report for the reason and participation level before changing lineup or target-share expectations.",
       "eventType": "ROLE_CHANGE",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T15:38:40Z",
+      "checkedAt": "2026-10-07T18:46:55Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Hamstring",
-        "practiceStatus": "LP",
-        "gameStatus": "ACTIVE",
+        "practiceStatus": null,
+        "gameStatus": null,
         "expectedReturn": null
       },
       "sources": [
@@ -1034,6 +1100,18 @@
           "url": "https://www.baltimoreravens.com/news/zay-flowers-ronnie-stanley-inactives-ravens-titans-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:35:23Z"
+        },
+        {
+          "sourceName": "Baltimore Ravens",
+          "author": "Clifton Brown",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 07, 2026 at 01:53 PM; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.baltimoreravens.com/news/lamar-jackson-not-at-first-practice-following-ankle-injury-ravens-falcons-week-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T18:46:20Z"
         }
       ]
     },
@@ -3958,23 +4036,23 @@
         "team": "IND",
         "position": "WR"
       },
-      "headline": "Keenan Allen downgraded to out for London game",
-      "summary": "The Colts announced October 3 that Allen is OUT against Washington with a groin injury, superseding Friday's questionable designation. The official website table now corroborates OUT.",
-      "fantasyAnalysis": "Use a healthy replacement for the London game. Josh Downs and other Indianapolis pass catchers could gain work, but no target allocation is confirmed. Ashton Dulin remains questionable in the retrieved official report.",
+      "headline": "Allen reportedly returns to Wednesday practice",
+      "summary": "RotoWire cites James Boyd that Allen is practicing Wednesday after the groin-related Week 4 absence. No participation grade or Week 5 clearance is established.",
+      "fantasyAnalysis": "Reassess after the official grade and final status before relying on his return or changing expectations for other Colts receivers.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T15:04:28Z",
+      "checkedAt": "2026-10-07T18:46:55Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Groin",
-        "practiceStatus": "DNP",
-        "gameStatus": "OUT",
+        "practiceStatus": null,
+        "gameStatus": null,
         "expectedReturn": null
       },
       "sources": [
@@ -4073,6 +4151,18 @@
           "url": "https://www.colts.com/team/injury-report/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T15:04:28Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing James Boyd",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 7, 2026 at 11:23am; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/keenan-allen-injury-returns-to-practice-wednesday-641186",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T18:46:20Z"
         }
       ]
     },
@@ -6440,6 +6530,48 @@
       ]
     },
     {
+      "eventId": "min-jordan-addison-hamstring-2026-10-07",
+      "player": {
+        "playerId": null,
+        "name": "Jordan Addison",
+        "team": "MIN",
+        "position": "WR"
+      },
+      "eventType": "INJURY",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T18:46:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring soreness",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Alec Lewis",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 7, 2026; exact clock not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/jordan-addison-news-nursing-hamstring-soreness-641189",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T18:46:20Z"
+        }
+      ],
+      "headline": "Addison reportedly will miss practice with hamstring soreness",
+      "summary": "RotoWire cites Alec Lewis that Addison will miss Wednesday practice with hamstring soreness. O'Connell reportedly characterized it as minor. No final grade or game designation is established.",
+      "fantasyAnalysis": "Monitor later participation and keep a receiver alternative; no absence or replacement share is guaranteed.",
+      "status": "REPORTED"
+    },
+    {
       "eventId": "min-justin-jefferson-thursday-dnp-2026-10-01",
       "player": {
         "playerId": null,
@@ -6648,6 +6780,48 @@
           "checkedAt": "2026-10-07T15:15:35Z"
         }
       ]
+    },
+    {
+      "eventId": "ne-aj-brown-recovery-observation-2026-10-07",
+      "player": {
+        "playerId": null,
+        "name": "A.J. Brown",
+        "team": "NE",
+        "position": "WR"
+      },
+      "eventType": "INJURY",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T18:46:55Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Doug Kyed",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 7, 2026; exact clock not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/aj-brown-injury-walking-without-limp-641183",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T18:46:20Z"
+        }
+      ],
+      "headline": "Brown observed walking without noticeable limp",
+      "summary": "RotoWire cites Doug Kyed that Brown walked in the locker room Wednesday without a noticeable limp. This is a limited recovery observation, not practice participation, IR activation or game clearance.",
+      "fantasyAnalysis": "Wait for a practice-window and activation decision before relying on a return; do not infer a return date from walking.",
+      "status": "REPORTED"
     },
     {
       "eventId": "ne-behren-morton-week4-inactive-2026-10-04",
@@ -12758,5 +12932,5 @@
       ]
     }
   ],
-  "contentHash": "d351938c0c016514769e510688c0b9784de662e7895be0431d3a536a9a1a5111"
+  "contentHash": "8da0a60ca628576b19d2a743380d158ed7e54e9ef4cde3f5c61685bd1133174d"
 }
