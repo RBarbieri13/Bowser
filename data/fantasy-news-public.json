@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T12:07:32Z",
-  "updatedAt": "2026-10-07T12:08:18.537Z",
-  "revision": "bowser-public-news-20261007T120818537Z",
+  "checkedAt": "2026-10-07T15:15:35Z",
+  "updatedAt": "2026-10-07T15:16:35.510Z",
+  "revision": "bowser-public-news-20261007T151635510Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -1775,24 +1775,24 @@
         "team": "CAR",
         "position": "WR"
       },
-      "headline": "Coker inactive as Sunday-night game gets underway",
-      "summary": "Coker remains officially inactive against Detroit with his quadriceps issue. Detroit's official game center now confirms first-quarter play. The earlier replacement-before-kickoff guidance is historical; Carolina's identified available receiver group is unchanged.",
-      "fantasyAnalysis": "Do not treat players in this underway game as available for lineup swaps. McMillan and the other active receivers could gain opportunities with Coker unavailable and Legette on IR, but no target share or replacement starting order is guaranteed.",
+      "headline": "Panthers reportedly hopeful Coker returns after Week 5 bye",
+      "summary": "RotoWire attributes to Jeremy Fowler optimism that Coker can return from his quadriceps injury after the Week 5 bye, potentially Week 6 against Philadelphia October 18. His confirmed Week 4 inactive status is historical; no clearance or new practice grade is established.",
+      "fantasyAnalysis": "Monitor post-bye practice before relying on Coker. Any reduction in replacement receivers' opportunities depends on his actual return and workload.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T00:51:55Z",
+      "checkedAt": "2026-10-07T15:15:35Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Quadriceps",
-        "practiceStatus": "LP",
-        "gameStatus": "INACTIVE",
-        "expectedReturn": "Unavailable for Week 4; later availability unconfirmed."
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Reported hope for Week 6 after Week 5 bye; not cleared"
       },
       "sources": [
         {
@@ -1854,6 +1854,18 @@
           "url": "https://www.detroitlions.com/game-day/2026/reg-week4/lions-at-panthers/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-05T00:48:51Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Jeremy Fowler",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 7, 2026; exact clock not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/jalen-coker-injury-could-return-after-week-5-bye-641161",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T15:15:21Z"
         }
       ]
     },
@@ -6248,6 +6260,90 @@
       ]
     },
     {
+      "eventId": "min-devin-neal-practice-squad-release-2026-10-06",
+      "player": {
+        "playerId": null,
+        "name": "Devin Neal",
+        "team": "MIN",
+        "position": "RB"
+      },
+      "headline": "Vikings release Devin Neal from practice squad",
+      "summary": "Minnesota's official log records Neal's practice-squad release October 6.",
+      "fantasyAnalysis": "No game-day elevation, offensive workload or automatic fantasy pickup is established.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T15:15:35Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Minnesota Vikings",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Transaction log dates only; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.vikings.com/team/transactions/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T15:14:56Z"
+        }
+      ]
+    },
+    {
+      "eventId": "min-jeshaun-jones-waived-2026-10-05",
+      "player": {
+        "playerId": null,
+        "name": "Jeshaun Jones",
+        "team": "MIN",
+        "position": "WR"
+      },
+      "headline": "Vikings waived Jeshaun Jones Monday",
+      "summary": "Minnesota's official log records Jones waived October 5; this earlier transaction is newly reconciled, not a Wednesday move.",
+      "fantasyAnalysis": "No game-day elevation, offensive workload or automatic fantasy pickup is established.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T15:15:35Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Minnesota Vikings",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Transaction log dates only; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.vikings.com/team/transactions/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T15:14:56Z"
+        }
+      ]
+    },
+    {
       "eventId": "min-justin-jefferson-thursday-dnp-2026-10-01",
       "player": {
         "playerId": null,
@@ -6412,6 +6508,48 @@
           "url": "https://www.vikings.com/news/vikings-dolphins-inactives-week-4-2026-nfl-season",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T19:35:51Z"
+        }
+      ]
+    },
+    {
+      "eventId": "min-odell-beckham-practice-squad-agreement-2026-10-07",
+      "player": {
+        "playerId": null,
+        "name": "Odell Beckham Jr.",
+        "team": "MIN",
+        "position": "WR"
+      },
+      "headline": "Beckham reportedly agrees to Vikings practice squad",
+      "summary": "RotoWire attributes to Jordan Schultz a Wednesday agreement for Beckham to join Minnesota's practice squad. The team log retrieved through October 6 does not yet verify the signing.",
+      "fantasyAnalysis": "No game-day elevation, offensive workload or automatic fantasy pickup is established.",
+      "eventType": "TRANSACTION",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T15:15:35Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Jordan Schultz",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 7, 2026 at 8:02am; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/odell-beckham-news-catches-on-with-vikings-641162",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T15:15:35Z"
         }
       ]
     },
@@ -12128,5 +12266,5 @@
       ]
     }
   ],
-  "contentHash": "8691df006f0e202ace56a9d569e63d9629ef26bb0d363ad13587ce248bade97d"
+  "contentHash": "c9c1b77fe2899f8b68daa2f26b7c4b09a4c1be835eb60d8a151f93abc3c02358"
 }
