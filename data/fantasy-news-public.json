@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T15:15:35Z",
-  "updatedAt": "2026-10-07T15:16:35.510Z",
-  "revision": "bowser-public-news-20261007T151635510Z",
+  "checkedAt": "2026-10-07T16:05:44Z",
+  "updatedAt": "2026-10-07T16:06:36.512Z",
+  "revision": "bowser-public-news-20261007T160636512Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -8451,6 +8451,48 @@
       ]
     },
     {
+      "eventId": "phi-dameon-pierce-active-roster-report-2026-10-07",
+      "player": {
+        "playerId": null,
+        "name": "Dameon Pierce",
+        "team": "PHI",
+        "position": "RB"
+      },
+      "headline": "Pierce reportedly promoted to Eagles 53-man roster",
+      "summary": "RotoWire attributes to Jeremy Fowler a Wednesday promotion of Pierce from Philadelphia's practice squad to the 53-man roster. The retrieved official transaction log does not yet record this move. Bigsby is on IR while Barkley's Week 5 status remains unresolved.",
+      "fantasyAnalysis": "Pierce could share work with Shipley if Barkley misses time, but no carry split or lead back is confirmed. Monitor official roster and injury updates; check actual availability before considering a speculative pickup.",
+      "eventType": "TRANSACTION",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T16:05:44Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff; reporting attributed to Jeremy Fowler",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 7, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/dameon-pierce-news-elevated-to-53-man-roster-641164",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T16:05:33Z"
+        }
+      ]
+    },
+    {
       "eventId": "phi-goedert-estimated-dnp-20260930",
       "player": {
         "playerId": null,
@@ -8918,15 +8960,15 @@
         "team": "PHI",
         "position": "RB"
       },
-      "headline": "Bigsby reportedly placed on injured reserve",
-      "summary": "RotoWire attributes to Zach Berman that Philadelphia placed Bigsby on injured reserve Tuesday, October 6, following the earlier reported need for core muscle surgery. This advances the planned IR move to a reported completed transaction. The official team transaction log had not yet shown the move when checked.",
+      "headline": "Eagles officially confirm Bigsby on injured reserve",
+      "summary": "Philadelphia's official transaction log now records Bigsby placed on injured reserve October 6, corroborating the earlier Berman report. The previously reported need for core muscle surgery is not verification that surgery has occurred.",
       "fantasyAnalysis": "Do not treat Bigsby as healthy Barkley cover. Shipley is a conditional alternative to monitor if Barkley remains unavailable, but additions to the backfield and the workload split are unsettled.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T23:35:30Z",
+      "checkedAt": "2026-10-07T16:05:44Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -9009,6 +9051,18 @@
           "url": "https://www.rotowire.com/football/headlines/tank-bigsby-injury-placed-on-ir-641081",
           "isOriginalSource": false,
           "checkedAt": "2026-10-06T23:35:20Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Transaction dated 10/06; no publication/update clock displayed",
+          "publishedDate": null,
+          "url": "https://www.philadelphiaeagles.com/team/transactions/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T16:05:00Z"
         }
       ]
     },
@@ -12266,5 +12320,5 @@
       ]
     }
   ],
-  "contentHash": "c9c1b77fe2899f8b68daa2f26b7c4b09a4c1be835eb60d8a151f93abc3c02358"
+  "contentHash": "fb1132265d83f0ebc19d8e956083942f95a98daffd07bca977243d7b04dda0cd"
 }
