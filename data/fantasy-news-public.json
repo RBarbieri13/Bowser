@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T17:16:15Z",
-  "updatedAt": "2026-10-07T17:17:29.317Z",
-  "revision": "bowser-public-news-20261007T171729317Z",
+  "checkedAt": "2026-10-07T17:30:25Z",
+  "updatedAt": "2026-10-07T17:31:55.760Z",
+  "revision": "bowser-public-news-20261007T173155760Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -8379,6 +8379,60 @@
       ]
     },
     {
+      "eventId": "nyj-tim-patrick-practice-window-2026-10-07",
+      "player": {
+        "playerId": null,
+        "name": "Tim Patrick",
+        "team": "NYJ",
+        "position": "WR"
+      },
+      "headline": "Jets reportedly opening Patrick practice window",
+      "summary": "The Jet Press, citing Brian Costello, reports the Jets are opening Patrick's practice window Wednesday, October 7 following his groin-related injured-reserve stint. RotoWire also describes an opened 21-day window. The official transaction log has not yet corroborated the move.",
+      "fantasyAnalysis": "Monitor his practice progression and formal activation before considering him for a lineup. A window is not game clearance, and any receiving opportunity depends on health and team usage.",
+      "eventType": "RETURN",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T17:30:25Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Practice window reportedly opening; game return unconfirmed"
+      },
+      "sources": [
+        {
+          "sourceName": "The Jet Press",
+          "author": "Charlie Baduini, citing Brian Costello",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-07T16:00:00Z",
+          "publishedAtRaw": "Oct 7, 2026, 12:00 PM EDT; article text retrieved through current search index, direct open unavailable",
+          "publishedDate": "2026-10-07",
+          "url": "https://thejetpress.com/jets-may-have-some-wr-reinforcements-on-way-tim-patrick-01m4bfv8mm0h",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T17:30:04Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 7, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/adonai-mitchell-injury-remains-week-to-week-641170",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T17:15:10Z"
+        }
+      ]
+    },
+    {
       "eventId": "phi-andy-dalton-qb3-2026-10-04",
       "player": {
         "playerId": null,
@@ -12476,5 +12530,5 @@
       ]
     }
   ],
-  "contentHash": "ff0b24eecc0abd8696e51608f7d450af3d58c567969f655d1aa4dfbe07514293"
+  "contentHash": "4af8dad9cc2928224ea12736f1da9fe644d75d3d984590e061e08ca3cd2813aa"
 }
