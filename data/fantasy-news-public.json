@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T17:57:25Z",
-  "updatedAt": "2026-10-07T17:58:15.472Z",
-  "revision": "bowser-public-news-20261007T175815472Z",
+  "checkedAt": "2026-10-07T18:12:20Z",
+  "updatedAt": "2026-10-07T18:14:01.555Z",
+  "revision": "bowser-public-news-20261007T181401555Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2525,15 +2525,15 @@
         "team": "CIN",
         "position": "WR"
       },
-      "headline": "Chase ruled out with concussion, NFL.com reports",
-      "summary": "NFL.com's official Sunday roundup states Chase was ruled out after suffering a concussion, corroborating Ben Baby's earlier report. The Bengals' original posts documented evaluation and the OUT decision. No recovery timetable or Week 5 status is confirmed.",
-      "fantasyAnalysis": "Higgins' separate reported adductor injury adds uncertainty to the receiving group. Prepare healthy alternatives pending both evaluations; no next-week absence or fixed target share is established.",
+      "headline": "Chase reportedly remains in concussion protocol Wednesday",
+      "summary": "RotoWire, citing Ben Baby, reports Chase remains in concussion protocol on Wednesday, October 7. No Week 5 clearance or final absence has been established.",
+      "fantasyAnalysis": "Keep a receiver alternative. Meyers and Gesicki could receive more opportunities if Chase remains out, also depending on Higgins health; no fixed shares are established.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T21:58:36Z",
+      "checkedAt": "2026-10-07T18:12:20Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2541,7 +2541,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Concussion, reported by NFL.com and Ben Baby",
         "practiceStatus": null,
-        "gameStatus": "OUT FOR GAME",
+        "gameStatus": null,
         "expectedReturn": "Week 5 status and recovery timetable unconfirmed."
       },
       "sources": [
@@ -2604,6 +2604,18 @@
           "url": "https://www.nfl.com/news/notable-injuries-news-sunday-week-4-games",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T21:57:59Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Ben Baby",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 7, 2026; exact clock not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/jamarr-chase-injury-remains-in-concussion-protocol-641179",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T18:11:15Z"
         }
       ]
     },
@@ -3461,15 +3473,15 @@
         "team": "GB",
         "position": "RB"
       },
-      "headline": "Brooks left with ankle injury; postgame status unresolved",
-      "summary": "Green Bay's final recap notes Brooks left with an ankle injury. His last in-game designation was questionable to return; the recap does not explicitly establish whether he returned. No severity or recovery timetable is verified.",
-      "fantasyAnalysis": "Reassess Brooks' evaluation before next-week plans. Lloyd remains a conditional contingency, with no future exclusive role or fixed touch split established.",
+      "headline": "Brooks reportedly will miss Wednesday practice",
+      "summary": "RotoWire, citing Matt Schneidman, reports Brooks will not practice Wednesday, October 7 because of his ankle injury. No completed official grade, severity or final Week 5 designation is established.",
+      "fantasyAnalysis": "Monitor practice and availability; no guaranteed redistribution of backfield touches follows.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T20:19:23Z",
+      "checkedAt": "2026-10-07T18:12:20Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -3477,7 +3489,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Ankle",
         "practiceStatus": null,
-        "gameStatus": "QUESTIONABLE TO RETURN (LAST IN-GAME REPORT)",
+        "gameStatus": null,
         "expectedReturn": "Game finished; explicit return outcome and future availability unconfirmed."
       },
       "sources": [
@@ -3516,6 +3528,18 @@
           "url": "https://www.packers.com/news/in-game-updates-week-4-buccaneers-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T20:16:37Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Matt Schneidman",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Feed entry dated October 7, 2026; exact clock unavailable; standalone article did not load",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/news.php",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T18:11:15Z"
         }
       ]
     },
@@ -4851,15 +4875,15 @@
         "team": "LA",
         "position": "TE"
       },
-      "headline": "Ferguson medial ankle sprain behind IR move; in-season return expected",
-      "summary": "The Rams report McVay attributed Ferguson IR placement to the severity of a medial ankle sprain. McVay expects him back before the season ends and does not want to rush the recovery. No exact return date or practice window is established.",
-      "fantasyAnalysis": "Keep multiweek tight-end cover; an in-season return expectation is not near-term clearance. Other Rams tight ends could gain opportunities, without a guaranteed workload.",
+      "headline": "McVay reportedly expects Ferguson back after minimum IR absence",
+      "summary": "Cameron DaSilva reports Wednesday that McVay said on Monday's Coach McVay Show he expects Ferguson ready after the minimum four-game IR absence. This is a recovery expectation from October 5, not a new Wednesday medical clearance or activation; earlier caution against rushing the medial ankle sprain remains relevant.",
+      "fantasyAnalysis": "Retain a tight-end replacement during IR. Monitor the eventual practice window and activation; the optimistic estimate does not guarantee a return date or workload.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T00:16:42Z",
+      "checkedAt": "2026-10-07T18:12:20Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -4868,7 +4892,7 @@
         "bodyPart": "Medial ankle sprain",
         "practiceStatus": null,
         "gameStatus": null,
-        "expectedReturn": "In-season return expected by coach; exact timing unresolved"
+        "expectedReturn": "Reported expectation after minimum four-game IR absence; not clearance"
       },
       "sources": [
         {
@@ -4966,6 +4990,18 @@
           "url": "https://www.therams.com/news/rams-injury-updates-bills-week-5-2026-jaylen-watson-aaron-donald-terrance-ferguson-monday-night-football",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T00:15:37Z"
+        },
+        {
+          "sourceName": "Rams Wire via Yahoo Sports",
+          "author": "Cameron DaSilva",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-07T16:49:00Z",
+          "publishedAtRaw": "Wed, October 7, 2026 at 4:49 PM UTC; reporting Monday October 5 show remarks; indexed article text",
+          "publishedDate": "2026-10-07",
+          "url": "https://sports.yahoo.com/articles/rams-te-terrance-ferguson-ready-164946720.html",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T18:12:10Z"
         }
       ]
     },
@@ -5901,15 +5937,15 @@
         "team": "LV",
         "position": "WR"
       },
-      "headline": "Nailor ruled out with concussion against Chiefs",
-      "summary": "The Raiders' original team announcement confirms Nailor is OUT with a concussion against Kansas City, corroborating NFL.com's earlier roundup. No future availability decision or recovery timetable is supplied.",
-      "fantasyAnalysis": "Other Raiders receivers could receive additional opportunities for the rest of the game, without a fixed target share. Reassess later availability after evaluation rather than assuming a future absence.",
+      "headline": "Nailor reportedly will miss Wednesday practice",
+      "summary": "RotoWire, citing Sam Warren, reports Nailor will not practice Wednesday, October 7 while dealing with a concussion. No Week 5 clearance or final designation is established.",
+      "fantasyAnalysis": "Keep a receiver alternative and await protocol clearance; no replacement target share is established.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-04T22:37:29Z",
+      "checkedAt": "2026-10-07T18:12:20Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -5917,7 +5953,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Concussion",
         "practiceStatus": null,
-        "gameStatus": "OUT FOR GAME",
+        "gameStatus": null,
         "expectedReturn": "Future availability and recovery timetable unknown."
       },
       "sources": [
@@ -5944,6 +5980,18 @@
           "url": "https://x.com/Raiders/status/2106868820321402986?s=20",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T22:36:42Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Sam Warren",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Feed entry dated October 7, 2026; exact clock unavailable; standalone article did not load",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/news.php",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T18:11:15Z"
         }
       ]
     },
@@ -8344,23 +8392,23 @@
         "team": "NYJ",
         "position": "TE"
       },
-      "headline": "Taylor officially ruled out against Chicago",
-      "summary": "The Jets' final table lists Mason Taylor DNP Friday and OUT, corroborating the earlier official coach announcement.",
-      "fantasyAnalysis": "Use a healthy replacement. The final Friday report lists Sadiq questionable and Ruckert full without a game designation. Neither is guaranteed to inherit a fixed target share.",
+      "headline": "Taylor reportedly set to practice Wednesday",
+      "summary": "RotoWire, citing Eric Allen, reports Taylor will practice Wednesday, October 7 following his thumb-related absence. A planned return does not establish the participation grade or game clearance.",
+      "fantasyAnalysis": "Reassess after the official report; do not assume a receiving workload or reduction for other Jets tight ends yet.",
       "eventType": "INJURY",
-      "status": "CONFIRMED",
+      "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-03T00:48:25Z",
+      "checkedAt": "2026-10-07T18:12:20Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Thumb",
-        "practiceStatus": "DNP",
-        "gameStatus": "OUT",
+        "practiceStatus": null,
+        "gameStatus": null,
         "expectedReturn": null
       },
       "sources": [
@@ -8411,6 +8459,18 @@
           "url": "https://www.newyorkjets.com/news/jets-injury-report-week-4-vs-bears-friday-10-02-2026",
           "isOriginalSource": true,
           "checkedAt": "2026-10-03T00:48:25Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Eric Allen",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Feed entry dated October 7, 2026; exact clock unavailable; standalone article did not load",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/news.php",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T18:11:15Z"
         }
       ]
     },
@@ -11910,15 +11970,15 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Daniels targeting full practice week and Week 5 start",
-      "summary": "RotoWire attributes to Quinn via Zach Selby a plan for Daniels to have a full practice week and then start against the Giants. This is a conditional target, not observed full participation or game clearance.",
-      "fantasyAnalysis": "Keep quarterback cover until actual practice and a final availability decision. No automatic replacement start or normal workload is assured.",
+      "headline": "Daniels observed throwing at Wednesday practice",
+      "summary": "RotoWire, citing John Keim, reports Daniels throwing during the media-open portion of Wednesday practice. Quinn previously targeted a full week and Sunday start, but this observation does not establish full participation or Week 5 clearance.",
+      "fantasyAnalysis": "Keep a quarterback alternative until the official grade and final availability are known; do not equate throwing with unrestricted game usage.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T22:43:15Z",
+      "checkedAt": "2026-10-07T18:12:20Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -12000,6 +12060,18 @@
           "url": "https://www.rotowire.com/football/news.php?view=injuries",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T22:42:18Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing John Keim",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 7, 2026 at 10:37am; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/jayden-daniels-injury-practicing-wednesday-641176",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T18:11:15Z"
         }
       ]
     },
@@ -12441,6 +12513,48 @@
       ]
     },
     {
+      "eventId": "was-stefon-diggs-practice-absence-2026-10-07",
+      "player": {
+        "playerId": null,
+        "name": "Stefon Diggs",
+        "team": "WAS",
+        "position": "WR"
+      },
+      "headline": "Diggs absent from media-open Wednesday practice",
+      "summary": "RotoWire, citing John Keim, reports Diggs was absent from the media-open portion of Wednesday practice. The reason is undisclosed; no injury diagnosis, full-session grade or final game designation is established.",
+      "fantasyAnalysis": "Monitor the official explanation and later participation before changing a lineup. Other Washington receivers could benefit only if an actual limitation or absence is confirmed.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T18:12:20Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing John Keim",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 7, 2026 at 10:38am; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/stefon-diggs-news-not-present-for-wednesdays-practice-641175",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T18:11:15Z"
+        }
+      ]
+    },
+    {
       "eventId": "was-terry-mclaurin-friday-hamstring-2026-10-02",
       "player": {
         "playerId": null,
@@ -12644,5 +12758,5 @@
       ]
     }
   ],
-  "contentHash": "ec1bb4417558f50efdba5ff9b00eb9ede5deb7f4b3beca9a87afdea70c0364aa"
+  "contentHash": "d351938c0c016514769e510688c0b9784de662e7895be0431d3a536a9a1a5111"
 }
