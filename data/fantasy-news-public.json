@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T17:30:25Z",
-  "updatedAt": "2026-10-07T17:31:55.760Z",
-  "revision": "bowser-public-news-20261007T173155760Z",
+  "checkedAt": "2026-10-07T17:49:45Z",
+  "updatedAt": "2026-10-07T17:51:09.943Z",
+  "revision": "bowser-public-news-20261007T175109943Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -644,15 +644,15 @@
         "team": "BAL",
         "position": "QB"
       },
-      "headline": "Jackson reportedly unlikely for Week 5 with unusual ankle sprain",
-      "summary": "RotoWire attributes to Ian Rapoport an unusual type of ankle sprain that makes Jackson unlikely for Week 5 and could cost multiple games. It is not characterized as necessarily a conventional low- or high-ankle sprain. A week-by-week assessment is expected; no final OUT decision or fixed absence is established.",
-      "fantasyAnalysis": "Prepare a quarterback alternative before Baltimore's Sunday-night game. Huntley would be the conditional replacement if Jackson cannot play; verify the starter and fantasy availability before acting.",
+      "headline": "Jackson reportedly absent Wednesday; Huntley gets first-team reps",
+      "summary": "RotoWire, citing Jamison Hensley, reports Jackson is not practicing Wednesday with his ankle injury and Huntley took first-team reps. Earlier unlikely-to-play and possible-multiple-game reports remain estimates; no final Week 5 OUT designation is established.",
+      "fantasyAnalysis": "Maintain a quarterback alternative. Huntley is the conditional replacement if Jackson cannot play; practice reps do not guarantee the starting decision or fantasy production.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T21:31:00Z",
+      "checkedAt": "2026-10-07T17:49:45Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -660,7 +660,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Ankle; earlier back listing",
         "practiceStatus": null,
-        "gameStatus": "DID NOT RETURN",
+        "gameStatus": null,
         "expectedReturn": "Reported outside chance for Week 5; possible multiple missed games, no final designation"
       },
       "sources": [
@@ -866,6 +866,18 @@
           "url": "https://www.rotowire.com/football/headlines/lamar-jackson-injury-viewed-as-unlikely-for-week-5-641070",
           "isOriginalSource": false,
           "checkedAt": "2026-10-06T21:30:50Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Jamison Hensley",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 7, 2026 at 10:20am; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/lamar-jackson-injury-not-practicing-wednesday-641171",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T17:48:35Z"
         }
       ]
     },
@@ -2249,15 +2261,15 @@
         "team": "CHI",
         "position": "RB"
       },
-      "headline": "Monangai day-to-day with right-thumb injury",
-      "summary": "RotoWire attributes to Johnson via Patrick Finley a day-to-day outlook after Monangai injured his right thumb against the Jets. No Week 5 clearance or confirmed absence was supplied.",
-      "fantasyAnalysis": "Monitor practice before relying on him. Any extra Swift work remains conditional; no permanent role change or fixed split is established.",
+      "headline": "Johnson reportedly downplays Monangai thumb concern",
+      "summary": "RotoWire attributes to Ben Johnson via Courtney Cronin that Monangai's thumb injury is not an issue Wednesday. This reassuring coach assessment is not a final practice grade, game designation or workload commitment.",
+      "fantasyAnalysis": "Monitor the official injury report before finalizing a lineup; the comment does not establish an increased share over Swift.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T22:43:15Z",
+      "checkedAt": "2026-10-07T17:49:45Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2304,6 +2316,18 @@
           "url": "https://www.rotowire.com/football/news.php?view=injuries",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T22:42:18Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Courtney Cronin",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 7, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/kyle-monangai-injury-thumb-injury-not-considered-an-issue-641174",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T17:48:35Z"
         }
       ]
     },
@@ -2591,15 +2615,15 @@
         "team": "CIN",
         "position": "WR"
       },
-      "headline": "Higgins day-to-day, Taylor reportedly says",
-      "summary": "Ben Baby's reporting, relayed by RotoWire, attributes a day-to-day outlook for Higgins' adductor injury to Zac Taylor on Monday. No Week 5 clearance, practice participation grade or confirmed missed game is established.",
-      "fantasyAnalysis": "Retain receiver alternatives pending practice and game status. Opportunities for other Bengals receivers depend on Higgins' recovery and Chase's concussion clearance; no fixed target redistribution is established.",
+      "headline": "Higgins reportedly scheduled for limited Wednesday practice",
+      "summary": "RotoWire, citing Ben Baby, reports Higgins is scheduled for limited Wednesday practice with his adductor injury after an earlier day-to-day outlook. No completed official grade or Week 5 clearance is established.",
+      "fantasyAnalysis": "Keep a receiver alternative while monitoring participation and final status. Any extra Meyers or Gesicki opportunity depends on Higgins and Chase availability; no target share is guaranteed.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T19:48:30Z",
+      "checkedAt": "2026-10-07T17:49:45Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2634,6 +2658,18 @@
           "url": "https://www.rotowire.com/football/headlines/tee-higgins-injury-deemed-day-to-day-640886",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T19:47:47Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Ben Baby",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on October 7, 2026 at 10:23am; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/tee-higgins-injury-will-be-limited-wednesday-641172",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T17:48:35Z"
         }
       ]
     },
@@ -6813,6 +6849,60 @@
           "url": "https://www.patriots.com/news/week-4-inactives-patriots-at-bills",
           "isOriginalSource": true,
           "checkedAt": "2026-10-04T15:36:27Z"
+        }
+      ]
+    },
+    {
+      "eventId": "ne-rhamondre-stevenson-practice-concern-2026-10-07",
+      "player": {
+        "playerId": null,
+        "name": "Rhamondre Stevenson",
+        "team": "NE",
+        "position": "RB"
+      },
+      "headline": "Stevenson reportedly not expected at Wednesday practice",
+      "summary": "RotoWire, citing Taylor Kyles, reports Stevenson is not expected to practice Wednesday, October 7 with an undisclosed issue, but still has a chance to play. No diagnosis, completed practice grade or final game designation is established.",
+      "fantasyAnalysis": "Keep an RB alternative ready and monitor the official report. Henderson, listed second on the team-published unofficial depth chart, is a conditional beneficiary if Stevenson is limited or unavailable; no carry share is guaranteed.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-10-07T17:49:45Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": null,
+        "practiceStatus": null,
+        "gameStatus": null,
+        "expectedReturn": "Week 5 availability unresolved; issue undisclosed"
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": "RotoWire Staff, citing Taylor Kyles",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published on October 7, 2026; exact publication clock not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.rotowire.com/football/headlines/rhamondre-stevenson-news-not-expected-to-practice-wednesday-641173",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T17:48:35Z"
+        },
+        {
+          "sourceName": "New England Patriots",
+          "author": "Patriots.com writers",
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Team-published unofficial depth chart; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.patriots.com/team/depth-chart",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T17:49:23Z"
         }
       ]
     },
@@ -12530,5 +12620,5 @@
       ]
     }
   ],
-  "contentHash": "4af8dad9cc2928224ea12736f1da9fe644d75d3d984590e061e08ca3cd2813aa"
+  "contentHash": "f28363fa6ab53e18b143dbe3fab370a74e5c0cd2bfebcd02a64249abf16310cd"
 }
