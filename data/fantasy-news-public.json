@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T00:56:53Z",
-  "updatedAt": "2026-10-07T00:57:30.492Z",
-  "revision": "bowser-public-news-20261007T005730492Z",
+  "checkedAt": "2026-10-07T12:07:32Z",
+  "updatedAt": "2026-10-07T12:08:18.537Z",
+  "revision": "bowser-public-news-20261007T120818537Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -7304,15 +7304,15 @@
         "team": "NYG",
         "position": "WR"
       },
-      "headline": "Berrios foot/ankle injury; IR decision not confirmed",
-      "summary": "RotoWire attributes to Paul Schwartz that Harbaugh confirmed Berrios has a foot/ankle injury but said an IR decision remains unresolved. Earlier reports described planned IR. The retrieved Giants transaction log stops at October 3 and does not corroborate a completed move.",
-      "fantasyAnalysis": "Monitor the roster decision and recovery timeline before relying on Berrios. No replacement receiving workload or fixed return date is established.",
+      "headline": "Berrios reportedly announces season-ending surgery",
+      "summary": "FantasyPros relays Ari Meirov that Berrios will undergo season-ending surgery for the lower-leg injury suffered October 4. This supersedes the earlier unresolved absence outlook. A completed IR move and completed surgery are not independently verified.",
+      "fantasyAnalysis": "Replace Berrios if relying on him. Replacement return opportunities do not establish a receiving workload or a single confirmed beneficiary.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T22:05:00Z",
+      "checkedAt": "2026-10-07T12:07:32Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -7321,7 +7321,7 @@
         "bodyPart": "Foot/ankle",
         "practiceStatus": null,
         "gameStatus": null,
-        "expectedReturn": "Expected absence reported; IR decision and return date unconfirmed"
+        "expectedReturn": "Season-ending surgery reported; no return this season expected"
       },
       "sources": [
         {
@@ -7359,6 +7359,18 @@
           "url": "https://www.giants.com/team/transactions/",
           "isOriginalSource": true,
           "checkedAt": "2026-10-05T22:04:38Z"
+        },
+        {
+          "sourceName": "FantasyPros",
+          "author": "Ari Koslow; reporting attributed to Ari Meirov",
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-10-07T00:03:00Z",
+          "publishedAtRaw": "Tue, Oct 6th 2026, 8:03pm EDT",
+          "publishedDate": "2026-10-06",
+          "url": "https://www.fantasypros.com/nfl/news/612556/braxton-berrios-leg-to-undergo-season-ending-surgery.php",
+          "isOriginalSource": false,
+          "checkedAt": "2026-10-07T12:07:01Z"
         }
       ]
     },
@@ -11531,15 +11543,15 @@
         "team": "WAS",
         "position": "WR"
       },
-      "headline": "Quinn reportedly confirms Lane will miss rest of season",
-      "summary": "RotoWire attributes to Dan Quinn confirmation that Lane will miss the remainder of the season after his ankle injury, strengthening the earlier likely-season-ending prognosis. A completed roster transaction was not independently verified.",
+      "headline": "Commanders place Jaylin Lane on injured reserve",
+      "summary": "Washington officially records Lane's placement on Reserve/Injured October 6. The earlier reported coach confirmation that his ankle injury ends his season remains attributed to Quinn.",
       "fantasyAnalysis": "Prepare a longer-term replacement if relying on Lane. Other Washington receivers and returners could gain opportunities, but no single beneficiary or workload is confirmed.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-05T23:34:43Z",
+      "checkedAt": "2026-10-07T12:07:32Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -11547,7 +11559,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Left ankle; reported fracture and dislocation",
         "practiceStatus": null,
-        "gameStatus": null,
+        "gameStatus": "IR",
         "expectedReturn": "Rest of season unavailable per reported coach confirmation"
       },
       "sources": [
@@ -11598,6 +11610,18 @@
           "url": "https://www.rotowire.com/football/news.php?view=injuries",
           "isOriginalSource": false,
           "checkedAt": "2026-10-05T23:33:40Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Transaction dated 10/06; publication/update clock not displayed",
+          "publishedDate": null,
+          "url": "https://www.commanders.com/team/transactions/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T12:07:32Z"
         }
       ]
     },
@@ -12104,5 +12128,5 @@
       ]
     }
   ],
-  "contentHash": "6d2dbc7243bf8e238dcfa4ff9e2bf6e5a0b86417e71600f614efd61b5b083115"
+  "contentHash": "8691df006f0e202ace56a9d569e63d9629ef26bb0d363ad13587ce248bade97d"
 }
