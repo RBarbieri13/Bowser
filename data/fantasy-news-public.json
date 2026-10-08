@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-07T18:46:55Z",
-  "updatedAt": "2026-10-07T19:19:37.996Z",
-  "revision": "bowser-public-news-20261007T191937996Z",
+  "checkedAt": "2026-10-08T01:58:15Z",
+  "updatedAt": "2026-10-08T01:59:08.607Z",
+  "revision": "bowser-public-news-20261008T015908607Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -2603,24 +2603,24 @@
         "team": "CIN",
         "position": "WR"
       },
-      "headline": "Chase reportedly remains in concussion protocol Wednesday",
-      "summary": "RotoWire, citing Ben Baby, reports Chase remains in concussion protocol on Wednesday, October 7. No Week 5 clearance or final absence has been established.",
+      "headline": "Chase DNP Wednesday with concussion",
+      "summary": "Official October 7 Wednesday grade is DNP with a concussion. No final Week 5 designation or clearance.",
       "fantasyAnalysis": "Keep a receiver alternative. Meyers and Gesicki could receive more opportunities if Chase remains out, also depending on Higgins health; no fixed shares are established.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-07T18:12:20Z",
+      "checkedAt": "2026-10-08T01:57:38Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Concussion, reported by NFL.com and Ben Baby",
-        "practiceStatus": null,
+        "bodyPart": "Concussion",
+        "practiceStatus": "DNP",
         "gameStatus": null,
-        "expectedReturn": "Week 5 status and recovery timetable unconfirmed."
+        "expectedReturn": "Week 5 final game status not yet designated"
       },
       "sources": [
         {
@@ -2694,6 +2694,18 @@
           "url": "https://www.rotowire.com/football/headlines/jamarr-chase-injury-remains-in-concussion-protocol-641179",
           "isOriginalSource": false,
           "checkedAt": "2026-10-07T18:11:15Z"
+        },
+        {
+          "sourceName": "Cincinnati Bengals",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 07, 2026 at 04:26 PM; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.bengals.com/news/bengals-dolphins-week-5-2026-injury-report",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-08T01:57:38Z"
         }
       ]
     },
@@ -2705,24 +2717,24 @@
         "team": "CIN",
         "position": "WR"
       },
-      "headline": "Higgins reportedly scheduled for limited Wednesday practice",
-      "summary": "RotoWire, citing Ben Baby, reports Higgins is scheduled for limited Wednesday practice with his adductor injury after an earlier day-to-day outlook. No completed official grade or Week 5 clearance is established.",
+      "headline": "Higgins DNP Wednesday despite earlier limited-practice plan",
+      "summary": "Official October 7 Wednesday grade is DNP with groin/neck injuries, superseding the earlier planned limited participation. No final Week 5 designation.",
       "fantasyAnalysis": "Keep a receiver alternative while monitoring participation and final status. Any extra Meyers or Gesicki opportunity depends on Higgins and Chase availability; no target share is guaranteed.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-07T17:49:45Z",
+      "checkedAt": "2026-10-08T01:57:38Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Adductor",
-        "practiceStatus": null,
+        "bodyPart": "Groin/neck",
+        "practiceStatus": "DNP",
         "gameStatus": null,
-        "expectedReturn": "Day-to-day per reported coach comments; Week 5 availability unresolved"
+        "expectedReturn": "Week 5 final game status not yet designated"
       },
       "sources": [
         {
@@ -2760,6 +2772,18 @@
           "url": "https://www.rotowire.com/football/headlines/tee-higgins-injury-will-be-limited-wednesday-641172",
           "isOriginalSource": false,
           "checkedAt": "2026-10-07T17:48:35Z"
+        },
+        {
+          "sourceName": "Cincinnati Bengals",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 07, 2026 at 04:26 PM; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.bengals.com/news/bengals-dolphins-week-5-2026-injury-report",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-08T01:57:38Z"
         }
       ]
     },
@@ -2897,15 +2921,15 @@
         "team": "DAL",
         "position": "WR"
       },
-      "headline": "CeeDee Lamb listed FP in Tuesday Week 5 report",
-      "summary": "The official Week 5 table lists CeeDee Lamb FP in the Tuesday, October 6 column, after the same grade in Monday's walkthrough estimate. Wednesday and final game-status fields remain unfilled; this does not establish game clearance.",
-      "fantasyAnalysis": "Recheck later participation and final status before relying on availability or workload.",
+      "headline": "CeeDee Lamb clears final Thursday-game injury report",
+      "summary": "The official Week 5 table lists CeeDee Lamb FP Wednesday, October 7 with no final game designation. This resolves the earlier unfilled final fields.",
+      "fantasyAnalysis": "Availability is supported by the final report, but no workload increase is guaranteed.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T21:31:00Z",
+      "checkedAt": "2026-10-07T19:39:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2940,8 +2964,62 @@
           "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T21:30:42Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 5 table with Monday, Tuesday, Wednesday and final status columns; publication/update clock absent",
+          "publishedDate": null,
+          "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T19:37:32Z"
         }
       ]
+    },
+    {
+      "eventId": "dal-jonathan-mingo-illness-2026-10-07",
+      "player": {
+        "playerId": null,
+        "name": "Jonathan Mingo",
+        "team": "DAL",
+        "position": "WR"
+      },
+      "eventType": "INJURY",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "sourceQuality": {
+        "confidence": null
+      },
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Illness",
+        "practiceStatus": "DNP",
+        "gameStatus": "QUESTIONABLE",
+        "expectedReturn": null
+      },
+      "sources": [
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 5 table with Monday, Tuesday, Wednesday and final status columns; publication/update clock absent",
+          "publishedDate": null,
+          "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T19:37:32Z"
+        }
+      ],
+      "headline": "Mingo questionable Thursday with illness",
+      "summary": "The official Week 5 table lists Mingo newly DNP Wednesday with illness and QUESTIONABLE for Thursday against Tampa Bay.",
+      "status": "CONFIRMED",
+      "checkedAt": "2026-10-07T19:39:00Z",
+      "fantasyAnalysis": "Monitor subsequent reports and final availability; this update does not guarantee workload or a replacement share."
     },
     {
       "eventId": "dal-tyler-goodson-monday-estimate-2026-10-05",
@@ -2951,15 +3029,15 @@
         "team": "DAL",
         "position": "RB"
       },
-      "headline": "Tyler Goodson listed FP in Tuesday Week 5 report",
-      "summary": "The official Week 5 table lists Tyler Goodson FP in the Tuesday, October 6 column, after the same grade in Monday's walkthrough estimate. Wednesday and final game-status fields remain unfilled; this does not establish game clearance.",
-      "fantasyAnalysis": "Recheck later participation and final status before relying on availability or workload.",
+      "headline": "Tyler Goodson clears final Thursday-game injury report",
+      "summary": "The official Week 5 table lists Tyler Goodson FP Wednesday, October 7 with no final game designation. This resolves the earlier unfilled final fields.",
+      "fantasyAnalysis": "Availability is supported by the final report, but no workload increase is guaranteed.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "LOW",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-06T21:31:00Z",
+      "checkedAt": "2026-10-07T19:39:00Z",
       "sourceQuality": {
         "confidence": null
       },
@@ -2994,6 +3072,18 @@
           "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
           "isOriginalSource": true,
           "checkedAt": "2026-10-06T21:30:42Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 5 table with Monday, Tuesday, Wednesday and final status columns; publication/update clock absent",
+          "publishedDate": null,
+          "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T19:37:32Z"
         }
       ]
     },
@@ -7094,24 +7184,24 @@
         "team": "NE",
         "position": "RB"
       },
-      "headline": "Stevenson reportedly not expected at Wednesday practice",
-      "summary": "Josh Alper reports Vrabel said at Wednesday's press conference that Stevenson is expected to miss the first Week 5 practice after an injury late in the Buffalo game. The coach did not specify its nature. Earlier reporting still left a chance to play; no diagnosis, official completed grade or final game designation is established.",
+      "headline": "Stevenson limited Wednesday with knee injury",
+      "summary": "Official October 7 Wednesday grade is LP with a knee injury, superseding the reported anticipated absence and undisclosed issue. No final Week 5 designation.",
       "fantasyAnalysis": "Keep an RB alternative ready and monitor the official report. Henderson, listed second on the team-published unofficial depth chart, is a conditional beneficiary if Stevenson is limited or unavailable; no carry share is guaranteed.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-07T17:57:25Z",
+      "checkedAt": "2026-10-08T01:57:38Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": null,
-        "practiceStatus": null,
+        "bodyPart": "Knee",
+        "practiceStatus": "LP",
         "gameStatus": null,
-        "expectedReturn": "Week 5 availability unresolved; issue undisclosed"
+        "expectedReturn": "Week 5 final game status not yet designated"
       },
       "sources": [
         {
@@ -7149,6 +7239,18 @@
           "url": "https://sports.yahoo.com/articles/rhamondre-stevenson-mack-hollins-set-171729385.html",
           "isOriginalSource": true,
           "checkedAt": "2026-10-07T17:57:05Z"
+        },
+        {
+          "sourceName": "New England Patriots",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 07, 2026 at 05:38 PM; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.patriots.com/news/week-5-injury-report-patriots-vs-raiders",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-08T01:57:38Z"
         }
       ]
     },
@@ -10925,23 +11027,23 @@
         "team": "TB",
         "position": "QB"
       },
-      "headline": "Mayfield reported absent Wednesday; team preview points to Daniels start",
-      "summary": "Greg Auman, quoted by FantasyPros on October 7, reported Mayfield absent from Wednesday practice. Tampa Bay's official Week 5 preview describes Jalon Daniels' first road start Thursday. The official table still has no Wednesday grade or final designation; Monday and Tuesday DNP entries were walkthrough estimates.",
-      "fantasyAnalysis": "Plan another quarterback option for Thursday. Daniels is the team preview's starting replacement, but rookie production and the duration of Mayfield's absence remain uncertain.",
+      "headline": "Baker Mayfield ruled out for Thursday",
+      "summary": "The official Week 5 table lists Baker Mayfield DNP Wednesday, October 7 and OUT for Thursday against Dallas.",
+      "fantasyAnalysis": "Use a quarterback replacement; the existing Jalon Daniels starting plan remains in place.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-07T16:13:50Z",
+      "checkedAt": "2026-10-07T19:39:00Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Right thumb",
-        "practiceStatus": null,
-        "gameStatus": null,
+        "practiceStatus": "DNP",
+        "gameStatus": "OUT",
         "expectedReturn": "Earlier reported three-to-six-week range remains an estimate; no return clearance"
       },
       "sources": [
@@ -11064,6 +11166,18 @@
           "url": "https://www.buccaneers.com/news/2026-game-preview-buccaneers-cowboys-week-5",
           "isOriginalSource": true,
           "checkedAt": "2026-10-07T16:13:36Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 5 table with Monday, Tuesday, Wednesday and final status columns; publication/update clock absent",
+          "publishedDate": null,
+          "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T19:37:32Z"
         }
       ]
     },
@@ -11534,22 +11648,22 @@
         "team": "TB",
         "position": "TE"
       },
-      "headline": "Kieft reported practicing Wednesday; official grade pending",
-      "summary": "Greg Auman, quoted in FantasyPros' October 7 report, observed Kieft practicing Wednesday. The official Week 5 table still lacks Wednesday and final grades; Monday and Tuesday LP entries were walkthrough estimates. The observation does not establish full participation or game clearance.",
-      "fantasyAnalysis": "Wait for the official Wednesday grade and final designation before treating Kieft as available; no receiving workload increase is established.",
+      "headline": "Ko Kieft clears final Thursday-game injury report",
+      "summary": "The official Week 5 table lists Ko Kieft FP Wednesday, October 7 with no final game designation. This resolves the earlier unfilled final fields.",
+      "fantasyAnalysis": "Availability is supported by the final report, but no workload increase is guaranteed.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-07T16:13:50Z",
+      "checkedAt": "2026-10-07T19:39:00Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Elbow",
-        "practiceStatus": null,
+        "practiceStatus": "FP",
         "gameStatus": null,
         "expectedReturn": "Week 5 final status pending"
       },
@@ -11613,6 +11727,18 @@
           "url": "https://www.buccaneers.com/news/2026-game-preview-buccaneers-cowboys-week-5",
           "isOriginalSource": true,
           "checkedAt": "2026-10-07T16:13:36Z"
+        },
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 5 table with Monday, Tuesday, Wednesday and final status columns; publication/update clock absent",
+          "publishedDate": null,
+          "url": "https://www.buccaneers.com/team/injury-report/week/REG-5",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-07T19:37:32Z"
         }
       ]
     },
@@ -12144,24 +12270,24 @@
         "team": "WAS",
         "position": "QB"
       },
-      "headline": "Daniels observed throwing at Wednesday practice",
-      "summary": "RotoWire, citing John Keim, reports Daniels throwing during the media-open portion of Wednesday practice. Quinn previously targeted a full week and Sunday start, but this observation does not establish full participation or Week 5 clearance.",
+      "headline": "Jayden Daniels full Wednesday practice",
+      "summary": "Official October 7 Wednesday grade is FP with a left elbow injury. This confirms completed full participation, not final game clearance or a guaranteed normal workload.",
       "fantasyAnalysis": "Keep a quarterback alternative until the official grade and final availability are known; do not equate throwing with unrestricted game usage.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-10-07T18:12:20Z",
+      "checkedAt": "2026-10-08T01:58:15Z",
       "sourceQuality": {
         "confidence": null
       },
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "left elbow",
-        "practiceStatus": null,
+        "bodyPart": "Left elbow",
+        "practiceStatus": "FP",
         "gameStatus": null,
-        "expectedReturn": "Full practice week and Week 5 start targeted; clearance pending"
+        "expectedReturn": "Week 5 final game status not yet designated"
       },
       "sources": [
         {
@@ -12246,6 +12372,18 @@
           "url": "https://www.rotowire.com/football/headlines/jayden-daniels-injury-practicing-wednesday-641176",
           "isOriginalSource": false,
           "checkedAt": "2026-10-07T18:11:15Z"
+        },
+        {
+          "sourceName": "Washington Commanders",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Oct 07, 2026 at 03:59 PM; timezone not displayed",
+          "publishedDate": "2026-10-07",
+          "url": "https://www.commanders.com/news/commanders-vs-giants-week-5-injury-report",
+          "isOriginalSource": true,
+          "checkedAt": "2026-10-08T01:58:15Z"
         }
       ]
     },
@@ -12932,5 +13070,5 @@
       ]
     }
   ],
-  "contentHash": "8da0a60ca628576b19d2a743380d158ed7e54e9ef4cde3f5c61685bd1133174d"
+  "contentHash": "5121779dd6d9b06bd7df791644fed6ad50c30e4387dfd09e6781a9eb0eb24767"
 }
