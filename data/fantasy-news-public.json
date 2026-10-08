@@ -3,8 +3,8 @@
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
   "checkedAt": "2026-10-08T01:58:15Z",
-  "updatedAt": "2026-10-08T01:59:08.607Z",
-  "revision": "bowser-public-news-20261008T015908607Z",
+  "updatedAt": "2026-10-08T02:02:33.312Z",
+  "revision": "bowser-public-news-20261008T020233312Z",
   "events": [
     {
       "eventId": "ari-carson-beck-week4-third-quarterback-2026-10-04",
@@ -12272,7 +12272,7 @@
       },
       "headline": "Jayden Daniels full Wednesday practice",
       "summary": "Official October 7 Wednesday grade is FP with a left elbow injury. This confirms completed full participation, not final game clearance or a guaranteed normal workload.",
-      "fantasyAnalysis": "Keep a quarterback alternative until the official grade and final availability are known; do not equate throwing with unrestricted game usage.",
+      "fantasyAnalysis": "Keep QB cover until final availability is known; full Wednesday practice does not guarantee unrestricted game usage.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
@@ -13070,5 +13070,5 @@
       ]
     }
   ],
-  "contentHash": "5121779dd6d9b06bd7df791644fed6ad50c30e4387dfd09e6781a9eb0eb24767"
+  "contentHash": "92580eb9e2f52dee106fd8daad43ce45f53dbcac1e40bd38234453209bea21f9"
 }
