@@ -62,6 +62,15 @@ test('upcoming Team Box rows contain verified DFS and null actual statistics', (
   try {
   const result=queryTeamBoxScores(params('season=2026&team=DET&weeks=2&trendAnchors=2&trendWeeks=5'),file);
   const gibbs=result.data.find(r=>r.player_display_name==='Jahmyr Gibbs');
+  const actualMetrics = ['snaps', 'snap_pct', 'completions', 'passing_attempts', 'passing_yards', 'passing_tds', 'interceptions', 'carries', 'rushing_yards', 'rushing_tds', 'targets', 'receptions', 'receiving_yards', 'receiving_tds', 'fantasy_points'];
+  assert.ok(result.data.length > 0);
+  for (const row of result.data) {
+    assert.equal(row.played, false);
+    assert.equal(row.stats_available, false);
+    assert.equal(row.record_source, 'Verified pregame DFS roster');
+    assert.equal(row.position_finish, null);
+    for (const metric of actualMetrics) assert.equal(row[metric], null, metric);
+  }
   assert.equal(gibbs.played,false); assert.equal(gibbs.stats_available,false);
   for(const key of ['snaps','fantasy_points','position_finish','carries','rushing_yards']) assert.equal(gibbs[key],null);
   assert.equal(gibbs.draft_kings_price,8500);assert.equal(gibbs.draft_kings_projection,getDfsWeek(2026,2).records.find(r=>r.name==='Jahmyr Gibbs').projection);

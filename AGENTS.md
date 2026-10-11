@@ -200,3 +200,8 @@ Robert's Command Center v2 prototype and handoff supersede older Fantasy News la
 - Shared game selectors use 140px cards (128px in compact panes), 76px minimum height and 6px gaps. Retain helmet identities, scores/odds, kickoff status, selection semantics, accessible focus and full-detail tooltips. This supersedes the supplied prototype's larger card geometry.
 - Trend direction cues use bold filled SVG arrows within the existing 16px slot, with bright green rises and red declines; preserve five direction grades, unavailable gaps, metric/history menus and separate sort controls.
 - Trend bar color intensity encodes value against the shared visible-column maximum, never week index. Equal values use equal intensity across rows and weeks. Positive values brighten continuously with value; zero stays neutral and missing stays a gap. Negative observations stay subdued with signed labels/negative markers. This overrides the prototype’s calendar-ordered palette ramp.
+
+## Current-season data coverage (October 10, 2026)
+
+- Keep completed-week coverage separate from a partially imported NFL week. Metadata exposes scheduled/completed/sourced game counts; Player Database defaults to the latest fully sourced week while retaining the three-week window default. Partial weeks remain selectable and labeled. Do not discard genuine Thursday statistics or claim the entire week is complete.
+- Validate every raw-source statistic and snap, require all scheduled games and teams through the requested completed week, preserve the 2025 warehouse byte-for-byte, and retain future-game null semantics. Snapshot tests may advance dated expectations but must retain pregame assertions in isolated fixtures.

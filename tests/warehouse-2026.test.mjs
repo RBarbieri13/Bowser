@@ -13,13 +13,16 @@ test('current snapshot is isolated and the historic warehouse is byte-identical'
   assert.equal(createHash('sha256').update(readFileSync(new URL('../data/fantasy_football.sqlite', import.meta.url))).digest('hex'), 'd3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869');
   const meta = getMeta(undefined, params());
   assert.equal(meta.season, 2026);
+  assert.deepEqual(meta.completedWeeks, [1, 2, 3, 4]);
+  assert.equal(meta.latestCompleteWeek, 4);
+  assert.deepEqual({...meta.weekCoverage.find(w => w.week === 5)}, {week:5,scheduledGames:15,completedGames:1,sourcedGames:1});
   assert.deepEqual(meta.seasons, [2025, 2026]);
-  assert.deepEqual(meta.availableWeeks, [1, 2, 3]);
-  assert.equal(meta.warehouse.completed_games, 48);
-  assert.equal(meta.warehouse.games_with_play_by_play, 48);
-  assert.equal(meta.warehouse.player_stat_rows, 1097);
-  assert.equal(meta.warehouse.stat_rows_with_snap_match, 1097);
-  assert.equal(meta.warehouse.snap_rows, 1273);
+  assert.deepEqual(meta.availableWeeks, [1, 2, 3, 4, 5]);
+  assert.equal(meta.warehouse.completed_games, 65);
+  assert.equal(meta.warehouse.games_with_play_by_play, 65);
+  assert.equal(meta.warehouse.player_stat_rows, 1484);
+  assert.equal(meta.warehouse.stat_rows_with_snap_match, 1484);
+  assert.equal(meta.warehouse.snap_rows, 1722);
   assert.equal(getMeta().season, 2025);
   assert.equal(getMeta().warehouse.player_stat_rows, 5630);
 });
@@ -43,7 +46,7 @@ test('2026 player totals and profile use Week 1 facts and selected scoring', () 
   assert.equal(Number((receiver.fantasy_points - standard.fantasy_points).toFixed(1)), receiver.receptions);
   const profile = queryPlayerProfile(params(`playerId=${receiver.player_id}`));
   assert.equal(profile.meta.season, 2026);
-  assert.equal(profile.data.gameLogs.length, 3);
+  assert.equal(profile.data.gameLogs.length, 4);
   assert.equal(profile.data.gameLogs.find((game) => game.week === 1).fantasy_points, receiver.fantasy_points);
   assert.deepEqual(profile.data.seasonStats.map((row) => row.season), [2026]);
   const noHistory = queryPlayerProfile(params('playerId=00-0041561'));
@@ -56,19 +59,12 @@ test('team box scores and game breakdown use real outcomes and never invent part
   assert.equal(scores.meta.season, 2026);
   assert.equal(scores.meta.weeks[0].scoreLabel, 'W 28-20');
   assert.equal(scores.meta.weeks[1].scoreLabel, 'L 6-28');
-  assert.equal(scores.meta.weeks[2].homeScore, null);
-  assert.equal(scores.meta.weeks[2].result, null);
-  assert.ok(scores.data.filter(row => row.stats_available).every((row) => [1, 2].includes(row.week)));
-  const pregame = scores.data.filter(row => row.week === 4);
-  assert.ok(pregame.length > 0, 'verified Week 4 salaries supply pregame roster rows');
-  const actualMetrics = ['snaps', 'snap_pct', 'completions', 'passing_attempts', 'passing_yards', 'passing_tds', 'interceptions', 'carries', 'rushing_yards', 'rushing_tds', 'targets', 'receptions', 'receiving_yards', 'receiving_tds', 'fantasy_points'];
-  for (const row of pregame) {
-    assert.equal(row.played, false);
-    assert.equal(row.stats_available, false);
-    assert.equal(row.record_source, 'Verified pregame DFS roster');
-    assert.equal(row.position_finish, null);
-    for (const metric of actualMetrics) assert.equal(row[metric], null, metric);
-  }
+  assert.equal(scores.meta.weeks[2].homeScore, 36);
+  assert.ok(scores.data.filter(row => row.stats_available).every(row => [1, 2, 4].includes(row.week)));
+  const week4 = scores.data.filter(row => row.week === 4 && row.stats_available);
+  assert.ok(week4.length > 0, 'Week 4 has sourced actual statistics');
+  assert.ok(week4.some(row => row.snaps > 0 && row.fantasy_points !== null));
+  // Pregame DFS null-actual semantics remain covered by the isolated fixture in dfs-archive.test.mjs.
   const game = queryGameBreakdown(params('gameId=2026_01_DAL_NYG'));
   assert.equal(game.data.game.homeScore, 28);
   assert.equal(game.data.game.awayScore, 20);
@@ -79,7 +75,8 @@ test('team box scores and game breakdown use real outcomes and never invent part
   assert.ok(game.data.playerSegments.length > 10);
   assert.ok(game.data.playerSegments.every((p) => p.total.snaps === null && p.segments.every((segment) => segment.snaps === null)));
   assert.ok(game.data.availability.unavailable.some((item) => item.metric === 'playerParticipation'));
-  const future = queryGameBreakdown(params(`gameId=${scores.meta.weeks[2].gameId}`));
+  const futureGame = queryTeamBoxScores(params('team=NYG&weeks=6')).meta.weeks[0];
+  const future = queryGameBreakdown(params(`gameId=${futureGame.gameId}`));
   assert.equal(future.data.game.homeScore, null);
   assert.deepEqual(future.data.teamSegments, []);
 });
@@ -91,7 +88,7 @@ test('opportunity history and profile preserve current rookies and no-game playe
   assert.ok(players.some((player) => !player.hasNFLHistory));
   assert.ok(players.some((player) => player.recordedGames === 1));
   assert.ok(players.every((player) => player.history.length === 10));
-  assert.ok(players.every((player) => player.history.at(-1).season === 2026 && player.history.at(-1).week === 3));
+  assert.ok(players.every((player) => player.history.at(-1).season === 2026 && player.history.at(-1).week === 4));
   assert.equal(players.find((p) => p.playerId === '00-0040691').history.find((game) => game.key === '2026-1').snaps, 69);
   assert.deepEqual(tracker.meta.trendSeasons, [2025, 2026]);
   assert.equal(queryOpportunityTracker(new URLSearchParams('team=NYG')).meta.historySeason, 2025);
@@ -261,11 +258,11 @@ test('selected-week ranges expose cumulative position rank and honest stats cove
   assert.deepEqual(range.meta.statsCoverage.missingWeeks, []);
   assert.equal(range.meta.positionFinish.label, '2026 Weeks 1, 2 cumulative PPR position rank');
 
-  const missing = queryPlayers(params('search=Jaxson%20Dart&limit=all&weeks=1,4'));
+  const missing = queryPlayers(params('search=Jaxson%20Dart&limit=all&weeks=1,6'));
   assert.equal(missing.data[0].games_played, 1);
   assert.equal(missing.data[0].fantasy_points, 26.6);
   assert.deepEqual(missing.meta.statsCoverage.availableRequestedWeeks, [1]);
-  assert.deepEqual(missing.meta.statsCoverage.missingWeeks, [4]);
+  assert.deepEqual(missing.meta.statsCoverage.missingWeeks, [6]);
   assert.equal(missing.meta.statsCoverage.complete, false);
 });
 
@@ -330,14 +327,14 @@ test('position finish sorts cumulative range ranks before pagination', () => {
 });
 
 test('selected-range trends keep exact base week including unavailable future slots and NFL-wide ranks', () => {
-  const range = queryPlayers(new URLSearchParams('season=2026&seasonType=ALL&weeks=2,3,4&limit=all&trendRange=selected'));
-  assert.deepEqual(range.meta.trendSlots.map(s=>[s.season,s.week]), [[2026,2],[2026,3],[2026,4]]);
+  const range = queryPlayers(new URLSearchParams('season=2026&seasonType=ALL&weeks=3,4,6&limit=all&trendRange=selected'));
+  assert.deepEqual(range.meta.trendSlots.map(s=>[s.season,s.week]), [[2026,3],[2026,4],[2026,6]]);
   assert(range.data.every(p=>p.player_trends.length===3 && p.player_trends.at(-1).fantasyPoints===null));
   const player=range.data.find(p=>p.range_position_rank===1);
-  const filtered=queryPlayers(new URLSearchParams(`season=2026&seasonType=ALL&weeks=2,3,4&limit=all&trendRange=selected&search=${encodeURIComponent(player.player_display_name)}`));
+  const filtered=queryPlayers(new URLSearchParams(`season=2026&seasonType=ALL&weeks=3,4,6&limit=all&trendRange=selected&search=${encodeURIComponent(player.player_display_name)}`));
   assert.equal(filtered.data[0].range_position_rank,player.range_position_rank);
   assert.deepEqual(filtered.meta.trendDomains,range.meta.trendDomains);
-  const future=queryPlayers(new URLSearchParams('season=2026&weeks=5,6,7&trendRange=selected'));
-  assert.deepEqual(future.meta.trendSlots.map(s=>s.week),[5,6,7]);
+  const future=queryPlayers(new URLSearchParams('season=2026&weeks=6,7,8&trendRange=selected'));
+  assert.deepEqual(future.meta.trendSlots.map(s=>s.week),[6,7,8]);
   assert.equal(future.data.length,0);
 });
