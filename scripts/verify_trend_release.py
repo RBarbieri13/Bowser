@@ -33,7 +33,7 @@ def check(condition, name):
 try:
     players = get('/api/v1/player-stats?season=2026&weeks=1&limit=all&includeTrends=1&trendWeeks=10')
     slots = [(2025, week) for week in range(10, 19)] + [(2026, 1)]
-    check(len(players['data']) == 423, 'Verified refreshed Week 1 source coverage: 423 recorded players')
+    check(len(players['data']) == 426, 'Verified refreshed Week 1 source coverage: 426 recorded players')
     check(all([(g['season'], g['week']) for g in p['player_trends']] == slots for p in players['data']), 'All player calendars align across 2025 and 2026')
     by_id = {p['player_id']: p for p in players['data']}
     cam = next(p for p in players['data'] if p['player_display_name'] == 'Cam Skattebo')
@@ -41,6 +41,20 @@ try:
     check(cam['snaps'] == 42 and tracy['snaps'] == 2, '42 versus 2 snap totals retained')
     check(cam['position_finish'] == 18 and tracy['position_finish'] == 107, 'NFL PPR weekly positional finishes retained')
     check(len(players['meta']['trendDomains']) == 19 and players['meta']['trendDomains']['fantasy_points']['min'] < 0, 'Shared metric domains preserve negative points')
+    meta = get('/api/v1/meta?season=2026')
+    check(meta['completedWeeks'] == [1,2,3,4] and meta['latestCompleteWeek'] == 4, 'Four complete NFL weeks; latest complete is Week 4')
+    check(next(w for w in meta['weekCoverage'] if w['week']==5) == {'week':5,'scheduledGames':15,'completedGames':1,'sourcedGames':1}, 'Week 5 Thursday available without claiming a complete week')
+    fourth = get('/api/v1/player-stats?season=2026&weeks=4&limit=all&trendRange=selected')
+    check(len(fourth['data']) == 415 and len({p['team'] for p in fourth['data']}) == 32, 'Week 4 all 415 player records and 32 teams')
+    allen = next(p for p in fourth['data'] if p['player_display_name']=='Josh Allen')
+    check(allen['passing_yards']==253 and allen['snaps']==59 and allen['fantasy_points']==18.5, 'Exact sourced Week 4 Allen stats')
+    four_weeks = get('/api/v1/player-stats?season=2026&weeks=1,2,3,4&limit=all&trendRange=selected')
+    allen_total = next(p for p in four_weeks['data'] if p['player_display_name']=='Josh Allen')
+    check(allen_total['games_played']==4 and allen_total['passing_yards']==1039 and allen_total['fantasy_points']==112.5 and allen_total['range_position_rank']==1, 'All four weeks accumulate and rank correctly')
+    check([g['week'] for g in allen_total['player_trends']]==[1,2,3,4], 'Four-week trend calendar')
+    for team in meta['teams']:
+        box4 = get('/api/v1/team-box-scores?season=2026&team='+team+'&weeks=4')
+        check(any(p['stats_available'] and p['snaps']>0 for p in box4['data']), 'Week 4 Team Box actual stats '+team)
     weekly = json.loads((root / 'data/dfs-weekly.json').read_text())
     # Current intentionally advances to the largest unlocked Classic slate as
     # kickoff passes. Verify that policy separately from broad stored-slate joins.
@@ -115,7 +129,7 @@ try:
     gibbs = [p for p in boxes['data'] if p['player_display_name'] == 'Jahmyr Gibbs']
     check({p['week']:p['draft_kings_price'] for p in gibbs} == {1:8000,2:8500}, 'Team Box prices belong to their exact historical week')
     check(next(p for p in gibbs if p['week']==2)['fantasy_points'] == 23.3, 'Completed Week 2 Gibbs sourced fantasy points retained at 23.3')
-    future = get('/api/v1/team-box-scores?season=2026&team=DET&weeks=4')
+    future = get('/api/v1/team-box-scores?season=2026&team=DET&weeks=6')
     check(all(p['fantasy_points'] is None for p in future['data']), 'Future rows never manufacture actual points')
     cumulative = get('/api/v1/player-stats?season=2026&weeks=1,2&limit=all&trendWeeks=3')
     dart = next(p for p in cumulative['data'] if p['player_display_name'] == 'Jaxson Dart')

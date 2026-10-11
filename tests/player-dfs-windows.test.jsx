@@ -130,3 +130,21 @@ test('whole sections collapse into a narrow restore rail without changing adjace
  expect([...grid().querySelectorAll('col')].map(c=>c.style.width)).toEqual(before);
  expect(grid().querySelectorAll('tbody tr:first-child .lhq-section-boundary').length).toBe(7);
 });
+
+
+test('statistics default to latest complete week while partial current week remains selectable',async()=>{
+ const existingFetch=fetch;
+ vi.stubGlobal('fetch',vi.fn(async input=>{
+  const result=await existingFetch(input),data=await result.json();
+  if(data.availableWeeks){data.availableWeeks=[1,2,3,4,5];data.latestCompleteWeek=4;data.weekCoverage=[{week:4,completedGames:16,sourcedGames:16,scheduledGames:16},{week:5,completedGames:1,sourcedGames:1,scheduledGames:15}];}
+  return response(data);
+ }));
+ render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
+ await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
+ expect(screen.getByLabelText('Base week')).toHaveValue('4');
+ expect(screen.getByLabelText('Weeks back')).toHaveValue('3');
+ expect(screen.getByRole('option',{name:'Week 5 · partial'})).toBeInTheDocument();
+ choose('Base week',5);
+ expect(screen.getByLabelText('Base week')).toHaveValue('5');
+ expect(fetch.mock.calls.some(([u])=>String(u).includes('weeks=3%2C4%2C5'))).toBe(true);
+});

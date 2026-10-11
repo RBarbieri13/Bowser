@@ -324,8 +324,17 @@ export function getMeta(dbPath, searchParams = new URLSearchParams()) {
   const summaryRow = db.prepare("SELECT value FROM warehouse_meta WHERE key = 'summary'").get();
   const draftSummaryRow = db.prepare("SELECT value FROM warehouse_meta WHERE key = 'fantasypros_adp_summary'").get();
   const summary = summaryRow ? JSON.parse(summaryRow.value) : {};
+  const weekCoverage = db.prepare(`SELECT week, COUNT(*) AS scheduledGames,
+    SUM(home_score IS NOT NULL AND away_score IS NOT NULL) AS completedGames,
+    SUM(play_by_play_available=1 AND (SELECT COUNT(DISTINCT team) FROM player_week_stats p
+      WHERE p.game_id=games.game_id AND p.source_player_stats=1 AND p.source_snap_counts=1)=2) AS sourcedGames
+    FROM games GROUP BY week ORDER BY week`).all();
+  const completedWeeks = weekCoverage.filter(w => w.completedGames === w.scheduledGames && w.sourcedGames === w.scheduledGames).map(w => w.week);
   return {
     season,
+    completedWeeks,
+    latestCompleteWeek: completedWeeks.at(-1) ?? null,
+    weekCoverage,
     seasons: AVAILABLE_SEASONS,
     currentSeason: 2026,
     dfsOptions: getDfsSlate('current').meta.options,
