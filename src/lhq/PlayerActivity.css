@@ -1,0 +1,17 @@
+/* Two independent 114px composite columns; headers keep the existing 36px band. */
+.lhq .lhq-grid th.activity-column,.lhq .lhq-grid td.activity-column{padding:0 3px;border-left:1px solid #ffffff17;overflow:visible}
+.activity-header{height:36px;width:100%;display:flex;flex-direction:column}
+.lhq .lhq-grid .activity-provider{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;height:14px;min-height:0;padding:0;border:0;background:none;font:800 10px/14px Arial,sans-serif;color:#eee}
+.activity-badge{color:#a8daed}.activity-yahoo .activity-badge{color:#c5a3ff}
+.activity-provider small{font:600 9px/12px Arial,sans-serif;color:#bcbcbc}
+.activity-sorters,.activity-cells{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;text-align:center}
+.lhq .lhq-grid .activity-sorters button{display:flex;flex-direction:column;align-items:center;justify-content:center;height:22px;min-height:0;min-width:0;padding:0;border:0;background:none;color:#dedede;font:800 12px/12px Arial,sans-serif}
+.lhq .lhq-grid .activity-sorters button>span{font:800 10px/8px Arial,sans-serif}
+.lhq .lhq-grid .activity-sorters button[aria-pressed=true]{color:#35d39a;box-shadow:inset 0 -1px #35d39a}
+.activity-cells{align-items:center;min-height:22px;font:700 11px/20px Arial,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.25px;color:#f3f3f3}
+.activity-cells .lhq-tip-anchor{min-width:0;display:block}.activity-number{display:block;white-space:nowrap}
+.activity-missing{color:#858585}.activity-positive{color:#35d39a}.activity-negative{color:#ed8d7f}
+.activity-menu{position:fixed;z-index:12000;width:240px;box-sizing:border-box;max-height:calc(100vh - 100px);overflow:auto;background:#181818;border:1px solid #484848;border-radius:4px;padding:7px;color:#eee;font:12px/1.35 Arial,sans-serif;box-shadow:0 6px 18px #0009}
+.activity-menu header{display:flex;align-items:center;justify-content:space-between}.activity-menu p{font-size:11px;color:#c5c5c5;margin:6px 0}.activity-menu select{width:100%;height:26px;margin-top:3px;background:#111;color:#eee;border:1px solid #484848;font:12px Arial,sans-serif}.activity-menu label{display:block;margin-top:4px;font-weight:700}
+.activity-menu button,.activity-menu a{color:#35d39a;background:none;border:0;padding:2px 4px;font:700 12px/20px Arial,sans-serif;cursor:pointer}.activity-menu button:disabled{color:#888;cursor:default}
+.activity-header button:focus-visible,.activity-number:focus-visible,.activity-menu :focus-visible{outline:2px solid #35d39a;outline-offset:0}.activity-sorters button:hover,.activity-provider:hover{background:#ffffff12!important}

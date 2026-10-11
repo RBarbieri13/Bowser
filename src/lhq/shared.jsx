@@ -10,6 +10,7 @@ import './sidebarTabs.css';
 import bowserLogo from '../assets/bowser-logo.png';
 const Preferences=createContext({});
 const PublicRefresh=createContext(0);
+export function usePublicRefresh(){return useContext(PublicRefresh);}
 export function useStored(key,fallback,session=false){
  const valid=v=>Array.isArray(fallback)?Array.isArray(v):fallback===null?v===null||typeof v==='boolean':typeof v===typeof fallback&&(typeof fallback!=='object'||v!==null&&!Array.isArray(v));
  const read=()=>{try{const value=JSON.parse((session?sessionStorage:localStorage).getItem(key));return valid(value)?value:fallback;}catch{return fallback;}};

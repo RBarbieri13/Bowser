@@ -307,7 +307,7 @@ test('Player competition ranks follow active metric and direction with ties; Ran
   fireEvent.click(within(grid).getByRole('button', { name: 'Rank', exact: true }));
   expect(cells('Fixture Gamma')[1]).toHaveTextContent(/^1$/);
   expect(cells('Fixture Alpha')[1]).toHaveTextContent(/^2$/);
-  expect(cells('Fixture Alpha')[cells('Fixture Alpha').length - 2]).toHaveTextContent('RB9');
+  expect(cells('Fixture Alpha')[cells('Fixture Alpha').length - 4]).toHaveTextContent('RB9');
   expect(cells('Fixture Alpha')[cells('Fixture Alpha').length - 1]).toHaveClass('lefa-column');
 });
 

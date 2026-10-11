@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "capturedAt": "2026-10-11T15:46:07.974135Z",
-  "importStartedAt": "2026-10-11T15:46:00.850388Z",
+  "capturedAt": "2026-10-11T16:39:51.102178Z",
+  "importStartedAt": "2026-10-11T16:39:43.292033Z",
   "defaultSlate": "2026-w5-dk-154470",
   "season": 2026,
   "week": 5,
@@ -230420,7 +230420,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154470",
-      "capturedAt": "2026-10-11T15:46:04.894147Z",
+      "capturedAt": "2026-10-11T16:39:47.844370Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -230566,7 +230566,7 @@
           "salary": 6200,
           "game": "CHI@GB 10/11/2026 01:00PM ET",
           "gameId": "2026_05_CHI_GB",
-          "status": "Q",
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -231700,7 +231700,7 @@
           "salary": 4000,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -232036,7 +232036,7 @@
           "salary": 4000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -232078,7 +232078,7 @@
           "salary": 4000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -232750,7 +232750,7 @@
           "salary": 5400,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 10.7,
           "projectionSource": "Fantasy Info Central",
@@ -234472,7 +234472,7 @@
           "salary": 4000,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -235900,7 +235900,7 @@
           "salary": 5800,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 8.6,
           "projectionSource": "Fantasy Info Central",
@@ -236068,7 +236068,7 @@
           "salary": 5300,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 10.7,
           "projectionSource": "Fantasy Info Central",
@@ -240016,7 +240016,7 @@
           "salary": 3000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -242935,7 +242935,7 @@
           "salary": 2500,
           "game": "HOU@TEN 10/11/2026 01:00PM ET",
           "gameId": "2026_05_HOU_TEN",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -243460,7 +243460,7 @@
           "salary": 2500,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -244720,7 +244720,7 @@
           "salary": 3100,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -244831,56 +244831,56 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154470.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154470",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154470",
-          "retrievedAt": "2026-10-11T15:46:04.894147Z",
+          "retrievedAt": "2026-10-11T16:39:47.844370Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "e075aec38b30ec6bcb2b9d7d038e212f72478bfe3cd171050151a15fae0ae112",
-          "bytes": 69801
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
+          "sha256": "4e2589c6191e6be33a48ef282ec9fea33b99cf1ea346a893f28b43edbdaa9dfe",
+          "bytes": 69819
         }
       },
       "identityAliasSource": {
@@ -244889,7 +244889,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -245009,7 +245009,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154468",
-      "capturedAt": "2026-10-11T15:46:05.053190Z",
+      "capturedAt": "2026-10-11T16:39:48.083727Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -245113,7 +245113,7 @@
           "salary": 6200,
           "game": "CHI@GB 10/11/2026 01:00PM ET",
           "gameId": "2026_05_CHI_GB",
-          "status": "Q",
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -245995,7 +245995,7 @@
           "salary": 4000,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -246331,7 +246331,7 @@
           "salary": 4000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -246373,7 +246373,7 @@
           "salary": 4000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -246940,7 +246940,7 @@
           "salary": 5400,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 10.7,
           "projectionSource": "Fantasy Info Central",
@@ -248368,7 +248368,7 @@
           "salary": 4000,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -249859,7 +249859,7 @@
           "salary": 5300,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 10.7,
           "projectionSource": "Fantasy Info Central",
@@ -253114,7 +253114,7 @@
           "salary": 3000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -255613,7 +255613,7 @@
           "salary": 2500,
           "game": "HOU@TEN 10/11/2026 01:00PM ET",
           "gameId": "2026_05_HOU_TEN",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -256138,7 +256138,7 @@
           "salary": 2500,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -257251,7 +257251,7 @@
           "salary": 3100,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -257362,56 +257362,56 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154468.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154468",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154468",
-          "retrievedAt": "2026-10-11T15:46:05.053190Z",
+          "retrievedAt": "2026-10-11T16:39:48.083727Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:05 GMT",
-          "sha256": "d314342bd1d2afc81eaf35386e6b6dbc195ad3c6d358e6f86f9164be0b5241d5",
-          "bytes": 59836
+          "httpDate": "Sun, 11 Oct 2026 16:39:48 GMT",
+          "sha256": "ce8508e982f5bc1dabc3c40ff57cafb7786bc508e4e82bc733888775fc0c6989",
+          "bytes": 60113
         }
       },
       "identityAliasSource": {
@@ -257420,7 +257420,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -257513,7 +257513,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154469",
-      "capturedAt": "2026-10-11T15:46:05.230697Z",
+      "capturedAt": "2026-10-11T16:39:48.236291Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -257575,7 +257575,7 @@
           "salary": 6200,
           "game": "CHI@GB 10/11/2026 01:00PM ET",
           "gameId": "2026_05_CHI_GB",
-          "status": "Q",
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -258100,7 +258100,7 @@
           "salary": 4000,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -258436,7 +258436,7 @@
           "salary": 4000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -258478,7 +258478,7 @@
           "salary": 4000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -258961,7 +258961,7 @@
           "salary": 5400,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 10.7,
           "projectionSource": "Fantasy Info Central",
@@ -259654,7 +259654,7 @@
           "salary": 4000,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -260977,7 +260977,7 @@
           "salary": 5300,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 10.7,
           "projectionSource": "Fantasy Info Central",
@@ -263182,7 +263182,7 @@
           "salary": 3000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -264904,7 +264904,7 @@
           "salary": 2500,
           "game": "HOU@TEN 10/11/2026 01:00PM ET",
           "gameId": "2026_05_HOU_TEN",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -265429,7 +265429,7 @@
           "salary": 2500,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -266395,7 +266395,7 @@
           "salary": 3100,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -266464,56 +266464,56 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154469.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154469",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154469",
-          "retrievedAt": "2026-10-11T15:46:05.230697Z",
+          "retrievedAt": "2026-10-11T16:39:48.236291Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:05 GMT",
-          "sha256": "f1dd772734c3dfc372184093dcd8c1b1a1b42fb6378ec29cf202b200c34f3f9d",
-          "bytes": 43269
+          "httpDate": "Sun, 11 Oct 2026 16:39:48 GMT",
+          "sha256": "cf48ea3bfc422906ce3aa14294892e6fb94322b09d98556ff2df9b49a91c2637",
+          "bytes": 43285
         }
       },
       "identityAliasSource": {
@@ -266522,7 +266522,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -266570,7 +266570,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154471",
-      "capturedAt": "2026-10-11T15:46:05.457234Z",
+      "capturedAt": "2026-10-11T16:39:48.557557Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -269998,54 +269998,54 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154471.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154471",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154471",
-          "retrievedAt": "2026-10-11T15:46:05.457234Z",
+          "retrievedAt": "2026-10-11T16:39:48.557557Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:05 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:48 GMT",
           "sha256": "f93a3df3ee37a9fe3153702f9b449ecebfaba65cb2d7a7b4e9fe0fb9f826fe6d",
           "bytes": 16666
         }
@@ -270056,7 +270056,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -270095,7 +270095,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154472",
-      "capturedAt": "2026-10-11T15:46:05.585261Z",
+      "capturedAt": "2026-10-11T16:39:48.679181Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -272410,54 +272410,54 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154472.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154472",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154472",
-          "retrievedAt": "2026-10-11T15:46:05.585261Z",
+          "retrievedAt": "2026-10-11T16:39:48.679181Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:05 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:48 GMT",
           "sha256": "877b72bafff92dbd6fc7bce67d6e44de959d2715737007b9d2c28f5304456853",
           "bytes": 11214
         }
@@ -272468,7 +272468,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -272507,7 +272507,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154473",
-      "capturedAt": "2026-10-11T15:46:05.844813Z",
+      "capturedAt": "2026-10-11T16:39:48.847940Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -274570,54 +274570,54 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154473.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154473",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154473",
-          "retrievedAt": "2026-10-11T15:46:05.844813Z",
+          "retrievedAt": "2026-10-11T16:39:48.847940Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:05 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:48 GMT",
           "sha256": "11e4d4bbb0fc065ac8593b2dcab07cd61483c40bc6983b8117fe09ab0f381038",
           "bytes": 9970
         }
@@ -274628,7 +274628,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -274666,7 +274666,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154476",
-      "capturedAt": "2026-10-11T15:46:06.025483Z",
+      "capturedAt": "2026-10-11T16:39:48.975024Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -277170,54 +277170,54 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154476.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154476",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154476",
-          "retrievedAt": "2026-10-11T15:46:06.025483Z",
+          "retrievedAt": "2026-10-11T16:39:48.975024Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:06 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:48 GMT",
           "sha256": "32f6f52975b0e06b3a324d3911b7b811847b2a24229ddba9bf6e255bcfd4bffc",
           "bytes": 10751
         }
@@ -277228,7 +277228,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -277266,7 +277266,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154477",
-      "capturedAt": "2026-10-11T15:46:06.174395Z",
+      "capturedAt": "2026-10-11T16:39:49.102036Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -277413,7 +277413,7 @@
           "salary": 8400,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 10.7,
           "projectionSource": "Fantasy Info Central",
@@ -277627,7 +277627,7 @@
           "salary": 6000,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -277995,7 +277995,7 @@
           "salary": 1400,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -278693,7 +278693,7 @@
           "salary": 12600,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 16.05,
           "projectionSource": "Fantasy Info Central",
@@ -278907,7 +278907,7 @@
           "salary": 9000,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -279275,7 +279275,7 @@
           "salary": 2100,
           "game": "NYG@WAS 10/11/2026 01:00PM ET",
           "gameId": "2026_05_NYG_WAS",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -279946,56 +279946,56 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154477.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154477",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154477",
-          "retrievedAt": "2026-10-11T15:46:06.174395Z",
+          "retrievedAt": "2026-10-11T16:39:49.102036Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:06 GMT",
-          "sha256": "a8e6865f0b8684fff02d90dc9d3d36c72aba8b4fd0d2450ab1943db8bd747c1c",
-          "bytes": 11686
+          "httpDate": "Sun, 11 Oct 2026 16:39:49 GMT",
+          "sha256": "f787eff305614c3236f51df18e19fdf44fd95dceb6f09936d114f03266881582",
+          "bytes": 11696
         }
       },
       "identityAliasSource": {
@@ -280004,7 +280004,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -280042,7 +280042,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154478",
-      "capturedAt": "2026-10-11T15:46:06.365096Z",
+      "capturedAt": "2026-10-11T16:39:49.285140Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -282678,54 +282678,54 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154478.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154478",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154478",
-          "retrievedAt": "2026-10-11T15:46:06.365096Z",
+          "retrievedAt": "2026-10-11T16:39:49.285140Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:06 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:49 GMT",
           "sha256": "e7e20ad3fc80a66e11a754c5ed0ee37f365f61ea746d4023fdaa53e62c389320",
           "bytes": 11101
         }
@@ -282736,7 +282736,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -282774,7 +282774,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154479",
-      "capturedAt": "2026-10-11T15:46:06.498661Z",
+      "capturedAt": "2026-10-11T16:39:49.460255Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -283855,7 +283855,7 @@
           "salary": 200,
           "game": "HOU@TEN 10/11/2026 01:00PM ET",
           "gameId": "2026_05_HOU_TEN",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -285047,7 +285047,7 @@
           "salary": 300,
           "game": "HOU@TEN 10/11/2026 01:00PM ET",
           "gameId": "2026_05_HOU_TEN",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -285278,56 +285278,56 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154479.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154479",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154479",
-          "retrievedAt": "2026-10-11T15:46:06.498661Z",
+          "retrievedAt": "2026-10-11T16:39:49.460255Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:06 GMT",
-          "sha256": "bc6786762b413122cfd27b337a013c21dd938431b7b746374c44c2efc11acc3c",
-          "bytes": 10851
+          "httpDate": "Sun, 11 Oct 2026 16:39:49 GMT",
+          "sha256": "0c99cfa69b1e5a3fe498bdffc4c5f00c3684427d11cb1eb21ca104f05f86de78",
+          "bytes": 10857
         }
       },
       "identityAliasSource": {
@@ -285336,7 +285336,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -285374,7 +285374,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154480",
-      "capturedAt": "2026-10-11T15:46:06.618690Z",
+      "capturedAt": "2026-10-11T16:39:49.618561Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -287914,54 +287914,54 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154480.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154480",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154480",
-          "retrievedAt": "2026-10-11T15:46:06.618690Z",
+          "retrievedAt": "2026-10-11T16:39:49.618561Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:06 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:49 GMT",
           "sha256": "215363968367ffe94d363d2794299f09c1e1ba7b5595f5b7f82d2dbf1e5aec67",
           "bytes": 11028
         }
@@ -287972,7 +287972,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -288010,7 +288010,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154481",
-      "capturedAt": "2026-10-11T15:46:06.745665Z",
+      "capturedAt": "2026-10-11T16:39:49.789998Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -288161,7 +288161,7 @@
           "salary": 8800,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 8.6,
           "projectionSource": "Fantasy Info Central",
@@ -288209,7 +288209,7 @@
           "salary": 8000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 10.7,
           "projectionSource": "Fantasy Info Central",
@@ -288335,7 +288335,7 @@
           "salary": 6000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -288357,7 +288357,7 @@
           "salary": 6000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -289091,7 +289091,7 @@
           "salary": 200,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -289289,7 +289289,7 @@
           "salary": 200,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -289463,7 +289463,7 @@
           "salary": 13200,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 12.9,
           "projectionSource": "Fantasy Info Central",
@@ -289511,7 +289511,7 @@
           "salary": 12000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": 16.05,
           "projectionSource": "Fantasy Info Central",
@@ -289637,7 +289637,7 @@
           "salary": 9000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -289659,7 +289659,7 @@
           "salary": 9000,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -290393,7 +290393,7 @@
           "salary": 300,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -290591,7 +290591,7 @@
           "salary": 300,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": "Q",
+          "status": null,
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -290635,7 +290635,7 @@
           "salary": 2200,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -290679,7 +290679,7 @@
           "salary": 3300,
           "game": "MIN@NO 10/11/2026 01:00PM ET",
           "gameId": "2026_05_MIN_NO",
-          "status": null,
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -290734,56 +290734,56 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154481.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154481",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154481",
-          "retrievedAt": "2026-10-11T15:46:06.745665Z",
+          "retrievedAt": "2026-10-11T16:39:49.789998Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:06 GMT",
-          "sha256": "7e50ece634435a0f7072094d32d59a423c68a2548e189a35f250a8515b4c0a50",
-          "bytes": 11589
+          "httpDate": "Sun, 11 Oct 2026 16:39:49 GMT",
+          "sha256": "96b158de58fbdc4275032c14966f26a8b7026188e3e9f66ddda598a8042c4306",
+          "bytes": 11605
         }
       },
       "identityAliasSource": {
@@ -290792,7 +290792,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -290830,7 +290830,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154482",
-      "capturedAt": "2026-10-11T15:46:06.907645Z",
+      "capturedAt": "2026-10-11T16:39:49.993138Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -293334,54 +293334,54 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154482.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154482",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154482",
-          "retrievedAt": "2026-10-11T15:46:06.907645Z",
+          "retrievedAt": "2026-10-11T16:39:49.993138Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:06 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:50 GMT",
           "sha256": "6f0f530da30243158f1008d377228a1366791a55565541cde14dacd5bc33a3ee",
           "bytes": 10872
         }
@@ -293392,7 +293392,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -293430,7 +293430,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154483",
-      "capturedAt": "2026-10-11T15:46:07.108202Z",
+      "capturedAt": "2026-10-11T16:39:50.239169Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -295978,54 +295978,54 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154483.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154483",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154483",
-          "retrievedAt": "2026-10-11T15:46:07.108202Z",
+          "retrievedAt": "2026-10-11T16:39:50.239169Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:07 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:50 GMT",
           "sha256": "66b8d1820b47429d0cb8b01eba715109109be9143adf767322bcf87d28942170",
           "bytes": 11047
         }
@@ -296036,7 +296036,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -296074,7 +296074,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154484",
-      "capturedAt": "2026-10-11T15:46:07.254175Z",
+      "capturedAt": "2026-10-11T16:39:50.410651Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -296095,7 +296095,7 @@
           "salary": 10200,
           "game": "CHI@GB 10/11/2026 01:00PM ET",
           "gameId": "2026_05_CHI_GB",
-          "status": "Q",
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -297331,7 +297331,7 @@
           "salary": 15300,
           "game": "CHI@GB 10/11/2026 01:00PM ET",
           "gameId": "2026_05_CHI_GB",
-          "status": "Q",
+          "status": "OUT",
           "matchMethod": "unique current nflverse roster name, position and team",
           "projection": null,
           "projectionSource": null,
@@ -298666,56 +298666,56 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154484.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154484",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154484",
-          "retrievedAt": "2026-10-11T15:46:07.254175Z",
+          "retrievedAt": "2026-10-11T16:39:50.410651Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:07 GMT",
-          "sha256": "1ca7534e69f819723e70472c899f50de0858de92a7fd3c0622f16e7fe8283c2c",
-          "bytes": 10974
+          "httpDate": "Sun, 11 Oct 2026 16:39:50 GMT",
+          "sha256": "67ebc7732a9eb76867b89dcc19de7aa1c892f3abb4a32594651a0cfc786e7ee9",
+          "bytes": 10978
         }
       },
       "identityAliasSource": {
@@ -298724,7 +298724,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -298762,7 +298762,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154485",
-      "capturedAt": "2026-10-11T15:46:07.404859Z",
+      "capturedAt": "2026-10-11T16:39:50.546416Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -301522,54 +301522,54 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154485.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154485",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154485",
-          "retrievedAt": "2026-10-11T15:46:07.404859Z",
+          "retrievedAt": "2026-10-11T16:39:50.546416Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:07 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:50 GMT",
           "sha256": "7301abf78e27d70abe5166687f32dd98f924cae94d8d99968b7c1e3321d2c56a",
           "bytes": 11882
         }
@@ -301580,7 +301580,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -301618,7 +301618,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154486",
-      "capturedAt": "2026-10-11T15:46:07.594399Z",
+      "capturedAt": "2026-10-11T16:39:50.707653Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -304078,54 +304078,54 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154486.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154486",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154486",
-          "retrievedAt": "2026-10-11T15:46:07.594399Z",
+          "retrievedAt": "2026-10-11T16:39:50.707653Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:07 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:50 GMT",
           "sha256": "53ae909fc9a481443e118eb67be3192bcf6cde0656675a9064ebae9fcae41da9",
           "bytes": 10606
         }
@@ -304136,7 +304136,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -304174,7 +304174,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154487",
-      "capturedAt": "2026-10-11T15:46:07.761100Z",
+      "capturedAt": "2026-10-11T16:39:50.858826Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -306590,54 +306590,54 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154487.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154487",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154487",
-          "retrievedAt": "2026-10-11T15:46:07.761100Z",
+          "retrievedAt": "2026-10-11T16:39:50.858826Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:07 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:50 GMT",
           "sha256": "ad21002debcaaf6250790c6afedfc9f46af0ef2855006d53a48a4d1302c80203",
           "bytes": 10383
         }
@@ -306648,7 +306648,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -306686,7 +306686,7 @@
       ],
       "salarySource": "DraftKings",
       "salaryUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154488",
-      "capturedAt": "2026-10-11T15:46:07.971431Z",
+      "capturedAt": "2026-10-11T16:39:51.100290Z",
       "projectionProvider": "Fantasy Info Central",
       "supplementalProjectionStatus": {
         "status": "unavailable",
@@ -308970,54 +308970,54 @@
         "schedule.csv": {
           "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
           "resolvedUrl": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
-          "retrievedAt": "2026-10-11T15:46:02.383441Z",
+          "retrievedAt": "2026-10-11T16:39:44.897067Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:02 GMT",
-          "sha256": "8cf3da23f6dc7c5955c4ac217d51849d3cbdffef6d831f93842e2e078ba1b404",
-          "bytes": 2184006
+          "httpDate": "Sun, 11 Oct 2026 16:39:44 GMT",
+          "sha256": "a40bb159d68a39449969d7d7e98faf0eafae2562ec96a4227e67f24e3fe1d65f",
+          "bytes": 2184005
         },
         "lobby.json": {
           "url": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
           "resolvedUrl": "https://www.draftkings.com/lobby/getcontests?sport=NFL",
-          "retrievedAt": "2026-10-11T15:46:03.845431Z",
+          "retrievedAt": "2026-10-11T16:39:46.303477Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
-          "sha256": "53884fcd71d9173a5f70085ff42d6ec3cce1564691d54e9c0e9102e39350ff8f",
-          "bytes": 7803368
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "0842c3017d9f7eca8ce0ced22be41734deffa1d00f16a52578202858f608110c",
+          "bytes": 7670003
         },
         "projections.html": {
           "url": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
           "resolvedUrl": "https://www.fantasyinfocentral.com/nfl/dfs/projections/draftkings",
-          "retrievedAt": "2026-10-11T15:46:04.037882Z",
+          "retrievedAt": "2026-10-11T16:39:46.685296Z",
           "lastModified": "Sun, 11 Oct 2026 07:41:01 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
-          "sha256": "ebf49642e91a0c06dd796ed81f2d0f9641df2ec6c546d48430a70056c3d926fa",
+          "httpDate": "Sun, 11 Oct 2026 16:39:46 GMT",
+          "sha256": "b4abd439449a4a4245f1de2a0a12879087ae7632579ed5fc6ce69a10b7351aee",
           "bytes": 458291
         },
         "supplemental-projections.html": {
           "url": "https://fantasysportscentral.com/football/dfscheat.php",
           "resolvedUrl": "https://fantasysportscentral.com/football/dfscheat.php",
-          "retrievedAt": "2026-10-11T15:46:04.325558Z",
+          "retrievedAt": "2026-10-11T16:39:47.140025Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:03 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "b35845053fe087ee5ff8622d7924eb8a9bab848dbf18c4aa92dfc86219bfb56d",
           "bytes": 132994
         },
         "roster.csv": {
           "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv",
-          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T16%3A38%3A36Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T15%3A38%3A28Z&ske=2026-10-11T16%3A38%3A36Z&sks=b&skv=2018-11-09&sig=7IQnq9ADMIgz1ei%2FMluD2JN5e23ISZ8qETp1HYF6Zo0%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczMzgyOSwibmJmIjoxNzkxNzMzNTI5LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.t1Lbw9I9R4Lroa7U_Z28rJOgpNGkuxSit3tDRQktl5E&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
-          "retrievedAt": "2026-10-11T15:46:04.578492Z",
+          "resolvedUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/452908115/4f967b8c-461b-4314-80a0-e8985656bf2d?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-11T17%3A27%3A52Z&rscd=attachment%3B+filename%3Droster_2026.csv&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-11T16%3A27%3A17Z&ske=2026-10-11T17%3A27%3A52Z&sks=b&skv=2018-11-09&sig=H1EIaE6WcMNv90AQU5RKr41PR11Kz3I6OQVbKLABvWM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MTczNzA4NywibmJmIjoxNzkxNzM2Nzg3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Ydpt9_WZveccu1kj8TLkbdLKG-QAUGUHxDImdWEnGnk&response-content-disposition=attachment%3B%20filename%3Droster_2026.csv&response-content-type=application%2Foctet-stream",
+          "retrievedAt": "2026-10-11T16:39:47.477412Z",
           "lastModified": "Sun, 11 Oct 2026 14:00:53 GMT",
-          "httpDate": "Sun, 11 Oct 2026 15:46:04 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:47 GMT",
           "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
           "bytes": 966462
         },
         "dk-154488.csv": {
           "url": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154488",
           "resolvedUrl": "https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId=154488",
-          "retrievedAt": "2026-10-11T15:46:07.971431Z",
+          "retrievedAt": "2026-10-11T16:39:51.100290Z",
           "lastModified": null,
-          "httpDate": "Sun, 11 Oct 2026 15:46:08 GMT",
+          "httpDate": "Sun, 11 Oct 2026 16:39:51 GMT",
           "sha256": "f05f7058e70d63176b32fb849be0d317589e595673779aa33c59089dc93e6a15",
           "bytes": 9754
         }
@@ -309028,7 +309028,7 @@
         "retrievedAt": null,
         "note": "Bundled name aliases only; must resolve to a current fetched roster ID/team/position.",
         "sha256": "ecff9f13a9691443a2e08c8d638542147a547ab05baabd2bb777fdbdeb3eee78",
-        "capturedAt": "2026-10-11T15:46:00.850388Z"
+        "capturedAt": "2026-10-11T16:39:43.292033Z"
       },
       "validation": {
         "status": "verified"
@@ -309037,8 +309037,8 @@
   },
   "validation": {
     "status": "verified",
-    "verifiedAt": "2026-10-11T15:46:07.974135Z"
+    "verifiedAt": "2026-10-11T16:39:51.102178Z"
   },
   "notes": "Official DraftKings Classic and full-game Showdown salaries, with FLEX/CPT roles kept separate. FIC pregame DraftKings points for matching week/game; verified FSC supplements. Showdown projects the same full game and explicitly applies 1.5\u00d7 only to CPT. Missing projections are null; AvgPointsPerGame is never a projection. Historical Week 1 file is untouched.",
-  "contentFingerprint": "04d8af57733831ece814c414ec294a2b4d48df67f791a2aee39f8d3fe043ad40"
+  "contentFingerprint": "79e8691059c29f408b82596cef6365f72e021c293bd708346aa95e349d6a7d07"
 }
