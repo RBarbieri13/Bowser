@@ -150,14 +150,16 @@ test('statistics default to latest complete week while partial current week rema
  expect(fetch.mock.calls.some(([u])=>String(u).includes('weeks=1%2C2%2C3%2C4%2C5'))).toBe(true);
 });
 
-test('LEFA follows real Yahoo read interface, filters one column after Finish, and Clear All preserves other filters',async()=>{
+test('LEFA follows real Yahoo read interface, filters one column after activity and Finish, and Clear All preserves other filters',async()=>{
  const leagues=[{key:'999.l.1',name:'Loongi League'},{key:'999.l.2',name:'LOEG'},{key:'999.l.3',name:'Fart League'}];
  const yahoo={status:{connected:true},account:{season:2026,leagues,teams:leagues.map(l=>({key:`${l.key}.t.1`,leagueKey:l.key}))},busy:false,loadOwnershipPage:vi.fn(async(team,start)=>({start,exhausted:true,nextStart:null,checkedAt:new Date().toISOString(),players:athletes.map(([id,name,nfl],i)=>({key:`999.p.${i}`,name,team:nfl,position:'WR',owned:id!=='ram',ownershipType:id==='ram'?'freeagents':'team',isMine:id==='giant'&&team==='999.l.1.t.1'}))}))};
  function App(){const ownership=usePlayerOwnership(yahoo,2026);return <LhqProvider><PlayerDatabase {...props} yahoo={yahoo} ownership={ownership}/></LhqProvider>;}
  render(<App/>);
  await waitFor(()=>expect(screen.getByText(/3\/4 fully checked/)).toBeInTheDocument());
  const r=within(grid()).getByRole('button',{name:'Fixture Giant',exact:true}).closest('tr');
- expect(r.lastChild).toHaveClass('lefa-column');expect(r.lastChild).toHaveTextContent('★●●≋');expect(r.lastChild.previousSibling).toHaveTextContent('WR2');
+ expect(r.lastChild).toHaveClass('lefa-column');expect(r.lastChild).toHaveTextContent('★●●≋');expect(r.lastChild.previousSibling).toHaveClass('activity-column');expect(r.lastChild.previousSibling.previousSibling).toHaveClass('activity-column');expect(r.lastChild.previousSibling.previousSibling.previousSibling).toHaveTextContent('WR2');
+ const headings=within(grid()).getAllByRole('columnheader');expect(headings.findIndex(h=>h.textContent==='Fin')).toBeLessThan(headings.findIndex(h=>h.querySelector('[aria-label="Sleeper activity source settings"]')));
+ expect(screen.getByRole('separator',{name:'Resize Sleeper activity'})).toHaveAttribute('aria-valuenow','114');
  fireEvent.change(screen.getByPlaceholderText('Search Players'),{target:{value:'Fixture'}});
  fireEvent.click(screen.getByRole('button',{name:'Filter All leagues ownership'}));
  fireEvent.click(screen.getByRole('button',{name:'None',exact:true}));
