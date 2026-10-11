@@ -247,3 +247,15 @@ test('research rejects a different league collection rather than mislabeling its
   });
   assert.equal(result.data.availability, null); assert(result.data.errors.availability);
 });
+
+test('cache grant is stable across token rotation and bound to freshly authorized team membership and season', async()=>{
+ const run=(cookie,teamData=teams,season=2026)=>call(`leagues?season=${season}`,{headers:{cookie},fetcher:async url=>response(url.includes('/leagues?')?leagues:teamData)});
+ const a=await run(sessionCookie()),b=await run(sessionCookie({...session,access:'ROTATED_ACCESS',refresh:'ROTATED_REFRESH'}));
+ assert.deepEqual(a.data.ownershipCache,b.data.ownershipCache);
+ assert.match(a.data.ownershipCache.scope,/^[a-f0-9]{64}$/);assert.equal(Buffer.from(a.data.ownershipCache.key,'base64').length,32);
+ assert.match(a.headers.get('cache-control'),/private, no-store/);
+ const other=JSON.parse(JSON.stringify(teams).replaceAll('999.l.42.t.1','999.l.42.t.2'));
+ const c=await run(sessionCookie(),other);assert.notEqual(c.data.ownershipCache.scope,a.data.ownershipCache.scope);assert.notEqual(c.data.ownershipCache.key,a.data.ownershipCache.key);
+ const d=await run(sessionCookie(),teams,2025);assert.notEqual(d.data.ownershipCache.key,a.data.ownershipCache.key);
+ for(const secret of [session.access,session.refresh,env.YAHOO_CLIENT_SECRET])assert(!a.body.includes(secret));
+});

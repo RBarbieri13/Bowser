@@ -301,3 +301,21 @@ test('ownership pages reuse the authorized no-store queue without caching payloa
  await act(async()=>{expect(await result.current.loadOwnershipPage('999.l.999.t.1',0)).toBeNull();expect(await result.current.loadOwnershipPage(teamA,0,()=>false)).toBeNull();});
  expect(calls.filter(c=>c.url.includes('include=ownershipPool'))).toHaveLength(1);
 });
+
+test('focus detects another-tab authorization and logout without reloading unchanged membership',async()=>{
+ let live={...connected,connected:false,connectionId:null};
+ const calls=mockReads(url=>url.endsWith('/status')?response(live):undefined);
+ const {result}=renderHook(()=>useYahooDashboard());await settle(result);expect(result.current.account).toBeNull();
+ live={...connected,connectionId:'session-one'};
+ await act(async()=>window.dispatchEvent(new Event('focus')));
+ await waitFor(()=>expect(result.current.account?.teams).toHaveLength(2));await settle(result);
+ const before=calls.filter(c=>c.url.includes('/leagues?')).length;
+ await act(async()=>window.dispatchEvent(new Event('focus')));
+ expect(calls.filter(c=>c.url.includes('/leagues?'))).toHaveLength(before);
+ live={...connected,connectionId:'session-two'};
+ await act(async()=>window.dispatchEvent(new Event('focus')));
+ await waitFor(()=>expect(calls.filter(c=>c.url.includes('/leagues?'))).toHaveLength(before+1));await settle(result);
+ live={...connected,connected:false,connectionId:null};
+ await act(async()=>window.dispatchEvent(new Event('focus')));
+ await waitFor(()=>expect(result.current.account).toBeNull());expect(result.current.status.connected).toBe(false);
+});

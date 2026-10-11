@@ -335,6 +335,7 @@ export function getMeta(dbPath, searchParams = new URLSearchParams()) {
     completedWeeks,
     latestCompleteWeek: completedWeeks.at(-1) ?? null,
     weekCoverage,
+    scheduleWeeks: db.prepare("SELECT week, MIN(gameday) AS firstGameDate, MAX(gameday) AS lastGameDate FROM games GROUP BY week ORDER BY week").all(),
     seasons: AVAILABLE_SEASONS,
     currentSeason: 2026,
     dfsOptions: getDfsSlate('current').meta.options,

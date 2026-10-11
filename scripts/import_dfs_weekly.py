@@ -220,6 +220,8 @@ def parse_projections(html, season, week, games, source, now):
         local = instant(game['startsAt']).astimezone(ET)
         expected_time = local.strftime('%a %-I:%M %p').lower()
         require(row[10].lower() == expected_time, f'Projection kickoff mismatch: {name}: {row[10]} != {expected_time}')
+        if row[4].strip() in ('--', '—', '', 'N/A') or row[5].strip() in ('--', '—', '', 'N/A'):
+            continue  # Explicit unavailable source values are not zero projections.
         value = float(row[4])
         require(math.isfinite(value) and 0 <= value <= 70, f'Invalid projection: {name}')
         key = (name_key(name), position, team)
@@ -234,13 +236,15 @@ def parse_projections(html, season, week, games, source, now):
     return result
 
 
-def roster_identities(text, season, week, alias_text):
+def roster_identities(text, season, week, alias_text, scheduled_teams=None):
     rows = list(csv.DictReader(io.StringIO(text)))
     require(rows and all(int(r['season']) == season for r in rows), 'Roster season mismatch')
     roster_week = max(int(r['week']) for r in rows if r['week'])
     require(week - 1 <= roster_week <= week, 'Roster is not current for the target week')
     rows = [r for r in rows if int(r.get('week') or roster_week) == roster_week]
-    require(len({team_key(r['team']) for r in rows}) == 32 and len(rows) > 500, 'Current roster coverage is incomplete')
+    roster_teams = {team_key(r['team']) for r in rows}
+    coverage = set(scheduled_teams) <= roster_teams if scheduled_teams is not None else len(roster_teams) == 32
+    require(coverage and len(rows) > 500, 'Current roster coverage is incomplete for scheduled teams')
     by_id = defaultdict(list)
     matches = defaultdict(set)
     for row in rows:
@@ -285,6 +289,8 @@ def parse_supplemental_projections(html, season, week, games, source, now):
         team, opponent = team_key(row[2]),team_key(row[4].lstrip('@'))
         require(team in by_team and opponent in (by_team[team]['away'],by_team[team]['home']) and opponent != team,
                 'Supplemental player matchup mismatch')
+        if row[6].strip() in ('--', '—', '', 'N/A') or row[5].strip() in ('--', '—', '', 'N/A'):
+            continue  # Retain missing projections as unavailable in the salary pool.
         value = float(row[6]); salary = int(row[5].replace('$','').replace(',',''))
         require(math.isfinite(value) and 0 <= value <= 70 and 2000 <= salary <= 15000, 'Invalid supplemental projection or salary')
         key = (f'def:{team}' if position == 'DEF' else name_key(name),position,team)
@@ -587,7 +593,7 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None, allow_parti
     roster = fetch.get(roster_url, 'roster.csv')
     alias_path = ROOT / 'data/raw/players.csv'
     alias_text = alias_path.read_text()
-    matches, roster_week = roster_identities(roster, season, week, alias_text)
+    matches, roster_week = roster_identities(roster, season, week, alias_text, {t for g in games for t in (g['away'], g['home'])})
     fetch.sources['identity-aliases'] = {'url': 'https://github.com/nflverse/nflverse-data/releases/download/players/players.csv',
                                         'localPath': 'data/raw/players.csv', 'retrievedAt': None,
                                         'note': 'Bundled name aliases only; must resolve to a current fetched roster ID/team/position.',

@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import {beforeEach,afterEach,test,expect,vi} from 'vitest';
 import {render,screen,fireEvent,waitFor,cleanup,within} from '@testing-library/react';
 import {LhqProvider} from '../src/lhq/shared.jsx';
+import {usePlayerOwnership} from '../src/lhq/usePlayerOwnership.js';
 import {PlayerDatabase} from '../src/lhq/PlayerDatabase.jsx';
 const props={season:2026,setSeason:vi.fn(),scoring:'ppr',setScoring:vi.fn(),onOpen:vi.fn()};
 const options=[{key:'mon',label:'Monday Showdown FLEX',season:2026,week:2,contestTypeId:96},{key:'mon:cpt',label:'Monday Showdown CPT',season:2026,week:2,contestTypeId:96},{key:'classic',label:'Classic',season:2026,week:2,contestTypeId:1}];
@@ -142,17 +143,18 @@ test('statistics default to latest complete week while partial current week rema
  render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
  await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
  expect(screen.getByLabelText('Base week')).toHaveValue('4');
- expect(screen.getByLabelText('Weeks back')).toHaveValue('3');
+ expect(screen.getByLabelText('Weeks back')).toHaveValue('4');
  expect(screen.getByRole('option',{name:'Week 5 · partial'})).toBeInTheDocument();
  choose('Base week',5);
  expect(screen.getByLabelText('Base week')).toHaveValue('5');
- expect(fetch.mock.calls.some(([u])=>String(u).includes('weeks=3%2C4%2C5'))).toBe(true);
+ expect(fetch.mock.calls.some(([u])=>String(u).includes('weeks=1%2C2%2C3%2C4%2C5'))).toBe(true);
 });
 
 test('LEFA follows real Yahoo read interface, filters one column after Finish, and Clear All preserves other filters',async()=>{
  const leagues=[{key:'999.l.1',name:'Loongi League'},{key:'999.l.2',name:'LOEG'},{key:'999.l.3',name:'Fart League'}];
  const yahoo={status:{connected:true},account:{season:2026,leagues,teams:leagues.map(l=>({key:`${l.key}.t.1`,leagueKey:l.key}))},busy:false,loadOwnershipPage:vi.fn(async(team,start)=>({start,exhausted:true,nextStart:null,checkedAt:new Date().toISOString(),players:athletes.map(([id,name,nfl],i)=>({key:`999.p.${i}`,name,team:nfl,position:'WR',owned:id!=='ram',ownershipType:id==='ram'?'freeagents':'team',isMine:id==='giant'&&team==='999.l.1.t.1'}))}))};
- render(<LhqProvider><PlayerDatabase {...props} yahoo={yahoo}/></LhqProvider>);
+ function App(){const ownership=usePlayerOwnership(yahoo,2026);return <LhqProvider><PlayerDatabase {...props} yahoo={yahoo} ownership={ownership}/></LhqProvider>;}
+ render(<App/>);
  await waitFor(()=>expect(screen.getByText(/3\/4 fully checked/)).toBeInTheDocument());
  const r=within(grid()).getByRole('button',{name:'Fixture Giant',exact:true}).closest('tr');
  expect(r.lastChild).toHaveClass('lefa-column');expect(r.lastChild).toHaveTextContent('★●●≋');expect(r.lastChild.previousSibling).toHaveTextContent('WR2');

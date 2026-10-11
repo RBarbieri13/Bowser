@@ -3,6 +3,7 @@
 import argparse
 from datetime import datetime, timezone
 import json
+import sqlite3
 import subprocess
 import urllib.request
 from pathlib import Path
@@ -42,8 +43,24 @@ try:
     check(cam['position_finish'] == 18 and tracy['position_finish'] == 107, 'NFL PPR weekly positional finishes retained')
     check(len(players['meta']['trendDomains']) == 19 and players['meta']['trendDomains']['fantasy_points']['min'] < 0, 'Shared metric domains preserve negative points')
     meta = get('/api/v1/meta?season=2026')
-    check(meta['completedWeeks'] == [1,2,3,4] and meta['latestCompleteWeek'] == 4, 'Four complete NFL weeks; latest complete is Week 4')
-    check(next(w for w in meta['weekCoverage'] if w['week']==5) == {'week':5,'scheduledGames':15,'completedGames':1,'sourcedGames':1}, 'Week 5 Thursday available without claiming a complete week')
+    # Compare release coverage against the independently verified local warehouse,
+    # including partial/future weeks. Do not pin unattended refreshes to today's week.
+    with sqlite3.connect(f'file:{root / "data/fantasy_football_2026.sqlite"}?mode=ro', uri=True) as db:
+        db.row_factory = sqlite3.Row
+        coverage = [dict(row) for row in db.execute('''SELECT week, COUNT(*) AS scheduledGames,
+            SUM(home_score IS NOT NULL AND away_score IS NOT NULL) AS completedGames,
+            SUM(play_by_play_available=1 AND (SELECT COUNT(DISTINCT team) FROM player_week_stats p
+                WHERE p.game_id=games.game_id AND p.source_player_stats=1 AND p.source_snap_counts=1)=2) AS sourcedGames
+            FROM games GROUP BY week ORDER BY week''')]
+        schedule = [dict(row) for row in db.execute('SELECT week, MIN(gameday) AS firstGameDate, MAX(gameday) AS lastGameDate FROM games GROUP BY week ORDER BY week')]
+        future_game = db.execute('''SELECT g.home_team,g.week FROM games g
+            WHERE g.home_score IS NULL AND g.away_score IS NULL AND g.play_by_play_available=0
+            AND NOT EXISTS (SELECT 1 FROM player_week_stats p WHERE p.game_id=g.game_id)
+            ORDER BY g.gameday,g.game_id LIMIT 1''').fetchone()
+    completed = [w['week'] for w in coverage if w['completedGames'] == w['scheduledGames'] == w['sourcedGames']]
+    check(meta['completedWeeks'] == completed and meta['latestCompleteWeek'] == (completed[-1] if completed else None), 'Hosted completed weeks match verified warehouse coverage')
+    check(meta['weekCoverage'] == coverage, 'Every hosted week retains exact scheduled/completed/sourced counts, including partial weeks')
+    check(meta['scheduleWeeks'] == schedule, 'Hosted calendar defaults use exact sourced NFL schedule dates')
     fourth = get('/api/v1/player-stats?season=2026&weeks=4&limit=all&trendRange=selected')
     check(len(fourth['data']) == 415 and len({p['team'] for p in fourth['data']}) == 32, 'Week 4 all 415 player records and 32 teams')
     allen = next(p for p in fourth['data'] if p['player_display_name']=='Josh Allen')
@@ -129,8 +146,11 @@ try:
     gibbs = [p for p in boxes['data'] if p['player_display_name'] == 'Jahmyr Gibbs']
     check({p['week']:p['draft_kings_price'] for p in gibbs} == {1:8000,2:8500}, 'Team Box prices belong to their exact historical week')
     check(next(p for p in gibbs if p['week']==2)['fantasy_points'] == 23.3, 'Completed Week 2 Gibbs sourced fantasy points retained at 23.3')
-    future = get('/api/v1/team-box-scores?season=2026&team=DET&weeks=6')
-    check(all(p['fantasy_points'] is None for p in future['data']), 'Future rows never manufacture actual points')
+    if future_game:
+        future = get('/api/v1/team-box-scores?season=2026&team=' + future_game['home_team'] + '&weeks=' + str(future_game['week']))
+        check(all(p['fantasy_points'] is None for p in future['data']), 'Verified unplayed game never manufactures actual points')
+    else:
+        checks.append('No unplayed game in verified schedule; pregame semantics covered by dated fixture tests')
     cumulative = get('/api/v1/player-stats?season=2026&weeks=1,2&limit=all&trendWeeks=3')
     dart = next(p for p in cumulative['data'] if p['player_display_name'] == 'Jaxson Dart')
     check(dart['games_played']==2 and dart['fantasy_points']==27.4 and dart['range_position_rank']==22, 'Week-range GP, fantasy totals and NFL position rank are cumulative')
