@@ -111,3 +111,62 @@ test('transactions authorize the chosen team before any league transaction reque
  assert.equal(result.status,403);
  assert.equal(result.data.error.code,'team_not_owned');
 });
+
+test('ownership pool paginates explicit current ownership and mine without exposing manager identifiers', async () => {
+  const withOwner = (key, type, owner) => {
+    const value = player(key, `Fixture ${key}`, 'RB', 'NYG', type);
+    value[1].ownership.owner_team_key = owner;
+    return value;
+  };
+  const result = await call(`league-research?season=2026&team=${teamKey}&include=ownershipPool&availabilityStart=25`, {
+    headers: { cookie }, fetcher: async url => {
+      if (url.includes('/teams?')) return response(teams);
+      if (url.endsWith(`league/${leagueKey}?format=json`)) return response(league);
+      assert(url.includes('/players;start=25;count=25/ownership'));
+      return response(playersPayload([
+        withOwner('999.p.1', 'team', teamKey), withOwner('999.p.2', 'team', `${leagueKey}.t.9`),
+        withOwner('999.p.3', 'freeagents', null), withOwner('999.p.4', 'waivers', null),
+        withOwner('999.p.5', 'team', null), withOwner('999.p.6', 'team', '999.l.999.t.1'),
+      ]));
+    },
+  });
+  assert.equal(result.status, 200);
+  assert.match(result.headers.get('cache-control'), /private, no-store/);
+  assert.equal(result.headers.get('vercel-cdn-cache-control'), 'no-store');
+  assert.deepEqual(result.data.ownershipPool.players.map(p => [p.owned, p.isMine]), [[true,true],[true,false],[false,false],[false,false],[true,null],[true,null]]);
+  assert.equal(result.data.ownershipPool.start,25);
+  assert.equal(result.data.ownershipPool.nextStart,null);
+  assert.equal(result.data.ownershipPool.exhausted,true);
+  assert(!result.body.includes(`${leagueKey}.t.9`));
+  assert(!result.body.includes('PRIVATE'));
+});
+
+test('ownership pool rejects duplicate identities and still requires authorized membership', async () => {
+  const result = await call(`league-research?season=2026&team=${teamKey}&include=ownershipPool`, {
+    headers:{cookie},fetcher:async url=>{
+      if(url.includes('/teams?'))return response(teams);
+      if(url.endsWith(`league/${leagueKey}?format=json`))return response(league);
+      return response(playersPayload([player('999.p.1','Fixture','RB','NYG','freeagents'),player('999.p.1','Fixture','RB','NYG','freeagents')]));
+    },
+  });
+  assert.equal(result.data.ownershipPool,null);
+  assert(result.data.errors.ownershipPool);
+  const denied=await call('league-research?season=2026&team=999.l.99.t.1&include=ownershipPool',{headers:{cookie},fetcher:async url=>{
+    assert(url.includes('/teams?'));return response(teams);
+  }});
+  assert.equal(denied.status,403);
+});
+
+test('mine covers every team actually owned by the authenticated account within the league', async()=>{
+ const twoTeams=structuredClone(teams);
+ const ownedCollection=twoTeams.fantasy_content.users[0].user[1].games[0].game[1].teams;
+ ownedCollection[1]={team:[[{team_key:`${leagueKey}.t.2`},{name:'Another private team'}]]};ownedCollection.count=2;
+ const item=player('999.p.1','Fixture Alpha','RB','NYG','team');item[1].ownership.owner_team_key=`${leagueKey}.t.2`;
+ const result=await call(`league-research?season=2026&team=${teamKey}&include=ownershipPool`,{headers:{cookie},fetcher:async url=>{
+   if(url.includes('/teams?'))return response(twoTeams);
+   if(url.endsWith(`league/${leagueKey}?format=json`))return response(league);
+   return response(playersPayload([item]));
+ }});
+ assert.equal(result.status,200);assert.equal(result.data.ownershipPool.players[0].isMine,true);
+ assert(!result.body.includes(`${leagueKey}.t.2`));
+});

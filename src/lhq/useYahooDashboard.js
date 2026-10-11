@@ -242,6 +242,21 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
     } finally { if (active()) setResearchBusy(previous => ({ ...previous, [teamKey]: false })); }
   }, [season, clear, appendLog]);
 
+  // The ownership scanner uses the same serialized, authenticated queue but keeps
+  // pages in its own temporary memory, never the research cache or browser storage.
+  const loadOwnershipPage = useCallback(async (teamKey, start = 0, isActive = () => true) => {
+    const id = revision.current;
+    const account = latest.current.season === season ? latest.current.account : null;
+    if (!account?.teams.some(team => team.key === teamKey) || !Number.isInteger(start) || start < 0 || start > 5000) return null;
+    try {
+      const query = new URLSearchParams({ season, team: teamKey, include: 'ownershipPool', availabilityStart: start });
+      const result = await enqueue(() => current(id) && isActive() ? request(`league-research?${query}`) : null);
+      if (!current(id) || !isActive()) return null;
+      if (!result || result.teamKey !== teamKey || result.leagueKey !== teamKey.split('.t.')[0] || result.season !== Number(season) || !result.ownershipPool || result.errors?.ownershipPool) throw error('invalid_data_response');
+      return { ...result.ownershipPool, checkedAt: result.checkedAt };
+    } catch (caught) { handleFailure(caught, 'ownership', id); return null; }
+  }, [season, clear, appendLog]);
+
   const visible = data.season === season ? data : emptyData(season);
   const summaries = useMemo(() => leagueSummaries(visible), [visible]);
   const exposure = useMemo(() => rosterExposure(visible.account, visible.dashboards), [visible]);
@@ -251,7 +266,7 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
     dashboards: visible.dashboards, research: visible.research, summaries, exposure,
     errors, error: errors.connection || '', busy, researchBusy, log, week, setWeek,
     connectionUrl, connectionNotice: Object.hasOwn(MESSAGES, callbackResult) ? MESSAGES[callbackResult] : '',
-    load, refresh, disconnect, connect, loadResearch,
+    load, refresh, disconnect, connect, loadResearch, loadOwnershipPage,
     coverage: { teamLimit: TEAM_LIMIT, totalTeams: visible.account?.teams.length ?? null, loadedTeams: Object.keys(visible.dashboards).length, complete: Boolean(visible.account) && visible.account.teams.length === Object.keys(visible.dashboards).length },
   };
 }

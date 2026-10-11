@@ -152,7 +152,7 @@ export function createYahooHandler({ env = process.env, fetcher = fetch, now = (
       if (!/^\d+\.l\.\d+\.t\.\d+$/.test(teamKey)) fail('invalid_team', 'Select one of your Yahoo teams.');
       const owned = entities(await query(`${userGames}/teams`), 'team');
       if (!owned.some(t => t.team_key === teamKey)) fail('team_not_owned', 'This team is not one of your teams in the selected season.', 403);
-      if (action === 'league-research') return json(res, 200, await queryLeagueResearch({ params: url.searchParams, teamKey, season, query, fail, now }));
+      if (action === 'league-research') return json(res, 200, await queryLeagueResearch({ params: url.searchParams, teamKey, ownedTeamKeys: owned.map(t => t.team_key), season, query, fail, now }));
       if (action === 'dashboard') {
         const leagueKey = teamKey.split('.t.')[0];
         const league = leagueInfo(entities(await query(`league/${leagueKey}`), 'league')[0] || {});

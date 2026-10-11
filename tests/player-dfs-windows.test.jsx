@@ -148,3 +148,23 @@ test('statistics default to latest complete week while partial current week rema
  expect(screen.getByLabelText('Base week')).toHaveValue('5');
  expect(fetch.mock.calls.some(([u])=>String(u).includes('weeks=3%2C4%2C5'))).toBe(true);
 });
+
+test('LEFA follows real Yahoo read interface, filters one column after Finish, and Clear All preserves other filters',async()=>{
+ const leagues=[{key:'999.l.1',name:'Loongi League'},{key:'999.l.2',name:'LOEG'},{key:'999.l.3',name:'Fart League'}];
+ const yahoo={status:{connected:true},account:{season:2026,leagues,teams:leagues.map(l=>({key:`${l.key}.t.1`,leagueKey:l.key}))},busy:false,loadOwnershipPage:vi.fn(async(team,start)=>({start,exhausted:true,nextStart:null,checkedAt:new Date().toISOString(),players:athletes.map(([id,name,nfl],i)=>({key:`999.p.${i}`,name,team:nfl,position:'WR',owned:id!=='ram',ownershipType:id==='ram'?'freeagents':'team',isMine:id==='giant'&&team==='999.l.1.t.1'}))}))};
+ render(<LhqProvider><PlayerDatabase {...props} yahoo={yahoo}/></LhqProvider>);
+ await waitFor(()=>expect(screen.getByText(/3\/4 fully checked/)).toBeInTheDocument());
+ const r=within(grid()).getByRole('button',{name:'Fixture Giant',exact:true}).closest('tr');
+ expect(r.lastChild).toHaveClass('lefa-column');expect(r.lastChild).toHaveTextContent('★●●≋');expect(r.lastChild.previousSibling).toHaveTextContent('WR2');
+ fireEvent.change(screen.getByPlaceholderText('Search Players'),{target:{value:'Fixture'}});
+ fireEvent.click(screen.getByRole('button',{name:'Filter All leagues ownership'}));
+ fireEvent.click(screen.getByRole('button',{name:'None',exact:true}));
+ fireEvent.click(screen.getByRole('checkbox',{name:/Unowned/}));
+ expect(within(grid()).queryByRole('button',{name:'Fixture Giant',exact:true})).not.toBeInTheDocument();
+ expect(within(grid()).getByRole('button',{name:'Fixture Ram',exact:true})).toBeInTheDocument();
+ fireEvent.keyDown(document,{key:'Escape'});
+ fireEvent.click(screen.getByRole('button',{name:'Clear All'}));
+ expect(within(grid()).getByRole('button',{name:'Fixture Giant',exact:true})).toBeInTheDocument();
+ expect(screen.getByPlaceholderText('Search Players')).toHaveValue('Fixture');
+ expect(yahoo.loadOwnershipPage).toHaveBeenCalledTimes(3);
+});
