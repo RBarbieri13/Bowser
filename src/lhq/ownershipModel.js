@@ -6,6 +6,9 @@ export const OWNERSHIP_LABELS = { mine: 'Mine', other: 'Owned by others', free: 
 export const LEFA = ['L', 'E', 'F', 'A'];
 export const LEAGUE_LABELS = { L: 'Loongi League', E: 'LOEG', F: 'Fart League', A: 'All leagues' };
 export const OWNERSHIP_MAX_AGE = 15 * 60 * 1000;
+// Server/client clocks can differ slightly; keep the source observation time intact.
+export const OWNERSHIP_CLOCK_SKEW = 5000;
+export const validOwnershipClock = (time, now = Date.now()) => Number.isFinite(time) && time <= now + OWNERSHIP_CLOCK_SKEW;
 export const defaultOwnershipFilters = () => ({ L: [...OWNERSHIP_STATES], E: [...OWNERSHIP_STATES], F: [...OWNERSHIP_STATES], A: [...OWNERSHIP_STATES], mode: 'every' });
 export const ownershipFiltersActive = f => LEFA.some(k => f[k].length !== 3);
 const normalName = name => String(name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -18,7 +21,7 @@ export function ownershipLeagues(account) {
 }
 export function defaultLeagueMapping(leagues) {
   return Object.fromEntries(['L', 'E', 'F'].map(letter => {
-    const names = { L: ['loongi', 'loongileague'], E: ['loeg'], F: ['fart', 'fartleague'] }[letter];
+    const names = { L: ['loongi', 'loongileague', 'theloongileague'], E: ['loeg', 'leagueofextraordinarygentlemen'], F: ['fart', 'fartleague'] }[letter];
     const matches = leagues.filter(l => names.includes(normalName(l.name)));
     return [letter, matches.length === 1 ? matches[0].key : ''];
   }));
@@ -34,7 +37,7 @@ export function ownershipIndex(players) {
 export function playerOwnership(row, index, now = Date.now()) {
   const match = index?.get(publicIdentityKey(row));
   const time = Date.parse(match?.checkedAt || '');
-  if (!match || !Number.isFinite(time) || now < time || now - time > OWNERSHIP_MAX_AGE) return 'unknown';
+  if (!match || !validOwnershipClock(time, now) || now - time > OWNERSHIP_MAX_AGE) return 'unknown';
   if (match.owned === false && ['freeagents', 'waivers'].includes(match.ownershipType)) return 'free';
   if (match.owned === true && match.ownershipType === 'team') return match.isMine === true ? 'mine' : match.isMine === false ? 'other' : 'unknown';
   return 'unknown';

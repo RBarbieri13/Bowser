@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { defaultLeagueMapping, ownershipIndex, ownershipLeagues, playerOwnership } from './ownershipModel.js';
+import { defaultLeagueMapping, ownershipIndex, ownershipLeagues, playerOwnership, validOwnershipClock } from './ownershipModel.js';
 
 /** Scoped Yahoo observations; no localStorage, public exports, or retained account cache. */
 export function usePlayerOwnership(yahoo, season) {
@@ -30,7 +30,7 @@ export function usePlayerOwnership(yahoo, season) {
             const previous = pools[league.key]?.players || [];
             const keys = new Set(previous.map(p => p.key));
             const time = Date.parse(page?.checkedAt || '');
-            if (!page || page.start !== start || !Array.isArray(page.players) || page.players.length > 25 || !Number.isFinite(time) || time > Date.now() || page.players.some(p => keys.has(p.key)) || new Set(page.players.map(p => p.key)).size !== page.players.length || (page.nextStart !== null && (page.nextStart !== start + 25 || page.nextStart > 5000 || page.players.length !== 25))) {
+            if (!page || page.start !== start || !Array.isArray(page.players) || page.players.length > 25 || !validOwnershipClock(time) || page.players.some(p => keys.has(p.key)) || new Set(page.players.map(p => p.key)).size !== page.players.length || (page.nextStart !== null && (page.nextStart !== start + 25 || page.nextStart > 5000 || page.players.length !== 25))) {
               delete pools[league.key];
               throw Error('Yahoo ownership loading stopped. Unread players remain unknown; refresh to retry.');
             }

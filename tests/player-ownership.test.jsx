@@ -4,7 +4,7 @@ import {useState} from 'react';
 import {afterEach,test,expect,vi} from 'vitest';
 import {cleanup,render,screen,fireEvent,waitFor,renderHook,act} from '@testing-library/react';
 import {OwnershipHeader,OwnershipCells} from '../src/lhq/PlayerOwnership.jsx';
-import {defaultOwnershipFilters,defaultLeagueMapping,ownershipLeagues,ownershipIndex,playerOwnership,matchesOwnership,ownershipSortValue,ownershipSummary,OWNERSHIP_MAX_AGE} from '../src/lhq/ownershipModel.js';
+import {defaultOwnershipFilters,defaultLeagueMapping,ownershipLeagues,ownershipIndex,playerOwnership,matchesOwnership,ownershipSortValue,ownershipSummary,OWNERSHIP_MAX_AGE,OWNERSHIP_CLOCK_SKEW} from '../src/lhq/ownershipModel.js';
 import {usePlayerOwnership} from '../src/lhq/usePlayerOwnership.js';
 const account={season:2026,leagues:[{key:'999.l.1',name:'Loongi League'},{key:'999.l.2',name:'LOEG'},{key:'999.l.3',name:'Fart League'},{key:'999.l.4',name:'Fourth League'}],teams:[1,2,3,4].map(n=>({key:`999.l.${n}.t.1`,leagueKey:`999.l.${n}`}))};
 const row={name:'Fixture Alpha',team:'LA',position:'WR'};
@@ -94,4 +94,32 @@ test('unmount cancels pending page completion and account replacement does not r
  await waitFor(()=>expect(read).toHaveBeenCalledTimes(1));unmount();
  await act(async()=>finish({start:0,players:[],nextStart:null,exhausted:true,checkedAt:new Date().toISOString()}));
  expect(read).toHaveBeenCalledTimes(1);
+});
+
+test('Yahoo full league names map exactly and ambiguous aliases stay unmapped',()=>{
+ const leagues=[{key:'999.l.1',name:'The Loongi League'},{key:'999.l.2',name:'LeagueOfExtraordinaryGentlemen'},{key:'999.l.3',name:'Fart League'}];
+ expect(defaultLeagueMapping(leagues)).toEqual({L:'999.l.1',E:'999.l.2',F:'999.l.3'});
+ expect(defaultLeagueMapping([...leagues,{key:'999.l.4',name:'LOEG'}]).E).toBe('');
+});
+test('small server clock skew remains usable; large future timestamps and stale observations stay unknown',()=>{
+ const now=Date.now();
+ const check=offset=>playerOwnership(row,ownershipIndex([observed({checkedAt:new Date(now+offset).toISOString()})]),now);
+ expect(check(43)).toBe('mine');
+ expect(check(OWNERSHIP_CLOCK_SKEW)).toBe('mine');
+ expect(check(OWNERSHIP_CLOCK_SKEW+1)).toBe('unknown');
+ expect(check(-OWNERSHIP_MAX_AGE-1)).toBe('unknown');
+ expect(playerOwnership(row,ownershipIndex([observed({checkedAt:'invalid'})]),now)).toBe('unknown');
+});
+test('scanner accepts slight clock skew, completes all leagues, and rejects far-future observations',async()=>{
+ const read=vi.fn(async()=>({start:0,players:[observed()],nextStart:null,exhausted:true,checkedAt:new Date(Date.now()+100).toISOString()}));
+ const yahoo={account,status:{connected:true},loadOwnershipPage:read,busy:false};
+ const {result,unmount}=renderHook(()=>usePlayerOwnership(yahoo,2026));
+ await waitFor(()=>expect(result.current.complete).toBe(true));
+ expect(read).toHaveBeenCalledTimes(4);
+ expect(result.current.statesFor(row).states.L).toBe('mine');
+ unmount();
+ const invalid=vi.fn(async()=>({start:0,players:[observed()],nextStart:null,exhausted:true,checkedAt:new Date(Date.now()+60000).toISOString()}));
+ const second=renderHook(()=>usePlayerOwnership({...yahoo,loadOwnershipPage:invalid},2026));
+ await waitFor(()=>expect(second.result.current.error).toMatch(/stopped/));
+ expect(second.result.current.observed).toBe(0);
 });
