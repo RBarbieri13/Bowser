@@ -172,3 +172,33 @@ test('LEFA follows real Yahoo read interface, filters one column after activity 
  expect(screen.getByPlaceholderText('Search Players')).toHaveValue('Fixture');
  expect(yahoo.loadOwnershipPage).toHaveBeenCalledTimes(3);
 });
+
+test('Sleeper and Yahoo independently collapse to restore rails and remember visibility across reloads',async()=>{
+ const view=render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
+ await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
+ const initialWidth=Number.parseFloat(grid().style.width);
+ fireEvent.keyDown(screen.getByRole('separator',{name:'Resize Sleeper activity'}),{key:'ArrowRight'});
+ expect(screen.getByRole('separator',{name:'Resize Sleeper activity'})).toHaveAttribute('aria-valuenow','118');
+ fireEvent.click(screen.getByRole('button',{name:'Hide Sleeper market trends'}));
+ expect(screen.queryByRole('button',{name:'Sort Sleeper adds'})).not.toBeInTheDocument();
+ expect(screen.queryByLabelText(/^sleeper adds:/)).not.toBeInTheDocument();
+ expect(screen.getByRole('button',{name:'Show Sleeper market trends'}).closest('th')).toHaveClass('activity-collapsed');
+ expect(Number.parseFloat(grid().style.width)).toBe(initialWidth-96);
+ expect(screen.getByRole('button',{name:'Sort Yahoo adds'})).toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:'Hide Yahoo market trends'}));
+ expect(screen.queryByRole('button',{name:'Yahoo activity source settings'})).not.toBeInTheDocument();
+ expect(screen.getByRole('button',{name:'Clear All'})).toBeInTheDocument();
+ expect(Number.parseFloat(grid().style.width)).toBe(initialWidth-192);
+ view.unmount();
+ render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
+ await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
+ expect(screen.getByRole('button',{name:'Show Sleeper market trends'})).toBeInTheDocument();
+ expect(screen.getByRole('button',{name:'Show Yahoo market trends'})).toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:'Show Sleeper market trends'}));
+ expect(screen.getByRole('separator',{name:'Resize Sleeper activity'})).toHaveAttribute('aria-valuenow','118');
+ expect(screen.getByRole('button',{name:'Sort Sleeper net adds'})).toBeInTheDocument();
+ expect(screen.getByRole('button',{name:'Show Yahoo market trends'})).toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:'Show Yahoo market trends'}));
+ expect(screen.getByRole('button',{name:'Sort Yahoo net adds'})).toBeInTheDocument();
+ expect(Number.parseFloat(grid().style.width)).toBe(initialWidth+4);
+});
