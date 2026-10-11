@@ -15,3 +15,6 @@
 .activity-menu header{display:flex;align-items:center;justify-content:space-between}.activity-menu p{font-size:11px;color:#c5c5c5;margin:6px 0}.activity-menu select{width:100%;height:26px;margin-top:3px;background:#111;color:#eee;border:1px solid #484848;font:12px Arial,sans-serif}.activity-menu label{display:block;margin-top:4px;font-weight:700}
 .activity-menu button,.activity-menu a{color:#35d39a;background:none;border:0;padding:2px 4px;font:700 12px/20px Arial,sans-serif;cursor:pointer}.activity-menu button:disabled{color:#888;cursor:default}
 .activity-header button:focus-visible,.activity-number:focus-visible,.activity-menu :focus-visible{outline:2px solid #35d39a;outline-offset:0}.activity-sorters button:hover,.activity-provider:hover{background:#ffffff12!important}
+/* Match the trend columns' independent, persistent 18px restore rails. */
+.lhq .lhq-leaf-band button.lhq-activity-collapse{right:2px;top:0;width:13px}
+.lhq .lhq-grid th.activity-collapsed,.lhq .lhq-grid td.activity-collapsed{padding:0}
