@@ -77,26 +77,29 @@ function parsePlayerKeys(params, fail, gameKey) {
   }
   return [...new Set(keys)];
 }
-function ownershipInfo(player) {
+function ownershipInfo(player, teamKey, ownedTeamKeys = [teamKey]) {
   const own = metadata(player.ownership);
   const type = text(own.ownership_type) || null;
   const owned = type === 'team' ? true : ['freeagents', 'waivers'].includes(type) ? false : null;
-  return { ...playerInfo(player), ownershipType: type, owned };
+  const owner = text(own.owner_team_key);
+  const league = teamKey?.split('.t.')[0];
+  const validOwner = /^\d+\.l\.\d+\.t\.\d+$/.test(owner) && owner.split('.t.')[0] === league;
+  return { ...playerInfo(player), ownershipType: type, owned, isMine: owned === false ? false : owned === true && validOwner ? ownedTeamKeys.includes(owner) : null };
 }
-async function ownershipForKeys(keys, { query, fail, leagueKey }) {
+async function ownershipForKeys(keys, { query, fail, leagueKey, teamKey, ownedTeamKeys }) {
   if (!keys.length) return new Map();
   const data = await query(`league/${leagueKey}/players;player_keys=${keys.join(',')}/ownership`);
-  const players = collection(data, 'players', 'player', fail, leagueKey).map(ownershipInfo);
+  const players = collection(data, 'players', 'player', fail, leagueKey).map(player => ownershipInfo(player, teamKey, ownedTeamKeys));
   if (players.some(player => !keys.includes(player.key) || player.owned === null)) fail('invalid_data_response', 'Yahoo returned incomplete player ownership.');
   return new Map(players.map(player => [player.key, player]));
 }
 
 // Routes follow https://sports.yahoo.com/developer/docs/ (Players and Transactions collections).
 // Every request is bounded, sequential, private, read-only, and authorized by the caller first.
-export async function queryLeagueResearch({ params, teamKey, season, query, fail, now }) {
+export async function queryLeagueResearch({ params, teamKey, ownedTeamKeys = [teamKey], season, query, fail, now }) {
   const requested = params.get('include') ?? 'availability,trades';
   const sections = [...new Set(requested.split(','))];
-  if (!sections.length || sections.some(section => !['availability', 'trades', 'transactions', 'ownership'].includes(section))) {
+  if (!sections.length || sections.some(section => !['availability', 'trades', 'transactions', 'ownership', 'ownershipPool'].includes(section))) {
     fail('invalid_include', 'Choose availability, trades, transactions, or ownership.');
   }
   const rawStart = params.get('availabilityStart') ?? '0';
@@ -116,7 +119,18 @@ export async function queryLeagueResearch({ params, teamKey, season, query, fail
   const result = { season: Number(season), teamKey, leagueKey, availability: null, trades: null, transactions: null, ownership: null, errors: {} };
   for (const section of sections) {
     try {
-      if (section === 'availability') {
+      if (section === 'ownershipPool') {
+        const data = await query(`league/${leagueKey}/players;start=${start};count=${PAGE_SIZE}/ownership`);
+        const players = collection(data, 'players', 'player', fail, leagueKey).map(player => ownershipInfo(player, teamKey, ownedTeamKeys));
+        if (players.length > PAGE_SIZE || new Set(players.map(p => p.key)).size !== players.length || players.some(p => !/^\d+\.p\.\d+$/.test(p.key) || !p.key.startsWith(`${gameKey}.p.`))) {
+          fail('invalid_data_response', 'Yahoo returned unexpected ownership pagination.', 502);
+        }
+        const exhausted = players.length < PAGE_SIZE;
+        result.ownershipPool = { players, start, pageSize: PAGE_SIZE, exhausted,
+          nextStart: exhausted || start + PAGE_SIZE > 5000 ? null : start + PAGE_SIZE,
+          limitReached: !exhausted && start + PAGE_SIZE > 5000,
+          coverage: 'Current ownership observations only. Missing players and missing owner identity remain unknown.' };
+      } else if (section === 'availability') {
         const data = await query(`league/${leagueKey}/players;status=${status};start=${start};count=${PAGE_SIZE}`);
         const players = collection(data, 'players', 'player', fail, leagueKey).map(playerInfo);
         if (players.length > PAGE_SIZE || players.some(player => !/^\d+\.p\.\d+$/.test(player.key) || !player.key.startsWith(`${leagueKey.split('.l.')[0]}.p.`))) {
@@ -129,7 +143,7 @@ export async function queryLeagueResearch({ params, teamKey, season, query, fail
           limitReached: !exhausted && start + PAGE_SIZE > 5000,
           coverage: 'One page of the current league player pool; absence does not establish roster ownership.' };
       } else if (section === 'ownership') {
-        const direct = await ownershipForKeys(requestedKeys, { query, fail, leagueKey });
+        const direct = await ownershipForKeys(requestedKeys, { query, fail, leagueKey, teamKey, ownedTeamKeys });
         const searched = [];
         for (const request of requestedPlayers) {
           const data = await query(`league/${leagueKey}/players;search=${encodeURIComponent(request.name)};count=${SEARCH_LIMIT}`);
@@ -139,16 +153,16 @@ export async function queryLeagueResearch({ params, teamKey, season, query, fail
           searched.push({ request, match: match || null, ambiguous: match === null });
         }
         const matchedKeys = [...new Set(searched.map(item => item.match?.key).filter(Boolean))];
-        const searchedOwnership = await ownershipForKeys(matchedKeys, { query, fail, leagueKey });
+        const searchedOwnership = await ownershipForKeys(matchedKeys, { query, fail, leagueKey, teamKey, ownedTeamKeys });
         const matches = [
           ...requestedKeys.map(key => {
             const owned = direct.get(key);
-            return owned ? { id: key, playerKey: key, name: owned.name, team: owned.team, position: owned.position, owned: owned.owned, ownershipType: owned.ownershipType, match: 'yahoo-player-key' } : { id: key, playerKey: key, owned: null, ownershipType: null, match: 'unavailable' };
+            return owned ? { id: key, playerKey: key, name: owned.name, team: owned.team, position: owned.position, owned: owned.owned, isMine: owned.isMine, ownershipType: owned.ownershipType, match: 'yahoo-player-key' } : { id: key, playerKey: key, owned: null, ownershipType: null, match: 'unavailable' };
           }),
           ...searched.map(({ request, match, ambiguous }) => {
             const owned = match ? searchedOwnership.get(match.key) : null;
             return { id: request.id, playerKey: match?.key || null, name: match?.name || request.name, team: match?.team || request.team, position: match?.position || request.position,
-              owned: owned?.owned ?? null, ownershipType: owned?.ownershipType || null, match: owned ? 'exact-name-team-position' : ambiguous ? 'ambiguous' : 'unmatched' };
+              owned: owned?.owned ?? null, isMine: owned?.isMine ?? null, ownershipType: owned?.ownershipType || null, match: owned ? 'exact-name-team-position' : ambiguous ? 'ambiguous' : 'unmatched' };
           }),
         ];
         result.ownership = { requested: requestedKeys.length + requestedPlayers.length, matched: matches.filter(item => item.owned !== null).length, matches,

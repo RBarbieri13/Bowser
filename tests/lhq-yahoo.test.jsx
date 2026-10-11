@@ -287,3 +287,17 @@ test('mismatched dashboard identity is rejected without mixing leagues', async (
   expect(result.current.dashboards[teamA]).toBeUndefined(); expect(result.current.errors[teamA]).toMatch(/unexpected/);
   expect(result.current.dashboards[teamB].teamKey).toBe(teamB);
 });
+
+test('ownership pages reuse the authorized no-store queue without caching payloads in research or storage',async()=>{
+ const page={season:2026,teamKey:teamA,leagueKey:'999.l.1',checkedAt:new Date().toISOString(),ownershipPool:{start:0,players:[{key:'999.p.1',name:'Private Fixture',owned:true,isMine:true}],nextStart:null,exhausted:true},errors:{}};
+ const calls=mockReads(url=>url.includes('include=ownershipPool')?response(page):undefined);
+ const {result}=renderHook(()=>useYahooDashboard());await settle(result);
+ let received;
+ await act(async()=>{received=await result.current.loadOwnershipPage(teamA,0);});
+ expect(received.players[0].isMine).toBe(true);
+ expect(result.current.research).toEqual({});expect(localStorage.length).toBe(0);expect(sessionStorage.length).toBe(0);
+ const reads=calls.filter(c=>c.url.includes('include=ownershipPool'));expect(reads).toHaveLength(1);
+ expect(reads[0].options).toMatchObject({credentials:'same-origin',cache:'no-store'});
+ await act(async()=>{expect(await result.current.loadOwnershipPage('999.l.999.t.1',0)).toBeNull();expect(await result.current.loadOwnershipPage(teamA,0,()=>false)).toBeNull();});
+ expect(calls.filter(c=>c.url.includes('include=ownershipPool'))).toHaveLength(1);
+});
