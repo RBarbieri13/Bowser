@@ -2,14 +2,51 @@ import assert from 'node:assert/strict';
 import test, { after } from 'node:test';
 import { DatabaseSync } from 'node:sqlite';
 import { alignedHistory, TREND_METRICS } from '../server/trend-history.mjs';
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { gunzipSync } from 'node:zlib';
 import { createHash } from 'node:crypto';
-import { closeDatabase, getMeta, openDatabase, queryPlayers, queryPlayerProfile, queryTeamBoxScores, queryGameBreakdown, queryOpportunityTracker, QueryValidationError } from '../server/stats-store.mjs';
+import * as store from '../server/stats-store.mjs';
+const { closeDatabase, QueryValidationError } = store;
+const fixtureDir = mkdtempSync(join(tmpdir(), 'bowser-week4-'));
+const fixturePath = join(fixtureDir, 'warehouse.sqlite');
+const fixtureBytes = gunzipSync(readFileSync(new URL('./fixtures/warehouse-2026-through-week4.sqlite.gz', import.meta.url)));
+assert.equal(createHash('sha256').update(fixtureBytes).digest('hex'), '4bec9351ea5d1164bfd0b3289c18699ef5a8fbe173105a6906b5d3f6a2f9bf1f');
+writeFileSync(fixturePath, fixtureBytes);
+const fixtureFor = query => query.get('season') === '2026' ? fixturePath : undefined;
+const getMeta = (path, query = new URLSearchParams()) => store.getMeta(path || fixtureFor(query), query);
+const openDatabase = (path, season) => store.openDatabase(path || (season === 2026 ? fixturePath : undefined), season);
+const [queryPlayers, queryPlayerProfile, queryTeamBoxScores, queryGameBreakdown, queryOpportunityTracker] = ['queryPlayers','queryPlayerProfile','queryTeamBoxScores','queryGameBreakdown','queryOpportunityTracker'].map(name => (query = new URLSearchParams(), path) => store[name](query, path || fixtureFor(query)));
 
 const params = (query = '') => new URLSearchParams(`season=2026&${query}`);
-after(() => closeDatabase());
+after(() => { closeDatabase(); rmSync(fixtureDir, {recursive:true,force:true}); });
 
-test('current snapshot is isolated and the historic warehouse is byte-identical', () => {
+test('active warehouse metadata follows verified source coverage as the season advances', () => {
+  const meta = store.getMeta(undefined, params());
+  const report = JSON.parse(readFileSync(new URL('../data/import-report-2026.json', import.meta.url)));
+  const db = store.openDatabase(undefined, 2026);
+  const games = db.prepare('SELECT game_id,week,gameday,home_score,away_score,play_by_play_available FROM games').all();
+  const sourced = db.prepare('SELECT game_id,COUNT(DISTINCT team) teams FROM player_week_stats WHERE source_player_stats=1 AND source_snap_counts=1 GROUP BY game_id').all();
+  const covered = new Set(sourced.filter(g=>g.teams===2).map(g=>g.game_id));
+  const weeks = [...new Set(games.map(g=>g.week))].sort((a,b)=>a-b);
+  const coverage = weeks.map(week => {
+    const rows = games.filter(g=>g.week===week);
+    return {week,scheduledGames:rows.length,completedGames:rows.filter(g=>g.home_score!==null && g.away_score!==null).length,sourcedGames:rows.filter(g=>g.play_by_play_available===1 && covered.has(g.game_id)).length};
+  });
+  const complete = coverage.filter(w=>w.scheduledGames===w.completedGames && w.scheduledGames===w.sourcedGames).map(w=>w.week);
+  assert.deepEqual(meta.weekCoverage.map(w=>({...w})),coverage);
+  assert.deepEqual(meta.completedWeeks,complete);
+  assert.equal(meta.latestCompleteWeek,complete.at(-1) ?? null);
+  assert.deepEqual(meta.availableWeeks,db.prepare('SELECT DISTINCT week FROM player_week_stats ORDER BY week').all().map(w=>w.week));
+  assert.deepEqual(meta.scheduleWeeks.map(w=>({...w})),weeks.map(week=>{
+    const dates=games.filter(g=>g.week===week).map(g=>g.gameday).sort();
+    return {week,firstGameDate:dates[0],lastGameDate:dates.at(-1)};
+  }));
+  for (const key of ['completed_games','games_with_play_by_play','player_stat_rows','stat_rows_with_snap_match','snap_rows']) assert.equal(meta.warehouse[key],report[key],key);
+});
+
+test('dated Week 4 fixture is isolated and the historic warehouse is byte-identical', () => {
   assert.equal(createHash('sha256').update(readFileSync(new URL('../data/fantasy_football.sqlite', import.meta.url))).digest('hex'), 'd3cc2ed8e38eaca00005b4facb2e475c833418302b4b2c367c42574412dd1869');
   const meta = getMeta(undefined, params());
   assert.equal(meta.season, 2026);
@@ -104,8 +141,8 @@ test('2026 ADP stays dated and upcoming matchups use the current roster team', (
   assert.equal(db.prepare("SELECT latest_team FROM players WHERE player_id=?").get(player.player_id).latest_team, 'IND');
   assert.equal(db.prepare("SELECT source_team FROM draft_rankings WHERE player_id=?").get(player.player_id).source_team, 'LAC');
   const next = db.prepare("SELECT opponent,kickoff_utc FROM team_schedule WHERE team='IND' AND gameday>=DATE('now') ORDER BY gameday LIMIT 1").get();
-  assert.equal(player.upcoming_opponent, next.opponent);
-  assert.equal(player.upcoming_kickoff_utc, next.kickoff_utc);
+  assert.equal(player.upcoming_opponent, next?.opponent ?? null);
+  assert.equal(player.upcoming_kickoff_utc, next?.kickoff_utc ?? null);
 });
 
 test('every stats route rejects unsupported seasons and cross-season game IDs', () => {

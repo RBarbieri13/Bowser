@@ -1,6 +1,9 @@
 import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { gunzipSync } from 'node:zlib';
 import { querySchedule, closeDatabase, QueryValidationError } from '../server/stats-store.mjs';
 import handler from '../api/v1/meta.mjs';
 import { fantasyStatsApiPlugin } from '../server/vite-api-plugin.mjs';
@@ -17,13 +20,18 @@ test('schedule returns one warehouse row per game with sourced scores and kickof
   assert.equal(result.meta.linesAvailable, false); assert.equal(result.meta.source, 'nflverse schedules');
   assert(!JSON.stringify(result).includes('implied'));
 });
-test('current season includes future games without inventing scores or points', () => {
-  const result = querySchedule(params('season=2026&week=18'));
+test('dated source fixture includes future games without inventing scores or points', () => {
+  const dir = mkdtempSync(join(tmpdir(),'bowser-pregame-'));
+  const path = join(dir,'warehouse.sqlite');
+  writeFileSync(path,gunzipSync(readFileSync(new URL('./fixtures/warehouse-2026-through-week4.sqlite.gz',import.meta.url))));
+  try {
+  const result = querySchedule(params('season=2026&week=18'),path);
   assert.equal(result.data.length, 16);
   assert(result.data.every(game => game.homeScore === null && game.awayScore === null && game.totalPoints === null));
-  const firstWeek = querySchedule(params('season=2026&week=1'));
+  const firstWeek = querySchedule(params('season=2026&week=1'),path);
   assert(firstWeek.data.some(game => game.kickoffUtc));
   assert(firstWeek.data.every(game => game.season === 2026));
+  } finally { closeDatabase(); rmSync(dir,{recursive:true,force:true}); }
 });
 test('schedule supports exact independent weeks, postseason and validation', () => {
   const result = querySchedule(params('season=2025&week=22,1,22'));
