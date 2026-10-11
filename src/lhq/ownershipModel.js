@@ -34,10 +34,10 @@ export function ownershipIndex(players) {
   }
   return result;
 }
-export function playerOwnership(row, index, now = Date.now()) {
+export function playerOwnership(row, index, now = Date.now(), maxAge = OWNERSHIP_MAX_AGE) {
   const match = index?.get(publicIdentityKey(row));
   const time = Date.parse(match?.checkedAt || '');
-  if (!match || !validOwnershipClock(time, now) || now - time > OWNERSHIP_MAX_AGE) return 'unknown';
+  if (!match || !validOwnershipClock(time, now) || now - time > maxAge) return 'unknown';
   if (match.owned === false && ['freeagents', 'waivers'].includes(match.ownershipType)) return 'free';
   if (match.owned === true && match.ownershipType === 'team') return match.isMine === true ? 'mine' : match.isMine === false ? 'other' : 'unknown';
   return 'unknown';

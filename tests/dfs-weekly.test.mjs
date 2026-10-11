@@ -42,14 +42,23 @@ test('lock follows first kickoff and archive window is explicitly a schedule est
   assert.equal(dfsSlateTiming(multi,Date.parse('2026-10-06T04:15:00Z')).availability,'archived');
 });
 
-test('current skips a locked all-week slate while explicit selection keeps its historical rows', t => {
+test('current skips a locked all-week slate while explicit selection keeps its historical rows', async t => {
   t.mock.method(Date,'now',()=>Date.parse('2026-10-02T03:45:00Z'));
-  const current=getDfsSlate();
+  // Retain the October 2 lock regression in an isolated Week 4 snapshot,
+  // independent of newer verified weeks appended to the production capture.
+  const temp=mkdtempSync(join(tmpdir(),'bowser-week4-lock-'));
+  t.after(()=>rmSync(temp,{recursive:true,force:true}));
+  mkdirSync(join(temp,'server'));mkdirSync(join(temp,'data'));
+  cpSync(new URL('../server/dfs-store.mjs',import.meta.url),join(temp,'server/dfs-store.mjs'));
+  cpSync(pinnedPath,join(temp,'data/dfs-week1-2026.json'));
+  writeFileSync(join(temp,'data/dfs-weekly.json'),JSON.stringify({...weekly,week:4,defaultSlate:'2026-w4-dk-154077',slates:Object.fromEntries(Object.entries(weekly.slates).filter(([,s])=>s.week===4))}));
+  const isolated=await import(pathToFileURL(join(temp,'server/dfs-store.mjs')));
+  const current=isolated.getDfsSlate();
   assert.equal(current.meta.id,154080);
   assert.equal(current.meta.slateState,'upcoming');
   assert.equal(current.meta.currentSnapshotAvailable,true);
   for(const key of ['2026-w4-dk-154077','2026-w4-dk-154084']){
-    const historical=getDfsSlate(key);
+    const historical=isolated.getDfsSlate(key);
     assert.equal(historical.meta.availability,'locked');
     assert.equal(historical.meta.slateState,'in-progress');
     assert.equal(historical.meta.isLocked,true);

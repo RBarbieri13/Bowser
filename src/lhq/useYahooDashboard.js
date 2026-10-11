@@ -100,6 +100,7 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
   const [busy, setBusy] = useState(true);
   const [researchBusy, setResearchBusy] = useState({});
   const [log, setLog] = useState([]);
+  const statusRef = useRef(status); statusRef.current = status;
   const revision = useRef(0), mounted = useRef(false), latest = useRef(data), researchRevision = useRef({});
   latest.current = data;
   const appendLog = useCallback((event, outcome = 'success') => {
@@ -135,13 +136,13 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
       const nextStatus = await read('status');
       if (!current(id)) return;
       if (!nextStatus || typeof nextStatus.connected !== 'boolean' || typeof nextStatus.configured !== 'boolean') throw error('invalid_data_response');
-      setStatus({ configured: nextStatus.configured, connected: nextStatus.connected, connectionUrl: nextStatus.connectionUrl || null, expiresAt: nextStatus.expiresAt || null, storage: nextStatus.storage || null });
+      setStatus({ configured: nextStatus.configured, connected: nextStatus.connected, connectionUrl: nextStatus.connectionUrl || null, expiresAt: nextStatus.expiresAt || null, storage: nextStatus.storage || null, connectionId: nextStatus.connectionId || null });
       if (!nextStatus.connected) return;
       appendLog('authorized');
       const account = await read(`leagues?${new URLSearchParams({ season })}`);
       if (!current(id)) return;
       if (!account || !Array.isArray(account.teams) || !Array.isArray(account.leagues) || (account.season != null && account.season !== Number(season)) || account.teams.some(team => !/^\d+\.l\.\d+\.t\.\d+$/.test(team.key) || team.leagueKey !== team.key.split('.t.')[0])) throw error('invalid_data_response');
-      const nextAccount = { season: Number(season), leagues: account.leagues, teams: [...new Map(account.teams.map(team => [team.key, team])).values()], checkedAt: account.checkedAt || null };
+      const nextAccount = { season: Number(season), leagues: account.leagues, teams: [...new Map(account.teams.map(team => [team.key, team])).values()], checkedAt: account.checkedAt || null, ownershipCache: account.ownershipCache || null };
       setData(previous => ({ ...previous, account: nextAccount }));
       latest.current = { ...latest.current, account: nextAccount };
       if (refreshToken) appendLog('refreshed');
@@ -170,6 +171,26 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
   useEffect(() => {
     load();
     return () => { revision.current++; };
+  }, [load]);
+
+  // Detect connect/disconnect/account replacement in another same-origin tab.
+  // This lightweight session read does not query Yahoo or restart ownership scans.
+  useEffect(() => {
+    let active = true, pending = false;
+    const probe = async () => {
+      if (pending || !statusRef.current || document.visibilityState === 'hidden') return;
+      pending = true;
+      const id = revision.current;
+      try {
+        const next = await enqueue(() => active && current(id) ? request('status') : null);
+        if (!active || !current(id) || !next) return;
+        if (next.connected !== statusRef.current.connected || (next.connectionId || null) !== statusRef.current.connectionId) await load();
+      } catch { /* Transient status failure does not erase last checked data or loop. */ }
+      finally { pending = false; }
+    };
+    const timer = setInterval(probe, 60000);
+    window.addEventListener('focus', probe); document.addEventListener('visibilitychange', probe);
+    return () => { active = false; clearInterval(timer); window.removeEventListener('focus', probe); document.removeEventListener('visibilitychange', probe); };
   }, [load]);
 
   // Private browser memory must expire with the existing absolute Yahoo session,
@@ -243,7 +264,7 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
   }, [season, clear, appendLog]);
 
   // The ownership scanner uses the same serialized, authenticated queue but keeps
-  // pages in its own temporary memory, never the research cache or browser storage.
+  // pages in its own account-scoped controller, separate from the research cache.
   const loadOwnershipPage = useCallback(async (teamKey, start = 0, isActive = () => true) => {
     const id = revision.current;
     const account = latest.current.season === season ? latest.current.account : null;

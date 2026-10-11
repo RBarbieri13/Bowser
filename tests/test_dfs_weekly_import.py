@@ -320,6 +320,26 @@ class WeeklyDfsTests(unittest.TestCase):
         with self.assertRaisesRegex(module.PartialData,'different week/date/matchup'):
             module.discover_slates(lobby,[game],NOW,schedule=[game,next_game])
 
+    def test_projection_missing_marker_is_not_zero_and_still_requires_coverage(self):
+        games = SLATE['games'][:1]
+        source = {'lastModified': 'Wed, 16 Sep 2026 07:41:01 GMT'}
+        html = projection_html(games)
+        extra = html[html.index('<tr>'):html.index('</tr>')+5].replace('Player ', 'Unavailable ').replace('15.2', '--')
+        parsed = module.parse_projections(html.replace('</table>', extra + '</table>'), 2026, 2, games, source, NOW)
+        self.assertEqual(len(parsed), 8)
+        with self.assertRaisesRegex(module.PartialData, 'team/position'):
+            module.parse_projections(html.replace('15.2', '--'), 2026, 2, games, source, NOW)
+
+    def test_roster_bye_teams_are_not_required_but_every_scheduled_team_is(self):
+        fields = ['season','week','team','gsis_id','status','full_name','football_name','first_name','last_name','position']
+        data = io.StringIO(); writer = csv.DictWriter(data, fieldnames=fields); writer.writeheader()
+        for i in range(510):
+            writer.writerow(dict(season=2026,week=5,team='NYG' if i%2 else 'LA',gsis_id=str(i),status='ACT',full_name=f'Fixture {i}',football_name='Fixture',first_name='Fixture',last_name=str(i),position='WR'))
+        matches,week = module.roster_identities(data.getvalue(),2026,5,'gsis_id,display_name,common_first_name,last_name\n',{'NYG','LAR'})
+        self.assertEqual(week,5);self.assertEqual(len(matches),510)
+        with self.assertRaisesRegex(module.PartialData,'scheduled teams'):
+            module.roster_identities(data.getvalue(),2026,5,'',{'NYG','LAR','BUF'})
+
     def test_projection_rejects_wrong_week_stale_dates_and_missing_team_position(self):
         games = SLATE['games'][:1]
         source = {'lastModified': 'Wed, 16 Sep 2026 07:41:01 GMT'}

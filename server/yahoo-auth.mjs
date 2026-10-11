@@ -1,7 +1,7 @@
 import { queryLeagueResearch } from './yahoo-research.mjs';
 import { metadata, entities, leagueInfo, teamInfo, rosterInfo, scoreboardInfo, settingsInfo } from './yahoo-dashboard.mjs';
 export { metadata, entities } from './yahoo-dashboard.mjs';
-import { createCipheriv, createDecipheriv, hkdfSync, randomBytes, timingSafeEqual } from 'node:crypto';
+import { createCipheriv, createDecipheriv, createHmac, hkdfSync, randomBytes, timingSafeEqual } from 'node:crypto';
 
 const PREFIX = '/api/v1/auth/yahoo/';
 const COOKIE = '__Host-bowser-yahoo';
@@ -83,7 +83,7 @@ export function createYahooHandler({ env = process.env, fetcher = fetch, now = (
     try {
       if (!['status', 'start', 'callback', 'leagues', 'roster', 'dashboard', 'league-research', ...postActions].includes(action)) return json(res, 404, { error: { code: 'not_found', message: 'Unknown Yahoo action.' } });
       if (req.method !== (postActions.includes(action) ? 'POST' : 'GET')) { res.setHeader('Allow', postActions.includes(action) ? 'POST' : 'GET'); return json(res, 405, { error: { code: 'method_not_allowed', message: 'Unsupported request method.' } }); }
-      if (action === 'status') return json(res, 200, { configured, connected: Boolean(session), expiresAt: session ? new Date(session.expiresAt).toISOString() : null, connectionUrl: configured ? `${callback.origin}/#/yahoo` : null, storage: 'Encrypted HttpOnly cookie; eight-hour browser session. No background imports.' });
+      if (action === 'status') return json(res, 200, { configured, connected: Boolean(session), expiresAt: session ? new Date(session.expiresAt).toISOString() : null, connectionId: session ? createHmac('sha256', secret).update('bowser-session-id:' + String(session.expiresAt)).digest('hex') : null, connectionUrl: configured ? `${callback.origin}/#/yahoo` : null, storage: 'Encrypted HttpOnly cookie; eight-hour browser session. Ownership snapshot encrypted in this browser and refreshed while connected; no unattended Yahoo imports.' });
       if (!configured) fail('not_configured', 'Yahoo credentials or the HTTPS callback are not configured for this deployment.', 503);
       if (req.headers.host !== callback.host) {
         if (action === 'start') return redirect(res, `${callback.origin}${PREFIX}start`);
@@ -146,7 +146,13 @@ export function createYahooHandler({ env = process.env, fetcher = fetch, now = (
       if (action === 'leagues') {
         const leagues = entities(await query(`${userGames}/leagues`), 'league').map(l => ({ key: text(l.league_key), name: text(l.name), season: number(l.season) ?? Number(season), teams: number(l.num_teams), week: number(l.current_week), scoring: text(l.scoring_type) }));
         const teams = entities(await query(`${userGames}/teams`), 'team').map(t => ({ key: text(t.team_key), leagueKey: text(t.team_key).split('.t.')[0], name: text(t.name) }));
-        return json(res, 200, { season: Number(season), leagues, teams, checkedAt: new Date(now()).toISOString() });
+        // A cache-only key, never an API credential. Derived solely from freshly
+        // authorized season/team membership; changing owned teams changes the key.
+        const membership = JSON.stringify([season, [...new Set(teams.map(t => t.key))].sort()]);
+        const scope = createHmac('sha256', secret).update('bowser-ownership-scope-v1:' + membership).digest('hex');
+        const key = Buffer.from(hkdfSync('sha256', secret, scope, 'bowser-ownership-cache-v1', 32)).toString('base64');
+        const ownershipCache = teams.length ? { scope, key, expiresAt: new Date(session.expiresAt).toISOString() } : null;
+        return json(res, 200, { season: Number(season), leagues, teams, ownershipCache, checkedAt: new Date(now()).toISOString() });
       }
       const teamKey = url.searchParams.get('team') || '';
       if (!/^\d+\.l\.\d+\.t\.\d+$/.test(teamKey)) fail('invalid_team', 'Select one of your Yahoo teams.');
