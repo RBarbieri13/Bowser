@@ -204,3 +204,19 @@ test('team links retain exact selected weeks rather than injecting previous-seas
  expect(screen.getByRole('link',{name:'Open BUF 2026 week 1 game breakdown'})).toHaveAttribute('href','#/game/2026_1_NYG_DAL?scoring=ppr');
  expect(parseWeekSelection('3,1,2,3,0,99,foo')).toEqual([1,2,3]);
 });
+
+test('snap-only range filter and column options preserve exact week stats and support hiding every metric',async()=>{
+ renderPage({initialWeeks:'2'});await screen.findByRole('button',{name:'Quarterback Zero',exact:true});
+ fireEvent.click(screen.getByRole('button',{name:'Played a snap',exact:true}));
+ expect(screen.queryByRole('button',{name:'Quarterback Zero',exact:true})).not.toBeInTheDocument();
+ expect(screen.getByRole('button',{name:'Runner Alpha',exact:true})).toBeInTheDocument();
+ fireEvent.change(screen.getByLabelText('From week'),{target:{value:'1'}});
+ await screen.findByRole('button',{name:'Quarterback Zero',exact:true});
+ fireEvent.click(screen.getByRole('button',{name:'Column options',exact:true}));
+ const dialog=screen.getByRole('dialog',{name:'Team box column options'});
+ for(const checkbox of within(dialog).getAllByRole('checkbox'))if(checkbox.checked)fireEvent.click(checkbox);
+ expect(table().querySelectorAll('.lhq-leaf-band th')).toHaveLength(2);
+ fireEvent.click(within(dialog).getByRole('button',{name:'Reset to defaults'}));
+ expect(table().querySelectorAll('.lhq-leaf-band th').length).toBeGreaterThan(2);
+ fireEvent.keyDown(document,{key:'Escape'});expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+});

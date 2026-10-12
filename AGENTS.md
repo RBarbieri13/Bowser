@@ -226,3 +226,14 @@ Robert's Command Center v2 prototype and handoff supersede older Fantasy News la
 - Finish is followed by two narrow composite columns (Sleeper then Yahoo), then LEFA. Each provider has independent Adds / Drops / Net sort controls; sort raw counts, descending first, unknown last. Keep compact displays and exact source/count tooltips. These composite columns are excluded from public CSV exports.
 - Sleeper activity is the selected rolling 6/24/72-hour public top-list observation, independent of statistics and DFS weeks. Missing top-list membership is not zero; Net requires both counts. Reuse public snapshot storage/cooldown and retain original capture clocks.
 - Yahoo activity is the selected authorized league's bounded successful transaction history, never Yahoo-wide counts or the Sleeper time window. Show scope/coverage in the header menu and tooltips; no unmatched-zero inference. Read through the existing serial queue. Transactions remain in memory and clear on account/season/disconnect boundaries; the ownership snapshot storage exception does not apply.
+
+## Usage share throughout Bowser (October 11, 2026)
+
+- Every active page's sidebar catalog includes the existing Usage share matrix, including Fantasy News's right-hand desk. Preserve existing tabs, hidden defaults and per-route active-tab restoration.
+- Use the route's statistics season/scoring and selected through/base week where present; otherwise use the latest fully sourced week. Keep five aligned regular-season slots, missing-value semantics, team/position controls, and follow/pin behavior. Yahoo disconnection must not block this public statistics panel. Fetch opportunity data only while Usage share is mounted; never persist player or league payloads.
+
+## Team and opportunity table controls (October 11, 2026)
+
+- Team Box Scores and Opportunity Tracker expose a Played a snap filter: at least one real positive snap in the displayed statistics range. Missing/DNP and zero-only players do not pass. Preserve other filters and source rows.
+- Both pages expose Column options in the top action row. Team Box Scores Fit columns measures displayed content and synchronizes each stat width across weeks. Opportunity metrics can be added, changed, hidden, and resized; retain legible trend minima, dropdowns and sorting. Adjacent visible trend sections use distinct palettes.
+- Opportunity comparison offers explicit earlier/later calendar-game selections, including nonconsecutive weeks and one-game periods. Default to total differences; offer per-game averages and always average percentage metrics/ranks. Show compact signed percent and nominal changes, with period/coverage details on hover. Require every chosen observation; missing never becomes zero. A zero baseline has unavailable percentage unless both totals are zero. Comparison selections do not change the displayed history or main statistics week.

@@ -1,0 +1,18 @@
+.lhq-column-modal .lhq-column-groups{overflow:auto;max-height:65vh}
+.lhq-column-modal fieldset{min-width:180px}
+.lhq-column-modal .op-metric-option{display:flex;align-items:center;gap:6px;margin:8px 0}
+.lhq-column-modal .op-metric-option select{min-width:0;width:160px}
+.lhq .op-compare{position:relative;display:flex;align-items:center;gap:6px}
+.lhq .op-compare-menu{position:absolute;right:0;top:100%;z-index:30;width:430px;max-width:90vw;padding:12px;background:#181818;border:1px solid #454545;box-shadow:0 8px 28px #0009;color:#ededed;font-size:12px}
+.lhq .op-compare-menu header{display:flex;justify-content:space-between;margin-bottom:10px}
+.lhq .op-periods{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lhq .op-periods fieldset{min-width:0;margin:0;border:1px solid #454545;padding:8px}
+.lhq .op-periods fieldset>div{max-height:250px;overflow:auto}
+.lhq .op-periods label{display:flex;align-items:center;gap:6px;padding:4px 0;color:#ededed}
+.lhq .op-periods input{accent-color:#3ecf8e}
+.lhq .op-compare-menu footer{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
+.lhq .op-delta{display:flex;flex-direction:column;justify-content:center;gap:4px;font-size:13px;white-space:nowrap}
+.lhq .op-delta b{font-size:15px}.lhq .op-delta small{font-size:11px}
+
+.lhq .op-compare-menu p{white-space:normal;line-height:1.5;color:#b4b4b4;margin:10px 0 0}
+.lhq .lhq-strip>.bowser-filter-pill{align-self:center}

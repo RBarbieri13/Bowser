@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest';
-import {cleanup, fireEvent, render, screen, within} from '@testing-library/react';
+import {cleanup, fireEvent, render, screen, within, waitFor} from '@testing-library/react';
 import {afterEach, beforeEach, expect, test, vi} from 'vitest';
 import {LhqProvider, Shell, Grid} from '../src/lhq/shared.jsx';
 
@@ -79,4 +79,35 @@ test('row mousedown publishes the existing row without blocking normal controls'
  render(<Grid rows={[row]} columns={[{key:'name',width:100,render:r=><button onClick={click}>{r.name}</button>}]} onRowMouseDown={callback}/>);
  fireEvent.mouseDown(screen.getByRole('button',{name:'Real row'}));expect(callback.mock.calls[0][0]).toBe(row);
  fireEvent.click(screen.getByRole('button',{name:'Real row'}));expect(click).toHaveBeenCalledOnce();
+});
+
+test('shared usage catalog is lazy, preserves manual selection across tabs and uses route statistics context',async()=>{
+ const slots=Array.from({length:5},(_,i)=>({season:2026,week:i+1}));
+ vi.stubGlobal('fetch',vi.fn(async input=>({ok:true,json:async()=>String(input).includes('/meta?')?{latestCompleteWeek:5,availableWeeks:[1,2,3,4,5],teams:['NYG','LA']}:{meta:{trendSlots:slots},data:{groups:[]}}})));
+ const view=render(harness({page:'waivers',panels:panels.filter(p=>p.id!=='usage'),usageContext:{season:2026,scoring:'half'}}));
+ open();expect(fetch.mock.calls.every(([url])=>!String(url).includes('/opportunity-tracker'))).toBe(true);
+ fireEvent.click(screen.getByRole('tab',{name:'Usage share',exact:true}));
+ await screen.findByRole('table',{name:'NYG RB five-week usage share'});
+ const request=new URL(fetch.mock.calls.find(([url])=>String(url).includes('/opportunity-tracker'))[0],'https://example.test');
+ expect(Object.fromEntries(request.searchParams)).toMatchObject({season:'2026',weeks:'5',games:'5',scoring:'half',historyAnchor:'requested'});
+ fireEvent.change(screen.getByLabelText('Usage share team'),{target:{value:'LA'}});
+ fireEvent.change(screen.getByLabelText('Usage share position'),{target:{value:'WR'}});
+ fireEvent.click(screen.getByRole('tab',{name:'Position Totals'}));
+ fireEvent.click(screen.getByRole('tab',{name:'Usage share',exact:true}));
+ expect(screen.getByLabelText('Usage share team')).toHaveValue('LA');expect(screen.getByLabelText('Usage share position')).toHaveValue('WR');
+ view.rerender(harness({page:'waivers',panels:panels.filter(p=>p.id!=='usage'),usageContext:{season:2025,baseWeek:17,scoring:'standard'}}));
+ await screen.findByRole('table',{name:'LA WR five-week usage share'});
+ expect(fetch.mock.calls.some(([url])=>String(url).includes('season=2025')&&String(url).includes('weeks=17')&&String(url).includes('scoring=standard'))).toBe(true);
+});
+
+test('route team changes supersede stale player context while an intentional pin remains intact',async()=>{
+ vi.stubGlobal('fetch',vi.fn(async()=>({ok:true,json:async()=>({meta:{trendSlots:[]},data:{groups:[]}})})));
+ const options=team=>({page:'team-box-scores',panels:panels.filter(p=>p.id!=='usage'),usageContext:{season:2026,baseWeek:4,team,selected:{player_id:'a',team:'NYG',position:'WR'}}});
+ const view=render(harness(options('NYG')));open();fireEvent.click(screen.getByRole('tab',{name:'Usage share',exact:true}));
+ await screen.findByRole('table',{name:'NYG WR five-week usage share'});
+ view.rerender(harness(options('LA')));
+ await waitFor(()=>expect(screen.getByLabelText('Usage share team')).toHaveValue('LA'));
+ fireEvent.click(screen.getByRole('button',{name:'Follows selection'}));
+ view.rerender(harness(options('NYG')));
+ expect(screen.getByLabelText('Usage share team')).toHaveValue('LA');
 });

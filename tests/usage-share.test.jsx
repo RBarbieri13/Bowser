@@ -79,3 +79,12 @@ test('reveals a followed player beyond the first six while preserving a subseque
  fireEvent.click(screen.getByRole('button',{name:'Click selected main row'}));
  await screen.findByRole('button',{name:'Focus Depth Player 7 · Snaps'});
 });
+
+test('name-only provider selections follow unique sourced teammates and react to same-team changes',async()=>{
+ const {rerender}=render(<Harness selected={{name:'Patrick Ricard',team:'NYG',position:'RB'}}/>);
+ await waitFor(()=>expect(document.querySelector('tbody[data-stat="snaps"] [data-player="b"]')).toHaveClass('focused'));
+ rerender(<Harness selected={{name:'Tyrone Tracy Jr.',team:'NYG',position:'RB'}}/>);
+ await waitFor(()=>expect(document.querySelector('tbody[data-stat="snaps"] [data-player="a"]')).toHaveClass('focused'));
+ rerender(<Harness selected={{gsisId:'b',name:'Patrick Ricard',team:'NYG',position:'RB'}}/>);
+ await waitFor(()=>expect(document.querySelector('tbody[data-stat="snaps"] [data-player="b"]')).toHaveClass('focused'));
+});

@@ -129,3 +129,20 @@ test('child retains pending league ordinal through Yahoo account hydration witho
  const filters={search:'',teams:[],pos:[],status:[],league:{mode:'mine-league',index:0}};act(()=>window.dispatchEvent(new MessageEvent('message',{origin:window.location.origin,source:opener,data:{type:'bowser-fantasy-news-filters',filters}})));expect(opener.postMessage.mock.calls.filter(([m])=>m.type==='bowser-fantasy-news-filters')).toHaveLength(0);
  v.rerender(<LhqProvider><FantasyNews {...props} yahoo={yahoo()}/></LhqProvider>);await waitFor(()=>expect(within(pane('Wire')).getAllByRole('button',{name:/^Expand/})).toHaveLength(1));expect(screen.getByRole('button',{name:'Filter news leagues'})).toHaveTextContent('1');for(const [m] of opener.postMessage.mock.calls.filter(([m])=>m.type==='bowser-fantasy-news-filters'))expect(m.filters.league).toEqual({mode:'mine-league',index:0});expect(localStorage.getItem(NEWS_LAYOUT_KEY)).toBeNull();
 });
+
+
+test('right sidebar offers public Usage share while Yahoo is disconnected and restores its tab',async()=>{
+ const existingFetch=fetch.getMockImplementation();
+ fetch.mockImplementation(async url=>String(url).includes('/meta?')?reply({latestCompleteWeek:4,availableWeeks:[1,2,3,4]}):String(url).includes('/opportunity-tracker?')?reply({data:{groups:[]},meta:{trendSlots:[]}}):existingFetch(url));
+ const view=renderPage();await ready();openLeague();
+ expect(screen.getByText('Yahoo not connected')).toBeInTheDocument();
+ fireEvent.click(screen.getByRole('tab',{name:'Usage share',exact:true}));
+ await screen.findByRole('table',{name:'NYG RB five-week usage share'});
+ expect(screen.queryByText('Yahoo not connected')).not.toBeInTheDocument();
+ expect(JSON.parse(sessionStorage.getItem('bowser:lhq:sidebar-tab:fantasy-news'))).toBe('usage-share');
+ fireEvent.click(togglePane('League desk'));fireEvent.click(togglePane('League desk'));
+ expect(screen.getByRole('tab',{name:'Usage share',exact:true})).toHaveAttribute('aria-selected','true');
+ view.unmount();renderPage();await ready();
+ expect(screen.getByRole('tab',{name:'Usage share',exact:true})).toHaveAttribute('aria-selected','true');
+ expect(fetch.mock.calls.filter(([url])=>String(url).includes('/opportunity-tracker?')).every(([url])=>String(url).includes('weeks=4'))).toBe(true);
+});
