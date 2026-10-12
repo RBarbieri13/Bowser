@@ -1,7 +1,9 @@
+import {comparePeriods,distinctTrendGroups,playedSnap} from '../src/lhq/opportunityComparison.js';
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, renderHook, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
+import { TeamBoxScores } from '../src/lhq/TeamBoxScores.jsx';
 import { PlayerDatabase } from '../src/lhq/PlayerDatabase.jsx';
 import { Waivers } from '../src/lhq/Waivers.jsx';
 import { MarketPulse } from '../src/lhq/MarketPulse.jsx';
@@ -84,7 +86,7 @@ test('waiver history validates persisted numbers before querying the API', async
   vi.stubGlobal('fetch', vi.fn(async () => reply(waiverPayload)));
   show(<Waivers {...props} />);
   await screen.findAllByRole('button', { name: 'Fixture Alpha', exact: true });
-  const params = new URL(fetch.mock.calls[0][0], 'https://example.test').searchParams;
+  const params = new URL(fetch.mock.calls.find(([url])=>String(url).includes('/waivers?'))[0], 'https://example.test').searchParams;
   expect(['5', '8', '10', '18']).toContain(params.get('trendWeeks'));
 });
 
@@ -365,4 +367,69 @@ test('waivers discovers the newest published research and opens on the latest co
   fireEvent.change(screen.getByRole('combobox',{name:'Waiver week'}),{target:{value:'2'}});
   await waitFor(()=>expect(screen.getByRole('combobox',{name:'Waiver week'})).toHaveValue('2'));
   expect(JSON.parse(localStorage.getItem(favoriteKey(2026,4)))).toHaveLength(1);
+});
+
+
+test.each([PlayerDatabase,Waivers,MarketPulse,TeamBoxScores,OpportunityTracker,LeagueHub,YahooConnection].map(Page=>[Page.name,Page]))('%s includes one Usage share tab in its sidebar catalog',async (_name,Page)=>{
+ const yahoo=yahooFixture();
+ vi.stubGlobal('fetch',vi.fn(async input=>{
+  const url=new URL(String(input),'https://example.test');
+  if(url.pathname.endsWith('/waivers'))return reply(waiverPayload);
+  if(url.pathname.endsWith('/opportunity-tracker'))return reply({data:{groups:[]},meta:{trendSlots:[]}});
+  if(url.pathname.endsWith('/market-pulse'))return reply({providers:{},rows:[]});
+  if(url.pathname.endsWith('/meta'))return reply({latestCompleteWeek:4,availableWeeks:[1,2,3,4],teams:['NYG'],seasons:[2025,2026]});
+  return reply({data:[],meta:{}});
+ }));
+ show(<Page {...props} yahoo={yahoo}/>);
+ fireEvent.click(screen.getByRole('button',{name:/Show sidebar/}));
+ expect(screen.getAllByRole('tab',{name:'Usage share',exact:true})).toHaveLength(1);
+ fireEvent.click(screen.getByRole('tab',{name:'Usage share',exact:true}));
+ await screen.findByLabelText('Usage share team');
+ expect(screen.getByLabelText('Usage share position')).toHaveValue('RB');
+});
+
+test('opportunity exposes snap-only filtering, resizable configurable metrics and exact custom period changes',async()=>{
+ localStorage.setItem('bowser:lhq:opportunity',JSON.stringify({history:3,metrics:{WR:['snaps','targets','fantasy_points']}}));
+ const slots=Array.from({length:6},(_,i)=>({season:2026,week:i+1,label:`2026 W${i+1}`}));
+ const active={playerId:'active',name:'Active Receiver',position:'WR',team:'NYG',history:slots.map((s,i)=>({...s,played:true,snaps:20,targets:[2,3,4,10,11,12][i],fantasy_points:10}))};
+ const inactive={...active,playerId:'inactive',name:'No Snap Receiver',history:slots.map(s=>({...s,played:true,snaps:0,targets:0,fantasy_points:0}))};
+ vi.stubGlobal('fetch',vi.fn(async url=>String(url).includes('/opportunity-tracker?')?reply({data:{groups:[{position:'WR',players:[active,inactive]}]},meta:{trendSlots:slots}}):reply({availableWeeks:[6],teams:['NYG']})));
+ show(<OpportunityTracker {...props}/>);await screen.findByRole('button',{name:'Active Receiver',exact:true});
+ fireEvent.click(screen.getByRole('button',{name:'Played a snap',exact:true}));expect(screen.queryByRole('button',{name:'No Snap Receiver',exact:true})).not.toBeInTheDocument();
+ const grid=screen.getByRole('table',{name:'WR opportunity tracker'}),grip=within(grid).getAllByRole('separator',{name:'Resize Targets'})[0];
+ const before=Number(grip.getAttribute('aria-valuenow'));fireEvent.keyDown(grip,{key:'ArrowRight'});expect(Number(grip.getAttribute('aria-valuenow'))).toBe(before+4);
+ fireEvent.click(screen.getByRole('button',{name:'Customize comparison periods'}));
+ await screen.findByLabelText('earlier 2026 week 4');
+ fireEvent.click(screen.getByRole('button',{name:'Clear earlier',exact:true}));fireEvent.click(screen.getByRole('button',{name:'Clear later',exact:true}));
+ fireEvent.click(screen.getByLabelText('earlier 2026 week 4'));fireEvent.click(screen.getByLabelText('later 2026 week 5'));
+ const row=within(grid).getByRole('button',{name:'Active Receiver',exact:true}).closest('tr');expect(row.querySelector('.op-delta')).toHaveTextContent('+10.0%+1.0');
+ fireEvent.click(screen.getByRole('button',{name:'Done',exact:true}));fireEvent.click(screen.getByRole('button',{name:'Column options',exact:true}));
+ fireEvent.click(screen.getByLabelText('Trend 2'));expect(within(grid).queryByRole('separator',{name:'Resize Targets'})).not.toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:'Add WR metric'}));expect(screen.getByLabelText('WR metric 4')).toBeInTheDocument();
+ fireEvent.change(screen.getByLabelText('WR metric 4'),{target:{value:'receptions'}});
+ fireEvent.click(screen.getByRole('button',{name:'Done',exact:true}));expect(within(grid).getAllByRole('separator',{name:'Resize Receptions'})).toHaveLength(2);
+ expect([...grid.querySelectorAll('col')].every(c=>c.style.width&&!c.style.width.includes('NaN'))).toBe(true);
+});
+
+test('custom comparison handles totals, averages, zero baselines, missing observations and nonconsecutive weeks',()=>{
+ const history=[{season:2026,week:1,played:true,targets:10,snaps:10},{season:2026,week:2,played:true,targets:11,snaps:20},{season:2026,week:3,played:false,targets:0,snaps:0},{season:2026,week:4,played:true,targets:0,snaps:0}];
+ expect(comparePeriods(history,'targets',['2026-1'],['2026-2'])).toMatchObject({delta:1,percent:10});
+ expect(comparePeriods(history,'targets',['2026-1','2026-4'],['2026-2'])).toMatchObject({delta:1,percent:10});
+ expect(comparePeriods(history,'targets',['2026-1','2026-4'],['2026-2'],'average')).toMatchObject({delta:6,percent:120});
+ expect(comparePeriods(history,'targets',['2026-4'],['2026-1'])).toMatchObject({delta:10,percent:null});
+ expect(comparePeriods(history,'targets',['2026-4'],['2026-4'])).toMatchObject({delta:0,percent:0});
+ expect(comparePeriods(history,'targets',['2026-3'],['2026-2']).delta).toBeNull();
+ expect(comparePeriods(history,'targets',[],['2026-2']).delta).toBeNull();
+ expect(comparePeriods(history,'targets',['2026-1'],['2026-9']).delta).toBeNull();
+ expect(playedSnap(history,[{season:2026,week:4}])).toBe(false);
+ expect(playedSnap(history,[{season:2026,week:1}])).toBe(true);
+ for(const metrics of [['snaps','touches','fantasy_points'],['snaps','snaps','snaps','snaps'],['targets','receptions','receiving_yards']]){const groups=distinctTrendGroups(metrics);expect(groups.every((g,i)=>!i||g!==groups[i-1])).toBe(true);}
+});
+
+test.each([[2,1,3],[2,2,5],[3,2,5],[4,2,5]])('short opportunity history %s with comparison %s requests supported %s slots',async(history,compare,expected)=>{
+ localStorage.setItem('bowser:lhq:opportunity',JSON.stringify({history}));
+ vi.stubGlobal('fetch',vi.fn(async url=>{if(!String(url).includes('/opportunity-tracker?'))return reply({availableWeeks:[4],teams:['NYG']});const games=Number(new URL(url,'http://fixture.test').searchParams.get('games'));if(![3,5,8,10,18].includes(games))throw Error('Unsupported opportunity API history');return reply({data:{groups:[]},meta:{trendSlots:[]}});}));
+ show(<OpportunityTracker {...props}/>);fireEvent.change(screen.getByLabelText('Compare',{selector:'select'}),{target:{value:String(compare)}});
+ await waitFor(()=>expect(fetch.mock.calls.some(([url])=>String(url).includes(`/opportunity-tracker?`)&&new URL(url,'http://fixture.test').searchParams.get('games')===String(expected))).toBe(true));
+ expect(fetch.mock.calls.filter(([url])=>String(url).includes('/opportunity-tracker?')).every(([url])=>[3,5,8,10,18].includes(Number(new URL(url,'http://fixture.test').searchParams.get('games'))))).toBe(true);
 });

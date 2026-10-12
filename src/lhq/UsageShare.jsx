@@ -10,7 +10,7 @@ export const USAGE_SHARE_STATS={
  QB:[['snaps','Snaps','#3ecf8e'],['passAttempts','Pass att','#a87cff'],['passingYards','Pass yds','#5aa9ff'],['passingTds','Pass TD','#e8735a'],['rushAttempts','Rush att','#2fc4b2'],['fantasyPoints','Fpts','#d8bf79']],
 };
 const COLORS=['#5aa9ff','#f2ae49','#a87cff','#e8735a','#d8bf79','#b4b4b4','#72e3ad'];
-const idOf=p=>p?.playerId||p?.player_id||'';
+const idOf=p=>p?.playerId||p?.player_id||p?.gsisId||'';
 const nameOf=p=>p?.name||p?.player_display_name||'';
 export const usageSurname=name=>String(name||'').replace(/\s+(Jr\.?|Sr\.?|II|III|IV)$/i,'').trim().split(/\s+/).at(-1);
 const rowAt=(player,slot)=>player.history?.find(h=>Number(h.season)===Number(slot.season)&&Number(h.week)===Number(slot.week));
@@ -18,15 +18,15 @@ export function usageShareValue(row,key){return row?.played===false||!Number.isF
 const format=(n,key)=>key==='fantasyPoints'?n.toFixed(1):String(Math.round(n));
 const rgb=hex=>[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)).join(',');
 const date=(value,clock=false)=>{const d=new Date(value);return value&&Number.isFinite(d.getTime())?new Intl.DateTimeFormat('en-US',{timeZone:'UTC',month:'short',day:'numeric',...(clock?{hour:'2-digit',minute:'2-digit',hour12:false}:{})}).format(d).replace(',','')+(clock?' UTC':''):'unavailable';};
-const selectionOf=selected=>{const position=['FB','HB'].includes(selected?.position)?'RB':selected?.position;const team=nflTeam(String(selected?.team||'').split(',').at(-1));return USAGE_SHARE_STATS[position]&&TEAMS.includes(team)?{team,position,focus:idOf(selected)}:null;};
+const selectionOf=selected=>{const position=['FB','HB'].includes(selected?.position)?'RB':selected?.position;const team=nflTeam(String(selected?.team||'').split(',').at(-1));return USAGE_SHARE_STATS[position]&&TEAMS.includes(team)?{team,position,focus:idOf(selected),focusName:nameOf(selected)}:null;};
 
 // Route-owned state deliberately outlives the shell's mounted active panel.
 export function useUsageShareState({selected,season=2026,baseWeek=1,scoring='ppr',teams=TEAMS,availableWeeks}={}){
  const [choice,setChoice]=useState(()=>({team:'NYG',position:'RB',focus:'',follow:true,expanded:false,reveal:0,...selectionOf(selected)}));
  const [visible,setVisible]=useState(false),[response,setResponse]=useState({key:'',data:null,error:'',loading:false});
- const cache=useRef(new Map()),handledReveal=useRef(''),selectedId=idOf(selected),selectedTeam=selected?.team,selectedPosition=selected?.position;
+ const cache=useRef(new Map()),handledReveal=useRef(''),selectedId=idOf(selected),selectedTeam=selected?.team,selectedPosition=selected?.position,selectedName=nameOf(selected);
  const selectPlayer=useCallback(player=>{const next=selectionOf(player);if(next)setChoice(old=>old.follow?{...old,...next,reveal:old.reveal+1,expanded:old.team===next.team&&old.position===next.position?old.expanded:false}:old);},[]);
- useEffect(()=>selectPlayer(selected),[selectedId,selectedTeam,selectedPosition,selectPlayer]);
+ useEffect(()=>selectPlayer(selected),[selectedId,selectedTeam,selectedPosition,selectedName,selectPlayer]);
  const key=`${season}:${choice.team}:${Math.min(18,baseWeek)}:${scoring}`;
  useEffect(()=>{
   if(!visible)return;
@@ -38,6 +38,13 @@ export function useUsageShareState({selected,season=2026,baseWeek=1,scoring='ppr
  },[visible,key,season,choice.team,baseWeek,scoring]);
  const result=response.key===key?response:{key,data:cache.current.get(key)||null,error:'',loading:visible&&!cache.current.has(key)};
  const meta=result.data?.meta||{},slots=meta.trendSlots||[];
+ // Resolve name-only provider context only within one sourced team/position group.
+ useEffect(()=>{
+  if(!result.data||choice.focus||!choice.focusName)return;
+  const group=result.data.data?.groups?.find(g=>g.position===choice.position)?.players||[];
+  const matches=group.filter(p=>nameOf(p).trim().toLowerCase()===choice.focusName.trim().toLowerCase());
+  if(matches.length===1&&idOf(matches[0]))setChoice(old=>({...old,focus:idOf(matches[0])}));
+ },[result.data,choice.focus,choice.focusName,choice.position]);
  // Reveal an explicitly followed player beyond the normal six-player cap once
  // per selection, while allowing a subsequent user collapse to remain collapsed.
  useEffect(()=>{
@@ -62,7 +69,7 @@ export function UsageShare({workspace}){
  const shown=choice.expanded?players:players.slice(0,6),focused=players.find(p=>idOf(p)===choice.focus)||players[0];
  const focusId=idOf(focused),otherPlayers=players.filter(p=>idOf(p)!==focusId);
  const stats=USAGE_SHARE_STATS[choice.position];
- const choose=patch=>setChoice(old=>({...old,...patch,focus:'',expanded:false}));
+ const choose=patch=>setChoice(old=>({...old,...patch,focus:'',focusName:'',expanded:false}));
  const focus=player=>setChoice(old=>({...old,focus:idOf(player),follow:false}));
  return <section className="lhq-usage-share" aria-label="Usage share">
   <div className="usage-share-controls"><select aria-label="Usage share team" value={choice.team} onChange={e=>choose({team:e.target.value})}>{teams.map(team=><option key={team}>{team}</option>)}</select><select aria-label="Usage share position" value={choice.position} onChange={e=>choose({position:e.target.value})}>{Object.keys(USAGE_SHARE_STATS).sort((a,b)=>['QB','RB','WR','TE'].indexOf(a)-['QB','RB','WR','TE'].indexOf(b)).map(pos=><option key={pos}>{pos}</option>)}</select><button className="usage-share-follow" aria-pressed={choice.follow} onClick={workspace.followSelected}>{choice.follow?'Follows selection':'Pinned'}</button></div>
