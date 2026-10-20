@@ -7,6 +7,7 @@ import sqlite3
 import subprocess
 import urllib.request
 from pathlib import Path
+from release_warehouse_expectations import expected_week_rows, compare_week_rows
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--url', required=True)
@@ -32,15 +33,21 @@ def check(condition, name):
     checks.append(name)
 
 try:
+    subprocess.run(['python3', 'scripts/verify_warehouse_2026.py'], cwd=root,
+                   check=True, capture_output=True, text=True, timeout=300)
+    checks.append('Active warehouse verified against its raw source inputs')
     players = get('/api/v1/player-stats?season=2026&weeks=1&limit=all&includeTrends=1&trendWeeks=10')
     slots = [(2025, week) for week in range(10, 19)] + [(2026, 1)]
-    check(len(players['data']) == 426, 'Verified refreshed Week 1 source coverage: 426 recorded players')
+    expected_week1 = expected_week_rows(root / 'data/fantasy_football_2026.sqlite', 1)
+    compare_week_rows(players['data'], expected_week1)
+    checks.append(f'All {len(expected_week1)} Week 1 identities, statistics and ranks match the verified warehouse')
     check(all([(g['season'], g['week']) for g in p['player_trends']] == slots for p in players['data']), 'All player calendars align across 2025 and 2026')
     by_id = {p['player_id']: p for p in players['data']}
     cam = next(p for p in players['data'] if p['player_display_name'] == 'Cam Skattebo')
     tracy = next(p for p in players['data'] if p['player_display_name'] == 'Tyrone Tracy Jr.')
     check(cam['snaps'] == 42 and tracy['snaps'] == 2, '42 versus 2 snap totals retained')
-    check(cam['position_finish'] == 18 and tracy['position_finish'] == 107, 'NFL PPR weekly positional finishes retained')
+    check(cam['position_finish'] == expected_week1[cam['player_id']]['position_finish']
+          and tracy['position_finish'] == expected_week1[tracy['player_id']]['position_finish'], 'NFL PPR weekly positional finishes match the complete current peer population')
     check(len(players['meta']['trendDomains']) == 19 and players['meta']['trendDomains']['fantasy_points']['min'] < 0, 'Shared metric domains preserve negative points')
     meta = get('/api/v1/meta?season=2026')
     # Compare release coverage against the independently verified local warehouse,
@@ -61,8 +68,17 @@ try:
     check(meta['completedWeeks'] == completed and meta['latestCompleteWeek'] == (completed[-1] if completed else None), 'Hosted completed weeks match verified warehouse coverage')
     check(meta['weekCoverage'] == coverage, 'Every hosted week retains exact scheduled/completed/sourced counts, including partial weeks')
     check(meta['scheduleWeeks'] == schedule, 'Hosted calendar defaults use exact sourced NFL schedule dates')
+    for week in meta['availableWeeks']:
+        if week in (1, 4):
+            continue
+        response = get(f'/api/v1/player-stats?season=2026&weeks={week}&limit=all&includeTrends=0')
+        expected_rows = expected_week_rows(root / 'data/fantasy_football_2026.sqlite', week)
+        compare_week_rows(response['data'], expected_rows)
+        checks.append(f'Week {week}: all {len(expected_rows)} identities, statistics and positional finishes verified')
     fourth = get('/api/v1/player-stats?season=2026&weeks=4&limit=all&trendRange=selected')
-    check(len(fourth['data']) == 415 and len({p['team'] for p in fourth['data']}) == 32, 'Week 4 all 415 player records and 32 teams')
+    expected_week4 = expected_week_rows(root / 'data/fantasy_football_2026.sqlite', 4)
+    compare_week_rows(fourth['data'], expected_week4)
+    check(len({p['team'] for p in fourth['data']}) == 32, f'Week 4 all {len(expected_week4)} verified player records and 32 teams')
     allen = next(p for p in fourth['data'] if p['player_display_name']=='Josh Allen')
     check(allen['passing_yards']==253 and allen['snaps']==59 and allen['fantasy_points']==18.5, 'Exact sourced Week 4 Allen stats')
     four_weeks = get('/api/v1/player-stats?season=2026&weeks=1,2,3,4&limit=all&trendRange=selected')

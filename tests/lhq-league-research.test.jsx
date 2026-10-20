@@ -8,6 +8,9 @@ import { MarketPulse } from '../src/lhq/MarketPulse.jsx';
 import { Waivers } from '../src/lhq/Waivers.jsx';
 import dfsWeekly from '../data/dfs-weekly.json';
 
+// Pin the original Week 4 projection scenario; current Week 7 has BUF on bye.
+vi.mock('../data/dfs-weekly.json',async importOriginal=>{const actual=await importOriginal();return {default:{...actual.default,week:4,defaultSlate:'2026-w4-dk-154077'}};});
+
 const teamKey = '999.l.1.t.1';
 const yahoo = {
   leagues: [{ key: '999.l.1', name: 'Fixture League' }],

@@ -109,6 +109,29 @@ class WeeklyDfsTests(unittest.TestCase):
         with self.assertRaisesRegex(module.PartialData, 'unlocked Classic default'):
             module.refreshed_classic_default(combined, ['showdown'], 2026, 2)
 
+    def test_monday_retains_only_unchanged_same_week_prelock_classic(self):
+        previous = copy.deepcopy(PARTIAL_BASELINE)
+        key = previous['defaultSlate']
+        slate = previous['slates'][key]
+        slate['capturedAt'] = module.iso(module.instant(slate['startsAt']) - timedelta(hours=1))
+        combined = copy.deepcopy(previous['slates'])
+        now = module.instant(slate['endsAt']) + timedelta(hours=1)
+        updated = ['2026-w2-dk-153434']
+        before = copy.deepcopy(combined)
+        self.assertEqual(module.publication_default(previous, combined, updated, 2026, 2, now), (key, 'retained-locked'))
+        self.assertEqual(combined, before)
+        for prior, candidate, season, week in [
+            (None, combined, 2026, 2),
+            (previous, combined, 2026, 3),
+            (previous, combined, 2025, 2),
+            (previous, {**combined, key:{**slate, 'records':[]}}, 2026, 2),
+        ]:
+            with self.assertRaisesRegex(module.PartialData, 'pre-lock Classic'):
+                module.publication_default(prior, candidate, updated, season, week, now)
+        slate['capturedAt'] = module.iso(now)
+        with self.assertRaises(module.PartialData):
+            module.publication_default(previous, copy.deepcopy(previous['slates']), updated, 2026, 2, now)
+
     def run_partial_fixture(self, directory, *, allow=False, supplemental=False):
         now = datetime(2026, 10, 1, 22, tzinfo=timezone.utc)
         target = Path(directory) / 'dfs.json'

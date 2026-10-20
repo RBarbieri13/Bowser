@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { DatabaseSync } from 'node:sqlite';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, cpSync, rmSync, renameSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -17,7 +18,12 @@ test('current chooses the verified weekly default; every archived and current sl
   assert.equal(current.meta.week, weekly.slates[weekly.defaultSlate].week);
   assert.equal(current.meta.season, weekly.slates[weekly.defaultSlate].season);
   assert.equal(current.meta.scoring, 'DraftKings Classic');
-  assert.equal(current.meta.options.length, Object.values(weekly.slates).reduce((n,s)=>n+(s.contestTypeId===96?2:1),0) + 3);
+  const archive = new DatabaseSync(new URL('../data/dfs_archive.sqlite', import.meta.url), {readOnly:true});
+  let archived;
+  try { archived = Object.fromEntries(archive.prepare('SELECT c.slate_key,c.metadata_json FROM dfs_slate_heads h JOIN dfs_captures c USING(capture_id)').all().map(r=>[r.slate_key,JSON.parse(r.metadata_json)])); }
+  finally { archive.close(); }
+  const expected = ['current', ...Object.entries({...pinned.slates,...weekly.slates,...archived}).flatMap(([key,s])=>s.contestTypeId===96?[key,`${key}:cpt`]:[key])].sort();
+  assert.deepEqual(current.meta.options.map(option=>option.key).sort(),expected);
   for (const option of current.meta.options) {
     assert.ok(option.label.includes(String(option.season)));
     assert.ok(option.label.includes(`W${option.week}`));
