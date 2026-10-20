@@ -561,6 +561,25 @@ def refreshed_classic_default(combined, updated_keys, season, week):
     return min(current, key=lambda item: (-item[1]['gameCount'], item[1]['id']))[0]
 
 
+def publication_default(previous, combined, updated_keys, season, week, now):
+    """A Monday Showdown refresh may retain this week's verified pre-lock Classic.
+
+    This never promotes Showdown or an older week, and never changes the retained
+    Classic's records or observation clock. All newly fetched sources still pass
+    their normal validation before this decision is made.
+    """
+    if any(not is_showdown(combined[key]) for key in updated_keys):
+        return refreshed_classic_default(combined, updated_keys, season, week), 'refreshed'
+    key = previous.get('defaultSlate') if previous else None
+    slate = previous['slates'].get(key) if key else None
+    require(bool(slate) and slate['season'] == season and slate['week'] == week
+            and not is_showdown(slate) and instant(slate['startsAt']) <= now
+            and instant(slate['capturedAt']) < instant(slate['startsAt'])
+            and combined.get(key) == slate,
+            'No verified same-week pre-lock Classic capture to retain; Showdown cannot replace weekly Classic context')
+    return key, 'retained-locked'
+
+
 def _refresh(target, raw_dir, now, dry_run=False, archive_path=None, allow_partial_projections=False):
     previous = json.loads(target.read_text()) if target.exists() else None
     if previous:
@@ -655,7 +674,7 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None, allow_parti
                          'identityAliasSource': fetch.sources['identity-aliases'], 'validation': {'status': 'verified',
                              **({'salaryStatus':'verified','projectionStatus':'partial' if projected_count else 'unavailable'} if primary_status else {})}}
         updated_keys.append(key)
-    default = refreshed_classic_default(combined, updated_keys, season, week)
+    default, classic_refresh = publication_default(previous, combined, updated_keys, season, week, now)
     verified_at = iso(datetime.now(timezone.utc))
     snapshot = {'schemaVersion': 2, 'capturedAt': verified_at, 'importStartedAt':iso(now), 'defaultSlate': default, 'season': season, 'week': week,
                 'slates': combined, 'validation': {'status': 'verified', 'verifiedAt': verified_at},
@@ -672,6 +691,7 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None, allow_parti
     return {'status': 'updated' if publish_changed else 'unchanged', 'changed': publish_changed, 'publishable': True,
             'written': changed and not dry_run, 'dryRun': dry_run, 'season': season, 'week': week, 'defaultSlate': default,
             'updatedSlates': updated_keys, 'snapshot': str(target), 'rawEvidence': str(raw_dir),
+            'classicRefresh': classic_refresh,
             'archive': archive,
             **({'projectionRefresh':'partial', 'primaryProjectionStatus':primary_status,
                 'supplementalProjectionStatus':supplemental_status} if primary_status else {}),

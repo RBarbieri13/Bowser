@@ -5,11 +5,12 @@
     2,
     3,
     4,
-    5
+    5,
+    6
   ],
-  "completed_games": 65,
-  "current_rookies": 218,
-  "current_roster_rows": 948,
+  "completed_games": 93,
+  "current_rookies": 219,
+  "current_roster_rows": 953,
   "current_roster_teams": 32,
   "database": "data/fantasy_football_2026.sqlite",
   "draft_rankings": {
@@ -46,17 +47,17 @@
       "Malachi Fields"
     ]
   },
-  "game_drives": 1400,
-  "game_flow_events": 865,
-  "game_team_segments": 780,
+  "game_drives": 2042,
+  "game_flow_events": 1236,
+  "game_team_segments": 1116,
   "games": 272,
-  "games_with_play_by_play": 65,
-  "imported_at": "2026-10-11T15:46:43.462663+00:00",
+  "games_with_play_by_play": 93,
+  "imported_at": "2026-10-20T22:58:55.274678+00:00",
   "participation_available": false,
   "participation_note": "Play-level personnel participation is not published for 2026; segment snaps remain unknown.",
-  "player_game_segments": 7710,
-  "player_stat_rows": 1484,
-  "players": 974,
+  "player_game_segments": 10968,
+  "player_stat_rows": 2130,
+  "players": 979,
   "positions": [
     "C",
     "CB",
@@ -66,6 +67,7 @@
     "HB",
     "NT",
     "OL",
+    "OT",
     "P",
     "QB",
     "RB",
@@ -75,67 +77,68 @@
   ],
   "postseason_rows": 0,
   "postseason_weeks": [],
-  "regular_season_rows": 1722,
+  "regular_season_rows": 2485,
   "regular_season_weeks": [
     1,
     2,
     3,
     4,
-    5
+    5,
+    6
   ],
-  "rows": 1722,
+  "rows": 2485,
   "season": 2026,
   "snap_join_methods": {
-    "exact_name_reviewed": 4,
-    "player_registry": 1718
+    "exact_name_reviewed": 6,
+    "player_registry": 2479
   },
-  "snap_rows": 1722,
+  "snap_rows": 2485,
   "snapshot_kind": "in_progress_season",
   "sources": {
     "depth_charts_2026": {
-      "bytes": 60570395,
+      "bytes": 64570223,
       "path": "data/raw/2026/depth_charts_2026.csv",
-      "sha256": "4a17f55fd9f025b12f2a09e8839552bc6e67abc08b828d580afacccdbbb6ac66",
+      "sha256": "263cddf0432e3afa1bffbdbb11d5ffa3e624bed2fe65d1fd1c6e13eeff890b19",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/depth_charts/depth_charts_2026.csv"
     },
     "play_by_play": {
-      "bytes": 4448255,
+      "bytes": 6436955,
       "path": "data/raw/2026/play_by_play.csv.gz",
-      "sha256": "e7c162e793cb0f828b97c9c92bf6efd7d60ff35eb6ef9b407b8d16001fd2a39a",
+      "sha256": "14d0b7edddc5df64d96fef8b2f2ec93a815d10e6d265f4b4622d6dcae5e38a98",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2026.csv.gz"
     },
     "player_stats": {
-      "bytes": 2012053,
+      "bytes": 2888889,
       "path": "data/raw/2026/player_stats.csv",
-      "sha256": "bda143a5f21ce606cf62cbf1f2ba832392e9f2cde73a8f733d4bc5d04f1598ff",
+      "sha256": "0d29a199ddecacca64e6290cbb12f68823d05ef271de0f6a3aa768efd60fad76",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2026.csv"
     },
     "players": {
-      "bytes": 7302622,
+      "bytes": 7304293,
       "path": "data/raw/2026/players.csv",
-      "sha256": "e6d430fb00bbd759e4345de6a767babaea69f8dd4ae866cd5add2e9e139afe10",
+      "sha256": "6fe6c8a03f0caa471a8327bb60cc1f97d8b18c83085780223543940718fded5c",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/players/players.csv"
     },
     "roster_2026": {
-      "bytes": 966462,
+      "bytes": 970979,
       "path": "data/raw/2026/roster_2026.csv",
-      "sha256": "e2a6c43a3bdf4b905044f4a532c157af7108a07cf8e7e8e6e26f7f9ea54e67c5",
+      "sha256": "21a78c1c84552a34b3dd7e1e3c75226eb1dff436370f06fc6bc14c10342ff300",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv"
     },
     "schedules": {
-      "bytes": 2184000,
+      "bytes": 2185716,
       "path": "data/raw/2026/schedules.csv",
-      "sha256": "24271ee009cbadb4e910b1ad024315b041d466d57f4ed3b17b93b9233202ac6b",
+      "sha256": "20fff2d868865221ed88265f16099dc2da29ee383fa95c24a37dc8c1fe079b81",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/schedules/games.csv"
     },
     "snap_counts": {
-      "bytes": 544049,
+      "bytes": 778062,
       "path": "data/raw/2026/snap_counts.csv",
-      "sha256": "fd2656dbe119dfe49f67e3df980b35b1f999ee49b76aeb5fb89797dea95379c6",
+      "sha256": "44f24d47c5e014d353fcae81a8372b7a44d70061f785841da216500f605d5b20",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/snap_counts/snap_counts_2026.csv"
     }
   },
-  "stat_rows_with_snap_match": 1484,
+  "stat_rows_with_snap_match": 2130,
   "unmatched_snap_player_ids_count": 2,
   "unmatched_snap_player_ids_sample": [
     "AndeAl01",

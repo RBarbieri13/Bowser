@@ -433,3 +433,20 @@ test.each([[2,1,3],[2,2,5],[3,2,5],[4,2,5]])('short opportunity history %s with 
  await waitFor(()=>expect(fetch.mock.calls.some(([url])=>String(url).includes(`/opportunity-tracker?`)&&new URL(url,'http://fixture.test').searchParams.get('games')===String(expected))).toBe(true));
  expect(fetch.mock.calls.filter(([url])=>String(url).includes('/opportunity-tracker?')).every(([url])=>[3,5,8,10,18].includes(Number(new URL(url,'http://fixture.test').searchParams.get('games'))))).toBe(true);
 });
+
+test('waiver bid tiers and budgets stay source-specific and league-scoped', async () => {
+ const sources=[{id:'one',label:'Source One',rankCount:0,faabCount:1,faabUrl:'https://example.test/faab'}];
+ const payload={...waiverPayload,meta:{...waiverPayload.meta,sources},rows:waiverPayload.rows.map(r=>({...r,faab:{one:{low:2,high:3,unit:'percent',budgetBasis:'remaining',tier:'1QB',alternatives:[{low:20,high:30,unit:'percent',budgetBasis:'remaining',tier:'Superflex'}]}}}))};
+ vi.stubGlobal('fetch',vi.fn(async()=>reply(payload)));
+ const account=k=>({teams:[{key:`999.l.${k}.t.1`,name:`Team ${k}`}],leagues:[{key:`999.l.${k}`,name:`League ${k}`}],research:{}});
+ const view=show(<Waivers {...props} yahoo={account(1)}/>);
+ await screen.findByRole('button',{name:'Favorite Fixture Alpha'});
+ fireEvent.click(screen.getByRole('button',{name:/Show sidebar/}));
+ fireEvent.click(screen.getByRole('tab',{name:'Filters & settings',exact:true}));
+ fireEvent.change(screen.getByLabelText('Remaining budget $'),{target:{value:'67'}});
+ fireEvent.change(screen.getByRole('combobox',{name:'Source bid tier'}),{target:{value:'superflex'}});
+ expect(screen.getByText('20–30%')).toBeInTheDocument();
+ view.rerender(<LhqProvider><Waivers {...props} yahoo={account(2)}/></LhqProvider>);
+ await waitFor(()=>expect(screen.getByLabelText('Remaining budget $')).toHaveValue(null));
+ expect(localStorage.getItem('bowser:lhq:waivers:budget:2026:999.l.1:remaining')).toBe('"67"');
+});

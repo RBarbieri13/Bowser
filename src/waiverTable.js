@@ -117,3 +117,14 @@ export function filterWaiverRows(rows, { search = '', position = 'All', team = '
       return (range.min === '' || value >= Number(range.min)) && (range.max === '' || value <= Number(range.max));
     }));
 }
+
+// Format-specific alternatives never replace a publisher's primary value silently.
+export function selectWaiverBid(bid, tier = 'primary') {
+  if (!bid || tier === 'primary') return bid;
+  const pattern = {superflex:/superflex/i, aggressive:/aggressive|desperate need/i, budget:/budget-minded/i}[tier];
+  if (!pattern) return bid;
+  return [bid,...(bid.alternatives||[])].find(value=>pattern.test(value.tier||'')) || null;
+}
+export function waiverDraftKey(season, week, leagueKey) {
+  return leagueKey ? `${favoriteKey(season,week)}:league:${leagueKey}` : favoriteKey(season,week);
+}
