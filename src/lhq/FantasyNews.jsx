@@ -14,7 +14,7 @@ export {NEWS_LAYOUT_KEY,NEWS_PANES,validateNewsLayout,safeNewsUrl} from './newsC
 export {newsRosterMatches} from './fantasyNewsContext.js';
 export {closeFantasyNewsWindows} from './newsWindows.jsx';
 const cleanFilters=()=>({search:'',teams:[],pos:[],leagues:[],status:[]});
-const NAV=[['players','Player Database'],['waivers','Waivers'],['market-pulse','Market Pulse'],['team-box-scores','Team Box Scores'],['opportunity-tracker','Opportunity Tracker'],['league-hub','League Hub'],['fantasy-news','Fantasy News'],['yahoo','Yahoo Connection']];
+const NAV=[['players','Player Database'],['waivers','Waivers'],['market-pulse','Market Pulse'],['team-box-scores','Team Box Scores'],['opportunity-tracker','Opportunity Tracker'],['league-hub','League Hub'],['fantasy-news','Fantasy News'],['briefings','Briefings'],['yahoo','Yahoo Connection']];
 export function FantasyNews({season=2026,scoring='ppr',onOpen,yahoo}){
  const [route]=useState(routeOptions),[hours,setHours]=useState(route.hours),[refresh,setRefresh]=useState(0),[autoRead,setAutoRead]=useState(true),[now,setNow]=useState(Date.now);
  const [layout,setLayout,storageError]=useNewsLayout(route.popout),[filters,setFilters]=useState(cleanFilters);
