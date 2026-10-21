@@ -10,7 +10,7 @@
   ],
   "completed_games": 93,
   "current_rookies": 219,
-  "current_roster_rows": 953,
+  "current_roster_rows": 956,
   "current_roster_teams": 32,
   "database": "data/fantasy_football_2026.sqlite",
   "draft_rankings": {
@@ -52,12 +52,12 @@
   "game_team_segments": 1116,
   "games": 272,
   "games_with_play_by_play": 93,
-  "imported_at": "2026-10-20T22:58:55.274678+00:00",
+  "imported_at": "2026-10-21T14:16:47.905649+00:00",
   "participation_available": false,
   "participation_note": "Play-level personnel participation is not published for 2026; segment snaps remain unknown.",
   "player_game_segments": 10968,
   "player_stat_rows": 2130,
-  "players": 979,
+  "players": 981,
   "positions": [
     "C",
     "CB",
@@ -96,39 +96,39 @@
   "snapshot_kind": "in_progress_season",
   "sources": {
     "depth_charts_2026": {
-      "bytes": 64570223,
+      "bytes": 64786693,
       "path": "data/raw/2026/depth_charts_2026.csv",
-      "sha256": "263cddf0432e3afa1bffbdbb11d5ffa3e624bed2fe65d1fd1c6e13eeff890b19",
+      "sha256": "4a51a9eca800a18dbb944ac55125d95a287365cdb4b6c2d07bf566af15698805",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/depth_charts/depth_charts_2026.csv"
     },
     "play_by_play": {
-      "bytes": 6436955,
+      "bytes": 6436940,
       "path": "data/raw/2026/play_by_play.csv.gz",
-      "sha256": "14d0b7edddc5df64d96fef8b2f2ec93a815d10e6d265f4b4622d6dcae5e38a98",
+      "sha256": "a6ddee607edda2d530bc65fd869c0eb2f8019ea0d962b020e039dae52c840399",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2026.csv.gz"
     },
     "player_stats": {
-      "bytes": 2888889,
+      "bytes": 2888891,
       "path": "data/raw/2026/player_stats.csv",
-      "sha256": "0d29a199ddecacca64e6290cbb12f68823d05ef271de0f6a3aa768efd60fad76",
+      "sha256": "30af4f807cdd01f8efe0b81d67b59eac081e9e59be5a4b9d267cba7212eb628c",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2026.csv"
     },
     "players": {
-      "bytes": 7304293,
+      "bytes": 7305403,
       "path": "data/raw/2026/players.csv",
-      "sha256": "6fe6c8a03f0caa471a8327bb60cc1f97d8b18c83085780223543940718fded5c",
+      "sha256": "f4250d7406be7690d14bfc666e83b3fe6b4d325272b8859ffd0dbfa856c83b55",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/players/players.csv"
     },
     "roster_2026": {
-      "bytes": 970979,
+      "bytes": 973009,
       "path": "data/raw/2026/roster_2026.csv",
-      "sha256": "21a78c1c84552a34b3dd7e1e3c75226eb1dff436370f06fc6bc14c10342ff300",
+      "sha256": "128aceb1a35d60888769021ae3cbc3551c434ed0141261f9e656266ccf679ec9",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv"
     },
     "schedules": {
-      "bytes": 2185716,
+      "bytes": 2185718,
       "path": "data/raw/2026/schedules.csv",
-      "sha256": "20fff2d868865221ed88265f16099dc2da29ee383fa95c24a37dc8c1fe079b81",
+      "sha256": "ab802f4808d50bd12cf94ff4c1020e122c3d8ce245d6e359e89286a61a275218",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/schedules/games.csv"
     },
     "snap_counts": {
