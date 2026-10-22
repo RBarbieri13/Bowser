@@ -52,7 +52,7 @@
   "game_team_segments": 1116,
   "games": 272,
   "games_with_play_by_play": 93,
-  "imported_at": "2026-10-21T14:16:47.905649+00:00",
+  "imported_at": "2026-10-22T15:33:57.109778+00:00",
   "participation_available": false,
   "participation_note": "Play-level personnel participation is not published for 2026; segment snaps remain unknown.",
   "player_game_segments": 10968,
@@ -96,9 +96,9 @@
   "snapshot_kind": "in_progress_season",
   "sources": {
     "depth_charts_2026": {
-      "bytes": 64786693,
+      "bytes": 65226267,
       "path": "data/raw/2026/depth_charts_2026.csv",
-      "sha256": "4a51a9eca800a18dbb944ac55125d95a287365cdb4b6c2d07bf566af15698805",
+      "sha256": "24db876ba2e2fd756306f37b72e3e93b06058d240b13891dff002ac7a66aa877",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/depth_charts/depth_charts_2026.csv"
     },
     "play_by_play": {
@@ -110,25 +110,25 @@
     "player_stats": {
       "bytes": 2888891,
       "path": "data/raw/2026/player_stats.csv",
-      "sha256": "30af4f807cdd01f8efe0b81d67b59eac081e9e59be5a4b9d267cba7212eb628c",
+      "sha256": "642a39fc10523818320ad583574fbc408c0caf530f7f2dfb88f2d2f545dd136d",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2026.csv"
     },
     "players": {
-      "bytes": 7305403,
+      "bytes": 7305662,
       "path": "data/raw/2026/players.csv",
-      "sha256": "f4250d7406be7690d14bfc666e83b3fe6b4d325272b8859ffd0dbfa856c83b55",
+      "sha256": "c5239e1480b397732d004f81c87dbb07565ff6ea4b2a0e6382cbb7ed35f6481e",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/players/players.csv"
     },
     "roster_2026": {
-      "bytes": 973009,
+      "bytes": 973409,
       "path": "data/raw/2026/roster_2026.csv",
-      "sha256": "128aceb1a35d60888769021ae3cbc3551c434ed0141261f9e656266ccf679ec9",
+      "sha256": "8b04283c108b3eb8ebd6788ce5143424b67a8f3e3594de1fa9d0359bee1735c9",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv"
     },
     "schedules": {
-      "bytes": 2185718,
+      "bytes": 2186337,
       "path": "data/raw/2026/schedules.csv",
-      "sha256": "ab802f4808d50bd12cf94ff4c1020e122c3d8ce245d6e359e89286a61a275218",
+      "sha256": "3c9cae07da97fc67064ad332d5e876a2f7b80aa0e88eceef661361686124d826",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/schedules/games.csv"
     },
     "snap_counts": {
