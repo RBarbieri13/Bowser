@@ -21,7 +21,7 @@
     "preview": "vite preview",
     "test:sites": "node --test tests/sites-worker.test.mjs",
     "data:dfs": "python3 scripts/import_dfs_weekly.py",
-    "test:dfs-import": "python3 tests/test_dfs_import.py && python3 tests/test_dfs_weekly_import.py && python3 tests/test_dfs_archive.py && python3 tests/test_release_warehouse_expectations.py",
+    "test:dfs-import": "python3 tests/test_dfs_import.py && python3 tests/test_dfs_weekly_import.py && python3 tests/test_dfs_archive.py && python3 tests/test_release_warehouse_expectations.py && python3 tests/test_showdown_csv_import.py",
     "data:2026": "python3 scripts/import_nflverse_2026.py",
     "data:verify:2026": "python3 scripts/verify_warehouse_2026.py",
     "data:waivers": "python3 scripts/import_waivers.py",
