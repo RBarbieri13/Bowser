@@ -3344,3 +3344,80 @@ td.fantasy-cell { background: rgba(104,102,76,.68) !important; }
 .player-resolution-alert button{margin-left:16px;background:none;border:0;color:inherit}
 .intel-player-name.player-name-link{font-size:inherit}
 .opportunity-data-note{color:#aab9ae;font-size:12px;padding:10px 0}
+
+/* Hallmark · component: player-card numeric typography · genre: technical
+ * theme: Bowser locked system · pre-emit critique: P5 H5 E5 S5 R5 V4
+ * Preserve the existing card and interaction states; only numeric presentation changes.
+ */
+@font-face {
+  font-family: "Bowser Inter";
+  src: url("/fonts/inter/Inter-SemiBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bowser Inter";
+  src: url("/fonts/inter/Inter-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+.player-profile-v2 {
+  --font-data: "Bowser Inter", "Helvetica Neue", Arial, sans-serif;
+  --profile-zero: var(--profile-secondary);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.player-profile-v2 .profile-eyebrow { font-family: var(--font-ui); }
+.player-profile-v2 .profile-v2-table { font-variant-numeric: lining-nums tabular-nums; }
+.player-profile-v2 .profile-game-log-table tbody tr:not(.profile-postseason-divider) > *,
+.player-profile-v2 .profile-game-log-table tfoot tr > *,
+.player-profile-v2 .profile-heat-table tbody th,
+.player-profile-v2 .profile-heat-tile,
+.player-profile-v2 .profile-season-table tbody > tr > *,
+.player-profile-v2 .profile-snap-meter b {
+  font-weight: 600;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: normal;
+  line-height: 1.4;
+}
+.player-profile-v2 .profile-heat-table tbody th,
+.player-profile-v2 .profile-heat-tile,
+.player-profile-v2 .profile-season-table tbody > tr > * { font-size: 15px; }
+.player-profile-v2 .profile-fpts-pill,
+.player-profile-v2 .profile-summary-fpts {
+  font-weight: 700;
+  letter-spacing: normal;
+  line-height: 1.4;
+}
+.player-profile-v2 .profile-hero-summary > div > strong { font-size: 26px; line-height: 1.2; }
+.player-profile-v2 .profile-hero-summary > div > strong span { font-family: var(--font-ui); }
+.player-profile-v2 .profile-hero-summary > div > small { font-size: 11px; line-height: 1.4; }
+.player-profile-v2 .profile-depth-card button small { font-size: 12px; font-weight: 600; line-height: 1.5; }
+.player-profile-v2 .profile-heat-legend small { font-size: 11px; font-weight: 600; }
+/* The shared trend intentionally has !important font rules; override only in player cards. */
+.player-profile-v2 .bowser-trend .bowser-trend-value {
+  font-family: var(--font-data) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 16px !important;
+}
+.player-profile-v2 .bowser-trend.lhq-bars { height: 30px !important; }
+.player-profile-v2 .bowser-trend .bowser-trend-slot.lhq-bar-slot { height: 30px; }
+.player-profile-v2 .bowser-trend-dates small {
+  color: var(--profile-secondary);
+  font: 600 10px/16px var(--font-data);
+}
+@media (max-width: 63.99rem) {
+  .player-profile-v2 .profile-hero-summary > div > strong { font-size: 22px; }
+  .player-profile-v2 .profile-hero-summary > div > small { font-size: 10px; }
+}
+/* Font shorthands reset numeric variants, so apply these to the rendered values too. */
+.player-profile-v2 .profile-v2-table :is(th, td, span, b),
+.player-profile-v2 .profile-hero-summary :is(strong, small),
+.player-profile-v2 .profile-depth-card button small,
+.player-profile-v2 .profile-heat-legend small,
+.player-profile-v2 .bowser-trend-value,
+.player-profile-v2 .bowser-trend-dates small {
+  font-variant-numeric: lining-nums tabular-nums;
+}

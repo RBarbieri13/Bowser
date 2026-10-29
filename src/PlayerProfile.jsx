@@ -135,7 +135,7 @@ function SnapMeter({ value }) {
 }
 
 function TrajectoryStrip({ profile, trendWeeks, onTrendWeeks, metric, onMetric }) {
-  return <section className="profile-trajectory" aria-labelledby="trajectory-title"><header><div><h3 id="trajectory-title">Season trajectory</h3><span>{profile.player.name} · aligned regular-season calendar weeks</span></div><div className="profile-trajectory-controls"><TrendMetricSelect metric={metric} onChange={onMetric} label="Player trajectory metric"/><label>History<select aria-label="Player trajectory history" value={trendWeeks} onChange={event=>onTrendWeeks(Number(event.target.value))}>{[2,3,4,5,8,10,18].map(n=><option key={n} value={n}>{n} calendar weeks</option>)}</select></label></div></header><TrendBars history={(profile.history || []).slice(-trendWeeks)} metric={metric} playerName={profile.player.name} showLabels/></section>;
+  return <section className="profile-trajectory" aria-labelledby="trajectory-title"><header><div><h3 id="trajectory-title">Season trajectory</h3><span>{profile.player.name} · aligned regular-season calendar weeks</span></div><div className="profile-trajectory-controls"><TrendMetricSelect metric={metric} onChange={onMetric} label="Player trajectory metric"/><label>History<select aria-label="Player trajectory history" value={trendWeeks} onChange={event=>onTrendWeeks(Number(event.target.value))}>{[2,3,4,5,8,10,18].map(n=><option key={n} value={n}>{n} calendar weeks</option>)}</select></label></div></header><TrendBars history={(profile.history || []).slice(-trendWeeks)} metric={metric} playerName={profile.player.name} slotWidth={32} showLabels/></section>;
 }
 
 function GameLogHeader({ groups }) {

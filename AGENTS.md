@@ -1,5 +1,9 @@
 # Bowser development instructions
 
+## Player-card numeric legibility (October 28, 2026)
+
+- Keep Poppins headings and the existing player-card anatomy. Use the locally bundled Inter numeric face with tabular lining digits for player-card statistics, FPTS pills, summaries, trajectory values/calendar labels, hero metrics, heat map, season statistics and depth-chart metrics. Keep ordinary numbers semibold and emphasized FPTS bold, with normal letter spacing, readable annotation sizes and sufficient contrast. Preserve right alignment, column widths, horizontal table scrolling and all warehouse data/calculations. Do not carry this player-card-specific font change into other tables.
+
 ## Fantasy News workspace (October 1, 2026)
 
 - Fantasy News belongs in the official Bowser LineupHQ navigation between League Hub and Yahoo Connection. Existing Bowser typography, colors, shell, compact data display and native research windows are authoritative. Keep it dense and full width, with independently collapsible panes and deeper details on demand. Preserve visible head-mouse controls and clear keyboard focus.
