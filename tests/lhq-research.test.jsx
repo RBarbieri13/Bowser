@@ -19,6 +19,35 @@ test('original image brand and contextual sidebar remain collapsed initially',as
  expect(screen.getByRole('tab',{name:'Selected player · statistics'})).toHaveAttribute('aria-selected','true');
  expect(screen.getByLabelText('Research player')).toHaveValue('test-a');
 });
+test('statistical groups have identifiable independent restore rails and preserve saved widths and trend choices',async()=>{
+ localStorage.setItem('bowser:lhq:players:widths',JSON.stringify({targets:77}));
+ const show=()=>render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
+ const view=show();
+ await screen.findByRole('button',{name:'Test Alpha',exact:true});
+ const table=screen.getByRole('table',{name:'Player statistics'});
+ const before=[...table.querySelectorAll('col')].map(c=>c.style.width);
+ fireEvent.click(screen.getByRole('button',{name:'Hide receiving trend'}));
+ for(const [group,caption] of [['usage','USG'],['passing','PASS'],['rushing','RUSH'],['receiving','REC'],['dfs','DFS'],['fantasy','FPTS']]){
+  const hide=screen.getByRole('button',{name:`Hide ${group} section`});
+  expect(hide).toHaveAttribute('aria-expanded','true');
+  fireEvent.click(hide);
+  const restore=screen.getByRole('button',{name:`Show ${group} section`});
+  expect(restore).toHaveTextContent(caption);
+  expect(restore).toHaveAttribute('aria-expanded','false');
+  expect(restore.querySelector('.lhq-stat-group-icon')).toHaveAttribute('aria-hidden','true');
+  expect(restore.title).toMatch(/columns/);
+ }
+ expect([...table.querySelectorAll('col')].filter(c=>c.style.width==='32px')).toHaveLength(6);
+ expect(screen.getByRole('button',{name:'Test Alpha',exact:true})).toBeInTheDocument();
+ view.unmount();show();
+ await screen.findByRole('button',{name:'Test Alpha',exact:true});
+ for(const group of ['usage','passing','rushing','receiving','dfs','fantasy'])fireEvent.click(screen.getByRole('button',{name:`Show ${group} section`}));
+ expect(screen.queryByRole('button',{name:'Show receiving section'})).not.toBeInTheDocument();
+ // A group toggle must retain the independently collapsed trend and its metric.
+ fireEvent.click(screen.getByRole('button',{name:'Show receiving trend'}));
+ expect([...screen.getByRole('table',{name:'Player statistics'}).querySelectorAll('col')].map(c=>c.style.width)).toEqual(before);
+ expect(JSON.parse(localStorage.getItem('bowser:lhq:players:collapsed-groups:v1'))).toEqual([]);
+});
 test('range finish displays aggregate rank, missing-week coverage, and independent three-week trend controls',async()=>{
  render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
  await screen.findByText('QB2');
