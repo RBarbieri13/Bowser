@@ -1,0 +1,16 @@
+/* A 32px restore rail adds only 14px to the former anonymous 18px placeholder. */
+.lhq .lhq-stat-group-toggle{display:flex;flex:none;flex-direction:column;align-items:center;justify-content:center;gap:1px;width:28px;min-width:28px;height:32px;padding:0;border:1px solid transparent;border-radius:3px;background:transparent;box-shadow:none;color:var(--stat-group-color);cursor:pointer;line-height:1}
+.lhq .lhq-stat-group-toggle[data-collapsed=true]{width:32px;min-width:32px;height:36px;border-radius:0;background:color-mix(in srgb,var(--stat-group-color) 7%,transparent)}
+.lhq .lhq-stat-group-toggle:hover{background:color-mix(in srgb,var(--stat-group-color) 17%,transparent);border-color:var(--stat-group-color);color:var(--stat-group-color)}
+.lhq .lhq-stat-group-toggle:focus-visible{outline:2px solid var(--stat-group-color);outline-offset:-2px}
+.lhq-stat-group-symbol{position:relative;display:block;width:24px;height:22px;flex:none}
+.lhq-stat-group-icon{display:block;width:20px;height:20px}
+.lhq-stat-group-state{position:absolute;right:-1px;top:-1px;width:10px;height:10px;border-radius:2px;background:#202521;stroke:currentColor;stroke-width:1.5;fill:none}
+.lhq .lhq-stat-group-caption{font:700 8.5px/9px 'Helvetica Neue',Helvetica,Arial,sans-serif;letter-spacing:.25px;color:inherit}
+/* Put the control before its title, so a pinned Fantasy group cannot cover it. */
+.lhq-group-band th:has(.lhq-stat-group-toggle)>div{justify-content:flex-start;gap:3px}
+.lhq-group-band th:has(.lhq-stat-group-toggle) .lhq-section-toggle{order:-1}
+.lhq-group-band th:has(.lhq-stat-group-toggle) .lhq-header-reset{margin-left:auto}
+.lhq-grid .lhq-collapsed-group{padding:0}
+.lhq-grid .lhq-collapsed-group>div{justify-content:center;gap:0;padding:0}
+.lhq-grid .lhq-collapsed-group>div>span{display:none}

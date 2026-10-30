@@ -247,3 +247,8 @@ Robert's Command Center v2 prototype and handoff supersede older Fantasy News la
 - Waiver game plans and Daily Fantasy Briefing are native Bowser pages at `#/briefings`, using the shared shell, existing warehouse player cards, sortable/resizable research tables, section navigation and source links. Preserve the complete report detail and every starting-slot alternative; PDFs remain archival verification outputs rather than the primary reading experience.
 - Private report packs are explicitly opened local files held only in React memory. Never bundle, upload, log, fetch from public paths, or persist report contents in browser/server storage. Navigation within Bowser preserves the pack; a full reload clears it. The minimal encrypted ownership cache exception does not cover reports.
 - Preserve each report's actual capture date. A newer waiver plan may be linked from an older daily edition, but must never redate old projections or availability. Only verified warehouse identities open player profiles; team defenses use team views and unavailable profiles remain plain text.
+
+## Identifiable statistical groups (October 29, 2026)
+
+- Player Database statistical groups use distinct, consistent pictograms with visible short labels on collapsed rails, full-name tooltips and accessible toggle state. Keep Receiving independently collapsible alongside Usage, Passing, Rushing, DFS, Draft and Fantasy. Place expanded collapse controls beside the group title so pinned columns cannot obscure a far-edge control.
+- Preserve the dense table: collapsed group rails are 32px wide, with existing data-column widths and header/row heights unchanged. Retain saved group visibility and individual trend preferences.

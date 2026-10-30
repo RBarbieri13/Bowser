@@ -125,7 +125,8 @@ test('whole sections collapse into a narrow restore rail without changing adjace
  fireEvent.click(screen.getByRole('button',{name:'Hide rushing section'}));
  expect(screen.queryByRole('button',{name:'rushing trend settings'})).not.toBeInTheDocument();
  expect(screen.getByRole('button',{name:'Show rushing section'}).closest('th').colSpan).toBe(1);
- expect([...grid().querySelectorAll('col')].filter(c=>c.style.width==='18px')).toHaveLength(1);
+ expect([...grid().querySelectorAll('col')].filter(c=>c.style.width==='32px')).toHaveLength(1);
+ expect(screen.getByRole('button',{name:'Show rushing section'})).toHaveTextContent('RUSH');
  expect(JSON.parse(localStorage.getItem('bowser:lhq:players:collapsed-groups:v1'))).toEqual(['rushing']);
  fireEvent.click(screen.getByRole('button',{name:'Show rushing section'}));
  expect([...grid().querySelectorAll('col')].map(c=>c.style.width)).toEqual(before);

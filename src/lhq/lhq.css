@@ -73,14 +73,7 @@
 
 /* Player Database: restrained section boundaries and compact pool controls. */
 .lhq .lhq-grid .lhq-section-boundary{border-left:1px solid #343434}
-.lhq-section-toggle{margin-left:auto!important;font-size:13px!important;min-width:16px;padding:0!important;color:#929e98!important;line-height:20px}
-.lhq-section-toggle:hover{color:#3ecf8e!important}
-.lhq-grid .lhq-collapsed-group{padding:0!important}
-.lhq-grid .lhq-collapsed-group>div{justify-content:center;gap:0;padding:0}
-.lhq-grid .lhq-collapsed-group>div>span{display:none}
-.lhq-grid .lhq-collapsed-group .lhq-section-toggle{margin:0!important}
 .lhq-position-team{display:flex;align-items:center;gap:18px;min-width:0}
 .lhq .lhq-team-filter select{border:0;background:transparent;font-family:inherit;font-size:15px;font-weight:600;color:#a8b7af;max-width:150px;padding:0 2px;cursor:pointer}
 .lhq .lhq-team-filter select option{background:#181818;color:#ddd}
 .lhq-research-controls input[type=search]{width:100%;box-sizing:border-box;background:#181818;border:1px solid #444;color:#ededed;padding:5px;font:inherit}
-.lhq .lhq-section-toggle{background:none;border:0;cursor:pointer;box-shadow:none}
