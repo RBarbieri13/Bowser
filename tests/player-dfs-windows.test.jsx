@@ -203,3 +203,29 @@ test('Sleeper and Yahoo independently collapse to restore rails and remember vis
  expect(screen.getByRole('button',{name:'Sort Yahoo net adds'})).toBeInTheDocument();
  expect(Number.parseFloat(grid().style.width)).toBe(initialWidth+4);
 });
+test('latest played week selects only the partial week and restores NFL actuals outside the DFS slate',async()=>{
+ const existingFetch=fetch;
+ vi.stubGlobal('fetch',vi.fn(async input=>{
+  const result=await existingFetch(input),data=await result.json();
+  if(data.availableWeeks){data.availableWeeks=[1,2,8];data.weekCoverage=[{week:8,scheduledGames:14,completedGames:13,sourcedGames:13}];}
+  return response(data);
+ }));
+ render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
+ await screen.findByRole('button',{name:'Latest played week · W8'});
+ choose('DFS slate','mon');
+ await within(grid()).findByRole('button',{name:'Unmatched Salary Player',exact:true});
+ choose('Sort','draft_kings_price');
+ fireEvent.click(screen.getByRole('button',{name:'Latest played week · W8'}));
+ await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
+ expect(screen.getByLabelText('Base week')).toHaveValue('8');
+ expect(screen.getByLabelText('Weeks back')).toHaveValue('1');
+ expect(screen.getByRole('checkbox',{name:'DFS',exact:true})).not.toBeChecked();
+ fireEvent.click(screen.getByRole('checkbox',{name:'DFS',exact:true}));
+ expect(screen.getByLabelText('DFS week')).toHaveValue('2');
+ fireEvent.click(screen.getByRole('button',{name:'Latest played week · W8'}));
+ expect(screen.getByText(/Showing Week 8 only · 13 of 14 games imported · partial week/)).toBeInTheDocument();
+ const requests=fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).map(([u])=>new URL(u,'https://test.invalid').searchParams);
+ expect(screen.getByLabelText('Sort')).toHaveValue('fantasy_points');
+ expect(requests.at(-1).get('weeks')).toBe('8');
+ expect(requests.at(-1).get('dfsSlate')).toBe('selected-week');
+});

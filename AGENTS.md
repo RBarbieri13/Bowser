@@ -252,3 +252,8 @@ Robert's Command Center v2 prototype and handoff supersede older Fantasy News la
 
 - Player Database statistical groups use distinct, consistent pictograms with visible short labels on collapsed rails, full-name tooltips and accessible toggle state. Keep Receiving independently collapsible alongside Usage, Passing, Rushing, DFS, Draft and Fantasy. Place expanded collapse controls beside the group title so pinned columns cannot obscure a far-edge control.
 - Preserve the dense table: collapsed group rails are 32px wide, with existing data-column widths and header/row heights unchanged. Retain saved group visibility and individual trend preferences.
+
+## Partial-week statistics (November 2, 2026)
+
+- Users can select a partially sourced NFL week before its final game. Show imported/scheduled game coverage beside the active statistics window; missing games never become zero. Keep a compact Latest played week action that selects that week alone and removes DFS slate filtering so yesterday’s completed NFL games are visible. Weeks back includes the base week; one means the base week only. Preserve independent DFS week controls.
+- Verify Week 8 has 13 sourced games and CHI–SEA remains pending for this release, focused control tests, npm run check and deployed readback; stop after three repeated validation failures.

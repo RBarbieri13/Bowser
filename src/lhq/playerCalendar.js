@@ -14,3 +14,13 @@ export function playerCalendarDefaults(meta, now = Date.now()) {
   const afterSeason = today > Date.parse(`${weeks.at(-1).lastGameDate}T00:00:00Z`) + 2*86400000;
   return { dfsWeek: current.week, baseWeek: Math.max(1, Math.min(complete, afterSeason ? complete : current.week-1)) };
 }
+
+// Report imported game coverage separately from the schedule: partial weeks are selectable.
+export function statisticsWeekStatus(meta, week) {
+ const coverage = meta?.weekCoverage?.find(w => w.week === week);
+ if (!coverage) return {label:'Game coverage unavailable',partial:false};
+ const {sourcedGames=0,scheduledGames=0,completedGames=0}=coverage;
+ return {partial:sourcedGames<scheduledGames,label:sourcedGames===0
+  ? `No game statistics imported yet (${completedGames} completed)`
+  : `${sourcedGames} of ${scheduledGames} games imported${sourcedGames<scheduledGames?' · partial week':''}`};
+}
