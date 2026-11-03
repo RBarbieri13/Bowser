@@ -11,6 +11,7 @@ export function usePlayerOwnership(yahoo, season) {
   const [overrides, setOverrides] = useState({ account: null, values: {} });
   const current = useRef(capture), attemptedAt = useRef(0), handledRefresh = useRef(0);
   current.current = capture;
+  const readRoster = yahoo?.loadOwnershipRoster;
   const readPage = yahoo?.loadOwnershipPage, busy = !!yahoo?.busy;
   useEffect(() => {
     const wake = () => {
@@ -28,7 +29,7 @@ export function usePlayerOwnership(yahoo, season) {
   useEffect(() => {
     let active = true;
     if (!account) { setCapture({ account: null, pools: {}, loading: false, error: '' }); return () => { active = false; }; }
-    if (busy || !readPage || !leagues.length) return () => { active = false; };
+    if (!readPage || !leagues.length) return () => { active = false; };
     const force = refresh !== handledRefresh.current;
     handledRefresh.current = refresh;
     const grant = account.ownershipCache;
@@ -39,10 +40,23 @@ export function usePlayerOwnership(yahoo, season) {
       if (!active) return;
       let fallback = saved?.pools || prior;
       const freshAt = saved?.savedAt || 0;
+      const retainComplete = Object.values(fallback).some(p=>p.complete);
       if (saved) setCapture({ account, pools: fallback, loading: false, error: '', saved: true });
       if (!force && saved && Date.now() - freshAt < OWNERSHIP_MAX_AGE) { attemptedAt.current = freshAt; return; }
       attemptedAt.current = Date.now();
       setCapture({ account, pools: fallback, loading: true, error: '', saved: !!saved });
+      // Publish affirmative owned/mine identities first, even while dashboards load.
+      if (readRoster && !retainComplete) for (const league of leagues) {
+        if (!active) return;
+        const roster = await readRoster(league.teamKeys[0], () => active);
+        if (!active) return;
+        if (!roster?.complete || !Array.isArray(roster.players) || roster.players.length > 1280 || !validOwnershipClock(Date.parse(roster.checkedAt)) || roster.players.some(p=>p.owned!==true || p.ownershipType!=='team' || typeof p.isMine!=='boolean') || new Set(roster.players.map(p=>p.key)).size!==roster.players.length) continue;
+        const members = new Map((fallback[league.key]?.players||[]).map(p=>[p.key,p]));
+        for (const player of roster.players) members.set(player.key,{...player,checkedAt:roster.checkedAt});
+        fallback = {...fallback,[league.key]:{players:[...members.values()],complete:false,checkedAt:roster.checkedAt}};
+        setCapture({account,pools:fallback,loading:true,error:'',saved:!!saved});
+      }
+      const preload = fallback;
       const pools = {}, cursors = new Map(leagues.map(l => [l.key, 0]));
       try {
         // Read-only, serialized round-robin pages. Replace an existing full snapshot
@@ -59,12 +73,22 @@ export function usePlayerOwnership(yahoo, season) {
             const time = Date.parse(page?.checkedAt || '');
             if (!page || page.start !== start || !Array.isArray(page.players) || page.players.length > 25 || !validOwnershipClock(time) || page.players.some(p => keys.has(p.key)) || new Set(page.players.map(p => p.key)).size !== page.players.length || (page.nextStart !== null && (page.nextStart !== start + 25 || page.nextStart > 5000 || page.players.length !== 25))) {
               delete pools[league.key];
+              if (!retainComplete) {
+                fallback = {...fallback};
+                if (preload[league.key]) fallback[league.key] = preload[league.key];
+                else delete fallback[league.key];
+              }
               throw Error('Yahoo ownership refresh stopped. Last checked values retained; unread players remain unknown.');
             }
             pools[league.key] = { players: [...previous, ...page.players.map(p => ({ ...p, checkedAt: page.checkedAt }))], complete: !!page.exhausted, checkedAt: page.checkedAt };
             if (page.nextStart === null) cursors.delete(league.key); else cursors.set(league.key, page.nextStart);
             setClock(Date.now());
-            if (!Object.keys(fallback).length) setCapture({ account, pools: { ...pools }, loading: !!cursors.size, error: '' });
+            if (!retainComplete) {
+              const merged = new Map((fallback[league.key]?.players||[]).map(p=>[p.key,p]));
+              for (const player of pools[league.key].players) merged.set(player.key,player);
+              fallback = {...fallback,[league.key]:{...pools[league.key],players:[...merged.values()]}};
+              setCapture({account,pools:fallback,loading:!!cursors.size,error:''});
+            }
             if (page.limitReached || page.nextStart === null && !page.exhausted) throw Error('Yahoo page limit reached; unread players remain unknown.');
           }
         }
@@ -79,12 +103,15 @@ export function usePlayerOwnership(yahoo, season) {
     // Cross-tab lock: a second tab reads the first tab's completed snapshot before
     // deciding whether it needs a scan. No Yahoo payload travels between tabs.
     const start = async () => {
+      const saved = await readOwnershipCache(grant, leagues.map(l=>l.key));
+      if (!active) return;
+      if (saved) setCapture({account,pools:saved.pools,loading:false,error:'',saved:true});
       if (grant?.scope && navigator.locks?.request) await navigator.locks.request(`bowser-ownership:${grant.scope}`, async () => { if (active) await run(); });
       else await run();
     };
     start().catch(() => { if (active) setCapture({ account, pools: prior, loading: false, error: 'Ownership refresh unavailable. Retry shortly.' }); });
     return () => { active = false; };
-  }, [account, leagues, busy, readPage, refresh]);
+  }, [account, leagues, readPage, readRoster, refresh]);
   const pools = capture.account === account && account ? capture.pools : {};
   const indices = useMemo(() => Object.fromEntries(Object.entries(pools).map(([key, pool]) => [key, ownershipIndex(pool.players)])), [pools]);
   const mapping = { ...defaultLeagueMapping(leagues), ...(overrides.account === account ? overrides.values : {}) };

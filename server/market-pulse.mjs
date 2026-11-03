@@ -1,3 +1,4 @@
+import {getYahooTrends} from './yahoo-trends.mjs';
 import { DatabaseSync } from 'node:sqlite';
 import { mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -128,6 +129,11 @@ export async function marketPulseHandler(req,res) {
     if (!hosted && !['localhost','127.0.0.1','[::1]'].includes(host)) return send(403,{error:'Local host required.'});
     if (req.method==='POST' && (req.headers['x-bowser-refresh']!=='1' || (req.headers.origin && new URL(req.headers.origin).host!==req.headers.host))) return send(403,{error:'Same-origin refresh required.'});
     const params=new URL(req.originalUrl || req.url,'http://localhost').searchParams;
+    if(params.get('provider')==='yahoo'){
+      const period=params.get('period')||'today';
+      if(!['today','yesterday'].includes(period))return send(400,{error:'Invalid Yahoo trend period.'});
+      return send(200,await getYahooTrends(period));
+    }
     const provider=params.get('provider') || 'sleeper', hours=Number(params.get('hours') || 24);
     if (!Object.hasOwn(PROVIDERS,provider) || ![6,24,72].includes(hours)) return send(400,{error:'Invalid provider or window.'});
     instance = getMarketPulse();

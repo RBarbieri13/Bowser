@@ -229,7 +229,7 @@ Robert's Command Center v2 prototype and handoff supersede older Fantasy News la
 
 - Finish is followed by two narrow composite columns (Sleeper then Yahoo), then LEFA. Each provider has independent Adds / Drops / Net sort controls; sort raw counts, descending first, unknown last. Keep compact displays and exact source/count tooltips. These composite columns are excluded from public CSV exports.
 - Sleeper activity is the selected rolling 6/24/72-hour public top-list observation, independent of statistics and DFS weeks. Missing top-list membership is not zero; Net requires both counts. Reuse public snapshot storage/cooldown and retain original capture clocks.
-- Yahoo activity is the selected authorized league's bounded successful transaction history, never Yahoo-wide counts or the Sleeper time window. Show scope/coverage in the header menu and tooltips; no unmatched-zero inference. Read through the existing serial queue. Transactions remain in memory and clear on account/season/disconnect boundaries; the ownership snapshot storage exception does not apply.
+- Robert's November 2 correction: Player Database Yahoo +/−/Δ uses public Yahoo-wide Transaction Trends for Today or Yesterday, independent of personal leagues and the Sleeper rolling window. Label the exact calendar date, capture time and published-list coverage; missing players remain unavailable, not zero. Private selected-league transaction history stays in League Research only.
 
 ## Usage share throughout Bowser (October 11, 2026)
 
@@ -257,3 +257,9 @@ Robert's Command Center v2 prototype and handoff supersede older Fantasy News la
 
 - Users can select a partially sourced NFL week before its final game. Show imported/scheduled game coverage beside the active statistics window; missing games never become zero. Keep a compact Latest played week action that selects that week alone and removes DFS slate filtering so yesterday’s completed NFL games are visible. Weeks back includes the base week; one means the base week only. Preserve independent DFS week controls.
 - Verify Week 8 has 13 sourced games and CHI–SEA remains pending for this release, focused control tests, npm run check and deployed readback; stop after three repeated validation failures.
+
+## Ownership loading and Fantasy legends (November 2, 2026)
+
+- Make affirmative mine/other membership visible through a bounded current league-roster preload while dashboards load. Validate current league week, team and roster counts, identities and ownership authorization. Full-pool pages continue progressively on an initial scan; a complete saved snapshot stays visible and is replaced atomically. Never infer free-agent status from roster absence. Read an authenticated encrypted snapshot before waiting on another tab's refresh lock.
+- Both activity and ownership headers retain compact information-circle legends on hover, focus and click. Ownership also has a key pictogram; explain L/E/F/A and ★/●/○/?/≋, and activity +/−/Δ, zeros, missing counts, scope and date. Preserve dense row/header geometry and native filters/sorting.
+- Bounded release: focused ownership/cache/privacy/source/parser and UI tests, npm run check, lint, independent review, exact-head PR merge, candidate and both permanent URL readbacks. Stop after three repeated validation failures.

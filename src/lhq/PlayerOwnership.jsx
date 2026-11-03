@@ -1,3 +1,4 @@
+import {ColumnLegend} from './ColumnLegend.jsx';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { LEFA, LEAGUE_LABELS, OWNERSHIP_STATES, OWNERSHIP_SYMBOLS, OWNERSHIP_LABELS, ownershipFiltersActive, ownershipSummary, OWNERSHIP_MAX_AGE } from './ownershipModel.js';
@@ -38,7 +39,10 @@ export function OwnershipHeader({ filters, setFilters, clear, ownership, onSort,
     setOpen(letter);
   };
   return <div className="lefa-header" onMouseDown={e => e.stopPropagation()}>
-    <button type="button" className="lefa-clear" disabled={!ownershipFiltersActive(filters) && filters.mode === 'every'} onClick={() => { clear(); setOpen(null); }}>Clear All</button>
+    <div className="lefa-tools"><ColumnLegend ownership label="League ownership legend" text={`L = ${ownership.leagues.find(l=>l.key===ownership.mapping.L)?.name||'Loongi League'}; E = ${ownership.leagues.find(l=>l.key===ownership.mapping.E)?.name||'LOEG'}; F = ${ownership.leagues.find(l=>l.key===ownership.mapping.F)?.name||'Fart League'}.
+A = summary across your connected leagues, not all Yahoo leagues.
+★ = on your team. ● = owned by another manager. ○ = unowned (free agent or waivers). ? = not yet verified or expired. ≋ = different statuses across leagues.
+Click L/E/F/A to filter or sort. Clear All resets only ownership filters. Ownership is current, independent of the statistics week.`}/><button type="button" className="lefa-clear" disabled={!ownershipFiltersActive(filters) && filters.mode === 'every'} onClick={() => { clear(); setOpen(null); }}>Clear All</button></div>
     <div className="lefa-letters">{LEFA.map(letter => <button type="button" key={letter} className={filters[letter].length < 3 ? 'lefa-active' : ''} aria-label={`Filter ${LEAGUE_LABELS[letter]} ownership`} aria-haspopup="dialog" aria-expanded={open === letter} title={LEAGUE_LABELS[letter]} onClick={e => show(letter, e.currentTarget)}><b>{letter}</b><span aria-hidden="true">▾</span></button>)}</div>
     {open && createPortal(<section ref={menu} role="dialog" aria-label={`${LEAGUE_LABELS[open]} ownership filter`} className="lefa-menu" style={point}>
       <header><strong>{LEAGUE_LABELS[open]}</strong><button type="button" aria-label="Close ownership filter" onClick={close}>×</button></header>

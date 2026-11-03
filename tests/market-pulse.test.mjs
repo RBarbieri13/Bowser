@@ -54,3 +54,19 @@ test('invalid query and public network requests are rejected before provider acc
  assert.equal((await invoke({method:'POST'})).status,403);
  assert.equal((await invoke({method:'POST',headers:{host:'localhost','x-bowser-refresh':'1',origin:'https://untrusted.example'}})).status,403);
 });
+
+// Public Yahoo trend counts must never come from private league transactions.
+import {parseYahooTrends,createYahooTrends} from '../server/yahoo-trends.mjs';
+const yahooHtml=(adds='12,345',drops='0',name='Fixture &amp; Player',date='2026-11-02')=>`<table><thead><tr>${['Player','% Ros','% Start','Drops','Adds','Trades','Total'].map(x=>`<th><a href="/f1/buzzindex?date=${date}&sort=BI_A">${x}</a></th>`).join('')}</tr></thead><tbody><tr><td><a class="name playernote" data-ys-playerid="42">${name}</a><span>NYG - WR</span></td><td>10%</td><td>2%</td><td>${drops}</td><td>${adds}</td><td>1</td><td>12346</td></tr></tbody></table>`;
+test('Yahoo public trend parser retains exact counts/zeros and rejects missing or malformed fields',()=>{
+ assert.deepEqual(parseYahooTrends(yahooHtml())[0],{id:'yahoo:42',name:'Fixture & Player',team:'NYG',position:'WR',adds:12345,drops:0,net:12345});
+ assert.throws(()=>parseYahooTrends(yahooHtml(),{date:'2026-11-01'}),/different calendar date/);
+ for(const html of ['<html>Sign in</html>',yahooHtml('—'),yahooHtml('-1'),yahooHtml('1.2')])assert.throws(()=>parseYahooTrends(html));
+});
+test('Yahoo public trend fetch coalesces callers, caches, preserves dated last good on failure, and changes calendar dates independently',async()=>{
+ let time=Date.parse('2026-11-02T21:00:00Z'),calls=0,fail=false;const urls=[];
+ const load=createYahooTrends({now:()=>time,fetcher:async(url,options)=>{calls++;urls.push(url);assert.equal(options.redirect,'error');assert.equal(options.headers,undefined);if(fail)throw Error('Source unavailable');return {ok:true,text:async()=>yahooHtml('12,345','0','Fixture &amp; Player',new URL(url).searchParams.get('date'))};}});
+ const [a,b]=await Promise.all([load(),load()]);assert.equal(calls,2);assert.deepEqual(a,b);assert.equal(a.scope,'platform');assert.equal(a.date,'2026-11-02');assert.equal(a.rows[0].adds,12345);assert(urls.every(u=>u.startsWith('https://football.fantasysports.yahoo.com/f1/buzzindex?')&&!u.includes('league')));
+ await load();assert.equal(calls,2);time+=16*60000;fail=true;const stale=await load();assert.equal(stale.rows[0].adds,12345);assert.equal(stale.capturedAt,a.capturedAt);assert(stale.error);assert(stale.stale);
+ fail=false;const yesterday=await load('yesterday');assert.equal(yesterday.date,'2026-11-01');assert(yesterday.sources.every(u=>u.includes('date=2026-11-01')));await assert.rejects(load('other'));
+});

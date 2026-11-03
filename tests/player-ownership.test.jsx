@@ -123,3 +123,34 @@ test('scanner accepts slight clock skew, completes all leagues, and rejects far-
  await waitFor(()=>expect(second.result.current.error).toMatch(/stopped/));
  expect(second.result.current.observed).toBe(0);
 });
+
+test('affirmative ownership appears during dashboard loading before the full pool scan finishes',async()=>{
+ let finish;const read=vi.fn(()=>new Promise(resolve=>{finish=resolve;}));
+ const seed=vi.fn(async()=>({complete:true,players:[observed()],checkedAt:new Date().toISOString()}));
+ const solo={...account,leagues:account.leagues.slice(0,1),teams:account.teams.slice(0,1)};
+ const {result,rerender,unmount}=renderHook(({busy})=>usePlayerOwnership({account:solo,status:{connected:true},busy,loadOwnershipRoster:seed,loadOwnershipPage:read},2026),{initialProps:{busy:true}});
+ await waitFor(()=>expect(result.current.statesFor(row).states.L).toBe('mine'));
+ expect(result.current.statesFor({...row,name:'Absent'}).states.L).toBe('unknown');
+ expect(result.current.complete).toBe(false);expect(seed).toHaveBeenCalledTimes(1);
+ rerender({busy:false});expect(seed).toHaveBeenCalledTimes(1);
+ await act(async()=>finish({start:0,players:[observed()],nextStart:null,exhausted:true,checkedAt:new Date().toISOString()}));
+ await waitFor(()=>expect(result.current.complete).toBe(true));unmount();
+});
+test('ownership key explains league letters and all five symbols',()=>{
+ render(<OwnershipHeader filters={defaultOwnershipFilters()} setFilters={()=>{}} clear={()=>{}} ownership={{leagues:ownershipLeagues(account),mapping:defaultLeagueMapping(account.leagues)}} sort={{key:'fantasy_points'}}/>);
+ fireEvent.focus(screen.getByRole('button',{name:'League ownership legend'}));
+ expect(screen.getByRole('tooltip')).toHaveTextContent('★ = on your team');
+ expect(screen.getByRole('tooltip')).toHaveTextContent('not all Yahoo leagues');
+ fireEvent.keyDown(screen.getByRole('button',{name:'League ownership legend'}),{key:'Escape'});expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+});
+test('initial full-pool observations become visible progressively after fast roster preload',async()=>{
+ let finish;
+ const first=Array.from({length:25},(_,i)=>observed({key:`999.p.${i+2}`,name:`Free ${i}`,owned:false,isMine:false,ownershipType:'freeagents'}));
+ const read=vi.fn(async(_team,start)=>start===0?{start:0,players:first,nextStart:25,exhausted:false,checkedAt:new Date().toISOString()}:new Promise(resolve=>{finish=resolve;}));
+ const seed=vi.fn(async()=>({complete:true,players:[observed()],checkedAt:new Date().toISOString()}));
+ const solo={...account,leagues:account.leagues.slice(0,1),teams:account.teams.slice(0,1)};
+ const {result,unmount}=renderHook(()=>usePlayerOwnership({account:solo,status:{connected:true},busy:false,loadOwnershipRoster:seed,loadOwnershipPage:read},2026));
+ await waitFor(()=>expect(result.current.statesFor({...row,name:'Free 0'}).states.L).toBe('free'));
+ expect(result.current.complete).toBe(false);expect(result.current.statesFor(row).states.L).toBe('mine');
+ unmount();await act(async()=>finish({start:25,players:[],nextStart:null,exhausted:true,checkedAt:new Date().toISOString()}));
+});

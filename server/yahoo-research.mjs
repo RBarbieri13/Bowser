@@ -99,7 +99,7 @@ async function ownershipForKeys(keys, { query, fail, leagueKey, teamKey, ownedTe
 export async function queryLeagueResearch({ params, teamKey, ownedTeamKeys = [teamKey], season, query, fail, now }) {
   const requested = params.get('include') ?? 'availability,trades';
   const sections = [...new Set(requested.split(','))];
-  if (!sections.length || sections.some(section => !['availability', 'trades', 'transactions', 'ownership', 'ownershipPool'].includes(section))) {
+  if (!sections.length || sections.some(section => !['availability', 'trades', 'transactions', 'ownership', 'ownershipPool', 'ownershipRoster'].includes(section))) {
     fail('invalid_include', 'Choose availability, trades, transactions, or ownership.');
   }
   const rawStart = params.get('availabilityStart') ?? '0';
@@ -119,7 +119,25 @@ export async function queryLeagueResearch({ params, teamKey, ownedTeamKeys = [te
   const result = { season: Number(season), teamKey, leagueKey, availability: null, trades: null, transactions: null, ownership: null, errors: {} };
   for (const section of sections) {
     try {
-      if (section === 'ownershipPool') {
+      if (section === 'ownershipRoster') {
+        // One current league-wide roster read, rather than every Yahoo player page.
+        // Only affirmative roster membership is emitted; absence never means free.
+        const data = await query(`league/${leagueKey}/teams/roster`);
+        const teams = collection(data, 'teams', 'team', fail, leagueKey);
+        if (!league.teams || teams.length !== league.teams || teams.length > 32 || new Set(teams.map(t => t.team_key)).size !== teams.length) fail('invalid_data_response', 'Yahoo returned incomplete league rosters.', 502);
+        const players = [];
+        for (const team of teams) {
+          if (!new RegExp(`^${leagueKey.replaceAll('.', '\\.')}\\.t\\.\\d+$`).test(team.team_key)) fail('league_mismatch', 'Yahoo returned an unrelated roster.', 502);
+          const rosters = entities(team, 'roster');
+          const containers = entities(team, 'players');
+          if (rosters.length !== 1 || containers.length !== 1 || rosters[0].coverage_type !== 'week' || !league.week || numeric(rosters[0].week) !== league.week) fail('invalid_data_response', 'Yahoo returned an incomplete roster.', 502);
+          const members = entities(containers[0], 'player');
+          if (numeric(containers[0].count) !== members.length || members.length > 40) fail('invalid_data_response', 'Yahoo roster count mismatch.', 502);
+          for (const member of members) players.push({...playerInfo(member),owned:true,isMine:ownedTeamKeys.includes(team.team_key),ownershipType:'team'});
+        }
+        if (players.some(p => !new RegExp(`^${gameKey}\\.p\\.\\d+$`).test(p.key) || !p.name || !p.team || !p.position) || new Set(players.map(p=>p.key)).size !== players.length) fail('invalid_data_response', 'Yahoo returned ambiguous roster identities.', 502);
+        result.ownershipRoster = {players,complete:true,coverage:'All current league rosters checked. Only affirmative membership; other players remain unknown until the ownership scan.'};
+      } else if (section === 'ownershipPool') {
         const data = await query(`league/${leagueKey}/players;start=${start};count=${PAGE_SIZE}/ownership`);
         const players = collection(data, 'players', 'player', fail, leagueKey).map(player => ownershipInfo(player, teamKey, ownedTeamKeys));
         if (players.length > PAGE_SIZE || new Set(players.map(p => p.key)).size !== players.length || players.some(p => !/^\d+\.p\.\d+$/.test(p.key) || !p.key.startsWith(`${gameKey}.p.`))) {

@@ -1,0 +1,11 @@
+.column-legend-anchor{display:inline-flex;flex:none;align-items:center}
+.lhq .column-legend-trigger{display:inline-flex;align-items:center;gap:1px;padding:0 1px;border:0;background:none;color:#bdc8c2;min-width:14px;min-height:14px;height:14px;cursor:help}
+.lhq .column-legend-trigger:hover,.lhq .column-legend-trigger:focus-visible{color:#3ecf8e;outline:1px solid #3ecf8e}
+.column-legend-popup{position:fixed;z-index:13000;width:320px;max-width:calc(100vw - 16px);box-sizing:border-box;padding:10px 12px;border:1px solid #53665c;border-radius:4px;background:#171d19;color:#e4ebe7;box-shadow:0 6px 20px #0009;font:12px/1.5 Arial,sans-serif;white-space:pre-line;pointer-events:none;text-align:left}
+.column-legend-popup strong{display:block;color:#3ecf8e;margin-bottom:5px;font-size:12px}
+.lefa-tools{display:flex;align-items:center;justify-content:space-between;height:12px;gap:2px}
+.lhq .lhq-grid .lefa-tools .lefa-clear{width:auto;flex:1}
+.activity-provider-line{display:flex;align-items:center;justify-content:center;gap:2px}
+/* Leave the existing top-right collapse handle its own hit target. */
+.activity-provider-line{box-sizing:border-box;padding-right:15px}
+.activity-provider-line>.lhq-tip-anchor{flex:1;min-width:0}
