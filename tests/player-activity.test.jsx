@@ -10,7 +10,7 @@ import {sortRows} from '../src/lhq/model.js';
 import {LhqProvider} from '../src/lhq/shared.jsx';
 const row={name:'Fixture Player',team:'LA',position:'WR'};
 const empty=()=>null;
-const activity={hours:24,setHours:vi.fn(),sleeperFor:()=>({adds:31500,drops:5500,net:26000}),yahooFor:empty,teamKey:'999.l.1.t.1',leagueName:'Loongi League',options:[{key:'999.l.1.t.1',name:'Loongi League'},{key:'999.l.2.t.1',name:'LOEG'}],setTeamKey:vi.fn(),yahooCoverage:'bounded latest 50; not Yahoo-wide',reloadYahoo:vi.fn(),refreshSleeper:vi.fn()};
+const activity={hours:24,setHours:vi.fn(),sleeperFor:()=>({adds:31500,drops:5500,net:26000}),yahooFor:empty,teamKey:'999.l.1.t.1',leagueName:'Loongi League',options:[{key:'999.l.1.t.1',name:'Loongi League'},{key:'999.l.2.t.1',name:'LOEG'}],setTeamKey:vi.fn(),yahooPeriod:'today',setYahooPeriod:vi.fn(),yahooCoverage:'Yahoo-wide public trend lists',reloadYahoo:vi.fn(),refreshSleeper:vi.fn()};
 afterEach(()=>{cleanup();vi.unstubAllGlobals();vi.restoreAllMocks();});
 test('abbreviations retain zeros, signs and missing values; no private composite is exported',()=>{
  expect([31500,5500,26000,0,null,-1250].map(v=>compactActivity(v))).toEqual(['31.5k','5.5k','26k','0','—','−1.3k']);
@@ -40,22 +40,28 @@ test('compact cells expose full exact counts and provider context; Yahoo gaps ne
  fireEvent.focus(screen.getByLabelText('sleeper adds: 31500'));expect(screen.getByRole('tooltip')).toHaveTextContent('31,500');expect(screen.getByRole('tooltip')).toHaveTextContent('rolling 24h');
  expect(screen.getByLabelText('yahoo adds: unavailable')).toHaveTextContent('—');
 });
-test('provider menus choose source window/league and close with Escape returning focus',()=>{
+test('provider menus choose rolling window/calendar date and close with Escape returning focus',()=>{
  render(<LhqProvider><ActivityHeader provider="sleeper" activity={activity}/><ActivityHeader provider="yahoo" activity={activity}/></LhqProvider>);
  fireEvent.click(screen.getByRole('button',{name:'Sleeper activity source settings'}));fireEvent.change(screen.getByLabelText('Sleeper activity window'),{target:{value:'72'}});expect(activity.setHours).toHaveBeenCalledWith(72);fireEvent.keyDown(document,{key:'Escape'});expect(screen.getByRole('button',{name:'Sleeper activity source settings'})).toHaveFocus();
- fireEvent.click(screen.getByRole('button',{name:'Yahoo activity source settings'}));expect(screen.getByRole('dialog')).toHaveTextContent('selected-league');fireEvent.change(screen.getByLabelText('Yahoo activity league'),{target:{value:'999.l.2.t.1'}});expect(activity.setTeamKey).toHaveBeenCalledWith('999.l.2.t.1');
+ fireEvent.click(screen.getByRole('button',{name:'Yahoo activity source settings'}));expect(screen.getByRole('dialog')).toHaveTextContent('Yahoo-wide');fireEvent.change(screen.getByLabelText('Yahoo trend date'),{target:{value:'yesterday'}});expect(activity.setYahooPeriod).toHaveBeenCalledWith('yesterday');
 });
 const account={season:2026,teams:[{key:'999.l.1.t.1'}],leagues:[{key:'999.l.1',name:'Loongi League'}]};
-const transactions={limit:50,complete:false,items:[{key:'tx1',status:'successful',timestamp:123,players:[{...row,key:'999.p.1',action:'add'}]}]};
 const mockFetch=()=>vi.stubGlobal('fetch',vi.fn(async url=>({ok:true,json:async()=>({provider:'sleeper',window:new URL(url,'https://test.invalid').searchParams.get('hours'),capturedAt:Date.now(),nextRefreshAt:Date.now()+900000,rows:[{...row,adds:12,drops:4}]})})));
-test('private reads load once in existing queue, switch scope, clear immediately on disconnect, never persist',async()=>{
- mockFetch();const loadResearch=vi.fn(),store=vi.spyOn(Storage.prototype,'setItem');
+test('Yahoo counts are platform-wide, require no private queue, survive disconnect, and use calendar dates',async()=>{
+ const loadResearch=vi.fn();vi.stubGlobal('fetch',vi.fn(async url=>{const p=new URL(url,'https://test.invalid').searchParams;return {ok:true,json:async()=>p.get('provider')==='yahoo'?{provider:'yahoo',scope:'platform',period:p.get('period'),date:'2026-11-02',rows:[{...row,adds:31000,drops:4000}]}:{provider:'sleeper',window:p.get('hours'),capturedAt:Date.now(),nextRefreshAt:Date.now()+900000,rows:[]}};}));
  const y={account,status:{connected:true},loadResearch,research:{},researchBusy:{}};
  const {result,rerender}=renderHook(({yahoo})=>usePlayerActivity(yahoo,2026),{initialProps:{yahoo:y}});
- await waitFor(()=>expect(loadResearch).toHaveBeenCalledTimes(1));expect(loadResearch).toHaveBeenCalledWith('999.l.1.t.1',{include:'transactions'});
- rerender({yahoo:{...y,research:{'999.l.1.t.1':{season:2026,teamKey:'999.l.1.t.1',transactions}}}});
- expect(result.current.yahooFor(row)).toMatchObject({adds:1,drops:0,net:1});expect(result.current.yahooFor({...row,name:'No returned match'})).toBeNull();
- rerender({yahoo:{...y,status:{connected:false}}});expect(result.current.yahooFor(row)).toBeNull();expect(result.current.options).toEqual([]);expect(store).not.toHaveBeenCalled();
+ await waitFor(()=>expect(result.current.yahooFor(row)?.adds).toBe(31000));
+ expect(loadResearch).not.toHaveBeenCalled();expect(result.current.yahooFor(row)).toEqual({adds:31000,drops:4000,net:27000});
+ rerender({yahoo:{...y,status:{connected:false}}});expect(result.current.yahooFor(row)?.adds).toBe(31000);
+ act(()=>result.current.setYahooPeriod('yesterday'));expect(result.current.yahooFor(row)).toBeNull();
+ await waitFor(()=>expect(fetch.mock.calls.some(([u])=>String(u).includes('provider=yahoo&period=yesterday'))).toBe(true));
+});
+test('activity legend explains symbols and global scope on hover',()=>{
+ render(<LhqProvider><ActivityHeader provider="yahoo" activity={activity}/></LhqProvider>);
+ fireEvent.mouseEnter(screen.getByRole('button',{name:'Yahoo activity legend'}).parentElement);
+ expect(screen.getByRole('tooltip')).toHaveTextContent('+ = adds. − = drops. Δ = adds minus drops');
+ expect(screen.getByRole('tooltip')).toHaveTextContent('Yahoo-wide');
 });
 test('Sleeper requests exact windows, never relabels old counts, and reports provider failure',async()=>{
  mockFetch();const {result}=renderHook(()=>usePlayerActivity(null,2026));await waitFor(()=>expect(result.current.sleeperFor(row)?.adds).toBe(12));

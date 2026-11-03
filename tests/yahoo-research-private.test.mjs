@@ -170,3 +170,14 @@ test('mine covers every team actually owned by the authenticated account within 
  assert.equal(result.status,200);assert.equal(result.data.ownershipPool.players[0].isMine,true);
  assert(!result.body.includes(`${leagueKey}.t.2`));
 });
+
+test('fast league roster preload validates current complete membership and emits affirmative identities only',async()=>{
+ const rosterPayload=(week=8)=>({fantasy_content:{league:[{league_key:leagueKey},{teams:{count:2,0:{team:[[{team_key:teamKey}],{roster:{coverage_type:'week',week,players:{count:1,0:{player:player('999.p.1','Fixture Alpha','RB','NYG',null)}}}}]},1:{team:[[{team_key:`${leagueKey}.t.2`}],{roster:{coverage_type:'week',week,players:{count:1,0:{player:player('999.p.2','Fixture Beta','WR','BUF',null)}}}}]}}}]}});
+ const read=async week=>call(`league-research?season=2026&team=${teamKey}&include=ownershipRoster`,{headers:{cookie},fetcher:async url=>{
+  if(url.includes('/teams?'))return response(teams);
+  if(url.endsWith(`league/${leagueKey}?format=json`))return response({fantasy_content:{league:[{league_key:leagueKey,season:'2026',num_teams:'2',current_week:'8'}]}});
+  assert(url.includes(`/league/${leagueKey}/teams/roster?`));return response(rosterPayload(week));
+ }});
+ const good=await read(8);assert.equal(good.data.ownershipRoster.complete,true);assert.deepEqual(good.data.ownershipRoster.players.map(p=>[p.owned,p.isMine]),[[true,true],[true,false]]);assert(!good.body.includes('PRIVATE'));assert(!good.body.includes(`${leagueKey}.t.2`));assert.match(good.headers.get('cache-control'),/no-store/);
+ const old=await read(1);assert.equal(old.data.ownershipRoster,null);assert(old.data.errors.ownershipRoster);
+});

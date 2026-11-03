@@ -263,6 +263,18 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
     } finally { if (active()) setResearchBusy(previous => ({ ...previous, [teamKey]: false })); }
   }, [season, clear, appendLog]);
 
+  const loadOwnershipRoster = useCallback(async (teamKey, isActive = () => true) => {
+    const id = revision.current;
+    if (!latest.current.account?.teams.some(t => t.key === teamKey)) return null;
+    try {
+      const query = new URLSearchParams({season,team:teamKey,include:'ownershipRoster'});
+      const result = await enqueue(() => current(id) && isActive() ? request(`league-research?${query}`) : null);
+      if (!current(id) || !isActive()) return null;
+      if (!result || result.teamKey !== teamKey || result.season !== Number(season) || !result.ownershipRoster || result.errors?.ownershipRoster) return null;
+      return {...result.ownershipRoster,checkedAt:result.checkedAt};
+    } catch (caught) { handleFailure(caught, 'ownership', id); return null; }
+  }, [season,handleFailure]);
+
   // The ownership scanner uses the same serialized, authenticated queue but keeps
   // pages in its own account-scoped controller, separate from the research cache.
   const loadOwnershipPage = useCallback(async (teamKey, start = 0, isActive = () => true) => {
@@ -287,7 +299,7 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
     dashboards: visible.dashboards, research: visible.research, summaries, exposure,
     errors, error: errors.connection || '', busy, researchBusy, log, week, setWeek,
     connectionUrl, connectionNotice: Object.hasOwn(MESSAGES, callbackResult) ? MESSAGES[callbackResult] : '',
-    load, refresh, disconnect, connect, loadResearch, loadOwnershipPage,
+    load, refresh, disconnect, connect, loadResearch, loadOwnershipPage, loadOwnershipRoster,
     coverage: { teamLimit: TEAM_LIMIT, totalTeams: visible.account?.teams.length ?? null, loadedTeams: Object.keys(visible.dashboards).length, complete: Boolean(visible.account) && visible.account.teams.length === Object.keys(visible.dashboards).length },
   };
 }
