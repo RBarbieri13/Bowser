@@ -1,3 +1,4 @@
+import {setStatsThrough} from './week-window-actions.js';
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest';
 import {beforeEach,afterEach,expect,test,vi} from 'vitest';
@@ -53,7 +54,7 @@ test('range finish displays aggregate rank, missing-week coverage, and independe
  await screen.findByText('QB2');
  expect(screen.queryByText('QB7')).toBeNull();
  expect(screen.getByText(/statistics unavailable for W2/)).toBeInTheDocument();
- fireEvent.change(screen.getByLabelText('Base week'),{target:{value:'3'}});
+ setStatsThrough(3);
  await screen.findByText('QB2');
  fireEvent.click(screen.getByRole('button',{name:'usage trend settings'}));
  fireEvent.change(screen.getByLabelText('usage trend history'),{target:{value:'3'}});
