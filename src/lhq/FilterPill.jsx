@@ -6,7 +6,7 @@ import './selectors.css';
 export const filterValues=value=>Array.isArray(value)?value:value==null||value==='All'||value==='all'?[]:[value];
 export const matchesFilter=(value,selected)=>!filterValues(selected).length||filterValues(selected).includes(value);
 export function FilterPill({children,label,on=false,count,disabled=false,size='small',onClick,dropdown=false,...props}) {
- return <button type="button" {...props} className={`bowser-pill ${size==='small'?'bowser-pill-small':''}`} style={{...bowserFilterPill.base,...(size==='small'?bowserFilterPill.small:{}),...props.style}} data-on={on} disabled={disabled} aria-pressed={dropdown?undefined:on} onClick={onClick}>{label??children}{count>0&&<span className="bowser-pill-count">{count}</span>}{dropdown&&<svg className="bowser-pill-caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1 L5 5 L9 1" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round"/></svg>}</button>;
+ return <button type="button" {...props} className={`bowser-pill ${size==='small'?'bowser-pill-small':''}`} style={{...bowserFilterPill.base,...(size==='compact'?bowserFilterPill.compact:size==='small'?bowserFilterPill.small:{}),...props.style}} data-on={on} disabled={disabled} aria-pressed={dropdown?undefined:on} onClick={onClick}>{label??children}{count>0&&<span className="bowser-pill-count">{count}</span>}{dropdown&&<svg className="bowser-pill-caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1 L5 5 L9 1" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round"/></svg>}</button>;
 }
 export function FilterSegments({options,value,onChange,label,multiple=false,size='small'}) {
  const selected=filterValues(value);

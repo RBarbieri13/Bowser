@@ -57,7 +57,10 @@ try:
         coverage = [dict(row) for row in db.execute('''SELECT week, COUNT(*) AS scheduledGames,
             SUM(home_score IS NOT NULL AND away_score IS NOT NULL) AS completedGames,
             SUM(play_by_play_available=1 AND (SELECT COUNT(DISTINCT team) FROM player_week_stats p
-                WHERE p.game_id=games.game_id AND p.source_player_stats=1 AND p.source_snap_counts=1)=2) AS sourcedGames
+                WHERE p.game_id=games.game_id AND p.source_player_stats=1 AND p.source_snap_counts=1)=2) AS sourcedGames,
+            SUM(home_score IS NOT NULL AND away_score IS NOT NULL AND play_by_play_available=1
+                AND (SELECT COUNT(DISTINCT team) FROM player_week_stats p WHERE p.game_id=games.game_id
+                    AND p.source_player_stats=1 AND p.source_snap_counts=1)=2) AS completedSourcedGames
             FROM games GROUP BY week ORDER BY week''')]
         schedule = [dict(row) for row in db.execute('SELECT week, MIN(gameday) AS firstGameDate, MAX(gameday) AS lastGameDate FROM games GROUP BY week ORDER BY week')]
         future_game = db.execute('''SELECT g.home_team,g.week FROM games g
@@ -66,7 +69,7 @@ try:
             ORDER BY g.gameday,g.game_id LIMIT 1''').fetchone()
     completed = [w['week'] for w in coverage if w['completedGames'] == w['scheduledGames'] == w['sourcedGames']]
     check(meta['completedWeeks'] == completed and meta['latestCompleteWeek'] == (completed[-1] if completed else None), 'Hosted completed weeks match verified warehouse coverage')
-    check(meta['weekCoverage'] == coverage, 'Every hosted week retains exact scheduled/completed/sourced counts, including partial weeks')
+    check(meta['weekCoverage'] == coverage, 'Every hosted week retains exact scheduled/completed/sourced counts and same-game completed+sourced intersection, including partial weeks')
     check(meta['scheduleWeeks'] == schedule, 'Hosted calendar defaults use exact sourced NFL schedule dates')
     for week in meta['availableWeeks']:
         if week in (1, 4):

@@ -324,11 +324,15 @@ export function getMeta(dbPath, searchParams = new URLSearchParams()) {
   const summaryRow = db.prepare("SELECT value FROM warehouse_meta WHERE key = 'summary'").get();
   const draftSummaryRow = db.prepare("SELECT value FROM warehouse_meta WHERE key = 'fantasypros_adp_summary'").get();
   const summary = summaryRow ? JSON.parse(summaryRow.value) : {};
-  const weekCoverage = db.prepare(`SELECT week, COUNT(*) AS scheduledGames,
-    SUM(home_score IS NOT NULL AND away_score IS NOT NULL) AS completedGames,
-    SUM(play_by_play_available=1 AND (SELECT COUNT(DISTINCT team) FROM player_week_stats p
-      WHERE p.game_id=games.game_id AND p.source_player_stats=1 AND p.source_snap_counts=1)=2) AS sourcedGames
-    FROM games GROUP BY week ORDER BY week`).all();
+  const weekCoverage = db.prepare(`WITH game_coverage AS (
+    SELECT week, home_score IS NOT NULL AND away_score IS NOT NULL AS completed,
+      play_by_play_available=1 AND (SELECT COUNT(DISTINCT team) FROM player_week_stats p
+        WHERE p.game_id=games.game_id AND p.source_player_stats=1 AND p.source_snap_counts=1)=2 AS sourced
+    FROM games
+  )
+    SELECT week, COUNT(*) AS scheduledGames, SUM(completed) AS completedGames,
+      SUM(sourced) AS sourcedGames, SUM(completed AND sourced) AS completedSourcedGames
+    FROM game_coverage GROUP BY week ORDER BY week`).all();
   const completedWeeks = weekCoverage.filter(w => w.completedGames === w.scheduledGames && w.sourcedGames === w.scheduledGames).map(w => w.week);
   return {
     season,
@@ -407,7 +411,9 @@ export function queryPlayers(searchParams = new URLSearchParams(), dbPath) {
     : "COALESCE(NULLIF(draft_rankings.source_team, ''), players.latest_team)";
   const trendRange = searchParams.get('trendRange') || 'history';
   if (!['history','selected'].includes(trendRange)) throw new QueryValidationError('trendRange','Choose history or selected trend range');
-  const history = queryAlignedHistory(db, { season, weeks, count: trendWeeks, receptionBonus, seasonType, exactWeeks: trendRange === 'selected' });
+  const historyAnchor = searchParams.get('historyAnchor') || 'completed';
+  if (!['completed','requested'].includes(historyAnchor)) throw new QueryValidationError('historyAnchor','Choose completed or requested');
+  const history = queryAlignedHistory(db, { season, weeks, count: trendWeeks, receptionBonus, seasonType, exactWeeks: trendRange === 'selected', requestedAnchor:historyAnchor==='requested' });
   const dfsChoice = searchParams.get('dfsSlate') || 'current';
   const dfs = dfsChoice === 'selected-week' ? getDfsWeek(season,Math.max(...weeks,1)) : getDfsSlate(dfsChoice);
   if(!dfs) throw new QueryValidationError("dfsSlate", "Unknown DraftKings slate");

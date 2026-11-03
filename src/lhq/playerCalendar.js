@@ -1,5 +1,7 @@
-// NFL week defaults use schedule dates and Tuesday 00:00 America/Chicago.
-// Actual-stat advancement additionally requires full imported game coverage.
+// DFS defaults use schedule dates and Tuesday 00:00 America/Chicago.
+// This fallback ending week requires complete coverage; it is not the Current
+// statistics label. calendarContext.currentWeek uses the first completed-and-
+// imported game, and Player Database can explicitly select partial weeks.
 export function playerCalendarDefaults(meta, now = Date.now()) {
   const complete = meta?.latestCompleteWeek ?? Math.max(1, ...(meta?.availableWeeks || []));
   const weeks = (meta?.scheduleWeeks || []).filter(w => /^\d{4}-\d{2}-\d{2}$/.test(w.firstGameDate) && Number.isInteger(w.week)).sort((a,b) => a.week-b.week);
