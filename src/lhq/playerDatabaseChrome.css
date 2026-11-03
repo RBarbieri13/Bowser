@@ -1,4 +1,10 @@
 /* Player Database chrome only: keep the data grid's native typography and geometry. */
+.lhq-player-shell .lhq-appbar{gap:16px}
+.lhq-player-shell .lhq-stacks{align-items:center;gap:14px}
+.lhq-player-shell .lhq-brand{padding:0;height:44px;min-height:44px}
+.lhq-player-shell .lhq-brand-logo{position:static;width:90px;height:42px;object-fit:contain}
+.lhq-player-shell .lhq-app-actions>span{display:none}
+.lhq-player-shell .ww-controls{flex:none}
 .lhq-player-shell .lhq-nav{padding:3px 16px 0;display:block;min-width:0}
 .lhq-player-shell .lhq-nav nav{flex-wrap:nowrap;gap:18px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;min-width:0}
 .lhq-player-shell .lhq-nav nav::-webkit-scrollbar,.lhq-player-shell .lhq-actions::-webkit-scrollbar,.lhq-player-shell .lhq-sources::-webkit-scrollbar{height:4px}
