@@ -110,7 +110,7 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
   const clear = useCallback(() => {
     const next = emptyData(season); latest.current = next; setData(next); setResearchBusy({});
   }, [season]);
-  const handleFailure = (caught, key, id) => {
+  const handleFailure = useCallback((caught, key, id) => {
     if (!current(id)) return;
     const problem = safeError(caught);
     setErrors(previous => ({ ...previous, [key]: problem.message }));
@@ -122,7 +122,7 @@ export function useYahooDashboard({ season = 2026, initialWeek = 'current', navi
       if (AUTH_ERRORS.has(problem.code)) setStatus(previous => ({ ...previous, connected: false }));
     }
     return problem;
-  };
+  }, [clear, appendLog]);
 
   const load = useCallback(async ({ refreshToken = false } = {}) => {
     const id = ++revision.current;

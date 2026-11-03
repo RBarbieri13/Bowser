@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { useYahooDashboard } from '../src/lhq/useYahooDashboard.js';
+import { usePlayerOwnership } from '../src/lhq/usePlayerOwnership.js';
 import { isReserveSlot, leagueHealth, leagueSummaries, rosterExposure, teamMatchup, teamStanding } from '../src/lhq/yahooModel.js';
 
 const teamA = '999.l.1.t.1', teamB = '999.l.2.t.1';
@@ -318,4 +319,25 @@ test('focus detects another-tab authorization and logout without reloading uncha
  live={...connected,connected:false,connectionId:null};
  await act(async()=>window.dispatchEvent(new Event('focus')));
  await waitFor(()=>expect(result.current.account).toBeNull());expect(result.current.status.connected).toBe(false);
+});
+
+// Exercise the real shared hook boundary: ownership's own state updates must not
+// replace the roster reader and restart its effect before a page can complete.
+test('dashboard and ownership hooks complete one bounded scan across real React renders', async () => {
+ const stamp = new Date().toISOString();
+ const player = {key:'999.p.1',name:'Private Starter',team:'BUF',position:'QB',owned:true,isMine:true,ownershipType:'team'};
+ const calls = mockReads(url => {
+  if (!url.includes('/league-research?')) return;
+  const q = new URL(url,'https://fixture.test').searchParams, teamKey=q.get('team');
+  if (q.get('include')==='ownershipRoster') return response({season:2026,teamKey,checkedAt:stamp,ownershipRoster:{players:[player],complete:true},errors:{}});
+  if (q.get('include')==='ownershipPool') return response({season:2026,teamKey,leagueKey:teamKey.split('.t.')[0],checkedAt:stamp,ownershipPool:{start:0,players:[player],nextStart:null,exhausted:true},errors:{}});
+ });
+ const {result,rerender}=renderHook(()=>{const yahoo=useYahooDashboard({season:2026});const ownership=usePlayerOwnership(yahoo,2026);return {yahoo,ownership};});
+ await waitFor(()=>expect(result.current.ownership.complete).toBe(true));
+ await waitFor(()=>expect(result.current.yahoo.busy).toBe(false));
+ const reader=result.current.yahoo.loadOwnershipRoster;rerender();
+ expect(result.current.yahoo.loadOwnershipRoster).toBe(reader);
+ expect(result.current.ownership.statesFor(player).all).toEqual(['mine','mine']);
+ expect(calls.filter(c=>c.url.includes('include=ownershipRoster'))).toHaveLength(2);
+ expect(calls.filter(c=>c.url.includes('include=ownershipPool'))).toHaveLength(2);
 });
