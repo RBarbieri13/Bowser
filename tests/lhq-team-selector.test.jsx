@@ -36,7 +36,7 @@ test('historical Classic salary is immediately before points, missing captures s
 test('visible Games shown expands beyond three weeks without moving the current end or replacing an independent matchup',async()=>{
  await page();expect(screen.getByLabelText('Games shown')).toHaveValue('3');
  expect(screen.queryByRole('separator',{name:'Resize week 2026-2'})).not.toBeInTheDocument();
- fireEvent.click(screen.getByRole('button',{name:'Toggle game selector'}));fireEvent.click(box(1));
+ fireEvent.click(screen.getByRole('button',{name:'Games · Toggle game selector'}));fireEvent.click(box(1));
  expect(screen.getByRole('separator',{name:'Resize week 2026-1'})).toBeInTheDocument();
  expect(screen.getByLabelText('Through week')).toHaveValue('6');
  fireEvent.change(screen.getByLabelText('Games shown'),{target:{value:'5'}});
@@ -48,7 +48,7 @@ test('visible Games shown expands beyond three weeks without moving the current 
 });
 
 test('single independent matchup replaces the prior independent choice even with Shift and keeps range weeks',async()=>{
- await page();fireEvent.click(screen.getByRole('button',{name:'Toggle game selector'}));fireEvent.click(box(1));fireEvent.click(box(2),{shiftKey:true});
+ await page();fireEvent.click(screen.getByRole('button',{name:'Games · Toggle game selector'}));fireEvent.click(box(1));fireEvent.click(box(2),{shiftKey:true});
  expect(box(1)).toHaveAttribute('aria-pressed','false');expect(box(2)).toHaveAttribute('aria-pressed','true');
  expect(screen.queryByRole('separator',{name:'Resize week 2026-1'})).not.toBeInTheDocument();
  for(const week of [2,4,5,6])expect(screen.getByRole('separator',{name:`Resize week 2026-${week}`})).toBeInTheDocument();
@@ -56,7 +56,7 @@ test('single independent matchup replaces the prior independent choice even with
 });
 
 test('position pills combine choices instead of forcing one position',async()=>{
- await page();fireEvent.click(screen.getByRole('button',{name:'Toggle game selector'}));
+ await page();fireEvent.click(screen.getByRole('button',{name:'Games · Toggle game selector'}));
  fireEvent.click(screen.getByRole('button',{name:'QB',exact:true}));expect(screen.queryByRole('button',{name:'Runner Fixture',exact:true})).not.toBeInTheDocument();
  fireEvent.click(screen.getByRole('button',{name:'RB',exact:true}));expect(screen.getByRole('button',{name:'Runner Fixture',exact:true})).toBeInTheDocument();expect(screen.getByRole('button',{name:'Quarterback Fixture',exact:true})).toBeInTheDocument();
 });
