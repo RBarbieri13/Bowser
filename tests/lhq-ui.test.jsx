@@ -159,7 +159,7 @@ test('sidebars reopen only by user action and header bands collapse independentl
  fireEvent.click(screen.getByRole('button',{name:'Toggle sources and options'}));
  expect(screen.queryByText('Source content')).not.toBeInTheDocument();
  expect(screen.getByText('Game content')).toBeInTheDocument();
- fireEvent.click(screen.getByRole('button',{name:'Toggle game selector'}));
+ fireEvent.click(screen.getByRole('button',{name:'Games · Toggle game selector'}));
  expect(screen.queryByText('Game content')).not.toBeInTheDocument();
  view.rerender(page('waivers'));
  expect(screen.queryByText('Sidebar content')).not.toBeInTheDocument();

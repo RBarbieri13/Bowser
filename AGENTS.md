@@ -265,3 +265,7 @@ Robert's Command Center v2 prototype and handoff supersede older Fantasy News la
 - Bounded release: focused ownership/cache/privacy/source/parser and UI tests, npm run check, lint, independent review, exact-head PR merge, candidate and both permanent URL readbacks. Stop after three repeated validation failures.
 
 - Ownership readers must retain callback identity across their own state updates and dashboard progress. Verify the actual useYahooDashboard/usePlayerOwnership hook combination completes a bounded scan; isolated stable mocks do not cover callback-driven restart loops.
+
+## Compact disclosure controls (November 3, 2026)
+
+- Sources and game-selector bands share Bowser's compact green disclosure control: a framed rotating chevron, semibold short label (Sources/Games), and a separate concise DFS week badge where relevant. Keep the complete accessible name, state, existing defaults and source visibility preference. Avoid tiny plain white show/hide sentences; preserve native filters, data and dense table geometry.

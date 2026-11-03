@@ -149,7 +149,7 @@ test('anchored trends use historical calendar slots, aliases and the visible-col
 });
 test('hiding every visible week does not claim players played every week', async () => {
   renderPage(); await screen.findByRole('button', { name: 'Runner Alpha', exact: true });
-  fireEvent.click(screen.getByRole('button',{name:'Toggle game selector'}));
+  fireEvent.click(screen.getByRole('button',{name:'Games · Toggle game selector'}));
   for (const week of [1, 2, 3]) fireEvent.click(screen.getByRole('button', { name: `Toggle week 2025-${week}` }));
   expect(screen.getByRole('button', { name: 'Played every week (0)' })).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Played every week (0)' }));
