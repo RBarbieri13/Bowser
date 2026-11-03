@@ -56,6 +56,7 @@ export const bowserGameSelector = Object.freeze({
 export const bowserFilterPill = Object.freeze({
  base:{height:40,padding:'0 20px',borderRadius:999,borderWidth:2,borderStyle:'solid',fontFamily:"'Poppins',ui-sans-serif,system-ui,sans-serif",fontSize:14,fontWeight:500},
  small:{height:32,padding:'0 14px',fontSize:12.5},
+ compact:{height:29,padding:'0 8px',fontSize:11.5,gap:4},
  colors:{off:'#3A3A3A',hover:'#EDEDED',on:'#3ECF8E',disabled:'#262626',disabledText:'#4A4A4A',text:'#EDEDED',page:'#0E0E0E',panel:'#181818'},
  gap:10,smallGap:8,menu:{background:'#181818',border:'1px solid #2E2E2E',borderRadius:12,padding:8,width:240,gap:2,boxShadow:'0 12px 32px rgba(0,0,0,.5)'},
 });

@@ -16,7 +16,7 @@ beforeEach(()=>{
  const u=new URL(input,'https://test.invalid'),p=u.searchParams,w=Number(p.get('week'));
  if(u.pathname.endsWith('/schedule'))return response({data:[{gameId:`2026_0${w}_NYG_LA`,awayTeam:'NYG',homeTeam:'LA',week:w,kickoffUtc:'2026-09-21T23:15:00Z'},{gameId:`2026_0${w}_BUF_NE`,awayTeam:'BUF',homeTeam:'NE',week:w}]});
  if(p.get('view')==='dfs-lineup')return response({data:athletes.filter(([id])=>p.get('dfsSlate')==='classic'||id!=='buf').flatMap(([id,name,team])=>['FLEX','CPT'].map(role=>({id:`${id}:${role}`,playerId:id,name,team,position:'WR',rosterPosition:role,salary:role==='CPT'?15000:10000,projection:role==='CPT'?30:20,gameId:id==='buf'?'2026_02_BUF_NE':'2026_02_NYG_LA'}))).concat([{id:'dk:unmatched',playerId:null,name:'Unmatched Salary Player',team:'NYG',position:'WR',rosterPosition:'FLEX',salary:200,projection:null,gameId:'2026_02_NYG_LA'}]),meta:{key:p.get('dfsSlate').replace(':cpt',''),season:2026,week:2}});
- if(u.pathname.endsWith('/player-stats')){const weeks=p.get('weeks').split(',').map(Number);return response({data:athletes.map(([id,name,team])=>({player_id:id,player_display_name:name,team:team==='LAR'?'LA':team,position:'WR',games_played:weeks.length,fantasy_points:weeks.reduce((a,b)=>a+b,0)*10,range_position_rank:2,player_trends:weeks.map(week=>({season:2026,week,snaps:week*10,team:team==='LAR'?'LA':team}))})),meta:{trendSlots:weeks.map(week=>({season:2026,week})),statsCoverage:{missingWeeks:[]}}});}
+ if(u.pathname.endsWith('/player-stats')){const weeks=p.get('weeks').split(',').map(Number),end=Math.min(18,Math.max(...weeks)),slots=p.get('trendRange')==='selected'?weeks.map(week=>({season:2026,week})):Array.from({length:Number(p.get('trendWeeks')||5)},(_,i)=>{const week=end-Number(p.get('trendWeeks')||5)+i+1;return week>0?{season:2026,week}:{season:2025,week:18+week};});return response({data:athletes.map(([id,name,team])=>({player_id:id,player_display_name:name,team:team==='LAR'?'LA':team,position:'WR',games_played:weeks.length,fantasy_points:weeks.reduce((a,b)=>a+b,0)*10,range_position_rank:2,player_trends:slots.map(slot=>({...slot,snaps:slot.week*10,team:team==='LAR'?'LA':team}))})),meta:{trendSlots:slots,statsCoverage:{missingWeeks:[]}}});}
  return response({seasons:[2025,2026],availableWeeks:[1,2,3],dfsOptions:options,dfsDefault:'classic'});
  }));
 });
@@ -62,8 +62,8 @@ test('base/count and DFS windows remain independent; Monday slate includes only 
  expect(within(grid()).getAllByRole('row')).toHaveLength(5); // two header rows, three salary identities
  expectStats(5,7);expectDfsWeek(2);
  const statRequests=fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).map(([u])=>new URL(u,'https://test.invalid').searchParams);
- expect(statRequests.at(-1).get('weeks')).toBe('5,6,7');expect(statRequests.at(-1).get('trendRange')).toBe('selected');
- expect([...grid().querySelectorAll('.lhq-bars')].every(b=>b.querySelectorAll('.lhq-bar-slot').length===3)).toBe(true);
+ expect(statRequests.at(-1).get('weeks')).toBe('5,6,7');expect(statRequests.at(-1).get('trendRange')).toBe('history');
+ expect([...grid().querySelectorAll('.lhq-bars')].every(b=>b.querySelectorAll('.lhq-bar-slot').length===5)).toBe(true);
  expect(screen.getByRole('button',{name:/NYG @ LA/})).toHaveAttribute('data-slate','true');
  expect(screen.getByRole('button',{name:/NYG @ LA/})).toHaveAttribute('aria-pressed','false');
  expect(screen.getByRole('button',{name:/BUF @ NE/})).toBeDisabled();
@@ -230,7 +230,7 @@ test('latest played week selects only the partial week and restores NFL actuals 
 });
 
 
-test('historical3–6 applies one source request with4trend slots and survives independent DFS changes',async()=>{
+test('historical3–6 applies one source request while5 independent trend slots survive DFS changes',async()=>{
  const existingFetch=fetch;
  vi.stubGlobal('fetch',vi.fn(async input=>{const r=await existingFetch(input),d=await r.json();if(d.availableWeeks)d.availableWeeks=[1,2,3,4,5,6,7,8];return response(d);}));
  render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
@@ -240,7 +240,75 @@ test('historical3–6 applies one source request with4trend slots and survives i
  await waitFor(()=>expect(within(grid()).getByRole('button',{name:'Fixture Bill'}).closest('tr')).toHaveTextContent('180.0'));
  expectStats(3,6);
  const requests=fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).slice(before).map(([u])=>new URL(u,'https://test.invalid').searchParams);
- expect(requests).toHaveLength(1);expect(requests[0].get('weeks')).toBe('3,4,5,6');expect(requests[0].get('trendRange')).toBe('selected');expect(requests[0].get('dfsSlate')).toBe('selected-week');
- expect([...grid().querySelectorAll('.lhq-bars')].every(b=>b.querySelectorAll('.lhq-bar-slot').length===4)).toBe(true);
+ expect(requests).toHaveLength(1);expect(requests[0].get('weeks')).toBe('3,4,5,6');expect(requests[0].get('trendRange')).toBe('history');expect(requests[0].get('dfsSlate')).toBe('selected-week');
+ expect([...grid().querySelectorAll('.lhq-bars')].every(b=>b.querySelectorAll('.lhq-bar-slot').length===5)).toBe(true);
  toggleDfs();setDfsWeek(5);expectStats(3,6);expectDfsWeek(5);
+});
+
+
+test('cumulative Weeks6–8 and five-slot trend history are independent in both directions',async()=>{
+ const existingFetch=fetch;
+ vi.stubGlobal('fetch',vi.fn(async input=>{const r=await existingFetch(input),d=await r.json();if(d.availableWeeks)d.availableWeeks=[1,2,3,4,5,6,7,8];return response(d);}));
+ render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
+ await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
+ setStatsRange(6,8,{allActuals:true});
+ const row=()=>within(grid()).getByRole('button',{name:'Fixture Bill',exact:true}).closest('tr');
+ await waitFor(()=>expect(row()).toHaveTextContent('210.0'));
+ expectStats(6,8);
+ expect(within(row()).getByText('70.0')).toBeInTheDocument();
+ expect(within(row()).getByText('WR2')).toBeInTheDocument();
+ expect([...row().querySelectorAll('.lhq-bars')].every(b=>b.querySelectorAll('.lhq-bar-slot').length===5)).toBe(true);
+ let request=new URL(fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).at(-1)[0],'https://test.invalid').searchParams;
+ expect(request.get('weeks')).toBe('6,7,8');expect(request.get('trendWeeks')).toBe('5');expect(request.get('historyAnchor')).toBe('requested');
+ expect([...row().querySelector('.lhq-bars').querySelectorAll('.lhq-bar-slot')].map(s=>Number(s.dataset.week))).toEqual([4,5,6,7,8]);
+ fireEvent.click(screen.getByRole('button',{name:'usage trend settings'}));
+ fireEvent.change(screen.getByLabelText('usage trend history'),{target:{value:'3'}});
+ fireEvent.click(screen.getByRole('button',{name:'Done',exact:true}));
+ await waitFor(()=>expect([...row().querySelectorAll('.lhq-bars')].every(b=>b.querySelectorAll('.lhq-bar-slot').length===3)).toBe(true));
+ expectStats(6,8);expect(row()).toHaveTextContent('210.0');expect(within(row()).getByText('70.0')).toBeInTheDocument();
+ request=new URL(fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).at(-1)[0],'https://test.invalid').searchParams;
+ expect(request.get('weeks')).toBe('6,7,8');expect(request.get('trendWeeks')).toBe('3');
+ setStatsRange(3,6);await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
+ expect([...row().querySelectorAll('.lhq-bars')].every(b=>b.querySelectorAll('.lhq-bar-slot').length===3)).toBe(true);
+ fireEvent.click(screen.getByRole('button',{name:'Latest played week · W8'}));
+ await waitFor(()=>expectStats(8,8));
+ expect([...row().querySelectorAll('.lhq-bars')].every(b=>b.querySelectorAll('.lhq-bar-slot').length===3)).toBe(true);
+});
+
+
+test('postseason totals keep honest regular-season history labels and slots',async()=>{
+ render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
+ await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
+ setStatsRange(21,22,{allActuals:true});
+ const row=()=>within(grid()).getByRole('button',{name:'Fixture Bill',exact:true}).closest('tr');
+ await waitFor(()=>expect(row()).toHaveTextContent('430.0'));
+ expectStats(21,22);
+ expect(screen.getByText('Trends: 5 NFL weeks through W18 · regular season')).toBeInTheDocument();
+ expect([...row().querySelector('.lhq-bars').querySelectorAll('.lhq-bar-slot')].map(s=>Number(s.dataset.week))).toEqual([14,15,16,17,18]);
+});
+
+
+test('early historical season reports one returned slot and retains five requested trend weeks',async()=>{
+ const existingFetch=fetch;
+ vi.stubGlobal('fetch',vi.fn(async input=>{
+  const result=await existingFetch(input),data=await result.json();
+  const query=new URL(input,'https://test.invalid');
+  if(query.pathname.endsWith('/player-stats')){
+   const slot={season:2025,week:1};
+   data.meta.trendSlots=[slot];
+   data.meta.trendAnchor=slot;
+   data.data=data.data.map(player=>({...player,player_trends:[{...slot,snaps:10}]}));
+  }else if(data.availableWeeks){
+   data.availableWeeks=[1];
+  }
+  return response(data);
+ }));
+ render(<LhqProvider><PlayerDatabase {...props} season={2025}/></LhqProvider>);
+ const player=await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
+ expectStats(1,1);
+ expect(screen.getByLabelText('Trend history weeks')).toHaveValue(5);
+ expect(screen.getByText('Trends: 1 of 5 slots available · through W1',{selector:'.lhq-player-context-trends'})).toBeInTheDocument();
+ const trends=[...player.closest('tr').querySelectorAll('.lhq-bars')];
+ expect(trends).toHaveLength(5);
+ expect(trends.map(bar=>bar.querySelectorAll('.lhq-bar-slot').length)).toEqual([1,1,1,1,1]);
 });

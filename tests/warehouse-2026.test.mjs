@@ -32,7 +32,9 @@ test('active warehouse metadata follows verified source coverage as the season a
   const weeks = [...new Set(games.map(g=>g.week))].sort((a,b)=>a-b);
   const coverage = weeks.map(week => {
     const rows = games.filter(g=>g.week===week);
-    return {week,scheduledGames:rows.length,completedGames:rows.filter(g=>g.home_score!==null && g.away_score!==null).length,sourcedGames:rows.filter(g=>g.play_by_play_available===1 && covered.has(g.game_id)).length};
+    const completed = new Set(rows.filter(g=>g.home_score!==null && g.away_score!==null).map(g=>g.game_id));
+    const sourced = rows.filter(g=>g.play_by_play_available===1 && covered.has(g.game_id));
+    return {week,scheduledGames:rows.length,completedGames:completed.size,sourcedGames:sourced.length,completedSourcedGames:sourced.filter(g=>completed.has(g.game_id)).length};
   });
   const complete = coverage.filter(w=>w.scheduledGames===w.completedGames && w.scheduledGames===w.sourcedGames).map(w=>w.week);
   assert.deepEqual(meta.weekCoverage.map(w=>({...w})),coverage);
@@ -52,7 +54,7 @@ test('dated Week 4 fixture is isolated and the historic warehouse is byte-identi
   assert.equal(meta.season, 2026);
   assert.deepEqual(meta.completedWeeks, [1, 2, 3, 4]);
   assert.equal(meta.latestCompleteWeek, 4);
-  assert.deepEqual({...meta.weekCoverage.find(w => w.week === 5)}, {week:5,scheduledGames:15,completedGames:1,sourcedGames:1});
+  assert.deepEqual({...meta.weekCoverage.find(w => w.week === 5)}, {week:5,scheduledGames:15,completedGames:1,sourcedGames:1,completedSourcedGames:1});
   assert.deepEqual(meta.seasons, [2025, 2026]);
   assert.deepEqual(meta.availableWeeks, [1, 2, 3, 4, 5]);
   assert.equal(meta.warehouse.completed_games, 65);
@@ -62,6 +64,26 @@ test('dated Week 4 fixture is isolated and the historic warehouse is byte-identi
   assert.equal(meta.warehouse.snap_rows, 1722);
   assert.equal(getMeta().season, 2025);
   assert.equal(getMeta().warehouse.player_stat_rows, 5630);
+});
+
+test('current-week coverage distinguishes final and imported evidence from different games', () => {
+  const disjointPath = join(fixtureDir, 'disjoint-coverage.sqlite');
+  writeFileSync(disjointPath, fixtureBytes);
+  const fixture = new DatabaseSync(disjointPath);
+  try {
+    const sourcedFinal = fixture.prepare('SELECT game_id,home_score,away_score FROM games WHERE week=5 AND home_score IS NOT NULL AND away_score IS NOT NULL AND play_by_play_available=1').get();
+    const unsourced = fixture.prepare('SELECT game_id FROM games WHERE week=5 AND home_score IS NULL AND away_score IS NULL AND play_by_play_available=0 LIMIT 1').get();
+    assert.ok(sourcedFinal && unsourced);
+    // Move the final score to another game in a disposable copy; statistics
+    // and play-by-play stay with the original game.
+    fixture.prepare('UPDATE games SET home_score=NULL,away_score=NULL WHERE game_id=?').run(sourcedFinal.game_id);
+    fixture.prepare('UPDATE games SET home_score=?,away_score=? WHERE game_id=?').run(sourcedFinal.home_score,sourcedFinal.away_score,unsourced.game_id);
+  } finally {
+    fixture.close();
+  }
+  const meta = getMeta(disjointPath, params());
+  assert.deepEqual({...meta.weekCoverage.find(w => w.week === 5)}, {week:5,scheduledGames:15,completedGames:1,sourcedGames:1,completedSourcedGames:0});
+  assert.ok(meta.availableWeeks.includes(5), 'available statistics alone must not authorize rollover');
 });
 
 test('2026 player totals and profile use Week 1 facts and selected scoring', () => {
@@ -374,4 +396,23 @@ test('selected-range trends keep exact base week including unavailable future sl
   const future=queryPlayers(new URLSearchParams('season=2026&weeks=6,7,8&trendRange=selected'));
   assert.deepEqual(future.meta.trendSlots.map(s=>s.week),[6,7,8]);
   assert.equal(future.data.length,0);
+});
+
+
+test('independent requested history ends at the selected range ceiling and retains gaps without changing totals or ranks',()=>{
+ const query='season=2026&seasonType=ALL&weeks=3,4,5&limit=all&dfsSlate=selected-week';
+ const baseline=queryPlayers(new URLSearchParams(query+'&trendRange=selected'));
+ const history=queryPlayers(new URLSearchParams(query+'&trendRange=history&trendWeeks=5&historyAnchor=requested'));
+ assert.deepEqual(history.meta.trendSlots.map(s=>[s.season,s.week]),[[2026,1],[2026,2],[2026,3],[2026,4],[2026,5]]);
+ assert.ok(history.data.length>0);
+ assert.ok(history.data.every(p=>p.player_trends.length===5));
+ assert.ok(history.data.some(p=>p.player_trends.at(-1).fantasyPoints!==null));
+ assert.ok(history.data.some(p=>p.player_trends.at(-1).fantasyPoints===null));
+ const future=queryPlayers(new URLSearchParams('season=2026&weeks=4,5,6&limit=all&trendWeeks=5&historyAnchor=requested'));
+ assert.deepEqual(future.meta.trendSlots.map(s=>s.week),[2,3,4,5,6]);
+ assert.ok(future.data.every(p=>p.player_trends.at(-1).fantasyPoints===null));
+ assert.deepEqual(history.data.map(p=>[p.player_id,p.fantasy_points,p.range_position_rank]),baseline.data.map(p=>[p.player_id,p.fantasy_points,p.range_position_rank]));
+ const early=queryPlayers(new URLSearchParams('season=2026&weeks=1,2&limit=all&trendWeeks=5&historyAnchor=requested'));
+ assert.deepEqual(early.meta.trendSlots.map(s=>[s.season,s.week]),[[2025,16],[2025,17],[2025,18],[2026,1],[2026,2]]);
+ assert.throws(()=>queryPlayers(new URLSearchParams(query+'&historyAnchor=unknown')),QueryValidationError);
 });

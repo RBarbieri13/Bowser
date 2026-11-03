@@ -1,0 +1,98 @@
+/* Player Database chrome only: keep the data grid's native typography and geometry. */
+.lhq-player-shell .lhq-nav{padding:3px 16px 0;display:block;min-width:0}
+.lhq-player-shell .lhq-nav nav{flex-wrap:nowrap;gap:18px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;min-width:0}
+.lhq-player-shell .lhq-nav nav::-webkit-scrollbar,.lhq-player-shell .lhq-actions::-webkit-scrollbar,.lhq-player-shell .lhq-sources::-webkit-scrollbar{height:4px}
+.lhq-player-shell .lhq-nav nav::-webkit-scrollbar-thumb,.lhq-player-shell .lhq-actions::-webkit-scrollbar-thumb,.lhq-player-shell .lhq-sources::-webkit-scrollbar-thumb{background:#48564d;border-radius:2px}
+.lhq-player-shell .lhq-nav nav a{flex:none;font-size:15px;line-height:30px}
+.lhq-player-shell .lhq-player-tools{display:flex;align-items:center;gap:10px;padding:4px 16px;border-bottom:1px solid #2e3931;min-width:0;background:#151a17}
+.lhq-player-shell .lhq-player-tools>.lhq-disclosure{margin:0;flex:none;max-width:none}
+.lhq-player-shell .lhq-player-tools .lhq-actions{flex:1;min-width:0;gap:8px;overflow-x:auto;scrollbar-width:thin;flex-wrap:nowrap}
+.lhq-player-shell .lhq-actions>*{flex:none}
+.lhq-player-shell .lhq-actions .lhq-stack{flex-direction:row;align-items:center;gap:6px}
+.lhq-player-shell .lhq-actions .lhq-stack>span:first-child{font-size:11px;color:#9fb3a5}
+.lhq-player-shell .lhq-actions .lhq-stack-value select{min-height:28px;height:28px;max-width:155px;font-size:12px}
+.lhq-player-shell .lhq-actions .lhq-mini{padding:4px 8px;font-size:11px;min-height:28px}
+.lhq-player-shell .lhq-actions>label{display:flex;align-items:center;gap:4px}
+.lhq-player-shell .lhq-sources{padding:5px 16px;gap:8px;min-height:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}
+.lhq-player-shell .lhq-source{gap:6px;flex:none}
+.lhq-player-shell .lhq-source .lhq-source-label{width:48px;font-size:10px;line-height:12px;color:#a4b8ab}
+.lhq-player-shell .lhq-source-button{width:190px;height:34px;padding:2px 6px}
+.lhq-player-shell .lhq-source-button strong{font-size:13px;line-height:15px}
+.lhq-player-shell .lhq-source-button small{font-size:11px;line-height:13px}
+.lhq-player-shell .lhq-workbench{padding-left:16px}
+.lhq-player-shell .lhq-main[aria-label=players]{padding-top:5px}
+.lhq-player-shell .lhq-main>.lhq-pool-line{gap:8px;margin-bottom:4px;align-items:center}
+.lhq-player-shell .lhq-position-team{flex-wrap:nowrap;gap:6px;min-width:0}
+.lhq-player-shell .lhq-chips,.lhq-player-shell .lhq-position-team .bowser-pill-row{flex-wrap:nowrap;gap:5px;min-width:max-content}
+.lhq-player-shell .lhq-ranges{flex-wrap:wrap;gap:4px;position:relative}
+.lhq-player-shell .lhq-ranges>div{position:static}
+.lhq-player-shell .lhq-range-panel{z-index:50;max-width:calc(100vw - 40px)}
+.lhq-player-shell .lhq-ranges .bowser-pill{padding-inline:6px!important;border-radius:4px!important}
+.lhq-player-shell .lhq-main>.lhq-disclosure{margin-bottom:4px;height:24px;min-height:24px;font-size:12px}
+.lhq-player-shell .lhq-strip:has(.bowser-game-selector){margin-bottom:4px}
+.lhq-player-shell .bowser-game-selector{padding-bottom:4px;gap:5px}
+.lhq-player-shell .bowser-game-selector.bowser-game-selector>button{min-height:70px}
+.lhq-player-shell .bowser-game-all{width:44px;min-width:44px}
+.lhq-player-shell .lhq-player-context{display:flex;align-items:center;gap:4px 10px;flex-wrap:wrap;margin:2px 0 4px;padding:4px 8px;border:1px solid #304739;border-left:2px solid #3ecf8e;background:#151e18;color:#c3d4c9;font-size:11px;line-height:15px}
+.lhq-player-shell .lhq-player-context-stats{color:#e2eae5;font-weight:600}
+.lhq-player-shell .lhq-player-context-trends{color:#72e3ad}
+.lhq-player-shell .lhq-player-context-pool{color:#a8b9ae}
+.lhq-player-shell .lhq-player-context-source.is-warning{color:#d8bf79}
+.lhq-player-shell .lhq-player-context .lhq-mini{margin-left:auto;min-height:24px;padding:2px 7px;font-size:11px}
+@media(max-width:1400px){
+ .lhq-player-shell .lhq-appbar{display:grid;grid-template-columns:96px auto auto 1fr;gap:4px 12px;height:auto;min-height:50px;padding:4px 16px;align-items:center}
+ .lhq-player-shell .lhq-brand{padding:0;grid-column:1;grid-row:1;height:34px;min-height:34px;min-width:0}
+ .lhq-player-shell .lhq-brand-logo{position:static;width:86px;height:38px;object-fit:contain;transform:none}
+ .lhq-player-shell .lhq-brand small{display:none}
+ .lhq-player-shell .lhq-stacks{display:contents}
+ .lhq-player-shell .lhq-stacks>.lhq-stack:first-child{grid-column:2;grid-row:1}
+ .lhq-player-shell .lhq-stacks>.lhq-stack:last-child{grid-column:3;grid-row:1}
+ .lhq-player-shell .lhq-appbar .lhq-stack{flex-direction:row;align-items:center;gap:6px}
+ .lhq-player-shell .lhq-appbar .lhq-stack>span:first-child{font-size:10px;line-height:12px;font-weight:600;color:#9fb3a5}
+ .lhq-player-shell .lhq-appbar .lhq-stack-value select{min-height:28px;height:28px;font-size:12px;padding:2px 8px}
+ .lhq-player-shell .lhq-app-actions{grid-column:4;grid-row:1;justify-self:end;gap:12px}
+ .lhq-player-shell .ww-controls{grid-column:1/-1;grid-row:2;order:unset;flex-basis:auto;min-width:0}
+}
+@media(min-width:690px) and (max-width:1100px){
+ .lhq-player-shell .ww-today{flex-basis:auto;flex-direction:column;align-items:flex-start;gap:0;padding-left:7px;border-left:1px solid #40564b}
+}
+@media(max-width:1000px){
+ .lhq-player-shell .lhq-main>.lhq-pool-line{flex-wrap:wrap;gap:4px}
+ .lhq-player-shell .lhq-position-team{padding-bottom:1px}
+ .lhq-player-shell .lhq-ranges{justify-content:flex-start}
+}
+@media(max-width:767px){
+ .lhq-player-shell .lhq-appbar{grid-template-columns:76px auto auto 1fr;padding:3px 10px;gap:3px 8px}
+ .lhq-player-shell .lhq-brand-logo{width:72px;height:34px}
+ .lhq-player-shell .lhq-appbar .lhq-stack{gap:4px}
+ .lhq-player-shell .lhq-nav{padding:0 10px}
+ .lhq-player-shell .lhq-nav nav{gap:16px}
+ .lhq-player-shell .lhq-nav nav a{font-size:13px;line-height:28px}
+ .lhq-player-shell .lhq-player-tools{gap:7px;padding:3px 10px}
+ .lhq-player-shell .lhq-player-tools .lhq-actions{margin-left:0;gap:6px}
+ .lhq-player-shell .lhq-sources{padding:4px 10px}
+ .lhq-player-shell .lhq-workbench{padding-left:10px}
+ .lhq-player-shell .lhq-main>.lhq-pool-line{margin-bottom:2px}
+ .lhq-player-shell .lhq-position-team{gap:5px}
+ .lhq-player-shell .lhq-main>.lhq-pool-line .lhq-chips{gap:5px}
+ .lhq-player-shell .lhq-main>.lhq-pool-line .bowser-pill{min-height:29px}
+ .lhq-player-shell .lhq-player-context{font-size:11px;line-height:14px;gap:2px 8px}
+}
+@media(max-width:500px){
+ .lhq-player-shell .ww-stat-group{flex:none;min-width:194px}
+ .lhq-player-shell .ww-trends{flex:1;min-width:128px}
+ .lhq-player-shell button.ww-dfs{flex:0 1 auto;min-width:148px;max-width:195px}
+ .lhq-player-shell .ww-today{flex:1;flex-direction:column;align-items:flex-start;gap:0;min-width:110px;white-space:normal}
+ .lhq-player-shell .lhq-range-panel{left:0;right:auto}
+}
+@media(max-width:460px){
+ .lhq-player-shell .lhq-appbar{grid-template-columns:64px auto auto 1fr;gap:3px 5px}
+ .lhq-player-shell .lhq-brand-logo{width:60px;height:30px}
+ .lhq-player-shell .lhq-appbar .lhq-stack{flex-direction:column;align-items:flex-start;gap:0}
+ .lhq-player-shell .lhq-app-actions{gap:9px}
+ .lhq-player-shell .lhq-position-team{flex-wrap:wrap}
+ .lhq-player-shell .lhq-position-team .lhq-chips{max-width:100%;min-width:0}.lhq-player-shell .lhq-position-team .bowser-pill-row{flex-wrap:wrap;min-width:0}
+}
+@media(pointer:coarse){
+ .lhq-player-shell .lhq-player-tools button,.lhq-player-shell .lhq-nav nav a,.lhq-player-shell .lhq-main>.lhq-pool-line .bowser-pill,.lhq-player-shell .lhq-main>.lhq-disclosure{min-height:44px;height:auto}
+}

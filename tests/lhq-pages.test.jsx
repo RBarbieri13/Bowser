@@ -314,14 +314,14 @@ test('Player competition ranks follow active metric and direction with ties; Ran
   expect(cells('Fixture Alpha')[cells('Fixture Alpha').length - 1]).toHaveClass('lefa-column');
 });
 
-test('Player inline metric menus share the selected statistics window, including passing', async () => {
+test('Player inline metric menus change independent trend history without changing cumulative weeks, including passing', async () => {
   const history=Array.from({length:18},(_,i)=>({season:2025,week:i+1,snaps:i,passing_yards:i*10}));
   playerApi(playerPayload([{...fixturePlayer,player_trends:history}]));
   show(<PlayerDatabase {...props}/>);
   await screen.findByRole('button',{name:'Fixture Alpha',exact:true});
   const table=screen.getByRole('table',{name:'Player statistics'});
   expect(table.querySelectorAll('.lhq-bars')).toHaveLength(5);
-  expect([...table.querySelectorAll('.lhq-bars')].map(n=>n.querySelectorAll('.lhq-bar-slot').length)).toEqual([1,1,1,1,1]);
+  expect([...table.querySelectorAll('.lhq-bars')].map(n=>n.querySelectorAll('.lhq-bar-slot').length)).toEqual([5,5,5,5,5]);
   setStatsThrough(10);
   await screen.findByRole('button',{name:'Fixture Alpha',exact:true});
   fireEvent.click(screen.getByRole('button',{name:'passing trend settings',exact:true}));

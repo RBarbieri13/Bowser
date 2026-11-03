@@ -9,6 +9,21 @@ export function scheduleWeekDates(meta,week){
  const fmt=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',timeZone:'UTC'});
  return start===end?fmt.format(start):`${fmt.format(start)}–${fmt.format(end)}`;
 }
+// Date context and source context are intentionally different. DFS may follow the
+// upcoming schedule week on Tuesday, but Current statistics advances only when
+// the importer confirms a completed game and sourced statistics in that week.
+function hasCompletedSourcedGame(coverage){
+ if(!coverage)return false;
+ const {completedGames,sourcedGames,scheduledGames,completedSourcedGames}=coverage;
+ if(!Number.isInteger(completedGames)||completedGames<1||!Number.isInteger(sourcedGames)||sourcedGames<1)return false;
+ if(Object.hasOwn(coverage,'completedSourcedGames')){
+  return Number.isInteger(completedSourcedGames)&&completedSourcedGames>0&&completedSourcedGames<=Math.min(completedGames,sourcedGames);
+ }
+ // Older metadata supplies separate counts. Only a guaranteed intersection is
+ // sufficient: two nonempty groups may otherwise refer to different games.
+ return Number.isInteger(scheduledGames)&&scheduledGames>=Math.max(completedGames,sourcedGames)&&completedGames+sourcedGames>scheduledGames;
+}
+
 export function calendarContext(meta,now=Date.now()){
  const date=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Chicago',year:'numeric',month:'2-digit',day:'2-digit'}).format(now),today=isoDay(date);
  const rows=(meta?.scheduleWeeks||[]).filter(r=>Number.isInteger(r.week)&&r.week>=1&&r.week<=22&&Number.isFinite(isoDay(r.firstGameDate))&&Number.isFinite(isoDay(r.lastGameDate))).sort((a,b)=>a.week-b.week);
@@ -16,8 +31,25 @@ export function calendarContext(meta,now=Date.now()){
  const last=rows.length?isoDay(rows.at(-1).lastGameDate):NaN;
  const untilNextTuesday=rows.length?((2-new Date(last).getUTCDay()+7)%7||7):0;
  const before=!!rows.length&&today<start(rows[0]),after=!!rows.length&&today>=last+untilNextTuesday*DAY;
- const current=!before&&!after?rows.filter(r=>start(r)<=today).at(-1):null;
- return {date,dateLabel:new Intl.DateTimeFormat('en-US',{timeZone:'America/Chicago',weekday:'short',month:'short',day:'numeric'}).format(now),currentWeek:current?.week??null,upcomingWeek:before?rows[0].week:null,beforeSeason:before,afterSeason:after,latestPlayed:Math.max(0,...(meta?.availableWeeks||[]))};
+ const calendar=!before&&!after?rows.filter(r=>start(r)<=today).at(-1):null;
+ const available=new Set(meta?.availableWeeks||[]);
+ // Coverage comes from the verified importer's final-game/statistics records.
+ // A date, kickoff, completed score without statistics, or availableWeeks alone
+ // is insufficient evidence to advance Current statistics.
+ const confirmed=rows.filter(r=>{
+  const coverage=meta?.weekCoverage?.find(w=>w.week===r.week);
+  return isoDay(r.firstGameDate)<=today&&available.has(r.week)&&hasCompletedSourcedGame(coverage);
+ }).at(-1);
+ const current=!before&&!after?confirmed:null;
+ return {
+  date,dateLabel:new Intl.DateTimeFormat('en-US',{timeZone:'America/Chicago',weekday:'short',month:'short',day:'numeric'}).format(now),
+  currentWeek:current?.week??null,
+  calendarWeek:calendar?.week??null,
+  currentWeekBasis:current?'completed-and-imported':null,
+  awaitingFirstImport:!!calendar&&(!current||calendar.week>current.week),
+  upcomingWeek:before?rows[0].week:null,beforeSeason:before,afterSeason:after,
+  latestPlayed:Math.max(0,...(meta?.availableWeeks||[]))
+ };
 }
 export function slateShortLabel(option){return (option?.label||'No slate · all players').replace(/^\d{4} W\d+ · /,'').replace(/ · archived$/,'');}
 
