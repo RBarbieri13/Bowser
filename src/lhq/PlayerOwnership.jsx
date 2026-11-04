@@ -1,8 +1,37 @@
 import {ColumnLegend} from './ColumnLegend.jsx';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { LEFA, LEAGUE_LABELS, OWNERSHIP_STATES, OWNERSHIP_SYMBOLS, OWNERSHIP_LABELS, ownershipFiltersActive, ownershipSummary, OWNERSHIP_MAX_AGE } from './ownershipModel.js';
+import { LEFA, LEAGUE_LABELS, OWNERSHIP_STATES, OWNERSHIP_SYMBOLS, OWNERSHIP_LABELS, ownershipFiltersActive, ownershipSummary, OWNERSHIP_MAX_AGE, defaultOwnershipFilters, matchesOwnership, ownershipSortValue } from './ownershipModel.js';
 import './PlayerOwnership.css';
+
+export const EMPTY_OWNERSHIP = {
+  statesFor: () => ({ states: { L: 'unknown', E: 'unknown', F: 'unknown' }, all: [] }),
+  leagues: [], mapping: {}
+};
+
+export function useOwnershipColumn(ownership, sort, setSort) {
+  const [filters, setFilters] = useState(defaultOwnershipFilters);
+  const [scope, setScope] = useState('A');
+  const clear = () => setFilters(defaultOwnershipFilters());
+  const matches = row => {
+    const { states, all } = ownership.statesFor(row);
+    return matchesOwnership(states, all, filters);
+  };
+  const column = {
+    key: 'league_ownership', label: 'LEFA', className: 'lefa-column', width: 88, minWidth: 80,
+    value: row => {
+      const { states, all } = ownership.statesFor(row);
+      return ownershipSortValue(scope === 'A' ? all : [states[scope]]);
+    },
+    render: row => <OwnershipCells row={row} ownership={ownership}/>,
+    headerContent: <OwnershipHeader filters={filters} setFilters={setFilters} clear={clear}
+      ownership={ownership} sort={sort} sortScope={scope} onSort={(letter, desc) => {
+        setScope(letter);
+        setSort({ key: 'league_ownership', desc });
+      }}/>
+  };
+  return { column, matches, clear };
+}
 
 export function OwnershipCells({ row, ownership }) {
   const { states, all } = ownership.statesFor(row);
@@ -54,11 +83,15 @@ Click L/E/F/A to filter or sort. Clear All resets only ownership filters. Owners
   </div>;
 }
 
-export function OwnershipStatus({ ownership, known, total }) {
+export function OwnershipStatus({ ownership, rows }) {
+  const known = ownership.connected ? rows.filter(row => {
+    const { all } = ownership.statesFor(row);
+    return all.length > 0 && all.every(state => state !== 'unknown');
+  }).length : 0;
   const stale = ownership.oldest && Date.now() - ownership.oldest > OWNERSHIP_MAX_AGE;
   return <span className="lefa-status" role="status">
     {!ownership.connected ? <a href="#/yahoo">Connect Yahoo · ownership ?</a> : <>
-      <span title="Last checked Yahoo ownership. Encrypted browser snapshot; updates every 15 minutes while connected and visible. Older values are labeled refresh due and expire after 24 hours. Independent of the selected statistics weeks. ★ mine · ● owned by others · ○ unowned · ? unknown · ≋ mixed. Active ownership filters exclude unknown observations unless all three statuses are selected.">Yahoo {ownership.loading ? (ownership.observed ? 'updating · last checked' : 'loading') : stale ? 'saved · refresh due' : ownership.saved ? 'saved ownership' : 'ownership'} · {known}/{total} fully checked{!ownership.loading && !ownership.complete ? ' · partial' : ''}{ownership.oldest ? ` · ${new Date(ownership.oldest).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}` : ''}</span>
+      <span title="Last checked Yahoo ownership. Encrypted browser snapshot; updates every 15 minutes while connected and visible. Older values are labeled refresh due and expire after 24 hours. Independent of the selected statistics weeks. ★ mine · ● owned by others · ○ unowned · ? unknown · ≋ mixed. Active ownership filters exclude unknown observations unless all three statuses are selected.">Yahoo {ownership.loading ? (ownership.observed ? 'updating · last checked' : 'loading') : stale ? 'saved · refresh due' : ownership.saved ? 'saved ownership' : 'ownership'} · {known}/{rows.length} fully checked{!ownership.loading && !ownership.complete ? ' · partial' : ''}{ownership.oldest ? ` · ${new Date(ownership.oldest).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}` : ''}</span>
       <button type="button" disabled={ownership.loading} onClick={ownership.refresh}>Refresh ownership</button>
       {['L', 'E', 'F'].some(k => !ownership.mapping[k]) && <span>Choose missing leagues in L/E/F</span>}
       {ownership.error && <span className="lefa-error">{ownership.error}</span>}

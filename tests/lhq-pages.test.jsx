@@ -111,6 +111,51 @@ test('waiver Games arrow starts closed, remembers visibility and preserves an ac
   expect(screen.getByRole('button',{name:/Toggle game selector/})).toHaveAttribute('aria-expanded','true');
 });
 
+test('Waivers shows per-league ownership beside Yahoo activity and keeps it out of downloads',async()=>{
+  const beta={...waiverPayload.rows[0],id:'fixture-b',playerId:'fixture-b',name:'Fixture Beta',stats:{fantasy_points:10}};
+  const rows=[waiverPayload.rows[0],beta];
+  vi.stubGlobal('fetch',vi.fn(async url=>reply(String(url).includes('/schedule?')?{data:[]}:{...waiverPayload,rows})));
+  const leagues=[{key:'999.l.1',name:'Loongi League'},{key:'999.l.2',name:'LOEG'},{key:'999.l.3',name:'Fart League'}];
+  const yahoo={leagues,teams:[{key:'999.l.1.t.1',leagueKey:'999.l.1',name:'Fixture Team'}]};
+  const ownership={connected:true,leagues,mapping:{L:leagues[0].key,E:leagues[1].key,F:leagues[2].key},assign:vi.fn(),refresh:vi.fn(),complete:true,statesFor:row=>{
+    const states=row.playerId==='fixture-a'?{L:'mine',E:'other',F:'free'}:{L:'unknown',E:'mine',F:'unknown'};
+    return {states,all:Object.values(states)};
+  }};
+  const view=show(<Waivers {...props} yahoo={yahoo} ownership={ownership}/>);
+  const alpha=await screen.findByRole('button',{name:'Fixture Alpha',exact:true});
+  const alphaRow=within(alpha.closest('tr'));
+  expect(alphaRow.getByLabelText('Loongi League: Mine')).toHaveTextContent('★');
+  expect(alphaRow.getByLabelText('LOEG: Owned by others')).toHaveTextContent('●');
+  expect(alphaRow.getByLabelText('Fart League: Unowned')).toHaveTextContent('○');
+  expect(alphaRow.getByLabelText('All leagues: Mixed ownership')).toHaveTextContent('≋');
+  expect(within(screen.getByRole('button',{name:'Filter Loongi League ownership'}).closest('th').parentElement).getByRole('button',{name:'Net'}).closest('th').nextElementSibling).toHaveClass('lefa-column');
+  expect(screen.getByText(/Yahoo ownership · 1\/2 fully checked/)).toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole('button',{name:'Filter Loongi League ownership'}));
+  const dialog=within(screen.getByRole('dialog',{name:'Loongi League ownership filter'}));
+  fireEvent.click(dialog.getByRole('button',{name:'★ first ↓'}));
+  expect(screen.getAllByRole('row').filter(row=>row.querySelector('.lefa-cells'))[0]).toHaveTextContent('Fixture Alpha');
+  fireEvent.click(dialog.getByRole('button',{name:'None',exact:true}));
+  fireEvent.click(dialog.getByRole('checkbox',{name:/Mine/}));
+  fireEvent.keyDown(document,{key:'Escape'});
+  expect(screen.queryByRole('button',{name:'Fixture Beta',exact:true})).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:'⇄'}));
+  expect(screen.getByRole('button',{name:'Favorites (1)'})).toBeInTheDocument();
+  const sources=screen.getByRole('button',{name:'Toggle sources and options'});
+  if(sources.getAttribute('aria-expanded')==='false')fireEvent.click(sources);
+  fireEvent.click(screen.getByRole('button',{name:'Download waivers CSV'}));
+  const [,columns,exportRows]=csvDownload.mock.lastCall;
+  expect(columns.map(column=>column.key)).not.toContain('league_ownership');
+  expect(exportRows.map(row=>row.playerId)).toEqual(['fixture-b','fixture-a']);
+
+  fireEvent.click(screen.getByRole('button',{name:'Clear All',exact:true}));
+  expect(screen.getByRole('button',{name:'Fixture Beta',exact:true})).toBeInTheDocument();
+  view.rerender(<LhqProvider><Waivers {...props}/></LhqProvider>);
+  const disconnected=await screen.findByRole('button',{name:'Fixture Alpha',exact:true});
+  expect(within(disconnected.closest('tr')).getByLabelText('Loongi League: Unknown')).toHaveTextContent('?');
+  expect(screen.getByRole('link',{name:'Connect Yahoo · ownership ?'})).toBeInTheDocument();
+});
+
 test('waiver history validates persisted numbers before querying the API', async () => {
   localStorage.setItem('bowser:lhq:waivers:history', '999');
   vi.stubGlobal('fetch', vi.fn(async () => reply(waiverPayload)));
