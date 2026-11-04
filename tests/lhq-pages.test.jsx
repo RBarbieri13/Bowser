@@ -220,6 +220,7 @@ test('market changing transaction window cannot retain or relabel previous-windo
   const { result, rerender } = renderHook(({ hours }) => useMarketData(hours), { initialProps: { hours: 24 } });
   await waitFor(() => expect(result.current.busy).toBe(false));
   expect(result.current.snapshots.sleeper.window).toBe('24');
+  expect(fetch).toHaveBeenCalledWith('/api/v1/market-pulse?provider=sleeper&hours=24',expect.objectContaining({method:'POST',headers:{'x-bowser-refresh':'1'}}));
   rerender({ hours: 6 });
   await waitFor(() => expect(result.current.errors.sleeper).toBe('Fixture source unavailable'));
   expect(result.current.snapshots.sleeper).toBeUndefined();

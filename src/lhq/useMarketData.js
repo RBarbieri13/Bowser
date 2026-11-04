@@ -1,7 +1,9 @@
 import {useEffect,useRef,useState} from 'react';
+import {usePublicRefresh} from './shared.jsx';
 import {mergeSnapshot,readSnapshot,saveSnapshot} from '../marketPulseStorage.js';
 const SOURCES=['sleeper','espn'];
 export function useMarketData(hours){
+ const publicRefresh=usePublicRefresh();
  const [snapshots,setSnapshots]=useState({}),[busy,setBusy]=useState(false),[errors,setErrors]=useState({}),[notice,setNotice]=useState('');const request=useRef({id:0,controller:null});
   async function load(refresh=false) {
     request.current.controller?.abort();
@@ -16,10 +18,10 @@ export function useMarketData(hours){
           const stored=await readSnapshot(provider,hours);
           if(stored) savedSnapshot=mergeSnapshot(savedSnapshot,stored);
         } catch { /* Live refresh still works when site storage is blocked. */ }
-        if(refresh && savedSnapshot?.capturedAt && Date.now()<savedSnapshot.nextRefreshAt && !savedSnapshot.error)
+        if(savedSnapshot?.capturedAt && Date.now()<savedSnapshot.nextRefreshAt && !savedSnapshot.error)
           return {provider,body:{...savedSnapshot,cached:true}};
         const response=await fetch(`/api/v1/market-pulse?provider=${provider}&hours=${hours}`,{
-          method:refresh?'POST':'GET',headers:refresh?{'x-bowser-refresh':'1'}:{},signal:controller.signal,
+          method:'POST',headers:{'x-bowser-refresh':'1'},cache:'no-store',signal:controller.signal,
         });
         const body=await response.json();
         if (!response.ok) throw new Error(body.error || `Request failed (${response.status})`);
@@ -48,9 +50,9 @@ export function useMarketData(hours){
   }
   useEffect(()=>{
     // Never relabel a previous Sleeper window as the newly selected one.
-    setSnapshots(previous=>({espn:previous.espn}));
+    setSnapshots(previous=>previous.sleeper?.window===String(hours)?previous:{espn:previous.espn});
     load();
     return ()=>{request.current.id++;request.current.controller?.abort();};
-  },[hours]);
+  },[hours,publicRefresh]);
 return {snapshots,busy,errors,notice,load};
 }
