@@ -1,10 +1,13 @@
 /* Player Database chrome only: keep the data grid's native typography and geometry. */
 .lhq-player-shell .lhq-appbar{gap:16px}
-.lhq-player-shell .lhq-stacks{align-items:center;gap:14px}
+.lhq-player-shell .lhq-stacks{align-items:center;gap:10px;flex-wrap:wrap}
+.lhq-player-shell .lhq-week-group{gap:8px;padding-left:10px}
+.lhq-player-shell .lhq-appbar .lhq-stack>span:first-child{font-size:10px;color:#a9b5ad}
+.lhq-player-shell .lhq-appbar .lhq-stack-value select{font-size:13px}
+.lhq-player-shell .lhq-dfs-week-group .wide select{max-width:235px}
 .lhq-player-shell .lhq-brand{padding:0;height:44px;min-height:44px}
 .lhq-player-shell .lhq-brand-logo{position:static;width:90px;height:42px;object-fit:contain}
 .lhq-player-shell .lhq-app-actions>span{display:none}
-.lhq-player-shell .ww-controls{flex:none}
 .lhq-player-shell .lhq-nav{padding:3px 16px 0;display:block;min-width:0}
 .lhq-player-shell .lhq-nav nav{flex-wrap:nowrap;gap:18px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;min-width:0}
 .lhq-player-shell .lhq-nav nav::-webkit-scrollbar,.lhq-player-shell .lhq-actions::-webkit-scrollbar,.lhq-player-shell .lhq-sources::-webkit-scrollbar{height:4px}
@@ -45,22 +48,10 @@
 .lhq-player-shell .lhq-player-context-pool{color:#a8b9ae}
 .lhq-player-shell .lhq-player-context-source.is-warning{color:#d8bf79}
 .lhq-player-shell .lhq-player-context .lhq-mini{margin-left:auto;min-height:24px;padding:2px 7px;font-size:11px}
-@media(max-width:1400px){
- .lhq-player-shell .lhq-appbar{display:grid;grid-template-columns:96px auto auto 1fr;gap:4px 12px;height:auto;min-height:50px;padding:4px 16px;align-items:center}
- .lhq-player-shell .lhq-brand{padding:0;grid-column:1;grid-row:1;height:34px;min-height:34px;min-width:0}
- .lhq-player-shell .lhq-brand-logo{position:static;width:86px;height:38px;object-fit:contain;transform:none}
- .lhq-player-shell .lhq-brand small{display:none}
- .lhq-player-shell .lhq-stacks{display:contents}
- .lhq-player-shell .lhq-stacks>.lhq-stack:first-child{grid-column:2;grid-row:1}
- .lhq-player-shell .lhq-stacks>.lhq-stack:last-child{grid-column:3;grid-row:1}
- .lhq-player-shell .lhq-appbar .lhq-stack{flex-direction:row;align-items:center;gap:6px}
- .lhq-player-shell .lhq-appbar .lhq-stack>span:first-child{font-size:10px;line-height:12px;font-weight:600;color:#9fb3a5}
- .lhq-player-shell .lhq-appbar .lhq-stack-value select{min-height:28px;height:28px;font-size:12px;padding:2px 8px}
- .lhq-player-shell .lhq-app-actions{grid-column:4;grid-row:1;justify-self:end;gap:12px}
- .lhq-player-shell .ww-controls{grid-column:1/-1;grid-row:2;order:unset;flex-basis:auto;min-width:0}
-}
-@media(min-width:690px) and (max-width:1100px){
- .lhq-player-shell .ww-today{flex-basis:auto;flex-direction:column;align-items:flex-start;gap:0;padding-left:7px;border-left:1px solid #40564b}
+@media(max-width:1100px){
+ .lhq-player-shell .lhq-appbar{height:auto;min-height:50px;flex-wrap:wrap;padding:4px 16px;gap:4px 12px}
+ .lhq-player-shell .lhq-stacks{order:3;flex-basis:100%;gap:6px 10px}
+ .lhq-player-shell .lhq-appbar .lhq-stack-value select{min-height:28px;height:28px;padding-block:2px}
 }
 @media(max-width:1000px){
  .lhq-player-shell .lhq-main>.lhq-pool-line{flex-wrap:wrap;gap:4px}
@@ -68,7 +59,7 @@
  .lhq-player-shell .lhq-ranges{justify-content:flex-start}
 }
 @media(max-width:767px){
- .lhq-player-shell .lhq-appbar{grid-template-columns:76px auto auto 1fr;padding:3px 10px;gap:3px 8px}
+ .lhq-player-shell .lhq-appbar{padding:3px 10px;gap:3px 8px}
  .lhq-player-shell .lhq-brand-logo{width:72px;height:34px}
  .lhq-player-shell .lhq-appbar .lhq-stack{gap:4px}
  .lhq-player-shell .lhq-nav{padding:0 10px}
@@ -85,16 +76,12 @@
  .lhq-player-shell .lhq-player-context{font-size:11px;line-height:14px;gap:2px 8px}
 }
 @media(max-width:500px){
- .lhq-player-shell .ww-stat-group{flex:none;min-width:194px}
- .lhq-player-shell .ww-trends{flex:1;min-width:128px}
- .lhq-player-shell button.ww-dfs{flex:0 1 auto;min-width:148px;max-width:195px}
- .lhq-player-shell .ww-today{flex:1;flex-direction:column;align-items:flex-start;gap:0;min-width:110px;white-space:normal}
  .lhq-player-shell .lhq-range-panel{left:0;right:auto}
 }
 @media(max-width:460px){
- .lhq-player-shell .lhq-appbar{grid-template-columns:64px auto auto 1fr;gap:3px 5px}
  .lhq-player-shell .lhq-brand-logo{width:60px;height:30px}
- .lhq-player-shell .lhq-appbar .lhq-stack{flex-direction:column;align-items:flex-start;gap:0}
+ .lhq-player-shell .lhq-week-group .lhq-stack-value select{max-width:min(42vw,165px)}
+ .lhq-player-shell .lhq-dfs-week-group .lhq-stack-value select{max-width:min(36vw,150px)}
  .lhq-player-shell .lhq-app-actions{gap:9px}
  .lhq-player-shell .lhq-position-team{flex-wrap:wrap}
  .lhq-player-shell .lhq-position-team .lhq-chips{max-width:100%;min-width:0}.lhq-player-shell .lhq-position-team .bowser-pill-row{flex-wrap:wrap;min-width:0}

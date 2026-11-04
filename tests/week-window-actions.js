@@ -1,12 +1,21 @@
-import {fireEvent,screen,within} from '@testing-library/react';
+import {fireEvent,screen} from '@testing-library/react';
 import {expect} from 'vitest';
-export function openStats(){if(!screen.queryByRole('dialog',{name:'Statistics window editor'}))fireEvent.click(screen.getByRole('button',{name:/^Statistics window:/}));}
-export function openDfs(){if(!screen.queryByRole('dialog',{name:'DFS week and slate editor'}))fireEvent.click(screen.getByRole('button',{name:/^DFS window:/}));}
-export function setStatsRange(from,through,{allActuals=false}={}){openStats();fireEvent.click(screen.getByRole('button',{name:'Week range',exact:true}));fireEvent.click(screen.getByRole('button',{name:`Start week: Week ${from}`,exact:true}));fireEvent.click(screen.getByRole('button',{name:`Ending week: Week ${through}`,exact:true}));fireEvent.click(screen.getByRole('button',{name:allActuals?'Apply range · all NFL actuals':'Apply window',exact:true}));}
-export function setStatsThrough(week){openStats();fireEvent.click(screen.getByRole('button',{name:/^Through W\d+, choose ending week$/}));fireEvent.click(screen.getByRole('button',{name:`Ending week: Week ${week}`,exact:true}));fireEvent.click(screen.getByRole('button',{name:'Apply window',exact:true}));}
-export function setStatsCount(count){openStats();fireEvent.change(screen.getByLabelText('Number of weeks in statistics window'),{target:{value:String(count)}});fireEvent.click(screen.getByRole('button',{name:'Apply window',exact:true}));}
-export function setDfsWeek(week){openDfs();fireEvent.click(screen.getByRole('button',{name:`DFS week: Week ${week}`,exact:true}));fireEvent.click(screen.getByRole('button',{name:'Apply DFS',exact:true}));}
-export function setDfsSlate(label){openDfs();fireEvent.click(within(screen.getByRole('group',{name:'Slate format'})).getByRole('button',{name:'All',exact:true}));const options=within(screen.getByRole('group',{name:'DFS slate'})).getAllByRole('button');const choice=options.find(b=>b.querySelector('strong')?.textContent===label);if(!choice)throw Error(`Sourced slate not found: ${label}`);fireEvent.click(choice);fireEvent.click(screen.getByRole('button',{name:'Apply DFS',exact:true}));}
-export function toggleDfs(){openDfs();fireEvent.click(screen.getByRole('checkbox',{name:'DFS fields + slate player pool',exact:true}));fireEvent.click(screen.getByRole('button',{name:'Apply DFS',exact:true}));}
-export function expectStats(from,through){const count=through-from+1;expect(screen.getByRole('button',{name:`Statistics window: ${from===through?`Week ${through}`:`Weeks ${from}–${through}`}, ${count} ${count===1?'week':'weeks'}`,exact:true})).toBeInTheDocument();}
-export function expectDfsWeek(week){expect(screen.getByRole('button',{name:new RegExp(`^DFS window: Week ${week},`)})).toBeInTheDocument();}
+
+const select=(label,value)=>fireEvent.change(screen.getByRole('combobox',{name:label,exact:true}),{target:{value:String(value)}});
+export const setStatsThrough=week=>select('Base week',week);
+export const setStatsCount=count=>select('Weeks back',count);
+export const setDfsWeek=week=>select('DFS week',week);
+export const setDfsSlate=key=>select('DFS slate',key);
+export const toggleDfs=()=>fireEvent.click(screen.getByRole('checkbox',{name:'DFS',exact:true}));
+export function setStatsRange(from,through,{allActuals=false}={}){
+ if(allActuals&&screen.getByRole('checkbox',{name:'DFS',exact:true}).checked)toggleDfs();
+ setStatsThrough(through);
+ setStatsCount(through-from+1);
+}
+export function expectStats(from,through){
+ expect(screen.getByRole('combobox',{name:'Base week',exact:true})).toHaveValue(String(through));
+ expect(screen.getByRole('combobox',{name:'Weeks back',exact:true})).toHaveValue(String(through-from+1));
+}
+export function expectDfsWeek(week){
+ expect(screen.getByRole('combobox',{name:'DFS week',exact:true})).toHaveValue(String(week));
+}

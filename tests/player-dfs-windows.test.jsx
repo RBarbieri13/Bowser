@@ -22,7 +22,7 @@ beforeEach(()=>{
 });
 afterEach(()=>{cleanup();vi.unstubAllGlobals();});
 const grid=()=>screen.getByRole('table',{name:'Player statistics'});
-const choose=(label,value)=>{if(label==='Base week')return setStatsThrough(value);if(label==='Weeks back')return setStatsCount(value);if(label==='DFS week')return setDfsWeek(value);if(label==='DFS slate')return setDfsSlate(value==='locked'?'All-week Classic · locked':options.find(o=>o.key===value)?.label||'No slate');fireEvent.change(screen.getByLabelText(label),{target:{value:String(value)}});};
+const choose=(label,value)=>{if(label==='Base week')return setStatsThrough(value);if(label==='Weeks back')return setStatsCount(value);if(label==='DFS week')return setDfsWeek(value);if(label==='DFS slate')return setDfsSlate(value);fireEvent.change(screen.getByLabelText(label),{target:{value:String(value)}});};
 test('initial DFS slate follows the verified current default ahead of a larger locked Classic',async()=>{
  const existingFetch=fetch;
  vi.stubGlobal('fetch',vi.fn(async input=>{
@@ -32,13 +32,13 @@ test('initial DFS slate follows the verified current default ahead of a larger l
  }));
  render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
  await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
- expect(screen.getByRole('button',{name:'DFS window: Week 2, Classic',exact:true})).toBeInTheDocument();
+ expectDfsWeek(2);expect(screen.getByLabelText('DFS slate')).toHaveValue('classic');
  expectStats(1,3);
  expect(fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).some(([u])=>new URL(u,'https://test.invalid').searchParams.get('weeks')==='1,2,3')).toBe(true);
  choose('Base week',1);expectStats(1,1);
  choose('Base week',3);expectStats(1,3);
  choose('DFS slate','locked');
- expect(screen.getByRole('button',{name:'DFS window: Week 2, All-week Classic · locked',exact:true})).toBeInTheDocument();
+ expectDfsWeek(2);expect(screen.getByLabelText('DFS slate')).toHaveValue('locked');
 });
 test('locked slate notice stays visible with complete projections and disappears when DFS is off',async()=>{
  const existingFetch=fetch;
@@ -81,7 +81,7 @@ test('game filters intersect the slate; turning DFS off restores statistics-only
  toggleDfs();
  expect(screen.getByLabelText('Sort')).toHaveValue('fantasy_points');
  await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
- expect(screen.getByRole('button',{name:'DFS window: off',exact:true})).toBeInTheDocument();expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+ expect(screen.getByRole('checkbox',{name:'DFS',exact:true})).not.toBeChecked();expect(screen.queryByLabelText('DFS week')).not.toBeInTheDocument();expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
  expect(within(grid()).queryByRole('button',{name:'Sal',exact:true})).not.toBeInTheDocument();
  expect(screen.queryByRole('button',{name:/NYG @ LA/})).not.toBeInTheDocument();
  fireEvent.click(screen.getByRole('button',{name:'Player team'}));fireEvent.click(screen.getByRole('option',{name:'BUF',exact:true}));expect(within(grid()).queryByRole('button',{name:'Fixture Ram'})).not.toBeInTheDocument();
@@ -91,7 +91,7 @@ test('unavailable future slates never fall back to another week and the statisti
  await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
  choose('Base week',4);choose('Weeks back',2);choose('DFS week',5);
  await screen.findByText(/No verified 2026 Week 5 slate/);
- expect(screen.getByRole('button',{name:'DFS window: Week 5, no sourced slate',exact:true})).toBeInTheDocument();
+ expectDfsWeek(5);expect(screen.getByLabelText('DFS slate')).toHaveValue('none');
  expectStats(3,4);
  await waitFor(()=>expect(within(grid()).getByRole('button',{name:'Fixture Bill'})).toBeInTheDocument());
  expect(within(grid()).queryByText('$10.0K')).not.toBeInTheDocument();
@@ -218,7 +218,7 @@ test('latest played week selects only the partial week and restores NFL actuals 
  fireEvent.click(screen.getByRole('button',{name:'Latest played week · W8'}));
  await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
  expectStats(8,8);
- expect(screen.getByRole('button',{name:'DFS window: off',exact:true})).toBeInTheDocument();
+ expect(screen.getByRole('checkbox',{name:'DFS',exact:true})).not.toBeChecked();expect(screen.queryByLabelText('DFS week')).not.toBeInTheDocument();
  toggleDfs();
  expectDfsWeek(2);
  fireEvent.click(screen.getByRole('button',{name:'Latest played week · W8'}));
@@ -230,7 +230,7 @@ test('latest played week selects only the partial week and restores NFL actuals 
 });
 
 
-test('historical3–6 applies one source request while5 independent trend slots survive DFS changes',async()=>{
+test('historical weeks 3–6 are queried with five independent trend slots across DFS changes',async()=>{
  const existingFetch=fetch;
  vi.stubGlobal('fetch',vi.fn(async input=>{const r=await existingFetch(input),d=await r.json();if(d.availableWeeks)d.availableWeeks=[1,2,3,4,5,6,7,8];return response(d);}));
  render(<LhqProvider><PlayerDatabase {...props}/></LhqProvider>);
@@ -240,7 +240,7 @@ test('historical3–6 applies one source request while5 independent trend slots 
  await waitFor(()=>expect(within(grid()).getByRole('button',{name:'Fixture Bill'}).closest('tr')).toHaveTextContent('180.0'));
  expectStats(3,6);
  const requests=fetch.mock.calls.filter(([u])=>String(u).includes('/player-stats?')).slice(before).map(([u])=>new URL(u,'https://test.invalid').searchParams);
- expect(requests).toHaveLength(1);expect(requests[0].get('weeks')).toBe('3,4,5,6');expect(requests[0].get('trendRange')).toBe('history');expect(requests[0].get('dfsSlate')).toBe('selected-week');
+ expect(requests.at(-1).get('weeks')).toBe('3,4,5,6');expect(requests.at(-1).get('trendRange')).toBe('history');expect(requests.at(-1).get('dfsSlate')).toBe('selected-week');
  expect([...grid().querySelectorAll('.lhq-bars')].every(b=>b.querySelectorAll('.lhq-bar-slot').length===5)).toBe(true);
  toggleDfs();setDfsWeek(5);expectStats(3,6);expectDfsWeek(5);
 });
@@ -306,7 +306,7 @@ test('early historical season reports one returned slot and retains five request
  render(<LhqProvider><PlayerDatabase {...props} season={2025}/></LhqProvider>);
  const player=await within(grid()).findByRole('button',{name:'Fixture Bill',exact:true});
  expectStats(1,1);
- expect(screen.getByLabelText('Trend history weeks')).toHaveValue(5);
+ expect(screen.getByLabelText('Trend history')).toHaveValue('5');
  expect(screen.getByText('Trends: 1 of 5 slots available · through W1',{selector:'.lhq-player-context-trends'})).toBeInTheDocument();
  const trends=[...player.closest('tr').querySelectorAll('.lhq-bars')];
  expect(trends).toHaveLength(5);
