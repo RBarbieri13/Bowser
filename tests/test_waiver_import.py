@@ -63,6 +63,21 @@ class WaiverImportTests(unittest.TestCase):
         self.assertEqual([r['rank'] for r in rows],[1,1,2])
         self.assertEqual(rows[-1]['overallRank'],7)
 
+    def test_fantasypros_defense_uses_verified_team_and_position_rank(self):
+        rows = [
+            'Mike Washington Jr. (RB - LV)', 'Devin Singletary (RB - NYG)',
+            'Adonai Mitchell (WR - NYJ)', 'Malik Willis (QB - MIA)',
+            'Detroit Lions (DST - DET)',
+        ]
+        html = '<table><tr><th>Rank</th><th>Player (Team)</th></tr>' + ''.join(
+            f'<tr><td>{rank}</td><td>{name}</td></tr>' for rank, name in enumerate(rows, 1)
+        ) + '</table>'
+        defense = w.parse_fantasypros_rank(w.Page(html))[-1]
+        self.assertEqual((defense['team'], defense['position'], defense['rank'], defense['overallRank']),
+                         ('DET', 'DST', 1, 5))
+        with self.assertRaisesRegex(ValueError, 'defense identity'):
+            w.parse_fantasypros_rank(w.Page(html.replace('DST - DET', 'DST - NYG')))
+
     def test_unprioritized_headings_cannot_become_ranks(self):
         page=w.Page('<h1>Week 2</h1><p>Running Back</p><h3>Kaelon Black, 49ers</h3><p>Blind Bid Recommendation: 20-30%</p>')
         with self.assertRaisesRegex(ValueError,'explicitly prioritizes'):w.parse_draftsharks(page)

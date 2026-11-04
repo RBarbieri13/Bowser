@@ -155,9 +155,12 @@ def parse_fantasypros_rank(page):
             out=[]
             for cells in table[1:]:
                 if len(cells)<2 or not cells[0].isdigit():continue
-                m=re.fullmatch(r'(.+?)\s*\((QB|RB|WR|TE|K)\s*-\s*([A-Z]+)\)',cells[1])
+                m=re.fullmatch(r'(.+?)\s*\((QB|RB|WR|TE|K|DST)\s*-\s*([A-Z]+)\)',cells[1])
                 if not m:raise ValueError('Unrecognized FantasyPros public rank row '+repr(cells))
-                out.append({'name':m[1].strip(),'position':m[2],'team':team_key(m[3]),'overallRank':int(cells[0])})
+                team = team_key(m[3])
+                if m[2] == 'DST' and (not team or team_key(m[1].strip()) != team):
+                    raise ValueError('Unrecognized FantasyPros defense identity '+repr(cells))
+                out.append({'name':m[1].strip(),'position':m[2],'team':team,'overallRank':int(cells[0])})
             if len(out)!=5:raise ValueError('FantasyPros public preview shape changed; review access and parser')
             return overall_to_position(out)
     raise ValueError('FantasyPros public rank table missing')
