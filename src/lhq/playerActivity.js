@@ -25,6 +25,35 @@ export function sleeperActivityIndex(rows=[]) {
   return row=>row?.identityUnavailable?null:index.get(identity(row))||null;
 }
 
+export function attachYahooMarketActivity(rows, yahooRows, yahooFor) {
+  const matches=new Map();
+  for(const row of rows){
+    const key=identity(row);
+    if(key)matches.set(key,(matches.get(key)||0)+1);
+  }
+  const counts=row=>{
+    const values=yahooFor(row);
+    if(!values)return null;
+    const {adds,drops}=values;
+    return {...values,total:adds!==null&&drops!==null?adds+drops:null};
+  };
+  const yahooIds=new Map(yahooRows.map(row=>[identity(row),row.id]));
+  const result=rows.map(row=>{
+    const key=identity(row),yahooActivity=matches.get(key)===1?counts(row):null;
+    if(!yahooActivity)return row;
+    const match=row.match.endsWith(' only')?(key.startsWith('DEF|')?'Team defense':'Name, position & team'):row.match;
+    return {...row,match,aliases:[...row.aliases,yahooIds.get(key)],yahooActivity};
+  });
+  for(const row of yahooRows){
+    const key=identity(row),yahooActivity=counts(row);
+    if(key&&!matches.has(key)&&yahooActivity){
+      const {id,name,team,position}=row;
+      result.push({id,name,team:normalizeTeam(team),position:normalizePosition(position),aliases:[id],match:'Yahoo only',yahooActivity});
+    }
+  }
+  return result;
+}
+
 /** Public downloads must not disclose private activity via Rank or ordering. */
 export function publicActivityExport(rows,columns,sort,rankSort) {
   const privateKey=key=>['activity_yahoo','league_ownership'].includes(key);

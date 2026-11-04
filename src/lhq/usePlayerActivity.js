@@ -30,17 +30,27 @@ export function usePlayerActivity() {
   },[hours,refresh,tick]);
   const snapshot=capture?.window===String(hours)?capture:null;
   const sleeperFor=useMemo(()=>sleeperActivityIndex(snapshot?.rows),[snapshot]);
+  const yahooActivity=useYahooActivity();
+  return {hours,setHours,snapshot,sleeperFor,loading,error,refreshSleeper:()=>setTick(n=>n+1),...yahooActivity};
+}
+
+export function useYahooActivity() {
+  const refresh=usePublicRefresh();
   const [yahooPeriod,setYahooPeriod]=useState('today'),[yahooSnapshot,setYahooSnapshot]=useState(null),[yahooBusy,setYahooBusy]=useState(false),[yahooError,setYahooError]=useState(''),[yahooTick,setYahooTick]=useState(0);
   useEffect(()=>{
     let active=true;const controller=new AbortController();setYahooBusy(true);setYahooError('');
-    fetch(`/api/v1/market-pulse?provider=yahoo&period=${yahooPeriod}`,{cache:'no-store',signal:controller.signal}).then(async response=>{
+    fetch(`/api/v1/market-pulse?provider=yahoo&period=${yahooPeriod}`,{credentials:'omit',cache:'no-store',signal:controller.signal}).then(async response=>{
       const data=await response.json();if(!response.ok||data.provider!=='yahoo'||data.scope!=='platform'||!Array.isArray(data.rows))throw Error('Yahoo-wide trends unavailable.');
       if(active){setYahooSnapshot({...data,period:yahooPeriod});setYahooError(data.error||'');}
     }).catch(error=>{if(active)setYahooError(error.message);}).finally(()=>{if(active)setYahooBusy(false);});
     return()=>{active=false;controller.abort();};
-  },[yahooPeriod,yahooTick,refresh,tick]);
+  },[yahooPeriod,yahooTick,refresh]);
+  useEffect(()=>{
+    const timer=setInterval(()=>{if(document.visibilityState!=='hidden')setYahooTick(n=>n+1);},TTL);
+    return()=>clearInterval(timer);
+  },[]);
   const publicYahoo=yahooSnapshot?.period===yahooPeriod?yahooSnapshot:null;
   const yahooFor=useMemo(()=>sleeperActivityIndex(publicYahoo?.rows),[publicYahoo]);
   const reloadYahoo=useCallback(()=>setYahooTick(n=>n+1),[]);
-  return {hours,setHours,snapshot,sleeperFor,loading,error,refreshSleeper:()=>setTick(n=>n+1),yahooFor,yahooPeriod,setYahooPeriod,yahooSnapshot:publicYahoo,yahooBusy,yahooError,yahooCoverage:publicYahoo?.coverage||'Yahoo-wide public transaction trends. Missing counts remain unavailable.',reloadYahoo,options:[],teamKey:''};
+  return {yahooFor,yahooPeriod,setYahooPeriod,yahooSnapshot:publicYahoo,yahooBusy,yahooError,yahooCoverage:publicYahoo?.coverage||'Yahoo-wide public transaction trends. Missing counts remain unavailable.',reloadYahoo};
 }
