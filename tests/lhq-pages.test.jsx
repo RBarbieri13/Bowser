@@ -2,6 +2,7 @@ import {expectDfsWeek,setStatsCount,setStatsThrough} from './week-window-actions
 import {comparePeriods,distinctTrendGroups,playedSnap} from '../src/lhq/opportunityComparison.js';
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest';
+import userEvent from '@testing-library/user-event';
 import { cleanup, fireEvent, render, renderHook, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { TeamBoxScores } from '../src/lhq/TeamBoxScores.jsx';
@@ -80,6 +81,34 @@ test('waiver page recovers invalid saved trend metrics without crashing', async 
   show(<Waivers {...props} />);
   await waitFor(() => expect(screen.getByRole('button', { name: 'Fixture Alpha', exact: true })).toBeInTheDocument());
   expect(screen.getByRole('button', { name: 'Snaps / week' })).toBeInTheDocument();
+});
+
+test('waiver Games arrow starts closed, remembers visibility and preserves an active filter', async () => {
+  const rows=[...waiverPayload.rows,{...waiverPayload.rows[0],id:'fixture-b',playerId:'fixture-b',name:'Fixture Beta',team:'KC'}];
+  const games=[{gameId:'NYG-LA',awayTeam:'NYG',homeTeam:'LA'}];
+  vi.stubGlobal('fetch',vi.fn(async url=>reply(String(url).includes('/schedule?')?{data:games}:{...waiverPayload,rows})));
+  const view=show(<Waivers {...props}/>);
+  const toggle=screen.getByRole('button',{name:/Toggle game selector/});
+  expect(toggle).toHaveAttribute('aria-expanded','false');
+  expect(document.getElementById(toggle.getAttribute('aria-controls'))).not.toBeVisible();
+  expect(screen.getByRole('button',{name:'Teams'})).toBeVisible();
+  expect(await screen.findByRole('button',{name:'Fixture Beta',exact:true})).toBeVisible();
+  const user=userEvent.setup();
+  toggle.focus();
+  await user.keyboard('{Enter}');
+  expect(toggle).toHaveAttribute('aria-expanded','true');
+  await user.click(await screen.findByRole('button',{name:/NYG @ LA/}));
+  expect(screen.queryByRole('button',{name:'Fixture Beta',exact:true})).not.toBeInTheDocument();
+  await user.click(toggle);
+  expect(toggle).toHaveAttribute('aria-expanded','false');
+  expect(toggle).toHaveTextContent('2 teams selected');
+  expect(screen.queryByRole('button',{name:/NYG @ LA/})).not.toBeInTheDocument();
+  expect(screen.queryByRole('button',{name:'Fixture Beta',exact:true})).not.toBeInTheDocument();
+  await user.click(toggle);
+  expect(screen.getByRole('button',{name:/NYG @ LA/})).toHaveAttribute('aria-pressed','true');
+  view.unmount();
+  show(<Waivers {...props}/>);
+  expect(screen.getByRole('button',{name:/Toggle game selector/})).toHaveAttribute('aria-expanded','true');
 });
 
 test('waiver history validates persisted numbers before querying the API', async () => {

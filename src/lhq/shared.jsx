@@ -4,7 +4,7 @@ import {UsageShare,useUsageShareState} from './UsageShare.jsx';
 import {TrendBars,TrendScaleContext} from '../TrendBars.jsx';
 import {trendWidth,visibleTrendMax} from '../trendColumn.js';
 import {FilterPill,FilterSegments} from './FilterPill.jsx';
-import {createContext,useContext,useEffect,useMemo,useRef,useState} from 'react';
+import {createContext,useContext,useEffect,useId,useMemo,useRef,useState} from 'react';
 import {createPortal} from 'react-dom';
 import {TREND_METRICS} from '../trendMetrics.js';
 import {COLORS,fmt,sortRows,columnHelp} from './model.js';
@@ -101,8 +101,10 @@ export function Field({label,children}){return <label className="lhq-field"><spa
 export function Status({loading,error}){return <>{loading&&<p className="lhq-status" role="status">Loading sourced data…</p>}{error&&<p className="lhq-error" role="alert">{error}</p>}</>;}
 export function MetricSelect({label,value,onChange}){return <Field label={label}><select value={value} onChange={e=>onChange(e.target.value)}>{Object.entries(TREND_METRICS).map(([key,m])=><option value={key} key={key}>{m.label}</option>)}</select></Field>;}
 
-export function CollapsibleStrip({label='Game selector',caption='Games',context,defaultOpen=true,children}){
- const [open,setOpen]=useState(defaultOpen);return <><DisclosureToggle label={caption} context={context} description={label.toLowerCase()} accessibleLabel={`${caption}${context?` · ${context}`:''} · Toggle ${label.toLowerCase()}`} open={open} onToggle={()=>setOpen(!open)}/>{open&&children}</>;
+export function CollapsibleStrip({label='Game selector',caption='Games',context,defaultOpen=true,open:controlledOpen,onOpenChange,children}){
+ const [localOpen,setLocalOpen]=useState(defaultOpen),id=useId();
+ const open=controlledOpen??localOpen;
+ return <><DisclosureToggle label={caption} context={context} description={label.toLowerCase()} accessibleLabel={`${caption}${context?` · ${context}`:''} · Toggle ${label.toLowerCase()}`} open={open} controls={id} onToggle={()=>{(onOpenChange??setLocalOpen)(!open);}}/><div id={id} hidden={!open}>{open&&children}</div></>;
 }
 export function TrendControl({label,metric,count,onMetric,onCount,counts=[2,3,4,5,8,10,18],note='Aligned NFL weeks; byes and missing games keep their place.'}){
  const [at,setAt]=useState(null),root=useRef(null),button=useRef(null);
