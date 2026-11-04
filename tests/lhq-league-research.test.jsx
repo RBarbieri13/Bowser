@@ -106,21 +106,49 @@ test('pickup markers synchronize on the same page and unresolved canonical ids r
   await waitFor(() => expect(screen.getByText(/Unknown saved player/)).toBeInTheDocument());
 });
 
-test('market pulse renders explicit Yahoo ownership marks and unknown dashes without fake leagues', async () => {
-  vi.stubGlobal('fetch', vi.fn(async url => {
-    const provider = new URL(url, 'https://example.test').searchParams.get('provider');
-    return { ok: true, json: async () => ({ provider, window: provider === 'sleeper' ? '24' : 'current', capturedAt: Date.now(), rows: provider === 'sleeper' ? [{ id: 'sleeper:1', name: 'Fixture Alpha', team: 'NYG', position: 'RB', adds: 4, drops: 1, net: 3 }] : [{ id: 'espn:1', name: 'Fixture Alpha', team: 'NYG', position: 'RB', rosterPct: 2, startPct: 1 }] }) };
+test('Market Pulse shows one public Yahoo group, independent of connected league and Sleeper window',async()=>{
+  const alpha={name:'Fixture Alpha',team:'NYG',position:'RB'};
+  const beta={name:'Fixture Beta',team:'BUF',position:'WR'};
+  const gamma={name:'Fixture Gamma',team:'WAS',position:'WR'};
+  vi.stubGlobal('fetch',vi.fn(async url=>{
+    const params=new URL(url,'https://example.test').searchParams,provider=params.get('provider');
+    const yesterday=params.get('period')==='yesterday';
+    const body=provider==='yahoo'
+      ? {provider,scope:'platform',date:yesterday?'2026-11-02':'2026-11-03',capturedAt:Date.now(),rows:[{id:'yahoo:1',...alpha,adds:yesterday?60:120,drops:5},{id:'yahoo:2',...gamma,adds:8,drops:0}]}
+      : {provider,window:provider==='sleeper'?params.get('hours'):'current',capturedAt:Date.now(),rows:provider==='sleeper'
+        ? [{id:'sleeper:1',...alpha,adds:4,drops:1,net:3},{id:'sleeper:2',...beta,adds:20}]
+        : [{id:'espn:1',...alpha,rosterPct:2,startPct:1}]};
+    return {ok:true,json:async()=>body};
   }));
-  show(<MarketPulse season={2026} setSeason={vi.fn()} onOpen={vi.fn()} yahoo={yahoo} />);
-  const grid = await screen.findByRole('table', { name: 'Player statistics' });
-  expect(within(grid).getByRole('columnheader', { name: /Y1/ })).toBeInTheDocument();
-  expect(within(grid).queryByRole('columnheader', { name: /Y2/ })).not.toBeInTheDocument();
-  expect(within(grid).getByText('✓')).toBeInTheDocument();
-  expect(within(grid).getByRole('columnheader',{name:/Total/})).toBeInTheDocument();
-  fireEvent.click(screen.getByRole('button',{name:'Refresh Yahoo activity'}));
-  expect(yahoo.loadResearch).toHaveBeenCalledWith(teamKey,{include:'transactions'});
-});
+  const props={season:2026,setSeason:vi.fn(),onOpen:vi.fn()};
+  localStorage.setItem('bowser:market-pulse:v1',JSON.stringify({sort:{key:`yahoo-adds:${teamKey}`,desc:false}}));
+  const view=show(<MarketPulse {...props} yahoo={yahoo}/>);
+  const grid=within(await screen.findByRole('table',{name:'Player statistics'}));
+  const player=async name=>(await grid.findByRole('button',{name,exact:true})).closest('tr');
+  const yahooCells=row=>[...row.cells].slice(5,9).map(cell=>cell.textContent);
+  const alphaRow=await player(alpha.name);
+  expect(grid.getAllByRole('columnheader',{name:/Yahoo-wide · transactions/})).toHaveLength(1);
+  expect(grid.queryByRole('columnheader',{name:/Y1|Y2|Y3|Fixture League/})).not.toBeInTheDocument();
+  await waitFor(()=>expect(yahooCells(alphaRow)).toEqual(['120','5','125','+115']));
+  expect(yahooCells(await player(beta.name))).toEqual(['—','—','—','—']);
+  expect(yahooCells(await player(gamma.name))).toEqual(['8','0','8','+8']);
+  expect(screen.queryByRole('button',{name:'Refresh Yahoo activity'})).not.toBeInTheDocument();
+  expect(screen.getByLabelText('Sort')).toHaveValue('adds');
 
+  const sources=screen.getByRole('button',{name:'Toggle sources and options'});
+  if(sources.getAttribute('aria-expanded')==='false')fireEvent.click(sources);
+  fireEvent.change(screen.getByLabelText('Yahoo date'),{target:{value:'yesterday'}});
+  await waitFor(()=>expect(yahooCells(alphaRow)).toEqual(['60','5','65','+55']));
+  expect(screen.getByText(/2026-11-02 ·/)).toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText('Sort'),{target:{value:'yahoo_public_adds'}});
+  expect(grid.getAllByRole('row').find(row=>row.parentElement.tagName==='TBODY')).toHaveTextContent(alpha.name);
+  fireEvent.change(screen.getByLabelText('Window'),{target:{value:'72'}});
+  expect(yahooCells(await player(alpha.name))).toEqual(['60','5','65','+55']);
+  view.rerender(<LhqProvider><MarketPulse {...props}/></LhqProvider>);
+  expect(yahooCells(await player(alpha.name))).toEqual(['60','5','65','+55']);
+  expect(fetch).toHaveBeenCalledWith('/api/v1/market-pulse?provider=yahoo&period=yesterday',expect.objectContaining({credentials:'omit',cache:'no-store'}));
+  expect(yahoo.loadResearch).not.toHaveBeenCalled();
+});
 
 test('Yahoo transaction counts separate player actions, deduplicate events and exclude unsuccessful/pending actions', () => {
  const row={name:'Fixture Alpha',team:'NYG',position:'RB'}, other={name:'Fixture Beta',team:'BUF',position:'WR'};

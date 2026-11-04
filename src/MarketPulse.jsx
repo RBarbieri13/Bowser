@@ -19,9 +19,11 @@ function preferences() {try{const p=JSON.parse(localStorage.getItem(KEY));return
 export function csvFor(rows, snapshots) {
   const escape = value => `"${(typeof value === 'string' ? value.replace(/^[\s]*[=+@-]/, "'$&") : String(value ?? '')).replaceAll('"', '""')}"`;
   const iso = value => value ? new Date(value).toISOString() : '';
+  const yahoo=snapshots.yahoo;
+  const yahooHeaders=yahoo?['Yahoo-wide date','Yahoo captured at','Yahoo adds','Yahoo drops','Yahoo total','Yahoo net']:[];
   return [
-    ['Player','Position','Team','Sleeper ID','ESPN ID','Identity match','Sleeper window','Sleeper captured at','ESPN captured at','Adds','Drops','Net','Add share %','Roster %','Start %','Roster change pp','ESPN previous at','News items','Latest topic','Positive','Neutral','Negative','Unclear','Model confidence %','Commentary balance','Balance change pp','Publications','Commentary captured at'],
-    ...rows.map(p => [p.name,p.position,p.team,p.sleeperId,p.espnId,p.match,snapshots.sleeper?.window,iso(snapshots.sleeper?.capturedAt),iso(snapshots.espn?.capturedAt),p.adds,p.drops,p.net,p.addShare,p.rosterPct,p.startPct,p.rosterDelta,iso(snapshots.espn?.previousAt),p.newsCount,p.newsTopic,p.positive,p.neutral,p.negative,p.unclear,p.newsConfidence,p.newsBalance,p.newsDelta,p.newsSources,iso(snapshots.commentary?.capturedAt)])
+    ['Player','Position','Team','Sleeper ID','ESPN ID','Identity match','Sleeper window','Sleeper captured at','ESPN captured at','Adds','Drops','Net','Add share %','Roster %','Start %','Roster change pp','ESPN previous at','News items','Latest topic','Positive','Neutral','Negative','Unclear','Model confidence %','Commentary balance','Balance change pp','Publications','Commentary captured at',...yahooHeaders],
+    ...rows.map(p => [p.name,p.position,p.team,p.sleeperId,p.espnId,p.match,snapshots.sleeper?.window,iso(snapshots.sleeper?.capturedAt),iso(snapshots.espn?.capturedAt),p.adds,p.drops,p.net,p.addShare,p.rosterPct,p.startPct,p.rosterDelta,iso(snapshots.espn?.previousAt),p.newsCount,p.newsTopic,p.positive,p.neutral,p.negative,p.unclear,p.newsConfidence,p.newsBalance,p.newsDelta,p.newsSources,iso(snapshots.commentary?.capturedAt),...(yahoo?[yahoo.date,iso(yahoo.capturedAt),p.yahooActivity?.adds,p.yahooActivity?.drops,p.yahooActivity?.total,p.yahooActivity?.net]:[])])
   ].map(row => row.map(escape).join(',')).join('\r\n');
 }
 function Balance({row}) {
