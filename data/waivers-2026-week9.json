@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "waiverWeek": 9,
-  "capturedAt": "2026-11-04T19:32:28.107011+00:00",
+  "capturedAt": "2026-11-05T15:22:16.637241+00:00",
   "sources": [
     {
       "id": "fantasypros",
@@ -9,22 +9,22 @@
       "type": "expert",
       "rankCount": 5,
       "faabCount": 25,
-      "publishedAt": "2026-11-04",
+      "publishedAt": "2026-11-05",
       "coverageNote": "Public PPR preview; bids use the publisher’s $100 reference.",
-      "capturedAt": "2026-11-04T19:32:21.023020+00:00",
+      "capturedAt": "2026-11-05T15:22:13.313043+00:00",
       "evidence": [
         {
           "url": "https://www.fantasypros.com/nfl/rankings/?scoring=PPR&type=waiver",
-          "sha256": "8e722558a6ee83a7ec1345bbd47024e964710c590721cb76c7ab6d33ae993fe3",
-          "datePublished": "2026-11-04",
-          "capturedAt": "2026-11-04T19:32:20.641373+00:00"
+          "sha256": "5c368828253ec71c0d4a0b0e485e8413b0a136655c7bf4d753a92a19f98941f5",
+          "datePublished": "2026-11-05",
+          "capturedAt": "2026-11-05T15:22:13.179386+00:00"
         },
         {
           "url": "https://www.fantasypros.com/2026/11/fantasy-football-waiver-wire-advice-players-to-add-stash-drop-week-9-2026/",
-          "sha256": "08499d0ee9ca7a420f4edb9c03ba46f5a78c0979604675c98b0e10fee99e8c69",
+          "sha256": "ab586a7a091730a80289fc089eed210f5ed9fd645b1754c4f971579af53a01ab",
           "datePublished": "2026-11-03T12:11:25+00:00",
           "dateModified": "2026-11-03T12:11:43+00:00",
-          "capturedAt": "2026-11-04T19:32:21.023020+00:00"
+          "capturedAt": "2026-11-05T15:22:13.313043+00:00"
         }
       ],
       "rankUrl": "https://www.fantasypros.com/nfl/rankings/?scoring=PPR&type=waiver",
@@ -40,21 +40,21 @@
       "faabCount": 20,
       "publishedAt": "2026-11-03T05:45:05-05:00",
       "coverageNote": "Overall priority normalized by position; bid tiers retain source units.",
-      "capturedAt": "2026-11-04T19:32:22.102546+00:00",
+      "capturedAt": "2026-11-05T15:22:13.691241+00:00",
       "evidence": [
         {
           "url": "https://www.rotoballer.com/waiver-wire-rankings-fantasy-football-week-9-2026/1981756",
-          "sha256": "f63fe54ba7ed588cc559c9c8e851369e2402b063721613528415ae589e004236",
+          "sha256": "24e5e0cc277f44bcdc68864fb0209348eb4e28c6c872263cb35c6e7157d54d62",
           "datePublished": "2026-11-03T05:45:05-05:00",
           "dateModified": "2026-11-04T06:13:14-05:00",
-          "capturedAt": "2026-11-04T19:32:21.294639+00:00"
+          "capturedAt": "2026-11-05T15:22:13.509786+00:00"
         },
         {
           "url": "https://www.rotoballer.com/faab-waiver-wire-advice-week-9-fantasy-pickups-2026/1982223",
-          "sha256": "7ae61fe9db33d8a1e249eccf603430c6df96972059e002d3b2380f485aa30dd6",
+          "sha256": "dbfad9f1c70c572914d84e8dc8fca24d78b28b658884598746c137824cf623fb",
           "datePublished": "2026-11-03T06:45:25-05:00",
           "dateModified": "2026-11-03T20:00:50-05:00",
-          "capturedAt": "2026-11-04T19:32:22.102546+00:00"
+          "capturedAt": "2026-11-05T15:22:13.691241+00:00"
         }
       ],
       "rankUrl": "https://www.rotoballer.com/waiver-wire-rankings-fantasy-football-week-9-2026/1981756",
@@ -69,13 +69,13 @@
       "faabCount": 6,
       "publishedAt": "2026-11-02",
       "coverageNote": "Percent of annual FAAB.",
-      "capturedAt": "2026-11-04T19:32:25.264847+00:00",
+      "capturedAt": "2026-11-05T15:22:14.566377+00:00",
       "evidence": [
         {
           "url": "https://www.footballguys.com/article/2026-email-feature-top-waiver-wire-pickups-week09",
-          "sha256": "4318f6ef9acde266fab0273e827c7336c37cd178f4d5d8c12fdaccb023b7ad4c",
+          "sha256": "04a04e8ec8c2865a68c43d5833400faa243d49c72274651cd10c670b360d46a8",
           "datePublished": "2026-11-02",
-          "capturedAt": "2026-11-04T19:32:25.264847+00:00"
+          "capturedAt": "2026-11-05T15:22:14.566377+00:00"
         }
       ],
       "faabUrl": "https://www.footballguys.com/article/2026-email-feature-top-waiver-wire-pickups-week09"
@@ -88,14 +88,14 @@
       "faabCount": 0,
       "publishedAt": "2026-11-02T17:08:45.234Z",
       "coverageNote": "Published overall waiver priorities, normalized by position.",
-      "capturedAt": "2026-11-04T19:32:25.671533+00:00",
+      "capturedAt": "2026-11-05T15:22:14.978209+00:00",
       "evidence": [
         {
           "url": "https://www.nfl.com/news/2026-nfl-fantasy-football-waiver-wire-week-9-jonah-coleman-mike-washington-jr-top-targets",
-          "sha256": "f1b6d873efef750eb8d90ac35acef0ded95086c6a709fdc092f23f491f2142ca",
+          "sha256": "31f81b9e369e741ac67940a6aa338b9ed0552352bc59f855061f1fb1e506d547",
           "datePublished": "2026-11-02T17:08:45.234Z",
           "dateModified": "2026-11-02T18:32:27.537Z",
-          "capturedAt": "2026-11-04T19:32:25.671533+00:00"
+          "capturedAt": "2026-11-05T15:22:14.978209+00:00"
         }
       ],
       "rankUrl": "https://www.nfl.com/news/2026-nfl-fantasy-football-waiver-wire-week-9-jonah-coleman-mike-washington-jr-top-targets",
@@ -109,14 +109,14 @@
       "faabCount": 0,
       "publishedAt": "2026-11-03T11:33:36-06:00",
       "coverageNote": "Published overall waiver priorities, normalized by position.",
-      "capturedAt": "2026-11-04T19:32:26.079301+00:00",
+      "capturedAt": "2026-11-05T15:22:15.249009+00:00",
       "evidence": [
         {
           "url": "https://blitzsportsmedia.com/fantasy-football-wk9-waiver-wire-rankings/",
-          "sha256": "9210c823c2bd1d8fecd0c642d312fbdf81f3c69dc2ee7ffc97eb49238eb79d96",
+          "sha256": "dbf15520753623ec6099ca08f8682f661a066b3372f900c6bc9b4dad92570a4b",
           "datePublished": "2026-11-03T11:33:36-06:00",
           "dateModified": "2026-11-03T11:33:40-06:00",
-          "capturedAt": "2026-11-04T19:32:26.079301+00:00"
+          "capturedAt": "2026-11-05T15:22:15.249009+00:00"
         }
       ],
       "rankUrl": "https://blitzsportsmedia.com/fantasy-football-wk9-waiver-wire-rankings/",
@@ -130,14 +130,14 @@
       "faabCount": 29,
       "publishedAt": "2026-11-03T17:03:00+00:00",
       "coverageNote": "Explicit positional add order; remaining FAAB and format-specific tiers. Ambiguous operator-plus-range phrases are omitted.",
-      "capturedAt": "2026-11-04T19:32:27.936918+00:00",
+      "capturedAt": "2026-11-05T15:22:16.516119+00:00",
       "evidence": [
         {
           "url": "https://www.cbssports.com/fantasy/football/news/fantasy-football-2026-week-9-waiver-wire/",
-          "sha256": "b45ccbd43006575707dec317e53d3a3e4e8278d07ed1cf16e0a6d3fe02f11c01",
+          "sha256": "af3943bd36a29b74d5f66d01beb199713a0780816723e5b5f4129903e602b68f",
           "datePublished": "2026-11-03T17:03:00+00:00",
           "dateModified": "2026-11-04T04:10:11+00:00",
-          "capturedAt": "2026-11-04T19:32:27.936918+00:00"
+          "capturedAt": "2026-11-05T15:22:16.516119+00:00"
         }
       ],
       "rankUrl": "https://www.cbssports.com/fantasy/football/news/fantasy-football-2026-week-9-waiver-wire/",
@@ -152,14 +152,14 @@
       "faabCount": 20,
       "publishedAt": "2026-11-03T14:00:00+00:00",
       "coverageNote": "12-team PPR, 1QB, four-point passing TDs; percent of remaining FAAB.",
-      "capturedAt": "2026-11-04T19:32:28.107011+00:00",
+      "capturedAt": "2026-11-05T15:22:16.637241+00:00",
       "evidence": [
         {
           "url": "https://dknetwork.draftkings.com/2026/11/03/fantasy-football-week-9-faab-rankings-waiver-wire-advice-streaming-recommendations/",
-          "sha256": "c5aafe6f32ea33f4571ff59f4dfff8b4f4263b43fe5c4f6089ecef2f446091a0",
+          "sha256": "c404bd25bbf32af911efad3a686ddc571056a8686ffb8b8aca6f09543f4e4a03",
           "datePublished": "2026-11-03T14:00:00+00:00",
           "dateModified": "2026-11-03T14:00:00Z",
-          "capturedAt": "2026-11-04T19:32:28.107011+00:00"
+          "capturedAt": "2026-11-05T15:22:16.637241+00:00"
         }
       ],
       "rankUrl": "https://dknetwork.draftkings.com/2026/11/03/fantasy-football-week-9-faab-rankings-waiver-wire-advice-streaming-recommendations/",
@@ -236,12 +236,6 @@
       "position": "DST",
       "team": "DET",
       "rankings": {
-        "fantasypros": {
-          "scope": "position",
-          "rank": 1,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 5
-        },
         "rotoballer": {
           "scope": "position",
           "rank": 3,
@@ -464,7 +458,7 @@
           "scope": "position",
           "rank": 1,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 3
+          "overallRank": 4
         },
         "blitz": {
           "scope": "position",
@@ -3007,6 +3001,12 @@
       "position": "WR",
       "team": "MIA",
       "rankings": {
+        "fantasypros": {
+          "scope": "position",
+          "rank": 3,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 5
+        },
         "rotoballer": {
           "scope": "position",
           "rank": 12,
@@ -3353,7 +3353,7 @@
           "scope": "position",
           "rank": 2,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 4
+          "overallRank": 3
         },
         "blitz": {
           "scope": "position",
