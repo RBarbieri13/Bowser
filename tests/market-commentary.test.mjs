@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { newsCandidates, classifyCommentary, commentaryRequest } from '../server/market-commentary.mjs';
-import { addCommentary, sentimentOf, topicOf } from '../src/marketCommentary.js';
+import { addCommentary, sentimentOf, topicOf, mergeMarketNews } from '../src/marketCommentary.js';
 
 const now = Date.parse('2026-09-26T22:00:00Z');
 const article = { id: 1, headline: 'Fixture Runner returns to practice', description: 'Fixture Runner is fully practicing.', published: '2026-09-26T12:00:00Z', links: { web: { href: 'https://www.espn.com/nfl/story/_/id/1/test' } }, categories: [{ type:'athlete', sportId:28, athleteId:12, description:'Fixture Runner' }, { type:'athlete', sportId:28, athleteId:13, description:'Other Player' }] };
@@ -53,4 +53,21 @@ test('adjacent windows share duration, deduplicate, exclude future items and req
   assert.equal(result.newsCount,2);assert.equal(result.newsDelta,150);assert.equal(result.previousNewsCount,2);
   assert.equal(addCommentary([row],{records:records.filter(r=>r.id!=='d')},{now,hours:72})[0].newsDelta,null);
   assert.equal(addCommentary([row],{records},{now,hours:24,topic:'waiver'})[0].newsCount,null);
+});
+test('fresh source-only headlines count as news without fabricated model judgments',()=>{
+  const source={...item,publishedAt:new Date(now-3600000).toISOString()};
+  const [result]=addCommentary([row],{records:[source]},{now});
+  assert.equal(result.newsCount,1);
+  assert.equal(result.newsTopic,'Unclassified');
+  for(const key of ['positive','neutral','negative','unclear','newsConfidence','newsBalance','newsDelta'])assert.equal(result[key],null);
+  assert.equal(result.news[0].answers,undefined);
+});
+test('a changed headline invalidates its old classification; unchanged inputs preserve original analysis clocks',()=>{
+  const old=record('a');
+  const observation={...old};delete observation.answers;
+  const snapshot={records:[old],capturedAt:'old-model-time'};
+  const same=mergeMarketNews(snapshot,{records:[observation],capturedAt:'new-feed-time'});
+  assert.deepEqual(same.records,[old]);assert.equal(same.classificationCapturedAt,'old-model-time');
+  const changed=mergeMarketNews(snapshot,{records:[{...observation,inputHash:'changed'}]});
+  assert.equal(changed.records.length,1);assert.equal(changed.records[0].answers,undefined);
 });

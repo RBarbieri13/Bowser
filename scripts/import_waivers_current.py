@@ -22,6 +22,7 @@ SOURCES = {
     'blitz': ('Blitz Sports Media', 'blitz', None, 'Published overall waiver priorities, normalized by position.'),
     'cbs': ('CBS Sports', 'cbs', 'cbs', 'Explicit positional add order; remaining FAAB and format-specific tiers. Ambiguous operator-plus-range phrases are omitted.'),
     'dknetwork': ('DK Network', 'dknetwork', 'dknetwork', '12-team PPR, 1QB, four-point passing TDs; percent of remaining FAAB.'),
+    'playerprofiler': ('PlayerProfiler', None, 'playerprofiler', 'Published dollar ranges for a $100 reference budget; PPR, six-point passing TDs. Bench-depth tiers remain separate; article order is not a ranking.'),
 }
 
 PUBLISHER_HOSTS = {
@@ -32,6 +33,7 @@ PUBLISHER_HOSTS = {
     'blitz': {'blitzsportsmedia.com'},
     'cbs': {'www.cbssports.com', 'hubapi.cbssports.com'},
     'dknetwork': {'dknetwork.draftkings.com'},
+    'playerprofiler': {'www.playerprofiler.com'},
 }
 CAPTURE_HOSTS = {key: PUBLISHER_HOSTS[sid] for sid, (_, rank, faab, _) in SOURCES.items()
                  for key in (rank, faab) if key}
@@ -44,9 +46,16 @@ def verify_url(key, url):
         raise ValueError(f'URL does not belong to the public publisher: {key}')
 
 
+def capture_keys(evidence):
+    keys = set(evidence)
+    required = set(CAPTURE_HOSTS) - {'dknetwork', 'playerprofiler'}
+    if not required <= keys or not keys <= set(CAPTURE_HOSTS) or not keys & {'dknetwork', 'playerprofiler'}:
+        raise ValueError('Captures require the core publishers and a current DK Network or PlayerProfiler FAAB edition')
+    return [key for key in CAPTURE_HOSTS if key in keys]
+
+
 def capture_sources(directory, urls):
-    if set(urls) != set(CAPTURE_HOSTS):
-        raise ValueError('URL manifest must include every required capture key')
+    capture_keys(urls)
     for key, url in urls.items():
         verify_url(key, url)
     directory.mkdir(parents=True, exist_ok=False)
@@ -79,7 +88,7 @@ def read_captures(directory, week):
     evidence = json.loads((directory / 'evidence.json').read_text())
     pages = {}
     used = {}
-    for key in CAPTURE_HOSTS:
+    for key in capture_keys(evidence):
         capture = evidence[key]
         raw = (directory / (key + '.html')).read_bytes()
         digest = hashlib.sha256(raw).hexdigest()
@@ -156,17 +165,53 @@ def cbs_facts(page):
         raise ValueError('CBS priorities and bid headings disagree')
     bids = []
     for i, j, player in zip(cards, cards[1:] + [len(lines)], ranks):
+        context = ''
+        surname = re.sub(r'\s+(?:Jr\.?|Sr\.?|II|III|IV)$', '', player['name']).split()[-1]
         for sentence in re.split(r'(?<=[.!?])\s+', ' '.join(lines[i:j])):
+            context += ' ' + sentence
             match = re.search(r'for (at least |up to )?(\d+(?:-\d+)?) percent of your remaining FAAB', sentence)
             if not match:
+                continue
+            # Multi-player paragraphs can recommend another player's bid first.
+            # An explicit named subject must be this card's player. Pronoun-only
+            # recommendations retain the card's subject and format qualification.
+            names = [name for name in re.findall(r"\b[A-Z][a-z]+(?:'[A-Za-z]+)?\b", sentence[:match.start()])
+                     if name.split("'")[0] not in {'I','He','His','Him','They','Their','It','If','And','But','The','This','That','You','We','Also','For','With','As','At','On','In','Superflex','Fantasy'}]
+            if names and names[-1] != surname:
                 continue
             operator = {'at least ': 'at-least', 'up to ': 'at-most'}.get(match[1])
             if operator and '-' in match[2]:
                 break
-            tier = 'Superflex / two-QB' if re.search(r'superflex|two-quarterback|two-QB', sentence, re.I) else 'source base'
+            tier = 'Superflex / two-QB' if re.search(r'superflex|two-quarterback|two-QB', context, re.I) else 'source base'
             bids.append(dict(player, bid=waiver.bid(match[2], basis='remaining', operator=operator, tier=tier)))
             break
     return ranks, bids
+
+
+def playerprofiler_bids(page, week):
+    if 'a $100 budget' not in ' '.join(page.lines) or 'six-point per passing touchdown' not in ' '.join(page.lines):
+        raise ValueError('PlayerProfiler FAAB reference/scoring changed')
+    tier = pos = None
+    rows = []
+    for line in page.lines:
+        section = re.fullmatch(rf'Week {week} (Shallow League|Standard Bench|Deep League) Waiver Wire Targets', line)
+        if section:
+            tier, pos = section[1], None
+        if line in {'Quarterback', 'Running Back', 'Wide Receiver', 'Tight End'}:
+            pos = {'Quarterback': 'QB', 'Running Back': 'RB', 'Wide Receiver': 'WR', 'Tight End': 'TE'}[line]
+        match = re.fullmatch(r'(.+), (.+) \(\d+% rostered\) \| \$(\d+(?:-\d+)?)(.*)', line)
+        if not match:
+            continue
+        team = waiver.team_key(match[2])
+        if not tier or not pos or not team:
+            raise ValueError('PlayerProfiler bid identity/tier unavailable')
+        value = waiver.bid(match[3], unit='dollars', tier=tier + ' · PPR, six-point passing TDs')
+        if match[4].strip():
+            value['sourceText'] = line
+        rows.append({'name': match[1], 'position': pos, 'team': team, 'bid': value})
+    if len(rows) < 10:
+        raise ValueError('PlayerProfiler FAAB list truncated')
+    return rows
 
 
 def assemble(directory, week):
@@ -183,11 +228,16 @@ def assemble(directory, week):
         'footballguys': waiver.parse_footballguys(pages['footballguys']),
     }
     ranks['cbs'], bids['cbs'] = cbs_facts(pages['cbs'])
-    ranks['dknetwork'], bids['dknetwork'] = dk_facts(pages['dknetwork'], week)
+    if 'dknetwork' in pages:
+        ranks['dknetwork'], bids['dknetwork'] = dk_facts(pages['dknetwork'], week)
+    if 'playerprofiler' in pages:
+        bids['playerprofiler'] = playerprofiler_bids(pages['playerprofiler'], week)
     index = waiver.identity_index(DATA / 'raw/2026/players.csv')
     players, sources = {}, []
     for sid, (label, rank_key, bid_key, note) in SOURCES.items():
         keys = list(dict.fromkeys(key for key in (rank_key, bid_key) if key))
+        if not all(key in evidence for key in keys):
+            continue
         source = {
             'id': sid, 'label': label, 'type': 'expert',
             'rankCount': len(ranks.get(sid, [])), 'faabCount': len(bids.get(sid, [])),
@@ -228,7 +278,7 @@ def assemble(directory, week):
                 if sid in player[kind]:
                     raise ValueError(f'Duplicate source/player {sid}: {name}')
                 if kind == 'rankings':
-                    player[kind][sid] = {'scope': 'position', **{k: row[k] for k in ('rank', 'method', 'overallRank') if k in row}}
+                    player[kind][sid] = {'scope': 'position', **{k: row[k] for k in ('rank', 'method', 'overallRank', 'condition') if k in row}}
                 else:
                     player[kind][sid] = row['bid']
     return {

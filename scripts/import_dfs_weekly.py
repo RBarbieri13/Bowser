@@ -375,6 +375,17 @@ def build_records(text, slate, projections, identities, supplemental=None, verif
     return sorted(records, key=lambda r: (int(r['draftKingsId']), r['name']))
 
 
+def validate_projection_salary_identities(salary_texts, slates, projections):
+    """Reject the entire primary feed if any slate identity cannot join official salaries."""
+    for slate in slates:
+        rows = csv.DictReader(io.StringIO(salary_texts[slate['id']]))
+        require({'Name', 'Position', 'TeamAbbrev'} <= set(rows.fieldnames or []), 'Salary CSV columns changed')
+        identities = {(name_key(row['Name']), position_key(row['Position']), team_key(row['TeamAbbrev'])) for row in rows}
+        teams = {team for game in slate['games'] for team in (game['away'], game['home'])}
+        missing = {key for key in projections if key[2] in teams} - identities
+        require(not missing, f'Projection-to-salary identity coverage mismatch: {sorted(missing)}')
+
+
 def validate_showdown_roles(records, teams):
     roles = {role:{(name_key(r['name']),r['position'],r['team']):r for r in records if r.get('rosterPosition') == role} for role in ('FLEX','CPT')}
     require(set(roles['FLEX']) == set(roles['CPT']) and len(roles['FLEX']) >= 40, 'Showdown requires matching complete FLEX/CPT populations of at least 40 players')
@@ -619,6 +630,19 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None, allow_parti
                                         'sha256': digest(alias_text.encode()), 'capturedAt': iso(now)}
     # Alias capture is local evidence; explicit unknown original retrieval date.
     shared_sources = {k: v for k, v in fetch.sources.items() if k != 'identity-aliases'}
+    salary_texts = {slate['id']: fetch.get(
+        f"https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId={slate['id']}",
+        f"dk-{slate['id']}.csv") for slate in slates}
+    try:
+        validate_projection_salary_identities(salary_texts, slates, projections)
+    except PartialData as error:
+        if not allow_partial_projections or not str(error).startswith('Projection-to-salary identity coverage mismatch:'):
+            raise
+        projections = {}
+        primary_source = fetch.sources.get('projections.html', {})
+        primary_status = {'status': 'unavailable', 'source': 'Fantasy Info Central', 'reason': str(error),
+                          'checkedAt': iso(datetime.now(timezone.utc)), 'lastModified': primary_source.get('lastModified'),
+                          'retrievedAt': primary_source.get('retrievedAt')}
     database_path = ROOT / f'data/fantasy_football_{season}.sqlite'
     database_ids = set()
     if database_path.exists():
@@ -630,7 +654,7 @@ def _refresh(target, raw_dir, now, dry_run=False, archive_path=None, allow_parti
     for slate in slates:
         filename = f"dk-{slate['id']}.csv"
         url = f"https://www.draftkings.com/lineup/getavailableplayerscsv?draftGroupId={slate['id']}"
-        records = build_records(fetch.get(url, filename), slate, projections, matches, supplemental, verified_classic_projections)
+        records = build_records(salary_texts[slate['id']], slate, projections, matches, supplemental, verified_classic_projections)
         if not is_showdown(slate):
             for record in records:
                 if record['projection'] is not None:
