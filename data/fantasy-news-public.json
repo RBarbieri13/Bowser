@@ -2,10 +2,248 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-10-22T20:52:54.898145+00:00",
-  "updatedAt": "2026-10-22T20:52:54.899206+00:00",
-  "revision": "bowser-public-news-20261022-afternoon",
+  "checkedAt": "2026-11-11T04:04:17.975Z",
+  "updatedAt": "2026-11-11T04:09:29.126Z",
+  "revision": "bowser-public-news-20261110-evening",
   "events": [
+    {
+      "eventId": "espn:50444360:14880",
+      "player": {
+        "playerId": null,
+        "name": "Kirk Cousins",
+        "team": "MIN",
+        "position": "QB"
+      },
+      "headline": "Kirk Cousins returns to Minnesota",
+      "summary": "ESPN reports Minnesota acquired Cousins from Las Vegas for a third-round pick.",
+      "fantasyAnalysis": "Reassess both passing offenses after the trade; the report does not establish future snap counts or fantasy production.",
+      "eventType": "TRANSACTION",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-11T01:12:15.000Z",
+      "lastUpdatedAt": "2026-11-11T01:12:15.000Z",
+      "checkedAt": "2026-11-11T04:04:17.975Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-11T01:12:15.000Z",
+          "url": "https://www.espn.com/nfl/story/_/id/50444360/sources-vikings-id-qb-kirk-cousins-prime-trade-target",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-11T04:04:17.975Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50444457:15818",
+      "player": {
+        "playerId": null,
+        "name": "Keenan Allen",
+        "team": "SF",
+        "position": "WR"
+      },
+      "headline": "San Francisco acquires Keenan Allen",
+      "summary": "ESPN reports the 49ers acquired Allen from Indianapolis to reinforce their injured receiving group.",
+      "fantasyAnalysis": "Prior Colts usage does not establish his new San Francisco workload; monitor team reports and subsequent participation.",
+      "eventType": "TRANSACTION",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-10T23:03:30.000Z",
+      "lastUpdatedAt": "2026-11-10T23:03:30.000Z",
+      "checkedAt": "2026-11-11T04:04:17.975Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-10T23:03:30.000Z",
+          "url": "https://www.espn.com/nfl/story/_/id/50444457/sources-49ers-acquire-keenan-allen-trade-colts",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-11T04:04:17.975Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50445576:4688813",
+      "player": {
+        "playerId": null,
+        "name": "Josh Downs",
+        "team": "KC",
+        "position": "WR"
+      },
+      "headline": "Josh Downs traded to Kansas City",
+      "summary": "ESPN reports Kansas City acquired Downs from Indianapolis.",
+      "fantasyAnalysis": "A team change creates a new role to assess; verify his usage with Kansas City before relying on his prior Colts workload.",
+      "eventType": "TRANSACTION",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-11T02:42:31.000Z",
+      "lastUpdatedAt": "2026-11-11T02:42:31.000Z",
+      "checkedAt": "2026-11-11T04:04:17.975Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-11T02:42:31.000Z",
+          "url": "https://www.espn.com/nfl/story/_/id/50445576/chiefs-trade-colts-wr-josh-downs",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-11T04:04:17.975Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50445819:4242512",
+      "player": {
+        "playerId": null,
+        "name": "Malik Willis",
+        "team": "MIA",
+        "position": "QB"
+      },
+      "headline": "Dolphins place Malik Willis on injured reserve",
+      "summary": "ESPN reports Miami placed Willis on injured reserve with a groin injury.",
+      "fantasyAnalysis": "Recheck current quarterback eligibility and Miami replacement plans before lineup decisions; no return date is established here.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-10T22:33:26.000Z",
+      "lastUpdatedAt": "2026-11-10T22:33:26.000Z",
+      "checkedAt": "2026-11-11T04:04:17.975Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-10T22:33:26.000Z",
+          "url": "https://www.espn.com/nfl/story/_/id/50445819/dolphins-put-qb-malik-willis-ir-groin-injury",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-11T04:04:17.975Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "practiceStatus": null,
+        "gameStatus": "IR",
+        "expectedReturn": null
+      }
+    },
+    {
+      "eventId": "espn:50446805:3917792",
+      "player": {
+        "playerId": null,
+        "name": "Daniel Jones",
+        "team": "IND",
+        "position": "QB"
+      },
+      "headline": "Daniel Jones remains with Indianapolis after deadline",
+      "summary": "ESPN reports Jones remained with the Colts after the trade deadline.",
+      "fantasyAnalysis": "Remaining on the roster alone does not confirm future starting status or a particular workload.",
+      "eventType": "TRANSACTION",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-10T23:27:48.000Z",
+      "lastUpdatedAt": "2026-11-10T23:27:48.000Z",
+      "checkedAt": "2026-11-11T04:04:17.975Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-10T23:27:48.000Z",
+          "url": "https://www.espn.com/nfl/story/_/id/50446805/rb-taylor-qb-jones-remain-colts-trade-deadline-passes",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-11T04:04:17.975Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50446805:4242335",
+      "player": {
+        "playerId": null,
+        "name": "Jonathan Taylor",
+        "team": "IND",
+        "position": "RB"
+      },
+      "headline": "Jonathan Taylor remains with Indianapolis after deadline",
+      "summary": "ESPN reports Taylor remained with the Colts when the trade deadline passed.",
+      "fantasyAnalysis": "Waiver bids conditional on a Taylor trade should be read as conditional; this report says that trade did not occur.",
+      "eventType": "TRANSACTION",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-10T23:27:48.000Z",
+      "lastUpdatedAt": "2026-11-10T23:27:48.000Z",
+      "checkedAt": "2026-11-11T04:04:17.975Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-10T23:27:48.000Z",
+          "url": "https://www.espn.com/nfl/story/_/id/50446805/rb-taylor-qb-jones-remain-colts-trade-deadline-passes",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-11T04:04:17.975Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50447756:4837248",
+      "player": {
+        "playerId": null,
+        "name": "Fernando Mendoza",
+        "team": "LV",
+        "position": "QB"
+      },
+      "headline": "Raiders name Fernando Mendoza starting quarterback",
+      "summary": "ESPN reports Las Vegas named Mendoza its starting quarterback after trading Kirk Cousins.",
+      "fantasyAnalysis": "A newly reported starting role warrants monitoring; current league availability and roster fit remain separate private research.",
+      "eventType": "DEPTH_CHART",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-11T01:45:03.000Z",
+      "lastUpdatedAt": "2026-11-11T01:45:03.000Z",
+      "checkedAt": "2026-11-11T04:04:17.975Z",
+      "sourceQuality": {
+        "confidence": null
+      },
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "author": null,
+          "xHandle": null,
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-11T01:45:03.000Z",
+          "url": "https://www.espn.com/nfl/story/_/id/50447756/raiders-name-fernando-mendoza-starting-qb-trading-kirk-cousins",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-11T04:04:17.975Z"
+        }
+      ]
+    },
     {
       "eventId": "nfl-2026-w7-ari-carsonbeck-checked-20261022",
       "player": {
@@ -3425,5 +3663,5 @@
       ]
     }
   ],
-  "contentHash": "e1ce10493c54c0e7ec770475ef5eff5dc38d2b0cd9626cae5b9d3d2b318ff5d9"
+  "contentHash": "4a40a2c494583bc6011437f746d9cf1d2b794f0e214092cf9c2dc0e0a1e66862"
 }
