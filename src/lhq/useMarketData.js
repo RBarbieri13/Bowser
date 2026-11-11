@@ -52,7 +52,8 @@ export function useMarketData(hours){
     // Never relabel a previous Sleeper window as the newly selected one.
     setSnapshots(previous=>previous.sleeper?.window===String(hours)?previous:{espn:previous.espn});
     load();
-    return ()=>{request.current.id++;request.current.controller?.abort();};
+    const timer=window.setInterval(()=>{if(document.visibilityState==='visible')load();},15*60*1000);
+    return ()=>{window.clearInterval(timer);request.current.id++;request.current.controller?.abort();};
   },[hours,publicRefresh]);
 return {snapshots,busy,errors,notice,load};
 }

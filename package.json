@@ -25,7 +25,7 @@
     "data:2026": "python3 scripts/import_nflverse_2026.py",
     "data:verify:2026": "python3 scripts/verify_warehouse_2026.py",
     "data:waivers": "python3 scripts/import_waivers.py",
-    "test:waivers": "npm run verify:waivers && python3 tests/test_waiver_import.py && python3 tests/test_waiver_week4.py && node --test tests/waivers-api.test.mjs && vitest run tests/waivers-ui.test.jsx && python3 tests/test_waivers_week7.py",
+    "test:waivers": "npm run verify:waivers && python3 tests/test_waiver_import.py && python3 tests/test_waiver_week4.py && node --test tests/waivers-api.test.mjs && vitest run tests/waivers-ui.test.jsx && python3 tests/test_waivers_week7.py && python3 tests/test_waivers_current.py",
     "verify:waivers": "python3 scripts/import_waivers.py --verify && python3 scripts/import_waivers_week4.py --verify && python3 scripts/import_waivers_week7.py --verify && python3 scripts/import_waivers_current.py --verify-all",
     "data:dfs:week1": "python3 scripts/import_dfs_week1.py",
     "jev": "node --env-file-if-exists=.env.local scripts/jev.mjs",
@@ -33,7 +33,8 @@
     "market:commentary:refresh": "node --env-file-if-exists=.env.local scripts/refresh_market_commentary.mjs",
     "data:waivers:week4": "python3 scripts/import_waivers_week4.py",
     "news:prepare": "node scripts/prepare-fantasy-news-snapshot.mjs",
-    "lint": "eslint src/lhq/WeekWindowPicker.jsx src/lhq/weekWindowModel.js tests/week-window-picker.test.jsx tests/week-window-model.test.jsx src/lhq/DisclosureToggle.jsx src/lhq/ColumnLegend.jsx src/lhq/StatGroupToggle.jsx src/lhq/TableControls.jsx src/lhq/ComparisonControl.jsx src/lhq/opportunityComparison.js src/lhq/FantasyNews.jsx src/lhq/news*.js src/lhq/news*.jsx src/lhq/usePublicNews.js src/lhq/fantasyNewsContext.js scripts/news/*.js tests/fantasy-news-ui.test.jsx src/lhq/FilterPill.jsx src/lhq/GameSelector.jsx src/lhq/selectorStyles.js tests/selectors.test.jsx src/TrendBars.jsx src/trendColumn.js tests/trend-column.test.jsx src/lhq/PlayerOwnership.jsx src/lhq/ownershipModel.js src/lhq/usePlayerOwnership.js src/lhq/ownershipCache.js src/lhq/useDataRefresh.js src/lhq/playerCalendar.js tests/player-ownership.test.jsx tests/ownership-cache.test.jsx tests/player-calendar.test.jsx src/lhq/PlayerActivity.jsx src/lhq/playerActivity.js src/lhq/usePlayerActivity.js tests/player-activity.test.jsx src/lhq/Briefings.jsx src/lhq/briefingModel.js tests/briefings.test.jsx"
+    "lint": "eslint src/lhq/WeekWindowPicker.jsx src/lhq/weekWindowModel.js tests/week-window-picker.test.jsx tests/week-window-model.test.jsx src/lhq/DisclosureToggle.jsx src/lhq/ColumnLegend.jsx src/lhq/StatGroupToggle.jsx src/lhq/TableControls.jsx src/lhq/ComparisonControl.jsx src/lhq/opportunityComparison.js src/lhq/FantasyNews.jsx src/lhq/news*.js src/lhq/news*.jsx src/lhq/usePublicNews.js src/lhq/fantasyNewsContext.js scripts/news/*.js tests/fantasy-news-ui.test.jsx src/lhq/FilterPill.jsx src/lhq/GameSelector.jsx src/lhq/selectorStyles.js tests/selectors.test.jsx src/TrendBars.jsx src/trendColumn.js tests/trend-column.test.jsx src/lhq/PlayerOwnership.jsx src/lhq/ownershipModel.js src/lhq/usePlayerOwnership.js src/lhq/ownershipCache.js src/lhq/useDataRefresh.js src/lhq/playerCalendar.js tests/player-ownership.test.jsx tests/ownership-cache.test.jsx tests/player-calendar.test.jsx src/lhq/PlayerActivity.jsx src/lhq/playerActivity.js src/lhq/usePlayerActivity.js tests/player-activity.test.jsx src/lhq/Briefings.jsx src/lhq/briefingModel.js tests/briefings.test.jsx",
+    "market:news:refresh": "node scripts/refresh_market_news.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "1.1.0",

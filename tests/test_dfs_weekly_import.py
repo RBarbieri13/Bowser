@@ -132,7 +132,7 @@ class WeeklyDfsTests(unittest.TestCase):
         with self.assertRaises(module.PartialData):
             module.publication_default(previous, copy.deepcopy(previous['slates']), updated, 2026, 2, now)
 
-    def run_partial_fixture(self, directory, *, allow=False, supplemental=False):
+    def run_partial_fixture(self, directory, *, allow=False, supplemental=False, identity_failure=False):
         now = datetime(2026, 10, 1, 22, tzinfo=timezone.utc)
         target = Path(directory) / 'dfs.json'
         if not target.exists(): target.write_text(json.dumps(PARTIAL_BASELINE))
@@ -186,8 +186,24 @@ class WeeklyDfsTests(unittest.TestCase):
              patch.object(module,'roster_identities',return_value=(identities,4)), \
              patch.object(module,'parse_supplemental_projections',return_value=fsc,
                           side_effect=None if supplemental else module.PartialData('Supplemental source unavailable')):
-            result = module.refresh(target,Path(directory)/'raw',now,allow_partial_projections=allow)
+            if identity_failure:
+                projections={('tradedplayer','WR',games[0]['away']):{'projection':12}}
+                with patch.object(module,'parse_projections',return_value=projections):
+                    result = module.refresh(target,Path(directory)/'raw',now,allow_partial_projections=allow)
+            else:
+                result = module.refresh(target,Path(directory)/'raw',now,allow_partial_projections=allow)
         return result, json.loads(target.read_text())
+
+    def test_identity_mismatch_rejects_primary_entirely_and_requires_explicit_partial_mode(self):
+        with tempfile.TemporaryDirectory() as temp:
+            with self.assertRaisesRegex(module.PartialData,'identity coverage mismatch'):
+                self.run_partial_fixture(temp,identity_failure=True)
+            result,snapshot=self.run_partial_fixture(temp,allow=True,identity_failure=True)
+            self.assertTrue(result['publishable'])
+            for key in result['updatedSlates']:
+                slate=snapshot['slates'][key]
+                self.assertTrue(all(row['projection'] is None for row in slate['records']))
+                self.assertIn('identity coverage mismatch',slate['primaryProjectionStatus']['reason'])
 
     def test_explicit_partial_mode_publishes_current_salaries_and_nulls_without_weakening_default(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -401,7 +417,9 @@ class WeeklyDfsTests(unittest.TestCase):
                        lambda s: next(r for r in s['slates'][s['defaultSlate']]['records'] if r['projection'] is not None).update(projectionWeek=s['slates'][s['defaultSlate']]['week'] + 1),
                        lambda s: s['slates'][s['defaultSlate']]['records'].pop(),
                        lambda s: s.update(defaultSlate='2026-w2-dk-153434')]:
-            broken = copy.deepcopy(SNAPSHOT)
+            # Tampering needs a fixed historical fixture with real projections;
+            # a valid current salary-only capture may have none.
+            broken = copy.deepcopy(PARTIAL_BASELINE)
             change(broken)
             with self.assertRaises(module.PartialData):
                 module.validate_snapshot(broken)
@@ -446,6 +464,7 @@ class WeeklyDfsTests(unittest.TestCase):
                  patch.object(module, 'discover_slates', return_value=discovered), \
                  patch.object(module, 'parse_projections', return_value=source_projections()), \
                  patch.object(module, 'roster_identities', return_value=({}, 2)), \
+                 patch.object(module, 'validate_projection_salary_identities'), \
                  patch.object(module, 'build_records', side_effect=[SLATE['records'], module.PartialData('second slate pending')]):
                 with self.assertRaisesRegex(module.PartialData, 'second slate'):
                     module.refresh(target, Path(temp) / 'raw', NOW)

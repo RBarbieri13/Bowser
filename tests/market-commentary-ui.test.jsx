@@ -32,3 +32,10 @@ test('news filters are inside the existing single panel and source counts remain
 test('CSV identifies model-derived columns and capture timestamp',()=>{
  const csv=csvFor([{name:'Fixture Runner',newsCount:1,newsBalance:100,newsDelta:null}],{commentary});expect(csv).toContain('Commentary balance');expect(csv).toContain(commentary.capturedAt);expect(csv).toContain('"100"');
 });
+test('CSV preserves separate source capture and original classification clocks',()=>{
+ const old='2026-09-26T21:36:07.842Z',fresh='2026-11-11T04:04:17.975Z';
+ const csv=csvFor([{name:'Fixture Runner'}],{commentary:{capturedAt:old,classificationCapturedAt:old,newsCapturedAt:fresh}});
+ const [headers,row]=csv.split('\r\n').map(line=>line.split(','));
+ expect(row[headers.indexOf('"Commentary captured at"')]).toBe(`"${old}"`);
+ expect(row[headers.indexOf('"News source captured at"')]).toBe(`"${fresh}"`);
+});

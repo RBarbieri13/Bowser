@@ -185,8 +185,11 @@ def parse_nfl_rank(page):
         if table and 'Waiver Wire Priority Rankings' in ' '.join(table[0]):
             out=[]
             for cells in table[1:]:
-                m=re.fullmatch(r'(\d+)\) (QB|RB|WR|TE) (.+), ([\w ]+)',cells[0])
-                if m:out.append({'name':m[3],'position':m[2],'team':team_key(m[4]),'overallRank':int(m[1])});continue
+                m=re.fullmatch(r'(\d+)\) (QB|RB|WR|TE) (.+), ([\w ]+)',re.sub(r'\s*\*+$', '', cells[0]))
+                if m:
+                    marker=re.search(r'\*+$',cells[0])
+                    condition=next((line for line in page.lines if marker and line.startswith(marker[0]) and not line.startswith(marker[0]+'*')),None)
+                    out.append({'name':m[3],'position':m[2],'team':team_key(m[4]),'overallRank':int(m[1]),**({'condition':condition.lstrip('*')} if condition else {})});continue
                 d=re.fullmatch(r'(\d+)\) (.+) D/ST',cells[0])
                 if d:out.append({'name':d[2]+' D/ST','position':'DST','team':team_key(d[2]),'overallRank':int(d[1])});continue
                 raise ValueError('Unrecognized NFL rank row '+repr(cells))
