@@ -83,8 +83,9 @@ def capture_sources(directory, urls):
 
 def read_captures(directory, week):
     with (DATA / 'raw/2026/schedules.csv').open() as schedule:
-        kickoff = min(date.fromisoformat(row['gameday']) for row in csv.DictReader(schedule)
-                      if row['season'] == '2026' and row['week'] == str(week) and row['game_type'] == 'REG')
+        game_dates = [date.fromisoformat(row['gameday']) for row in csv.DictReader(schedule)
+                      if row['season'] == '2026' and row['week'] == str(week) and row['game_type'] == 'REG']
+        kickoff, final_game = min(game_dates), max(game_dates)
     evidence = json.loads((directory / 'evidence.json').read_text())
     pages = {}
     used = {}
@@ -108,7 +109,10 @@ def read_captures(directory, week):
                 raise ValueError(f'Wrong waiver week: {key}')
         published = date.fromisoformat(dates['datePublished'][:10])
         captured_at = datetime.fromisoformat(capture['capturedAt'].replace('Z', '+00:00'))
-        if captured_at.tzinfo is None or not kickoff - timedelta(days=5) <= published <= kickoff or published > captured_at.date():
+        # Publishers can revise the current week's advice after Thursday kickoff.
+        # Keep the exact-week title and capture-time gates, and stop at the last
+        # scheduled game rather than admitting an article from another NFL week.
+        if captured_at.tzinfo is None or not kickoff - timedelta(days=5) <= published <= final_game or published > captured_at.date():
             raise ValueError(f'Wrong publication window: {key}')
         used[key] = {'url': capture['url'], 'sha256': digest, **dates, 'capturedAt': capture['capturedAt']}
         pages[key] = page

@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "waiverWeek": 10,
-  "capturedAt": "2026-11-13T14:03:35.199098+00:00",
+  "capturedAt": "2026-11-13T21:35:34.952834+00:00",
   "sources": [
     {
       "id": "fantasypros",
@@ -11,20 +11,20 @@
       "faabCount": 24,
       "publishedAt": "2026-11-11",
       "coverageNote": "Public PPR preview; bids use the publisher’s $100 reference.",
-      "capturedAt": "2026-11-13T14:03:28.880809+00:00",
+      "capturedAt": "2026-11-13T21:35:29.975544+00:00",
       "evidence": [
         {
           "url": "https://www.fantasypros.com/nfl/rankings/?scoring=PPR&type=waiver",
-          "sha256": "b3c94c3bf49f6820f5b5ac6675d665c6da52bed3500a037d3dc6222b574d0d46",
+          "sha256": "c06bf2539e54ee543c690a5c851a77bd9b9ad22f34c67b57d9ada8373480ca7c",
           "datePublished": "2026-11-11",
-          "capturedAt": "2026-11-13T14:03:28.418778+00:00"
+          "capturedAt": "2026-11-13T21:35:29.744494+00:00"
         },
         {
           "url": "https://www.fantasypros.com/2026/11/fantasy-football-waiver-wire-advice-players-to-add-stash-drop-week-10-2026/",
-          "sha256": "00a82333378e1873aba2a6952f7d23ea79db8ea27d102beefeab4da8a4478d9c",
+          "sha256": "564227539cd3c552ae72819d858aecaa7891a1051ff7ffc622924c8d482bfb67",
           "datePublished": "2026-11-10T12:58:34+00:00",
           "dateModified": "2026-11-10T23:39:32+00:00",
-          "capturedAt": "2026-11-13T14:03:28.880809+00:00"
+          "capturedAt": "2026-11-13T21:35:29.975544+00:00"
         }
       ],
       "rankUrl": "https://www.fantasypros.com/nfl/rankings/?scoring=PPR&type=waiver",
@@ -38,23 +38,23 @@
       "type": "expert",
       "rankCount": 85,
       "faabCount": 15,
-      "publishedAt": "2026-11-12T12:20:38-05:00",
+      "publishedAt": "2026-11-13T08:50:38-05:00",
       "coverageNote": "Overall priority normalized by position; bid tiers retain source units.",
-      "capturedAt": "2026-11-13T14:03:29.608742+00:00",
+      "capturedAt": "2026-11-13T21:35:30.516330+00:00",
       "evidence": [
         {
           "url": "https://www.rotoballer.com/mid-week-waiver-wire-rankings-fantasy-football-week-10-2026/1990215",
-          "sha256": "aa73bac502f640c5c1ee6edf7038c54d2b156c0018d7b7b4e223ef57b6dec71d",
-          "datePublished": "2026-11-12T12:20:38-05:00",
-          "dateModified": "2026-11-12T13:19:24-05:00",
-          "capturedAt": "2026-11-13T14:03:29.241467+00:00"
+          "sha256": "63512cc303c8fe6a6426bd3292218cb6a1b315e4398eed1dc929c992df2e79c4",
+          "datePublished": "2026-11-13T08:50:38-05:00",
+          "dateModified": "2026-11-13T09:53:43-05:00",
+          "capturedAt": "2026-11-13T21:35:30.271644+00:00"
         },
         {
           "url": "https://www.rotoballer.com/faab-waiver-wire-advice-week-10-fantasy-pickups-2026/1988730",
-          "sha256": "51dc873f3d0a4c7877c1363d7e22be593edfe1417a9fe58d820377e8611ba7f8",
+          "sha256": "c26b83738eaab195c76cf91e1acaaa8fa3b5a00d07e2cc268722b70903311cab",
           "datePublished": "2026-11-10T11:40:00-05:00",
           "dateModified": "2026-11-10T19:17:09-05:00",
-          "capturedAt": "2026-11-13T14:03:29.608742+00:00"
+          "capturedAt": "2026-11-13T21:35:30.516330+00:00"
         }
       ],
       "rankUrl": "https://www.rotoballer.com/mid-week-waiver-wire-rankings-fantasy-football-week-10-2026/1990215",
@@ -69,13 +69,13 @@
       "faabCount": 5,
       "publishedAt": "2026-11-09",
       "coverageNote": "Percent of annual FAAB.",
-      "capturedAt": "2026-11-13T14:03:34.159875+00:00",
+      "capturedAt": "2026-11-13T21:35:32.106763+00:00",
       "evidence": [
         {
           "url": "https://www.footballguys.com/article/2026-email-feature-top-waiver-wire-pickups-week10",
-          "sha256": "6fe9c81db0f52f31d016416c19d92895d2524f4d445a6d1eab69730cc08e8f19",
+          "sha256": "44162f8422dab7759b0c524430889abe3e162af47f995f0781b132ca3b5e69c2",
           "datePublished": "2026-11-09",
-          "capturedAt": "2026-11-13T14:03:34.159875+00:00"
+          "capturedAt": "2026-11-13T21:35:32.106763+00:00"
         }
       ],
       "faabUrl": "https://www.footballguys.com/article/2026-email-feature-top-waiver-wire-pickups-week10"
@@ -88,14 +88,14 @@
       "faabCount": 0,
       "publishedAt": "2026-11-09T16:23:35.428Z",
       "coverageNote": "Published overall waiver priorities, normalized by position.",
-      "capturedAt": "2026-11-13T14:03:34.472464+00:00",
+      "capturedAt": "2026-11-13T21:35:32.659071+00:00",
       "evidence": [
         {
           "url": "https://www.nfl.com/news/2026-nfl-fantasy-football-waiver-wire-week-10-jordyn-tyson-tank-dell-headline-top-15-targets",
-          "sha256": "74b1852d94d3de8c9aee03f21eed8f51bb8bc1845d05cd278d279a7fc5e0d6e8",
+          "sha256": "cab51da94620133dea9835d5f65fd956897133554956c1be06d12267ac228316",
           "datePublished": "2026-11-09T16:23:35.428Z",
           "dateModified": "2026-11-10T02:40:38.74Z",
-          "capturedAt": "2026-11-13T14:03:34.472464+00:00"
+          "capturedAt": "2026-11-13T21:35:32.659071+00:00"
         }
       ],
       "rankUrl": "https://www.nfl.com/news/2026-nfl-fantasy-football-waiver-wire-week-10-jordyn-tyson-tank-dell-headline-top-15-targets",
@@ -109,14 +109,14 @@
       "faabCount": 0,
       "publishedAt": "2026-11-10T14:01:37-06:00",
       "coverageNote": "Published overall waiver priorities, normalized by position.",
-      "capturedAt": "2026-11-13T14:03:34.837634+00:00",
+      "capturedAt": "2026-11-13T21:35:32.967713+00:00",
       "evidence": [
         {
           "url": "https://blitzsportsmedia.com/fantasy-football-wk10-waiver-ranks-26/",
-          "sha256": "a46abf99193202758c4b4a4a699329efa6c940a3b299a441fa32cf607aee1392",
+          "sha256": "7da1dcc32f7084231bf13e784061a5c7e22bb94a86e9b07666ef7499fb3d2e36",
           "datePublished": "2026-11-10T14:01:37-06:00",
           "dateModified": "2026-11-10T14:01:41-06:00",
-          "capturedAt": "2026-11-13T14:03:34.837634+00:00"
+          "capturedAt": "2026-11-13T21:35:32.967713+00:00"
         }
       ],
       "rankUrl": "https://blitzsportsmedia.com/fantasy-football-wk10-waiver-ranks-26/",
@@ -130,14 +130,14 @@
       "faabCount": 20,
       "publishedAt": "2026-11-10T15:51:00+00:00",
       "coverageNote": "Explicit positional add order; remaining FAAB and format-specific tiers. Ambiguous operator-plus-range phrases are omitted.",
-      "capturedAt": "2026-11-13T14:03:35.038715+00:00",
+      "capturedAt": "2026-11-13T21:35:34.695400+00:00",
       "evidence": [
         {
           "url": "https://www.cbssports.com/fantasy/football/news/week-10-waiver-wire-audric-estime-could-be-the-cure/",
-          "sha256": "59a8d14eca07004d01fd54e416e15b280bb09b5d184910d8693ccea2cbe02fd9",
+          "sha256": "a2dc200f09943c5bc0dbc8cd6c6b9106f9129b5ce203b04a8e70c654bd57b1f5",
           "datePublished": "2026-11-10T15:51:00+00:00",
           "dateModified": "2026-11-11T10:13:07+00:00",
-          "capturedAt": "2026-11-13T14:03:35.038715+00:00"
+          "capturedAt": "2026-11-13T21:35:34.695400+00:00"
         }
       ],
       "rankUrl": "https://www.cbssports.com/fantasy/football/news/week-10-waiver-wire-audric-estime-could-be-the-cure/",
@@ -152,14 +152,14 @@
       "faabCount": 12,
       "publishedAt": "2026-11-10T13:50:41+00:00",
       "coverageNote": "Published dollar ranges for a $100 reference budget; PPR, six-point passing TDs. Bench-depth tiers remain separate; article order is not a ranking.",
-      "capturedAt": "2026-11-13T14:03:35.199098+00:00",
+      "capturedAt": "2026-11-13T21:35:34.952834+00:00",
       "evidence": [
         {
           "url": "https://www.playerprofiler.com/article/week-10-waiver-wire-top-fantasy-football-pickups-2026/",
-          "sha256": "9a7f1947f5ff4fe7c6c2c90b089f37fc86ed82a21f0ab765c0806e602880243f",
+          "sha256": "d52e41bf6e65b9ddc3e31b238f0b8a4c401f2151ec81b12e7fe1b9707283a0e5",
           "datePublished": "2026-11-10T13:50:41+00:00",
           "dateModified": "2026-11-10T13:51:54+00:00",
-          "capturedAt": "2026-11-13T14:03:35.199098+00:00"
+          "capturedAt": "2026-11-13T21:35:34.952834+00:00"
         }
       ],
       "faabUrl": "https://www.playerprofiler.com/article/week-10-waiver-wire-top-fantasy-football-pickups-2026/"
