@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "waiverWeek": 10,
-  "capturedAt": "2026-11-11T04:02:46.328682+00:00",
+  "capturedAt": "2026-11-13T14:03:35.199098+00:00",
   "sources": [
     {
       "id": "fantasypros",
@@ -11,20 +11,20 @@
       "faabCount": 24,
       "publishedAt": "2026-11-11",
       "coverageNote": "Public PPR preview; bids use the publisher’s $100 reference.",
-      "capturedAt": "2026-11-11T04:02:42.696100+00:00",
+      "capturedAt": "2026-11-13T14:03:28.880809+00:00",
       "evidence": [
         {
           "url": "https://www.fantasypros.com/nfl/rankings/?scoring=PPR&type=waiver",
-          "sha256": "b608cea643138ff3f5f9e725b62397170e8ac471ded4ce3f4c3929e48da67544",
+          "sha256": "b3c94c3bf49f6820f5b5ac6675d665c6da52bed3500a037d3dc6222b574d0d46",
           "datePublished": "2026-11-11",
-          "capturedAt": "2026-11-11T04:02:42.487620+00:00"
+          "capturedAt": "2026-11-13T14:03:28.418778+00:00"
         },
         {
           "url": "https://www.fantasypros.com/2026/11/fantasy-football-waiver-wire-advice-players-to-add-stash-drop-week-10-2026/",
-          "sha256": "67c45d0f856004a84173306adb032127ddaa08e2099b43e1e02ab143fb05f727",
+          "sha256": "00a82333378e1873aba2a6952f7d23ea79db8ea27d102beefeab4da8a4478d9c",
           "datePublished": "2026-11-10T12:58:34+00:00",
           "dateModified": "2026-11-10T23:39:32+00:00",
-          "capturedAt": "2026-11-11T04:02:42.696100+00:00"
+          "capturedAt": "2026-11-13T14:03:28.880809+00:00"
         }
       ],
       "rankUrl": "https://www.fantasypros.com/nfl/rankings/?scoring=PPR&type=waiver",
@@ -38,26 +38,26 @@
       "type": "expert",
       "rankCount": 85,
       "faabCount": 15,
-      "publishedAt": "2026-11-10T11:45:34-05:00",
+      "publishedAt": "2026-11-12T12:20:38-05:00",
       "coverageNote": "Overall priority normalized by position; bid tiers retain source units.",
-      "capturedAt": "2026-11-11T04:02:43.060137+00:00",
+      "capturedAt": "2026-11-13T14:03:29.608742+00:00",
       "evidence": [
         {
-          "url": "https://www.rotoballer.com/waiver-wire-rankings-fantasy-football-week-10-2026/1988192",
-          "sha256": "e5c0ffcbc493c650157031830aa37fdb61b096f69c9635013a0837e466520f2b",
-          "datePublished": "2026-11-10T11:45:34-05:00",
-          "dateModified": "2026-11-10T11:59:27-05:00",
-          "capturedAt": "2026-11-11T04:02:42.834723+00:00"
+          "url": "https://www.rotoballer.com/mid-week-waiver-wire-rankings-fantasy-football-week-10-2026/1990215",
+          "sha256": "aa73bac502f640c5c1ee6edf7038c54d2b156c0018d7b7b4e223ef57b6dec71d",
+          "datePublished": "2026-11-12T12:20:38-05:00",
+          "dateModified": "2026-11-12T13:19:24-05:00",
+          "capturedAt": "2026-11-13T14:03:29.241467+00:00"
         },
         {
           "url": "https://www.rotoballer.com/faab-waiver-wire-advice-week-10-fantasy-pickups-2026/1988730",
-          "sha256": "043bac4b8ab4c0a2246da3df9ccd2ded0f1a4e26122a3dbbc1e73e94f169477a",
+          "sha256": "51dc873f3d0a4c7877c1363d7e22be593edfe1417a9fe58d820377e8611ba7f8",
           "datePublished": "2026-11-10T11:40:00-05:00",
           "dateModified": "2026-11-10T19:17:09-05:00",
-          "capturedAt": "2026-11-11T04:02:43.060137+00:00"
+          "capturedAt": "2026-11-13T14:03:29.608742+00:00"
         }
       ],
-      "rankUrl": "https://www.rotoballer.com/waiver-wire-rankings-fantasy-football-week-10-2026/1988192",
+      "rankUrl": "https://www.rotoballer.com/mid-week-waiver-wire-rankings-fantasy-football-week-10-2026/1990215",
       "rankMethod": "within-position ordinal of published overall waiver priority",
       "faabUrl": "https://www.rotoballer.com/faab-waiver-wire-advice-week-10-fantasy-pickups-2026/1988730"
     },
@@ -69,13 +69,13 @@
       "faabCount": 5,
       "publishedAt": "2026-11-09",
       "coverageNote": "Percent of annual FAAB.",
-      "capturedAt": "2026-11-11T04:02:43.704973+00:00",
+      "capturedAt": "2026-11-13T14:03:34.159875+00:00",
       "evidence": [
         {
           "url": "https://www.footballguys.com/article/2026-email-feature-top-waiver-wire-pickups-week10",
-          "sha256": "a116566ea6ba6619eb513c5d7d056367af07af5fccfb432014e8da1641c8473e",
+          "sha256": "6fe9c81db0f52f31d016416c19d92895d2524f4d445a6d1eab69730cc08e8f19",
           "datePublished": "2026-11-09",
-          "capturedAt": "2026-11-11T04:02:43.704973+00:00"
+          "capturedAt": "2026-11-13T14:03:34.159875+00:00"
         }
       ],
       "faabUrl": "https://www.footballguys.com/article/2026-email-feature-top-waiver-wire-pickups-week10"
@@ -88,14 +88,14 @@
       "faabCount": 0,
       "publishedAt": "2026-11-09T16:23:35.428Z",
       "coverageNote": "Published overall waiver priorities, normalized by position.",
-      "capturedAt": "2026-11-11T04:02:44.113953+00:00",
+      "capturedAt": "2026-11-13T14:03:34.472464+00:00",
       "evidence": [
         {
           "url": "https://www.nfl.com/news/2026-nfl-fantasy-football-waiver-wire-week-10-jordyn-tyson-tank-dell-headline-top-15-targets",
-          "sha256": "96a6aad98175916a8d39fce53ec1245ee682edf9f41437f2b92d0b85cc91e661",
+          "sha256": "74b1852d94d3de8c9aee03f21eed8f51bb8bc1845d05cd278d279a7fc5e0d6e8",
           "datePublished": "2026-11-09T16:23:35.428Z",
           "dateModified": "2026-11-10T02:40:38.74Z",
-          "capturedAt": "2026-11-11T04:02:44.113953+00:00"
+          "capturedAt": "2026-11-13T14:03:34.472464+00:00"
         }
       ],
       "rankUrl": "https://www.nfl.com/news/2026-nfl-fantasy-football-waiver-wire-week-10-jordyn-tyson-tank-dell-headline-top-15-targets",
@@ -109,14 +109,14 @@
       "faabCount": 0,
       "publishedAt": "2026-11-10T14:01:37-06:00",
       "coverageNote": "Published overall waiver priorities, normalized by position.",
-      "capturedAt": "2026-11-11T04:02:45.788636+00:00",
+      "capturedAt": "2026-11-13T14:03:34.837634+00:00",
       "evidence": [
         {
           "url": "https://blitzsportsmedia.com/fantasy-football-wk10-waiver-ranks-26/",
-          "sha256": "81222c3e97548fc27f502633d17c8c263a35a34188824bf10972408951988dcb",
+          "sha256": "a46abf99193202758c4b4a4a699329efa6c940a3b299a441fa32cf607aee1392",
           "datePublished": "2026-11-10T14:01:37-06:00",
           "dateModified": "2026-11-10T14:01:41-06:00",
-          "capturedAt": "2026-11-11T04:02:45.788636+00:00"
+          "capturedAt": "2026-11-13T14:03:34.837634+00:00"
         }
       ],
       "rankUrl": "https://blitzsportsmedia.com/fantasy-football-wk10-waiver-ranks-26/",
@@ -126,18 +126,18 @@
       "id": "cbs",
       "label": "CBS Sports",
       "type": "expert",
-      "rankCount": 41,
-      "faabCount": 21,
+      "rankCount": 39,
+      "faabCount": 20,
       "publishedAt": "2026-11-10T15:51:00+00:00",
       "coverageNote": "Explicit positional add order; remaining FAAB and format-specific tiers. Ambiguous operator-plus-range phrases are omitted.",
-      "capturedAt": "2026-11-11T04:02:46.221860+00:00",
+      "capturedAt": "2026-11-13T14:03:35.038715+00:00",
       "evidence": [
         {
           "url": "https://www.cbssports.com/fantasy/football/news/week-10-waiver-wire-audric-estime-could-be-the-cure/",
-          "sha256": "68e8fa3ede8a223ab195db6a17ee20669ec08168b33fec489b7aac06629f8456",
+          "sha256": "59a8d14eca07004d01fd54e416e15b280bb09b5d184910d8693ccea2cbe02fd9",
           "datePublished": "2026-11-10T15:51:00+00:00",
-          "dateModified": "2026-11-11T03:52:28+00:00",
-          "capturedAt": "2026-11-11T04:02:46.221860+00:00"
+          "dateModified": "2026-11-11T10:13:07+00:00",
+          "capturedAt": "2026-11-13T14:03:35.038715+00:00"
         }
       ],
       "rankUrl": "https://www.cbssports.com/fantasy/football/news/week-10-waiver-wire-audric-estime-could-be-the-cure/",
@@ -152,14 +152,14 @@
       "faabCount": 12,
       "publishedAt": "2026-11-10T13:50:41+00:00",
       "coverageNote": "Published dollar ranges for a $100 reference budget; PPR, six-point passing TDs. Bench-depth tiers remain separate; article order is not a ranking.",
-      "capturedAt": "2026-11-11T04:02:46.328682+00:00",
+      "capturedAt": "2026-11-13T14:03:35.199098+00:00",
       "evidence": [
         {
           "url": "https://www.playerprofiler.com/article/week-10-waiver-wire-top-fantasy-football-pickups-2026/",
-          "sha256": "2c6435f78b974770b8d50f87c3d6adfad58125c4684eb79a0e2e34e3d059d8cb",
+          "sha256": "9a7f1947f5ff4fe7c6c2c90b089f37fc86ed82a21f0ab765c0806e602880243f",
           "datePublished": "2026-11-10T13:50:41+00:00",
           "dateModified": "2026-11-10T13:51:54+00:00",
-          "capturedAt": "2026-11-11T04:02:46.328682+00:00"
+          "capturedAt": "2026-11-13T14:03:35.199098+00:00"
         }
       ],
       "faabUrl": "https://www.playerprofiler.com/article/week-10-waiver-wire-top-fantasy-football-pickups-2026/"
@@ -181,9 +181,9 @@
         },
         "rotoballer": {
           "scope": "position",
-          "rank": 2,
+          "rank": 1,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 79
+          "overallRank": 77
         },
         "nfl": {
           "scope": "position",
@@ -211,9 +211,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 5,
+          "rank": 2,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 82
+          "overallRank": 78
         },
         "blitz": {
           "scope": "position",
@@ -237,7 +237,7 @@
           "scope": "position",
           "rank": 4,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 81
+          "overallRank": 80
         }
       },
       "faab": {},
@@ -259,9 +259,9 @@
         },
         "rotoballer": {
           "scope": "position",
-          "rank": 3,
+          "rank": 5,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 80
+          "overallRank": 81
         },
         "blitz": {
           "scope": "position",
@@ -283,9 +283,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 8,
+          "rank": 6,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 85
+          "overallRank": 82
         }
       },
       "faab": {},
@@ -301,9 +301,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 6,
+          "rank": 9,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 83
+          "overallRank": 85
         },
         "blitz": {
           "scope": "position",
@@ -325,9 +325,27 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 1,
+          "rank": 3,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 78
+          "overallRank": 79
+        }
+      },
+      "faab": {},
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "team:dst:NYG",
+      "playerId": null,
+      "name": "New York Giants",
+      "position": "DST",
+      "team": "NYG",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 7,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 83
         }
       },
       "faab": {},
@@ -343,7 +361,7 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 7,
+          "rank": 8,
           "method": "within-position ordinal of published overall waiver priority",
           "overallRank": 84
         },
@@ -547,9 +565,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 3,
+          "rank": 2,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 65
+          "overallRank": 63
         },
         "blitz": {
           "scope": "position",
@@ -637,7 +655,7 @@
           "scope": "position",
           "rank": 15,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 77
+          "overallRank": 76
         }
       },
       "faab": {},
@@ -671,6 +689,12 @@
       "position": "QB",
       "team": "ARI",
       "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 13,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 74
+        },
         "cbs": {
           "scope": "position",
           "rank": 5,
@@ -691,24 +715,6 @@
       "teamProvenance": "publisher"
     },
     {
-      "id": "00-0032950",
-      "playerId": "00-0032950",
-      "name": "Carson Wentz",
-      "position": "QB",
-      "team": "MIN",
-      "rankings": {
-        "rotoballer": {
-          "scope": "position",
-          "rank": 5,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 67
-        }
-      },
-      "faab": {},
-      "identityMethod": "unique nflverse name and position",
-      "teamProvenance": "nflverse player dictionary"
-    },
-    {
       "id": "00-0035710",
       "playerId": "00-0035710",
       "name": "Daniel Jones",
@@ -717,9 +723,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 12,
+          "rank": 10,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 74
+          "overallRank": 71
         }
       },
       "faab": {},
@@ -755,9 +761,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 8,
+          "rank": 7,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 70
+          "overallRank": 68
         }
       },
       "faab": {},
@@ -771,6 +777,12 @@
       "position": "QB",
       "team": "LV",
       "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 12,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 73
+        },
         "cbs": {
           "scope": "position",
           "rank": 4,
@@ -782,24 +794,6 @@
       "teamProvenance": "publisher"
     },
     {
-      "id": "00-0035289",
-      "playerId": "00-0035289",
-      "name": "Gardner Minshew",
-      "position": "QB",
-      "team": "ARI",
-      "rankings": {
-        "rotoballer": {
-          "scope": "position",
-          "rank": 14,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 76
-        }
-      },
-      "faab": {},
-      "identityMethod": "unique nflverse name and position",
-      "teamProvenance": "nflverse player dictionary"
-    },
-    {
       "id": "00-0030565",
       "playerId": "00-0030565",
       "name": "Geno Smith",
@@ -808,9 +802,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 1,
+          "rank": 3,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 63
+          "overallRank": 64
         },
         "cbs": {
           "scope": "position",
@@ -856,9 +850,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 7,
+          "rank": 5,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 69
+          "overallRank": 66
         },
         "blitz": {
           "scope": "position",
@@ -907,9 +901,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 6,
+          "rank": 4,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 68
+          "overallRank": 65
         },
         "cbs": {
           "scope": "position",
@@ -955,9 +949,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 11,
+          "rank": 6,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 73
+          "overallRank": 67
         }
       },
       "faab": {},
@@ -973,9 +967,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 9,
+          "rank": 8,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 71
+          "overallRank": 69
         }
       },
       "faab": {},
@@ -987,18 +981,41 @@
       "playerId": "00-0029604",
       "name": "Kirk Cousins",
       "position": "QB",
-      "team": "LV",
+      "team": "MIN",
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 2,
+          "rank": 1,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 64
+          "overallRank": 62
         }
       },
       "faab": {},
       "identityMethod": "unique nflverse name and position",
       "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0040014",
+      "playerId": "00-0040014",
+      "name": "Kyle McCord",
+      "position": "QB",
+      "team": "MIA",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 14,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 75
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 6,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
     },
     {
       "id": "00-0038128",
@@ -1007,12 +1024,6 @@
       "position": "QB",
       "team": "MIA",
       "rankings": {
-        "rotoballer": {
-          "scope": "position",
-          "rank": 4,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 66
-        },
         "blitz": {
           "scope": "position",
           "rank": 3,
@@ -1033,9 +1044,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 10,
+          "rank": 9,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 72
+          "overallRank": 70
         }
       },
       "faab": {},
@@ -1051,9 +1062,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 13,
+          "rank": 11,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 75
+          "overallRank": 72
         },
         "blitz": {
           "scope": "position",
@@ -1069,15 +1080,15 @@
     {
       "id": "00-0039373",
       "playerId": "00-0039373",
-      "name": "Audric Estimé",
+      "name": "Audric Estime",
       "position": "RB",
       "team": "NO",
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 12,
+          "rank": 8,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 26
+          "overallRank": 22
         },
         "nfl": {
           "scope": "position",
@@ -1148,6 +1159,12 @@
       "position": "RB",
       "team": "ARI",
       "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 16,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 45
+        },
         "blitz": {
           "scope": "position",
           "rank": 11,
@@ -1156,7 +1173,7 @@
         },
         "cbs": {
           "scope": "position",
-          "rank": 4,
+          "rank": 3,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -1207,7 +1224,7 @@
       "rankings": {
         "cbs": {
           "scope": "position",
-          "rank": 8,
+          "rank": 7,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -1224,9 +1241,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 8,
+          "rank": 6,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 21
+          "overallRank": 17
         },
         "blitz": {
           "scope": "position",
@@ -1283,9 +1300,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 4,
+          "rank": 3,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 6
+          "overallRank": 4
         },
         "nfl": {
           "scope": "position",
@@ -1391,9 +1408,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 7,
+          "rank": 15,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 11
+          "overallRank": 43
         }
       },
       "faab": {},
@@ -1409,9 +1426,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 10,
+          "rank": 11,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 24
+          "overallRank": 26
         },
         "blitz": {
           "scope": "position",
@@ -1421,7 +1438,7 @@
         },
         "cbs": {
           "scope": "position",
-          "rank": 10,
+          "rank": 9,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -1465,7 +1482,7 @@
         },
         "cbs": {
           "scope": "position",
-          "rank": 9,
+          "rank": 8,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -1497,27 +1514,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 6,
+          "rank": 5,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 8
-        }
-      },
-      "faab": {},
-      "identityMethod": "unique nflverse name and position",
-      "teamProvenance": "nflverse player dictionary"
-    },
-    {
-      "id": "00-0033553",
-      "playerId": "00-0033553",
-      "name": "James Conner",
-      "position": "RB",
-      "team": "ARI",
-      "rankings": {
-        "rotoballer": {
-          "scope": "position",
-          "rank": 18,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 48
+          "overallRank": 7
         }
       },
       "faab": {},
@@ -1533,9 +1532,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 11,
+          "rank": 7,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 25
+          "overallRank": 20
         }
       },
       "faab": {},
@@ -1553,11 +1552,11 @@
           "scope": "position",
           "rank": 17,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 45
+          "overallRank": 46
         },
         "cbs": {
           "scope": "position",
-          "rank": 11,
+          "rank": 10,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -1634,9 +1633,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 5,
+          "rank": 4,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 7
+          "overallRank": 6
         },
         "blitz": {
           "scope": "position",
@@ -1646,7 +1645,7 @@
         },
         "cbs": {
           "scope": "position",
-          "rank": 6,
+          "rank": 5,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -1679,17 +1678,17 @@
       "teamProvenance": "publisher"
     },
     {
-      "id": "00-0039391",
-      "playerId": "00-0039391",
-      "name": "Kimani Vidal",
+      "id": "00-0040568",
+      "playerId": "00-0040568",
+      "name": "Lan Larison",
       "position": "RB",
-      "team": "LAC",
+      "team": "NE",
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 14,
+          "rank": 18,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 40
+          "overallRank": 61
         }
       },
       "faab": {},
@@ -1703,9 +1702,15 @@
       "position": "RB",
       "team": "GB",
       "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 10,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 25
+        },
         "cbs": {
           "scope": "position",
-          "rank": 7,
+          "rank": 6,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -1724,7 +1729,7 @@
           "scope": "position",
           "rank": 9,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 22
+          "overallRank": 23
         },
         "blitz": {
           "scope": "position",
@@ -1773,7 +1778,7 @@
       "rankings": {
         "cbs": {
           "scope": "position",
-          "rank": 5,
+          "rank": 4,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -1790,7 +1795,7 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 13,
+          "rank": 12,
           "method": "within-position ordinal of published overall waiver priority",
           "overallRank": 28
         },
@@ -1814,9 +1819,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 3,
+          "rank": 14,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 4
+          "overallRank": 40
         },
         "nfl": {
           "scope": "position",
@@ -1830,11 +1835,6 @@
           "rank": 3,
           "method": "within-position ordinal of published overall waiver priority",
           "overallRank": 7
-        },
-        "cbs": {
-          "scope": "position",
-          "rank": 3,
-          "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
       "faab": {
@@ -1883,9 +1883,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 15,
+          "rank": 13,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 41
+          "overallRank": 39
         }
       },
       "faab": {},
@@ -1899,12 +1899,6 @@
       "position": "RB",
       "team": "DAL",
       "rankings": {
-        "rotoballer": {
-          "scope": "position",
-          "rank": 16,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 42
-        },
         "nfl": {
           "scope": "position",
           "rank": 4,
@@ -1925,9 +1919,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 7,
+          "rank": 10,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 51
+          "overallRank": 54
         }
       },
       "faab": {},
@@ -1945,7 +1939,7 @@
           "scope": "position",
           "rank": 1,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 14
+          "overallRank": 13
         },
         "nfl": {
           "scope": "position",
@@ -2010,6 +2004,12 @@
       "position": "TE",
       "team": "LA",
       "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 9,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 51
+        },
         "cbs": {
           "scope": "position",
           "rank": 2,
@@ -2029,7 +2029,7 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 6,
+          "rank": 7,
           "method": "within-position ordinal of published overall waiver priority",
           "overallRank": 38
         },
@@ -2092,9 +2092,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 4,
+          "rank": 5,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 34
+          "overallRank": 35
         },
         "nfl": {
           "scope": "position",
@@ -2177,30 +2177,19 @@
       "teamProvenance": "publisher"
     },
     {
-      "id": "00-0037252",
-      "playerId": "00-0037252",
-      "name": "Greg Dulcich",
-      "position": "TE",
-      "team": "MIA",
-      "rankings": {
-        "rotoballer": {
-          "scope": "position",
-          "rank": 8,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 54
-        }
-      },
-      "faab": {},
-      "identityMethod": "unique nflverse name and position",
-      "teamProvenance": "nflverse player dictionary"
-    },
-    {
       "id": "00-0036040",
       "playerId": "00-0036040",
       "name": "Juwan Johnson",
       "position": "TE",
       "team": "NO",
-      "rankings": {},
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 6,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 37
+        }
+      },
       "faab": {
         "playerprofiler": {
           "low": 1,
@@ -2223,9 +2212,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 9,
+          "rank": 11,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 55
+          "overallRank": 56
         }
       },
       "faab": {},
@@ -2266,9 +2255,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 2,
+          "rank": 3,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 23
+          "overallRank": 27
         }
       },
       "faab": {},
@@ -2284,9 +2273,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 3,
+          "rank": 4,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 32
+          "overallRank": 29
         },
         "blitz": {
           "scope": "position",
@@ -2333,6 +2322,12 @@
       "position": "TE",
       "team": "LA",
       "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 8,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 42
+        },
         "blitz": {
           "scope": "position",
           "rank": 4,
@@ -2358,9 +2353,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 5,
+          "rank": 2,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 35
+          "overallRank": 21
         },
         "blitz": {
           "scope": "position",
@@ -2422,9 +2417,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 6,
+          "rank": 5,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 13
+          "overallRank": 10
         },
         "cbs": {
           "scope": "position",
@@ -2455,7 +2450,7 @@
           "scope": "position",
           "rank": 4,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 10
+          "overallRank": 9
         },
         "blitz": {
           "scope": "position",
@@ -2532,35 +2527,17 @@
       "teamProvenance": "publisher"
     },
     {
-      "id": "00-0031236",
-      "playerId": "00-0031236",
-      "name": "Brandin Cooks",
+      "id": "00-0035021",
+      "playerId": "00-0035021",
+      "name": "Ashton Dulin",
       "position": "WR",
-      "team": "SF",
+      "team": "IND",
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 29,
+          "rank": 31,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 56
-        }
-      },
-      "faab": {},
-      "identityMethod": "unique nflverse name and position",
-      "teamProvenance": "nflverse player dictionary"
-    },
-    {
-      "id": "00-0039893",
-      "playerId": "00-0039893",
-      "name": "Brian Thomas Jr.",
-      "position": "WR",
-      "team": "JAX",
-      "rankings": {
-        "rotoballer": {
-          "scope": "position",
-          "rank": 21,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 43
+          "overallRank": 59
         }
       },
       "faab": {},
@@ -2576,7 +2553,7 @@
       "rankings": {
         "cbs": {
           "scope": "position",
-          "rank": 16,
+          "rank": 14,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -2599,9 +2576,9 @@
         },
         "rotoballer": {
           "scope": "position",
-          "rank": 8,
+          "rank": 12,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 16
+          "overallRank": 19
         },
         "nfl": {
           "scope": "position",
@@ -2699,24 +2676,6 @@
       "teamProvenance": "publisher"
     },
     {
-      "id": "00-0040890",
-      "playerId": "00-0040890",
-      "name": "Cyrus Allen",
-      "position": "WR",
-      "team": "KC",
-      "rankings": {
-        "rotoballer": {
-          "scope": "position",
-          "rank": 28,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 53
-        }
-      },
-      "faab": {},
-      "identityMethod": "unique nflverse name and position",
-      "teamProvenance": "nflverse player dictionary"
-    },
-    {
       "id": "00-0038621",
       "playerId": "00-0038621",
       "name": "DeMario Douglas",
@@ -2731,9 +2690,9 @@
         },
         "rotoballer": {
           "scope": "position",
-          "rank": 11,
+          "rank": 8,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 19
+          "overallRank": 14
         },
         "blitz": {
           "scope": "position",
@@ -2774,6 +2733,24 @@
       "teamProvenance": "publisher"
     },
     {
+      "id": "00-0041132",
+      "playerId": "00-0041132",
+      "name": "Deion Burks",
+      "position": "WR",
+      "team": "IND",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 32,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 60
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
       "id": "00-0032775",
       "playerId": "00-0032775",
       "name": "Demarcus Robinson",
@@ -2782,9 +2759,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 20,
+          "rank": 21,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 39
+          "overallRank": 44
         }
       },
       "faab": {
@@ -2824,9 +2801,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 14,
+          "rank": 17,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 29
+          "overallRank": 33
         }
       },
       "faab": {},
@@ -2834,17 +2811,17 @@
       "teamProvenance": "nflverse player dictionary"
     },
     {
-      "id": "00-0040785",
-      "playerId": "00-0040785",
-      "name": "Dohnte Meyers",
+      "id": "00-0036331",
+      "playerId": "00-0036331",
+      "name": "Devin Duvernay",
       "position": "WR",
-      "team": "CIN",
+      "team": "ARI",
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 26,
+          "rank": 28,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 50
+          "overallRank": 55
         }
       },
       "faab": {},
@@ -2860,13 +2837,13 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 25,
+          "rank": 26,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 49
+          "overallRank": 52
         },
         "cbs": {
           "scope": "position",
-          "rank": 11,
+          "rank": 10,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -2883,7 +2860,7 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 16,
+          "rank": 15,
           "method": "within-position ordinal of published overall waiver priority",
           "overallRank": 31
         }
@@ -2901,7 +2878,7 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 30,
+          "rank": 29,
           "method": "within-position ordinal of published overall waiver priority",
           "overallRank": 57
         }
@@ -2962,24 +2939,6 @@
       "teamProvenance": "publisher"
     },
     {
-      "id": "00-0040646",
-      "playerId": "00-0040646",
-      "name": "Jalen Royals",
-      "position": "WR",
-      "team": "KC",
-      "rankings": {
-        "rotoballer": {
-          "scope": "position",
-          "rank": 27,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 52
-        }
-      },
-      "faab": {},
-      "identityMethod": "unique nflverse name and position",
-      "teamProvenance": "nflverse player dictionary"
-    },
-    {
       "id": "00-0040172",
       "playerId": "00-0040172",
       "name": "Jordan Watkins",
@@ -2988,9 +2947,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 22,
+          "rank": 20,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 44
+          "overallRank": 41
         },
         "nfl": {
           "scope": "position",
@@ -3003,11 +2962,6 @@
           "rank": 7,
           "method": "within-position ordinal of published overall waiver priority",
           "overallRank": 26
-        },
-        "cbs": {
-          "scope": "position",
-          "rank": 10,
-          "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
       "faab": {
@@ -3059,33 +3013,8 @@
               "tier": "Desperation Bid"
             }
           ]
-        },
-        "cbs": {
-          "low": 5,
-          "high": null,
-          "unit": "percent",
-          "budgetBasis": "remaining",
-          "operator": "at-least",
-          "tier": "source base"
         }
       },
-      "identityMethod": "unique nflverse name and position",
-      "teamProvenance": "publisher"
-    },
-    {
-      "id": "00-0039751",
-      "playerId": "00-0039751",
-      "name": "Jordan Whittington",
-      "position": "WR",
-      "team": "LA",
-      "rankings": {
-        "cbs": {
-          "scope": "position",
-          "rank": 15,
-          "method": "publisher explicitly ordered positional waiver priorities"
-        }
-      },
-      "faab": {},
       "identityMethod": "unique nflverse name and position",
       "teamProvenance": "publisher"
     },
@@ -3129,7 +3058,7 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 18,
+          "rank": 19,
           "method": "within-position ordinal of published overall waiver priority",
           "overallRank": 36
         },
@@ -3178,13 +3107,13 @@
       "playerId": "00-0030279",
       "name": "Keenan Allen",
       "position": "WR",
-      "team": "IND",
+      "team": "SF",
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 5,
+          "rank": 2,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 12
+          "overallRank": 5
         }
       },
       "faab": {},
@@ -3200,27 +3129,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 7,
+          "rank": 9,
           "method": "within-position ordinal of published overall waiver priority",
           "overallRank": 15
-        }
-      },
-      "faab": {},
-      "identityMethod": "unique nflverse name and position",
-      "teamProvenance": "nflverse player dictionary"
-    },
-    {
-      "id": "00-0041529",
-      "playerId": "00-0041529",
-      "name": "Kevin Coleman Jr.",
-      "position": "WR",
-      "team": "MIA",
-      "rankings": {
-        "rotoballer": {
-          "scope": "position",
-          "rank": 34,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 61
         }
       },
       "faab": {},
@@ -3238,11 +3149,11 @@
           "scope": "position",
           "rank": 3,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 9
+          "overallRank": 8
         },
         "cbs": {
           "scope": "position",
-          "rank": 17,
+          "rank": 15,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -3267,9 +3178,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 15,
+          "rank": 11,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 30
+          "overallRank": 18
         },
         "blitz": {
           "scope": "position",
@@ -3279,7 +3190,7 @@
         },
         "cbs": {
           "scope": "position",
-          "rank": 14,
+          "rank": 13,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -3315,6 +3226,24 @@
       "teamProvenance": "publisher"
     },
     {
+      "id": "00-0032951",
+      "playerId": "00-0032951",
+      "name": "Laquon Treadwell",
+      "position": "WR",
+      "team": "IND",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 25,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 50
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
       "id": "00-0033555",
       "playerId": "00-0033555",
       "name": "Mack Hollins",
@@ -3323,13 +3252,13 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 17,
+          "rank": 14,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 33
+          "overallRank": 30
         },
         "cbs": {
           "scope": "position",
-          "rank": 12,
+          "rank": 11,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -3369,9 +3298,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 23,
+          "rank": 22,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 46
+          "overallRank": 47
         }
       },
       "faab": {},
@@ -3387,27 +3316,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 9,
+          "rank": 13,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 17
-        }
-      },
-      "faab": {},
-      "identityMethod": "unique nflverse name and position",
-      "teamProvenance": "nflverse player dictionary"
-    },
-    {
-      "id": "00-0031235",
-      "playerId": "00-0031235",
-      "name": "Odell Beckham Jr.",
-      "position": "WR",
-      "team": "MIN",
-      "rankings": {
-        "rotoballer": {
-          "scope": "position",
-          "rank": 35,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 62
+          "overallRank": 24
         }
       },
       "faab": {},
@@ -3441,9 +3352,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 19,
+          "rank": 18,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 37
+          "overallRank": 34
         },
         "blitz": {
           "scope": "position",
@@ -3453,7 +3364,7 @@
         },
         "cbs": {
           "scope": "position",
-          "rank": 18,
+          "rank": 16,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -3501,9 +3412,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 13,
+          "rank": 16,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 27
+          "overallRank": 32
         }
       },
       "faab": {},
@@ -3519,9 +3430,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 32,
+          "rank": 23,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 59
+          "overallRank": 48
         }
       },
       "faab": {},
@@ -3537,9 +3448,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 2,
+          "rank": 6,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 5
+          "overallRank": 11
         },
         "blitz": {
           "scope": "position",
@@ -3601,9 +3512,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 12,
+          "rank": 7,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 20
+          "overallRank": 12
         },
         "nfl": {
           "scope": "position",
@@ -3681,9 +3592,9 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 24,
+          "rank": 27,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 47
+          "overallRank": 53
         }
       },
       "faab": {},
@@ -3699,13 +3610,13 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 33,
+          "rank": 24,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 60
+          "overallRank": 49
         },
         "cbs": {
           "scope": "position",
-          "rank": 13,
+          "rank": 12,
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
@@ -3722,7 +3633,7 @@
       "rankings": {
         "rotoballer": {
           "scope": "position",
-          "rank": 31,
+          "rank": 30,
           "method": "within-position ordinal of published overall waiver priority",
           "overallRank": 58
         },
@@ -3759,7 +3670,7 @@
           "scope": "position",
           "rank": 10,
           "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 18
+          "overallRank": 16
         },
         "cbs": {
           "scope": "position",
