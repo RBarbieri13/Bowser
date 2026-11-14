@@ -220,3 +220,48 @@ test('snap-only range filter and column options preserve exact week stats and su
  expect(table().querySelectorAll('.lhq-leaf-band th').length).toBeGreaterThan(2);
  fireEvent.keyDown(document,{key:'Escape'});expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 });
+
+test('visible stat controls restore hidden receiving and usage without opening settings, and keep QB values distinct',async()=>{
+ localStorage.setItem(TEAM_BOX_PREFERENCE_KEY,JSON.stringify({historicalSalaryLayout:1,visibleStats:['carries','rushing_yards','rushing_tds','fantasy_points'],lhqWidths:{player:175,skill_line:80}}));
+ const view=renderPage();await screen.findByRole('button',{name:'Runner Alpha',exact:true});
+ const controls=screen.getByRole('group',{name:'Team box stat columns'});
+ expect(within(controls).getByRole('button',{name:'Show receiving columns'})).toHaveAttribute('aria-expanded','false');
+ fireEvent.click(within(controls).getByRole('button',{name:'Show receiving columns'}));
+ expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+ expect(statCell('Runner Alpha','RB','REC')).toHaveTextContent('1');
+ expect(statCell('Runner Charlie','RB','TGT')).toHaveTextContent('8');
+ expect(statCell('Quarterback Zero','QB','REC')).toHaveTextContent('—');
+ expect(table().querySelectorAll('.lhq-subgroup-band th')[1]).toHaveTextContent('RECEIVING');
+ fireEvent.click(within(controls).getByRole('button',{name:'Show usage columns'}));
+ expect(statCell('Runner Alpha','RB','SNP')).toHaveTextContent('42');
+ fireEvent.click(within(controls).getByRole('button',{name:'Show passing columns'}));
+ expect(statCell('Quarterback Zero','QB','C-A \\/ REC')).toHaveTextContent('10-20');
+ expect(statCell('Runner Alpha','RB','C-A \\/ REC')).toHaveTextContent('1');
+ expect(table()).toHaveTextContent('Receiving: Receptions · yards · touchdowns · Targets');
+ const saved=JSON.parse(localStorage.getItem(TEAM_BOX_PREFERENCE_KEY));
+ expect(saved.lhqWidths).toEqual({player:175,skill_line:80});
+ expect(saved.visibleStats).toContain('targets');
+ view.unmount();renderPage();await screen.findByRole('button',{name:'Runner Alpha',exact:true});
+ expect(screen.getByRole('button',{name:'Hide receiving columns'})).toHaveAttribute('aria-expanded','true');
+ expect(statCell('Runner Charlie','RB','INT \\/ TGT')).toHaveTextContent('8');
+});
+
+test('stat groups retain individual choices, share every week and expose a keyboard-accessible key',async()=>{
+ renderPage();await screen.findByRole('button',{name:'Quarterback Zero',exact:true});
+ fireEvent.click(screen.getByRole('button',{name:'Hide passing columns'}));
+ expect(within(table()).getAllByRole('button',{name:/^REC$/})).toHaveLength(3);
+ fireEvent.click(screen.getByRole('button',{name:'Column options',exact:true}));
+ const dialog=screen.getByRole('dialog',{name:'Team box column options'});
+ fireEvent.click(within(dialog).getByRole('checkbox',{name:'Targets',exact:true}));
+ fireEvent.click(within(dialog).getByRole('button',{name:'Done',exact:true}));
+ const receiving=screen.getByRole('button',{name:'Show receiving columns'});
+ expect(receiving).toHaveTextContent('3/4');
+ fireEvent.click(receiving);
+ expect(within(table()).getAllByRole('button',{name:/^TGT$/})).toHaveLength(3);
+ fireEvent.click(screen.getByRole('button',{name:'Hide receiving columns'}));
+ expect(within(table()).queryByRole('button',{name:/^REC$/})).not.toBeInTheDocument();
+ expect(table()).toHaveTextContent('Receiving hidden — expand above');
+ const legend=screen.getByRole('button',{name:'Passing and receiving column key'});
+ fireEvent.focus(legend);expect(screen.getByRole('tooltip')).toHaveTextContent('QB rows show passing; RB, WR and TE rows show receiving');
+ fireEvent.keyDown(legend,{key:'Escape'});expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+});
