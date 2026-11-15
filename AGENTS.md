@@ -280,3 +280,7 @@ Robert's Command Center v2 prototype and handoff supersede older Fantasy News la
 ## Team Box stat discovery (November 14, 2026)
 
 - Keep Usage, Passing, Receiving and Rushing show/hide controls immediately visible above the weekly table, with a clear path to individual column choices. Identify the reused passing/receiving columns in the header and beside each position section: QB rows show passing, while RB/WR/TE rows show receiving. When only one set is visible, use that set's own labels. Preserve the dense shared grid, synchronized widths, exact sourced values, saved preferences and horizontal scrolling; do not require opening Sources or the sidebar to discover these statistics.
+
+## Team Box header colors and actions (November 14, 2026)
+
+- Reuse Player Database’s semantic stat colors on Team Box headers and stat controls, with blue Passing and purple Receiving shown separately in the shared header. Week actions must have readable labels, usable pointer/keyboard targets and visible state. FPTS sorting reverses on repeat activation; adding, moving and removing a trend must work by click or keyboard as well as drag-and-drop. For narrow stat subsets, keep a labeled Week actions row above the grid instead of clipping controls inside a tiny week header. Preserve dense shared widths, individual column preferences and source data.

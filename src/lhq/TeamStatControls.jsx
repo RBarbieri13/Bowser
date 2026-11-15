@@ -1,4 +1,5 @@
 import {CaretDown,CaretRight} from '@phosphor-icons/react';
+import {COLORS} from './model.js';
 import {ColumnLegend} from './ColumnLegend.jsx';
 import './teamStatControls.css';
 
@@ -17,7 +18,7 @@ export function TeamStatControls({visibleStats,dfs,onToggle,onCustomize}){
   <div className="team-stat-controls-buttons">{TEAM_STAT_GROUPS.map(group=>{
    const count=group.id==='dfs'&&!dfs?0:group.keys.filter(key=>visibleStats.includes(key)).length;
    const shown=count>0,complete=count===group.keys.length,Chevron=shown?CaretDown:CaretRight;
-   return <button type="button" key={group.id} className="team-stat-toggle" data-visible={shown} aria-label={`${complete?'Hide':'Show'} ${group.label.toLowerCase()} columns`} aria-expanded={shown} title={`${complete?'Hide':'Show all'} ${group.label.toLowerCase()} columns across every week`} onClick={()=>onToggle(group,!complete)}>
+   return <button type="button" key={group.id} className="team-stat-toggle" style={{'--team-stat-color':COLORS[group.id]}} data-visible={shown} aria-label={`${complete?'Hide':'Show'} ${group.label.toLowerCase()} columns`} aria-expanded={shown} title={`${complete?'Hide':'Show all'} ${group.label.toLowerCase()} columns across every week`} onClick={()=>onToggle(group,!complete)}>
     <span className="team-stat-toggle-title"><Chevron size={13} aria-hidden="true"/><strong>{group.label}</strong>{shown&&!complete&&<small>{count}/{group.keys.length}</small>}</span>
     <span className="team-stat-toggle-summary">{group.summary}</span>
    </button>;
