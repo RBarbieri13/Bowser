@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 vi.mock('../src/lhq/model.js', async original => ({ ...(await original()), csvDownload: vi.fn() }));
-import { csvDownload } from '../src/lhq/model.js';
+import { COLORS, csvDownload } from '../src/lhq/model.js';
 import { LhqProvider } from '../src/lhq/shared.jsx';
 import { TeamBoxScores, median, shortKickoff, teamBoxWidths, teamCsvColumns, teamWeekValue, proportionalWeekWidths, parseWeekSelection } from '../src/lhq/TeamBoxScores.jsx';
 import { TEAM_BOX_PREFERENCE_KEY } from '../src/teamBoxColumns.js';
@@ -264,4 +264,67 @@ test('stat groups retain individual choices, share every week and expose a keybo
  const legend=screen.getByRole('button',{name:'Passing and receiving column key'});
  fireEvent.focus(legend);expect(screen.getByRole('tooltip')).toHaveTextContent('QB rows show passing; RB, WR and TE rows show receiving');
  fireEvent.keyDown(legend,{key:'Escape'});expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+});
+
+
+test('Team Box reuses Player Database colors, including both halves of the shared header',async()=>{
+ renderPage();await screen.findByRole('button',{name:'Runner Alpha',exact:true});
+ for(const group of ['usage','passing','receiving','rushing','fantasy','dfs']){
+  expect(screen.getByRole('button',{name:`Hide ${group} columns`}).style.getPropertyValue('--team-stat-color')).toBe(COLORS[group]);
+ }
+ for(const heading of table().querySelectorAll('.team-skill-heading')){
+  expect(within(heading).getByText('PASSING',{exact:true})).toHaveStyle({color:COLORS.passing});
+  expect(within(heading).getByText('RECEIVING',{exact:true})).toHaveStyle({color:COLORS.receiving});
+ }
+ fireEvent.click(screen.getByRole('button',{name:'Hide passing columns'}));
+ expect(table().querySelectorAll('.team-skill-heading')).toHaveLength(3);
+ for(const heading of table().querySelectorAll('.team-skill-heading'))expect(heading).toHaveTextContent(/^RECEIVING$/);
+});
+
+test('labeled week sorting reverses on repeated clicks and restores a hidden FPTS column',async()=>{
+ renderPage();await screen.findByRole('button',{name:'Runner Alpha',exact:true});
+ const runnerOrder=()=>[...table().querySelectorAll('tbody .lhq-player')].map(x=>x.textContent).filter(x=>x.startsWith('Runner'));
+ fireEvent.click(screen.getByRole('button',{name:'Sort 2025 week 1 fantasy points highest first'}));
+ expect(runnerOrder()).toEqual(['Runner Charlie','Runner Beta','Runner Alpha']);
+ expect(screen.getByRole('button',{name:'Sort 2025 week 1 fantasy points lowest first'})).toHaveAttribute('aria-pressed','true');
+ fireEvent.click(screen.getByRole('button',{name:'Sort 2025 week 1 fantasy points lowest first'}));
+ expect(runnerOrder()).toEqual(['Runner Alpha','Runner Beta','Runner Charlie']);
+ fireEvent.click(screen.getByRole('button',{name:'Hide fantasy columns'}));
+ expect(within(table()).queryByRole('button',{name:/^FPTS/})).not.toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:'Sort 2025 week 1 fantasy points highest first'}));
+ expect(statCell('Runner Charlie','RB','FPTS')).toHaveTextContent('8.0');
+ expect(runnerOrder()).toEqual(['Runner Charlie','Runner Beta','Runner Alpha']);
+});
+
+test('week trend actions add, move and remove the chart without drag or sidebar settings',async()=>{
+ renderPage();await screen.findByRole('button',{name:'Runner Alpha',exact:true});
+ expect(table().querySelector('.bowser-trend-heading')).not.toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:'Add trend after 2025 week 1'}));
+ await waitFor(()=>expect(fetch.mock.calls.some(([url])=>url.includes('trendAnchors=1'))).toBe(true));
+ expect(table().querySelectorAll('.bowser-trend-heading')).toHaveLength(1);
+ expect(screen.getByRole('button',{name:'Remove trend after 2025 week 1'})).toHaveAttribute('aria-pressed','true');
+ fireEvent.click(screen.getByRole('button',{name:'Add trend after 2025 week 2'}));
+ await waitFor(()=>expect(fetch.mock.calls.some(([url])=>url.includes('trendAnchors=2'))).toBe(true));
+ expect(table().querySelectorAll('.bowser-trend-heading')).toHaveLength(1);
+ expect(screen.getByRole('button',{name:'Add trend after 2025 week 1'})).toHaveAttribute('aria-pressed','false');
+ fireEvent.click(screen.getByRole('button',{name:'Remove trend after 2025 week 2'}));
+ expect(table().querySelector('.bowser-trend-heading')).not.toBeInTheDocument();
+ expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+});
+
+
+test.each([28,44])('narrow %ipx stat weeks retain labeled sort and trend actions without widening columns',async width=>{
+ localStorage.setItem(TEAM_BOX_PREFERENCE_KEY,JSON.stringify({historicalSalaryLayout:1,visibleStats:['fantasy_points'],lhqWidths:{fantasy_points:width}}));
+ renderPage();await screen.findByRole('button',{name:'Runner Alpha',exact:true});
+ const actions=screen.getByRole('group',{name:'Compact week actions'});
+ fireEvent.change(within(actions).getByLabelText('Week actions for'),{target:{value:'2025-1'}});
+ fireEvent.click(within(actions).getByRole('button',{name:'Sort 2025 week 1 fantasy points highest first'}));
+ expect(statCell('Runner Charlie','RB','FPTS')).toHaveTextContent('8.0');
+ fireEvent.click(within(actions).getByRole('button',{name:'Add trend after 2025 week 1'}));
+ await waitFor(()=>expect(table().querySelectorAll('.bowser-trend-heading')).toHaveLength(1));
+ fireEvent.click(within(actions).getByRole('button',{name:'Remove trend after 2025 week 1'}));
+ expect(table().querySelector('.bowser-trend-heading')).not.toBeInTheDocument();
+ expect(JSON.parse(localStorage.getItem(TEAM_BOX_PREFERENCE_KEY)).lhqWidths.fantasy_points).toBe(width);
+ const header=within(table()).getAllByRole('button',{name:/^FPTS/})[0].closest('th');
+ expect(table().querySelectorAll('col')[header.cellIndex].style.width).toBe(`${width}px`);
 });
