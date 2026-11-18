@@ -1,0 +1,3508 @@
+{
+  "season": 2026,
+  "waiverWeek": 11,
+  "capturedAt": "2026-11-18T14:06:24.405896+00:00",
+  "sources": [
+    {
+      "id": "fantasypros",
+      "label": "FantasyPros",
+      "type": "expert",
+      "rankCount": 5,
+      "faabCount": 24,
+      "publishedAt": "2026-11-18",
+      "coverageNote": "Public PPR preview; bids use the publisher’s $100 reference.",
+      "capturedAt": "2026-11-18T14:06:20.613548+00:00",
+      "evidence": [
+        {
+          "url": "https://www.fantasypros.com/nfl/rankings/?scoring=PPR&type=waiver",
+          "sha256": "d60f63096319aa853bbbb409293fc263dfc4939afe581a585a5bab06e1f85262",
+          "datePublished": "2026-11-18",
+          "capturedAt": "2026-11-18T14:06:20.463338+00:00"
+        },
+        {
+          "url": "https://www.fantasypros.com/2026/11/fantasy-football-waiver-wire-advice-players-to-add-stash-drop-week-11-2026/",
+          "sha256": "52d56bfc6332ff688ffcb02fac1a29100dd995fc02fc7f01a1423fcbfc5f2cc6",
+          "datePublished": "2026-11-17T12:15:23+00:00",
+          "dateModified": "2026-11-17T12:15:26+00:00",
+          "capturedAt": "2026-11-18T14:06:20.613548+00:00"
+        }
+      ],
+      "rankUrl": "https://www.fantasypros.com/nfl/rankings/?scoring=PPR&type=waiver",
+      "rankMethod": "within-position ordinal of published overall waiver priority",
+      "faabUrl": "https://www.fantasypros.com/2026/11/fantasy-football-waiver-wire-advice-players-to-add-stash-drop-week-11-2026/",
+      "rankScoring": "PPR"
+    },
+    {
+      "id": "rotoballer",
+      "label": "RotoBaller",
+      "type": "expert",
+      "rankCount": 85,
+      "faabCount": 19,
+      "publishedAt": "2026-11-17T23:25:50-05:00",
+      "coverageNote": "Overall priority normalized by position; bid tiers retain source units.",
+      "capturedAt": "2026-11-18T14:06:21.210868+00:00",
+      "evidence": [
+        {
+          "url": "https://www.rotoballer.com/waiver-wire-rankings-fantasy-football-week-11-2026/1995073",
+          "sha256": "a8772308a5417abe792ab90e57be6efe36b7365fd0dfeacae5e8c8be0fbfb61d",
+          "datePublished": "2026-11-17T23:25:50-05:00",
+          "dateModified": "2026-11-18T00:14:31-05:00",
+          "capturedAt": "2026-11-18T14:06:20.963569+00:00"
+        },
+        {
+          "url": "https://www.rotoballer.com/faab-waiver-wire-advice-week-11-fantasy-pickups-2026/1995747",
+          "sha256": "5fc4a3a1c974b5232ac79718c21954588339d9d6d04459539f3026569209462c",
+          "datePublished": "2026-11-17T23:45:31-05:00",
+          "dateModified": "2026-11-18T00:12:37-05:00",
+          "capturedAt": "2026-11-18T14:06:21.210868+00:00"
+        }
+      ],
+      "rankUrl": "https://www.rotoballer.com/waiver-wire-rankings-fantasy-football-week-11-2026/1995073",
+      "rankMethod": "within-position ordinal of published overall waiver priority",
+      "faabUrl": "https://www.rotoballer.com/faab-waiver-wire-advice-week-11-fantasy-pickups-2026/1995747"
+    },
+    {
+      "id": "footballguys",
+      "label": "Footballguys",
+      "type": "expert",
+      "rankCount": 0,
+      "faabCount": 6,
+      "publishedAt": "2026-11-16",
+      "coverageNote": "Percent of annual FAAB.",
+      "capturedAt": "2026-11-18T14:06:22.517779+00:00",
+      "evidence": [
+        {
+          "url": "https://www.footballguys.com/article/2026-email-feature-top-waiver-wire-pickups-week11",
+          "sha256": "23b7d94da2990968793b99451f8c7edf798d61905d30ce5e72a0e21976ee90fa",
+          "datePublished": "2026-11-16",
+          "capturedAt": "2026-11-18T14:06:22.517779+00:00"
+        }
+      ],
+      "faabUrl": "https://www.footballguys.com/article/2026-email-feature-top-waiver-wire-pickups-week11"
+    },
+    {
+      "id": "nfl",
+      "label": "NFL",
+      "type": "expert",
+      "rankCount": 15,
+      "faabCount": 0,
+      "publishedAt": "2026-11-16T17:14:01.227Z",
+      "coverageNote": "Published overall waiver priorities, normalized by position.",
+      "capturedAt": "2026-11-18T14:06:22.771057+00:00",
+      "evidence": [
+        {
+          "url": "https://www.nfl.com/news/2026-nfl-fantasy-football-waiver-wire-week-11-wr-keenan-allen-rb-seth-mcgowan-among-top-targets",
+          "sha256": "56741ee2155a41be62be92302635cb4e08e783e2f2ce5727976ad006c59130e5",
+          "datePublished": "2026-11-16T17:14:01.227Z",
+          "dateModified": "2026-11-16T17:18:38.827Z",
+          "capturedAt": "2026-11-18T14:06:22.771057+00:00"
+        }
+      ],
+      "rankUrl": "https://www.nfl.com/news/2026-nfl-fantasy-football-waiver-wire-week-11-wr-keenan-allen-rb-seth-mcgowan-among-top-targets",
+      "rankMethod": "within-position ordinal of published overall waiver priority"
+    },
+    {
+      "id": "blitz",
+      "label": "Blitz Sports Media",
+      "type": "expert",
+      "rankCount": 10,
+      "faabCount": 0,
+      "publishedAt": "2026-11-16T12:25:00-06:00",
+      "coverageNote": "Published overall waiver priorities, normalized by position.",
+      "capturedAt": "2026-11-18T14:06:23.079465+00:00",
+      "evidence": [
+        {
+          "url": "https://blitzsportsmedia.com/fantasy-football-waiver-wire-wk11-26/",
+          "sha256": "a262e68e9d66b7333c8c13aa806a039ac3b9af49d957441beae21b0e670e7af5",
+          "datePublished": "2026-11-16T12:25:00-06:00",
+          "dateModified": "2026-11-16T12:25:04-06:00",
+          "capturedAt": "2026-11-18T14:06:23.079465+00:00"
+        }
+      ],
+      "rankUrl": "https://blitzsportsmedia.com/fantasy-football-waiver-wire-wk11-26/",
+      "rankMethod": "within-position ordinal of published overall waiver priority"
+    },
+    {
+      "id": "cbs",
+      "label": "CBS Sports",
+      "type": "expert",
+      "rankCount": 27,
+      "faabCount": 17,
+      "publishedAt": "2026-11-17T18:14:00+00:00",
+      "coverageNote": "Explicit positional add order; remaining FAAB and format-specific tiers. Ambiguous operator-plus-range phrases are omitted.",
+      "capturedAt": "2026-11-18T14:06:24.205759+00:00",
+      "evidence": [
+        {
+          "url": "https://www.cbssports.com/fantasy/football/news/week-11-2026-fantasy-football-waiver-wire/",
+          "sha256": "7c67f1830e3a4a99fa98de41a63c4a20dc09c638b41515d0ab3f4d86d0a5c8fe",
+          "datePublished": "2026-11-17T18:14:00+00:00",
+          "dateModified": "2026-11-18T02:48:03+00:00",
+          "capturedAt": "2026-11-18T14:06:24.205759+00:00"
+        }
+      ],
+      "rankUrl": "https://www.cbssports.com/fantasy/football/news/week-11-2026-fantasy-football-waiver-wire/",
+      "rankMethod": "publisher explicitly ordered positional waiver priorities",
+      "faabUrl": "https://www.cbssports.com/fantasy/football/news/week-11-2026-fantasy-football-waiver-wire/"
+    },
+    {
+      "id": "playerprofiler",
+      "label": "PlayerProfiler",
+      "type": "expert",
+      "rankCount": 0,
+      "faabCount": 12,
+      "publishedAt": "2026-11-17T16:17:35+00:00",
+      "coverageNote": "Published dollar ranges for a $100 reference budget; PPR, six-point passing TDs. Bench-depth tiers remain separate; article order is not a ranking.",
+      "capturedAt": "2026-11-18T14:06:24.405896+00:00",
+      "evidence": [
+        {
+          "url": "https://www.playerprofiler.com/article/week-11-waiver-wire-top-fantasy-football-pickups-2026/",
+          "sha256": "5a87cf6dbde26251e6a4150e69a6297a7d3b7ff2c326fff52131056c8ad1de8f",
+          "datePublished": "2026-11-17T16:17:35+00:00",
+          "dateModified": "2026-11-17T16:17:35+00:00",
+          "capturedAt": "2026-11-18T14:06:24.405896+00:00"
+        }
+      ],
+      "faabUrl": "https://www.playerprofiler.com/article/week-11-waiver-wire-top-fantasy-football-pickups-2026/"
+    }
+  ],
+  "players": [
+    {
+      "id": "team:dst:BUF",
+      "playerId": null,
+      "name": "Buffalo Bills",
+      "position": "DST",
+      "team": "BUF",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 78
+        }
+      },
+      "faab": {},
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "team:dst:CAR",
+      "playerId": null,
+      "name": "Carolina Panthers",
+      "position": "DST",
+      "team": "CAR",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 8,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 85
+        }
+      },
+      "faab": {},
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "team:dst:CHI",
+      "playerId": null,
+      "name": "Chicago Bears",
+      "position": "DST",
+      "team": "CHI",
+      "rankings": {
+        "fantasypros": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 2
+        },
+        "rotoballer": {
+          "scope": "position",
+          "rank": 4,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 81
+        },
+        "blitz": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 10
+        }
+      },
+      "faab": {},
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "team:dst:CIN",
+      "playerId": null,
+      "name": "Cincinnati Bengals",
+      "position": "DST",
+      "team": "CIN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 3,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 80
+        }
+      },
+      "faab": {},
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "team:dst:DAL",
+      "playerId": null,
+      "name": "Dallas Cowboys",
+      "position": "DST",
+      "team": "DAL",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 6,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 83
+        }
+      },
+      "faab": {},
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "team:dst:KC",
+      "playerId": null,
+      "name": "Kansas City Chiefs",
+      "position": "DST",
+      "team": "KC",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 79
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 7
+        }
+      },
+      "faab": {},
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "team:dst:DET",
+      "playerId": null,
+      "name": "Lions D/ST",
+      "position": "DST",
+      "team": "DET",
+      "rankings": {
+        "nfl": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 8
+        }
+      },
+      "faab": {},
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "team:dst:LAC",
+      "playerId": null,
+      "name": "Los Angeles Chargers",
+      "position": "DST",
+      "team": "LAC",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 5,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 82
+        }
+      },
+      "faab": {},
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "team:dst:NYJ",
+      "playerId": null,
+      "name": "New York Jets",
+      "position": "DST",
+      "team": "NYJ",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 7,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 84
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 3,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 15
+        }
+      },
+      "faab": {},
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0031203",
+      "playerId": "00-0031203",
+      "name": "Cairo Santos",
+      "position": "K",
+      "team": "CHI",
+      "rankings": {},
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0031136",
+      "playerId": "00-0031136",
+      "name": "Chris Boswell",
+      "position": "K",
+      "team": "PIT",
+      "rankings": {},
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0041182",
+      "playerId": "00-0041182",
+      "name": "Drew Stevens",
+      "position": "K",
+      "team": "WAS",
+      "rankings": {},
+      "faab": {
+        "fantasypros": {
+          "low": 0,
+          "high": 0,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 1,
+              "high": 1,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0034794",
+      "playerId": "00-0034794",
+      "name": "Jason Sanders",
+      "position": "K",
+      "team": "NYJ",
+      "rankings": {},
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0023459",
+      "playerId": "00-0023459",
+      "name": "Aaron Rodgers",
+      "position": "QB",
+      "team": "PIT",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 3,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 65
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 3,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "cbs": {
+          "low": 1,
+          "high": 1,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0039164",
+      "playerId": "00-0039164",
+      "name": "Anthony Richardson",
+      "position": "QB",
+      "team": "IND",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 15,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 77
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0034855",
+      "playerId": "00-0034855",
+      "name": "Baker Mayfield",
+      "position": "QB",
+      "team": "TB",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 6,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 68
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0039732",
+      "playerId": "00-0039732",
+      "name": "Bo Nix",
+      "position": "QB",
+      "team": "DEN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 64
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 9
+        }
+      },
+      "faab": {
+        "playerprofiler": {
+          "low": 3,
+          "high": 5,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "Shallow League · PPR, six-point passing TDs",
+          "referenceBudget": 100
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0040676",
+      "playerId": "00-0040676",
+      "name": "Cam Ward",
+      "position": "QB",
+      "team": "TEN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 5,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 67
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 10
+        },
+        "blitz": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 5
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 1,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 2,
+          "high": 2,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 3,
+              "high": 3,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 1,
+              "high": 1,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "rotoballer": {
+          "low": 2,
+          "high": 4,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 4,
+              "high": 7,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            }
+          ]
+        },
+        "cbs": {
+          "low": 0,
+          "high": 5,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-most",
+          "tier": "source base"
+        },
+        "playerprofiler": {
+          "low": 2,
+          "high": 4,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "Deep League · PPR, six-point passing TDs",
+          "referenceBudget": 100
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0041561",
+      "playerId": "00-0041561",
+      "name": "Carson Beck",
+      "position": "QB",
+      "team": "ARI",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 13,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 75
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0035710",
+      "playerId": "00-0035710",
+      "name": "Daniel Jones",
+      "position": "QB",
+      "team": "IND",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 12,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 74
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0033537",
+      "playerId": "00-0033537",
+      "name": "Deshaun Watson",
+      "position": "QB",
+      "team": "CLE",
+      "rankings": {},
+      "faab": {
+        "footballguys": {
+          "low": 15,
+          "high": 30,
+          "unit": "percent",
+          "budgetBasis": "annual"
+        },
+        "playerprofiler": {
+          "low": 2,
+          "high": 3,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "Standard Bench · PPR, six-point passing TDs",
+          "referenceBudget": 100
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0041562",
+      "playerId": "00-0041562",
+      "name": "Fernando Mendoza",
+      "position": "QB",
+      "team": "LV",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 10,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 72
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0039923",
+      "playerId": "00-0039923",
+      "name": "J.J. McCarthy",
+      "position": "QB",
+      "team": "NYG",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 11,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 73
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 2,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "cbs": {
+          "low": 1,
+          "high": 1,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0033119",
+      "playerId": "00-0033119",
+      "name": "Jacoby Brissett",
+      "position": "QB",
+      "team": "BAL",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 8,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 70
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 4,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "cbs": {
+          "low": 1,
+          "high": 1,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0041251",
+      "playerId": "00-0041251",
+      "name": "Jalon Daniels",
+      "position": "QB",
+      "team": "TB",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 7,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 69
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 5,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "rotoballer": {
+          "low": 1,
+          "high": 1,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 3,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            }
+          ]
+        },
+        "cbs": {
+          "low": 5,
+          "high": null,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-least",
+          "tier": "Superflex / two-QB"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0039398",
+      "playerId": "00-0039398",
+      "name": "Joe Milton III",
+      "position": "QB",
+      "team": "PHI",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 4,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 66
+        }
+      },
+      "faab": {
+        "rotoballer": {
+          "low": 2,
+          "high": 4,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 4,
+              "high": 7,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            }
+          ]
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0036355",
+      "playerId": "00-0036355",
+      "name": "Justin Herbert",
+      "position": "QB",
+      "team": "LAC",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 9,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 71
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0029604",
+      "playerId": "00-0029604",
+      "name": "Kirk Cousins",
+      "position": "QB",
+      "team": "MIN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 63
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0040014",
+      "playerId": "00-0040014",
+      "name": "Kyle McCord",
+      "position": "QB",
+      "team": "MIA",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 14,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 76
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0033906",
+      "playerId": "00-0033906",
+      "name": "Alvin Kamara",
+      "position": "RB",
+      "team": "NO",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 8,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 21
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0033699",
+      "playerId": "00-0033699",
+      "name": "Austin Ekeler",
+      "position": "RB",
+      "team": "WAS",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 12,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 27
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0038611",
+      "playerId": "00-0038611",
+      "name": "Chris Rodriguez Jr.",
+      "position": "RB",
+      "team": "JAX",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 11,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 26
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0038705",
+      "playerId": "00-0038705",
+      "name": "Emari Demercado",
+      "position": "RB",
+      "team": "HOU",
+      "rankings": {
+        "cbs": {
+          "scope": "position",
+          "rank": 4,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "rotoballer": {
+          "low": 1,
+          "high": 2,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 3,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 3,
+              "high": 5,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        },
+        "cbs": {
+          "low": 0,
+          "high": 5,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-most",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0040242",
+      "playerId": "00-0040242",
+      "name": "Jacory Croskey-Merritt",
+      "position": "RB",
+      "team": "WAS",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 3,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 5
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 1,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0039344",
+      "playerId": "00-0039344",
+      "name": "Jonathon Brooks",
+      "position": "RB",
+      "team": "CAR",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 5,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 15
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 5,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0034975",
+      "playerId": "00-0034975",
+      "name": "Justice Hill",
+      "position": "RB",
+      "team": "BAL",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 16,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 40
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 3,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0041052",
+      "playerId": "00-0041052",
+      "name": "Kaelon Black",
+      "position": "RB",
+      "team": "SF",
+      "rankings": {
+        "fantasypros": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 1
+        },
+        "rotoballer": {
+          "scope": "position",
+          "rank": 4,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 6
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 11
+        },
+        "blitz": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 1
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 9,
+          "high": 9,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 18,
+              "high": 18,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 5,
+              "high": 5,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "rotoballer": {
+          "low": 15,
+          "high": 20,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 20,
+              "high": 25,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 25,
+              "high": 35,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        },
+        "footballguys": {
+          "low": 15,
+          "high": 30,
+          "unit": "percent",
+          "budgetBasis": "annual"
+        },
+        "playerprofiler": {
+          "low": 10,
+          "high": 12,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "Standard Bench · PPR, six-point passing TDs",
+          "referenceBudget": 100
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0040142",
+      "playerId": "00-0040142",
+      "name": "Kaleb Johnson",
+      "position": "RB",
+      "team": "GB",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 13,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 28
+        }
+      },
+      "faab": {
+        "rotoballer": {
+          "low": 1,
+          "high": 3,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 3,
+              "high": 5,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 5,
+              "high": 8,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0036919",
+      "playerId": "00-0036919",
+      "name": "Kenny Gainwell",
+      "position": "RB",
+      "team": "TB",
+      "rankings": {
+        "fantasypros": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 3
+        },
+        "rotoballer": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 2
+        }
+      },
+      "faab": {
+        "playerprofiler": {
+          "low": 5,
+          "high": 7,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "Shallow League · PPR, six-point passing TDs",
+          "referenceBudget": 100
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0040236",
+      "playerId": "00-0040236",
+      "name": "Kyle Monangai",
+      "position": "RB",
+      "team": "CHI",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 3
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0040878",
+      "playerId": "00-0040878",
+      "name": "Mike Washington Jr.",
+      "position": "RB",
+      "team": "LV",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 7,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 20
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0040730",
+      "playerId": "00-0040730",
+      "name": "RJ Harvey",
+      "position": "RB",
+      "team": "DEN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 6,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 16
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0039875",
+      "playerId": "00-0039875",
+      "name": "Ray Davis",
+      "position": "RB",
+      "team": "BUF",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 15,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 38
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0036020",
+      "playerId": "00-0036020",
+      "name": "Salvon Ahmed",
+      "position": "RB",
+      "team": "CHI",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 18,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 42
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0033526",
+      "playerId": "00-0033526",
+      "name": "Samaje Perine",
+      "position": "RB",
+      "team": "CIN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 9,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 24
+        }
+      },
+      "faab": {
+        "footballguys": {
+          "low": 15,
+          "high": 30,
+          "unit": "percent",
+          "budgetBasis": "annual"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0041125",
+      "playerId": "00-0041125",
+      "name": "Seth McGowan",
+      "position": "RB",
+      "team": "IND",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 10,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 25
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 4
+        },
+        "blitz": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 4
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 2,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 6,
+          "high": 6,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 12,
+              "high": 12,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 3,
+              "high": 3,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "rotoballer": {
+          "low": 8,
+          "high": 12,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 12,
+              "high": 18,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 18,
+              "high": 25,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        },
+        "cbs": {
+          "low": 5,
+          "high": null,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-least",
+          "tier": "source base"
+        },
+        "playerprofiler": {
+          "low": 8,
+          "high": 10,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "Deep League · PPR, six-point passing TDs",
+          "referenceBudget": 100
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0039364",
+      "playerId": "00-0039364",
+      "name": "Sione Vaki",
+      "position": "RB",
+      "team": "DET",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 14,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 36
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0039032",
+      "playerId": "00-0039032",
+      "name": "Tyjae Spears",
+      "position": "RB",
+      "team": "TEN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 17,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 41
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0039746",
+      "playerId": "00-0039746",
+      "name": "Will Shipley",
+      "position": "RB",
+      "team": "PHI",
+      "rankings": {
+        "cbs": {
+          "scope": "position",
+          "rank": 6,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "cbs": {
+          "low": 1,
+          "high": 1,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0038129",
+      "playerId": "00-0038129",
+      "name": "Cade Otton",
+      "position": "TE",
+      "team": "TB",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 9,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 47
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0037809",
+      "playerId": "00-0037809",
+      "name": "Chig Okonkwo",
+      "position": "TE",
+      "team": "WAS",
+      "rankings": {
+        "fantasypros": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 5
+        },
+        "rotoballer": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 19
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 5
+        },
+        "blitz": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 3
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 2,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 2,
+          "high": 2,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 3,
+              "high": 3,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 1,
+              "high": 1,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "rotoballer": {
+          "low": 4,
+          "high": 5,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 5,
+              "high": 6,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 6,
+              "high": 8,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        },
+        "playerprofiler": {
+          "low": 3,
+          "high": 4,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "Standard Bench · PPR, six-point passing TDs",
+          "referenceBudget": 100
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0038558",
+      "playerId": "00-0038558",
+      "name": "Darnell Washington",
+      "position": "TE",
+      "team": "PIT",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 11,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 49
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0031610",
+      "playerId": "00-0031610",
+      "name": "Darren Waller",
+      "position": "TE",
+      "team": "CAR",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 10,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 48
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 4,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "cbs": {
+          "low": 1,
+          "high": 1,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0040215",
+      "playerId": "00-0040215",
+      "name": "Gavin Bartholomew",
+      "position": "TE",
+      "team": "MIN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 7,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 39
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 5,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "rotoballer": {
+          "low": 1,
+          "high": 2,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 3,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 3,
+              "high": 4,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        },
+        "cbs": {
+          "low": 1,
+          "high": 1,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0040584",
+      "playerId": "00-0040584",
+      "name": "Gunnar Helm",
+      "position": "TE",
+      "team": "TEN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 8,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 44
+        }
+      },
+      "faab": {
+        "rotoballer": {
+          "low": 1,
+          "high": 2,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 3,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 3,
+              "high": 4,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        },
+        "playerprofiler": {
+          "low": 0,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "Deep League · PPR, six-point passing TDs",
+          "referenceBudget": 100
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0034753",
+      "playerId": "00-0034753",
+      "name": "Mark Andrews",
+      "position": "TE",
+      "team": "BAL",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 3,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 29
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 1,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "playerprofiler": {
+          "low": 3,
+          "high": 5,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "Shallow League · PPR, six-point passing TDs",
+          "referenceBudget": 100
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0039066",
+      "playerId": "00-0039066",
+      "name": "Michael Mayer",
+      "position": "TE",
+      "team": "LV",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 6,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 32
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 3,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 14
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 3,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 2,
+          "high": 2,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 3,
+              "high": 3,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 1,
+              "high": 1,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "rotoballer": {
+          "low": 4,
+          "high": 5,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 5,
+              "high": 6,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 6,
+              "high": 8,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        },
+        "cbs": {
+          "low": 5,
+          "high": null,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-least",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0034829",
+      "playerId": "00-0034829",
+      "name": "Mike Gesicki",
+      "position": "TE",
+      "team": "CIN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 4,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 30
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 13
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0036894",
+      "playerId": "00-0036894",
+      "name": "Pat Freiermuth",
+      "position": "TE",
+      "team": "PIT",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 22
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0040737",
+      "playerId": "00-0040737",
+      "name": "Terrance Ferguson",
+      "position": "TE",
+      "team": "LA",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 5,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 31
+        }
+      },
+      "faab": {
+        "rotoballer": {
+          "low": 3,
+          "high": 4,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 4,
+              "high": 5,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 5,
+              "high": 8,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0039890",
+      "playerId": "00-0039890",
+      "name": "Adonai Mitchell",
+      "position": "WR",
+      "team": "NYJ",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 6,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 10
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 5,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 12
+        },
+        "blitz": {
+          "scope": "position",
+          "rank": 3,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 7
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 6,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 2,
+          "high": 2,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 4,
+              "high": 4,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 1,
+              "high": 1,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "rotoballer": {
+          "low": 5,
+          "high": 7,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 7,
+              "high": 10,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 10,
+              "high": 15,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        },
+        "cbs": {
+          "low": 5,
+          "high": null,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-least",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0039816",
+      "playerId": "00-0039816",
+      "name": "Anthony Gould",
+      "position": "WR",
+      "team": "IND",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 26,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 55
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0041040",
+      "playerId": "00-0041040",
+      "name": "Antonio Williams",
+      "position": "WR",
+      "team": "WAS",
+      "rankings": {
+        "fantasypros": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 4
+        },
+        "rotoballer": {
+          "scope": "position",
+          "rank": 3,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 7
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 10,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 4,
+          "high": 4,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 8,
+              "high": 8,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "rotoballer": {
+          "low": 6,
+          "high": 8,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 8,
+              "high": 12,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 12,
+              "high": 18,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        },
+        "footballguys": {
+          "low": 15,
+          "high": 30,
+          "unit": "percent",
+          "budgetBasis": "annual"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0035021",
+      "playerId": "00-0035021",
+      "name": "Ashton Dulin",
+      "position": "WR",
+      "team": "IND",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 31,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 60
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0041399",
+      "playerId": "00-0041399",
+      "name": "CJ Daniels",
+      "position": "WR",
+      "team": "LA",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 27,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 56
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0041523",
+      "playerId": "00-0041523",
+      "name": "Caleb Douglas",
+      "position": "WR",
+      "team": "MIA",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 8,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 12
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 3,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 3
+        },
+        "blitz": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 2
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 2,
+          "high": 2,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 4,
+              "high": 4,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 1,
+              "high": 1,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "footballguys": {
+          "low": 20,
+          "high": 40,
+          "unit": "percent",
+          "budgetBasis": "annual"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0040705",
+      "playerId": "00-0040705",
+      "name": "Chimere Dike",
+      "position": "WR",
+      "team": "TEN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 20,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 46
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 9,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "rotoballer": {
+          "low": 1,
+          "high": 2,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 4,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 4,
+              "high": 6,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0034348",
+      "playerId": "00-0034348",
+      "name": "Courtland Sutton",
+      "position": "WR",
+      "team": "DEN",
+      "rankings": {
+        "cbs": {
+          "scope": "position",
+          "rank": 4,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0040890",
+      "playerId": "00-0040890",
+      "name": "Cyrus Allen",
+      "position": "WR",
+      "team": "KC",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 22,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 51
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0036331",
+      "playerId": "00-0036331",
+      "name": "Devin Duvernay",
+      "position": "WR",
+      "team": "ARI",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 23,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 52
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0040170",
+      "playerId": "00-0040170",
+      "name": "Elic Ayomanor",
+      "position": "WR",
+      "team": "TEN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 12,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 18
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 8,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 0,
+          "high": 0,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 1,
+              "high": 1,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "rotoballer": {
+          "low": 3,
+          "high": 4,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 4,
+              "high": 6,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 6,
+              "high": 8,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        },
+        "cbs": {
+          "low": 0,
+          "high": 5,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-most",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "name:wr:isaiahwilliams",
+      "playerId": null,
+      "name": "Isaiah Williams",
+      "position": "WR",
+      "team": null,
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 29,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 58
+        }
+      },
+      "faab": {},
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "unknown"
+    },
+    {
+      "id": "00-0040870",
+      "playerId": "00-0040870",
+      "name": "Ja'Kobi Lane",
+      "position": "WR",
+      "team": "BAL",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 15,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 34
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 7,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "cbs": {
+          "low": 0,
+          "high": 5,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-most",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0037666",
+      "playerId": "00-0037666",
+      "name": "Jalen Tolbert",
+      "position": "WR",
+      "team": "MIA",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 30,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 59
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0036259",
+      "playerId": "00-0036259",
+      "name": "Jauan Jennings",
+      "position": "WR",
+      "team": "MIN",
+      "rankings": {},
+      "faab": {
+        "rotoballer": {
+          "low": 3,
+          "high": 4,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 4,
+              "high": 6,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 6,
+              "high": 8,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0040172",
+      "playerId": "00-0040172",
+      "name": "Jordan Watkins",
+      "position": "WR",
+      "team": "SF",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 17,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 37
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0041029",
+      "playerId": "00-0041029",
+      "name": "Jordyn Tyson",
+      "position": "WR",
+      "team": "NO",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 1
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 1,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 1
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0041100",
+      "playerId": "00-0041100",
+      "name": "Josh Cameron",
+      "position": "WR",
+      "team": "JAX",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 25,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 54
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0038997",
+      "playerId": "00-0038997",
+      "name": "Josh Downs",
+      "position": "WR",
+      "team": "KC",
+      "rankings": {},
+      "faab": {
+        "footballguys": {
+          "low": 20,
+          "high": 40,
+          "unit": "percent",
+          "budgetBasis": "annual"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0030279",
+      "playerId": "00-0030279",
+      "name": "Keenan Allen",
+      "position": "WR",
+      "team": "SF",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 4
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 2
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0039901",
+      "playerId": "00-0039901",
+      "name": "Keon Coleman",
+      "position": "WR",
+      "team": "BUF",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 13,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 23
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0037261",
+      "playerId": "00-0037261",
+      "name": "Khalil Shakir",
+      "position": "WR",
+      "team": "BUF",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 4,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 8
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0040590",
+      "playerId": "00-0040590",
+      "name": "Konata Mumpfield",
+      "position": "WR",
+      "team": "LA",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 14,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 33
+        },
+        "nfl": {
+          "scope": "position",
+          "rank": 4,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 6
+        },
+        "blitz": {
+          "scope": "position",
+          "rank": 5,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 9
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0032951",
+      "playerId": "00-0032951",
+      "name": "Laquon Treadwell",
+      "position": "WR",
+      "team": "IND",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 18,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 43
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0040867",
+      "playerId": "00-0040867",
+      "name": "Makai Lemon",
+      "position": "WR",
+      "team": "PHI",
+      "rankings": {
+        "blitz": {
+          "scope": "position",
+          "rank": 4,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 8
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 2,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "playerprofiler": {
+          "low": 4,
+          "high": 6,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "Shallow League · PPR, six-point passing TDs",
+          "referenceBudget": 100
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0041042",
+      "playerId": "00-0041042",
+      "name": "Malachi Fields",
+      "position": "WR",
+      "team": "NYG",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 19,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 45
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0039880",
+      "playerId": "00-0039880",
+      "name": "Malik Washington",
+      "position": "WR",
+      "team": "MIA",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 11,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 17
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0040506",
+      "playerId": "00-0040506",
+      "name": "Myles Price",
+      "position": "WR",
+      "team": "MIN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 33,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 62
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 11,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "cbs": {
+          "low": 1,
+          "high": 1,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0040134",
+      "playerId": "00-0040134",
+      "name": "Pat Bryant",
+      "position": "WR",
+      "team": "DEN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 7,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 11
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 3,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "rotoballer": {
+          "low": 7,
+          "high": 10,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 10,
+              "high": 15,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 15,
+              "high": 20,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0038544",
+      "playerId": "00-0038544",
+      "name": "Quentin Johnston",
+      "position": "WR",
+      "team": "LAC",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 16,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 35
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0041070",
+      "playerId": "00-0041070",
+      "name": "Reggie Virgil",
+      "position": "WR",
+      "team": "ARI",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 24,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 53
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0039410",
+      "playerId": "00-0039410",
+      "name": "Ryan Flournoy",
+      "position": "WR",
+      "team": "DAL",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 5,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 9
+        },
+        "blitz": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 6
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 2,
+          "high": 2,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 4,
+              "high": 4,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 1,
+              "high": 1,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "playerprofiler": {
+          "low": 4,
+          "high": 6,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "Standard Bench · PPR, six-point passing TDs",
+          "referenceBudget": 100
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0038977",
+      "playerId": "00-0038977",
+      "name": "Tank Dell",
+      "position": "WR",
+      "team": "HOU",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 9,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 13
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "name:wr:travishunter",
+      "playerId": null,
+      "name": "Travis Hunter",
+      "position": "WR",
+      "team": null,
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 28,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 57
+        }
+      },
+      "faab": {},
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "unknown"
+    },
+    {
+      "id": "00-0040727",
+      "playerId": "00-0040727",
+      "name": "Tre Harris",
+      "position": "WR",
+      "team": "LAC",
+      "rankings": {
+        "cbs": {
+          "scope": "position",
+          "rank": 5,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 0,
+          "high": 0,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 1,
+              "high": 1,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "cbs": {
+          "low": 5,
+          "high": null,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-least",
+          "tier": "source base"
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0036849",
+      "playerId": "00-0036849",
+      "name": "Tutu Atwell",
+      "position": "WR",
+      "team": "LA",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 21,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 50
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    },
+    {
+      "id": "00-0038618",
+      "playerId": "00-0038618",
+      "name": "Xavier Hutchinson",
+      "position": "WR",
+      "team": "HOU",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 10,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 14
+        },
+        "cbs": {
+          "scope": "position",
+          "rank": 1,
+          "method": "publisher explicitly ordered positional waiver priorities"
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "rotoballer": {
+          "low": 3,
+          "high": 4,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 4,
+              "high": 6,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 6,
+              "high": 8,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        },
+        "cbs": {
+          "low": 5,
+          "high": null,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-least",
+          "tier": "source base"
+        },
+        "playerprofiler": {
+          "low": 2,
+          "high": 3,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "Deep League · PPR, six-point passing TDs",
+          "referenceBudget": 100
+        }
+      },
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "00-0040522",
+      "playerId": "00-0040522",
+      "name": "Xavier Restrepo",
+      "position": "WR",
+      "team": "TEN",
+      "rankings": {
+        "rotoballer": {
+          "scope": "position",
+          "rank": 32,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 61
+        }
+      },
+      "faab": {},
+      "identityMethod": "unique nflverse name and position",
+      "teamProvenance": "nflverse player dictionary"
+    }
+  ],
+  "methodology": "Verified source-native waiver priorities and FAAB. Missing cells are unavailable. Budget bases and format tiers remain separate."
+}
