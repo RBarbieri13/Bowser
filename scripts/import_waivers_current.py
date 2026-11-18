@@ -122,6 +122,30 @@ def read_captures(directory, week):
 
 
 def blitz_ranks(page):
+    # Current editions publish an ordered article rather than the older table.
+    # Read explicit numbered headings before considering unrelated table widgets.
+    headings = [node.text() for node in page.root.all('h2')
+                if re.match(r'^\d+\. ', node.text())]
+    if headings:
+        rows = []
+        for heading in headings:
+            match = re.fullmatch(r'(\d+)\. (.+), (QB|RB|WR|TE|K) \(([A-Z]{2,3})\)', heading)
+            defense = re.fullmatch(r'(\d+)\. (.+) (?:DEF|DST|D/ST)', heading)
+            if match:
+                rank, name, pos, source_team = match.groups()
+                team = waiver.team_key(source_team)
+            elif defense:
+                rank, name = defense.groups()
+                team, pos = waiver.team_key(name), 'DST'
+                name += ' D/ST'
+            else:
+                raise ValueError('Invalid Blitz numbered player identity')
+            if not team or int(rank) != len(rows) + 1:
+                raise ValueError('Invalid Blitz article priority sequence/team')
+            rows.append({'name': name, 'team': team, 'position': pos, 'overallRank': int(rank)})
+        if len(rows) < 10:
+            raise ValueError('Blitz article priorities truncated')
+        return waiver.overall_to_position(rows)
     table = next(t for t in page.tables() if t[0][:3] == ['RK', 'Player', 'Pos'])
     rows = []
     for rank, player, pos, *_ in table[1:]:

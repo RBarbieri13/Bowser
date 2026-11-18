@@ -12,6 +12,28 @@ import import_waivers_current as current
 ROOT=Path(__file__).resolve().parents[1]
 
 class CurrentWaivers(unittest.TestCase):
+    def test_blitz_article_order_is_not_a_rank_widget_or_positional_order(self):
+        headings = ['1. Kaelon Black, RB (SF)', '2. Caleb Douglas, WR (MIA)',
+                    '3. Chig Okonkwo, TE (WAS)', '4. Seth McGowan, RB (IND)',
+                    '5. Cam Ward, QB (TEN)', '6. Ryan Flournoy, WR (DAL)',
+                    '7. Adonai Mitchell, WR (NYJ)', '8. Makai Lemon, WR (PHI)',
+                    '9. Konata Mumpfield, WR (LAR)', '10. Chicago Bears DEF']
+        widget = '<table><tr><th>RK</th><th>Player</th><th>Pos</th></tr><tr><td>1</td><td>Unrelated Player NYJ • WR</td><td>WR</td></tr></table>'
+        page = waiver.Page(widget + ''.join('<h2>'+h+'</h2>' for h in headings))
+        rows = current.blitz_ranks(page)
+        self.assertEqual(len(rows), 10)
+        self.assertEqual((rows[3]['overallRank'], rows[3]['rank']), (4, 2))
+        self.assertEqual((rows[-1]['team'], rows[-1]['position']), ('CHI', 'DST'))
+        for broken in [headings[:-1], [h.replace('2. Caleb', '3. Caleb') for h in headings],
+                       [h.replace('(SF)', '(ZZZ)') for h in headings],
+                       [h.replace(', RB (SF)', ', UNKNOWN (SF)') for h in headings]]:
+            with self.subTest(broken=broken), self.assertRaises(ValueError):
+                current.blitz_ranks(waiver.Page(''.join('<h2>'+h+'</h2>' for h in broken)))
+
+    def test_blitz_existing_table_format_remains_supported(self):
+        rows = current.blitz_ranks(waiver.Page('<table><tr><th>RK</th><th>Player</th><th>Pos</th></tr><tr><td>1</td><td>Cam Ward TEN • QB</td><td>QB</td></tr></table>'))
+        self.assertEqual((rows[0]['name'], rows[0]['rank']), ('Cam Ward', 1))
+
     def test_rolling_rankings_cannot_cross_the_requested_week_kickoff(self):
         with tempfile.TemporaryDirectory() as temporary:
             data=Path(temporary)
