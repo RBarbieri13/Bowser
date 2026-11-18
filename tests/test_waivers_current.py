@@ -107,4 +107,16 @@ class CurrentWaivers(unittest.TestCase):
         beck=next(row for row in snapshot['players'] if row['name']=='Carson Beck')['faab']['cbs']
         self.assertEqual(beck['low'],10);self.assertEqual(beck['tier'],'Superflex / two-QB')
 
+    def test_week11_source_tiers_and_shared_card_bids(self):
+        snapshot=json.loads((ROOT/'data/waivers-2026-week11.json').read_text())
+        players={row['name']:row for row in snapshot['players']}
+        for name in ['Pat Bryant', 'Courtland Sutton']:
+            bid=players[name]['faab']['cbs']
+            self.assertEqual((bid['low'],bid['high'],bid['operator']),(5,None,'at-least'))
+        tiers=players['Cam Ward']['faab']['rotoballer']['alternatives']
+        self.assertIn(('Superflex Bid',30,40),[(b['tier'],b['low'],b['high']) for b in tiers])
+        bears=next(row for row in players.values() if row['position']=='DST' and row['team']=='CHI')
+        self.assertEqual(bears['faab']['fantasypros']['unit'],'dollars')
+        self.assertEqual(bears['faab']['rotoballer']['low'],3)
+
 if __name__=='__main__':unittest.main()
