@@ -218,6 +218,30 @@ def cbs_facts(page):
     return ranks, bids
 
 
+def reviewed_cbs_bids(page, ranks, bids, week):
+    """Reconcile bid paragraphs whose named recipients span CBS player cards."""
+    path = DATA / f'waiver-source-notes/cbs-2026-week{week}.json'
+    if not path.exists():
+        return bids
+    notes = json.loads(path.read_text())
+    by_name = {player['name']: player for player in ranks}
+    by_bid = {row['name']: row for row in bids}
+    for note in notes:
+        matches = [line for line in page.lines if note['anchor'] in line]
+        if len(matches) != 1:
+            raise ValueError(f'CBS reviewed bid paragraph changed: {note["players"]}')
+        tail = matches[0].split(note['anchor'], 1)[1]
+        price = re.match(r'(at least |up to )?(\d+(?:-\d+)?) percent of your remaining FAAB', tail)
+        if not price or (price[1] and '-' in price[2]):
+            raise ValueError(f'CBS reviewed price changed: {note["players"]}')
+        op = {'at least ': 'at-least', 'up to ': 'at-most'}.get(price[1])
+        native = waiver.bid(price[2], basis='remaining', operator=op, tier=note['tier'])
+        for name in note['players']:
+            by_bid[name] = dict(by_name[name], bid=native)
+    return list(by_bid.values())
+
+
+
 def playerprofiler_bids(page, week):
     if 'a $100 budget' not in ' '.join(page.lines) or 'six-point per passing touchdown' not in ' '.join(page.lines):
         raise ValueError('PlayerProfiler FAAB reference/scoring changed')
@@ -258,6 +282,7 @@ def assemble(directory, week):
         'footballguys': waiver.parse_footballguys(pages['footballguys']),
     }
     ranks['cbs'], bids['cbs'] = cbs_facts(pages['cbs'])
+    bids['cbs'] = reviewed_cbs_bids(pages['cbs'], ranks['cbs'], bids['cbs'], week)
     if 'dknetwork' in pages:
         ranks['dknetwork'], bids['dknetwork'] = dk_facts(pages['dknetwork'], week)
     if 'playerprofiler' in pages:

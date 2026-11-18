@@ -8,7 +8,7 @@
       "label": "FantasyPros",
       "type": "expert",
       "rankCount": 5,
-      "faabCount": 24,
+      "faabCount": 29,
       "publishedAt": "2026-11-18",
       "coverageNote": "Public PPR preview; bids use the publisher’s $100 reference.",
       "capturedAt": "2026-11-18T14:06:20.613548+00:00",
@@ -37,7 +37,7 @@
       "label": "RotoBaller",
       "type": "expert",
       "rankCount": 85,
-      "faabCount": 19,
+      "faabCount": 22,
       "publishedAt": "2026-11-17T23:25:50-05:00",
       "coverageNote": "Overall priority normalized by position; bid tiers retain source units.",
       "capturedAt": "2026-11-18T14:06:21.210868+00:00",
@@ -127,7 +127,7 @@
       "label": "CBS Sports",
       "type": "expert",
       "rankCount": 27,
-      "faabCount": 17,
+      "faabCount": 27,
       "publishedAt": "2026-11-17T18:14:00+00:00",
       "coverageNote": "Explicit positional add order; remaining FAAB and format-specific tiers. Ambiguous operator-plus-range phrases are omitted.",
       "capturedAt": "2026-11-18T14:06:24.205759+00:00",
@@ -228,7 +228,57 @@
           "overallRank": 10
         }
       },
-      "faab": {},
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        },
+        "rotoballer": {
+          "low": 3,
+          "high": 4,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 4,
+              "high": 5,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 5,
+              "high": 6,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        }
+      },
       "identityMethod": "publisher name and position",
       "teamProvenance": "publisher"
     },
@@ -246,7 +296,34 @@
           "overallRank": 80
         }
       },
-      "faab": {},
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        }
+      },
       "identityMethod": "publisher name and position",
       "teamProvenance": "publisher"
     },
@@ -264,7 +341,76 @@
           "overallRank": 83
         }
       },
-      "faab": {},
+      "faab": {
+        "rotoballer": {
+          "low": 1,
+          "high": 1,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 3,
+              "high": 3,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        }
+      },
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "team:dst:DET",
+      "playerId": null,
+      "name": "Detroit Lions",
+      "position": "DST",
+      "team": "DET",
+      "rankings": {
+        "nfl": {
+          "scope": "position",
+          "rank": 2,
+          "method": "within-position ordinal of published overall waiver priority",
+          "overallRank": 8
+        }
+      },
+      "faab": {
+        "fantasypros": {
+          "low": 2,
+          "high": 2,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 3,
+              "high": 3,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 1,
+              "high": 1,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        }
+      },
       "identityMethod": "publisher name and position",
       "teamProvenance": "publisher"
     },
@@ -293,24 +439,6 @@
       "teamProvenance": "publisher"
     },
     {
-      "id": "team:dst:DET",
-      "playerId": null,
-      "name": "Lions D/ST",
-      "position": "DST",
-      "team": "DET",
-      "rankings": {
-        "nfl": {
-          "scope": "position",
-          "rank": 2,
-          "method": "within-position ordinal of published overall waiver priority",
-          "overallRank": 8
-        }
-      },
-      "faab": {},
-      "identityMethod": "publisher name and position",
-      "teamProvenance": "publisher"
-    },
-    {
       "id": "team:dst:LAC",
       "playerId": null,
       "name": "Los Angeles Chargers",
@@ -324,7 +452,31 @@
           "overallRank": 82
         }
       },
-      "faab": {},
+      "faab": {
+        "rotoballer": {
+          "low": 2,
+          "high": 2,
+          "unit": "percent",
+          "budgetBasis": "unspecified",
+          "tier": "base",
+          "alternatives": [
+            {
+              "low": 3,
+              "high": 3,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Aggressive Bid"
+            },
+            {
+              "low": 4,
+              "high": 4,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Desperation Bid"
+            }
+          ]
+        }
+      },
       "identityMethod": "publisher name and position",
       "teamProvenance": "publisher"
     },
@@ -348,7 +500,72 @@
           "overallRank": 15
         }
       },
-      "faab": {},
+      "faab": {
+        "fantasypros": {
+          "low": 1,
+          "high": 1,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 2,
+              "high": 2,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        }
+      },
+      "identityMethod": "publisher name and position",
+      "teamProvenance": "publisher"
+    },
+    {
+      "id": "team:dst:SF",
+      "playerId": null,
+      "name": "San Francisco 49ers",
+      "position": "DST",
+      "team": "SF",
+      "rankings": {},
+      "faab": {
+        "fantasypros": {
+          "low": 0,
+          "high": 0,
+          "unit": "dollars",
+          "budgetBasis": "unspecified",
+          "tier": "True Value",
+          "referenceBudget": 100,
+          "alternatives": [
+            {
+              "low": 1,
+              "high": 1,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Desperate Need",
+              "referenceBudget": 100
+            },
+            {
+              "low": 0,
+              "high": 0,
+              "unit": "dollars",
+              "budgetBasis": "unspecified",
+              "tier": "Budget-Minded",
+              "referenceBudget": 100
+            }
+          ]
+        }
+      },
       "identityMethod": "publisher name and position",
       "teamProvenance": "publisher"
     },
@@ -701,6 +918,13 @@
               "unit": "percent",
               "budgetBasis": "unspecified",
               "tier": "Aggressive Bid"
+            },
+            {
+              "low": 30,
+              "high": 40,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Superflex Bid"
             }
           ]
         },
@@ -951,6 +1175,13 @@
               "unit": "percent",
               "budgetBasis": "unspecified",
               "tier": "Aggressive Bid"
+            },
+            {
+              "low": 20,
+              "high": 30,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Superflex Bid"
             }
           ]
         },
@@ -994,6 +1225,13 @@
               "unit": "percent",
               "budgetBasis": "unspecified",
               "tier": "Aggressive Bid"
+            },
+            {
+              "low": 30,
+              "high": 40,
+              "unit": "percent",
+              "budgetBasis": "unspecified",
+              "tier": "Superflex Bid"
             }
           ]
         }
@@ -1230,7 +1468,16 @@
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
-      "faab": {},
+      "faab": {
+        "cbs": {
+          "low": 10,
+          "high": null,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-least",
+          "tier": "source base"
+        }
+      },
       "identityMethod": "unique nflverse name and position",
       "teamProvenance": "publisher"
     },
@@ -1253,7 +1500,15 @@
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
-      "faab": {},
+      "faab": {
+        "cbs": {
+          "low": 1,
+          "high": 1,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "tier": "deeper leagues"
+        }
+      },
       "identityMethod": "unique nflverse name and position",
       "teamProvenance": "publisher"
     },
@@ -1276,7 +1531,16 @@
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
-      "faab": {},
+      "faab": {
+        "cbs": {
+          "low": 5,
+          "high": null,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-least",
+          "tier": "PPR"
+        }
+      },
       "identityMethod": "unique nflverse name and position",
       "teamProvenance": "publisher"
     },
@@ -1837,6 +2101,13 @@
             }
           ]
         },
+        "cbs": {
+          "low": 5,
+          "high": 10,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "tier": "source base"
+        },
         "playerprofiler": {
           "low": 3,
           "high": 4,
@@ -2048,6 +2319,14 @@
         }
       },
       "faab": {
+        "cbs": {
+          "low": 10,
+          "high": null,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-least",
+          "tier": "source base"
+        },
         "playerprofiler": {
           "low": 3,
           "high": 5,
@@ -2449,6 +2728,14 @@
           "high": 30,
           "unit": "percent",
           "budgetBasis": "annual"
+        },
+        "cbs": {
+          "low": 0,
+          "high": 5,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-most",
+          "tier": "source base"
         }
       },
       "identityMethod": "unique nflverse name and position",
@@ -2595,6 +2882,14 @@
               "tier": "Desperation Bid"
             }
           ]
+        },
+        "cbs": {
+          "low": 0,
+          "high": 5,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-most",
+          "tier": "source base"
         }
       },
       "identityMethod": "unique nflverse name and position",
@@ -2613,7 +2908,16 @@
           "method": "publisher explicitly ordered positional waiver priorities"
         }
       },
-      "faab": {},
+      "faab": {
+        "cbs": {
+          "low": 5,
+          "high": null,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-least",
+          "tier": "source base"
+        }
+      },
       "identityMethod": "unique nflverse name and position",
       "teamProvenance": "publisher"
     },
@@ -3043,6 +3347,14 @@
         }
       },
       "faab": {
+        "cbs": {
+          "low": 5,
+          "high": null,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-least",
+          "tier": "source base"
+        },
         "playerprofiler": {
           "low": 4,
           "high": 6,
@@ -3190,6 +3502,14 @@
               "tier": "Desperation Bid"
             }
           ]
+        },
+        "cbs": {
+          "low": 5,
+          "high": null,
+          "unit": "percent",
+          "budgetBasis": "remaining",
+          "operator": "at-least",
+          "tier": "source base"
         }
       },
       "identityMethod": "unique nflverse name and position",

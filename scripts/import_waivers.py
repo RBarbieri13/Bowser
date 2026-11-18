@@ -246,7 +246,7 @@ def parse_cbs(page):
 
 def parse_fantasypros_faab(page):
     if 'based on a $100 budget' not in ' '.join(page.lines):raise ValueError('FantasyPros dollar reference budget changed')
-    out=[];player=None;values=[]
+    out=[];player=None;values=[];defenses=False
     def finish():
         if player and values:
             primary=values[0]
@@ -256,7 +256,14 @@ def parse_fantasypros_faab(page):
         m=re.fullmatch(r'(.+?) \((QB|RB|WR|TE|K) [–-] ([A-Z]+)\): .*Rostered',line)
         if m:
             finish();player={'name':m[1],'position':m[2],'team':team_key(m[3])};values=[];continue
-        if line in {'Defenses','Fool’s Gold','Drop Recommendations'}:finish();player=None;values=[]
+        if line in {'Defenses','Fool’s Gold','Drop Recommendations'}:
+            finish();player=None;values=[];defenses=line=='Defenses'
+        if defenses:
+            defense=re.fullmatch(r'(.+?): \d+% Rostered',line)
+            if defense:
+                team=team_key(defense[1])
+                if not team: raise ValueError('Unknown FantasyPros defense '+defense[1])
+                finish();player={'name':defense[1],'position':'DST','team':team};values=[]
         if player:
             b=re.fullmatch(r'(True Value|Desperate Need|Budget-Minded): \$(\d+(?:-\d+)?)',line)
             if b:values.append(bid(b[2],unit='dollars',tier=b[1]))
@@ -271,11 +278,19 @@ def parse_rotoballer_faab(page):
         m=re.fullmatch(r'(.+?) \((QB|RB|WR|TE), ([A-Z]+)\) - \d+% rostered',line)
         if m:
             pending.append({'name':m[1],'position':m[2],'team':team_key(m[3])});continue
-        b=re.fullmatch(r'(FAAB Bid|Aggressive Bid|Desperation Bid):\s*(.+)',line)
+        defense=re.fullmatch(r'(.+) Defense \((?:vs\.|at|@) [A-Z]+\) - \d+% rostered',line)
+        if defense:
+            team=team_key(defense[1])
+            if not team: raise ValueError('Unknown RotoBaller defense '+defense[1])
+            pending.append({'name':defense[1],'position':'DST','team':team})
+            continue
+        b=re.fullmatch(r'(FAAB Bid|Aggressive Bid|Desperation Bid|Superflex Bid):\s*(.+)',line)
         if b:
             values=b[2].split(' / ')
             if b[1]=='FAAB Bid':
-                if not pending:continue  # Defense/team paragraphs are excluded here.
+                if not pending:
+                    last=[]
+                    continue
                 if len(pending)!=len(values):raise ValueError('RotoBaller grouped bids no longer align with player headings')
                 last=[]
                 for player,value in zip(pending,values):
