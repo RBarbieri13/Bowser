@@ -2,10 +2,37 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-11T04:04:17.975Z",
-  "updatedAt": "2026-11-11T04:09:29.126Z",
-  "revision": "bowser-public-news-20261110-evening",
+  "checkedAt": "2026-11-18T04:42:57Z",
+  "updatedAt": "2026-11-18T04:42:57Z",
+  "revision": "bowser-public-news-20261117-evening",
   "events": [
+    {
+      "eventId": "espn:49949224:3915511",
+      "player": {
+        "playerId": "00-0036442",
+        "name": "Joe Burrow",
+        "position": "QB",
+        "team": "CIN"
+      },
+      "headline": "Burrow leads ESPN rest-of-season quarterback rankings",
+      "summary": "The updated fantasy rankings put Cincinnati’s quarterback first among quarterbacks.",
+      "eventType": "OTHER",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": "2026-11-17T18:47:48.000Z",
+      "lastUpdatedAt": "2026-11-17T18:47:48.000Z",
+      "checkedAt": "2026-11-18T04:36:28.145Z",
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-17T18:47:48.000Z",
+          "url": "https://www.espn.com/fantasy/football/story/_/id/49949224/fantasy-football-2026-updated-rest-season-rankings",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
     {
       "eventId": "espn:50444360:14880",
       "player": {
@@ -243,6 +270,527 @@
           "checkedAt": "2026-11-11T04:04:17.975Z"
         }
       ]
+    },
+    {
+      "eventId": "espn:50463509:4241416",
+      "player": {
+        "playerId": "00-0036555",
+        "name": "Chuba Hubbard",
+        "position": "RB",
+        "team": "CAR"
+      },
+      "headline": "Hubbard’s role in Carolina",
+      "summary": "ESPN profiles the Panthers running back’s leadership as a team captain.",
+      "eventType": "OTHER",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": "2026-11-17T19:29:01.000Z",
+      "lastUpdatedAt": "2026-11-17T19:29:01.000Z",
+      "checkedAt": "2026-11-18T04:36:28.145Z",
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-17T19:29:01.000Z",
+          "url": "https://www.espn.com/nfl/story/_/id/50463509/chuba-hubbard-x-factor-spark-carolina-panthers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50505347:4433971",
+      "player": {
+        "playerId": "00-0040014",
+        "name": "Kyle McCord",
+        "position": "QB",
+        "team": "MIA"
+      },
+      "headline": "Miami coach praises McCord’s debut",
+      "summary": "Jeff Hafley singled out McCord’s composure and his trust in receivers Malik Washington and Caleb Douglas.",
+      "eventType": "COACH_COMMENT",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-17T16:48:42.000Z",
+      "lastUpdatedAt": "2026-11-17T16:48:42.000Z",
+      "checkedAt": "2026-11-18T04:36:28.145Z",
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-17T16:48:42.000Z",
+          "url": "https://www.espn.com/nfl/story/_/id/50505347/miami-dolphins-quarterback-kyle-mccord-debut-colts",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50511159:14880",
+      "player": {
+        "playerId": "00-0029604",
+        "name": "Kirk Cousins",
+        "position": "QB",
+        "team": "MIN"
+      },
+      "headline": "Minnesota reviews Cousins’ first start back",
+      "summary": "ESPN details how Cousins and Kevin O’Connell prepared for their first game together after the trade.",
+      "eventType": "PERFORMANCE",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": "2026-11-17T17:19:26.000Z",
+      "lastUpdatedAt": "2026-11-17T17:19:26.000Z",
+      "checkedAt": "2026-11-18T04:36:28.145Z",
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-17T17:19:26.000Z",
+          "url": "https://www.espn.com/nfl/story/_/id/50511159/vikings-kirk-cousins-trade-beat-packers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50511179:3043078",
+      "player": {
+        "playerId": "00-0032764",
+        "name": "Derrick Henry",
+        "position": "RB",
+        "team": "BAL"
+      },
+      "headline": "ESPN reviews Henry’s fantasy outlook",
+      "summary": "The segment examines concerns about Baltimore’s running back.",
+      "eventType": "OTHER",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": "2026-11-17T16:52:58.000Z",
+      "lastUpdatedAt": "2026-11-17T16:52:58.000Z",
+      "checkedAt": "2026-11-18T04:36:28.145Z",
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-17T16:52:58.000Z",
+          "url": "https://www.espn.com/video/clip/_/id/50511179/should-fantasy-managers-concerned-derrick-henry",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50511207:4688380",
+      "player": {
+        "playerId": "00-0040676",
+        "name": "Cam Ward",
+        "position": "QB",
+        "team": "TEN"
+      },
+      "headline": "Ward draws Week 11 streaming interest",
+      "summary": "ESPN evaluates Tennessee’s quarterback as a one-week fantasy starter.",
+      "eventType": "OTHER",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": "2026-11-17T17:01:53.000Z",
+      "lastUpdatedAt": "2026-11-17T17:01:53.000Z",
+      "checkedAt": "2026-11-18T04:36:28.145Z",
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-17T17:01:53.000Z",
+          "url": "https://www.espn.com/video/clip/_/id/50511207/why-cam-ward-real-streaming-potential-week-11",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50511255:4362478",
+      "player": {
+        "playerId": "00-0038705",
+        "name": "Emari Demercado",
+        "position": "RB",
+        "team": "HOU"
+      },
+      "headline": "ESPN weighs Demercado’s Week 11 outlook",
+      "summary": "ESPN examines the Houston running back as a Week 11 fantasy option.",
+      "eventType": "OTHER",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": "2026-11-17T17:03:06.000Z",
+      "lastUpdatedAt": "2026-11-17T17:03:06.000Z",
+      "checkedAt": "2026-11-18T04:36:28.145Z",
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-17T17:03:06.000Z",
+          "url": "https://www.espn.com/video/clip/_/id/50511255/is-emari-demercado-worth-fantasy-consideration-week-11",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50511322:4880281",
+      "player": {
+        "playerId": "00-0041029",
+        "name": "Jordyn Tyson",
+        "position": "WR",
+        "team": "NO"
+      },
+      "headline": "Field Yates names Tyson his top waiver add",
+      "summary": "Yates puts the Saints receiver first among his Week 11 waiver options.",
+      "eventType": "OTHER",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": "2026-11-17T16:28:17.000Z",
+      "lastUpdatedAt": "2026-11-17T16:28:17.000Z",
+      "checkedAt": "2026-11-18T04:36:28.145Z",
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-17T16:28:17.000Z",
+          "url": "https://www.espn.com/video/clip/_/id/50511322/why-jordyn-tyson-field-yates-no-1-waiver-wire-pickup",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50511343:4686422",
+      "player": {
+        "playerId": "00-0038618",
+        "name": "Xavier Hutchinson",
+        "position": "WR",
+        "team": "HOU"
+      },
+      "headline": "Mike Clay weighs Hutchinson’s outlook",
+      "summary": "Clay expresses reservations about the Houston receiver’s fantasy prospects.",
+      "eventType": "OTHER",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": "2026-11-17T16:59:41.000Z",
+      "lastUpdatedAt": "2026-11-17T16:59:41.000Z",
+      "checkedAt": "2026-11-18T04:36:28.145Z",
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-17T16:59:41.000Z",
+          "url": "https://www.espn.com/video/clip/_/id/50511343/why-mike-clay-overly-bullish-xavier-hutchinson",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50513594:4569587",
+      "player": {
+        "playerId": "00-0038117",
+        "name": "Wan'Dale Robinson",
+        "position": "WR",
+        "team": "TEN"
+      },
+      "headline": "Tennessee places Robinson on injured reserve",
+      "summary": "The Titans placed the receiver on IR after his ankle injury.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-17T23:03:44.000Z",
+      "lastUpdatedAt": "2026-11-17T23:03:44.000Z",
+      "checkedAt": "2026-11-18T04:36:28.145Z",
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-17T23:03:44.000Z",
+          "url": "https://www.espn.com/nfl/story/_/id/50513594/titans-put-wr-wandale-robinson-ankle-ir",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50514056:2577417",
+      "player": {
+        "playerId": "00-0033077",
+        "name": "Dak Prescott",
+        "position": "QB",
+        "team": "DAL"
+      },
+      "headline": "ESPN favors Prescott for Week 11",
+      "summary": "ESPN’s fantasy segment makes the case for starting the Dallas quarterback.",
+      "eventType": "OTHER",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": "2026-11-17T22:15:04.000Z",
+      "lastUpdatedAt": "2026-11-17T22:15:04.000Z",
+      "checkedAt": "2026-11-18T04:36:28.145Z",
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-17T22:15:04.000Z",
+          "url": "https://www.espn.com/video/clip/_/id/50514056/why-fantasy-managers-utilize-dak-prescott-week-11",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
+    {
+      "eventId": "espn:50515291:4431611",
+      "player": {
+        "playerId": "00-0039918",
+        "name": "Caleb Williams",
+        "position": "QB",
+        "team": "CHI"
+      },
+      "headline": "Williams used the bye to rest his hamstring",
+      "summary": "The Bears quarterback discussed his recovery and his response to throwing four interceptions.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-18T02:45:43.000Z",
+      "lastUpdatedAt": "2026-11-18T02:45:43.000Z",
+      "checkedAt": "2026-11-18T04:36:28.145Z",
+      "sources": [
+        {
+          "sourceName": "ESPN",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-18T02:45:43.000Z",
+          "url": "https://www.espn.com/nfl/story/_/id/50515291/bears-caleb-williams-moved-4-interception-game-frustration-lingers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
+    {
+      "eventId": "hou-ind-20261117:00-0035685",
+      "player": {
+        "playerId": "00-0035685",
+        "name": "David Montgomery",
+        "position": "RB",
+        "team": "HOU"
+      },
+      "headline": "David Montgomery practiced in full Tuesday",
+      "summary": "Tuesday’s Week 11 report lists groin and records participation as FP.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-17T21:48:15.312Z",
+      "lastUpdatedAt": "2026-11-17T21:48:15.312Z",
+      "checkedAt": "2026-11-18T04:40:50.724316+00:00",
+      "sources": [
+        {
+          "sourceName": "Houston Texans",
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-11-16T23:48:00Z",
+          "url": "https://www.houstontexans.com/news/week-11-injury-report-texans-vs-colts",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:40:50.724316+00:00"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "practiceStatus": "FP"
+      }
+    },
+    {
+      "eventId": "hou-ind-20261117:00-0036556",
+      "player": {
+        "playerId": "00-0036556",
+        "name": "Brevin Jordan",
+        "position": "TE",
+        "team": "HOU"
+      },
+      "headline": "Brevin Jordan did not practice Tuesday",
+      "summary": "Tuesday’s Week 11 report lists foot / illness and records participation as DNP.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-17T21:48:15.312Z",
+      "lastUpdatedAt": "2026-11-17T21:48:15.312Z",
+      "checkedAt": "2026-11-18T04:40:50.724316+00:00",
+      "sources": [
+        {
+          "sourceName": "Houston Texans",
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-11-16T23:48:00Z",
+          "url": "https://www.houstontexans.com/news/week-11-injury-report-texans-vs-colts",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:40:50.724316+00:00"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot / Illness",
+        "practiceStatus": "DNP"
+      }
+    },
+    {
+      "eventId": "hou-ind-20261117:00-0038394",
+      "player": {
+        "playerId": "00-0038394",
+        "name": "Will Mallory",
+        "position": "TE",
+        "team": "IND"
+      },
+      "headline": "Will Mallory did not practice Tuesday",
+      "summary": "Tuesday’s Week 11 report lists hamstring and records participation as DNP.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-17T21:48:15.312Z",
+      "lastUpdatedAt": "2026-11-17T21:48:15.312Z",
+      "checkedAt": "2026-11-18T04:40:50.724316+00:00",
+      "sources": [
+        {
+          "sourceName": "Houston Texans",
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-11-16T23:48:00Z",
+          "url": "https://www.houstontexans.com/news/week-11-injury-report-texans-vs-colts",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:40:50.724316+00:00"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": "DNP"
+      }
+    },
+    {
+      "eventId": "hou-ind-20261117:00-0038977",
+      "player": {
+        "playerId": "00-0038977",
+        "name": "Tank Dell",
+        "position": "WR",
+        "team": "HOU"
+      },
+      "headline": "Tank Dell practiced in full Tuesday",
+      "summary": "Tuesday’s Week 11 report lists hand / shoulder and records participation as FP.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-17T21:48:15.312Z",
+      "lastUpdatedAt": "2026-11-17T21:48:15.312Z",
+      "checkedAt": "2026-11-18T04:40:50.724316+00:00",
+      "sources": [
+        {
+          "sourceName": "Houston Texans",
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-11-16T23:48:00Z",
+          "url": "https://www.houstontexans.com/news/week-11-injury-report-texans-vs-colts",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:40:50.724316+00:00"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hand / Shoulder",
+        "practiceStatus": "FP"
+      }
+    },
+    {
+      "eventId": "hou-ind-20261117:00-0039816",
+      "player": {
+        "playerId": "00-0039816",
+        "name": "Anthony Gould",
+        "position": "WR",
+        "team": "IND"
+      },
+      "headline": "Anthony Gould was limited Tuesday",
+      "summary": "Tuesday’s Week 11 report lists toe and records participation as LP.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-17T21:48:15.312Z",
+      "lastUpdatedAt": "2026-11-17T21:48:15.312Z",
+      "checkedAt": "2026-11-18T04:40:50.724316+00:00",
+      "sources": [
+        {
+          "sourceName": "Houston Texans",
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-11-16T23:48:00Z",
+          "url": "https://www.houstontexans.com/news/week-11-injury-report-texans-vs-colts",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:40:50.724316+00:00"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Toe",
+        "practiceStatus": "LP"
+      }
+    },
+    {
+      "eventId": "hou-ind-20261117:00-0039849",
+      "player": {
+        "playerId": "00-0039849",
+        "name": "Marvin Harrison Jr.",
+        "position": "WR",
+        "team": "HOU"
+      },
+      "headline": "Marvin Harrison Jr. did not practice Tuesday",
+      "summary": "Tuesday’s Week 11 report lists hamstring and records participation as DNP.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-17T21:48:15.312Z",
+      "lastUpdatedAt": "2026-11-17T21:48:15.312Z",
+      "checkedAt": "2026-11-18T04:40:50.724316+00:00",
+      "sources": [
+        {
+          "sourceName": "Houston Texans",
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-11-16T23:48:00Z",
+          "url": "https://www.houstontexans.com/news/week-11-injury-report-texans-vs-colts",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:40:50.724316+00:00"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": "DNP"
+      }
+    },
+    {
+      "eventId": "hou-ind-20261117:00-0040583",
+      "player": {
+        "playerId": "00-0040583",
+        "name": "Woody Marks",
+        "position": "RB",
+        "team": "HOU"
+      },
+      "headline": "Woody Marks did not practice Tuesday",
+      "summary": "Tuesday’s Week 11 report lists concussion and records participation as DNP.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-17T21:48:15.312Z",
+      "lastUpdatedAt": "2026-11-17T21:48:15.312Z",
+      "checkedAt": "2026-11-18T04:40:50.724316+00:00",
+      "sources": [
+        {
+          "sourceName": "Houston Texans",
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-11-16T23:48:00Z",
+          "url": "https://www.houstontexans.com/news/week-11-injury-report-texans-vs-colts",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-18T04:40:50.724316+00:00"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion",
+        "practiceStatus": "DNP"
+      }
     },
     {
       "eventId": "nfl-2026-w7-ari-carsonbeck-checked-20261022",
@@ -3663,5 +4211,5 @@
       ]
     }
   ],
-  "contentHash": "4a40a2c494583bc6011437f746d9cf1d2b794f0e214092cf9c2dc0e0a1e66862"
+  "contentHash": "1596863865590a332c5bd00e37e99644a4feaf0342dd79c6d62037b866ab6132"
 }
