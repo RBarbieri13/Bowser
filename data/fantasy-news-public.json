@@ -2,10 +2,67 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-21T19:16:21.610Z",
-  "updatedAt": "2026-11-21T19:16:21.610Z",
-  "revision": "bowser-public-news-20261121-spears",
+  "checkedAt": "2026-11-21T19:44:56.678Z",
+  "updatedAt": "2026-11-21T19:44:56.678Z",
+  "revision": "bowser-public-news-20261121-beck",
   "events": [
+    {
+      "eventId": "azcardinals:20261121:carson-beck-out",
+      "player": {
+        "playerId": null,
+        "name": "Carson Beck",
+        "position": "QB",
+        "team": "ARI"
+      },
+      "headline": "Cardinals rule out Carson Beck; Josh Johnson to start",
+      "summary": "Arizona officially downgraded Beck to out with back spasms for Sunday's Week 11 game at Kansas City. The team confirmed Josh Johnson will start.",
+      "fantasyAnalysis": "Bench Beck this week. Johnson is an emergency superflex option, not a recommended one-quarterback streamer against Kansas City. The Week 11 downgrade does not establish Beck's Week 12 status.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-21T19:21:51.756Z",
+      "lastUpdatedAt": "2026-11-21T19:21:58.229Z",
+      "sourceQuality": {
+        "confidence": 96,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "AZCardinals.com",
+          "author": "Darren Urban",
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-11-21T19:21:58.229Z",
+          "url": "https://www.azcardinals.com/news/josh-johnson-start-confirmed-after-carson-beck-downgraded",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-21T19:44:56.678Z"
+        },
+        {
+          "sourceName": "Darren Urban on Bluesky",
+          "author": "Darren Urban",
+          "sourceType": "BEAT_WRITER",
+          "publishedAt": "2026-11-21T19:21:51.756Z",
+          "url": "https://bsky.app/profile/darrenurban.bsky.social/post/3n2tt4xplos27",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-21T19:44:56.678Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Back",
+        "gameStatus": "Out for Week 11"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Josh Johnson",
+          "relationship": "BENEFICIARY",
+          "impact": "Confirmed starter at Kansas City in Week 11.",
+          "team": "ARI",
+          "position": "QB"
+        }
+      ],
+      "checkedAt": "2026-11-21T19:44:56.678Z"
+    },
     {
       "eventId": "bsky:3n2tlvu7eo22x:josh-jacobs",
       "player": {
@@ -4318,5 +4375,5 @@
       "checkedAt": "2026-11-21T19:16:21.610Z"
     }
   ],
-  "contentHash": "b8a8d82624e5cddb87060655419438b558ebbbcf52ca3bf7f2a6e18390f813c8"
+  "contentHash": "48b2a9140f6a521909955ed1f51e6664968fcf58deb4c6b9a2524d890828613f"
 }
