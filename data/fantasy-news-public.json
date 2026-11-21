@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-21T19:44:56.678Z",
-  "updatedAt": "2026-11-21T19:44:56.678Z",
-  "revision": "bowser-public-news-20261121-beck",
+  "checkedAt": "2026-11-21T20:14:24.835Z",
+  "updatedAt": "2026-11-21T20:14:24.835Z",
+  "revision": "bowser-public-news-20261121-wilson",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -4327,6 +4327,46 @@
       ]
     },
     {
+      "eventId": "steelers:20261121:roman-wilson-activated",
+      "player": {
+        "playerId": null,
+        "name": "Roman Wilson",
+        "position": "WR",
+        "team": "PIT"
+      },
+      "headline": "Steelers activate Roman Wilson from injured reserve",
+      "summary": "Pittsburgh activated Wilson to the active roster Saturday after his hand injury. He is eligible for Sunday's Week 11 game against Philadelphia; activation is not an official game-day active designation.",
+      "fantasyAnalysis": "Wilson could return to the receiver rotation. Treat him as a watch-list option rather than relying on a full workload in his first game back; check inactives and early usage.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "sourceQuality": {
+        "confidence": 96,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Pittsburgh Steelers official transactions",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": "2026-11-21",
+          "publishedAtRaw": "11/21 transaction entry in the 2026 archive; publication time not displayed.",
+          "url": "https://www.steelers.com/team/transactions/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-21T20:14:24.835Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hand",
+        "gameStatus": "Activated from injured reserve"
+      },
+      "checkedAt": "2026-11-21T20:14:24.835Z"
+    },
+    {
       "eventId": "tennesseetitans:20261121:tyjae-spears-ir",
       "player": {
         "playerId": null,
@@ -4375,5 +4415,5 @@
       "checkedAt": "2026-11-21T19:16:21.610Z"
     }
   ],
-  "contentHash": "48b2a9140f6a521909955ed1f51e6664968fcf58deb4c6b9a2524d890828613f"
+  "contentHash": "c1c4eccf1cc9004afe093a1cde2a9ac423b2c88936a5c8f1b9142b5db0071099"
 }
