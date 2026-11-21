@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-21T21:27:47.303Z",
-  "updatedAt": "2026-11-21T21:27:47.303Z",
-  "revision": "bowser-public-news-20261121-pittman-wicks",
+  "checkedAt": "2026-11-21T21:45:37.844Z",
+  "updatedAt": "2026-11-21T21:45:37.844Z",
+  "revision": "bowser-public-news-20261121-burrow-brooks-shipley",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -62,6 +62,45 @@
         }
       ],
       "checkedAt": "2026-11-21T19:44:56.678Z"
+    },
+    {
+      "eventId": "bengals:20261121:joe-burrow-no-designation",
+      "player": {
+        "playerId": null,
+        "name": "Joe Burrow",
+        "position": "QB",
+        "team": "CIN"
+      },
+      "headline": "Joe Burrow has no Week 11 game designation",
+      "summary": "Cincinnati's final report lists Burrow as a full participant Thursday, Friday and Saturday despite an illness, with no game designation for Monday night at Washington.",
+      "fantasyAnalysis": "Use Burrow as planned. The illness did not lead to a game designation; there is no reason to pivot to a backup based on the injury report.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-21T21:15:00Z",
+      "lastUpdatedAt": "2026-11-21T21:15:51.527Z",
+      "sourceQuality": {
+        "confidence": 96,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Bengals.com Week 11 final injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.bengals.com/news/bengals-commanders-week-11-2026-injury-report-monday-night-football",
+          "publishedAt": "2026-11-21T21:15:00Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-21T21:45:37.844Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Illness",
+        "practiceStatus": "FP",
+        "gameStatus": "No Week 11 game designation"
+      },
+      "checkedAt": "2026-11-21T21:45:37.844Z"
     },
     {
       "eventId": "bsky:3n2tlvu7eo22x:josh-jacobs",
@@ -239,6 +278,56 @@
         "gameStatus": "Injured reserve"
       },
       "checkedAt": "2026-11-21T21:27:47.303Z"
+    },
+    {
+      "eventId": "eagles:20261121:will-shipley-activated",
+      "player": {
+        "playerId": null,
+        "name": "Will Shipley",
+        "position": "RB",
+        "team": "PHI"
+      },
+      "headline": "Eagles activate Will Shipley from injured reserve",
+      "summary": "Philadelphia activated Shipley Saturday while he was still listed questionable with a foot injury and illness for Sunday's Week 11 game against Pittsburgh.",
+      "fantasyAnalysis": "Activation makes Shipley eligible, not confirmed active. Monitor inactives and actual usage; there is no assured change to the Eagles' backfield workload.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "sourceQuality": {
+        "confidence": 96,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles official transactions",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.philadelphiaeagles.com/team/transactions/",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "publishedDate": "2026-11-21",
+          "publishedAtRaw": "11/21 transaction entry in the 2026 archive; publication clock not displayed.",
+          "checkedAt": "2026-11-21T21:45:37.844Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles official injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.philadelphiaeagles.com/team/injury-report/",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Dynamic team injury table; publication clock not displayed.",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-21T21:45:37.844Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot/Illness",
+        "gameStatus": "Activated from injured reserve; questionable for Week 11"
+      },
+      "checkedAt": "2026-11-21T21:45:37.844Z"
     },
     {
       "eventId": "espn:49949224:3915511",
@@ -4307,6 +4396,44 @@
       ]
     },
     {
+      "eventId": "panthers:20261121:jonathon-brooks-out",
+      "player": {
+        "playerId": null,
+        "name": "Jonathon Brooks",
+        "position": "RB",
+        "team": "CAR"
+      },
+      "headline": "Panthers downgrade Jonathon Brooks to out",
+      "summary": "Carolina did not activate Brooks from injured reserve and officially downgraded him to out for Sunday's Week 11 game against Baltimore. He had been questionable after three full practices while working back from a groin injury.",
+      "fantasyAnalysis": "Keep Brooks out of Week 11 lineups. Chuba Hubbard remains the lead option in Carolina's backfield; Brooks's first game back is not yet confirmed.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-21T21:00:01.777Z",
+      "lastUpdatedAt": "2026-11-21T21:00:01.777Z",
+      "sourceQuality": {
+        "confidence": 96,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Panthers.com Saturday roster update",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.panthers.com/news/panthers-activate-mike-jackson-from-ir-among-other-moves-isaiah-simmons-ir",
+          "publishedAt": "2026-11-21T21:00:01.777Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-21T21:45:37.844Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "gameStatus": "Out for Week 11; remains on injured reserve"
+      },
+      "checkedAt": "2026-11-21T21:45:37.844Z"
+    },
+    {
       "eventId": "reported-20261022-breecehall",
       "player": {
         "playerId": "00-0038120",
@@ -4579,5 +4706,5 @@
       "checkedAt": "2026-11-21T19:16:21.610Z"
     }
   ],
-  "contentHash": "2e40679f143e5e1d040529fef60a0865cc33b8aeb6709290dc08ad8bbd63f42e"
+  "contentHash": "5b14a4e36af78d1aa8878ea0d0ef1625facd45a808f5f528db2f4ad5b83d2812"
 }
