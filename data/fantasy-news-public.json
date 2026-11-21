@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-21T20:14:24.835Z",
-  "updatedAt": "2026-11-21T20:14:24.835Z",
-  "revision": "bowser-public-news-20261121-wilson",
+  "checkedAt": "2026-11-21T21:19:24.558Z",
+  "updatedAt": "2026-11-21T21:19:24.558Z",
+  "revision": "bowser-public-news-20261121-commanders-rbs",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -121,6 +121,84 @@
           "position": "RB"
         }
       ]
+    },
+    {
+      "eventId": "commanders:20261121:jacory-croskey-merritt-questionable",
+      "player": {
+        "playerId": null,
+        "name": "Jacory Croskey-Merritt",
+        "position": "RB",
+        "team": "WAS"
+      },
+      "headline": "Jacory Croskey-Merritt questionable for Monday; activation pending",
+      "summary": "Washington listed Croskey-Merritt as questionable for Monday's Week 11 game against Cincinnati after three full practices. He is working back from a groin injury and has not yet been activated from injured reserve.",
+      "fantasyAnalysis": "Do not count on his availability until Washington activates him and posts Monday inactives. If he returns, he could share work with Washington's other backs, but the first-game workload is uncertain.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-21T20:59:24.363Z",
+      "lastUpdatedAt": "2026-11-21T21:05:47.625Z",
+      "sourceQuality": {
+        "confidence": 96,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Washington Commanders official Week 11 game status",
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-11-21T20:59:24.363Z",
+          "url": "https://www.commanders.com/news/game-status-commanders-bengals-week-11",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-21T21:19:24.558Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "practiceStatus": "FP",
+        "gameStatus": "Questionable for Week 11; on injured reserve pending activation"
+      },
+      "checkedAt": "2026-11-21T21:19:24.558Z"
+    },
+    {
+      "eventId": "commanders:20261121:rachaad-white-questionable",
+      "player": {
+        "playerId": null,
+        "name": "Rachaad White",
+        "position": "RB",
+        "team": "WAS"
+      },
+      "headline": "Rachaad White questionable for Monday after missing Saturday practice",
+      "summary": "Washington listed White as questionable for Monday's Week 11 game against Cincinnati. He was limited Friday with a heel injury and did not practice Saturday. Dan Quinn said the team held him out to reduce soreness.",
+      "fantasyAnalysis": "Have a late-game alternative and check Monday inactives. If White misses time, Austin Ekeler could be involved, and Jacory Croskey-Merritt could compete for carries if activated; neither workload is assured.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-21T20:59:24.363Z",
+      "lastUpdatedAt": "2026-11-21T21:05:47.625Z",
+      "sourceQuality": {
+        "confidence": 96,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Washington Commanders official Week 11 game status",
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-11-21T20:59:24.363Z",
+          "url": "https://www.commanders.com/news/game-status-commanders-bengals-week-11",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-21T21:19:24.558Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Heel",
+        "practiceStatus": "DNP",
+        "gameStatus": "Questionable for Week 11"
+      },
+      "checkedAt": "2026-11-21T21:19:24.558Z"
     },
     {
       "eventId": "espn:49949224:3915511",
@@ -4415,5 +4493,5 @@
       "checkedAt": "2026-11-21T19:16:21.610Z"
     }
   ],
-  "contentHash": "c1c4eccf1cc9004afe093a1cde2a9ac423b2c88936a5c8f1b9142b5db0071099"
+  "contentHash": "675c794a77db7abf63fae82b1b7b750629f3eebce09753f0a360ba6a52fc3881"
 }
