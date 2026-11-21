@@ -2,10 +2,69 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-18T04:42:57Z",
-  "updatedAt": "2026-11-18T04:42:57Z",
-  "revision": "bowser-public-news-20261117-evening",
+  "checkedAt": "2026-11-21T17:42:33.252Z",
+  "updatedAt": "2026-11-21T17:42:33.252Z",
+  "revision": "bowser-public-news-20261121-jacobs",
   "events": [
+    {
+      "eventId": "bsky:3n2tlvu7eo22x:josh-jacobs",
+      "player": {
+        "playerId": null,
+        "name": "Josh Jacobs",
+        "position": "RB",
+        "team": "GB"
+      },
+      "headline": "LaFleur does not expect Josh Jacobs to play Wednesday",
+      "summary": "Packers head coach Matt LaFleur said Saturday he does not anticipate Jacobs playing against the Rams on Wednesday, Nov. 25, while leaving open the possibility of progress. Jacobs is recovering from finger surgery and has not been officially ruled out for Week 12.",
+      "fantasyAnalysis": "Plan a Week 12 alternative before the early Wednesday kickoff. Kaleb Johnson led the Packers running backs in Week 10 with 10 carries for 42 yards, but Green Bay split the work and his Week 12 role is not guaranteed.",
+      "eventType": "COACH_COMMENT",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-21T17:12:37.248Z",
+      "lastUpdatedAt": "2026-11-21T17:12:37.248Z",
+      "checkedAt": "2026-11-21T17:42:33.252Z",
+      "sourceQuality": {
+        "confidence": 84,
+        "primarySourceType": "BEAT_WRITER",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Jason B. Hirschhorn on Bluesky",
+          "author": "Jason B. Hirschhorn",
+          "sourceType": "BEAT_WRITER",
+          "publishedAt": "2026-11-21T17:12:37.248Z",
+          "url": "https://bsky.app/profile/byjbh.bsky.social/post/3n2tlvu7eo22x",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-21T17:42:33.252Z"
+        },
+        {
+          "sourceName": "Packers.com",
+          "author": "Wes Hodkiewicz",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 17, 2026 at 08:30 AM (timezone not specified)",
+          "publishedDate": "2026-11-17",
+          "url": "https://www.packers.com/news/inbox-kaleb-johnson-has-responded-the-right-way-nov-17-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-21T17:42:33.252Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Finger",
+        "gameStatus": "Not expected to play Wednesday; official designation pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Kaleb Johnson",
+          "relationship": "BENEFICIARY",
+          "impact": "Led Green Bay backs in Week 10 carries; possible committee lead if Jacobs sits.",
+          "team": "GB",
+          "position": "RB"
+        }
+      ]
+    },
     {
       "eventId": "espn:49949224:3915511",
       "player": {
@@ -4211,5 +4270,5 @@
       ]
     }
   ],
-  "contentHash": "1596863865590a332c5bd00e37e99644a4feaf0342dd79c6d62037b866ab6132"
+  "contentHash": "f0dc810794a424b98b1d0b0c35c35c608641428b7e3404aa67b7006a71caf975"
 }
