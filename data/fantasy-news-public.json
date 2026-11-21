@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-21T21:19:24.558Z",
-  "updatedAt": "2026-11-21T21:19:24.558Z",
-  "revision": "bowser-public-news-20261121-commanders-rbs",
+  "checkedAt": "2026-11-21T21:27:47.303Z",
+  "updatedAt": "2026-11-21T21:27:47.303Z",
+  "revision": "bowser-public-news-20261121-pittman-wicks",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -199,6 +199,46 @@
         "gameStatus": "Questionable for Week 11"
       },
       "checkedAt": "2026-11-21T21:19:24.558Z"
+    },
+    {
+      "eventId": "eagles:20261121:dontayvion-wicks-ir",
+      "player": {
+        "playerId": null,
+        "name": "Dontayvion Wicks",
+        "position": "WR",
+        "team": "PHI"
+      },
+      "headline": "Eagles place Dontayvion Wicks on injured reserve",
+      "summary": "Philadelphia placed Wicks on injured reserve Saturday after ruling him out of the Week 11 game against Pittsburgh with an ankle/foot injury.",
+      "fantasyAnalysis": "Plan for a multi-game absence. DeVonta Smith has no Week 11 game designation and can rejoin the receiver rotation, but Wicks's absence does not assign a specific target share.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "sourceQuality": {
+        "confidence": 96,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles official transactions",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.philadelphiaeagles.com/team/transactions/",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "publishedDate": "2026-11-21",
+          "publishedAtRaw": "11/21 transaction in the 2026 archive; publication time not displayed.",
+          "checkedAt": "2026-11-21T21:27:47.303Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle/Foot",
+        "gameStatus": "Injured reserve"
+      },
+      "checkedAt": "2026-11-21T21:27:47.303Z"
     },
     {
       "eventId": "espn:49949224:3915511",
@@ -4405,6 +4445,52 @@
       ]
     },
     {
+      "eventId": "steelers:20261121:michael-pittman-jr-remains-ir",
+      "player": {
+        "playerId": null,
+        "name": "Michael Pittman Jr.",
+        "position": "WR",
+        "team": "PIT"
+      },
+      "headline": "Michael Pittman Jr. remains on injured reserve for Week 11",
+      "summary": "Pittsburgh did not activate Pittman (foot) for Sunday's game at Philadelphia. The Steelers activated Roman Wilson, but Pittman remains on injured reserve despite full practices Thursday and Friday.",
+      "fantasyAnalysis": "Keep Pittman out of Week 11 lineups. Wilson is eligible to rejoin DK Metcalf and Germie Bernard, but the target split is uncertain. Pittman's practice participation does not establish a Week 12 return.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-21T20:11:49.333Z",
+      "lastUpdatedAt": "2026-11-21T20:11:49.333Z",
+      "sourceQuality": {
+        "confidence": 92,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 1
+      },
+      "sources": [
+        {
+          "sourceName": "Steelers.com Saturday roster announcement",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.steelers.com/news/steelers-make-roster-moves-ahead-of-eagles-game",
+          "publishedAt": "2026-11-21T20:00:26.381Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-21T21:27:47.303Z"
+        },
+        {
+          "sourceName": "NBC Sports / Rotoworld",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-11-21/michael-pittman-not-activated-from-ir-for-week-11",
+          "publishedAt": "2026-11-21T20:11:49.333Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-21T21:27:47.303Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot",
+        "gameStatus": "Remains on injured reserve; unavailable Week 11"
+      },
+      "checkedAt": "2026-11-21T21:27:47.303Z"
+    },
+    {
       "eventId": "steelers:20261121:roman-wilson-activated",
       "player": {
         "playerId": null,
@@ -4493,5 +4579,5 @@
       "checkedAt": "2026-11-21T19:16:21.610Z"
     }
   ],
-  "contentHash": "675c794a77db7abf63fae82b1b7b750629f3eebce09753f0a360ba6a52fc3881"
+  "contentHash": "2e40679f143e5e1d040529fef60a0865cc33b8aeb6709290dc08ad8bbd63f42e"
 }
