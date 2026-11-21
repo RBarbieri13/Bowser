@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-21T21:45:37.844Z",
-  "updatedAt": "2026-11-21T21:45:37.844Z",
-  "revision": "bowser-public-news-20261121-burrow-brooks-shipley",
+  "checkedAt": "2026-11-21T21:57:11.834Z",
+  "updatedAt": "2026-11-21T21:57:11.834Z",
+  "revision": "bowser-public-news-20261121-mike-evans",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -4396,6 +4396,46 @@
       ]
     },
     {
+      "eventId": "nflnetwork:20261121:mike-evans-expected-week11",
+      "player": {
+        "playerId": null,
+        "name": "Mike Evans",
+        "position": "WR",
+        "team": "SF"
+      },
+      "headline": "Mike Evans expected to return Sunday night; remains questionable",
+      "summary": "NFL Network's Mike Garafolo reports Evans (Achilles) is expected to play against Minnesota in Mexico City. San Francisco's official status remains questionable after he sat out Wednesday and was limited Thursday and Friday.",
+      "fantasyAnalysis": "Keep a Sunday-night fallback and check inactives before the 8:20 p.m. ET kickoff. If Evans plays, do not assume his usual snap count or a fixed target split with the other San Francisco receivers.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-21T19:14:14.392Z",
+      "sourceQuality": {
+        "confidence": 88,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "NFL.com citing NFL Network's Mike Garafolo",
+          "author": "Bobby Kownack",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-21T19:12:31.946Z",
+          "url": "https://www.nfl.com/news/niners-wr-mike-evans-achilles-expected-to-play-sunday-vs-vikings",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-21T21:57:11.834Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Achilles",
+        "practiceStatus": "LP",
+        "gameStatus": "Questionable for Week 11; reported likely to play"
+      },
+      "checkedAt": "2026-11-21T21:57:11.834Z"
+    },
+    {
       "eventId": "panthers:20261121:jonathon-brooks-out",
       "player": {
         "playerId": null,
@@ -4706,5 +4746,5 @@
       "checkedAt": "2026-11-21T19:16:21.610Z"
     }
   ],
-  "contentHash": "5b14a4e36af78d1aa8878ea0d0ef1625facd45a808f5f528db2f4ad5b83d2812"
+  "contentHash": "2497838cc8fbed9ae9094f7510bd885b40b759e1ba60edff30dd22253e975b72"
 }
