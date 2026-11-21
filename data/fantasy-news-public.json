@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-21T17:42:33.252Z",
-  "updatedAt": "2026-11-21T17:42:33.252Z",
-  "revision": "bowser-public-news-20261121-jacobs",
+  "checkedAt": "2026-11-21T19:16:21.610Z",
+  "updatedAt": "2026-11-21T19:16:21.610Z",
+  "revision": "bowser-public-news-20261121-spears",
   "events": [
     {
       "eventId": "bsky:3n2tlvu7eo22x:josh-jacobs",
@@ -4268,7 +4268,55 @@
           "checkedAt": "2026-10-22T20:48:35.849823+00:00"
         }
       ]
+    },
+    {
+      "eventId": "tennesseetitans:20261121:tyjae-spears-ir",
+      "player": {
+        "playerId": null,
+        "name": "Tyjae Spears",
+        "position": "RB",
+        "team": "TEN"
+      },
+      "headline": "Titans place Tyjae Spears on injured reserve",
+      "summary": "Tennessee placed Spears on injured reserve Saturday after listing him with a knee injury. The Titans announced Michael Carter as a game-day elevation for Sunday's game at Dallas.",
+      "fantasyAnalysis": "Spears is unavailable this week and must miss at least four games on injured reserve. Tony Pollard is the most likely workload beneficiary, but no specific split is confirmed.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-21T18:34:54.317Z",
+      "lastUpdatedAt": "2026-11-21T18:34:54.317Z",
+      "sourceQuality": {
+        "confidence": 96,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "TennesseeTitans.com",
+          "author": "Jim Wyatt",
+          "sourceType": "OFFICIAL",
+          "publishedAt": "2026-11-21T18:34:54.317Z",
+          "url": "https://www.tennesseetitans.com/news/titans-place-rb-tyjae-spears-on-injured-reserve",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-21T19:16:21.610Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee",
+        "gameStatus": "Injured reserve"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Tony Pollard",
+          "relationship": "BENEFICIARY",
+          "impact": "Likely to handle more of Tennessee's backfield work with Spears unavailable.",
+          "team": "TEN",
+          "position": "RB"
+        }
+      ],
+      "checkedAt": "2026-11-21T19:16:21.610Z"
     }
   ],
-  "contentHash": "f0dc810794a424b98b1d0b0c35c35c608641428b7e3404aa67b7006a71caf975"
+  "contentHash": "b8a8d82624e5cddb87060655419438b558ebbbcf52ca3bf7f2a6e18390f813c8"
 }
