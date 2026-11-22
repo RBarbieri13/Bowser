@@ -2,10 +2,48 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-22T23:22:51.210Z",
-  "updatedAt": "2026-11-22T23:22:51.210Z",
-  "revision": "bowser-public-news-20261122-jalen-coker-protocol",
+  "checkedAt": "2026-11-22T23:58:09.919Z",
+  "updatedAt": "2026-11-22T23:58:09.919Z",
+  "revision": "bowser-public-news-20261123-mike-evans-active",
   "events": [
+    {
+      "eventId": "49ers:20261122:mike-evans-active-week11",
+      "player": {
+        "playerId": null,
+        "name": "Mike Evans",
+        "position": "WR",
+        "team": "SF"
+      },
+      "headline": "Mike Evans officially active for Week 11 against Minnesota",
+      "summary": "San Francisco confirmed Evans is active for Sunday night in Mexico City after he was listed as questionable with an Achilles injury.",
+      "fantasyAnalysis": "Evans is available for Week 11. The active designation does not establish his snap count or target volume after the injury.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T23:50:10.157Z",
+      "sourceQuality": {
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "San Francisco 49ers official Week 11 inactives",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.49ers.com/news/mike-evans-active-dre-greenlaw-out-vs-vikings-inactives-week-11-minvssf",
+          "publishedAt": "2026-11-22T23:50:10.157Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-22T23:58:09.919Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Achilles",
+        "gameStatus": "Active for Week 11 vs. Minnesota"
+      },
+      "checkedAt": "2026-11-22T23:58:09.919Z"
+    },
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
       "player": {
@@ -5374,5 +5412,5 @@
       "checkedAt": "2026-11-22T17:06:39.416Z"
     }
   ],
-  "contentHash": "58d258313707ebb992fe60a811587ec63d2c57b543d746be467bcbc4db8f52a2"
+  "contentHash": "f202e4e786720a751a12c140680803167dd8389978257a7c59b75f0ba0bc5b50"
 }
