@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-22T13:34:22.596Z",
-  "updatedAt": "2026-11-22T13:34:22.597Z",
-  "revision": "bowser-public-news-20261122-alec-pierce",
+  "checkedAt": "2026-11-22T14:47:29.547Z",
+  "updatedAt": "2026-11-22T14:47:29.547Z",
+  "revision": "bowser-public-news-20261122-davante-adams",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -4594,6 +4594,45 @@
       "checkedAt": "2026-11-22T12:57:18.677Z"
     },
     {
+      "eventId": "nflnetwork:20261122:davante-adams-return-outlook",
+      "player": {
+        "playerId": null,
+        "name": "Davante Adams",
+        "position": "WR",
+        "team": "LAR"
+      },
+      "headline": "Report: Davante Adams more likely to return in mid-December",
+      "summary": "NFL Network's Ian Rapoport reports that Adams has only an outside chance of coming off injured reserve for Week 13 against Kansas City and is more likely to return around mid-December. The Rams have not announced his activation.",
+      "fantasyAnalysis": "Do not count on Adams for Wednesday against Green Bay or Week 13. Keep an alternative available; activation and game status still need team confirmation.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T14:42:00Z",
+      "sourceQuality": {
+        "confidence": 88,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire citing NFL Network's Ian Rapoport",
+          "author": "RotoWire Staff",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.rotowire.com/football/headlines/davante-adams-injury-outside-chance-to-play-week-13-649038",
+          "publishedAt": "2026-11-22T14:32:09Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-22T14:47:29.547Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "gameStatus": "On injured reserve; reported return more likely around mid-December"
+      },
+      "checkedAt": "2026-11-22T14:47:29.547Z"
+    },
+    {
       "eventId": "nflnetwork:20261122:ladd-mcconkey-expected-week11",
       "player": {
         "playerId": null,
@@ -4944,5 +4983,5 @@
       "checkedAt": "2026-11-21T19:16:21.610Z"
     }
   ],
-  "contentHash": "26c0e0c28aa3be33ec77eb8d2dc8f49eeced5e138857a4a85617130c8a63b483"
+  "contentHash": "3f559da301956727e96b7b9291926c823aeb100ae5ea8d668a74ce3ab2ab6480"
 }
