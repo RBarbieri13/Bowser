@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-22T14:47:29.547Z",
-  "updatedAt": "2026-11-22T14:47:29.547Z",
-  "revision": "bowser-public-news-20261122-davante-adams",
+  "checkedAt": "2026-11-22T17:06:39.416Z",
+  "updatedAt": "2026-11-22T17:06:39.416Z",
+  "revision": "bowser-public-news-20261122-early-inactives-bowers",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -142,6 +142,45 @@
       "checkedAt": "2026-11-21T21:45:37.844Z"
     },
     {
+      "eventId": "bills:20261122:dalton-kincaid-inactive-week11",
+      "player": {
+        "playerId": null,
+        "name": "Dalton Kincaid",
+        "position": "TE",
+        "team": "BUF"
+      },
+      "headline": "Dalton Kincaid inactive against Miami",
+      "summary": "Buffalo listed Kincaid inactive after he missed practice all week with thumb and ankle injuries and was listed doubtful.",
+      "fantasyAnalysis": "Sit Kincaid. Dawson Knox is a possible replacement with a clearer path to routes, but his target volume is not assured.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T16:32:07.669Z",
+      "sourceQuality": {
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Buffalo Bills",
+          "author": null,
+          "sourceType": "OFFICIAL",
+          "url": "https://www.buffalobills.com/news/buffalo-bills-inactives-vs-dolphins-week-11",
+          "publishedAt": "2026-11-22T16:32:07.669Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-22T17:06:39.416Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb/ankle",
+        "gameStatus": "Inactive for Week 11"
+      },
+      "checkedAt": "2026-11-22T17:06:39.416Z"
+    },
+    {
       "eventId": "bsky:3n2tlvu7eo22x:josh-jacobs",
       "player": {
         "playerId": null,
@@ -199,6 +238,45 @@
           "position": "RB"
         }
       ]
+    },
+    {
+      "eventId": "buccaneers:20261122:baker-mayfield-active-week11",
+      "player": {
+        "playerId": null,
+        "name": "Baker Mayfield",
+        "position": "QB",
+        "team": "TB"
+      },
+      "headline": "Baker Mayfield cleared to start against Detroit",
+      "summary": "Tampa Bay confirmed Mayfield will start against the Lions after he was listed questionable with foot and right thumb injuries.",
+      "fantasyAnalysis": "Mayfield is available for Week 11. His clearance does not establish that he is fully healthy or guarantee his usual mobility.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T16:38:33.786Z",
+      "sourceQuality": {
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "author": "Scott Smith",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.buccaneers.com/news/bucs-lions-inactives-baker-mayfield-will-start",
+          "publishedAt": "2026-11-22T16:30:00Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-22T17:06:39.416Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot/right thumb",
+        "gameStatus": "Active and confirmed starter for Week 11"
+      },
+      "checkedAt": "2026-11-22T17:06:39.416Z"
     },
     {
       "eventId": "commanders:20261121:jacory-croskey-merritt-questionable",
@@ -367,6 +445,45 @@
         "gameStatus": "Activated from injured reserve; questionable for Week 11"
       },
       "checkedAt": "2026-11-21T21:45:37.844Z"
+    },
+    {
+      "eventId": "espn:20261122:brock-bowers-low-optimism-week11",
+      "player": {
+        "playerId": null,
+        "name": "Brock Bowers",
+        "position": "TE",
+        "team": "LV"
+      },
+      "headline": "Report: Low optimism that Brock Bowers plays against Denver",
+      "summary": "ESPN's Adam Schefter reported that there is little optimism Bowers will play, though the tight end is pushing to suit up. Bowers remains officially questionable with ankle and quadriceps injuries.",
+      "fantasyAnalysis": "Have a tight end available in the late window until official inactives. Michael Mayer could see more work if Bowers sits; his usage is not guaranteed.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T16:06:29Z",
+      "sourceQuality": {
+        "confidence": 88,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "CBS Sports citing ESPN's Adam Schefter",
+          "author": "RotoWire Staff",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.cbssports.com/fantasy/football/news/raiders-brock-bowers-trending-in-wrong-direction/",
+          "publishedAt": "2026-11-22T15:54:16Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-22T17:06:39.416Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle/quadriceps",
+        "gameStatus": "Questionable for Week 11; reported low optimism to play"
+      },
+      "checkedAt": "2026-11-22T17:06:39.416Z"
     },
     {
       "eventId": "espn:20261122:puka-nacua-rehab-outlook",
@@ -4711,6 +4828,45 @@
       "checkedAt": "2026-11-21T21:45:37.844Z"
     },
     {
+      "eventId": "panthers:20261122:darren-waller-active-week11",
+      "player": {
+        "playerId": null,
+        "name": "Darren Waller",
+        "position": "TE",
+        "team": "CAR"
+      },
+      "headline": "Darren Waller cleared against Baltimore",
+      "summary": "Carolina confirmed Waller and Tommy Tremble are available after both tight ends were questionable with knee injuries.",
+      "fantasyAnalysis": "Waller can be considered for Week 11, but Tremble is also active and no change in the rotation is confirmed.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T16:33:06.626Z",
+      "sourceQuality": {
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Carolina Panthers",
+          "author": "Darin Gantt",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.panthers.com/news/week-11-inactives-vs-baltimore-cornerback-marco-wilson-inactive-for-ravens-game",
+          "publishedAt": "2026-11-22T16:33:06.626Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-22T17:06:39.416Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee",
+        "gameStatus": "Active for Week 11"
+      },
+      "checkedAt": "2026-11-22T17:06:39.416Z"
+    },
+    {
       "eventId": "reported-20261022-breecehall",
       "player": {
         "playerId": "00-0038120",
@@ -4981,7 +5137,46 @@
         }
       ],
       "checkedAt": "2026-11-21T19:16:21.610Z"
+    },
+    {
+      "eventId": "titans:20261122:carnell-tate-active-week11",
+      "player": {
+        "playerId": null,
+        "name": "Carnell Tate",
+        "position": "WR",
+        "team": "TEN"
+      },
+      "headline": "Carnell Tate active against Dallas",
+      "summary": "Tate is not on Tennessee's official Week 11 inactive list after being questionable with a shoulder injury.",
+      "fantasyAnalysis": "Tate is available, but the active designation does not establish a full workload in his return.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T16:42:27.407Z",
+      "sourceQuality": {
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Tennessee Titans",
+          "author": null,
+          "sourceType": "OFFICIAL",
+          "url": "https://www.tennesseetitans.com/news/game-inactives-week-11-titans-at-cowboys",
+          "publishedAt": "2026-11-22T16:30:36.165Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-22T17:06:39.416Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Shoulder",
+        "gameStatus": "Active for Week 11"
+      },
+      "checkedAt": "2026-11-22T17:06:39.416Z"
     }
   ],
-  "contentHash": "3f559da301956727e96b7b9291926c823aeb100ae5ea8d668a74ce3ab2ab6480"
+  "contentHash": "e9e1e9a052ef0f25e17cc0aa6f6d682c7756da47a79db789357d6107d6bf5468"
 }
