@@ -120,7 +120,26 @@ try:
         if player:
             check(player['draft_kings_price'] == salary['salary'] and player['draft_kings_projection'] == salary['projection'], f'DFS identity join {salary["playerId"]}')
             joined += 1
-    check(joined > 250, 'Broad current-slate salary coverage joins recorded players')
+    expected_join_ids = {row['playerId'] for row in expected['records']
+                         if row.get('playerId') in expected_week1}
+    actual_join_ids = {row['player_id'] for row in stored['data']
+                       if row.get('draft_kings_price') is not None}
+    check(bool(expected_join_ids) and actual_join_ids == expected_join_ids and joined == len(expected_join_ids),
+          'Every current-slate salary identity joins the independently verified warehouse, including small afternoon slates')
+    # Keep the broad-slate regression independent of the current schedule: a
+    # valid two/three-game afternoon slate cannot contain 250 matched players.
+    broad_key = '2026-w10-dk-156415'
+    broad = get('/api/v1/player-stats?season=2026&weeks=1&limit=all&includeTrends=0&dfsSlate=' + broad_key)
+    check(broad['meta']['dfs']['key'] == broad_key, 'Broad historical Classic fixture remains explicitly selectable')
+    broad_players = {row['player_id']: row for row in broad['data']}
+    broad_joined = 0
+    for salary in weekly['slates'][broad_key]['records']:
+        player = broad_players.get(salary.get('playerId'))
+        if player:
+            check(player['draft_kings_price'] == salary['salary'] and player['draft_kings_projection'] == salary['projection'],
+                  f'Broad historical DFS identity join {salary["playerId"]}')
+            broad_joined += 1
+    check(broad_joined > 250, 'Broad historical-slate salary coverage joins recorded players')
     history = get('/api/v1/player-stats?season=2025&weeks=18&limit=all&includeTrends=1')
     check(len(history['data']) > 200 and all(p['player_trends'][-1]['season'] == 2025 for p in history['data']), '2025 history still available')
     opportunity = get('/api/v1/opportunity-tracker?season=2026&team=NYG&weeks=1&games=10&scoring=ppr')
