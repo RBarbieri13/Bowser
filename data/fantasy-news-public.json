@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-22T01:48:56.312Z",
-  "updatedAt": "2026-11-22T01:48:56.312Z",
-  "revision": "bowser-public-news-20261122-puka-iosivas",
+  "checkedAt": "2026-11-22T12:57:18.677Z",
+  "updatedAt": "2026-11-22T12:57:18.677Z",
+  "revision": "bowser-public-news-20261122-mcconkey-mayfield",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -4515,6 +4515,86 @@
       "checkedAt": "2026-11-21T21:57:11.834Z"
     },
     {
+      "eventId": "nflnetwork:20261122:baker-mayfield-expected-week11",
+      "player": {
+        "playerId": null,
+        "name": "Baker Mayfield",
+        "position": "QB",
+        "team": "TB"
+      },
+      "headline": "Report: Baker Mayfield expected to start at Detroit",
+      "summary": "NFL Network's Ian Rapoport reports Mayfield is expected to play Sunday at Detroit. He remains officially questionable with foot and right thumb injuries after two limited practices to close the week.",
+      "fantasyAnalysis": "Check official inactives before the 1 p.m. ET kickoff. Jalon Daniels is the reported contingency if Mayfield cannot go; the expected return does not guarantee an unrestricted workload.",
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot/Right Thumb",
+        "practiceStatus": "LP",
+        "gameStatus": "Questionable for Week 11; reported likely to play"
+      },
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T12:24:58Z",
+      "sourceQuality": {
+        "confidence": 88,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire citing NFL Network's Ian Rapoport",
+          "author": "RotoWire Staff",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.rotowire.com/football/headlines/baker-mayfield-injury-in-line-to-play-sunday-649030",
+          "publishedAt": "2026-11-22T12:24:58Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-22T12:57:18.677Z"
+        }
+      ],
+      "checkedAt": "2026-11-22T12:57:18.677Z"
+    },
+    {
+      "eventId": "nflnetwork:20261122:ladd-mcconkey-expected-week11",
+      "player": {
+        "playerId": null,
+        "name": "Ladd McConkey",
+        "position": "WR",
+        "team": "LAC"
+      },
+      "headline": "Report: Ladd McConkey expected to play against the Jets",
+      "summary": "NFL Network's Ian Rapoport reports McConkey is expected back Sunday after missing the previous game with a back injury. The Chargers officially listed him questionable after three limited practices.",
+      "fantasyAnalysis": "Check official inactives before the 4:05 p.m. ET kickoff. Keep an alternative until he is active, and do not assume his normal workload.",
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Back",
+        "practiceStatus": "LP",
+        "gameStatus": "Questionable for Week 11; reported likely to play"
+      },
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T12:34:00Z",
+      "sourceQuality": {
+        "confidence": 88,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire citing NFL Network's Ian Rapoport",
+          "author": "RotoWire Staff",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.rotowire.com/football/headlines/ladd-mcconkey-injury-expected-to-be-available-sunday-649031",
+          "publishedAt": "2026-11-22T12:33:29Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-22T12:57:18.677Z"
+        }
+      ],
+      "checkedAt": "2026-11-22T12:57:18.677Z"
+    },
+    {
       "eventId": "panthers:20261121:jonathon-brooks-out",
       "player": {
         "playerId": null,
@@ -4825,5 +4905,5 @@
       "checkedAt": "2026-11-21T19:16:21.610Z"
     }
   ],
-  "contentHash": "f6ebc88be795912db9f17618c3e4d9d53a08de7c2369ec30b689caa223d5eb20"
+  "contentHash": "b423f80e34796d06278b4f85a082d6f8f0aedd21a08777e9a9fc21b08a25c2d5"
 }
