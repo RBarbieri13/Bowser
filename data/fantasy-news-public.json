@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-22T12:57:18.677Z",
-  "updatedAt": "2026-11-22T12:57:18.677Z",
-  "revision": "bowser-public-news-20261122-mcconkey-mayfield",
+  "checkedAt": "2026-11-22T13:34:22.596Z",
+  "updatedAt": "2026-11-22T13:34:22.597Z",
+  "revision": "bowser-public-news-20261122-alec-pierce",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -4515,6 +4515,45 @@
       "checkedAt": "2026-11-21T21:57:11.834Z"
     },
     {
+      "eventId": "nflnetwork:20261122:alec-pierce-season-outlook",
+      "player": {
+        "playerId": null,
+        "name": "Alec Pierce",
+        "position": "WR",
+        "team": "IND"
+      },
+      "headline": "Report: Colts expected to shut down Alec Pierce for the season",
+      "summary": "NFL Network's Ian Rapoport reports that Indianapolis is expected to keep Pierce out for the rest of 2026 while he recovers from the heel injury that put him on injured reserve. The Colts have not announced a season-ending decision.",
+      "fantasyAnalysis": "Do not plan on a redraft return this season. Pierce has already missed most of the year; this outlook does not by itself establish a new target split as Anthony Richardson takes over at quarterback.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T12:52:33Z",
+      "sourceQuality": {
+        "confidence": 88,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire citing NFL Network's Ian Rapoport",
+          "author": "RotoWire Staff",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.rotowire.com/football/headlines/alec-pierce-injury-expected-to-be-shut-down-for-the-season-649033",
+          "publishedAt": "2026-11-22T12:52:33Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-22T13:34:22.596Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Heel",
+        "gameStatus": "On injured reserve; reported unlikely to return this season"
+      },
+      "checkedAt": "2026-11-22T13:34:22.596Z"
+    },
+    {
       "eventId": "nflnetwork:20261122:baker-mayfield-expected-week11",
       "player": {
         "playerId": null,
@@ -4905,5 +4944,5 @@
       "checkedAt": "2026-11-21T19:16:21.610Z"
     }
   ],
-  "contentHash": "b423f80e34796d06278b4f85a082d6f8f0aedd21a08777e9a9fc21b08a25c2d5"
+  "contentHash": "26c0e0c28aa3be33ec77eb8d2dc8f49eeced5e138857a4a85617130c8a63b483"
 }
