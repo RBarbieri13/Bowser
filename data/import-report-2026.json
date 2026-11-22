@@ -57,7 +57,7 @@
   "game_team_segments": 1812,
   "games": 272,
   "games_with_play_by_play": 151,
-  "imported_at": "2026-11-21T16:57:31.749886+00:00",
+  "imported_at": "2026-11-22T18:42:07.719601+00:00",
   "participation_available": false,
   "participation_note": "Play-level personnel participation is not published for 2026; segment snaps remain unknown.",
   "player_game_segments": 17742,
@@ -107,9 +107,9 @@
   "snapshot_kind": "in_progress_season",
   "sources": {
     "depth_charts_2026": {
-      "bytes": 78370900,
+      "bytes": 78822905,
       "path": "data/raw/2026/depth_charts_2026.csv",
-      "sha256": "18c56341fffb6bc0aff061f56fe2a856aa63b1b92f74d37ef2849b9630db1309",
+      "sha256": "ae3f5992fc1278775c782433336e7b537e471cb59ea6bcf33ef0ec27269c02d6",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/depth_charts/depth_charts_2026.csv"
     },
     "play_by_play": {
@@ -127,19 +127,19 @@
     "players": {
       "bytes": 7309249,
       "path": "data/raw/2026/players.csv",
-      "sha256": "9196f8e58b60648c975c57ea785a4f45c06bcd551271e070efa429182c935166",
+      "sha256": "a78280a0f60cd63b28cbbfe35cb2702e1e16ffc0f7d8ac27653c584b4251bf86",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/players/players.csv"
     },
     "roster_2026": {
       "bytes": 985936,
       "path": "data/raw/2026/roster_2026.csv",
-      "sha256": "0270482f7fd00c864fc91029cd857de8f9e66caaebff0f9e460e14e1bfd3cebc",
+      "sha256": "7c829312a04778f0add61d20a41725b39b7455079534ff5d1b9b369403e157ef",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_2026.csv"
     },
     "schedules": {
-      "bytes": 2191361,
+      "bytes": 2190882,
       "path": "data/raw/2026/schedules.csv",
-      "sha256": "c5eac2f372dfdf6c73282a31363a74445aeda9896b0374bef4ba1c39c55a443a",
+      "sha256": "99375aa1f24519af57375a8d6441ab316f81ff45456a10add51e021e5199aff6",
       "url": "https://github.com/nflverse/nflverse-data/releases/download/schedules/games.csv"
     },
     "snap_counts": {
