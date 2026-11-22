@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-22T17:06:39.416Z",
-  "updatedAt": "2026-11-22T17:06:39.416Z",
-  "revision": "bowser-public-news-20261122-early-inactives-bowers",
+  "checkedAt": "2026-11-22T17:20:35.426Z",
+  "updatedAt": "2026-11-22T17:20:35.426Z",
+  "revision": "bowser-public-news-20261122-roman-wilson-active",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -5091,6 +5091,45 @@
       "checkedAt": "2026-11-21T20:14:24.835Z"
     },
     {
+      "eventId": "steelers:20261122:roman-wilson-active-week11",
+      "player": {
+        "playerId": null,
+        "name": "Roman Wilson",
+        "position": "WR",
+        "team": "PIT"
+      },
+      "headline": "Roman Wilson active against Philadelphia",
+      "summary": "Pittsburgh confirmed Wilson is back for Week 11 after he missed four games on injured reserve with a hand injury. The team activated him Saturday; Sunday’s inactive report confirmed his availability.",
+      "fantasyAnalysis": "Wilson can return to Pittsburgh’s receiver rotation. Watch his routes and snaps before relying on him in a fantasy lineup.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T16:39:52.292Z",
+      "sourceQuality": {
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Pittsburgh Steelers",
+          "author": "Teresa Varley",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.steelers.com/news/steelers-inactives-for-week-11-vs-eagles",
+          "publishedAt": "2026-11-22T16:30:00Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-22T17:20:35.426Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hand",
+        "gameStatus": "Active for Week 11"
+      },
+      "checkedAt": "2026-11-22T17:20:35.426Z"
+    },
+    {
       "eventId": "tennesseetitans:20261121:tyjae-spears-ir",
       "player": {
         "playerId": null,
@@ -5178,5 +5217,5 @@
       "checkedAt": "2026-11-22T17:06:39.416Z"
     }
   ],
-  "contentHash": "e9e1e9a052ef0f25e17cc0aa6f6d682c7756da47a79db789357d6107d6bf5468"
+  "contentHash": "dd870f4ffb5291c8270bfd62aad75f0b364e8f8b414bf883795f8e06fcd6e8f4"
 }
