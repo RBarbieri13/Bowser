@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-22T23:06:06.633Z",
-  "updatedAt": "2026-11-22T23:06:06.633Z",
-  "revision": "bowser-public-news-20261122-saquon-barkley-arm",
+  "checkedAt": "2026-11-22T23:22:51.210Z",
+  "updatedAt": "2026-11-22T23:22:51.210Z",
+  "revision": "bowser-public-news-20261122-jalen-coker-protocol",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -5123,6 +5123,45 @@
       ]
     },
     {
+      "eventId": "sheena-quick:20261122:jalen-coker-concussion-protocol",
+      "player": {
+        "playerId": null,
+        "name": "Jalen Coker",
+        "position": "WR",
+        "team": "CAR"
+      },
+      "headline": "Report: Jalen Coker enters concussion protocol",
+      "summary": "FOX Sports Radio's Sheena Quick reported that Coker entered the concussion protocol after leaving Carolina's Week 11 win over Baltimore. No Week 12 designation has been issued.",
+      "fantasyAnalysis": "Have a pivot if counting on Coker for Monday night at Tampa Bay. John Metchie III, Brycen Tremayne and Xavier Legette could share more work if he misses the game; no single replacement is established.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T21:50:00Z",
+      "sourceQuality": {
+        "confidence": 86,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire citing Sheena Quick",
+          "author": "RotoWire Staff",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.rotowire.com/football/headlines/jalen-coker-injury-enters-concussion-protocol-649160",
+          "publishedAt": "2026-11-22T21:49:19Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-22T23:22:51.210Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion",
+        "gameStatus": "Reported in concussion protocol; Week 12 status pending"
+      },
+      "checkedAt": "2026-11-22T23:22:51.210Z"
+    },
+    {
       "eventId": "steelers:20261121:michael-pittman-jr-remains-ir",
       "player": {
         "playerId": null,
@@ -5335,5 +5374,5 @@
       "checkedAt": "2026-11-22T17:06:39.416Z"
     }
   ],
-  "contentHash": "2e52420b927e6b21f820c3181dba9fb2028b0a8b9e2ac7e18496e5f0d794c91f"
+  "contentHash": "58d258313707ebb992fe60a811587ec63d2c57b543d746be467bcbc4db8f52a2"
 }
