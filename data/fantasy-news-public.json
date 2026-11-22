@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-22T20:05:10.764Z",
-  "updatedAt": "2026-11-22T20:05:10.764Z",
-  "revision": "bowser-public-news-20261122-brock-bowers-inactive",
+  "checkedAt": "2026-11-22T23:06:06.633Z",
+  "updatedAt": "2026-11-22T23:06:06.633Z",
+  "revision": "bowser-public-news-20261122-saquon-barkley-arm",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -4907,6 +4907,45 @@
       "checkedAt": "2026-11-22T17:06:39.416Z"
     },
     {
+      "eventId": "pennlive:20261122:saquon-barkley-arm-week12",
+      "player": {
+        "playerId": null,
+        "name": "Saquon Barkley",
+        "position": "RB",
+        "team": "PHI"
+      },
+      "headline": "Report: Saquon Barkley optimistic for Thanksgiving after apparent arm injury",
+      "summary": "Barkley told PennLive's Johnny McGonigal he believes he will play Thursday at Dallas after trainers examined his left arm late in Sunday's game. Philadelphia has not issued a Week 12 game designation.",
+      "fantasyAnalysis": "Check the Eagles' short-week practice and game-status reports before making a change. Will Shipley and Jaydon Blue are contingency options if Barkley misses time, not established replacements.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T22:42:00Z",
+      "sourceQuality": {
+        "confidence": 88,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire citing PennLive's Johnny McGonigal",
+          "author": "RotoWire Staff",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.rotowire.com/football/headlines/saquon-barkley-injury-dealing-with-apparent-arm-injury-649185",
+          "publishedAt": "2026-11-22T22:41:16Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-22T23:06:06.633Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Left arm",
+        "gameStatus": "Reported optimistic for Week 12; official designation pending"
+      },
+      "checkedAt": "2026-11-22T23:06:06.633Z"
+    },
+    {
       "eventId": "raiders:20261122:brock-bowers-inactive-week11",
       "player": {
         "playerId": null,
@@ -5296,5 +5335,5 @@
       "checkedAt": "2026-11-22T17:06:39.416Z"
     }
   ],
-  "contentHash": "0c739ecdba50493d77be754491be63e4ab9e2dc04b1c9fbbdb6df3bc2f160767"
+  "contentHash": "2e52420b927e6b21f820c3181dba9fb2028b0a8b9e2ac7e18496e5f0d794c91f"
 }
