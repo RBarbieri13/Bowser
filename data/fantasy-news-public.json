@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-22T17:20:35.426Z",
-  "updatedAt": "2026-11-22T17:20:35.426Z",
-  "revision": "bowser-public-news-20261122-roman-wilson-active",
+  "checkedAt": "2026-11-22T19:50:34.076Z",
+  "updatedAt": "2026-11-22T19:50:34.076Z",
+  "revision": "bowser-public-news-20261122-ladd-mcconkey-active",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -277,6 +277,46 @@
         "gameStatus": "Active and confirmed starter for Week 11"
       },
       "checkedAt": "2026-11-22T17:06:39.416Z"
+    },
+    {
+      "eventId": "chargers:20261122:ladd-mcconkey-active-week11",
+      "player": {
+        "playerId": null,
+        "name": "Ladd McConkey",
+        "position": "WR",
+        "team": "LAC"
+      },
+      "headline": "Ladd McConkey active against the Jets",
+      "summary": "The Chargers confirmed McConkey is active for Week 11 after listing him questionable with a back injury. He was limited in all three practices and missed the previous game.",
+      "fantasyAnalysis": "McConkey is available. The team has not confirmed a normal workload; monitor his routes and snaps on return.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T19:50:00Z",
+      "sourceQuality": {
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Chargers",
+          "author": "Omar Navarro Jr.",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.chargers.com/news/jets-inactives-week-11-2026",
+          "publishedAt": "2026-11-22T19:50:00Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-22T19:50:34.076Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Back",
+        "practiceStatus": "LP",
+        "gameStatus": "Active for Week 11"
+      },
+      "checkedAt": "2026-11-22T19:50:34.076Z"
     },
     {
       "eventId": "commanders:20261121:jacory-croskey-merritt-questionable",
@@ -5217,5 +5257,5 @@
       "checkedAt": "2026-11-22T17:06:39.416Z"
     }
   ],
-  "contentHash": "dd870f4ffb5291c8270bfd62aad75f0b364e8f8b414bf883795f8e06fcd6e8f4"
+  "contentHash": "43eef8b6def5d8ed8cb0db63f7a1a2a5d2be7204325d4207b768a3c52ccb0679"
 }
