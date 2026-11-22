@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-22T19:50:34.076Z",
-  "updatedAt": "2026-11-22T19:50:34.076Z",
-  "revision": "bowser-public-news-20261122-ladd-mcconkey-active",
+  "checkedAt": "2026-11-22T20:05:10.764Z",
+  "updatedAt": "2026-11-22T20:05:10.764Z",
+  "revision": "bowser-public-news-20261122-brock-bowers-inactive",
   "events": [
     {
       "eventId": "azcardinals:20261121:carson-beck-out",
@@ -4907,6 +4907,45 @@
       "checkedAt": "2026-11-22T17:06:39.416Z"
     },
     {
+      "eventId": "raiders:20261122:brock-bowers-inactive-week11",
+      "player": {
+        "playerId": null,
+        "name": "Brock Bowers",
+        "position": "TE",
+        "team": "LV"
+      },
+      "headline": "Brock Bowers inactive against Denver",
+      "summary": "Las Vegas listed Bowers inactive for Week 11 after he was questionable with ankle and quadriceps injuries.",
+      "fantasyAnalysis": "Sit Bowers. Michael Mayer is a possible late-window replacement if available, and Fernando Mendoza is without a primary receiver. Neither Mayer’s target volume nor a Week 12 timeline is confirmed.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-22T19:55:15.019Z",
+      "sourceQuality": {
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Las Vegas Raiders",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.raiders.com/news/las-vegas-raiders-week-11-inactives-vs-denver-broncos",
+          "publishedAt": "2026-11-22T19:55:15.019Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-22T20:05:10.764Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle/quadriceps",
+        "practiceStatus": "LP",
+        "gameStatus": "Inactive for Week 11"
+      },
+      "checkedAt": "2026-11-22T20:05:10.764Z"
+    },
+    {
       "eventId": "reported-20261022-breecehall",
       "player": {
         "playerId": "00-0038120",
@@ -5257,5 +5296,5 @@
       "checkedAt": "2026-11-22T17:06:39.416Z"
     }
   ],
-  "contentHash": "43eef8b6def5d8ed8cb0db63f7a1a2a5d2be7204325d4207b768a3c52ccb0679"
+  "contentHash": "0c739ecdba50493d77be754491be63e4ab9e2dc04b1c9fbbdb6df3bc2f160767"
 }
