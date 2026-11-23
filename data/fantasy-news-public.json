@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-23T00:44:22.702Z",
-  "updatedAt": "2026-11-23T00:44:22.702Z",
-  "revision": "bowser-public-news-20261123-justin-herbert-protocol",
+  "checkedAt": "2026-11-23T01:49:48.173Z",
+  "updatedAt": "2026-11-23T01:49:48.173Z",
+  "revision": "bowser-public-news-20261123-brock-bowers-week12",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -576,6 +576,45 @@
         "gameStatus": "Activated from injured reserve; questionable for Week 11"
       },
       "checkedAt": "2026-11-21T21:45:37.844Z"
+    },
+    {
+      "eventId": "espn:20261122:brock-bowers-kubiak-optimistic-week12",
+      "player": {
+        "playerId": null,
+        "name": "Brock Bowers",
+        "position": "TE",
+        "team": "LV"
+      },
+      "headline": "Report: Klint Kubiak optimistic Brock Bowers can play Week 12",
+      "summary": "Ryan McFadden reported that Kubiak was optimistic Bowers could face Cleveland next Sunday after missing the Denver game with ankle and quadriceps injuries. No Week 12 designation has been issued.",
+      "fantasyAnalysis": "Keep Michael Mayer as a contingency, but check the Raiders' practice reports and final status before counting on either player's workload.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-23T01:17:00Z",
+      "sourceQuality": {
+        "confidence": 89,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire citing ESPN's Ryan McFadden",
+          "author": "RotoWire Staff",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.rotowire.com/football/headlines/brock-bowers-injury-coach-optimistic-about-week-12-availability-649252",
+          "publishedAt": "2026-11-23T01:15:50Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T01:49:48.173Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle/quadriceps",
+        "gameStatus": "Coach reportedly optimistic for Week 12; designation pending"
+      },
+      "checkedAt": "2026-11-23T01:49:48.173Z"
     },
     {
       "eventId": "espn:20261122:brock-bowers-low-optimism-week11",
@@ -5504,5 +5543,5 @@
       "checkedAt": "2026-11-22T17:06:39.416Z"
     }
   ],
-  "contentHash": "74f886ed111507a86a57094ecb15e68867d4e791072f0098e81d7aee0d36b056"
+  "contentHash": "5752e55b8e0568e4dfb5acca2aec9c43c33aa613bc129dcb6da827fb2a3b4c49"
 }
