@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-23T20:36:01.569Z",
-  "updatedAt": "2026-11-23T20:36:01.573Z",
-  "revision": "bowser-public-news-20261123-colts-mcgowan-pierce",
+  "checkedAt": "2026-11-23T20:51:13.456Z",
+  "updatedAt": "2026-11-23T20:51:13.459Z",
+  "revision": "bowser-public-news-20261123-aiyuk-walker-addison-pittman",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1597,6 +1597,67 @@
         "gameStatus": "Reported in concussion protocol; Week 12 status pending"
       },
       "checkedAt": "2026-11-23T00:44:22.702Z"
+    },
+    {
+      "eventId": "nbcsports:20261123:kenneth-walker-remains-starter",
+      "player": {
+        "playerId": null,
+        "name": "Kenneth Walker III",
+        "position": "RB",
+        "team": "KC"
+      },
+      "headline": "Eric Bieniemy says Kenneth Walker III remains the starter when available",
+      "summary": "The Chiefs offensive coordinator said Walker remains the starter when he returns. Emmett Johnson has filled in during Walker's groin injury. The statement does not establish Walker's Thanksgiving availability or workload.",
+      "eventType": "ROLE_CHANGE",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-23T18:37:00Z",
+      "lastUpdatedAt": "2026-11-23T18:37:00Z",
+      "checkedAt": "2026-11-23T20:51:13.270Z",
+      "sources": [
+        {
+          "sourceName": "RotoBaller, citing Chiefs reporter Charles Goldman",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-23T18:37:00Z",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.rotoballer.com/player-news/kenneth-walker-iii-will-remain-chiefs-starter-when-healthy/2001852",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T20:51:13.270Z"
+        }
+      ]
+    },
+    {
+      "eventId": "nbcsports:20261123:michael-pittman-friday-coach",
+      "player": {
+        "playerId": null,
+        "name": "Michael Pittman Jr.",
+        "position": "WR",
+        "team": "PIT"
+      },
+      "headline": "Mike McCarthy expects Michael Pittman Jr. to return Friday",
+      "summary": "McCarthy said Monday he is very confident Pittman will play against Denver. Pittman has not yet been activated from injured reserve after his foot injury, and the coach's expectation does not establish a full workload.",
+      "eventType": "COACH_COMMENT",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-23T20:51:13.270Z",
+      "sources": [
+        {
+          "sourceName": "NBC Sports, citing ESPN reporter Brooke Pryor",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "November 23, 2026 coach update; publication time not displayed",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.nbcsports.com/fantasy/football/player-news?playerNewsId=0000019b-d6db-d968-a19b-defb77100000",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T20:51:13.270Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot"
+      }
     },
     {
       "eventId": "nfl-2026-w7-ari-carsonbeck-checked-20261022",
@@ -5487,6 +5548,67 @@
       }
     },
     {
+      "eventId": "rotowire:649377:jordan-addison-week12-coach",
+      "player": {
+        "playerId": "00-0038994",
+        "name": "Jordan Addison",
+        "position": "WR",
+        "team": "MIN"
+      },
+      "headline": "Kevin O'Connell does not expect Jordan Addison to play Week 12",
+      "summary": "O'Connell said Addison is progressing after thumb surgery but is not expected to face Atlanta on Sunday. The Vikings have not posted a final Week 12 designation.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-23T20:51:13.270Z",
+      "sources": [
+        {
+          "sourceName": "RotoWire, citing Minnesota Star Tribune reporter Ben Goessling",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on November 23, 2026 at 12:36pm (timezone not displayed)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.rotowire.com/football/headlines/jordan-addison-injury-progressing-well-but-likely-out-week-12-649377",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T20:51:13.270Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb"
+      }
+    },
+    {
+      "eventId": "sfchronicle:21963120:brandon-aiyuk-waived",
+      "player": {
+        "playerId": null,
+        "name": "Brandon Aiyuk",
+        "position": "WR",
+        "team": "SF"
+      },
+      "headline": "Reports: 49ers waive Brandon Aiyuk",
+      "summary": "The San Francisco Chronicle reports the 49ers waived Aiyuk, and NFL.com cited ESPN reporting that San Francisco was releasing him. No new team or playing timetable is confirmed.",
+      "eventType": "TRANSACTION",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-23T19:12:35Z",
+      "lastUpdatedAt": "2026-11-23T19:12:35Z",
+      "checkedAt": "2026-11-23T20:51:13.270Z",
+      "sources": [
+        {
+          "sourceName": "San Francisco Chronicle",
+          "sourceType": "BEAT_WRITER",
+          "publishedAt": "2026-11-23T19:12:35Z",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.sfchronicle.com/sports/49ers/article/49ers-part-brandon-aiyuk-ending-fractious-21963120.php",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-23T20:51:13.270Z"
+        }
+      ]
+    },
+    {
       "eventId": "sheena-quick:20261122:jalen-coker-concussion-protocol",
       "player": {
         "playerId": null,
@@ -5776,5 +5898,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "9c1a85a1ec23a4f880b295ef3b2b4ad5b61bc4c08a55a0356dddff6a81cb0f1f"
+  "contentHash": "23f32b0f62b8d9456ead03949ea030d2edf4a460fa3c01f0505d67c7a12729aa"
 }
