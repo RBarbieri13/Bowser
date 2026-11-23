@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-23T00:12:24.372Z",
-  "updatedAt": "2026-11-23T00:12:24.372Z",
-  "revision": "bowser-public-news-20261123-kyren-williams-practice",
+  "checkedAt": "2026-11-23T00:44:22.702Z",
+  "updatedAt": "2026-11-23T00:44:22.702Z",
+  "revision": "bowser-public-news-20261123-justin-herbert-protocol",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1441,6 +1441,45 @@
         "bodyPart": "Concussion",
         "practiceStatus": "DNP"
       }
+    },
+    {
+      "eventId": "kelley:20261122:justin-herbert-concussion-protocol-week12",
+      "player": {
+        "playerId": null,
+        "name": "Justin Herbert",
+        "position": "QB",
+        "team": "LAC"
+      },
+      "headline": "Report: Justin Herbert enters concussion protocol after Jets game",
+      "summary": "Jeanna Kelley reported that the Chargers announced postgame that Herbert was entering concussion protocol. His Week 12 availability against New England is not yet determined.",
+      "fantasyAnalysis": "Line up a Week 12 quarterback contingency, especially in superflex. DJ Uiagalelei is the listed backup, not a confirmed Week 12 starter.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-23T00:35:01Z",
+      "sourceQuality": {
+        "confidence": 90,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Bolts From The Blue",
+          "author": "Jeanna Kelley",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.boltsfromtheblue.com/los-angeles-chargers-injuries/67256/chargers-jets-week-11-justin-herbert-concussion-protocol",
+          "publishedAt": "2026-11-23T00:35:01Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-23T00:44:22.702Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion",
+        "gameStatus": "Reported in concussion protocol; Week 12 status pending"
+      },
+      "checkedAt": "2026-11-23T00:44:22.702Z"
     },
     {
       "eventId": "nfl-2026-w7-ari-carsonbeck-checked-20261022",
@@ -5465,5 +5504,5 @@
       "checkedAt": "2026-11-22T17:06:39.416Z"
     }
   ],
-  "contentHash": "9d207183fa23809c5bf43c48f028987c5059014f4451ecb23386304879a7e737"
+  "contentHash": "74f886ed111507a86a57094ecb15e68867d4e791072f0098e81d7aee0d36b056"
 }
