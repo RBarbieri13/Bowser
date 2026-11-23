@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-23T20:51:13.456Z",
-  "updatedAt": "2026-11-23T20:51:13.459Z",
-  "revision": "bowser-public-news-20261123-aiyuk-walker-addison-pittman",
+  "checkedAt": "2026-11-23T21:15:06.776Z",
+  "updatedAt": "2026-11-23T21:15:06.780Z",
+  "revision": "bowser-public-news-20261123-croskey-merritt-metcalf",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -533,6 +533,39 @@
       "checkedAt": "2026-11-21T21:19:24.558Z"
     },
     {
+      "eventId": "commanders:20261123:jacory-croskey-merritt-ir-activation",
+      "player": {
+        "playerId": null,
+        "name": "Jacory Croskey-Merritt",
+        "position": "RB",
+        "team": "WAS"
+      },
+      "headline": "Washington announces Jacory Croskey-Merritt activated from injured reserve",
+      "summary": "Washington announced that it activated Croskey-Merritt from injured reserve and removed his designation, as reported by Hogs Haven. His expected workload is unknown. Rachaad White's separate heel designation remained questionable pending inactives.",
+      "eventType": "TRANSACTION",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-23T21:03:34Z",
+      "lastUpdatedAt": "2026-11-23T21:03:34Z",
+      "checkedAt": "2026-11-23T21:15:06.561Z",
+      "sources": [
+        {
+          "sourceName": "Hogs Haven quoting the Commanders announcement",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-23T21:03:34Z",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.hogshaven.com/washington-commanders-roster/456072/washington-commanders-activate-bill-croskey-merritt-bengals-game",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T21:15:06.561Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "gameStatus": "Reported activated and removed from injury report for Week 11"
+      }
+    },
+    {
       "eventId": "eagles:20261121:dontayvion-wicks-ir",
       "player": {
         "playerId": null,
@@ -739,6 +772,34 @@
         "expectedReturn": "Reported four to five months after MCL surgery; not an official timetable"
       },
       "checkedAt": "2026-11-22T01:48:56.312Z"
+    },
+    {
+      "eventId": "espn:20261123:dk-metcalf-no-suspension",
+      "player": {
+        "playerId": null,
+        "name": "DK Metcalf",
+        "position": "WR",
+        "team": "PIT"
+      },
+      "headline": "Report: DK Metcalf will not be suspended",
+      "summary": "ESPN's Adam Schefter reports Metcalf will not miss a game through league suspension after Sunday's ejection. The league is still reviewing possible fines. Pittsburgh plays Denver Friday.",
+      "eventType": "SUSPENSION",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-23T21:08:33Z",
+      "lastUpdatedAt": "2026-11-23T21:08:33Z",
+      "checkedAt": "2026-11-23T21:15:06.561Z",
+      "sources": [
+        {
+          "sourceName": "Behind the Steel Curtain quoting ESPN's Adam Schefter",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-23T21:08:33Z",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.behindthesteelcurtain.com/pittsburgh-steelers-news/178408/steelers-dk-metcalf-dodges-nfl-suspension-eagles-cooper-dejean-eye-poke-wr-news-penalty-flag-fine",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T21:15:06.561Z"
+        }
+      ]
     },
     {
       "eventId": "espn:49949224:3915511",
@@ -5898,5 +5959,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "23f32b0f62b8d9456ead03949ea030d2edf4a460fa3c01f0505d67c7a12729aa"
+  "contentHash": "99df457bba3fd8ddd186f01c51b1591428c4d04c498967604c76b1ac426f7631"
 }
