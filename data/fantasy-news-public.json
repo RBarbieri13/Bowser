@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-23T22:05:33.663Z",
-  "updatedAt": "2026-11-23T22:05:33.667Z",
-  "revision": "bowser-public-news-20261123-kyren-williams-monday-full",
+  "checkedAt": "2026-11-23T22:35:27.770Z",
+  "updatedAt": "2026-11-23T22:35:27.770Z",
+  "revision": "bowser-public-news-20261123-thanksgiving-monday-eagles-chiefs",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -455,6 +455,40 @@
       "checkedAt": "2026-11-22T19:50:34.076Z"
     },
     {
+      "eventId": "chiefs:20261123:kenneth-walker-monday-dnp-week12",
+      "player": {
+        "playerId": null,
+        "name": "Kenneth Walker III",
+        "position": "RB",
+        "team": "KC"
+      },
+      "headline": "Kenneth Walker III opens Thanksgiving week with a DNP",
+      "summary": "The official Chiefs report lists Walker as a Monday nonparticipant with a groin injury ahead of Thursday at Buffalo. He missed the prior two games; Kansas City has not assigned a Week 12 game designation, and Emmett Johnson started in his absence.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-23T22:35:03.778Z",
+      "sources": [
+        {
+          "sourceName": "Kansas City Chiefs",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "November 23, 2026 Monday Week 12 practice column; publication clock unavailable",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.chiefs.com/team/injury-report/week/reg-12",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-23T22:35:03.778Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "practiceStatus": "DNP"
+      }
+    },
+    {
       "eventId": "commanders:20261121:jacory-croskey-merritt-questionable",
       "player": {
         "playerId": null,
@@ -654,6 +688,108 @@
         "gameStatus": "Activated from injured reserve; questionable for Week 11"
       },
       "checkedAt": "2026-11-21T21:45:37.844Z"
+    },
+    {
+      "eventId": "eagles:20261123:dallas-goedert-monday-lp-week12",
+      "player": {
+        "playerId": null,
+        "name": "Dallas Goedert",
+        "position": "TE",
+        "team": "PHI"
+      },
+      "headline": "Dallas Goedert limited on estimated Monday report with shin injury",
+      "summary": "Philadelphia lists Goedert as limited with a shin injury on its first Week 12 report. The Eagles held a walkthrough Monday, so participation was estimated. No final Thanksgiving game designation has been assigned.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-23T22:35:03.778Z",
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "November 23, 2026 Monday Week 12 practice column; publication clock unavailable",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.philadelphiaeagles.com/team/injury-report/week/REG-12",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-23T22:35:03.778Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Shin",
+        "practiceStatus": "LP"
+      }
+    },
+    {
+      "eventId": "eagles:20261123:saquon-barkley-monday-lp-week12",
+      "player": {
+        "playerId": null,
+        "name": "Saquon Barkley",
+        "position": "RB",
+        "team": "PHI"
+      },
+      "headline": "Saquon Barkley listed limited on estimated Monday report",
+      "summary": "Philadelphia's first Week 12 injury report lists Barkley as limited with neck and illness entries ahead of Thanksgiving at Dallas. Monday was a walkthrough, so participation was estimated. No final game designation has been assigned.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-23T22:35:03.778Z",
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "November 23, 2026 Monday Week 12 practice column; publication clock unavailable",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.philadelphiaeagles.com/team/injury-report/week/REG-12",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-23T22:35:03.778Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Neck",
+        "practiceStatus": "LP"
+      }
+    },
+    {
+      "eventId": "eagles:20261123:will-shipley-monday-lp-week12",
+      "player": {
+        "playerId": null,
+        "name": "Will Shipley",
+        "position": "RB",
+        "team": "PHI"
+      },
+      "headline": "Will Shipley listed limited to open Thanksgiving week",
+      "summary": "Philadelphia lists Shipley as limited with foot and illness entries on its estimated Monday walkthrough report ahead of Thursday at Dallas. He was activated and played Sunday after missing time; there is no Thursday game designation and no confirmed increase in role.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-23T22:35:03.778Z",
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "November 23, 2026 Monday Week 12 practice column; publication clock unavailable",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.philadelphiaeagles.com/team/injury-report/week/REG-12",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-23T22:35:03.778Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot",
+        "practiceStatus": "LP"
+      }
     },
     {
       "eventId": "espn:20261122:brock-bowers-kubiak-optimistic-week12",
@@ -5993,5 +6129,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "63f32c5370d32baba8c78f6e78055526c16aaca692a65ca8042062f443253874"
+  "contentHash": "4b3f8019d8ea08bb9ecc6df4b27ac4ddc5a57491c2a90209f17bc231bf2ebe42"
 }
