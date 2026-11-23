@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-23T21:15:06.776Z",
-  "updatedAt": "2026-11-23T21:15:06.780Z",
-  "revision": "bowser-public-news-20261123-croskey-merritt-metcalf",
+  "checkedAt": "2026-11-23T22:05:33.663Z",
+  "updatedAt": "2026-11-23T22:05:33.667Z",
+  "revision": "bowser-public-news-20261123-kyren-williams-monday-full",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -5208,6 +5208,40 @@
       "checkedAt": "2026-11-22T12:57:18.677Z"
     },
     {
+      "eventId": "packers:20261123:kyren-williams-monday-fp-week12",
+      "player": {
+        "playerId": null,
+        "name": "Kyren Williams",
+        "position": "RB",
+        "team": "LAR"
+      },
+      "headline": "Kyren Williams upgraded to full practice Monday",
+      "summary": "The official Packers–Rams Week 12 report lists Williams as limited Sunday and a full participant Monday with a toe injury. The full session does not establish Wednesday's final game designation or workload.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-23T22:05:33.492Z",
+      "sources": [
+        {
+          "sourceName": "Green Bay Packers",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "November 23, 2026 Monday Week 12 practice column; publication clock unavailable",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.packers.com/team/injury-report/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-23T22:05:33.492Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Toe",
+        "practiceStatus": "FP"
+      }
+    },
+    {
       "eventId": "panthers:20261121:jonathon-brooks-out",
       "player": {
         "playerId": null,
@@ -5959,5 +5993,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "99df457bba3fd8ddd186f01c51b1591428c4d04c498967604c76b1ac426f7631"
+  "contentHash": "63f32c5370d32baba8c78f6e78055526c16aaca692a65ca8042062f443253874"
 }
