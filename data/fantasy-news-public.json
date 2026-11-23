@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-23T19:34:13.537Z",
-  "updatedAt": "2026-11-23T19:34:13.542Z",
-  "revision": "bowser-public-news-20261123-marks-week12",
+  "checkedAt": "2026-11-23T19:46:24.571Z",
+  "updatedAt": "2026-11-23T19:46:24.574Z",
+  "revision": "bowser-public-news-20261123-tuten-ferguson",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -5370,6 +5370,82 @@
       ]
     },
     {
+      "eventId": "rotowire:649365:bhayshul-tuten-ankle-20261123",
+      "player": {
+        "playerId": null,
+        "name": "Bhayshul Tuten",
+        "position": "RB",
+        "team": "JAX"
+      },
+      "headline": "Liam Coen says Bhayshul Tuten aggravated right ankle",
+      "summary": "Coen said an examination Monday did not find a major issue after Tuten aggravated his existing right ankle injury against the Giants. Tuten has no confirmed Week 12 game status.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-23T19:46:24.134Z",
+      "sources": [
+        {
+          "sourceName": "RotoWire, citing Florida Times-Union reporter Ryan O'Halloran",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on November 23, 2026 at 11:34am (timezone not displayed)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.rotowire.com/football/headlines/bhayshul-tuten-injury-avoids-major-ankle-injury-in-week-11-649365",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T19:46:24.134Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Right ankle"
+      }
+    },
+    {
+      "eventId": "rotowire:649367:terrance-ferguson-season-ending-20261123",
+      "player": {
+        "playerId": null,
+        "name": "Terrance Ferguson",
+        "position": "TE",
+        "team": "LAR"
+      },
+      "headline": "Sean McVay says Terrance Ferguson will miss rest of season",
+      "summary": "McVay said Ferguson will not be activated from injured reserve this season and needs ankle surgery, reversing the Rams' previously announced plan to activate him.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-23T19:37:48Z",
+      "checkedAt": "2026-11-23T19:46:24.134Z",
+      "sources": [
+        {
+          "sourceName": "RotoWire, citing Rams reporter Stu Jackson",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on November 23, 2026 at 11:39am (timezone not displayed)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.rotowire.com/football/headlines/terrance-ferguson-injury-needs-surgery-wont-return-from-ir-649367",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T19:46:24.134Z"
+        },
+        {
+          "sourceName": "Turf Show Times",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-23T19:37:48Z",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.turfshowtimes.com/los-angeles-rams-injuries/155795/rams-terrance-ferguson-injury-out-for-season",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T19:46:24.134Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "expectedReturn": "Not expected to return in 2026"
+      }
+    },
+    {
       "eventId": "sheena-quick:20261122:jalen-coker-concussion-protocol",
       "player": {
         "playerId": null,
@@ -5659,5 +5735,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "088c4a618e26b7c9fde2638748b9115b57c0a6777bdfbe13636dc60c5881dd4f"
+  "contentHash": "255e3d1309d44d6921e85e2e32f080b8a60f7e7723912a2580a487983cd7ccd7"
 }
