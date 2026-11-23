@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-23T22:35:27.770Z",
-  "updatedAt": "2026-11-23T22:35:27.770Z",
-  "revision": "bowser-public-news-20261123-thanksgiving-monday-eagles-chiefs",
+  "checkedAt": "2026-11-23T23:47:33.064Z",
+  "updatedAt": "2026-11-23T23:47:33.064Z",
+  "revision": "bowser-public-news-20261123-thanksgiving-bills-cowboys",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -217,6 +217,41 @@
         "gameStatus": "Inactive for Week 11"
       },
       "checkedAt": "2026-11-22T17:06:39.416Z"
+    },
+    {
+      "eventId": "bills:20261123:dalton-kincaid-monday-estimated-lp-week12",
+      "player": {
+        "playerId": null,
+        "name": "Dalton Kincaid",
+        "position": "TE",
+        "team": "BUF"
+      },
+      "headline": "Dalton Kincaid opens Week 12 with estimated limited participation",
+      "summary": "NBC Sports reports Buffalo listed Kincaid as limited for thumb and ankle injuries on its estimated Monday report ahead of Thursday against Kansas City. Buffalo did not practice Monday. Kincaid missed Sunday against Miami and does not yet have a Thanksgiving game designation.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-23T23:47:32.892Z",
+      "sources": [
+        {
+          "sourceName": "NBC Sports",
+          "author": "Josh Alper",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Published November 23, 2026 05:33 PM (timezone not displayed)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/bills-list-greg-rousseau-dalton-kincaid-as-limited-on-mondays-practice-report",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T23:47:32.892Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb / ankle",
+        "practiceStatus": "LP"
+      }
     },
     {
       "eventId": "broncos:20261122:jonah-coleman-week11-workload",
@@ -597,6 +632,41 @@
         "isInjuryRelated": true,
         "bodyPart": "Groin",
         "gameStatus": "Reported activated and removed from injury report for Week 11"
+      }
+    },
+    {
+      "eventId": "cowboys:20261123:jake-ferguson-monday-estimated-dnp-week12",
+      "player": {
+        "playerId": null,
+        "name": "Jake Ferguson",
+        "position": "TE",
+        "team": "DAL"
+      },
+      "headline": "Jake Ferguson listed DNP on estimated Monday report",
+      "summary": "RotoWire, citing Cowboys team writer Tommy Yarrish, reports that Dallas listed Ferguson as a Monday nonparticipant due to knee and ankle injuries after he missed the past two games. Being seen at the walkthrough did not establish participation, and this estimate does not assign a Thanksgiving designation.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-23T23:47:32.892Z",
+      "sources": [
+        {
+          "sourceName": "RotoWire",
+          "author": "Tommy Yarrish (report cited)",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "Updated on November 23, 2026 at 3:22pm (timezone not displayed)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.rotowire.com/football/headlines/jake-ferguson-injury-estimated-as-dnp-monday-649402",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T23:47:32.892Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee / ankle",
+        "practiceStatus": "DNP"
       }
     },
     {
@@ -6129,5 +6199,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "4b3f8019d8ea08bb9ecc6df4b27ac4ddc5a57491c2a90209f17bc231bf2ebe42"
+  "contentHash": "17fbd885aa0539cbe69a5a00287030b5069408fa2ccf8b42684f1b0f94595c89"
 }
