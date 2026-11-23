@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-23T15:54:23.218Z",
-  "updatedAt": "2026-11-23T15:54:23.218Z",
-  "revision": "bowser-public-news-20261123-brown-coleman",
+  "checkedAt": "2026-11-23T19:34:13.537Z",
+  "updatedAt": "2026-11-23T19:34:13.542Z",
+  "revision": "bowser-public-news-20261123-marks-week12",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1524,6 +1524,39 @@
         "isInjuryRelated": true,
         "bodyPart": "Concussion",
         "practiceStatus": "DNP"
+      }
+    },
+    {
+      "eventId": "houchron:22545374:woody-marks-w12-20261123",
+      "player": {
+        "playerId": "00-0040583",
+        "name": "Woody Marks",
+        "position": "RB",
+        "team": "HOU"
+      },
+      "headline": "DeMeco Ryans hopeful Woody Marks can play Week 12",
+      "summary": "Ryans said Monday that Marks is making progress from his concussion and Houston hopes he can play Sunday against Baltimore. Marks missed Week 11; the coach did not announce protocol clearance.",
+      "eventType": "COACH_COMMENT",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-23T18:50:48Z",
+      "lastUpdatedAt": "2026-11-23T18:50:48Z",
+      "checkedAt": "2026-11-23T19:34:13.282Z",
+      "sources": [
+        {
+          "sourceName": "Houston Chronicle",
+          "author": "Peter Warren",
+          "sourceType": "BEAT_WRITER",
+          "publishedAt": "2026-11-23T18:50:48Z",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.houstonchronicle.com/sports/texans/article/texans-injuries-ravens-demeco-ryans-updates-22545374.php",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-23T19:34:13.282Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion"
       }
     },
     {
@@ -5626,5 +5659,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "e6c7bf17fa850012f15c4d0118f04378ae9c3e18cb085289cf296902bc580cc5"
+  "contentHash": "088c4a618e26b7c9fde2638748b9115b57c0a6777bdfbe13636dc60c5881dd4f"
 }
