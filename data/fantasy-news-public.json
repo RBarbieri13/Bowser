@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-23T01:49:48.173Z",
-  "updatedAt": "2026-11-23T01:49:48.173Z",
-  "revision": "bowser-public-news-20261123-brock-bowers-week12",
+  "checkedAt": "2026-11-23T15:54:23.218Z",
+  "updatedAt": "2026-11-23T15:54:23.218Z",
+  "revision": "bowser-public-news-20261123-brown-coleman",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -217,6 +217,51 @@
         "gameStatus": "Inactive for Week 11"
       },
       "checkedAt": "2026-11-22T17:06:39.416Z"
+    },
+    {
+      "eventId": "broncos:20261122:jonah-coleman-week11-workload",
+      "player": {
+        "playerId": null,
+        "name": "Jonah Coleman",
+        "position": "RB",
+        "team": "DEN"
+      },
+      "headline": "Jonah Coleman handles 28 touches as Denver’s lead back against Las Vegas",
+      "summary": "Coleman carried 24 times for 111 yards and three touchdowns and caught four passes for 18 yards in Denver's Week 11 win. That was his observed workload, not a Week 12 depth chart announcement.",
+      "fantasyAnalysis": "Value Coleman as Denver's lead option based on Week 11 usage. Monitor J.K. Dobbins and any changes to the backfield ahead of Friday at Pittsburgh.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 1
+      },
+      "sources": [
+        {
+          "sourceName": "Denver Broncos official postgame coverage",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.denverbroncos.com/news/the-way-he-played-today-was-special-rb-jonah-coleman-posts-historic-111-yard-3-touchdown-rushing-performance-vs-raiders",
+          "publishedAt": null,
+          "publishedDate": "2026-11-22",
+          "publishedAtRaw": "Nov 22, 2026 at 08:45 PM (timezone not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-23T15:54:23.218Z"
+        },
+        {
+          "sourceName": "NFL official Week 11 gamebook",
+          "sourceType": "OFFICIAL",
+          "url": "https://static.www.nfl.com/image/upload/v1795395098/gamecenter/ab99a17b-4feb-11f1-abca-2c54536568a9.pdf",
+          "publishedAt": null,
+          "publishedDate": "2026-11-22",
+          "publishedAtRaw": "Gamebook dated 11/22/2026; publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-23T15:54:23.218Z"
+        }
+      ],
+      "checkedAt": "2026-11-23T15:54:23.218Z"
     },
     {
       "eventId": "bsky:3n2tlvu7eo22x:josh-jacobs",
@@ -5541,7 +5586,45 @@
         "gameStatus": "Active for Week 11"
       },
       "checkedAt": "2026-11-22T17:06:39.416Z"
+    },
+    {
+      "eventId": "weei:20261123:aj-brown-vrabel-unlikely-week12",
+      "player": {
+        "playerId": null,
+        "name": "A.J. Brown",
+        "position": "WR",
+        "team": "NE"
+      },
+      "headline": "Report: Mike Vrabel does not expect A.J. Brown to play Week 12",
+      "summary": "Vrabel told WEEI that Brown would not practice Monday and that he does not expect him to face the Chargers Sunday. Brown is recovering from a hamstring injury; the Patriots have not issued a final designation.",
+      "fantasyAnalysis": "Plan to bench Brown unless the official report changes. More receiver opportunities may be available in New England, but individual workloads with Tommy DeVito are not established.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-23T12:36:27Z",
+      "sourceQuality": {
+        "confidence": 91,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Pats Pulpit quoting Mike Vrabel on WEEI",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.patspulpit.com/new-england-patriots-injuries/144976/aj-brown-injury-update-mike-vrabel-confirms-status-nfl-week-12-chargers",
+          "publishedAt": "2026-11-23T12:36:27Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T15:54:23.218Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "gameStatus": "Coach reportedly does not anticipate Week 12 availability; final designation pending"
+      },
+      "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "5752e55b8e0568e4dfb5acca2aec9c43c33aa613bc129dcb6da827fb2a3b4c49"
+  "contentHash": "e6c7bf17fa850012f15c4d0118f04378ae9c3e18cb085289cf296902bc580cc5"
 }
