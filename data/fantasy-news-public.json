@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-22T23:58:09.919Z",
-  "updatedAt": "2026-11-22T23:58:09.919Z",
-  "revision": "bowser-public-news-20261123-mike-evans-active",
+  "checkedAt": "2026-11-23T00:12:24.372Z",
+  "updatedAt": "2026-11-23T00:12:24.372Z",
+  "revision": "bowser-public-news-20261123-kyren-williams-practice",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -315,6 +315,59 @@
         "gameStatus": "Active and confirmed starter for Week 11"
       },
       "checkedAt": "2026-11-22T17:06:39.416Z"
+    },
+    {
+      "eventId": "caplan:20261122:kyren-williams-sunday-toe-lp-week12",
+      "player": {
+        "playerId": null,
+        "name": "Kyren Williams",
+        "position": "RB",
+        "team": "LAR"
+      },
+      "headline": "Report: Kyren Williams limited Sunday with a sore toe",
+      "summary": "Adam Caplan reported that Williams was limited Sunday. Sean McVay previously said he expected Williams to play Wednesday against Green Bay. No official Week 12 game designation has been confirmed.",
+      "fantasyAnalysis": "Check the Rams' final report before kickoff Wednesday. Keep Blake Corum as a contingency, not a confirmed lead back.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "sourceQuality": {
+        "confidence": 86,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 1
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire citing Adam Caplan",
+          "author": "RotoWire Staff",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.rotowire.com/football/headlines/kyren-williams-injury-limited-at-practice-649210",
+          "publishedAt": null,
+          "publishedDate": "2026-11-22",
+          "publishedAtRaw": "Updated on November 22, 2026 at 3:45pm (timezone not displayed)",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T00:12:24.372Z"
+        },
+        {
+          "sourceName": "NBC Sports ProFootballTalk",
+          "author": "Josh Alper",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/kyren-williams-has-a-toe-injury-is-expected-to-be-ready-for-wednesday",
+          "publishedAt": null,
+          "publishedDate": "2026-11-21",
+          "publishedAtRaw": "Published November 21, 2026 05:54 PM (timezone not displayed)",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T00:12:24.372Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Toe",
+        "practiceStatus": "LP",
+        "gameStatus": "Reported limited Sunday; Wednesday game designation pending"
+      },
+      "checkedAt": "2026-11-23T00:12:24.372Z"
     },
     {
       "eventId": "chargers:20261122:ladd-mcconkey-active-week11",
@@ -5412,5 +5465,5 @@
       "checkedAt": "2026-11-22T17:06:39.416Z"
     }
   ],
-  "contentHash": "f202e4e786720a751a12c140680803167dd8389978257a7c59b75f0ba0bc5b50"
+  "contentHash": "9d207183fa23809c5bf43c48f028987c5059014f4451ecb23386304879a7e737"
 }
