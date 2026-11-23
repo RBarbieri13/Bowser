@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-23T19:46:24.571Z",
-  "updatedAt": "2026-11-23T19:46:24.574Z",
-  "revision": "bowser-public-news-20261123-tuten-ferguson",
+  "checkedAt": "2026-11-23T20:36:01.569Z",
+  "updatedAt": "2026-11-23T20:36:01.573Z",
+  "revision": "bowser-public-news-20261123-colts-mcgowan-pierce",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -4926,20 +4926,29 @@
         "position": "WR",
         "team": "IND"
       },
-      "headline": "Report: Colts expected to shut down Alec Pierce for the season",
-      "summary": "NFL Network's Ian Rapoport reports that Indianapolis is expected to keep Pierce out for the rest of 2026 while he recovers from the heel injury that put him on injured reserve. The Colts have not announced a season-ending decision.",
-      "fantasyAnalysis": "Do not plan on a redraft return this season. Pierce has already missed most of the year; this outlook does not by itself establish a new target split as Anthony Richardson takes over at quarterback.",
+      "headline": "Shane Steichen says Colts have not ruled out Alec Pierce returning",
+      "summary": "Steichen said Monday that Pierce continues rehabilitating his left heel and Indianapolis has not decided whether he will return this season. NFL Network previously reported a shutdown was expected; the Colts have not activated Pierce or given a return date.",
+      "fantasyAnalysis": "Pierce remains on injured reserve. Do not count on a redraft return without an activation or clearer timeline; no new receiving role is confirmed.",
       "eventType": "INJURY",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-11-22T12:52:33Z",
+      "lastUpdatedAt": "2026-11-23T19:26:00Z",
       "sourceQuality": {
         "confidence": 88,
         "primarySourceType": "NEWS_OUTLET",
-        "corroboratingSourceCount": 0
+        "corroboratingSourceCount": 1
       },
       "sources": [
+        {
+          "sourceName": "RotoBaller, quoting Colts reporter Kevin Bowen",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-23T19:26:00Z",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.rotoballer.com/player-news/shane-steichen-says-colts-have-not-determined-if-alec-pierce-will-play-again-in-2026/2001954",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T20:36:01.368Z"
+        },
         {
           "sourceName": "RotoWire citing NFL Network's Ian Rapoport",
           "author": "RotoWire Staff",
@@ -4953,9 +4962,9 @@
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Heel",
-        "gameStatus": "On injured reserve; reported unlikely to return this season"
+        "gameStatus": "On injured reserve; team has not ruled out a return this season"
       },
-      "checkedAt": "2026-11-22T13:34:22.596Z"
+      "checkedAt": "2026-11-23T20:36:01.368Z"
     },
     {
       "eventId": "nflnetwork:20261122:baker-mayfield-expected-week11",
@@ -5370,6 +5379,38 @@
       ]
     },
     {
+      "eventId": "rotoballer:2001961:seth-mcgowan-hamstring-20261123",
+      "player": {
+        "playerId": null,
+        "name": "Seth McGowan",
+        "team": "IND",
+        "position": "RB"
+      },
+      "headline": "Shane Steichen says Seth McGowan will miss time with hamstring injury",
+      "summary": "The Colts expect McGowan to miss time after he injured his hamstring against Houston. Steichen did not give a timetable. DJ Giddens is the likely next backup behind Jonathan Taylor.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-23T20:12:00Z",
+      "lastUpdatedAt": "2026-11-23T20:12:00Z",
+      "checkedAt": "2026-11-23T20:36:01.368Z",
+      "sources": [
+        {
+          "sourceName": "RotoBaller, citing The Athletic's James Boyd",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": "2026-11-23T20:12:00Z",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.rotoballer.com/player-news/seth-mcgowan-will-miss-some-time-with-hamstring-injury/2001961",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-23T20:36:01.368Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring"
+      }
+    },
+    {
       "eventId": "rotowire:649365:bhayshul-tuten-ankle-20261123",
       "player": {
         "playerId": null,
@@ -5735,5 +5776,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "255e3d1309d44d6921e85e2e32f080b8a60f7e7723912a2580a487983cd7ccd7"
+  "contentHash": "9c1a85a1ec23a4f880b295ef3b2b4ad5b61bc4c08a55a0356dddff6a81cb0f1f"
 }
