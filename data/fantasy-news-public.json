@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-24T23:19:20.988Z",
-  "updatedAt": "2026-11-24T23:19:21.308Z",
-  "revision": "bowser-public-news-20261124-week12-tuesday-te-eagles",
+  "checkedAt": "2026-11-24T23:45:16.172Z",
+  "updatedAt": "2026-11-24T23:45:16.473Z",
+  "revision": "bowser-public-news-20261124-colts-week12-richardson-qb1",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -5614,6 +5614,53 @@
       "checkedAt": "2026-11-22T12:57:18.677Z"
     },
     {
+      "eventId": "official:2026-11-20:colts:week-12:anthony-richardson-starter",
+      "player": {
+        "playerId": null,
+        "name": "Anthony Richardson Sr.",
+        "position": "QB",
+        "team": "IND"
+      },
+      "headline": "Colts list Anthony Richardson Sr. as Week 12 QB1",
+      "summary": "Indianapolis lists Richardson first on its November 24 unofficial depth chart for the Giants game, following Shane Steichen's November 20 announcement naming Richardson the starter and saying the Colts would release Daniel Jones. Tuesday's chart lists Riley Leonard second and newly signed Shane Buechele third.",
+      "fantasyAnalysis": "Richardson can be evaluated as Indianapolis's Week 12 starter for superflex decisions. The backups' order does not imply a planned split.",
+      "eventType": "DEPTH_CHART",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-24T23:45:16.172Z",
+      "checkedAt": "2026-11-24T23:45:16.172Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Colts.com",
+          "author": "Abby Halpin",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 24, 2026 at 03:27 PM (timezone not shown)",
+          "publishedDate": "2026-11-24",
+          "url": "https://www.colts.com/news/colts-release-unofficial-depth-chart-for-week-12-v-giants",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T23:45:16.172Z"
+        },
+        {
+          "sourceName": "Colts.com",
+          "author": "JJ Stankevitz",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 20, 2026 at 01:05 PM (timezone not shown)",
+          "publishedDate": "2026-11-20",
+          "url": "https://www.colts.com/news/colts-to-start-anthony-richardson-sr-at-quarterback-release-daniel-jones",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T23:45:16.172Z"
+        }
+      ]
+    },
+    {
       "eventId": "official:2026-11-23:seahawks:week-12:sam-darnold-monday-reps",
       "player": {
         "playerId": null,
@@ -6870,5 +6917,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "6e51e94ee6f25d9dd47b9d894a06e5287fae3a9c7987b3eae0b5eca3cb154821"
+  "contentHash": "629c3b546aebb1a929dbc0bf12748aa2d12a6ce89108334ac57d62097a3b1e9e"
 }
