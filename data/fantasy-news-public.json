@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-24T00:29:49.455Z",
-  "updatedAt": "2026-11-24T00:29:49.455Z",
-  "revision": "bowser-public-news-20261124-sam-laporta-monday-limited",
+  "checkedAt": "2026-11-24T06:42:04.785Z",
+  "updatedAt": "2026-11-24T06:42:04.785Z",
+  "revision": "bowser-public-news-20261124-commanders-week11-final-backfield",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -5329,6 +5329,84 @@
       ]
     },
     {
+      "eventId": "nfl:20261123:jacory-croskey-merritt-was-week11-backfield-usage",
+      "player": {
+        "playerId": null,
+        "name": "Jacory Croskey-Merritt",
+        "position": "RB",
+        "team": "WAS"
+      },
+      "headline": "Jacory Croskey-Merritt leads Washington backs with 15 touches in return",
+      "summary": "Croskey-Merritt logged 13 carries for 54 yards and a touchdown and caught two of three targets for 23 yards against Cincinnati after returning from injured reserve. Austin Ekeler had nine touches and Rachaad White had no credited offensive touches. The split applies to Week 11; Washington has not confirmed a future workload.",
+      "eventType": "ROLE_CHANGE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-24T06:42:04.497Z",
+      "sources": [
+        {
+          "sourceName": "NFL Gamebook",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Official gamebook for the November 23, 2026 game; publication date and clock unavailable",
+          "publishedDate": null,
+          "url": "https://static.www.nfl.com/image/upload/v1795494250/gamecenter/abbf25b8-4feb-11f1-abca-2c54536568a9.pdf",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T06:42:04.497Z"
+        },
+        {
+          "sourceName": "Cincinnati Bengals",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 23, 2026 at 11:19 PM (timezone not displayed)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.bengals.com/news/bengals-commanders-recap-postgame-notes-quotes-stats-week-11-2026-monday-night-football",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-24T06:42:04.497Z"
+        }
+      ]
+    },
+    {
+      "eventId": "nfl:20261123:rachaad-white-was-week11-backfield-usage",
+      "player": {
+        "playerId": null,
+        "name": "Rachaad White",
+        "position": "RB",
+        "team": "WAS"
+      },
+      "headline": "Rachaad White has no credited offensive touches against Cincinnati",
+      "summary": "White returned two kickoffs for 48 yards but had no credited rush or reception. His attempted carry was nullified by defensive offsides. Jacory Croskey-Merritt handled 15 offensive touches and Austin Ekeler handled nine. This game raises a Week 12 workload concern but does not confirm an injury setback or future role.",
+      "eventType": "ROLE_CHANGE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-24T06:42:04.497Z",
+      "sources": [
+        {
+          "sourceName": "NFL Gamebook",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Official gamebook for the November 23, 2026 game; publication date and clock unavailable",
+          "publishedDate": null,
+          "url": "https://static.www.nfl.com/image/upload/v1795494250/gamecenter/abbf25b8-4feb-11f1-abca-2c54536568a9.pdf",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T06:42:04.497Z"
+        },
+        {
+          "sourceName": "Cincinnati Bengals",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 23, 2026 at 11:19 PM (timezone not displayed)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.bengals.com/news/bengals-commanders-recap-postgame-notes-quotes-stats-week-11-2026-monday-night-football",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-24T06:42:04.497Z"
+        }
+      ]
+    },
+    {
       "eventId": "nflnetwork:20261121:mike-evans-expected-week11",
       "player": {
         "playerId": null,
@@ -6321,5 +6399,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "0299e8f8a91014d497ef71d83ed5643740ccb236992f6d6a6a3d67fd6aa66728"
+  "contentHash": "967c0bc285504adab3be3d596651235230b6c63b842e8bb90ffe8aafe139f68a"
 }
