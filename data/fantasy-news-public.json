@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-24T00:16:00.371Z",
-  "updatedAt": "2026-11-24T00:16:00.371Z",
-  "revision": "bowser-public-news-20261124-commanders-mnf-backs-active",
+  "checkedAt": "2026-11-24T00:29:49.455Z",
+  "updatedAt": "2026-11-24T00:29:49.455Z",
+  "revision": "bowser-public-news-20261124-sam-laporta-monday-limited",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1952,6 +1952,40 @@
         "gameStatus": "Reported in concussion protocol; Week 12 status pending"
       },
       "checkedAt": "2026-11-23T00:44:22.702Z"
+    },
+    {
+      "eventId": "lions:20261123:sam-laporta-monday-lp-week12",
+      "player": {
+        "playerId": null,
+        "name": "Sam LaPorta",
+        "position": "TE",
+        "team": "DET"
+      },
+      "headline": "Sam LaPorta listed limited Monday with ankle injury",
+      "summary": "The Bears' official Week 12 injury report lists Detroit tight end Sam LaPorta as limited Monday with an ankle injury ahead of their Thanksgiving matchup. He has no final game designation.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-24T00:29:49.305Z",
+      "sources": [
+        {
+          "sourceName": "Chicago Bears",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "November 23, 2026 Monday Week 12 practice column; publication clock unavailable",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.chicagobears.com/team/injury-report/week/reg-12",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T00:29:49.305Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "LP"
+      }
     },
     {
       "eventId": "nbcsports:20261123:kenneth-walker-remains-starter",
@@ -6287,5 +6321,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "f837a608bf6b43c819834755755410409797383161548b71c52bcf2d5b7dfde1"
+  "contentHash": "0299e8f8a91014d497ef71d83ed5643740ccb236992f6d6a6a3d67fd6aa66728"
 }
