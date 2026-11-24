@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-23T23:47:33.064Z",
-  "updatedAt": "2026-11-23T23:47:33.064Z",
-  "revision": "bowser-public-news-20261123-thanksgiving-bills-cowboys",
+  "checkedAt": "2026-11-24T00:16:00.371Z",
+  "updatedAt": "2026-11-24T00:16:00.371Z",
+  "revision": "bowser-public-news-20261124-commanders-mnf-backs-active",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -602,6 +602,50 @@
       "checkedAt": "2026-11-21T21:19:24.558Z"
     },
     {
+      "eventId": "commanders:20261123:jacory-croskey-merritt-active-week11",
+      "player": {
+        "playerId": null,
+        "name": "Jacory Croskey-Merritt",
+        "position": "RB",
+        "team": "WAS"
+      },
+      "headline": "Jacory Croskey-Merritt active for Monday night vs. Cincinnati",
+      "summary": "Washington activated Croskey-Merritt from injured reserve earlier Monday and did not list him among its Week 11 inactives. Rachaad White is also active. The official game-day list does not establish the backfield's workload split.",
+      "eventType": "RETURN",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-24T00:16:00.209Z",
+      "sources": [
+        {
+          "sourceName": "Washington Commanders",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 23, 2026 at 06:44 PM (timezone not displayed)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.commanders.com/news/inactives-commanders-vs-bengals-week-11",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T00:16:00.209Z"
+        },
+        {
+          "sourceName": "Cincinnati Bengals",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 23, 2026 at 06:45 PM (timezone not displayed)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.bengals.com/news/bengals-commanders-inactives-week-11-2026-monday-night-football",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-24T00:16:00.209Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "gameStatus": "ACTIVE"
+      }
+    },
+    {
       "eventId": "commanders:20261123:jacory-croskey-merritt-ir-activation",
       "player": {
         "playerId": null,
@@ -632,6 +676,50 @@
         "isInjuryRelated": true,
         "bodyPart": "Groin",
         "gameStatus": "Reported activated and removed from injury report for Week 11"
+      }
+    },
+    {
+      "eventId": "commanders:20261123:rachaad-white-active-week11",
+      "player": {
+        "playerId": null,
+        "name": "Rachaad White",
+        "position": "RB",
+        "team": "WAS"
+      },
+      "headline": "Rachaad White active for Monday night vs. Cincinnati",
+      "summary": "White is not on Washington's official Week 11 inactive list after being listed questionable with a heel injury. Jacory Croskey-Merritt is also active following his activation from injured reserve. Availability does not guarantee a particular workload.",
+      "eventType": "RETURN",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-24T00:16:00.209Z",
+      "sources": [
+        {
+          "sourceName": "Washington Commanders",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 23, 2026 at 06:44 PM (timezone not displayed)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.commanders.com/news/inactives-commanders-vs-bengals-week-11",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T00:16:00.209Z"
+        },
+        {
+          "sourceName": "Cincinnati Bengals",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 23, 2026 at 06:45 PM (timezone not displayed)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.bengals.com/news/bengals-commanders-inactives-week-11-2026-monday-night-football",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-24T00:16:00.209Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Heel",
+        "gameStatus": "ACTIVE"
       }
     },
     {
@@ -6199,5 +6287,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "17fbd885aa0539cbe69a5a00287030b5069408fa2ccf8b42684f1b0f94595c89"
+  "contentHash": "f837a608bf6b43c819834755755410409797383161548b71c52bcf2d5b7dfde1"
 }
