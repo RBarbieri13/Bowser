@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-24T21:50:58.116Z",
-  "updatedAt": "2026-11-24T21:50:58.443Z",
-  "revision": "bowser-public-news-20261124-week12-walker-ferguson-tuesday",
+  "checkedAt": "2026-11-24T23:19:20.988Z",
+  "updatedAt": "2026-11-24T23:19:21.308Z",
+  "revision": "bowser-public-news-20261124-week12-tuesday-te-eagles",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -5664,6 +5664,56 @@
       ]
     },
     {
+      "eventId": "official:2026-11-24:bills:week-12:dalton-kincaid-tuesday-lp",
+      "player": {
+        "playerId": null,
+        "name": "Dalton Kincaid",
+        "position": "TE",
+        "team": "BUF"
+      },
+      "headline": "Dalton Kincaid listed limited again Tuesday",
+      "summary": "Buffalo listed Kincaid limited Tuesday with thumb and ankle injuries after listing him limited on Monday's estimated report. He missed Week 11 and has no final Thanksgiving designation against Kansas City.",
+      "fantasyAnalysis": "Keep a tight end alternative until the final report. Dawson Knox is an option to monitor if Kincaid sits, not a guaranteed target replacement.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-24T23:19:20.988Z",
+      "checkedAt": "2026-11-24T23:19:20.988Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Buffalo Bills",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 12 Tuesday practice report (publication date, clock and timezone not shown)",
+          "publishedDate": null,
+          "url": "https://www.buffalobills.com/team/injury-report/week/reg-12",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T23:19:20.988Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb and ankle",
+        "practiceStatus": "Limited Participation",
+        "gameStatus": "No Week 12 game designation yet"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Dawson Knox",
+          "team": "BUF",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Potential additional snaps if Kincaid is unavailable."
+        }
+      ]
+    },
+    {
       "eventId": "official:2026-11-24:chiefs:week-12:kenneth-walker-tuesday-lp",
       "player": {
         "playerId": null,
@@ -5752,6 +5802,152 @@
         "isInjuryRelated": true,
         "bodyPart": "Knee and ankle",
         "practiceStatus": "Did Not Participate",
+        "gameStatus": "No Week 12 game designation yet"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "official:2026-11-24:eagles:week-12:dallas-goedert-tuesday-estimated-fp",
+      "player": {
+        "playerId": null,
+        "name": "Dallas Goedert",
+        "position": "TE",
+        "team": "PHI"
+      },
+      "headline": "Eagles upgrade Dallas Goedert to estimated full participation",
+      "summary": "Philadelphia upgraded Goedert (shin) from estimated limited Monday to estimated full Tuesday on the short week. A final Thanksgiving designation against Dallas has not been issued.",
+      "fantasyAnalysis": "The practice estimate is encouraging, but wait for Wednesday's game-status report before treating Goedert as cleared.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-24T23:19:20.988Z",
+      "checkedAt": "2026-11-24T23:19:20.988Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 12 Tuesday injury report (publication date, clock and timezone not shown)",
+          "publishedDate": null,
+          "url": "https://www.philadelphiaeagles.com/team/injury-report/week/REG-12",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T23:19:20.988Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 23, 2026 at 06:30 PM (timezone not shown)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.philadelphiaeagles.com/news/eagles-at-cowboys-injury-report-2026-nfl-week-12-thanksgiving",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T23:19:20.988Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Shin",
+        "practiceStatus": "Estimated Full Participation",
+        "gameStatus": "No Week 12 game designation yet"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "official:2026-11-24:eagles:week-12:saquon-barkley-tuesday-estimated-fp",
+      "player": {
+        "playerId": null,
+        "name": "Saquon Barkley",
+        "position": "RB",
+        "team": "PHI"
+      },
+      "headline": "Eagles upgrade Saquon Barkley to estimated full participation",
+      "summary": "Philadelphia upgraded Barkley (neck/illness) from estimated limited Monday to estimated full Tuesday on the short week. A final Thanksgiving designation against Dallas has not been issued.",
+      "fantasyAnalysis": "The upgrade reduces concern but is not a final game status. Check Wednesday's designation before assuming Barkley's availability.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-24T23:19:20.988Z",
+      "checkedAt": "2026-11-24T23:19:20.988Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 12 Tuesday injury report (publication date, clock and timezone not shown)",
+          "publishedDate": null,
+          "url": "https://www.philadelphiaeagles.com/team/injury-report/week/REG-12",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T23:19:20.988Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 23, 2026 at 06:30 PM (timezone not shown)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.philadelphiaeagles.com/news/eagles-at-cowboys-injury-report-2026-nfl-week-12-thanksgiving",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T23:19:20.988Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Neck and illness",
+        "practiceStatus": "Estimated Full Participation",
+        "gameStatus": "No Week 12 game designation yet"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "official:2026-11-24:lions:week-12:sam-laporta-tuesday-estimated-fp",
+      "player": {
+        "playerId": null,
+        "name": "Sam LaPorta",
+        "position": "TE",
+        "team": "DET"
+      },
+      "headline": "Lions upgrade Sam LaPorta to estimated full participation",
+      "summary": "Detroit estimated LaPorta as full Tuesday after listing him limited Monday because of an ankle injury. The Lions held walkthroughs both days and have not issued a final Thanksgiving designation.",
+      "fantasyAnalysis": "The upgrade is encouraging. Check the final report before treating LaPorta as available against Chicago.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-24T23:19:20.988Z",
+      "checkedAt": "2026-11-24T23:19:20.988Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Detroit Lions",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 24, 2026 at 05:06 PM (timezone not shown)",
+          "publishedDate": "2026-11-24",
+          "url": "https://www.detroitlions.com/news/lions-vs-bears-practice-report-nov-24",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T23:19:20.988Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "Estimated Full Participation",
         "gameStatus": "No Week 12 game designation yet"
       },
       "affectedPlayers": []
@@ -6674,5 +6870,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "b9ecdde60d0dc94553e83ab897d6d811412d4d21fad855de178ea04d4c97ab81"
+  "contentHash": "6e51e94ee6f25d9dd47b9d894a06e5287fae3a9c7987b3eae0b5eca3cb154821"
 }
