@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-24T20:06:02.656Z",
-  "updatedAt": "2026-11-24T20:06:08.659Z",
-  "revision": "bowser-public-news-20261124-week12-jacobs-rams-darnold",
+  "checkedAt": "2026-11-24T21:50:58.116Z",
+  "updatedAt": "2026-11-24T21:50:58.443Z",
+  "revision": "bowser-public-news-20261124-week12-walker-ferguson-tuesday",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -5664,6 +5664,99 @@
       ]
     },
     {
+      "eventId": "official:2026-11-24:chiefs:week-12:kenneth-walker-tuesday-lp",
+      "player": {
+        "playerId": null,
+        "name": "Kenneth Walker III",
+        "position": "RB",
+        "team": "KC"
+      },
+      "headline": "Kenneth Walker III returns to limited practice Tuesday",
+      "summary": "Walker (groin) practiced on a limited basis Tuesday after Kansas City estimated him as a non-participant at Monday's walkthrough. He has no final designation for Thursday at Buffalo.",
+      "fantasyAnalysis": "Keep a Thursday contingency. Emmett Johnson is the likely lead if Walker is out; Tuesday's participation does not establish availability or a carry share.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-24T21:50:58.116Z",
+      "checkedAt": "2026-11-24T21:50:58.116Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Kansas City Chiefs",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 24, 2026 at 03:19 PM (timezone not shown)",
+          "publishedDate": "2026-11-24",
+          "url": "https://www.chiefs.com/news/week-12-injury-report-chiefs-vs-bills-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T21:50:58.116Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "practiceStatus": "Limited Participation",
+        "gameStatus": "No Week 12 game designation yet"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Emmett Johnson",
+          "team": "KC",
+          "position": "RB",
+          "relationship": "BENEFICIARY",
+          "impact": "Likely lead back if Walker remains inactive; split depends on availability."
+        }
+      ]
+    },
+    {
+      "eventId": "official:2026-11-24:cowboys:week-12:jake-ferguson-tuesday-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Jake Ferguson",
+        "position": "TE",
+        "team": "DAL"
+      },
+      "headline": "Jake Ferguson misses Tuesday practice ahead of Thanksgiving",
+      "summary": "Dallas said Ferguson (knee/ankle) did not practice Tuesday, after a non-participation estimate for Monday's walkthrough. The Cowboys have not yet announced a game designation for Thursday against Philadelphia.",
+      "fantasyAnalysis": "Keep a playable tight end alternative for the short week. Two non-participation listings do not amount to an official out designation.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-24T21:50:58.116Z",
+      "checkedAt": "2026-11-24T21:50:58.116Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "DallasCowboys.com",
+          "author": "Dallas Cowboys Staff Writers",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov. 24 update at 3:15 p.m. (timezone not shown)",
+          "publishedDate": "2026-11-24",
+          "url": "https://www.dallascowboys.com/news/updates-november-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T21:50:58.116Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee and ankle",
+        "practiceStatus": "Did Not Participate",
+        "gameStatus": "No Week 12 game designation yet"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "official:2026-11-24:packers:week-12:josh-jacobs-questionable",
       "player": {
         "playerId": null,
@@ -6581,5 +6674,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "f2d80cc30f9517441568d7306d8fdaeaac494156c239b951a8da19c82f43ad73"
+  "contentHash": "b9ecdde60d0dc94553e83ab897d6d811412d4d21fad855de178ea04d4c97ab81"
 }
