@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-24T06:42:04.785Z",
-  "updatedAt": "2026-11-24T06:42:04.785Z",
-  "revision": "bowser-public-news-20261124-commanders-week11-final-backfield",
+  "checkedAt": "2026-11-24T20:06:02.656Z",
+  "updatedAt": "2026-11-24T20:06:08.659Z",
+  "revision": "bowser-public-news-20261124-week12-jacobs-rams-darnold",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -5614,6 +5614,188 @@
       "checkedAt": "2026-11-22T12:57:18.677Z"
     },
     {
+      "eventId": "official:2026-11-23:seahawks:week-12:sam-darnold-monday-reps",
+      "player": {
+        "playerId": null,
+        "name": "Sam Darnold",
+        "position": "QB",
+        "team": "SEA"
+      },
+      "headline": "Sam Darnold returns for lower-tempo Monday work",
+      "summary": "Seattle said Darnold took extensive reps at Monday's lower-tempo practice after missing two games with quadriceps and rib injuries. Coach Mike Macdonald said he wanted to see Wednesday's practice before declaring a Week 12 starter.",
+      "fantasyAnalysis": "Darnold is progressing, but do not treat him as a confirmed Week 12 starter. Drew Lock started the past two games if a contingency is needed.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-24T20:06:02.656Z",
+      "checkedAt": "2026-11-24T20:06:02.656Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Seahawks.com",
+          "author": "John Boyle",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 23, 2026 at 04:55 PM (timezone not shown)",
+          "publishedDate": "2026-11-23",
+          "url": "https://www.seahawks.com/news/seahawks-qb-sam-darnold-took-a-ton-of-reps-monday-as-he-works-his-way-back-from-injuries",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T20:06:02.656Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Quadriceps and ribs",
+        "gameStatus": "No Week 12 starting decision; Wednesday practice pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Drew Lock",
+          "position": "QB",
+          "team": "SEA",
+          "impact": "Started the last two games while Darnold was out.",
+          "relationship": "BENEFICIARY"
+        }
+      ]
+    },
+    {
+      "eventId": "official:2026-11-24:packers:week-12:josh-jacobs-questionable",
+      "player": {
+        "playerId": null,
+        "name": "Josh Jacobs",
+        "position": "RB",
+        "team": "GB"
+      },
+      "headline": "Packers list Josh Jacobs questionable for Wednesday",
+      "summary": "Green Bay lists Jacobs as questionable at the Rams after three days of limited participation on the injury report, including a limited estimate Tuesday. He is recovering from surgery on his right ring finger. Coach Matt LaFleur had said he did not expect Jacobs to play.",
+      "fantasyAnalysis": "Keep an alternative ready for Wednesday and check official inactives. Kaleb Johnson is a possible beneficiary if Jacobs sits, but his workload is not guaranteed.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-24T20:06:02.656Z",
+      "checkedAt": "2026-11-24T20:06:02.656Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Packers.com",
+          "author": "Wes Hodkiewicz",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 24, 2026 at 12:00 PM (timezone not shown)",
+          "publishedDate": "2026-11-24",
+          "url": "https://www.packers.com/news/packers-list-eight-questionable-vs-rams-week-12-injury-report",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T20:06:02.656Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Finger",
+        "gameStatus": "Questionable for Week 12 at the Rams"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Kaleb Johnson",
+          "position": "RB",
+          "team": "GB",
+          "impact": "Possible backfield beneficiary if Jacobs is inactive; carry share is not guaranteed.",
+          "relationship": "BENEFICIARY"
+        }
+      ]
+    },
+    {
+      "eventId": "official:2026-11-24:rams:week-12:kyren-williams-no-designation",
+      "player": {
+        "playerId": null,
+        "name": "Kyren Williams",
+        "position": "RB",
+        "team": "LAR"
+      },
+      "headline": "Kyren Williams has no Wednesday injury designation",
+      "summary": "Williams went from limited Sunday to full Monday and was estimated as full Tuesday with a toe injury. The Rams gave him no game designation for Week 12 against Green Bay.",
+      "fantasyAnalysis": "No injury-related pivot is indicated. This report does not establish a change in touch share with Blake Corum.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-24T20:06:02.656Z",
+      "checkedAt": "2026-11-24T20:06:02.656Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Rams",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 12 Tuesday injury report (original publication date, clock and timezone not shown)",
+          "publishedDate": null,
+          "url": "https://www.therams.com/team/injury-report/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T20:06:02.656Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Toe",
+        "gameStatus": "No game designation for Week 12 vs. Green Bay"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "official:2026-11-24:rams:week-12:matthew-stafford-no-designation",
+      "player": {
+        "playerId": null,
+        "name": "Matthew Stafford",
+        "position": "QB",
+        "team": "LAR"
+      },
+      "headline": "Matthew Stafford has no Wednesday injury designation",
+      "summary": "The Rams' final Week 12 injury report lists Stafford as full on all three practice reports, including a full estimate Tuesday for his right elbow, and gives him no game designation against Green Bay.",
+      "fantasyAnalysis": "No injury-related pivot is indicated for the Wednesday kickoff.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-24T20:06:02.656Z",
+      "checkedAt": "2026-11-24T20:06:02.656Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Rams",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 12 Tuesday injury report (original publication date, clock and timezone not shown)",
+          "publishedDate": null,
+          "url": "https://www.therams.com/team/injury-report/",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-24T20:06:02.656Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Right elbow",
+        "gameStatus": "No game designation for Week 12 vs. Green Bay"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "packers:20261123:kyren-williams-monday-fp-week12",
       "player": {
         "playerId": null,
@@ -6399,5 +6581,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "967c0bc285504adab3be3d596651235230b6c63b842e8bb90ffe8aafe139f68a"
+  "contentHash": "f2d80cc30f9517441568d7306d8fdaeaac494156c239b951a8da19c82f43ad73"
 }
