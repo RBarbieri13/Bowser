@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T21:13:28.065Z",
-  "updatedAt": "2026-11-25T21:13:39.482Z",
-  "revision": "bowser-public-news-20261125-week12-laporta-bowers-mcmillan",
+  "checkedAt": "2026-11-25T21:27:00.481Z",
+  "updatedAt": "2026-11-25T21:27:00.839Z",
+  "revision": "bowser-public-news-20261125-week12-tuten-wednesday",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6619,6 +6619,66 @@
       }
     },
     {
+      "eventId": "official:2026-11-25:jaguars:bhayshul-tuten-wednesday-dnp-week12",
+      "player": {
+        "playerId": null,
+        "name": "Bhayshul Tuten",
+        "position": "RB",
+        "team": "JAX"
+      },
+      "headline": "Bhayshul Tuten misses Wednesday practice with ankle/foot injury",
+      "summary": "Jacksonville listed Tuten as a nonparticipant Wednesday ahead of Sunday's game against Tennessee. The team has not issued a Week 12 game designation. Chris Rodriguez Jr. (hand), listed second on the team depth chart, practiced in full.",
+      "fantasyAnalysis": "Rodriguez is the first Jacksonville back to monitor if Tuten sits, though LeQuint Allen Jr. could share work. Tuten also missed a practice last week and played; do not assume he is out based on Wednesday alone.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T21:27:00.481Z",
+      "checkedAt": "2026-11-25T21:27:00.481Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Jacksonville Jaguars",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.jaguars.com/team/injury-report/week/reg-12",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Week 12 Wednesday practice report (November 25, 2026; publication clock not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T21:27:00.481Z"
+        },
+        {
+          "sourceName": "Jacksonville Jaguars unofficial depth chart",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.jaguars.com/team/depth-chart",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Live Week 12 depth chart (publication date and clock not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T21:27:00.481Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle/foot",
+        "practiceStatus": "Did Not Participate Wednesday",
+        "gameStatus": "Week 12 game designation pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Chris Rodriguez Jr.",
+          "position": "RB",
+          "team": "JAX",
+          "relationship": "Backup",
+          "impact": "First candidate for additional carries if Tuten misses the game; workload not confirmed."
+        }
+      ]
+    },
+    {
       "eventId": "official:2026-11-25:lions:week-12:sam-laporta-no-designation",
       "player": {
         "playerId": null,
@@ -7541,5 +7601,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "85536939708da0cd16f9e774b3c5e96229a95be7d7757d43df0e7de71199ee13"
+  "contentHash": "8e517f5e8ed016a10e004def5b17118450b083542c61d6baf0546ca4584f774a"
 }
