@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T21:46:30.638Z",
-  "updatedAt": "2026-11-25T21:46:30.985Z",
-  "revision": "bowser-public-news-20261125-week12-wednesday-wrs",
+  "checkedAt": "2026-11-25T21:57:45.958Z",
+  "updatedAt": "2026-11-25T21:57:46.304Z",
+  "revision": "bowser-public-news-20261125-week12-beck-texans",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1922,6 +1922,92 @@
         "bodyPart": "Concussion",
         "practiceStatus": "DNP"
       }
+    },
+    {
+      "eventId": "houchron:20261125:marvin-harrison-jr-practice-return",
+      "player": {
+        "playerId": null,
+        "name": "Marvin Harrison Jr.",
+        "position": "WR",
+        "team": "HOU"
+      },
+      "headline": "Marvin Harrison Jr. returns to Texans practice Wednesday",
+      "summary": "Jonathan M. Alexander reported Harrison returned to Wednesday practice following two missed games because of a hamstring injury. His participation level and Sunday game status are unconfirmed.",
+      "fantasyAnalysis": "Monitor Thursday and Friday participation before moving Harrison into a starting lineup.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T21:57:45.958Z",
+      "checkedAt": "2026-11-25T21:57:45.958Z",
+      "sourceQuality": {
+        "confidence": 93,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Houston Chronicle",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.houstonchronicle.com/sports/texans/article/woody-marks-marvin-harrison-practice-22550240.php",
+          "author": "Jonathan M. Alexander",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Updated Nov 25, 2026 at 1:30 p.m. (timezone not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T21:57:45.958Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": "Reported back at practice; participation level unconfirmed",
+        "gameStatus": "Week 12 game designation pending"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "houchron:20261125:woody-marks-practice-return",
+      "player": {
+        "playerId": null,
+        "name": "Woody Marks",
+        "position": "RB",
+        "team": "HOU"
+      },
+      "headline": "Woody Marks returns to the practice field Wednesday",
+      "summary": "Jonathan M. Alexander reported Marks returned to practice Wednesday after missing Week 11 with a concussion. His participation level and clearance for Baltimore are not established.",
+      "fantasyAnalysis": "Keep Houston backup options as insurance until Marks clears concussion protocol and the team confirms his availability.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T21:57:45.958Z",
+      "checkedAt": "2026-11-25T21:57:45.958Z",
+      "sourceQuality": {
+        "confidence": 93,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Houston Chronicle",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.houstonchronicle.com/sports/texans/article/woody-marks-marvin-harrison-practice-22550240.php",
+          "author": "Jonathan M. Alexander",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Updated Nov 25, 2026 at 1:30 p.m. (timezone not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T21:57:45.958Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion",
+        "practiceStatus": "Reported back at practice; participation level unconfirmed",
+        "gameStatus": "Week 12 game designation pending"
+      },
+      "affectedPlayers": []
     },
     {
       "eventId": "houchron:22545374:woody-marks-w12-20261123",
@@ -6409,6 +6495,57 @@
       ]
     },
     {
+      "eventId": "official:2026-11-25:cardinals:carson-beck-wednesday-no-team-practice",
+      "player": {
+        "playerId": null,
+        "name": "Carson Beck",
+        "position": "QB",
+        "team": "ARI"
+      },
+      "headline": "Carson Beck sits Wednesday; Cardinals prep Josh Johnson",
+      "summary": "Mike LaFleur said Beck did not practice Wednesday as he deals with back spasms, though he was expected to throw on the side. Beck is day-to-day; Josh Johnson is preparing to start if Beck cannot play against Washington.",
+      "fantasyAnalysis": "Treat both quarterbacks as conditional until Arizona gives a game designation. Johnson is a deeper superflex option if named the starter.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T21:57:45.958Z",
+      "checkedAt": "2026-11-25T21:57:45.958Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Arizona Cardinals",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.azcardinals.com/news/carson-beck-remains-sidelined-for-now-with-bad-back-cardinals-qb",
+          "author": "Darren Urban",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 12:47 PM (timezone not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T21:57:45.958Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Back",
+        "practiceStatus": "No team practice Wednesday",
+        "gameStatus": "Week 12 game designation pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Josh Johnson",
+          "team": "ARI",
+          "position": "QB",
+          "relationship": "Backup",
+          "impact": "Preparing to start if Carson Beck cannot play."
+        }
+      ]
+    },
+    {
       "eventId": "official:2026-11-25:chiefs:week-12:kenneth-walker-out",
       "player": {
         "playerId": null,
@@ -7722,5 +7859,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "ff958a91ed749f39a49f4f8dbc28af95687d4e1601859c7aeaa517c23888abb0"
+  "contentHash": "a216ff7ad4d5f6eb96fd1cd9c9d0410318a9d7956b4d19eb67bdc00c66afe3a4"
 }
