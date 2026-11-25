@@ -34,6 +34,61 @@ class CurrentWaivers(unittest.TestCase):
         rows = current.blitz_ranks(waiver.Page('<table><tr><th>RK</th><th>Player</th><th>Pos</th></tr><tr><td>1</td><td>Cam Ward TEN • QB</td><td>QB</td></tr></table>'))
         self.assertEqual((rows[0]['name'], rows[0]['rank']), ('Cam Ward', 1))
 
+    def test_unnumbered_blitz_recommendations_do_not_become_numeric_ranks(self):
+        page = waiver.Page('<h1>Week 12 Waiver Wire</h1><h2>Deshaun Watson, QB (CLE)</h2><h2>Justice Hill, RB (BAL)</h2>')
+        self.assertEqual(current.blitz_ranks(page), [])
+        widget = '<table><tr><th>RK</th><th>Player</th><th>Pos</th></tr><tr><td>1</td><td>Unrelated Player NYJ • WR</td><td>WR</td></tr></table>'
+        self.assertEqual(current.blitz_ranks(waiver.Page(widget + '<h2>Justice Hill, RB (BAL)</h2>')), [])
+        with self.assertRaisesRegex(ValueError, 'numeric priorities unavailable'):
+            current.blitz_ranks(waiver.Page('<h1>Week 12 Waiver Wire</h1>'))
+
+    def test_sharp_uses_explicit_positional_numbers_and_excludes_watch_lists(self):
+        sections = [('Quarterback', 'QB', ['Deshaun Watson, Browns', 'Joe Milton, Eagles', 'Sam Darnold, Seahawks']),
+                    ('Running Back', 'RB', ['Chris Rodriguez, Jaguars', 'Samaje Perine, Bengals', 'Justice Hill, Ravens']),
+                    ('Wide Receiver', 'WR', ['Antonio Williams, Commanders', 'Chimere Dike, Titans', 'Ted Hurst, Bucs']),
+                    ('Tight End', 'TE', ['Evan Engram, Broncos', 'Tyler Higbee, Rams', 'Kenyon Sadiq, Jets'])]
+        html = ''.join('<h2>Week 12 '+label+' Fantasy Football Waiver Wire Pickups</h2>' +
+                       ''.join(f'<h3>{i}. {name} — Available in 80.7% of ESPN leagues</h3>' for i, name in enumerate(names, 1)) +
+                       '<h3>Watch List</h3><h3>1. Unranked Player, Browns — Available in 90% of ESPN leagues</h3>'
+                       for label, _, names in sections)
+        rows = current.sharp_ranks(waiver.Page(html), 12)
+        self.assertEqual(len(rows), 12)
+        self.assertEqual([(r['position'], r['rank']) for r in rows], [(pos, i) for _, pos, _ in sections for i in range(1, 4)])
+        self.assertTrue(all(r['method'] == waiver.METHOD_POSITION and 'overallRank' not in r for r in rows))
+        self.assertEqual(rows[8]['team'], 'TB')
+        for broken in [html.replace('2. Joe Milton', '4. Joe Milton'),
+                       html.replace('Deshaun Watson, Browns', 'Deshaun Watson, Unknown'),
+                       html.replace('Week 12 Tight End', 'Week 11 Tight End')]:
+            with self.subTest(broken=broken), self.assertRaises(ValueError):
+                current.sharp_ranks(waiver.Page(broken), 12)
+        with self.assertRaises(ValueError):
+            current.verify_url('sharp', 'https://example.com/fake-ranks')
+
+    def test_playerprofiler_percentage_label_variants_preserve_native_dollar_tiers(self):
+        for suffix in ['', ' rostered']:
+            html = '<p>a $100 budget; six-point per passing touchdown</p><h2>Week 12 Standard Bench Waiver Wire Targets</h2><h3>Running Back</h3>'
+            html += ''.join(f'<h3>Player {i}, Jaguars (28%{suffix}) | $12-22</h3>' for i in range(10))
+            rows = current.playerprofiler_bids(waiver.Page(html), 12)
+            self.assertEqual(len(rows), 10)
+            self.assertTrue(all((r['bid']['low'], r['bid']['high'], r['bid']['unit'], r['bid']['referenceBudget'], r['bid']['budgetBasis']) ==
+                                (12, 22, 'dollars', 100, 'unspecified') for r in rows))
+            self.assertTrue(all('Standard Bench' in r['bid']['tier'] for r in rows))
+            with self.assertRaisesRegex(ValueError, 'reference/scoring changed'):
+                current.playerprofiler_bids(waiver.Page(html.replace('a $100 budget', 'an unknown budget')), 12)
+
+    def test_cbs_later_superflex_clause_cannot_relabel_the_earlier_base_bid(self):
+        ranks = [{'name': 'Joe Milton III', 'position': 'QB', 'team': 'PHI'},
+                 {'name': 'Anthony Richardson', 'position': 'QB', 'team': 'IND'}]
+        page = waiver.Page('<h1>WAIVER WIRE</h1><h2>Joe Milton III</h2><p>QB</p><p>PHI</p>'
+                           '<p>In deeper leagues, Milton is worth adding for 1 percent of your remaining FAAB, and he should be rostered in all Superflex and two-quarterback leagues for at least 10 percent.</p>'
+                           '<h2>Anthony Richardson</h2><p>QB</p><p>IND</p>'
+                           '<p>Richardson should be added in all Superflex and two-quarterback leagues for at least 10 percent of your remaining FAAB.</p>')
+        with patch.object(waiver, 'parse_cbs', return_value=(ranks, [])):
+            _, bids = current.cbs_facts(page)
+        by_name = {row['name']: row['bid'] for row in bids}
+        self.assertEqual((by_name['Joe Milton III']['low'], by_name['Joe Milton III']['tier']), (1, 'source base'))
+        self.assertEqual((by_name['Anthony Richardson']['low'], by_name['Anthony Richardson']['tier']), (10, 'Superflex / two-QB'))
+
     def test_rolling_rankings_cannot_cross_the_requested_week_kickoff(self):
         with tempfile.TemporaryDirectory() as temporary:
             data=Path(temporary)
