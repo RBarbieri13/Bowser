@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T20:17:19.000Z",
-  "updatedAt": "2026-11-25T20:17:19.000Z",
-  "revision": "bowser-public-news-20261125-week12-thanksgiving-final-sourced",
+  "checkedAt": "2026-11-25T20:26:20.000Z",
+  "updatedAt": "2026-11-25T20:26:20.000Z",
+  "revision": "bowser-public-news-20261125-week12-purdy-ankle",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6232,6 +6232,56 @@
       ]
     },
     {
+      "eventId": "official:2026-11-25:49ers:week-12:brock-purdy-wednesday-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Brock Purdy",
+        "position": "QB",
+        "team": "SF"
+      },
+      "headline": "Brock Purdy to miss Wednesday practice with ankle sprain",
+      "summary": "Kyle Shanahan said Purdy would not practice Wednesday after spraining his ankle against Minnesota. Shanahan called him day to day and said missing Sunday against Seattle is possible; no game designation has been issued.",
+      "fantasyAnalysis": "Keep a playable backup while awaiting Friday’s designation. Mac Jones would be the next starter if Purdy cannot play.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T20:26:20.000Z",
+      "checkedAt": "2026-11-25T20:26:20.000Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "NFL.com",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 25, 2026 at 02:40 PM (timezone not shown)",
+          "publishedDate": "2026-11-25",
+          "url": "https://fantasy-www.nfl.com/news/brock-purdy-sits-out-practice-ankle-sprain-49ers-seahawks",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T20:26:20.000Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "Did Not Participate",
+        "gameStatus": "No Week 12 game designation yet"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Mac Jones",
+          "team": "SF",
+          "position": "QB",
+          "relationship": "BENEFICIARY",
+          "impact": "Likely starter if Purdy cannot play."
+        }
+      ]
+    },
+    {
       "eventId": "official:2026-11-25:bills:week-12:dalton-kincaid-questionable",
       "player": {
         "playerId": null,
@@ -7321,5 +7371,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "54aba1f009442c56060b0b83e8780ae18956bb35acb9d94a76b22daaddba0c90"
+  "contentHash": "b997a9fce118ecb2c9dbdf61aa4b8a202a2439a133a41ed083525a6eb7608050"
 }
