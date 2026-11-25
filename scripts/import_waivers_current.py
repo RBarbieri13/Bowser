@@ -23,6 +23,7 @@ SOURCES = {
     'cbs': ('CBS Sports', 'cbs', 'cbs', 'Explicit positional add order; remaining FAAB and format-specific tiers. Ambiguous operator-plus-range phrases are omitted.'),
     'dknetwork': ('DK Network', 'dknetwork', 'dknetwork', '12-team PPR, 1QB, four-point passing TDs; percent of remaining FAAB.'),
     'playerprofiler': ('PlayerProfiler', None, 'playerprofiler', 'Published dollar ranges for a $100 reference budget; PPR, six-point passing TDs. Bench-depth tiers remain separate; article order is not a ranking.'),
+    'sharp': ('Sharp Football Analysis', 'sharp', None, 'Explicit numbered positional waiver priorities only; Watch List and Deep Cuts are not ranked.'),
 }
 
 PUBLISHER_HOSTS = {
@@ -34,6 +35,7 @@ PUBLISHER_HOSTS = {
     'cbs': {'www.cbssports.com', 'hubapi.cbssports.com'},
     'dknetwork': {'dknetwork.draftkings.com'},
     'playerprofiler': {'www.playerprofiler.com'},
+    'sharp': {'www.sharpfootballanalysis.com'},
 }
 CAPTURE_HOSTS = {key: PUBLISHER_HOSTS[sid] for sid, (_, rank, faab, _) in SOURCES.items()
                  for key in (rank, faab) if key}
@@ -48,7 +50,7 @@ def verify_url(key, url):
 
 def capture_keys(evidence):
     keys = set(evidence)
-    required = set(CAPTURE_HOSTS) - {'dknetwork', 'playerprofiler'}
+    required = set(CAPTURE_HOSTS) - {'dknetwork', 'playerprofiler', 'sharp'}
     if not required <= keys or not keys <= set(CAPTURE_HOSTS) or not keys & {'dknetwork', 'playerprofiler'}:
         raise ValueError('Captures require the core publishers and a current DK Network or PlayerProfiler FAAB edition')
     return [key for key in CAPTURE_HOSTS if key in keys]
@@ -146,7 +148,14 @@ def blitz_ranks(page):
         if len(rows) < 10:
             raise ValueError('Blitz article priorities truncated')
         return waiver.overall_to_position(rows)
-    table = next(t for t in page.tables() if t[0][:3] == ['RK', 'Player', 'Pos'])
+    # Unnumbered article headings are recommendations, not numeric ranks.
+    # Do not substitute a potentially unrelated ranking widget for the article.
+    if any(re.fullmatch(r'.+, (QB|RB|WR|TE|K) \([A-Z]{2,3}\)', n.text())
+           for n in page.root.all('h2')):
+        return []
+    table = next((t for t in page.tables() if t and t[0][:3] == ['RK', 'Player', 'Pos']), None)
+    if table is None:
+        raise ValueError('Blitz numeric priorities unavailable')
     rows = []
     for rank, player, pos, *_ in table[1:]:
         match = re.fullmatch(r'(.+) ([A-Z]+) • (QB|RB|WR|TE|K|DST|DEF)', player)
@@ -154,6 +163,36 @@ def blitz_ranks(page):
             raise ValueError('Invalid Blitz player identity')
         rows.append({'name': match[1], 'team': waiver.team_key(match[2]), 'position': 'DST' if pos == 'DEF' else pos, 'overallRank': int(rank)})
     return waiver.overall_to_position(rows)
+
+
+def sharp_ranks(page, week):
+    positions = {'Quarterback': 'QB', 'Running Back': 'RB', 'Wide Receiver': 'WR', 'Tight End': 'TE'}
+    pos = None
+    rows, counts = [], {}
+    for line in page.lines:
+        section = re.fullmatch(rf'Week {week} (Quarterback|Running Back|Wide Receiver|Tight End) Fantasy Football Waiver Wire Pickups', line)
+        if section:
+            pos = positions[section[1]]
+            if pos in counts:
+                raise ValueError('Duplicate Sharp positional section')
+            counts[pos] = 0
+            continue
+        if line in {'Watch List', 'Deep Cuts'} or line.startswith('Week '):
+            pos = None
+        if not pos or not re.match(r'^\d+\. ', line):
+            continue
+        match = re.fullmatch(r'(\d+)\. (.+), (.+) [—–] Available in \d+(?:\.\d+)?% of ESPN leagues', line)
+        team = waiver.team_key(match[3]) if match else None
+        if match and match[3] == 'Bucs':
+            team = 'TB'
+        if not match or not team or int(match[1]) != counts[pos] + 1:
+            raise ValueError('Invalid Sharp numbered positional identity/order')
+        counts[pos] += 1
+        rows.append({'name': match[2], 'team': team, 'position': pos,
+                     'rank': int(match[1]), 'method': waiver.METHOD_POSITION})
+    if set(counts) != set(positions.values()) or not all(counts.values()) or len(rows) < 10:
+        raise ValueError('Sharp positional waiver list truncated')
+    return rows
 
 
 def dk_facts(page, week):
@@ -198,6 +237,7 @@ def cbs_facts(page):
         context = ''
         surname = re.sub(r'\s+(?:Jr\.?|Sr\.?|II|III|IV)$', '', player['name']).split()[-1]
         for sentence in re.split(r'(?<=[.!?])\s+', ' '.join(lines[i:j])):
+            prior_context = context
             context += ' ' + sentence
             match = re.search(r'for (at least |up to )?(\d+(?:-\d+)?) percent of your remaining FAAB', sentence)
             if not match:
@@ -212,7 +252,10 @@ def cbs_facts(page):
             operator = {'at least ': 'at-least', 'up to ': 'at-most'}.get(match[1])
             if operator and '-' in match[2]:
                 break
-            tier = 'Superflex / two-QB' if re.search(r'superflex|two-quarterback|two-QB', context, re.I) else 'source base'
+            # A later clause can recommend a different Superflex price. It must
+            # not relabel the earlier base-format bid matched here.
+            bid_context = prior_context + ' ' + sentence[:match.start()]
+            tier = 'Superflex / two-QB' if re.search(r'superflex|two-quarterback|two-QB', bid_context, re.I) else 'source base'
             bids.append(dict(player, bid=waiver.bid(match[2], basis='remaining', operator=operator, tier=tier)))
             break
     return ranks, bids
@@ -253,7 +296,7 @@ def playerprofiler_bids(page, week):
             tier, pos = section[1], None
         if line in {'Quarterback', 'Running Back', 'Wide Receiver', 'Tight End'}:
             pos = {'Quarterback': 'QB', 'Running Back': 'RB', 'Wide Receiver': 'WR', 'Tight End': 'TE'}[line]
-        match = re.fullmatch(r'(.+), (.+) \(\d+% rostered\) \| \$(\d+(?:-\d+)?)(.*)', line)
+        match = re.fullmatch(r'(.+), (.+) \(\d+%(?: rostered)?\) \| \$(\d+(?:-\d+)?)(.*)', line)
         if not match:
             continue
         team = waiver.team_key(match[2])
@@ -287,6 +330,8 @@ def assemble(directory, week):
         ranks['dknetwork'], bids['dknetwork'] = dk_facts(pages['dknetwork'], week)
     if 'playerprofiler' in pages:
         bids['playerprofiler'] = playerprofiler_bids(pages['playerprofiler'], week)
+    if 'sharp' in pages:
+        ranks['sharp'] = sharp_ranks(pages['sharp'], week)
     index = waiver.identity_index(DATA / 'raw/2026/players.csv')
     players, sources = {}, []
     for sid, (label, rank_key, bid_key, note) in SOURCES.items():
@@ -301,7 +346,9 @@ def assemble(directory, week):
             'evidence': [evidence[key] for key in keys],
         }
         if rank_key:
-            source.update(rankUrl=evidence[rank_key]['url'], rankMethod=waiver.METHOD_POSITION if sid == 'cbs' else waiver.METHOD_OVERALL)
+            source.update(rankUrl=evidence[rank_key]['url'], rankMethod=waiver.METHOD_POSITION if sid in {'cbs', 'sharp'} else waiver.METHOD_OVERALL)
+        if sid == 'blitz' and not ranks[sid]:
+            source['coverageNote'] = 'Current article has unnumbered recommendations, not numeric ranks; excluded from ranking publisher counts.'
         if bid_key:
             source['faabUrl'] = evidence[bid_key]['url']
         if sid in {'fantasypros', 'dknetwork'}:
