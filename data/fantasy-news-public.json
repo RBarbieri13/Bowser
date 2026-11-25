@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T22:27:27.282Z",
-  "updatedAt": "2026-11-25T22:27:27.622Z",
-  "revision": "bowser-public-news-20261125-week12-juwan-meyers",
+  "checkedAt": "2026-11-25T22:41:31.253Z",
+  "updatedAt": "2026-11-25T22:41:31.586Z",
+  "revision": "bowser-public-news-20261125-week12-bowers-addison-official",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6954,6 +6954,47 @@
       ]
     },
     {
+      "eventId": "official:2026-11-25:raiders:brock-bowers-limited",
+      "player": {
+        "playerId": null,
+        "name": "Brock Bowers",
+        "position": "TE",
+        "team": "LV"
+      },
+      "headline": "Raiders list Brock Bowers limited Wednesday",
+      "summary": "Las Vegas officially listed Bowers as limited Wednesday with an ankle injury, after he missed Week 11. Backup Michael Mayer (back) was a full participant. No Sunday game designation has been issued.",
+      "fantasyAnalysis": "Keep Bowers in consideration, but hold a Sunday-night fallback such as Mayer if rostered. Limited practice does not clear Bowers to play at Cleveland.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T22:41:31.253Z",
+      "checkedAt": "2026-11-25T22:41:31.253Z",
+      "sourceQuality": {
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Las Vegas Raiders",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.raiders.com/team/injury-report/week/reg-12",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Week 12 Wednesday practice table (November 25, 2026; publication clock not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T22:41:31.253Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "Limited Participation Wednesday",
+        "gameStatus": "Week 12 designation pending"
+      }
+    },
+    {
       "eventId": "official:2026-11-25:saints:juwan-johnson-wednesday-dnp",
       "player": {
         "playerId": null,
@@ -7066,6 +7107,47 @@
           "impact": "Will start Friday against Denver; future starts not confirmed."
         }
       ]
+    },
+    {
+      "eventId": "official:2026-11-25:vikings:jordan-addison-wednesday-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Jordan Addison",
+        "position": "WR",
+        "team": "MIN"
+      },
+      "headline": "Vikings list Jordan Addison as a Wednesday nonparticipant",
+      "summary": "Minnesota's first Week 12 practice table lists Addison as DNP with the thumb injury. The coach previously described Wednesday's participation as an estimate. Minnesota has not issued a final designation for Sunday against Atlanta.",
+      "fantasyAnalysis": "Plan around another receiver unless Addison's status improves. Jauan Jennings is a possible beneficiary of extra targets if Addison remains out, but no particular target share is guaranteed.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T22:41:31.253Z",
+      "checkedAt": "2026-11-25T22:41:31.253Z",
+      "sourceQuality": {
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Minnesota Vikings",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.vikings.com/team/injury-report/week/reg-12",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Week 12 Wednesday practice table (November 25, 2026; publication clock not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T22:41:31.253Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb",
+        "practiceStatus": "Estimated Did Not Participate Wednesday",
+        "gameStatus": "Week 12 designation pending"
+      }
     },
     {
       "eventId": "packers:20261123:kyren-williams-monday-fp-week12",
@@ -8015,5 +8097,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "207f2ea0e13a3aceb0749502067a4dfafcb73f0ce27137f2cb4bec2e03dbd592"
+  "contentHash": "af57162fbeae96ef594037783b6cc80c93cc57b9f6c3ddbc534e4fc68165a5ab"
 }
