@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T18:48:50.000Z",
-  "updatedAt": "2026-11-25T18:48:50.000Z",
-  "revision": "bowser-public-news-20261125-week12-devito-starter",
+  "checkedAt": "2026-11-25T20:15:57.000Z",
+  "updatedAt": "2026-11-25T20:15:57.000Z",
+  "revision": "bowser-public-news-20261125-week12-thanksgiving-final",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6232,6 +6232,56 @@
       ]
     },
     {
+      "eventId": "official:2026-11-25:bills:week-12:dalton-kincaid-questionable",
+      "player": {
+        "playerId": null,
+        "name": "Dalton Kincaid",
+        "position": "TE",
+        "team": "BUF"
+      },
+      "headline": "Bills list Dalton Kincaid questionable for Thanksgiving",
+      "summary": "Kincaid (thumb and ankle) was limited all three days and is questionable Thursday against Kansas City. He missed Week 11.",
+      "fantasyAnalysis": "Check the inactives before the late Thanksgiving game and keep a tight end who has not locked available. Dawson Knox could see more work if Kincaid sits.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T20:15:57.000Z",
+      "checkedAt": "2026-11-25T20:15:57.000Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Buffalo Bills",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 25, 2026 at 01:41 PM (timezone not shown)",
+          "publishedDate": "2026-11-25",
+          "url": "https://www.buffalobills.com/news/buffalo-bills-injury-report-vs-chiefs-week-12-thanksgiving",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T20:15:57.000Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb and ankle",
+        "practiceStatus": "Limited Participation",
+        "gameStatus": "Questionable"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Dawson Knox",
+          "team": "BUF",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Could see more routes and targets if Kincaid is inactive."
+        }
+      ]
+    },
+    {
       "eventId": "official:2026-11-25:chiefs:week-12:kenneth-walker-out",
       "player": {
         "playerId": null,
@@ -6280,6 +6330,145 @@
           "impact": "Likely lead back again with Walker ruled out."
         }
       ]
+    },
+    {
+      "eventId": "official:2026-11-25:cowboys:week-12:jake-ferguson-out",
+      "player": {
+        "playerId": null,
+        "name": "Jake Ferguson",
+        "position": "TE",
+        "team": "DAL"
+      },
+      "headline": "Jake Ferguson ruled out for Thanksgiving",
+      "summary": "The final Week 12 report lists Ferguson out Thursday against Philadelphia with knee and ankle injuries after three non-participation listings.",
+      "fantasyAnalysis": "Move Ferguson out of lineups. Brevyn Spann-Ford and Luke Schoonmaker are possible beneficiaries; neither has a guaranteed target share.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T20:15:57.000Z",
+      "checkedAt": "2026-11-25T20:15:57.000Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 12 Wednesday final injury report (publication clock not shown)",
+          "publishedDate": null,
+          "url": "https://www.philadelphiaeagles.com/team/injury-report/week/REG-12",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T20:15:57.000Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee and ankle",
+        "practiceStatus": "Did Not Participate",
+        "gameStatus": "Out"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Brevyn Spann-Ford",
+          "team": "DAL",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Could see more opportunity with Ferguson out; workload is uncertain."
+        },
+        {
+          "name": "Luke Schoonmaker",
+          "team": "DAL",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Could see more opportunity with Ferguson out; workload is uncertain."
+        }
+      ]
+    },
+    {
+      "eventId": "official:2026-11-25:eagles:week-12:dallas-goedert-no-designation",
+      "player": {
+        "playerId": null,
+        "name": "Dallas Goedert",
+        "position": "TE",
+        "team": "PHI"
+      },
+      "headline": "Dallas Goedert has no Thanksgiving injury designation",
+      "summary": "Philadelphia lists Goedert (shin) as a full participant on Wednesday and gives him no game designation against Dallas.",
+      "fantasyAnalysis": "Goedert is available to use as a normal tight end option; no injury replacement is needed based on the report.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T20:15:57.000Z",
+      "checkedAt": "2026-11-25T20:15:57.000Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 12 Wednesday final injury report (publication clock not shown)",
+          "publishedDate": null,
+          "url": "https://www.philadelphiaeagles.com/team/injury-report/week/REG-12",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T20:15:57.000Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Shin",
+        "practiceStatus": "Full Participation",
+        "gameStatus": "No game designation"
+      }
+    },
+    {
+      "eventId": "official:2026-11-25:eagles:week-12:saquon-barkley-no-designation",
+      "player": {
+        "playerId": null,
+        "name": "Saquon Barkley",
+        "position": "RB",
+        "team": "PHI"
+      },
+      "headline": "Saquon Barkley has no Thanksgiving injury designation",
+      "summary": "Philadelphia lists Barkley (neck and illness) as a full participant on Wednesday and gives him no game designation against Dallas.",
+      "fantasyAnalysis": "Start Barkley as usual. The report does not establish an exact snap or carry share.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T20:15:57.000Z",
+      "checkedAt": "2026-11-25T20:15:57.000Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Week 12 Wednesday final injury report (publication clock not shown)",
+          "publishedDate": null,
+          "url": "https://www.philadelphiaeagles.com/team/injury-report/week/REG-12",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T20:15:57.000Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Neck and illness",
+        "practiceStatus": "Full Participation",
+        "gameStatus": "No game designation"
+      }
     },
     {
       "eventId": "official:2026-11-25:patriots:week-12:tommy-devito-starter",
@@ -7111,5 +7300,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "6b9b45b3e32e9d6a41a65367c3797370aa42efd82ae40ad9133e6ad81274001c"
+  "contentHash": "ed0b2be9f0eedf4e430ff93da3aac0796f6e822e7bef348492135aadd18a5bc2"
 }
