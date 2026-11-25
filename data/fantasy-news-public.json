@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T21:57:45.958Z",
-  "updatedAt": "2026-11-25T21:57:46.304Z",
-  "revision": "bowser-public-news-20261125-week12-beck-texans",
+  "checkedAt": "2026-11-25T22:15:57.128Z",
+  "updatedAt": "2026-11-25T22:15:57.475Z",
+  "revision": "bowser-public-news-20261125-week12-rodgers-release",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6912,6 +6912,60 @@
       ]
     },
     {
+      "eventId": "official:2026-11-25:steelers:aaron-rodgers-released",
+      "player": {
+        "playerId": null,
+        "name": "Aaron Rodgers",
+        "position": "QB",
+        "team": "PIT"
+      },
+      "headline": "Steelers release Aaron Rodgers",
+      "summary": "Pittsburgh's November 25 transaction log lists Rodgers as released. Mason Rudolph is the team's announced starter Friday against Denver. Rodgers' subsequent team and availability are not established.",
+      "fantasyAnalysis": "Do not count on Rodgers for Week 12. Rudolph gains the immediate Pittsburgh opportunity but is a deep superflex option against Denver, not an automatic pickup. The club has not confirmed a rest-of-season starter.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T22:15:57.128Z",
+      "checkedAt": "2026-11-25T22:15:57.128Z",
+      "sourceQuality": {
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 1
+      },
+      "sources": [
+        {
+          "sourceName": "Pittsburgh Steelers",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.steelers.com/team/transactions/2026",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "November 25 transaction listing (publication clock not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T22:15:57.128Z"
+        },
+        {
+          "sourceName": "NFL.com citing Ian Rapoport and Adam Schefter",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://fantasy-www.nfl.com/news/steelers-release-aaron-rodgers",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 03:19 PM (timezone not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T22:15:57.128Z"
+        }
+      ],
+      "affectedPlayers": [
+        {
+          "name": "Mason Rudolph",
+          "team": "PIT",
+          "position": "QB",
+          "relationship": "Week 12 starter",
+          "impact": "Will start Friday against Denver; future starts not confirmed."
+        }
+      ]
+    },
+    {
       "eventId": "packers:20261123:kyren-williams-monday-fp-week12",
       "player": {
         "playerId": null,
@@ -7859,5 +7913,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "a216ff7ad4d5f6eb96fd1cd9c9d0410318a9d7956b4d19eb67bdc00c66afe3a4"
+  "contentHash": "da6ed6bc7650704dda3bf299d837ab4fe1a467aa8e3e44e179a82736f5b55ca9"
 }
