@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-24T23:45:16.172Z",
-  "updatedAt": "2026-11-24T23:45:16.473Z",
-  "revision": "bowser-public-news-20261124-colts-week12-richardson-qb1",
+  "checkedAt": "2026-11-25T02:26:21.866Z",
+  "updatedAt": "2026-11-25T02:26:22.199Z",
+  "revision": "bowser-public-news-20261125-week12-dobbins-suspension",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -5761,6 +5761,61 @@
       ]
     },
     {
+      "eventId": "official:2026-11-24:broncos:week-12:jk-dobbins-suspension",
+      "player": {
+        "playerId": null,
+        "name": "J.K. Dobbins",
+        "position": "RB",
+        "team": "DEN"
+      },
+      "headline": "Broncos suspend J.K. Dobbins for Week 12",
+      "summary": "Denver head coach Sean Payton announced Tuesday that Dobbins was suspended for conduct detrimental to the team. The one-game team suspension makes the running back unavailable Friday against Pittsburgh.",
+      "fantasyAnalysis": "Bench Dobbins for Week 12. Jonah Coleman is the likely lead after carrying 24 times against Las Vegas. The suspension does not establish Denver's rotation beyond Friday.",
+      "eventType": "SUSPENSION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T02:26:21.866Z",
+      "checkedAt": "2026-11-25T02:26:21.866Z",
+      "sourceQuality": {
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 1
+      },
+      "sources": [
+        {
+          "sourceName": "DenverBroncos.com",
+          "author": "Aric DiLalla",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 24, 2026 at 03:43 PM (timezone not shown)",
+          "publishedDate": "2026-11-24",
+          "url": "https://www.denverbroncos.com/news/injuryreport/injury-report-s-brandon-jones-estimated-as-full-practice-participant-ahead-of-week-12-game-vs-steelers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T02:26:21.866Z"
+        },
+        {
+          "sourceName": "NBC Sports",
+          "sourceType": "NEWS_OUTLET",
+          "publishedAt": null,
+          "publishedAtRaw": "November 24, 2026 at 04:52 PM (timezone not shown)",
+          "publishedDate": "2026-11-24",
+          "url": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/sean-payton-suspends-j-k-dobbins-for-week-12-for-conduct-detrimental-to-the-team",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-25T02:26:21.866Z"
+        }
+      ],
+      "affectedPlayers": [
+        {
+          "name": "Jonah Coleman",
+          "team": "DEN",
+          "position": "RB",
+          "relationship": "BENEFICIARY",
+          "impact": "Likely Week 12 lead back after 24 Week 11 carries; no guaranteed carry share."
+        }
+      ]
+    },
+    {
       "eventId": "official:2026-11-24:chiefs:week-12:kenneth-walker-tuesday-lp",
       "player": {
         "playerId": null,
@@ -6917,5 +6972,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "629c3b546aebb1a929dbc0bf12748aa2d12a6ce89108334ac57d62097a3b1e9e"
+  "contentHash": "7411c4e73dbf7042db364428181e873b5d61757d56f7ee7e4e81e56d26044638"
 }
