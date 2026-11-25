@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T20:26:20.000Z",
-  "updatedAt": "2026-11-25T20:26:20.000Z",
-  "revision": "bowser-public-news-20261125-week12-purdy-ankle",
+  "checkedAt": "2026-11-25T20:48:14.000Z",
+  "updatedAt": "2026-11-25T20:48:14.000Z",
+  "revision": "bowser-public-news-20261125-week12-aiyuk-reported",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -5329,6 +5329,41 @@
       ]
     },
     {
+      "eventId": "nfl:2026-11-25:commanders:week-12:brandon-aiyuk-practice-squad-plan",
+      "player": {
+        "playerId": null,
+        "name": "Brandon Aiyuk",
+        "position": "WR",
+        "team": "WAS"
+      },
+      "headline": "Report: Brandon Aiyuk plans to join Washington’s practice squad",
+      "summary": "Agent Drew Rosenhaus told ESPN’s Adam Schefter that Aiyuk is set to join Washington’s practice squad. NFL Network’s Ian Rapoport reported the signing is expected next week. No completed transaction or active-roster move was confirmed in the report.",
+      "fantasyAnalysis": "Do not count on Week 12 snaps or spend meaningful waiver budget based on the agreement alone. Watch for a completed signing and a move to the game-day roster.",
+      "eventType": "TRANSACTION",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T20:48:14.000Z",
+      "checkedAt": "2026-11-25T20:48:14.000Z",
+      "sourceQuality": {
+        "confidence": 92,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "NFL.com",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 25, 2026 at 01:33 PM (timezone not shown)",
+          "publishedDate": "2026-11-25",
+          "url": "https://amp.nfl.com/news/brandon-aiyuk-commanders-to-sign-ex-49ers-wr-practice-squad",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T20:48:14.000Z"
+        }
+      ]
+    },
+    {
       "eventId": "nfl:20261123:jacory-croskey-merritt-was-week11-backfield-usage",
       "player": {
         "playerId": null,
@@ -7371,5 +7406,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "b997a9fce118ecb2c9dbdf61aa4b8a202a2439a133a41ed083525a6eb7608050"
+  "contentHash": "acffa924521aac4593d56d8053a52a33acea2af5cbdb99e481f7985e27643696"
 }
