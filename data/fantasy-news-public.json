@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T23:04:22.985Z",
-  "updatedAt": "2026-11-25T23:04:23.359Z",
-  "revision": "bowser-public-news-20261125-week12-herbert-diggs",
+  "checkedAt": "2026-11-25T23:34:20.709Z",
+  "updatedAt": "2026-11-25T23:34:28.100Z",
+  "revision": "bowser-public-news-20261125-week12-henry",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6995,6 +6995,73 @@
       }
     },
     {
+      "eventId": "official:2026-11-25:ravens:derrick-henry-concussion-protocol",
+      "player": {
+        "playerId": null,
+        "name": "Derrick Henry",
+        "position": "RB",
+        "team": "BAL"
+      },
+      "headline": "Derrick Henry back in concussion protocol; Minter expects him Sunday",
+      "summary": "Ravens coach Jesse Minter said Henry briefly had symptoms late in Week 11, tested clear, and was put back in protocol as a precaution. Minter said Henry would be listed limited Wednesday and expects him to play against Houston; clearance for Sunday is not confirmed.",
+      "fantasyAnalysis": "Keep an alternative available until Henry clears protocol. Justice Hill is next on the team depth chart, followed by Rasheen Ali; a lead workload is not guaranteed.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T23:34:20.709Z",
+      "checkedAt": "2026-11-25T23:34:20.709Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Baltimore Ravens coach transcript",
+          "url": "https://www.baltimoreravens.com/news/transcript-press-conferences-11-25-26",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 04:49 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T23:34:20.709Z"
+        },
+        {
+          "sourceName": "Baltimore Ravens depth chart",
+          "url": "https://www.baltimoreravens.com/team/depth-chart",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Live team depth chart; no dated publication clock displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T23:34:20.709Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion",
+        "practiceStatus": "Coach says limited Wednesday",
+        "gameStatus": "Week 12 clearance pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Justice Hill",
+          "team": "BAL",
+          "position": "RB",
+          "relationship": "Next on depth chart",
+          "impact": "Carries and receiving work could rise if Henry misses Week 12."
+        },
+        {
+          "name": "Rasheen Ali",
+          "team": "BAL",
+          "position": "RB",
+          "relationship": "Depth",
+          "impact": "Could share carries if Henry misses Week 12."
+        }
+      ]
+    },
+    {
       "eventId": "official:2026-11-25:saints:juwan-johnson-wednesday-dnp",
       "player": {
         "playerId": null,
@@ -8185,5 +8252,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "6c2031dfaf3df5c0722006d93dd48f78da6d186f9f03437f1565939417751b90"
+  "contentHash": "9819b0a39270d686c623783ff8b39786ab7ea1966032c7e2c1c25b12ef0b2f55"
 }
