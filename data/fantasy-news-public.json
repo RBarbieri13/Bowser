@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T20:48:14.000Z",
-  "updatedAt": "2026-11-25T20:48:14.000Z",
-  "revision": "bowser-public-news-20261125-week12-aiyuk-reported",
+  "checkedAt": "2026-11-25T21:13:28.065Z",
+  "updatedAt": "2026-11-25T21:13:39.482Z",
+  "revision": "bowser-public-news-20261125-week12-laporta-bowers-mcmillan",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -395,6 +395,48 @@
         "gameStatus": "Active and confirmed starter for Week 11"
       },
       "checkedAt": "2026-11-22T17:06:39.416Z"
+    },
+    {
+      "eventId": "buccaneers:20261125:jalen-mcmillan-designated-return",
+      "player": {
+        "playerId": null,
+        "name": "Jalen McMillan",
+        "position": "WR",
+        "team": "TB"
+      },
+      "headline": "Bucs open Jalen McMillan's 21-day return window",
+      "summary": "McMillan returned to practice Wednesday after a knee injury. Tampa Bay opened his 21-day window to be activated from injured reserve; he has not yet been activated.",
+      "fantasyAnalysis": "Monitor activation and snap share before using McMillan. He is a watch-list option rather than a priority add for Monday against Carolina.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "lastUpdatedAt": "2026-11-25T21:13:28.065Z",
+      "firstReportedAt": null,
+      "checkedAt": "2026-11-25T21:13:28.065Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Tampa Bay Buccaneers",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.buccaneers.com/news/jalen-mcmillan-christian-rozeboom-return-practice",
+          "author": "Scott Smith",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 25, 2026 at 11:29 AM (timezone not shown)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T21:13:28.065Z",
+          "publishedDate": "2026-11-25"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee",
+        "practiceStatus": "Returned to practice; participation level not specified",
+        "gameStatus": "Designated to return from injured reserve; not activated"
+      }
     },
     {
       "eventId": "caplan:20261122:kyren-williams-sunday-toe-lp-week12",
@@ -6577,6 +6619,58 @@
       }
     },
     {
+      "eventId": "official:2026-11-25:lions:week-12:sam-laporta-no-designation",
+      "player": {
+        "playerId": null,
+        "name": "Sam LaPorta",
+        "position": "TE",
+        "team": "DET"
+      },
+      "headline": "Sam LaPorta off injury designation for Thanksgiving",
+      "summary": "The Lions list LaPorta as a full participant Wednesday with no game designation for Thursday against Chicago after an ankle injury.",
+      "fantasyAnalysis": "LaPorta can be used as a normal starting tight end against Chicago; the final report does not promise a particular workload.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "lastUpdatedAt": "2026-11-25T21:13:28.065Z",
+      "firstReportedAt": null,
+      "checkedAt": "2026-11-25T21:13:28.065Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 1
+      },
+      "sources": [
+        {
+          "sourceName": "Detroit Lions",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.detroitlions.com/team/injury-report/week/reg-12",
+          "author": null,
+          "publishedAt": null,
+          "publishedAtRaw": "Week 12 Wednesday practice and game-status table (November 25, 2026; publication clock not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T21:13:28.065Z",
+          "publishedDate": "2026-11-25"
+        },
+        {
+          "sourceName": "Pride of Detroit",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.prideofdetroit.com/detroit-lions-injuries/182606/detroit-lions-injury-report-dj-reed-wonnum-chicago-bears-thanksgiving",
+          "author": "Erik Schlitt",
+          "publishedAt": "2026-11-25T20:53:51Z",
+          "publishedAtRaw": null,
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-25T21:13:28.065Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "Full Participation",
+        "gameStatus": "No Week 12 game designation"
+      }
+    },
+    {
       "eventId": "official:2026-11-25:patriots:week-12:tommy-devito-starter",
       "player": {
         "playerId": null,
@@ -6808,6 +6902,47 @@
         "gameStatus": "Inactive for Week 11"
       },
       "checkedAt": "2026-11-22T20:05:10.764Z"
+    },
+    {
+      "eventId": "report:2026-11-25:raiders:brock-bowers-practice-return",
+      "player": {
+        "playerId": null,
+        "name": "Brock Bowers",
+        "position": "TE",
+        "team": "LV"
+      },
+      "headline": "Brock Bowers seen at the start of Raiders practice Wednesday",
+      "summary": "Reporters saw Bowers at the start of Wednesday's practice. He missed Week 11 with ankle and quadriceps injuries. Wednesday participation level and Sunday status are not yet established.",
+      "fantasyAnalysis": "Keep Michael Mayer as a fallback until the Raiders' practice and game-status reports clarify Bowers' availability for Sunday night at Cleveland.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "lastUpdatedAt": "2026-11-25T20:09:34Z",
+      "firstReportedAt": null,
+      "checkedAt": "2026-11-25T21:13:28.065Z",
+      "sourceQuality": {
+        "confidence": 89,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Silver and Black Pride citing on-site media",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.silverandblackpride.com/las-vegas-raiders-news/147424/raiders-news-brock-bowers-returns-practice-wednesday",
+          "author": "Bill Williamson",
+          "publishedAt": "2026-11-25T20:09:34Z",
+          "publishedAtRaw": null,
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-25T21:13:28.065Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle/quadriceps",
+        "practiceStatus": "Reported present at start of Wednesday practice",
+        "gameStatus": "Week 12 designation pending"
+      }
     },
     {
       "eventId": "reported-20261022-breecehall",
@@ -7406,5 +7541,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "acffa924521aac4593d56d8053a52a33acea2af5cbdb99e481f7985e27643696"
+  "contentHash": "85536939708da0cd16f9e774b3c5e96229a95be7d7757d43df0e7de71199ee13"
 }
