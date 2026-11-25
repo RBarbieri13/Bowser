@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T22:41:31.253Z",
-  "updatedAt": "2026-11-25T22:41:31.586Z",
-  "revision": "bowser-public-news-20261125-week12-bowers-addison-official",
+  "checkedAt": "2026-11-25T23:04:22.985Z",
+  "updatedAt": "2026-11-25T23:04:23.359Z",
+  "revision": "bowser-public-news-20261125-week12-herbert-diggs",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -7380,6 +7380,94 @@
       }
     },
     {
+      "eventId": "report:2026-11-25:chargers:justin-herbert-wednesday-no-practice",
+      "player": {
+        "playerId": null,
+        "name": "Justin Herbert",
+        "position": "QB",
+        "team": "LAC"
+      },
+      "headline": "Harbaugh says Justin Herbert will not practice Wednesday",
+      "summary": "Jim Harbaugh said Herbert would miss Wednesday's practice while in concussion protocol, per Noah Furtado. Herbert has not been ruled out for Sunday's game against New England.",
+      "fantasyAnalysis": "Keep a quarterback fallback. The Chargers list DJ Uiagalelei as Herbert's backup; he is a deep superflex option only if Herbert is ruled out.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T20:27:00Z",
+      "checkedAt": "2026-11-25T23:04:22.985Z",
+      "sourceQuality": {
+        "confidence": 91,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "CBS Sports citing Noah Furtado",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.cbssports.com/fantasy/football/news/chargers-justin-herbert-not-practicing-wednesday/",
+          "publishedAt": "2026-11-25T20:27:00Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-25T23:04:22.985Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion",
+        "practiceStatus": "Coach-reported Wednesday absence",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "DJ Uiagalelei",
+          "team": "LAC",
+          "position": "QB",
+          "relationship": "Backup",
+          "impact": "Next up if Herbert cannot clear concussion protocol."
+        }
+      ]
+    },
+    {
+      "eventId": "report:2026-11-25:commanders:stefon-diggs-excused",
+      "player": {
+        "playerId": null,
+        "name": "Stefon Diggs",
+        "position": "WR",
+        "team": "WAS"
+      },
+      "headline": "Stefon Diggs reportedly excused from Wednesday practice",
+      "summary": "Ben Standig reported Diggs missed Washington's Wednesday practice with an excused personal absence. There is no reported new injury or Week 12 game designation in this update.",
+      "fantasyAnalysis": "Don't bench Diggs solely on the excused absence; check the final report ahead of Sunday's game at Arizona.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T20:25:00Z",
+      "checkedAt": "2026-11-25T23:04:22.985Z",
+      "sourceQuality": {
+        "confidence": 91,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "CBS Sports citing Ben Standig",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.cbssports.com/fantasy/football/news/commanders-stefon-diggs-excused-absence-wednesday/",
+          "publishedAt": "2026-11-25T20:25:00Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-25T23:04:22.985Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": false,
+        "bodyPart": null,
+        "practiceStatus": "Reported excused Wednesday absence",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "report:2026-11-25:panthers:tetairoa-mcmillan-foot-canales",
       "player": {
         "playerId": null,
@@ -8097,5 +8185,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "af57162fbeae96ef594037783b6cc80c93cc57b9f6c3ddbc534e4fc68165a5ab"
+  "contentHash": "6c2031dfaf3df5c0722006d93dd48f78da6d186f9f03437f1565939417751b90"
 }
