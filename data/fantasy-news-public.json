@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T17:26:58.000Z",
-  "updatedAt": "2026-11-25T17:26:58.000Z",
-  "revision": "bowser-public-news-20261125-week12-walker-out",
+  "checkedAt": "2026-11-25T18:48:50.000Z",
+  "updatedAt": "2026-11-25T18:48:50.000Z",
+  "revision": "bowser-public-news-20261125-week12-devito-starter",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6282,6 +6282,50 @@
       ]
     },
     {
+      "eventId": "official:2026-11-25:patriots:week-12:tommy-devito-starter",
+      "player": {
+        "playerId": null,
+        "name": "Tommy DeVito",
+        "position": "QB",
+        "team": "NE"
+      },
+      "headline": "New England prepares to start Tommy DeVito in Week 12",
+      "summary": "The Patriots' Wednesday game preview identifies DeVito as the quarterback for Sunday's matchup with the Chargers, the first full game without injured starter Drake Maye. The preview does not set a return date for Maye.",
+      "fantasyAnalysis": "Plan for a Maye replacement this week. DeVito is an emergency superflex option, not a priority in one-quarterback formats.",
+      "eventType": "ROLE_CHANGE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T18:48:49.000Z",
+      "checkedAt": "2026-11-25T18:48:49.000Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "New England Patriots",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 25, 2026 at 06:00 AM (timezone not shown)",
+          "publishedDate": "2026-11-25",
+          "url": "https://www.patriots.com/news/patriots-gameplan-how-will-the-offense-adjust-for-qb-tommy-devito-in-sunday-s-week-12-matchup-vs-the-chargers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T18:48:49.000Z"
+        }
+      ],
+      "affectedPlayers": [
+        {
+          "name": "Drake Maye",
+          "team": "NE",
+          "position": "QB",
+          "relationship": "COMPETITOR",
+          "impact": "Not expected to play in Week 12; exact return date not established."
+        }
+      ]
+    },
+    {
       "eventId": "packers:20261123:kyren-williams-monday-fp-week12",
       "player": {
         "playerId": null,
@@ -7067,5 +7111,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "9f697fd1c2fc88a8d4410bec2639e12414787ab3821d0e3ed2067e4ae6b48057"
+  "contentHash": "6b9b45b3e32e9d6a41a65367c3797370aa42efd82ae40ad9133e6ad81274001c"
 }
