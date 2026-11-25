@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T22:15:57.128Z",
-  "updatedAt": "2026-11-25T22:15:57.475Z",
-  "revision": "bowser-public-news-20261125-week12-rodgers-release",
+  "checkedAt": "2026-11-25T22:27:27.282Z",
+  "updatedAt": "2026-11-25T22:27:27.622Z",
+  "revision": "bowser-public-news-20261125-week12-juwan-meyers",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6816,6 +6816,48 @@
       ]
     },
     {
+      "eventId": "official:2026-11-25:jaguars:jakobi-meyers-wednesday-limited",
+      "player": {
+        "playerId": null,
+        "name": "Jakobi Meyers",
+        "position": "WR",
+        "team": "JAX"
+      },
+      "headline": "Jakobi Meyers limited Wednesday with ankle injury",
+      "summary": "Jacksonville listed Meyers as limited Wednesday with an ankle injury ahead of Sunday's game against Tennessee. No Week 12 game designation has been issued.",
+      "fantasyAnalysis": "Monitor the late-week injury report. This first limited session is not a reason on its own to shift Jacksonville receiver projections.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T22:27:27.282Z",
+      "checkedAt": "2026-11-25T22:27:27.282Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Jacksonville Jaguars",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.jaguars.com/team/injury-report/week/reg-12",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Week 12 Wednesday practice table (November 25, 2026; publication clock not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T22:27:27.282Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "Limited Participation Wednesday",
+        "gameStatus": "Week 12 game designation pending"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "official:2026-11-25:lions:week-12:sam-laporta-no-designation",
       "player": {
         "playerId": null,
@@ -6908,6 +6950,66 @@
           "position": "QB",
           "relationship": "COMPETITOR",
           "impact": "Not expected to play in Week 12; exact return date not established."
+        }
+      ]
+    },
+    {
+      "eventId": "official:2026-11-25:saints:juwan-johnson-wednesday-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Juwan Johnson",
+        "position": "TE",
+        "team": "NO"
+      },
+      "headline": "Juwan Johnson misses Wednesday practice",
+      "summary": "New Orleans listed Johnson as a nonparticipant Wednesday with hamstring and wrist injuries ahead of Sunday's game at Cincinnati. His Week 12 game designation is pending.",
+      "fantasyAnalysis": "Check the late-week reports and hold a tight-end alternative. If Johnson sits, Noah Fant is next on the team depth chart, but his target volume is not guaranteed.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T22:27:27.282Z",
+      "checkedAt": "2026-11-25T22:27:27.282Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "New Orleans Saints",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.neworleanssaints.com/news/injury-report-cincinnati-bengals-vs-new-orleans-saints-2026-nfl-week-12-wednesday",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 03:34 PM (timezone not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T22:27:27.282Z"
+        },
+        {
+          "sourceName": "New Orleans Saints depth chart",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.neworleanssaints.com/team/depth-chart",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Live depth chart (publication date and clock not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T22:27:27.282Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring and wrist",
+        "practiceStatus": "Did Not Participate Wednesday",
+        "gameStatus": "Week 12 game designation pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Noah Fant",
+          "team": "NO",
+          "position": "TE",
+          "relationship": "Backup",
+          "impact": "Could see more snaps if Johnson sits; target volume unconfirmed."
         }
       ]
     },
@@ -7913,5 +8015,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "da6ed6bc7650704dda3bf299d837ab4fe1a467aa8e3e44e179a82736f5b55ca9"
+  "contentHash": "207f2ea0e13a3aceb0749502067a4dfafcb73f0ce27137f2cb4bec2e03dbd592"
 }
