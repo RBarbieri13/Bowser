@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T20:15:57.000Z",
-  "updatedAt": "2026-11-25T20:15:57.000Z",
-  "revision": "bowser-public-news-20261125-week12-thanksgiving-final",
+  "checkedAt": "2026-11-25T20:17:19.000Z",
+  "updatedAt": "2026-11-25T20:17:19.000Z",
+  "revision": "bowser-public-news-20261125-week12-thanksgiving-final-sourced",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6346,8 +6346,8 @@
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-11-25T20:15:57.000Z",
-      "checkedAt": "2026-11-25T20:15:57.000Z",
+      "lastUpdatedAt": "2026-11-25T20:17:19.000Z",
+      "checkedAt": "2026-11-25T20:17:19.000Z",
       "sourceQuality": {
         "confidence": 98,
         "primarySourceType": "OFFICIAL",
@@ -6355,14 +6355,15 @@
       },
       "sources": [
         {
-          "sourceName": "Philadelphia Eagles",
+          "sourceName": "Dallas Cowboys",
           "sourceType": "OFFICIAL",
           "publishedAt": null,
-          "publishedAtRaw": "Week 12 Wednesday final injury report (publication clock not shown)",
-          "publishedDate": null,
-          "url": "https://www.philadelphiaeagles.com/team/injury-report/week/REG-12",
+          "publishedAtRaw": "Nov. 25 update at 1:00 p.m. (timezone not shown)",
+          "publishedDate": "2026-11-25",
+          "url": "https://www.dallascowboys.com/news/updates-november-2026",
           "isOriginalSource": true,
-          "checkedAt": "2026-11-25T20:15:57.000Z"
+          "checkedAt": "2026-11-25T20:17:19.000Z",
+          "author": "Dallas Cowboys Staff Writers"
         }
       ],
       "injury": {
@@ -6403,14 +6404,24 @@
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-11-25T20:15:57.000Z",
-      "checkedAt": "2026-11-25T20:15:57.000Z",
+      "lastUpdatedAt": "2026-11-25T20:17:19.000Z",
+      "checkedAt": "2026-11-25T20:17:19.000Z",
       "sourceQuality": {
         "confidence": 98,
         "primarySourceType": "OFFICIAL",
         "corroboratingSourceCount": 0
       },
       "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 25, 2026 at 12:40 PM (timezone not shown)",
+          "publishedDate": "2026-11-25",
+          "url": "https://www.philadelphiaeagles.com/news/eagles-at-cowboys-injury-report-2026-nfl-week-12-thanksgiving",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T20:17:19.000Z"
+        },
         {
           "sourceName": "Philadelphia Eagles",
           "sourceType": "OFFICIAL",
@@ -6444,14 +6455,24 @@
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-11-25T20:15:57.000Z",
-      "checkedAt": "2026-11-25T20:15:57.000Z",
+      "lastUpdatedAt": "2026-11-25T20:17:19.000Z",
+      "checkedAt": "2026-11-25T20:17:19.000Z",
       "sourceQuality": {
         "confidence": 98,
         "primarySourceType": "OFFICIAL",
         "corroboratingSourceCount": 0
       },
       "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 25, 2026 at 12:40 PM (timezone not shown)",
+          "publishedDate": "2026-11-25",
+          "url": "https://www.philadelphiaeagles.com/news/eagles-at-cowboys-injury-report-2026-nfl-week-12-thanksgiving",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T20:17:19.000Z"
+        },
         {
           "sourceName": "Philadelphia Eagles",
           "sourceType": "OFFICIAL",
@@ -7300,5 +7321,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "ed0b2be9f0eedf4e430ff93da3aac0796f6e822e7bef348492135aadd18a5bc2"
+  "contentHash": "54aba1f009442c56060b0b83e8780ae18956bb35acb9d94a76b22daaddba0c90"
 }
