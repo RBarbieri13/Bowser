@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T21:27:00.481Z",
-  "updatedAt": "2026-11-25T21:27:00.839Z",
-  "revision": "bowser-public-news-20261125-week12-tuten-wednesday",
+  "checkedAt": "2026-11-25T21:46:30.638Z",
+  "updatedAt": "2026-11-25T21:46:30.985Z",
+  "revision": "bowser-public-news-20261125-week12-wednesday-wrs",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6964,6 +6964,86 @@
       "checkedAt": "2026-11-22T20:05:10.764Z"
     },
     {
+      "eventId": "report:2026-11-25:49ers:mike-evans-wednesday-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Mike Evans",
+        "position": "WR",
+        "team": "SF"
+      },
+      "headline": "Mike Evans reportedly not practicing Wednesday",
+      "summary": "Harrison Rich reported Evans would not practice Wednesday because of his Achilles issue. Evans returned in Week 11, but there is no Week 12 game designation yet.",
+      "fantasyAnalysis": "Keep a late-Sunday pivot available if Evans remains limited or uncertain. This report does not establish a setback or a Week 12 absence.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T21:46:30.638Z",
+      "checkedAt": "2026-11-25T21:46:30.638Z",
+      "sourceQuality": {
+        "confidence": 88,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "RotoWire citing Harrison Rich",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.rotowire.com/football/headlines/mike-evans-injury-not-practicing-wednesday-649741",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Published on November 25, 2026 (clock not displayed)",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-25T21:46:30.638Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Achilles",
+        "practiceStatus": "Reported not practicing Wednesday",
+        "gameStatus": "Week 12 game designation pending"
+      }
+    },
+    {
+      "eventId": "report:2026-11-25:panthers:tetairoa-mcmillan-foot-canales",
+      "player": {
+        "playerId": null,
+        "name": "Tetairoa McMillan",
+        "position": "WR",
+        "team": "CAR"
+      },
+      "headline": "Dave Canales optimistic about Tetairoa McMillan's Week 12 availability",
+      "summary": "Canales said McMillan dealt with foot soreness after Sunday and expressed optimism about his availability Monday at Tampa Bay, per Mike Kaye. The Wednesday session was unofficial, and there is no Week 12 game designation yet.",
+      "fantasyAnalysis": "Do not bench McMillan on this report alone. Check the subsequent practice reports and leave a Monday-compatible fallback if his status is unresolved.",
+      "eventType": "COACH_COMMENT",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T20:18:00Z",
+      "checkedAt": "2026-11-25T21:46:30.638Z",
+      "sourceQuality": {
+        "confidence": 88,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "CBS Sports citing Mike Kaye",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.cbssports.com/fantasy/football/news/panthers-tetairoa-mcmillan-canales-optimistic-about-week-12-status/",
+          "publishedAt": "2026-11-25T20:18:00Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-25T21:46:30.638Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot",
+        "practiceStatus": "Reported absent from unofficial Wednesday session",
+        "gameStatus": "Week 12 game designation pending"
+      }
+    },
+    {
       "eventId": "report:2026-11-25:raiders:brock-bowers-practice-return",
       "player": {
         "playerId": null,
@@ -7002,6 +7082,47 @@
         "bodyPart": "Ankle/quadriceps",
         "practiceStatus": "Reported present at start of Wednesday practice",
         "gameStatus": "Week 12 designation pending"
+      }
+    },
+    {
+      "eventId": "report:2026-11-25:vikings:jordan-addison-estimated-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Jordan Addison",
+        "position": "WR",
+        "team": "MIN"
+      },
+      "headline": "Jordan Addison expected to be listed as estimated DNP Wednesday",
+      "summary": "Kevin O'Connell said Addison would be estimated as a Wednesday nonparticipant, per Matthew Coller. Addison is recovering from thumb surgery, and Minnesota has not issued a final game designation for Sunday against Atlanta.",
+      "fantasyAnalysis": "Plan to use another receiver unless Addison makes late-week progress. The report reinforces the coach's earlier expectation that Addison may not be available.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T21:46:30.638Z",
+      "checkedAt": "2026-11-25T21:46:30.638Z",
+      "sourceQuality": {
+        "confidence": 88,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "FantasyPros citing Matthew Coller",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.fantasypros.com/nfl/news/622539/jordan-addison-thumb-estimated-dnp-practice-wednesday.php",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "November 25, 2026 report quoting Wednesday media availability (publication clock not verified)",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-25T21:46:30.638Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb",
+        "practiceStatus": "Coach-reported estimated Did Not Participate Wednesday",
+        "gameStatus": "Week 12 game designation pending"
       }
     },
     {
@@ -7601,5 +7722,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "8e517f5e8ed016a10e004def5b17118450b083542c61d6baf0546ca4584f774a"
+  "contentHash": "ff958a91ed749f39a49f4f8dbc28af95687d4e1601859c7aeaa517c23888abb0"
 }
