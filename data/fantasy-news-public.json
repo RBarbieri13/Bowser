@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T12:59:17.658Z",
-  "updatedAt": "2026-11-25T12:59:22.767Z",
-  "revision": "bowser-public-news-20261125-week12-rudolph-starter",
+  "checkedAt": "2026-11-25T17:26:58.000Z",
+  "updatedAt": "2026-11-25T17:26:58.000Z",
+  "revision": "bowser-public-news-20261125-week12-walker-out",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6232,6 +6232,56 @@
       ]
     },
     {
+      "eventId": "official:2026-11-25:chiefs:week-12:kenneth-walker-out",
+      "player": {
+        "playerId": null,
+        "name": "Kenneth Walker III",
+        "position": "RB",
+        "team": "KC"
+      },
+      "headline": "Chiefs rule Kenneth Walker III out for Thanksgiving",
+      "summary": "Kansas City ruled Walker out for Thursday at Buffalo with a groin injury. He did not practice Wednesday after limited participation Tuesday.",
+      "fantasyAnalysis": "Keep Walker on the bench. Emmett Johnson is the likely lead back again, not a guaranteed workload.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-25T17:26:44.000Z",
+      "checkedAt": "2026-11-25T17:26:44.000Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Kansas City Chiefs",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedAtRaw": "Nov 25, 2026 at 10:46 AM (timezone not shown)",
+          "publishedDate": "2026-11-25",
+          "url": "https://www.chiefs.com/news/week-12-injury-report-chiefs-vs-bills-2026",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-25T17:26:44.000Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "practiceStatus": "Did Not Participate",
+        "gameStatus": "Out"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Emmett Johnson",
+          "team": "KC",
+          "position": "RB",
+          "relationship": "BENEFICIARY",
+          "impact": "Likely lead back again with Walker ruled out."
+        }
+      ]
+    },
+    {
       "eventId": "packers:20261123:kyren-williams-monday-fp-week12",
       "player": {
         "playerId": null,
@@ -7017,5 +7067,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "609ec53774016f2c3600875d6c5e8b7a84fc7359b084517b16f1eb3bc4bfff3d"
+  "contentHash": "9f697fd1c2fc88a8d4410bec2639e12414787ab3821d0e3ed2067e4ae6b48057"
 }
