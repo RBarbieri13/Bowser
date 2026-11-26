@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T22:57:09Z",
-  "updatedAt": "2026-11-26T22:57:09Z",
-  "revision": "bowser-public-news-20261126-week12-ravens-texans",
+  "checkedAt": "2026-11-26T23:35:05Z",
+  "updatedAt": "2026-11-26T23:35:05Z",
+  "revision": "bowser-public-news-20261126-week12-goedert-barkley",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1409,6 +1409,62 @@
       }
     },
     {
+      "eventId": "eagles:20261126:dallas-goedert-shoulder-in-game-out",
+      "player": {
+        "playerId": null,
+        "name": "Dallas Goedert",
+        "position": "TE",
+        "team": "PHI"
+      },
+      "headline": "Eagles rule Dallas Goedert out against Dallas with shoulder injury",
+      "summary": "Goedert left in the first half with a shoulder injury, separate from his pregame shin listing. Philadelphia downgraded him to out for the remainder of the game.",
+      "fantasyAnalysis": "Zach Ertz is listed next on the team depth chart. Watch how Philadelphia uses Ertz, Johnny Mundt and Eli Stowers before making a waiver decision. No Week 13 status has been announced.",
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Shoulder",
+        "gameStatus": "Out for remainder of Week 12; Week 13 unknown"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Zach Ertz",
+          "team": "PHI",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Listed behind Goedert; could gain work, but the tight end split is unconfirmed."
+        }
+      ],
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T23:10:44Z",
+      "checkedAt": "2026-11-26T23:35:05Z",
+      "sources": [
+        {
+          "sourceName": "Bleeding Green Nation",
+          "author": "Alexis Chassen",
+          "sourceType": "BEAT_WRITER",
+          "url": "https://www.bleedinggreennation.com/philadelphia-eagles-injuries/191576/eagles-injury-updates-cooper-dejean-ruled-out-saquon-barkley-questionable-to-return",
+          "publishedAt": "2026-11-26T23:10:44Z",
+          "publishedAtRaw": "Updated Nov. 26 at 23:10 UTC",
+          "publishedDate": "2026-11-26",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T23:35:05Z"
+        },
+        {
+          "sourceName": "DraftKings Network quoting Eagles downgrade",
+          "author": "Ciaran Doyle",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://dknetwork.draftkings.com/2026/11/26/what-happened-to-dallas-goedert-live-injury-updates-for-eagles-vs-cowboys-on-thursday-11-26-26/",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 article; exact clock not verified",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-26T23:35:05Z"
+        }
+      ]
+    },
+    {
       "eventId": "eagles:20261126:joe-milton-week12-thanksgiving-starter",
       "player": {
         "playerId": null,
@@ -1436,6 +1492,62 @@
           "publishedAtRaw": "Nov 26, 2026 at 12:30 AM (team article does not display timezone)",
           "isOriginalSource": true,
           "checkedAt": "2026-11-26T17:20:03Z"
+        }
+      ]
+    },
+    {
+      "eventId": "eagles:20261126:saquon-barkley-stinger-in-game-questionable",
+      "player": {
+        "playerId": null,
+        "name": "Saquon Barkley",
+        "position": "RB",
+        "team": "PHI"
+      },
+      "headline": "Saquon Barkley leaves against Dallas with a stinger",
+      "summary": "Philadelphia listed Barkley questionable to return with a stinger. He briefly tried to return, but Will Shipley took the second-quarter carries shown in the game log. Barkley’s rest-of-game status was not confirmed at this check.",
+      "fantasyAnalysis": "Shipley is the first backup to watch if Barkley continues to miss snaps. Wait for postgame news before treating Shipley as a Week 13 starter.",
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Stinger",
+        "gameStatus": "Questionable to return during Week 12; Week 13 unknown"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Will Shipley",
+          "team": "PHI",
+          "position": "RB",
+          "relationship": "BENEFICIARY",
+          "impact": "Took second-quarter carries while Barkley was sidelined."
+        }
+      ],
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T23:10:44Z",
+      "checkedAt": "2026-11-26T23:35:05Z",
+      "sources": [
+        {
+          "sourceName": "Bleeding Green Nation",
+          "author": "Alexis Chassen",
+          "sourceType": "BEAT_WRITER",
+          "url": "https://www.bleedinggreennation.com/philadelphia-eagles-injuries/191576/eagles-injury-updates-cooper-dejean-ruled-out-saquon-barkley-questionable-to-return",
+          "publishedAt": "2026-11-26T23:10:44Z",
+          "publishedAtRaw": "Updated Nov. 26 at 23:10 UTC",
+          "publishedDate": "2026-11-26",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T23:35:05Z"
+        },
+        {
+          "sourceName": "DraftKings Network quoting Eagles injury update",
+          "author": "Ciaran Doyle",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://dknetwork.draftkings.com/2026/11/26/what-happened-to-saquon-barkley-live-injury-updates-for-eagles-vs-cowboys-on-thursday-11-26-26/",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 article; exact clock not verified",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-26T23:35:05Z"
         }
       ]
     },
@@ -10089,5 +10201,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "09a7276ddedb19bc222ca03d7477716b16c66b8bff084375e3868f61c79ee698"
+  "contentHash": "cb68903b7dff3b55ef4127ad8ad7defa33395cd8d78649c6a72ec310ff5d686d"
 }
