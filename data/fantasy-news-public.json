@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T22:46:20Z",
-  "updatedAt": "2026-11-26T22:46:20Z",
-  "revision": "bowser-public-news-20261126-week12-aiyuk",
+  "checkedAt": "2026-11-26T22:57:09Z",
+  "updatedAt": "2026-11-26T22:57:09Z",
+  "revision": "bowser-public-news-20261126-week12-ravens-texans",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -9760,6 +9760,186 @@
       "checkedAt": "2026-11-21T19:16:21.610Z"
     },
     {
+      "eventId": "texans-ravens:20261126:derrick-henry-thu",
+      "player": {
+        "playerId": null,
+        "name": "Derrick Henry",
+        "position": "RB",
+        "team": "BAL"
+      },
+      "headline": "Derrick Henry advances to a full Thursday practice",
+      "summary": "Henry upgraded from limited Wednesday to full Thursday on the official report. Baltimore has not announced that he cleared concussion protocol or his final game designation.",
+      "fantasyAnalysis": "Keep him in your plans if cleared. Justice Hill and Rasheen Ali are contingency options only; their split is unknown if Henry sits.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T22:57:09Z",
+      "sources": [
+        {
+          "sourceName": "Houston Texans official Week 12 injury report for both teams",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.houstontexans.com/news/week-12-injury-report-texans-vs-ravens",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team practice column; separate update clock not verified",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T22:57:09Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion",
+        "practiceStatus": "LP Wednesday; FP Thursday",
+        "gameStatus": "Week 12 designation pending"
+      }
+    },
+    {
+      "eventId": "texans-ravens:20261126:kayshon-boutte-thu",
+      "player": {
+        "playerId": null,
+        "name": "Kayshon Boutte",
+        "position": "WR",
+        "team": "HOU"
+      },
+      "headline": "Kayshon Boutte misses second practice with hip injury",
+      "summary": "Houston listed Boutte as a non-participant Wednesday and Thursday. No final game designation was posted.",
+      "fantasyAnalysis": "Have another option if you rely on Boutte in a deeper league. Harrison’s potential return also clouds the target split.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T22:57:09Z",
+      "sources": [
+        {
+          "sourceName": "Houston Texans official Week 12 injury report for both teams",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.houstontexans.com/news/week-12-injury-report-texans-vs-ravens",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team practice column; separate update clock not verified",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T22:57:09Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hip",
+        "practiceStatus": "DNP Wednesday and Thursday",
+        "gameStatus": "Week 12 designation pending"
+      }
+    },
+    {
+      "eventId": "texans-ravens:20261126:marvin-harrison-jr-thu",
+      "player": {
+        "playerId": null,
+        "name": "Marvin Harrison Jr.",
+        "position": "WR",
+        "team": "HOU"
+      },
+      "headline": "Marvin Harrison Jr. upgrades to full practice Thursday",
+      "summary": "Houston listed Harrison as full Thursday after he was limited Wednesday. Harrison missed the last two games with a hamstring injury.",
+      "fantasyAnalysis": "He is trending toward a return. Wait for Friday’s designation before committing; the first-game target load is not assured.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T22:57:09Z",
+      "sources": [
+        {
+          "sourceName": "Houston Texans official Week 12 injury report for both teams",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.houstontexans.com/news/week-12-injury-report-texans-vs-ravens",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team practice column; separate update clock not verified",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T22:57:09Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": "LP Wednesday; FP Thursday",
+        "gameStatus": "Week 12 designation pending"
+      }
+    },
+    {
+      "eventId": "texans-ravens:20261126:woody-marks-thu",
+      "player": {
+        "playerId": null,
+        "name": "Woody Marks",
+        "position": "RB",
+        "team": "HOU"
+      },
+      "headline": "Woody Marks logs a second full practice",
+      "summary": "Marks was listed as full on Wednesday and Thursday after missing Week 11 with a concussion. No clearance or final game status was announced.",
+      "fantasyAnalysis": "Monitor clearance and avoid projecting the same backfield split as Week 11 if Marks returns.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T22:57:09Z",
+      "sources": [
+        {
+          "sourceName": "Houston Texans official Week 12 injury report for both teams",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.houstontexans.com/news/week-12-injury-report-texans-vs-ravens",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team practice column; separate update clock not verified",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T22:57:09Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion",
+        "practiceStatus": "FP Wednesday and Thursday",
+        "gameStatus": "Week 12 designation pending"
+      }
+    },
+    {
+      "eventId": "texans-ravens:20261126:zay-flowers-thu",
+      "player": {
+        "playerId": null,
+        "name": "Zay Flowers",
+        "position": "WR",
+        "team": "BAL"
+      },
+      "headline": "Zay Flowers upgrades to full participation Thursday",
+      "summary": "Flowers practiced fully on Thursday after a limited Wednesday with an ankle injury. There is no final game designation yet.",
+      "fantasyAnalysis": "The upgrade is encouraging. Plan to start him if active, and confirm his status Friday.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T22:57:09Z",
+      "sources": [
+        {
+          "sourceName": "Houston Texans official Week 12 injury report for both teams",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.houstontexans.com/news/week-12-injury-report-texans-vs-ravens",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team practice column; separate update clock not verified",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T22:57:09Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "LP Wednesday; FP Thursday",
+        "gameStatus": "Week 12 designation pending"
+      }
+    },
+    {
       "eventId": "titans:20261122:carnell-tate-active-week11",
       "player": {
         "playerId": null,
@@ -9909,5 +10089,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "d9c711f234b45dd53fbbe4ecccb01bd3006d3bfda1f59d1047135738d9a73cab"
+  "contentHash": "09a7276ddedb19bc222ca03d7477716b16c66b8bff084375e3868f61c79ee698"
 }
