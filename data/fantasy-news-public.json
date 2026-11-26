@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T20:35:19Z",
-  "updatedAt": "2026-11-26T20:35:19Z",
-  "revision": "bowser-public-news-20261126-week12-loveland-herbert",
+  "checkedAt": "2026-11-26T20:56:07Z",
+  "updatedAt": "2026-11-26T20:56:07Z",
+  "revision": "bowser-public-news-20261126-week12-badie-tuten",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -384,6 +384,51 @@
         }
       ],
       "checkedAt": "2026-11-23T15:54:23.218Z"
+    },
+    {
+      "eventId": "broncos:20261126:tyler-badie-questionable-still-ir",
+      "player": {
+        "playerId": null,
+        "name": "Tyler Badie",
+        "position": "RB",
+        "team": "DEN"
+      },
+      "headline": "Broncos list Tyler Badie questionable; still needs activation",
+      "summary": "Denver listed Badie as questionable for Friday against Pittsburgh after full participation Tuesday and Wednesday and an estimated full walkthrough Thursday. Denver explicitly says he still needs to be activated from injured reserve to play.",
+      "fantasyAnalysis": "Wait for an official roster move and inactives. Even if active, Badie has no established Week 12 role behind Jonah Coleman with J.K. Dobbins suspended.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T20:56:07Z",
+      "sources": [
+        {
+          "sourceName": "Denver Broncos final Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.denverbroncos.com/news/injuryreport/injury-report-s-brandon-jones-not-assigned-game-status-3-broncos-ruled-out-for-week-12-game-vs-steelers",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26, 2026 at 12:51 PM as displayed; publication timezone not stated",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T20:56:07Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb",
+        "practiceStatus": "Full Tuesday and Wednesday; estimated full Thursday",
+        "gameStatus": "Questionable; remains on injured reserve pending activation"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Jonah Coleman",
+          "team": "DEN",
+          "position": "RB",
+          "relationship": "BENEFICIARY",
+          "impact": "Projects as the lead back with Dobbins suspended; Badie's potential role is not known."
+        }
+      ]
     },
     {
       "eventId": "bsky:3n2tlvu7eo22x:josh-jacobs",
@@ -2256,6 +2301,51 @@
         "isInjuryRelated": true,
         "bodyPart": "Concussion"
       }
+    },
+    {
+      "eventId": "jaguars:20261126:bhayshul-tuten-second-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Bhayshul Tuten",
+        "position": "RB",
+        "team": "JAX"
+      },
+      "headline": "Bhayshul Tuten misses a second practice with ankle and foot injuries",
+      "summary": "Jacksonville listed Tuten as a non-participant Wednesday and Thursday ahead of Tennessee, while Chris Rodriguez Jr. practiced fully both days. No final game status was posted.",
+      "fantasyAnalysis": "Chris Rodriguez Jr. is a deep-league bench stash if Tuten misses Sunday, not a guaranteed lead back. Check Friday's report before adding solely for Week 12.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T20:56:07Z",
+      "sources": [
+        {
+          "sourceName": "Jacksonville Jaguars Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.jaguars.com/team/injury-report/week/reg-12",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team practice column; publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T20:56:07Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle/foot",
+        "practiceStatus": "DNP Wednesday and Thursday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Chris Rodriguez Jr.",
+          "team": "JAX",
+          "position": "RB",
+          "relationship": "BENEFICIARY",
+          "impact": "Potential for more backfield work if Tuten is inactive; full practice Wednesday and Thursday."
+        }
+      ]
     },
     {
       "eventId": "kelley:20261122:justin-herbert-concussion-protocol-week12",
@@ -9259,5 +9349,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "65297deb51cd22e5dcc370492021ff566964c35d54b3e2478728e5243201833c"
+  "contentHash": "c0da5cb3b7d02fdf51c09d0f2b51cd2d76fe4234f57f7ef7d18891e95a434f99"
 }
