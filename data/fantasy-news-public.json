@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T21:47:59Z",
-  "updatedAt": "2026-11-26T21:47:59Z",
-  "revision": "bowser-public-news-20261126-week12-bears-usage",
+  "checkedAt": "2026-11-26T21:55:51Z",
+  "updatedAt": "2026-11-26T21:55:51Z",
+  "revision": "bowser-public-news-20261126-week12-juwan-diggs-likely",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1085,6 +1085,42 @@
       }
     },
     {
+      "eventId": "commanders:20261126:stefon-diggs-off-injury-report",
+      "player": {
+        "playerId": null,
+        "name": "Stefon Diggs",
+        "position": "WR",
+        "team": "WAS"
+      },
+      "headline": "Stefon Diggs drops off Washington’s Thursday injury report",
+      "summary": "Washington’s updated Week 12 report does not list Diggs after Wednesday’s excused personal absence. No injury was identified in that absence.",
+      "fantasyAnalysis": "The Wednesday absence is no longer a reason to bench Diggs. Monitor normal game-day inactives.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T21:55:51Z",
+      "sources": [
+        {
+          "sourceName": "Washington Commanders official Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.commanders.com/news/commanders-vs-cardinals-week-12-injury-report",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team injury report; exact publication time not verified",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T21:55:51Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": false,
+        "practiceStatus": "Not listed Thursday",
+        "gameStatus": "No Thursday listing; final Week 12 designation pending"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "cowboys:20261123:jake-ferguson-monday-estimated-dnp-week12",
       "player": {
         "playerId": null,
@@ -2080,6 +2116,43 @@
           "checkedAt": "2026-11-18T04:36:28.145Z"
         }
       ]
+    },
+    {
+      "eventId": "giants:20261126:isaiah-likely-limited-thursday",
+      "player": {
+        "playerId": null,
+        "name": "Isaiah Likely",
+        "position": "TE",
+        "team": "NYG"
+      },
+      "headline": "Isaiah Likely remains limited Thursday with groin injury",
+      "summary": "The Giants listed Likely as limited on Wednesday and Thursday. A groin injury did not stop him from playing in Week 11; his Week 12 designation is still pending.",
+      "fantasyAnalysis": "Keep him in your plans for now and check Friday’s report. Have another tight end ready if he is downgraded before the early Sunday game.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T21:55:51Z",
+      "sources": [
+        {
+          "sourceName": "New York Giants official Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.giants.com/news/injury-report-statuses-for-giants-vs-colts",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team injury report; exact publication time not verified",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T21:55:51Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "practiceStatus": "LP Wednesday and Thursday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
     },
     {
       "eventId": "hou-ind-20261117:00-0035685",
@@ -9173,6 +9246,51 @@
       }
     },
     {
+      "eventId": "saints:20261126:juwan-johnson-second-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Juwan Johnson",
+        "position": "TE",
+        "team": "NO"
+      },
+      "headline": "Juwan Johnson misses a second practice ahead of Cincinnati",
+      "summary": "New Orleans listed Johnson as a non-participant Wednesday and Thursday with hamstring and wrist injuries. The team has not posted a game designation.",
+      "fantasyAnalysis": "Have a replacement ready. Noah Fant is a possible deep-league pivot if Johnson is ruled out, not a guaranteed source of targets.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T21:55:51Z",
+      "sources": [
+        {
+          "sourceName": "New Orleans Saints official Thursday injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.neworleanssaints.com/news/injury-report-cincinnati-bengals-vs-new-orleans-saints-2026-nfl-week-12-thursday",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team injury report; exact publication time not verified",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T21:55:51Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring/wrist",
+        "practiceStatus": "DNP Wednesday and Thursday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Noah Fant",
+          "team": "NO",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Could gain routes if Johnson misses Week 12."
+        }
+      ]
+    },
+    {
       "eventId": "sfchronicle:21963120:brandon-aiyuk-waived",
       "player": {
         "playerId": null,
@@ -9536,5 +9654,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "73276d93e61fc6ad8c57e695823bc4bac5153c01f698ff63ac07114002863230"
+  "contentHash": "cca5c14cbbaa04e6bebb8bb8b06389b92f0c2253e4e3d94cc5935c2dabc824f6"
 }
