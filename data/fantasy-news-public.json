@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T22:25:56Z",
-  "updatedAt": "2026-11-26T22:25:56Z",
-  "revision": "bowser-public-news-20261126-week12-purdy-evans",
+  "checkedAt": "2026-11-26T22:46:20Z",
+  "updatedAt": "2026-11-26T22:46:20Z",
+  "revision": "bowser-public-news-20261126-week12-aiyuk",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1083,6 +1083,36 @@
         "bodyPart": "Heel",
         "gameStatus": "ACTIVE"
       }
+    },
+    {
+      "eventId": "commanders:20261126:brandon-aiyuk-practice-squad-signed",
+      "player": {
+        "playerId": null,
+        "name": "Brandon Aiyuk",
+        "position": "WR",
+        "team": "WAS"
+      },
+      "headline": "Commanders officially sign Brandon Aiyuk to practice squad",
+      "summary": "Washington announced the signing Thursday, Nov. 26. It is a practice-squad deal, not a signing to the active roster or a game-day elevation.",
+      "fantasyAnalysis": "Watch for elevation or promotion and actual game usage before starting him. He is a speculative deep-league stash, not a Week 12 lineup play based on this signing.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T22:46:20Z",
+      "sources": [
+        {
+          "sourceName": "Washington Commanders transaction announcement",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.commanders.com/news/commanders-brandon-aiyuk-to-practice-squad",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26, 2026 at 11:59 AM displayed; publication timezone not stated",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T22:46:20Z"
+        }
+      ]
     },
     {
       "eventId": "commanders:20261126:stefon-diggs-off-injury-report",
@@ -9879,5 +9909,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "32eeffeae418a3ce08a3d763246716e35a7f6bd08ac2f2ca2d95cdf2d31d7f2e"
+  "contentHash": "d9c711f234b45dd53fbbe4ecccb01bd3006d3bfda1f59d1047135738d9a73cab"
 }
