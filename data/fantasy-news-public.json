@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T20:12:54Z",
-  "updatedAt": "2026-11-26T20:12:54Z",
-  "revision": "bowser-public-news-20261126-week12-pittman",
+  "checkedAt": "2026-11-26T20:35:19Z",
+  "updatedAt": "2026-11-26T20:35:19Z",
+  "revision": "bowser-public-news-20261126-week12-loveland-herbert",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -140,6 +140,51 @@
           "author": "Erik Schlitt",
           "isOriginalSource": true,
           "checkedAt": "2026-11-26T16:41:32Z"
+        }
+      ]
+    },
+    {
+      "eventId": "bears:20261126:colston-loveland-knee-out-week12",
+      "player": {
+        "playerId": null,
+        "name": "Colston Loveland",
+        "position": "TE",
+        "team": "CHI"
+      },
+      "headline": "Bears rule Colston Loveland out of Thanksgiving game with knee injury",
+      "summary": "Loveland left in the first quarter against Detroit, was carted from the medical tent to the locker room and was ruled out for the rest of the game. No Week 13 status was announced.",
+      "fantasyAnalysis": "Monitor the postgame update and Week 13 practice. Sam Roush is listed next on the team depth chart and is a deep-league watch, not a proven replacement.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T20:35:19Z",
+      "sources": [
+        {
+          "sourceName": "Chicago Sun-Times",
+          "sourceType": "BEAT_WRITER",
+          "url": "https://chicago.suntimes.com/bears/2026/11/26/bears-lions-colston-loveland-carted-to-locker-room-tight-end-thursday-ford-field",
+          "author": "Patrick Finley",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 on-site report; exact clock not verified",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T20:35:19Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee",
+        "gameStatus": "Out for remainder of Week 12 at Detroit; Week 13 unknown"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Sam Roush",
+          "team": "CHI",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Listed behind Loveland on the depth chart; receiving role if Loveland misses time is not established."
         }
       ]
     },
@@ -572,6 +617,52 @@
         "gameStatus": "Active for Week 11"
       },
       "checkedAt": "2026-11-22T19:50:34.076Z"
+    },
+    {
+      "eventId": "chargers:20261126:justin-herbert-thu-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Justin Herbert",
+        "position": "QB",
+        "team": "LAC"
+      },
+      "headline": "Justin Herbert misses second practice in concussion protocol",
+      "summary": "The Chargers listed Herbert as a non-participant Wednesday and Thursday. The team has not announced whether he will play against New England on Sunday.",
+      "fantasyAnalysis": "Keep a replacement ready. DJ Uiagalelei is next in line if Herbert is not cleared, but is an emergency superflex option rather than a standard QB streamer.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T20:35:19Z",
+      "sources": [
+        {
+          "sourceName": "Los Angeles Chargers Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.chargers.com/news/justin-herbert-akheem-mesidor-patriots-injury-report-2026",
+          "author": "Omar Navarro",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26, 2026 at 12:15 PM as displayed; publication timezone not stated",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T20:35:19Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion",
+        "practiceStatus": "DNP Wednesday and Thursday",
+        "gameStatus": "In concussion protocol; Week 12 designation pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "DJ Uiagalelei",
+          "team": "LAC",
+          "position": "QB",
+          "relationship": "BENEFICIARY",
+          "impact": "Next in line if Herbert does not clear concussion protocol; not confirmed to start."
+        }
+      ]
     },
     {
       "eventId": "chiefs:20261123:kenneth-walker-monday-dnp-week12",
@@ -9168,5 +9259,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "c187ab9a3ff5d46286113249b4037a138e37edb16e8a573ed6d9589860168102"
+  "contentHash": "65297deb51cd22e5dcc370492021ff566964c35d54b3e2478728e5243201833c"
 }
