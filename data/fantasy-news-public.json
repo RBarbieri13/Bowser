@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T13:01:03Z",
-  "updatedAt": "2026-11-26T13:01:03Z",
-  "revision": "bowser-public-news-20261126-week12-corbin-elevation",
+  "checkedAt": "2026-11-26T14:42:42Z",
+  "updatedAt": "2026-11-26T14:42:42Z",
+  "revision": "bowser-public-news-20261126-week12-maye-roschon",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6506,6 +6506,36 @@
       ]
     },
     {
+      "eventId": "official:2026-11-25:bears:week-12:roschon-johnson-out",
+      "player": {
+        "playerId": null,
+        "name": "Roschon Johnson",
+        "position": "RB",
+        "team": "CHI"
+      },
+      "headline": "Bears rule out Roschon Johnson for Thanksgiving",
+      "summary": "Chicago ruled Johnson out with an ankle injury for its Week 12 game at Detroit. D'Andre Swift and Kyle Monangai were not listed among the Bears ruled out.",
+      "fantasyAnalysis": "The absence mainly removes backfield depth. Do not assume a change in the Swift–Monangai workload from this designation alone.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T14:42:42Z",
+      "sources": [
+        {
+          "sourceName": "Chicago Bears",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 02:00 PM (timezone not displayed)",
+          "url": "https://www.chicagobears.com/news/three-bears-players-ruled-out-of-thanksgiving-game-in-detroit-injury-update",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T14:42:42Z"
+        }
+      ]
+    },
+    {
       "eventId": "official:2026-11-25:bills:week-12:dalton-kincaid-questionable",
       "player": {
         "playerId": null,
@@ -7115,6 +7145,36 @@
         "gameStatus": "Week 12 designation pending"
       },
       "affectedPlayers": []
+    },
+    {
+      "eventId": "official:2026-11-25:patriots:week-12:drake-maye-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Drake Maye",
+        "position": "QB",
+        "team": "NE"
+      },
+      "headline": "Drake Maye misses Wednesday practice with fibula injury",
+      "summary": "New England's Wednesday Week 12 injury report lists Maye as a nonparticipant with a fibula injury. This practice report does not provide a game designation or return date.",
+      "fantasyAnalysis": "New England is preparing Tommy DeVito to start against the Chargers. Keep Maye out of Week 12 lineups; this report by itself does not establish when he might return.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T14:42:42Z",
+      "sources": [
+        {
+          "sourceName": "New England Patriots",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 06:34 PM (timezone not displayed)",
+          "url": "https://www.patriots.com/news/week-12-injury-report-patriots-at-chargers",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T14:42:42Z"
+        }
+      ]
     },
     {
       "eventId": "official:2026-11-25:patriots:week-12:tommy-devito-starter",
@@ -8953,5 +9013,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "4dabe3296fb0cee214a12074d004368c79a950e2b1397353d7a1a0a17c32037c"
+  "contentHash": "4a0df9326697afec3fa42983f72cf237f37d442e068879dc9e1cc1e473e410ff"
 }
