@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T22:12:42Z",
-  "updatedAt": "2026-11-26T22:12:42Z",
-  "revision": "bowser-public-news-20261126-week12-seattle-minnesota",
+  "checkedAt": "2026-11-26T22:25:56Z",
+  "updatedAt": "2026-11-26T22:25:56Z",
+  "revision": "bowser-public-news-20261126-week12-purdy-evans",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6333,6 +6333,87 @@
       "checkedAt": "2026-11-22T12:57:18.677Z"
     },
     {
+      "eventId": "ninersnation:20261126:brock-purdy-second-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Brock Purdy",
+        "position": "QB",
+        "team": "SF"
+      },
+      "headline": "Report: Brock Purdy misses Thursday practice with ankle injury",
+      "summary": "Kyle Posey reports San Francisco’s Thursday report lists Purdy as a non-participant for a second day. The 49ers have not released a final Week 12 designation.",
+      "fantasyAnalysis": "Keep an alternate quarterback ready. Mac Jones is the direct replacement if Purdy cannot play in Sunday's afternoon window, but no switch has been announced.",
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "Reported DNP Wednesday and Thursday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Mac Jones",
+          "team": "SF",
+          "position": "QB",
+          "relationship": "BENEFICIARY",
+          "impact": "In line to start if Purdy cannot play."
+        }
+      ],
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T22:18:46Z",
+      "checkedAt": "2026-11-26T22:25:56Z",
+      "sources": [
+        {
+          "sourceName": "Niners Nation",
+          "author": "Kyle Posey",
+          "sourceType": "BEAT_WRITER",
+          "url": "https://www.ninersnation.com/san-francisco-49ers-injuries/166336/brock-purdy-misses-practice-for-the-second-straight-day",
+          "publishedAt": "2026-11-26T22:18:46Z",
+          "publishedDate": "2026-11-26",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T22:25:56Z"
+        }
+      ]
+    },
+    {
+      "eventId": "ninersnation:20261126:mike-evans-limited-thursday",
+      "player": {
+        "playerId": null,
+        "name": "Mike Evans",
+        "position": "WR",
+        "team": "SF"
+      },
+      "headline": "Report: Mike Evans returns to limited practice Thursday",
+      "summary": "Kyle Posey reports Evans was limited Thursday with an Achilles injury after missing Wednesday’s practice. No final Week 12 designation was published.",
+      "fantasyAnalysis": "The return to drills is encouraging but is not clearance or evidence of a full workload. Recheck Friday and note the unsettled quarterback situation.",
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Achilles",
+        "practiceStatus": "DNP Wednesday; reported LP Thursday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T22:18:46Z",
+      "checkedAt": "2026-11-26T22:25:56Z",
+      "sources": [
+        {
+          "sourceName": "Niners Nation",
+          "author": "Kyle Posey",
+          "sourceType": "BEAT_WRITER",
+          "url": "https://www.ninersnation.com/san-francisco-49ers-injuries/166336/brock-purdy-misses-practice-for-the-second-straight-day",
+          "publishedAt": "2026-11-26T22:18:46Z",
+          "publishedDate": "2026-11-26",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T22:25:56Z"
+        }
+      ]
+    },
+    {
       "eventId": "official:2026-11-20:colts:week-12:anthony-richardson-starter",
       "player": {
         "playerId": null,
@@ -9798,5 +9879,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "90a4c1e95c222bf9d3ee70fa271aa0526f8e604658d60eb0309b637cde35531c"
+  "contentHash": "32eeffeae418a3ce08a3d763246716e35a7f6bd08ac2f2ca2d95cdf2d31d7f2e"
 }
