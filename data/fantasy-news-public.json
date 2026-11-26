@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T16:41:32Z",
-  "updatedAt": "2026-11-26T16:41:32Z",
-  "revision": "bowser-public-news-20261126-week12-laporta-ahmed",
+  "checkedAt": "2026-11-26T17:20:03Z",
+  "updatedAt": "2026-11-26T17:20:03Z",
+  "revision": "bowser-public-news-20261126-week12-milton",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1063,6 +1063,37 @@
         "bodyPart": "Foot",
         "practiceStatus": "LP"
       }
+    },
+    {
+      "eventId": "eagles:20261126:joe-milton-week12-thanksgiving-starter",
+      "player": {
+        "playerId": null,
+        "name": "Joe Milton III",
+        "position": "QB",
+        "team": "PHI"
+      },
+      "headline": "Eagles confirm Joe Milton III will start at Dallas on Thanksgiving",
+      "summary": "Philadelphia’s official Week 12 preview says Milton will make his third NFL start, following a Week 11 win over Pittsburgh. Offensive coordinator Sean Mannion noted his ability to contribute on designed runs and scrambles but did not commit to a particular rushing workload.",
+      "fantasyAnalysis": "Milton is a volatile QB2 or superflex fallback. The starting role and mobility are relevant, but this does not make him a typical one-QB start or guarantee a role beyond Week 12.",
+      "eventType": "ROLE_CHANGE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T17:20:03Z",
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles",
+          "sourceType": "OFFICIAL",
+          "author": "Dave Spadaro",
+          "url": "https://www.philadelphiaeagles.com/news/thanksgiving-game-preview-eagles-at-cowboys-six-storylines-to-follow-2026-nfl-week-12-joe-milton-saquon-barkley-dak-prescott-cee-dee-lamb",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov 26, 2026 at 12:30 AM (team article does not display timezone)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T17:20:03Z"
+        }
+      ]
     },
     {
       "eventId": "espn:20261122:brock-bowers-kubiak-optimistic-week12",
@@ -9091,5 +9122,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "d4e12f5cf351ee14d93daf53478a0fc36db0d20ea25634bf6c1290c6d0de3637"
+  "contentHash": "4cd1cf76e7787c02d4e6d88c536cfbe26976fc7651c1b488bc4f628bee13c5c9"
 }
