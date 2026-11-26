@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T21:35:28Z",
-  "updatedAt": "2026-11-26T21:35:28Z",
-  "revision": "bowser-public-news-20261126-week12-beck-jalen",
+  "checkedAt": "2026-11-26T21:47:59Z",
+  "updatedAt": "2026-11-26T21:47:59Z",
+  "revision": "bowser-public-news-20261126-week12-bears-usage",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -187,6 +187,66 @@
           "impact": "Listed behind Loveland on the depth chart; receiving role if Loveland misses time is not established."
         }
       ]
+    },
+    {
+      "eventType": "ROLE_CHANGE",
+      "status": "CONFIRMED",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T21:47:59Z",
+      "sources": [
+        {
+          "sourceName": "Chicago Bears Week 12 official final box score",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.chicagobears.com/game-day/2026/reg-week12/bears-at-lions/box-score",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 final box score; publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T21:47:59Z"
+        }
+      ],
+      "eventId": "bears:20261126:kyle-monangai-goal-line-week12",
+      "player": {
+        "playerId": null,
+        "name": "Kyle Monangai",
+        "position": "RB",
+        "team": "CHI"
+      },
+      "headline": "Kyle Monangai scores twice while D’Andre Swift leads Bears in touches",
+      "summary": "Monangai logged eight carries for 15 yards and two touchdowns, plus one catch for 14 yards. Swift had 16 touches for 162 yards and a touchdown; Salvon Ahmed added five touches for 67 yards.",
+      "fantasyAnalysis": "Monangai benefited from goal-line work, but Swift led the backfield in both touches and production. Treat Monangai as a touchdown-dependent flex, not a new lead back. Ahmed remains a depth watch.",
+      "fantasyImpact": "MEDIUM"
+    },
+    {
+      "eventType": "ROLE_CHANGE",
+      "status": "CONFIRMED",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T21:47:59Z",
+      "sources": [
+        {
+          "sourceName": "Chicago Bears Week 12 official final box score",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.chicagobears.com/game-day/2026/reg-week12/bears-at-lions/box-score",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 final box score; publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T21:47:59Z"
+        }
+      ],
+      "eventId": "bears:20261126:sam-roush-five-catches-week12",
+      "player": {
+        "playerId": null,
+        "name": "Sam Roush",
+        "position": "TE",
+        "team": "CHI"
+      },
+      "headline": "Sam Roush catches five passes after Colston Loveland exits",
+      "summary": "Roush finished with five catches for 31 yards in Chicago’s 39–35 win at Detroit. Stephen Carlson added two catches for 30 yards. Loveland was ruled out during the game with a knee injury.",
+      "fantasyAnalysis": "Roush is the first deep-league tight end to watch if Loveland misses more time. Five catches are useful evidence of a receiving role, but no Week 13 starter or workload is confirmed.",
+      "fantasyImpact": "MEDIUM"
     },
     {
       "eventId": "bengals:20261121:andrei-iosivas-doubtful",
@@ -9476,5 +9536,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "43702e7be173f253d2657c57b094cf1fb44f65f4dc4c7db74dc68ea5d0733acb"
+  "contentHash": "73276d93e61fc6ad8c57e695823bc4bac5153c01f698ff63ac07114002863230"
 }
