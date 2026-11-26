@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T00:05:08.549Z",
-  "updatedAt": "2026-11-26T00:05:08.697Z",
-  "revision": "bowser-public-news-20261125-week12-jacobs",
+  "checkedAt": "2026-11-26T00:14:00.647Z",
+  "updatedAt": "2026-11-26T00:14:00.946Z",
+  "revision": "bowser-public-news-20261125-week12-wednesday-grades",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1931,21 +1931,31 @@
         "position": "WR",
         "team": "HOU"
       },
-      "headline": "Marvin Harrison Jr. returns to Texans practice Wednesday",
-      "summary": "Jonathan M. Alexander reported Harrison returned to Wednesday practice following two missed games because of a hamstring injury. His participation level and Sunday game status are unconfirmed.",
-      "fantasyAnalysis": "Monitor Thursday and Friday participation before moving Harrison into a starting lineup.",
+      "headline": "Marvin Harrison Jr. officially limited Wednesday",
+      "summary": "Houston lists Harrison limited Wednesday with the hamstring injury that kept him out of the previous two games. No Sunday game designation has been posted.",
+      "fantasyAnalysis": "Recheck Friday before starting him. Houston's target distribution depends on Harrison's availability and on how much he plays.",
       "eventType": "PRACTICE",
-      "status": "REPORTED",
-      "fantasyImpact": "HIGH",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-11-25T21:57:45.958Z",
-      "checkedAt": "2026-11-25T21:57:45.958Z",
+      "lastUpdatedAt": "2026-11-26T00:14:00.647Z",
+      "checkedAt": "2026-11-26T00:14:00.647Z",
       "sourceQuality": {
-        "confidence": 93,
-        "primarySourceType": "NEWS_OUTLET",
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
         "corroboratingSourceCount": 0
       },
       "sources": [
+        {
+          "sourceName": "Houston Texans",
+          "url": "https://www.houstontexans.com/news/week-12-injury-report-texans-vs-ravens",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 05:03 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        },
         {
           "sourceName": "Houston Chronicle",
           "sourceType": "NEWS_OUTLET",
@@ -1961,8 +1971,8 @@
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Hamstring",
-        "practiceStatus": "Reported back at practice; participation level unconfirmed",
-        "gameStatus": "Week 12 game designation pending"
+        "practiceStatus": "Limited Wednesday",
+        "gameStatus": "Week 12 designation pending"
       },
       "affectedPlayers": []
     },
@@ -1974,21 +1984,31 @@
         "position": "RB",
         "team": "HOU"
       },
-      "headline": "Woody Marks returns to the practice field Wednesday",
-      "summary": "Jonathan M. Alexander reported Marks returned to practice Wednesday after missing Week 11 with a concussion. His participation level and clearance for Baltimore are not established.",
-      "fantasyAnalysis": "Keep Houston backup options as insurance until Marks clears concussion protocol and the team confirms his availability.",
+      "headline": "Woody Marks officially full Wednesday",
+      "summary": "Houston lists Marks as a full participant Wednesday after he missed Week 11 with a concussion. The team has not announced that he cleared protocol or is active Sunday.",
+      "fantasyAnalysis": "Marks is trending up. Don't assume David Montgomery will retain the same workload if Marks returns or that Marks is cleared yet.",
       "eventType": "PRACTICE",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-11-25T21:57:45.958Z",
-      "checkedAt": "2026-11-25T21:57:45.958Z",
+      "lastUpdatedAt": "2026-11-26T00:14:00.647Z",
+      "checkedAt": "2026-11-26T00:14:00.647Z",
       "sourceQuality": {
-        "confidence": 93,
-        "primarySourceType": "NEWS_OUTLET",
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
         "corroboratingSourceCount": 0
       },
       "sources": [
+        {
+          "sourceName": "Houston Texans",
+          "url": "https://www.houstontexans.com/news/week-12-injury-report-texans-vs-ravens",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 05:03 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        },
         {
           "sourceName": "Houston Chronicle",
           "sourceType": "NEWS_OUTLET",
@@ -2004,8 +2024,8 @@
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Concussion",
-        "practiceStatus": "Reported back at practice; participation level unconfirmed",
-        "gameStatus": "Week 12 game designation pending"
+        "practiceStatus": "Full Wednesday",
+        "gameStatus": "Week 12 designation pending"
       },
       "affectedPlayers": []
     },
@@ -6402,21 +6422,31 @@
         "position": "QB",
         "team": "SF"
       },
-      "headline": "Brock Purdy to miss Wednesday practice with ankle sprain",
-      "summary": "Kyle Shanahan said Purdy would not practice Wednesday after spraining his ankle against Minnesota. Shanahan called him day to day and said missing Sunday against Seattle is possible; no game designation has been issued.",
-      "fantasyAnalysis": "Keep a playable backup while awaiting Friday’s designation. Mac Jones would be the next starter if Purdy cannot play.",
-      "eventType": "INJURY",
+      "headline": "49ers officially list Brock Purdy DNP Wednesday",
+      "summary": "San Francisco confirmed Purdy missed Wednesday practice with an ankle injury. Kyle Shanahan called him day-to-day; Wednesday's grade does not rule him out Sunday.",
+      "fantasyAnalysis": "Keep a fallback for Sunday's late-afternoon kickoff. Mac Jones is the likely replacement if Purdy cannot play.",
+      "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-11-25T20:26:20.000Z",
-      "checkedAt": "2026-11-25T20:26:20.000Z",
+      "lastUpdatedAt": "2026-11-26T00:14:00.647Z",
+      "checkedAt": "2026-11-26T00:14:00.647Z",
       "sourceQuality": {
         "confidence": 98,
         "primarySourceType": "OFFICIAL",
         "corroboratingSourceCount": 0
       },
       "sources": [
+        {
+          "sourceName": "San Francisco 49ers",
+          "url": "https://www.49ers.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Live Week 12 injury report; no update clock displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        },
         {
           "sourceName": "NFL.com",
           "sourceType": "OFFICIAL",
@@ -6431,8 +6461,8 @@
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Ankle",
-        "practiceStatus": "Did Not Participate",
-        "gameStatus": "No Week 12 game designation yet"
+        "practiceStatus": "DNP Wednesday",
+        "gameStatus": "Week 12 designation pending"
       },
       "affectedPlayers": [
         {
@@ -6502,21 +6532,31 @@
         "position": "QB",
         "team": "ARI"
       },
-      "headline": "Carson Beck sits Wednesday; Cardinals prep Josh Johnson",
-      "summary": "Mike LaFleur said Beck did not practice Wednesday as he deals with back spasms, though he was expected to throw on the side. Beck is day-to-day; Josh Johnson is preparing to start if Beck cannot play against Washington.",
-      "fantasyAnalysis": "Treat both quarterbacks as conditional until Arizona gives a game designation. Johnson is a deeper superflex option if named the starter.",
+      "headline": "Carson Beck officially DNP Wednesday; Josh Johnson prepares",
+      "summary": "Arizona's Week 12 report confirms Beck missed Wednesday practice with a back injury. The Cardinals previously reported Josh Johnson was preparing in case Beck cannot play; no final starter or game status is confirmed.",
+      "fantasyAnalysis": "Keep an alternative for Sunday's late window. Johnson is a deep superflex fallback only if named starter.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-11-25T21:57:45.958Z",
-      "checkedAt": "2026-11-25T21:57:45.958Z",
+      "lastUpdatedAt": "2026-11-26T00:14:00.647Z",
+      "checkedAt": "2026-11-26T00:14:00.647Z",
       "sourceQuality": {
         "confidence": 98,
         "primarySourceType": "OFFICIAL",
         "corroboratingSourceCount": 0
       },
       "sources": [
+        {
+          "sourceName": "Commanders–Cardinals Week 12 injury report",
+          "url": "https://www.commanders.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Live Week 12 injury report; no update clock displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        },
         {
           "sourceName": "Arizona Cardinals",
           "sourceType": "OFFICIAL",
@@ -6532,8 +6572,8 @@
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Back",
-        "practiceStatus": "No team practice Wednesday",
-        "gameStatus": "Week 12 game designation pending"
+        "practiceStatus": "DNP Wednesday",
+        "gameStatus": "Week 12 designation pending"
       },
       "affectedPlayers": [
         {
@@ -6544,6 +6584,48 @@
           "impact": "Preparing to start if Carson Beck cannot play."
         }
       ]
+    },
+    {
+      "eventId": "official:2026-11-25:chargers:week-12:david-njoku-dnp",
+      "player": {
+        "playerId": null,
+        "name": "David Njoku",
+        "position": "TE",
+        "team": "LAC"
+      },
+      "headline": "David Njoku misses Wednesday practice with shoulder injury",
+      "summary": "The Chargers list Njoku as DNP Wednesday with a shoulder injury. No Sunday game designation has been posted.",
+      "fantasyAnalysis": "Monitor Njoku before setting lineups; Oronde Gadsden could see more routes if Njoku sits, but no new role is guaranteed.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T00:14:00.647Z",
+      "checkedAt": "2026-11-26T00:14:00.647Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Los Angeles Chargers",
+          "url": "https://www.chargers.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Live Week 12 injury report; no update clock displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Shoulder",
+        "practiceStatus": "DNP Wednesday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
     },
     {
       "eventId": "official:2026-11-25:chiefs:week-12:kenneth-walker-out",
@@ -6910,6 +6992,48 @@
       }
     },
     {
+      "eventId": "official:2026-11-25:patriots:week-12:aj-brown-dnp",
+      "player": {
+        "playerId": null,
+        "name": "A.J. Brown",
+        "position": "WR",
+        "team": "NE"
+      },
+      "headline": "A.J. Brown misses Wednesday practice with hamstring injury",
+      "summary": "New England confirmed Brown did not practice Wednesday with a hamstring injury. Mike Vrabel previously indicated he was unlikely to play in Week 12, but the Wednesday report does not rule him out.",
+      "fantasyAnalysis": "Prepare a WR alternative. The remaining Patriots receivers could see more targets if Brown is out; no specific split is confirmed.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T00:14:00.647Z",
+      "checkedAt": "2026-11-26T00:14:00.647Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "New England Patriots",
+          "url": "https://www.patriots.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Live Week 12 injury report; no update clock displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": "DNP Wednesday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "official:2026-11-25:patriots:week-12:tommy-devito-starter",
       "player": {
         "playerId": null,
@@ -7002,21 +7126,31 @@
         "position": "RB",
         "team": "BAL"
       },
-      "headline": "Derrick Henry back in concussion protocol; Minter expects him Sunday",
-      "summary": "Ravens coach Jesse Minter said Henry briefly had symptoms late in Week 11, tested clear, and was put back in protocol as a precaution. Minter said Henry would be listed limited Wednesday and expects him to play against Houston; clearance for Sunday is not confirmed.",
-      "fantasyAnalysis": "Keep an alternative available until Henry clears protocol. Justice Hill is next on the team depth chart, followed by Rasheen Ali; a lead workload is not guaranteed.",
+      "headline": "Derrick Henry limited Wednesday after re-entering concussion protocol",
+      "summary": "The Week 12 report confirms Henry was limited Wednesday with a concussion. Coach Jesse Minter says Henry tested clear after brief symptoms, was put back into protocol as a precaution, and is expected to play, but has not confirmed clearance for Sunday.",
+      "fantasyAnalysis": "Keep an alternative available until he clears protocol. Justice Hill is next on the team depth chart, with Rasheen Ali behind him.",
       "eventType": "PRACTICE",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-11-25T23:34:20.709Z",
-      "checkedAt": "2026-11-25T23:34:20.709Z",
+      "lastUpdatedAt": "2026-11-26T00:14:00.647Z",
+      "checkedAt": "2026-11-26T00:14:00.647Z",
       "sourceQuality": {
         "confidence": 98,
         "primarySourceType": "OFFICIAL",
         "corroboratingSourceCount": 0
       },
       "sources": [
+        {
+          "sourceName": "Houston Texans",
+          "url": "https://www.houstontexans.com/news/week-12-injury-report-texans-vs-ravens",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 05:03 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        },
         {
           "sourceName": "Baltimore Ravens coach transcript",
           "url": "https://www.baltimoreravens.com/news/transcript-press-conferences-11-25-26",
@@ -7041,8 +7175,8 @@
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Concussion",
-        "practiceStatus": "Coach says limited Wednesday",
-        "gameStatus": "Week 12 clearance pending"
+        "practiceStatus": "Limited Wednesday",
+        "gameStatus": "Week 12 designation pending"
       },
       "affectedPlayers": [
         {
@@ -7060,6 +7194,48 @@
           "impact": "Could share carries if Henry misses Week 12."
         }
       ]
+    },
+    {
+      "eventId": "official:2026-11-25:ravens:week-12:zay-flowers-limited",
+      "player": {
+        "playerId": null,
+        "name": "Zay Flowers",
+        "position": "WR",
+        "team": "BAL"
+      },
+      "headline": "Zay Flowers limited Wednesday with ankle injury",
+      "summary": "Baltimore lists Flowers as limited Wednesday with an ankle injury ahead of Sunday's Houston game. No final status is listed.",
+      "fantasyAnalysis": "Check Friday's report; don't assume a reduced role or make an automatic switch after one limited practice.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T00:14:00.647Z",
+      "checkedAt": "2026-11-26T00:14:00.647Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Houston Texans",
+          "url": "https://www.houstontexans.com/news/week-12-injury-report-texans-vs-ravens",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 05:03 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "Limited Wednesday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
     },
     {
       "eventId": "official:2026-11-25:saints:juwan-johnson-wednesday-dnp",
@@ -7120,6 +7296,100 @@
           "impact": "Could see more snaps if Johnson sits; target volume unconfirmed."
         }
       ]
+    },
+    {
+      "eventId": "official:2026-11-25:seahawks:week-12:jaxon-smith-njigba-ankle",
+      "player": {
+        "playerId": null,
+        "name": "Jaxon Smith-Njigba",
+        "position": "WR",
+        "team": "SEA"
+      },
+      "headline": "Jaxon Smith-Njigba limited Wednesday with ankle injury",
+      "summary": "Seattle listed Smith-Njigba limited with an ankle injury in the first Week 12 practice report. A final game designation has not been issued.",
+      "fantasyAnalysis": "Keep him in plans for now and watch Friday's report; no change to the target hierarchy is confirmed.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T00:14:00.647Z",
+      "checkedAt": "2026-11-26T00:14:00.647Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Seattle Seahawks",
+          "url": "https://www.seahawks.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Live Week 12 injury report; no update clock displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "Limited Wednesday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "official:2026-11-25:seahawks:week-12:sam-darnold-full",
+      "player": {
+        "playerId": null,
+        "name": "Sam Darnold",
+        "position": "QB",
+        "team": "SEA"
+      },
+      "headline": "Sam Darnold practices fully Wednesday",
+      "summary": "Seattle listed Darnold full with a quadriceps injury. Coach Mike Macdonald said earlier Wednesday the plan is to start him at San Francisco if practice goes well; a final game designation or post-practice starter announcement is not established.",
+      "fantasyAnalysis": "Darnold is trending toward a return. Drew Lock, limited with an elbow injury Wednesday, is the fallback only if Darnold cannot play.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T00:14:00.647Z",
+      "checkedAt": "2026-11-26T00:14:00.647Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Seattle Seahawks",
+          "url": "https://www.seahawks.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Live Week 12 injury report; no update clock displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        },
+        {
+          "sourceName": "Seattle Seahawks coach update",
+          "url": "https://www.seahawks.com/news/updates-on-sam-darnold-the-o-line-other-seahawks-injuries-from-mike-macdonald-s-wednesday-press-conference",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 02:55 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Quadriceps",
+        "practiceStatus": "Full Wednesday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
     },
     {
       "eventId": "official:2026-11-25:steelers:aaron-rodgers-released",
@@ -7413,21 +7683,31 @@
         "position": "WR",
         "team": "SF"
       },
-      "headline": "Mike Evans reportedly not practicing Wednesday",
-      "summary": "Harrison Rich reported Evans would not practice Wednesday because of his Achilles issue. Evans returned in Week 11, but there is no Week 12 game designation yet.",
-      "fantasyAnalysis": "Keep a late-Sunday pivot available if Evans remains limited or uncertain. This report does not establish a setback or a Week 12 absence.",
+      "headline": "49ers officially list Mike Evans DNP Wednesday",
+      "summary": "San Francisco's report confirms Evans missed Wednesday practice with an Achilles injury after playing in Week 11. No Sunday designation has been issued.",
+      "fantasyAnalysis": "Retain a late-game receiver alternative if relying on Evans; Keenan Allen could see more work if Evans sits, but usage is not guaranteed.",
       "eventType": "PRACTICE",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-11-25T21:46:30.638Z",
-      "checkedAt": "2026-11-25T21:46:30.638Z",
+      "lastUpdatedAt": "2026-11-26T00:14:00.647Z",
+      "checkedAt": "2026-11-26T00:14:00.647Z",
       "sourceQuality": {
-        "confidence": 88,
-        "primarySourceType": "NEWS_OUTLET",
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
         "corroboratingSourceCount": 0
       },
       "sources": [
+        {
+          "sourceName": "San Francisco 49ers",
+          "url": "https://www.49ers.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Live Week 12 injury report; no update clock displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        },
         {
           "sourceName": "RotoWire citing Harrison Rich",
           "sourceType": "NEWS_OUTLET",
@@ -7442,9 +7722,10 @@
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Achilles",
-        "practiceStatus": "Reported not practicing Wednesday",
-        "gameStatus": "Week 12 game designation pending"
-      }
+        "practiceStatus": "DNP Wednesday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
     },
     {
       "eventId": "report:2026-11-25:chargers:justin-herbert-wednesday-no-practice",
@@ -7454,21 +7735,31 @@
         "position": "QB",
         "team": "LAC"
       },
-      "headline": "Harbaugh says Justin Herbert will not practice Wednesday",
-      "summary": "Jim Harbaugh said Herbert would miss Wednesday's practice while in concussion protocol, per Noah Furtado. Herbert has not been ruled out for Sunday's game against New England.",
-      "fantasyAnalysis": "Keep a quarterback fallback. The Chargers list DJ Uiagalelei as Herbert's backup; he is a deep superflex option only if Herbert is ruled out.",
+      "headline": "Chargers officially list Justin Herbert DNP Wednesday",
+      "summary": "The Chargers' report confirms Herbert did not practice Wednesday because of a concussion. No final game designation has been issued for Sunday against New England.",
+      "fantasyAnalysis": "Keep a quarterback fallback. DJ Uiagalelei is the listed backup and a deep superflex option only if Herbert is ruled out.",
       "eventType": "PRACTICE",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-11-25T20:27:00Z",
-      "checkedAt": "2026-11-25T23:04:22.985Z",
+      "lastUpdatedAt": "2026-11-26T00:14:00.647Z",
+      "checkedAt": "2026-11-26T00:14:00.647Z",
       "sourceQuality": {
-        "confidence": 91,
-        "primarySourceType": "NEWS_OUTLET",
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
         "corroboratingSourceCount": 0
       },
       "sources": [
+        {
+          "sourceName": "Los Angeles Chargers",
+          "url": "https://www.chargers.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Live Week 12 injury report; no update clock displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:14:00.647Z"
+        },
         {
           "sourceName": "CBS Sports citing Noah Furtado",
           "sourceType": "NEWS_OUTLET",
@@ -7481,7 +7772,7 @@
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Concussion",
-        "practiceStatus": "Coach-reported Wednesday absence",
+        "practiceStatus": "DNP Wednesday",
         "gameStatus": "Week 12 designation pending"
       },
       "affectedPlayers": [
@@ -8317,5 +8608,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "ff93028d6219a5013d518d71f712bc62bfaf815c4c11936eac2224ef3da9f5ec"
+  "contentHash": "4b0df3d96eb6d0181b74a178a494e3adc542a009c9d71d413f524ff8259ae269"
 }
