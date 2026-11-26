@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T21:55:51Z",
-  "updatedAt": "2026-11-26T21:55:51Z",
-  "revision": "bowser-public-news-20261126-week12-juwan-diggs-likely",
+  "checkedAt": "2026-11-26T22:12:42Z",
+  "updatedAt": "2026-11-26T22:12:42Z",
+  "revision": "bowser-public-news-20261126-week12-seattle-minnesota",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -9291,6 +9291,78 @@
       ]
     },
     {
+      "eventId": "seahawks:20261126:jaxon-smith-njigba-thu-practice",
+      "player": {
+        "playerId": null,
+        "name": "Jaxon Smith-Njigba",
+        "position": "WR",
+        "team": "SEA"
+      },
+      "headline": "Jaxon Smith-Njigba remains limited with ankle injury",
+      "summary": "Seattle listed Smith-Njigba as limited Wednesday and Thursday ahead of the 49ers. There is no final game designation yet.",
+      "fantasyAnalysis": "Keep him in your plans and check Friday. The limited sessions are not a reason by themselves to bench him.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T22:12:42Z",
+      "sources": [
+        {
+          "sourceName": "SEA team Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.seahawks.com/team/injury-report/week/reg-12",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team practice column; publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T22:12:42Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "LP Wednesday and Thursday",
+        "gameStatus": "Week 12 designation pending"
+      }
+    },
+    {
+      "eventId": "seahawks:20261126:sam-darnold-thu-practice",
+      "player": {
+        "playerId": null,
+        "name": "Sam Darnold",
+        "position": "QB",
+        "team": "SEA"
+      },
+      "headline": "Sam Darnold logs a second full practice before 49ers game",
+      "summary": "Seattle listed Darnold as a full participant Wednesday and Thursday while recovering from a quadriceps injury. Mike Macdonald said the plan is to start him if practice goes well.",
+      "fantasyAnalysis": "Darnold is trending toward a return, but use Friday's designation and game-day news before committing in superflex.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T22:12:42Z",
+      "sources": [
+        {
+          "sourceName": "SEA team Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.seahawks.com/team/injury-report/week/reg-12",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team practice column; publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T22:12:42Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Quadriceps",
+        "practiceStatus": "FP Wednesday and Thursday",
+        "gameStatus": "Week 12 designation pending"
+      }
+    },
+    {
       "eventId": "sfchronicle:21963120:brandon-aiyuk-waived",
       "player": {
         "playerId": null,
@@ -9616,6 +9688,78 @@
       "checkedAt": "2026-11-22T17:06:39.416Z"
     },
     {
+      "eventId": "vikings:20261126:jordan-addison-thu-practice",
+      "player": {
+        "playerId": null,
+        "name": "Jordan Addison",
+        "position": "WR",
+        "team": "MIN"
+      },
+      "headline": "Jordan Addison remains out of practice after thumb surgery",
+      "summary": "Minnesota listed Addison as a non-participant on its estimated Wednesday report and again Thursday. He did not play in Week 11 after thumb surgery.",
+      "fantasyAnalysis": "Keep alternative receiver coverage until Friday. Do not treat lack of a final designation as clearance.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T22:12:42Z",
+      "sources": [
+        {
+          "sourceName": "MIN team Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.vikings.com/team/injury-report/week/reg-12",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team practice column; publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T22:12:42Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb",
+        "practiceStatus": "Estimated DNP Wednesday; DNP Thursday",
+        "gameStatus": "Week 12 designation pending"
+      }
+    },
+    {
+      "eventId": "vikings:20261126:kyler-murray-thu-practice",
+      "player": {
+        "playerId": null,
+        "name": "Kyler Murray",
+        "position": "QB",
+        "team": "MIN"
+      },
+      "headline": "Kyler Murray is limited again as Minnesota prepares for Atlanta",
+      "summary": "Murray was estimated limited Wednesday and listed limited Thursday. The Vikings have not confirmed him as their Week 12 starter after he missed Week 11.",
+      "fantasyAnalysis": "Do not start him in fantasy without a confirmed starting assignment; hold a replacement for superflex.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T22:12:42Z",
+      "sources": [
+        {
+          "sourceName": "MIN team Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.vikings.com/team/injury-report/week/reg-12",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday team practice column; publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T22:12:42Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": "Estimated LP Wednesday; LP Thursday",
+        "gameStatus": "Week 12 designation pending"
+      }
+    },
+    {
       "eventId": "weei:20261123:aj-brown-vrabel-unlikely-week12",
       "player": {
         "playerId": null,
@@ -9654,5 +9798,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "cca5c14cbbaa04e6bebb8bb8b06389b92f0c2253e4e3d94cc5935c2dabc824f6"
+  "contentHash": "90a4c1e95c222bf9d3ee70fa271aa0526f8e604658d60eb0309b637cde35531c"
 }
