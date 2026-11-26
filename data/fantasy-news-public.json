@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T00:47:37.479Z",
-  "updatedAt": "2026-11-26T00:47:37.624Z",
-  "revision": "bowser-public-news-20261125-week12-jacobs-confirmed-murray",
+  "checkedAt": "2026-11-26T03:19:20Z",
+  "updatedAt": "2026-11-26T03:19:27Z",
+  "revision": "bowser-public-news-20261125-week12-watson-out",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -7930,6 +7930,64 @@
       "affectedPlayers": []
     },
     {
+      "eventId": "report:2026-11-25:packers:week-12:christian-watson-head-evaluation",
+      "player": {
+        "playerId": null,
+        "name": "Christian Watson",
+        "position": "WR",
+        "team": "GB"
+      },
+      "headline": "Packers rule Christian Watson out with a concussion",
+      "summary": "Watson left late in the second quarter after a hit by Kamren Kinchens, who was ejected on the play. Justis Mosqueda reported that Green Bay first listed Watson questionable to return for a concussion evaluation, then officially ruled him out with a concussion. Watson had already returned from a separate first-quarter thigh injury.",
+      "fantasyAnalysis": "Hold Watson and monitor clearance before Week 13. Matthew Golden could see more targets if Watson misses time; there is no Week 13 designation yet.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-26T02:53:38Z",
+      "lastUpdatedAt": "2026-11-26T03:19:20Z",
+      "checkedAt": "2026-11-26T03:19:20Z",
+      "sourceQuality": {
+        "confidence": 91,
+        "primarySourceType": "BEAT_WRITER",
+        "corroboratingSourceCount": 1
+      },
+      "sources": [
+        {
+          "sourceName": "Acme Packing Company",
+          "author": "Justis Mosqueda",
+          "sourceType": "BEAT_WRITER",
+          "url": "https://www.acmepackingcompany.com/green-bay-packers-news/90171/rams-s-kam-kinchens-ejected-packers-wr-christian-watson-evaluated-for-concussion",
+          "publishedAt": "2026-11-26T02:53:38Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T03:19:20Z"
+        },
+        {
+          "sourceName": "CBS Sports live play-by-play",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.cbssports.com/nfl/gametracker/playbyplay/NFL_20261125_GB@LAR/",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Live play-by-play; injury recorded at 2:00 in the second quarter",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T03:18:40Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Head",
+        "gameStatus": "Out for remainder of Week 12; Week 13 undetermined"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Matthew Golden",
+          "team": "GB",
+          "position": "WR",
+          "relationship": "BENEFICIARY",
+          "impact": "Could see more targets if Watson is sidelined."
+        }
+      ]
+    },
+    {
       "eventId": "report:2026-11-25:packers:week-12:josh-jacobs-inactive",
       "player": {
         "playerId": null,
@@ -8722,5 +8780,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "ce786af9d0ae30b83e968015afd51f0967537eceafd1fb115ddf2c54a28fd102"
+  "contentHash": "967a961cd32160a524635c48e150d022f9a7dc2d7938e681d18b7a5d891916a6"
 }
