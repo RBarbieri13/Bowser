@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T00:27:38.692Z",
-  "updatedAt": "2026-11-26T00:27:38.838Z",
-  "revision": "bowser-public-news-20261125-week12-likely",
+  "checkedAt": "2026-11-26T00:47:37.479Z",
+  "updatedAt": "2026-11-26T00:47:37.624Z",
+  "revision": "bowser-public-news-20261125-week12-jacobs-confirmed-murray",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -7539,6 +7539,58 @@
       }
     },
     {
+      "eventId": "official:2026-11-25:vikings:week-12:kyler-murray-estimated-limited",
+      "player": {
+        "playerId": null,
+        "name": "Kyler Murray",
+        "position": "QB",
+        "team": "MIN"
+      },
+      "headline": "Vikings estimate Kyler Murray limited Wednesday",
+      "summary": "Minnesota estimated Murray would have been limited with his hamstring injury during Wednesday's walkthrough. He was out last week, when Kirk Cousins started. No change at starter or final Week 12 designation was announced.",
+      "fantasyAnalysis": "Do not start Murray on an estimated practice grade. Monitor the next practices and the starting quarterback decision; Cousins is first on the team's unofficial depth chart.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T00:47:37.479Z",
+      "checkedAt": "2026-11-26T00:47:37.479Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Minnesota Vikings injury report",
+          "url": "https://www.vikings.com/news/falcons-injury-report-week-12-2026-nfl-season",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 04:35 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:47:37.479Z"
+        },
+        {
+          "sourceName": "Minnesota Vikings depth chart",
+          "url": "https://www.vikings.com/team/depth-chart",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": null,
+          "publishedAtRaw": "Current unofficial team depth chart; no update clock displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:47:37.479Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": "Estimated limited Wednesday walkthrough",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "packers:20261123:kyren-williams-monday-fp-week12",
       "player": {
         "playerId": null,
@@ -7885,21 +7937,31 @@
         "position": "RB",
         "team": "GB"
       },
-      "headline": "Josh Jacobs reported inactive against the Rams",
-      "summary": "Justis Mosqueda reported Jacobs on Green Bay's Wednesday inactive list as he recovers from right ring-finger surgery. This supersedes the Tuesday questionable outlook; no Week 13 status has been established.",
-      "fantasyAnalysis": "Sit Jacobs for Week 12. Kaleb Johnson and Chris Brooks could gain opportunities, but the split with MarShawn Lloyd is not settled.",
+      "headline": "Packers confirm Josh Jacobs inactive against the Rams",
+      "summary": "The Packers' official inactives confirm Jacobs will not play Wednesday as he recovers from a finger injury. No Week 13 designation has been issued.",
+      "fantasyAnalysis": "Sit Jacobs for Week 12. Kaleb Johnson and Chris Brooks could gain opportunities, but the split with MarShawn Lloyd is not established.",
       "eventType": "INJURY",
-      "status": "REPORTED",
+      "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": "2026-11-25T23:57:27Z",
-      "lastUpdatedAt": "2026-11-25T23:57:27Z",
-      "checkedAt": "2026-11-26T00:05:08.549Z",
+      "lastUpdatedAt": "2026-11-26T00:47:37.479Z",
+      "checkedAt": "2026-11-26T00:47:37.479Z",
       "sourceQuality": {
-        "confidence": 92,
-        "primarySourceType": "BEAT_WRITER",
-        "corroboratingSourceCount": 0
+        "confidence": 99,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 1
       },
       "sources": [
+        {
+          "sourceName": "Green Bay Packers inactives",
+          "url": "https://www.packers.com/news/packers-rams-week-12-inactives-nov-25-2026",
+          "sourceType": "OFFICIAL",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 05:45 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:47:37.479Z"
+        },
         {
           "sourceName": "Acme Packing Company",
           "author": "Justis Mosqueda",
@@ -7922,8 +7984,8 @@
       ],
       "injury": {
         "isInjuryRelated": true,
-        "bodyPart": "Right ring finger",
-        "gameStatus": "Reported inactive for Week 12 at the Rams"
+        "bodyPart": "Finger",
+        "gameStatus": "Inactive for Week 12 at the Rams"
       },
       "affectedPlayers": [
         {
@@ -8660,5 +8722,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "f09d836b0b43c0aeddea1d09973b548f583f7809376ad11490553c35e691830c"
+  "contentHash": "ce786af9d0ae30b83e968015afd51f0967537eceafd1fb115ddf2c54a28fd102"
 }
