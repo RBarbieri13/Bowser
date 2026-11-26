@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T14:42:42Z",
-  "updatedAt": "2026-11-26T14:42:42Z",
-  "revision": "bowser-public-news-20261126-week12-maye-roschon",
+  "checkedAt": "2026-11-26T16:41:32Z",
+  "updatedAt": "2026-11-26T16:41:32Z",
+  "revision": "bowser-public-news-20261126-week12-laporta-ahmed",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -100,6 +100,48 @@
         }
       ],
       "checkedAt": "2026-11-21T19:44:56.678Z"
+    },
+    {
+      "eventId": "bears:20261125:salvon-ahmed-thanksgiving-elevation",
+      "player": {
+        "playerId": null,
+        "name": "Salvon Ahmed",
+        "position": "RB",
+        "team": "CHI"
+      },
+      "headline": "Chicago elevates running back Salvon Ahmed for Thanksgiving",
+      "summary": "The Bears’ Nov. 25 transaction log lists Ahmed elevated to the active roster for the Detroit game. Roschon Johnson was ruled out with an ankle injury. Ahmed was not listed among the Bears’ inactives published by Erik Schlitt.",
+      "fantasyAnalysis": "Ahmed provides depth behind D’Andre Swift and Kyle Monangai. This is a game elevation, not evidence of a new lead role or an immediate standard-league add.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T16:35:48Z",
+      "checkedAt": "2026-11-26T16:41:32Z",
+      "sources": [
+        {
+          "sourceName": "Chicago Bears transactions",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.chicagobears.com/team/transactions/",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "11/25 official transaction log; no publication clock shown",
+          "author": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T16:41:32Z"
+        },
+        {
+          "sourceName": "Pride of Detroit",
+          "sourceType": "BEAT_WRITER",
+          "url": "https://www.prideofdetroit.com/detroit-lions-news/182786/lions-week-12-inactives-dj-wonnum-chuck-clark-out-vs-bears",
+          "publishedAt": "2026-11-26T16:35:48Z",
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": null,
+          "author": "Erik Schlitt",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T16:41:32Z"
+        }
+      ]
     },
     {
       "eventId": "bengals:20261121:andrei-iosivas-doubtful",
@@ -2164,6 +2206,42 @@
         "isInjuryRelated": true,
         "bodyPart": "Ankle",
         "practiceStatus": "LP"
+      }
+    },
+    {
+      "eventId": "lions:20261126:sam-laporta-thanksgiving-active",
+      "player": {
+        "playerId": null,
+        "name": "Sam LaPorta",
+        "position": "TE",
+        "team": "DET"
+      },
+      "headline": "Sam LaPorta available for Thanksgiving against Chicago",
+      "summary": "Detroit beat reporter Erik Schlitt published the Lions’ Week 12 inactives. LaPorta is not on the list after practicing in full Wednesday and carrying no final game designation for his ankle injury.",
+      "fantasyAnalysis": "Use LaPorta as a normal starting tight end; the inactive list does not establish a particular snap count or workload.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": "2026-11-26T16:35:48Z",
+      "lastUpdatedAt": "2026-11-26T16:35:48Z",
+      "checkedAt": "2026-11-26T16:41:32Z",
+      "sources": [
+        {
+          "sourceName": "Pride of Detroit",
+          "sourceType": "BEAT_WRITER",
+          "url": "https://www.prideofdetroit.com/detroit-lions-news/182786/lions-week-12-inactives-dj-wonnum-chuck-clark-out-vs-bears",
+          "publishedAt": "2026-11-26T16:35:48Z",
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": null,
+          "author": "Erik Schlitt",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T16:41:32Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "gameStatus": "Active for Week 12 vs. Chicago"
       }
     },
     {
@@ -9013,5 +9091,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "4a0df9326697afec3fa42983f72cf237f37d442e068879dc9e1cc1e473e410ff"
+  "contentHash": "d4e12f5cf351ee14d93daf53478a0fc36db0d20ea25634bf6c1290c6d0de3637"
 }
