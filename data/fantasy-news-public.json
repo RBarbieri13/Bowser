@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T00:14:00.647Z",
-  "updatedAt": "2026-11-26T00:14:00.946Z",
-  "revision": "bowser-public-news-20261125-week12-wednesday-grades",
+  "checkedAt": "2026-11-26T00:27:38.692Z",
+  "updatedAt": "2026-11-26T00:27:38.838Z",
+  "revision": "bowser-public-news-20261125-week12-likely",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6838,6 +6838,58 @@
       }
     },
     {
+      "eventId": "official:2026-11-25:giants:isaiah-likely-groin-limited",
+      "player": {
+        "playerId": null,
+        "name": "Isaiah Likely",
+        "position": "TE",
+        "team": "NYG"
+      },
+      "headline": "Giants list Isaiah Likely limited Wednesday",
+      "summary": "Isaiah Likely was limited Wednesday with a groin injury in the Giants' first Week 12 report. He played last week after a Friday absence with the same listed issue; no Sunday designation has been issued for Week 12 at Indianapolis.",
+      "fantasyAnalysis": "Watch Friday's report and Sunday's inactives. A limited practice alone doesn't call for benching him; have a tight end alternative if he is downgraded.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T00:27:38.692Z",
+      "checkedAt": "2026-11-26T00:27:38.692Z",
+      "sourceQuality": {
+        "confidence": 98,
+        "primarySourceType": "OFFICIAL",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "New York Giants injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.giants.com/news/injury-report-statuses-for-giants-vs-colts",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Nov 25, 2026 at 04:00 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:27:38.692Z"
+        },
+        {
+          "sourceName": "New York Giants Week 11 inactives",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.giants.com/news/inactives-who-s-in-who-s-out-for-giants-vs-jaguars",
+          "publishedAt": null,
+          "publishedDate": "2026-11-22",
+          "publishedAtRaw": "Nov 22, 2026 at 02:55 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:27:38.692Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "practiceStatus": "Limited Wednesday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "official:2026-11-25:jaguars:bhayshul-tuten-wednesday-dnp-week12",
       "player": {
         "playerId": null,
@@ -8608,5 +8660,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "4b0df3d96eb6d0181b74a178a494e3adc542a009c9d71d413f524ff8259ae269"
+  "contentHash": "f09d836b0b43c0aeddea1d09973b548f583f7809376ad11490553c35e691830c"
 }
