@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T04:46:30Z",
-  "updatedAt": "2026-11-26T04:46:34Z",
-  "revision": "bowser-public-news-20261125-week12-corum-usage",
+  "checkedAt": "2026-11-26T05:19:30Z",
+  "updatedAt": "2026-11-26T05:19:39Z",
+  "revision": "bowser-public-news-20261125-week12-rams-tight-ends",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -8207,6 +8207,73 @@
       }
     },
     {
+      "eventId": "report:2026-11-25:rams:week-12:tyler-higbee-chest-exit",
+      "player": {
+        "playerId": null,
+        "name": "Tyler Higbee",
+        "position": "TE",
+        "team": "LAR"
+      },
+      "headline": "Tyler Higbee and Davis Allen exited Rams win with injuries",
+      "summary": "NBC Sports reported that the broadcast ruled Higbee out with a chest injury after he went to the locker room early in the fourth quarter. Allen had already been ruled out with an ankle injury. Neither has a Week 13 designation.",
+      "fantasyAnalysis": "Colby Parkinson is the first Rams tight end to monitor if both sit next week; Max Klare could play more too. No immediate add on this report alone.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T05:19:30Z",
+      "checkedAt": "2026-11-26T05:19:30Z",
+      "sourceQuality": {
+        "confidence": 92,
+        "primarySourceType": "NEWS_OUTLET",
+        "corroboratingSourceCount": 1
+      },
+      "sources": [
+        {
+          "sourceName": "NBC Sports",
+          "author": "Mark Garcia",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-11-25/tyler-higbee-out-for-remainder-of-week-12-vs-gb",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Publication date from article URL; no time displayed",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-26T05:19:30Z"
+        },
+        {
+          "sourceName": "RotoWire",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://web9.rotowire.com/football/headlines/tyler-higbee-injury-leaves-game-with-chest-injury-649900",
+          "publishedAt": null,
+          "publishedDate": "2026-11-25",
+          "publishedAtRaw": "Updated Nov 25, 2026 at 8:10 PM; timezone not displayed",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-26T05:19:30Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Chest",
+        "gameStatus": "Reported out for remainder of Week 12; Week 13 undetermined"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Colby Parkinson",
+          "team": "LAR",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Could get more work if Higbee and Allen are out."
+        },
+        {
+          "name": "Max Klare",
+          "team": "LAR",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Could see more snaps if the tight end room remains short."
+        }
+      ]
+    },
+    {
       "eventId": "report:2026-11-25:vikings:jordan-addison-estimated-dnp",
       "player": {
         "playerId": null,
@@ -8844,5 +8911,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "0e407886c37dfa4b1044c2ff19b053ca6cb6bbeb8b93f5ce404adc25b04fc906"
+  "contentHash": "45921f1a566f68f9ee1a9ff30ebfc10ee95f01dc9c90a23696a98edaff9a19aa"
 }
