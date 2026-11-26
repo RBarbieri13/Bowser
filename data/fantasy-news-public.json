@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-25T23:34:20.709Z",
-  "updatedAt": "2026-11-25T23:34:28.100Z",
-  "revision": "bowser-public-news-20261125-week12-henry",
+  "checkedAt": "2026-11-26T00:05:08.549Z",
+  "updatedAt": "2026-11-26T00:05:08.697Z",
+  "revision": "bowser-public-news-20261125-week12-jacobs",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -7535,6 +7535,71 @@
       "affectedPlayers": []
     },
     {
+      "eventId": "report:2026-11-25:packers:week-12:josh-jacobs-inactive",
+      "player": {
+        "playerId": null,
+        "name": "Josh Jacobs",
+        "position": "RB",
+        "team": "GB"
+      },
+      "headline": "Josh Jacobs reported inactive against the Rams",
+      "summary": "Justis Mosqueda reported Jacobs on Green Bay's Wednesday inactive list as he recovers from right ring-finger surgery. This supersedes the Tuesday questionable outlook; no Week 13 status has been established.",
+      "fantasyAnalysis": "Sit Jacobs for Week 12. Kaleb Johnson and Chris Brooks could gain opportunities, but the split with MarShawn Lloyd is not settled.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": "2026-11-25T23:57:27Z",
+      "lastUpdatedAt": "2026-11-25T23:57:27Z",
+      "checkedAt": "2026-11-26T00:05:08.549Z",
+      "sourceQuality": {
+        "confidence": 92,
+        "primarySourceType": "BEAT_WRITER",
+        "corroboratingSourceCount": 0
+      },
+      "sources": [
+        {
+          "sourceName": "Acme Packing Company",
+          "author": "Justis Mosqueda",
+          "sourceType": "BEAT_WRITER",
+          "url": "https://www.acmepackingcompany.com/green-bay-packers-news/90165/packers-inactives-lb-zaire-franklin-rb-josh-jacobs-out-vs-los-angeles-rams",
+          "publishedAt": "2026-11-25T23:57:27Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:05:08.549Z"
+        },
+        {
+          "sourceName": "Packers depth chart",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.packers.com/team/depth-chart",
+          "publishedAt": null,
+          "publishedDate": "2026-11-23",
+          "publishedAtRaw": "Unofficial depth chart dated November 23, no time displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T00:05:08.549Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Right ring finger",
+        "gameStatus": "Reported inactive for Week 12 at the Rams"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Kaleb Johnson",
+          "team": "GB",
+          "position": "RB",
+          "relationship": "BENEFICIARY",
+          "impact": "Could pick up carries; share is uncertain."
+        },
+        {
+          "name": "Chris Brooks",
+          "team": "GB",
+          "position": "RB",
+          "relationship": "BENEFICIARY",
+          "impact": "Could pick up work in the backfield."
+        }
+      ]
+    },
+    {
       "eventId": "report:2026-11-25:panthers:tetairoa-mcmillan-foot-canales",
       "player": {
         "playerId": null,
@@ -8252,5 +8317,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "9819b0a39270d686c623783ff8b39786ab7ea1966032c7e2c1c25b12ef0b2f55"
+  "contentHash": "ff93028d6219a5013d518d71f712bc62bfaf815c4c11936eac2224ef3da9f5ec"
 }
