@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T17:20:03Z",
-  "updatedAt": "2026-11-26T17:20:03Z",
-  "revision": "bowser-public-news-20261126-week12-milton",
+  "checkedAt": "2026-11-26T20:12:54Z",
+  "updatedAt": "2026-11-26T20:12:54Z",
+  "revision": "bowser-public-news-20261126-week12-pittman",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -8997,6 +8997,52 @@
       "checkedAt": "2026-11-22T17:20:35.426Z"
     },
     {
+      "eventId": "steelers:20261126:michael-pittman-jr-activated-ir",
+      "player": {
+        "playerId": null,
+        "name": "Michael Pittman Jr.",
+        "position": "WR",
+        "team": "PIT"
+      },
+      "headline": "Steelers activate Michael Pittman Jr. from injured reserve",
+      "summary": "Pittsburgh’s Nov. 26 transaction log confirms Pittman was activated from injured reserve. The official Week 12 report lists him as a full participant Thursday after a foot injury. Pittsburgh placed Ben Skowronek on injured reserve in the same set of moves.",
+      "fantasyAnalysis": "Pittman is eligible to play Friday against Denver. Watch the inactive list and his first-game snaps and targets with Mason Rudolph before trusting him as a standard-league starter.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T20:12:54Z",
+      "sources": [
+        {
+          "sourceName": "Pittsburgh Steelers transactions",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.steelers.com/team/transactions/",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 transaction row; publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T20:12:54Z"
+        },
+        {
+          "sourceName": "Pittsburgh Steelers Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.steelers.com/news/week-12-injury-report-broncos-x3630",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Thursday, November 26 practice report (timezone not displayed)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T20:12:54Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot",
+        "practiceStatus": "Full Participation",
+        "gameStatus": "Activated from injured reserve; eligible for Week 12"
+      }
+    },
+    {
       "eventId": "tennesseetitans:20261121:tyjae-spears-ir",
       "player": {
         "playerId": null,
@@ -9122,5 +9168,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "4cd1cf76e7787c02d4e6d88c536cfbe26976fc7651c1b488bc4f628bee13c5c9"
+  "contentHash": "c187ab9a3ff5d46286113249b4037a138e37edb16e8a573ed6d9589860168102"
 }
