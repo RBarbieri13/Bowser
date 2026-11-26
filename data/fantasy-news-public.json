@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T23:35:05Z",
-  "updatedAt": "2026-11-26T23:35:05Z",
-  "revision": "bowser-public-news-20261126-week12-goedert-barkley",
+  "checkedAt": "2026-11-26T23:45:56Z",
+  "updatedAt": "2026-11-26T23:45:56Z",
+  "revision": "bowser-public-news-20261126-week12-bowers",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -8697,6 +8697,51 @@
       "checkedAt": "2026-11-22T20:05:10.764Z"
     },
     {
+      "eventId": "raiders:20261126:brock-bowers-limited-thursday",
+      "player": {
+        "playerId": null,
+        "name": "Brock Bowers",
+        "position": "TE",
+        "team": "LV"
+      },
+      "headline": "Brock Bowers remains limited Thursday with ankle injury",
+      "summary": "The Raiders list Bowers as limited Wednesday and Thursday after he missed Week 11. Michael Mayer practiced fully both days. Bowers has no final Week 12 designation yet.",
+      "fantasyAnalysis": "Keep a late-game replacement because the Raiders play Sunday night. Mayer is the direct late-window contingency if Bowers is inactive.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T23:45:56Z",
+      "sources": [
+        {
+          "sourceName": "Las Vegas Raiders official Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.raiders.com/news/raiders-browns-week-12-injury-report",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Thursday report column; no separate update clock verified",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T23:45:56Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "LP Wednesday and Thursday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Michael Mayer",
+          "team": "LV",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Next tight end to watch if Bowers cannot play; no target floor assured."
+        }
+      ]
+    },
+    {
       "eventId": "report:2026-11-25:49ers:mike-evans-wednesday-dnp",
       "player": {
         "playerId": null,
@@ -10201,5 +10246,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "cb68903b7dff3b55ef4127ad8ad7defa33395cd8d78649c6a72ec310ff5d686d"
+  "contentHash": "e5438bf18ee53715cdede039942d802e7a1a9fe85f3dde588ff00574bc3920a0"
 }
