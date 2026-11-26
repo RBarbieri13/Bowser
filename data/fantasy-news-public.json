@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T21:16:11Z",
-  "updatedAt": "2026-11-26T21:16:11Z",
-  "revision": "bowser-public-news-20261126-week12-tetairoa",
+  "checkedAt": "2026-11-26T21:35:28Z",
+  "updatedAt": "2026-11-26T21:35:28Z",
+  "revision": "bowser-public-news-20261126-week12-beck-jalen",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -571,6 +571,43 @@
       }
     },
     {
+      "eventId": "buccaneers:20261126:jalen-mcmillan-full-practice-ir",
+      "player": {
+        "playerId": null,
+        "name": "Jalen McMillan",
+        "position": "WR",
+        "team": "TB"
+      },
+      "headline": "Jalen McMillan practices fully as he works back from injured reserve",
+      "summary": "Tampa Bay listed McMillan as a full participant Thursday with a knee injury. His return-to-practice window is open, but the team has not announced an activation to the 53-man roster.",
+      "fantasyAnalysis": "A watch in deep leagues. Do not count on him for Monday night without activation and an active designation; his workload on return is unknown.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T21:35:28Z",
+      "sources": [
+        {
+          "sourceName": "Tampa Bay Buccaneers official Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.buccaneers.com/team/injury-report/week/reg-12",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday practice column; publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T21:35:28Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee",
+        "practiceStatus": "FP Thursday",
+        "gameStatus": "Designated for return from IR; activation not announced"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "caplan:20261122:kyren-williams-sunday-toe-lp-week12",
       "player": {
         "playerId": null,
@@ -622,6 +659,51 @@
         "gameStatus": "Reported limited Sunday; Wednesday game designation pending"
       },
       "checkedAt": "2026-11-23T00:12:24.372Z"
+    },
+    {
+      "eventId": "cardinals:20261126:carson-beck-second-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Carson Beck",
+        "position": "QB",
+        "team": "ARI"
+      },
+      "headline": "Carson Beck misses a second practice with back injury",
+      "summary": "Arizona’s quarterback was listed as a non-participant Wednesday and Thursday on the Week 12 report. Arizona is preparing Josh Johnson in case Beck cannot play against Washington, but has not announced a final game designation.",
+      "fantasyAnalysis": "Have another quarterback ready in superflex. Johnson is next up if Beck sits but is not a preferred one-quarterback streamer.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-26T21:35:28Z",
+      "sources": [
+        {
+          "sourceName": "Washington Commanders official Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.commanders.com/team/injury-report/week/reg-12",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov. 26 Thursday practice column; publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-26T21:35:28Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Back",
+        "practiceStatus": "DNP Wednesday and Thursday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Josh Johnson",
+          "team": "ARI",
+          "position": "QB",
+          "relationship": "BENEFICIARY",
+          "impact": "Would be in line for a second consecutive start if Beck cannot play."
+        }
+      ]
     },
     {
       "eventId": "chargers:20261122:ladd-mcconkey-active-week11",
@@ -9394,5 +9476,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "91a62af98f8de5b2a5f6dd4ba54749c939b9cb9715ed5608d228b490005519e0"
+  "contentHash": "43702e7be173f253d2657c57b094cf1fb44f65f4dc4c7db74dc68ea5d0733acb"
 }
