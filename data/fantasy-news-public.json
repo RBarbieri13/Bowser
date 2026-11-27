@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T18:28:45Z",
-  "updatedAt": "2026-11-27T18:28:45Z",
-  "revision": "bowser-public-news-20261127-week12-beck-brown-cooper",
+  "checkedAt": "2026-11-27T19:15:43Z",
+  "updatedAt": "2026-11-27T19:15:43Z",
+  "revision": "bowser-public-news-20261127-week12-colts-outs-tuten-watch",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1138,6 +1138,88 @@
         "bodyPart": "Rib",
         "gameStatus": "Active for Week 12 vs Buffalo"
       }
+    },
+    {
+      "eventId": "colts:20261127:seth-mcgowan-week12-out",
+      "player": {
+        "playerId": null,
+        "name": "Seth McGowan",
+        "position": "RB",
+        "team": "IND"
+      },
+      "headline": "Seth McGowan ruled out against the Giants",
+      "summary": "Shane Steichen ruled McGowan out for Week 12 with a hamstring injury after the back missed the first two practices.",
+      "fantasyAnalysis": "Jonathan Taylor remains the lead back. DJ Giddens is a deep handcuff, not a standalone start based on this injury.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T19:15:43Z",
+      "sources": [
+        {
+          "sourceName": "Indianapolis Colts official Week 12 status report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.colts.com/news/who-s-in-who-s-out-colts-rule-out-five-ahead-of-sunday",
+          "publishedAt": null,
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 01:24 PM; timezone not shown",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T19:15:43Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": null,
+        "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": [
+        {
+          "name": "DJ Giddens",
+          "team": "IND",
+          "position": "RB",
+          "relationship": "BENEFICIARY",
+          "impact": "Could have more opportunity for reserve carries behind Jonathan Taylor."
+        }
+      ]
+    },
+    {
+      "eventId": "colts:20261127:will-mallory-week12-out",
+      "player": {
+        "playerId": null,
+        "name": "Will Mallory",
+        "position": "TE",
+        "team": "IND"
+      },
+      "headline": "Will Mallory ruled out against the Giants",
+      "summary": "Shane Steichen ruled Mallory out for Week 12 with a hamstring injury.",
+      "fantasyAnalysis": "Tyler Warren remains the primary Colts tight end. The injury does not create a standalone streaming option.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T19:15:43Z",
+      "sources": [
+        {
+          "sourceName": "Indianapolis Colts official Week 12 status report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.colts.com/news/who-s-in-who-s-out-colts-rule-out-five-ahead-of-sunday",
+          "publishedAt": null,
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 01:24 PM; timezone not shown",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T19:15:43Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": null,
+        "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": []
     },
     {
       "eventId": "commanders:20261121:jacory-croskey-merritt-questionable",
@@ -6763,6 +6845,51 @@
       ]
     },
     {
+      "eventId": "nfl:20261127:jaguars:bhayshul-tuten-coen-uncertain",
+      "player": {
+        "playerId": null,
+        "name": "Bhayshul Tuten",
+        "position": "RB",
+        "team": "JAX"
+      },
+      "headline": "Liam Coen unsure if Bhayshul Tuten will face Tennessee",
+      "summary": "Coen said Tuten's Week 12 availability is uncertain after two missed practices with ankle and foot injuries. The team had not issued a final designation at the time checked.",
+      "fantasyAnalysis": "Keep a backup for the Sunday early window. A Tuten absence could consolidate more work for Travis Etienne Jr.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T19:15:43Z",
+      "sources": [
+        {
+          "sourceName": "NFL.com Friday roundup quoting Liam Coen",
+          "sourceType": "OFFICIAL",
+          "url": "https://amp.nfl.com/news/nfl-news-roundup-latest-league-updates-from-friday-nov-27",
+          "publishedAt": null,
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 10:40 AM; display does not identify timezone",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T19:15:43Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle and foot",
+        "practiceStatus": null,
+        "gameStatus": "Uncertain per coach; no final designation verified"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Travis Etienne Jr.",
+          "team": "JAX",
+          "position": "RB",
+          "relationship": "BENEFICIARY",
+          "impact": "Could see a larger share of Jacksonville's backfield touches if Tuten sits."
+        }
+      ]
+    },
+    {
       "eventId": "nfl:20261127:jaguars:parker-washington-out-week12",
       "player": {
         "playerId": null,
@@ -11045,5 +11172,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "0369b194ee7c6faf71ea02ad9fd506a5e4dc63ccc3ade50a7856632f10f9c850"
+  "contentHash": "aa57813fb6e727d7db8c2be1ffbc7c581dbc7e31ef23d2b8ada74e17041c9017"
 }
