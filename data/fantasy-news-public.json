@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T01:03:53Z",
-  "updatedAt": "2026-11-27T01:03:53Z",
-  "revision": "bowser-public-news-20261126-week12-badie-activated",
+  "checkedAt": "2026-11-27T01:42:00Z",
+  "updatedAt": "2026-11-27T01:42:09Z",
+  "revision": "bowser-public-news-20261126-week12-eagles-postgame",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1594,6 +1594,46 @@
       ]
     },
     {
+      "eventId": "eagles:20261126:joe-milton-four-td-week12",
+      "player": {
+        "playerId": null,
+        "name": "Joe Milton III",
+        "position": "QB",
+        "team": "PHI"
+      },
+      "headline": "Joe Milton III accounts for four touchdowns in Eagles comeback",
+      "summary": "Milton completed 21 of 31 passes for 331 yards, three touchdowns and one interception and rushed three times for 15 yards and a score as Philadelphia beat Dallas 39–38. DeVonta Smith caught 11 passes for 200 yards and two touchdowns.",
+      "fantasyAnalysis": "Milton is a superflex watch if he keeps the starting job. His Week 13 role and future volume are not guaranteed; Smith’s target production is evidence from this game, not a weekly projection.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-27T01:35:35.189Z",
+      "checkedAt": "2026-11-27T01:42:00Z",
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles final Week 12 box score",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.philadelphiaeagles.com/game-day/2026/reg-week12/eagles-at-cowboys/box-score",
+          "publishedDate": "2026-11-26",
+          "publishedAt": null,
+          "publishedAtRaw": "November 26 completed game; final box-score publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T01:42:00Z"
+        },
+        {
+          "sourceName": "Philadelphia Eagles live game recap, updated with final score",
+          "author": "PhiladelphiaEagles.com",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.philadelphiaeagles.com/news/game-recap-eagles-at-cowboys-thanksgiving-2026-nfl-week-12-saquon-barkley-devonta-smith-joe-milton-dak-prescott",
+          "publishedDate": "2026-11-26",
+          "publishedAt": "2026-11-27T01:35:00Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T01:42:00Z"
+        }
+      ]
+    },
+    {
       "eventId": "eagles:20261126:joe-milton-week12-thanksgiving-starter",
       "player": {
         "playerId": null,
@@ -1632,13 +1672,13 @@
         "position": "RB",
         "team": "PHI"
       },
-      "headline": "Saquon Barkley leaves against Dallas with a stinger",
-      "summary": "Philadelphia listed Barkley questionable to return with a stinger. Its live box score entering the fourth quarter had Will Shipley at 10 carries for 46 yards and Barkley at five for seven. No final return decision or Week 13 timeline is established.",
-      "fantasyAnalysis": "Shipley handled the extra rushing work and is the first backup to monitor. Treat him as a contingency stash, not a confirmed Week 13 starter.",
+      "headline": "Saquon Barkley finishes with five carries after stinger; Will Shipley leads Eagles backs",
+      "summary": "Philadelphia listed Barkley questionable to return with a stinger. Game logs show all five Barkley carries for seven yards came in the first quarter. Will Shipley led Philadelphia backs with 10 carries for 46 yards in the 39–38 win. No Week 13 status has been announced.",
+      "fantasyAnalysis": "Shipley is the first backup to watch and a conditional waiver stash. Wait for a Barkley update before treating Shipley as a Week 13 starter.",
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Stinger",
-        "gameStatus": "Questionable to return during Week 12; Week 13 unknown"
+        "gameStatus": "No recorded touch after first quarter; Week 13 status unknown"
       },
       "affectedPlayers": [
         {
@@ -1646,16 +1686,26 @@
           "team": "PHI",
           "position": "RB",
           "relationship": "BENEFICIARY",
-          "impact": "Led Philadelphia with 10 carries for 46 yards through three quarters."
+          "impact": "Led Eagles running backs with 10 carries for 46 yards in the completed game."
         }
       ],
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
-      "lastUpdatedAt": "2026-11-26T23:10:44Z",
-      "checkedAt": "2026-11-27T00:28:58Z",
+      "lastUpdatedAt": "2026-11-27T01:35:35.189Z",
+      "checkedAt": "2026-11-27T01:42:00Z",
       "sources": [
+        {
+          "sourceName": "Philadelphia Eagles live game recap, updated with final score",
+          "author": "PhiladelphiaEagles.com",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.philadelphiaeagles.com/news/game-recap-eagles-at-cowboys-thanksgiving-2026-nfl-week-12-saquon-barkley-devonta-smith-joe-milton-dak-prescott",
+          "publishedDate": "2026-11-26",
+          "publishedAt": "2026-11-27T01:35:00Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T01:42:00Z"
+        },
         {
           "sourceName": "Bleeding Green Nation",
           "author": "Alexis Chassen",
@@ -10435,5 +10485,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "a7c34c2fddd58962a9d725d16c30f384515f9c7f16ef6005b0c00a5e09bcc9ec"
+  "contentHash": "49e27ed61173dca43acca7e19436debe99cecab1c5109bcf053f230203ade5ba"
 }
