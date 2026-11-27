@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T22:15:12Z",
-  "updatedAt": "2026-11-27T22:15:13.042Z",
-  "revision": "bowser-public-news-20261127-bowers-official-questionable",
+  "checkedAt": "2026-11-27T22:34:55Z",
+  "updatedAt": "2026-11-27T22:34:56.213Z",
+  "revision": "bowser-public-news-20261127-purdy-out-jones-starts",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -11314,6 +11314,51 @@
       }
     },
     {
+      "eventId": "sf:20261127:purdy-out-jones-start-week12",
+      "player": {
+        "playerId": null,
+        "name": "Brock Purdy",
+        "position": "QB",
+        "team": "SF"
+      },
+      "headline": "Kyle Shanahan rules out Brock Purdy; Mac Jones to start",
+      "summary": "SFGATE reports Shanahan ruled Purdy out after Friday's practice because of his ankle injury. Jones will start Sunday against Seattle.",
+      "fantasyAnalysis": "Bench Purdy for Week 12. Jones is a one-week quarterback option in superflex and deeper formats; the announcement does not establish Purdy's Week 13 status.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T22:34:55Z",
+      "sources": [
+        {
+          "sourceName": "SFGATE, Alex Simon reporting Kyle Shanahan’s Friday announcement",
+          "url": "https://www.sfgate.com/49ers/article/brock-purdy-49ers-seahawks-injury-22552603.php",
+          "sourceType": "NEWS_OUTLET",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Latest item timestamp shown as Nov. 27, 2:30 p.m.; original article and update clocks differ, timezone not printed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:34:55Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Left ankle",
+        "practiceStatus": null,
+        "gameStatus": "Out Week 12, per Kyle Shanahan"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Mac Jones",
+          "team": "SF",
+          "position": "QB",
+          "relationship": "BENEFICIARY",
+          "impact": "Will start Week 12 against Seattle."
+        }
+      ]
+    },
+    {
       "eventId": "sfchronicle:20261127:brock-purdy-friday-media-absence",
       "player": {
         "playerId": null,
@@ -12142,5 +12187,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "842a1eeef5b4fed38dcb9bc6c8f560bc2a4b457a41174137e5538ed1fc9cce2d"
+  "contentHash": "eacd8656494d4ba2c9f7873e0a744eba510243f23c403f86b2e6edaf0944ef8d"
 }
