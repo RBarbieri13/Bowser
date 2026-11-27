@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T00:28:58Z",
-  "updatedAt": "2026-11-27T00:28:59Z",
-  "revision": "bowser-public-news-20261126-week12-shipley-live-usage",
+  "checkedAt": "2026-11-27T00:49:00Z",
+  "updatedAt": "2026-11-27T00:49:00Z",
+  "revision": "bowser-public-news-20261126-week12-browning-car-estimate",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -849,6 +849,46 @@
         "gameStatus": "Active for Week 11"
       },
       "checkedAt": "2026-11-22T19:50:34.076Z"
+    },
+    {
+      "eventId": "chargers:20261126:jake-browning-active-roster",
+      "player": {
+        "playerId": null,
+        "name": "Jake Browning",
+        "position": "QB",
+        "team": "LAC"
+      },
+      "headline": "Chargers sign Jake Browning to the active roster",
+      "summary": "Los Angeles signed Browning from the practice squad on Thursday. Justin Herbert remains in concussion protocol and was listed as a Thursday non-participant. The latest Week 12 unofficial depth chart lists DJ Uiagalelei as the backup.",
+      "fantasyAnalysis": "Browning adds quarterback depth, not a confirmed Week 12 starting role. Uiagalelei remains the presumptive replacement if Herbert is out, pending a team announcement.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T18:39:10.428Z",
+      "checkedAt": "2026-11-27T00:49:00Z",
+      "sources": [
+        {
+          "sourceName": "Los Angeles Chargers transaction announcement",
+          "author": "Chargers Communications",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.chargers.com/news/sign-quarterback-jake-browning-to-active-roster",
+          "publishedAt": "2026-11-26T18:39:10.428Z",
+          "publishedDate": "2026-11-26",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T00:49:00Z"
+        },
+        {
+          "sourceName": "Chargers Week 12 unofficial depth chart",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.chargers.com/news/depth-chart-2026-season",
+          "publishedAt": null,
+          "publishedDate": "2026-11-24",
+          "publishedAtRaw": "Nov 24, 2026 at 03:45 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T00:49:00Z"
+        }
+      ]
     },
     {
       "eventId": "chargers:20261126:justin-herbert-thu-dnp",
@@ -8712,16 +8752,25 @@
         "position": "WR",
         "team": "CAR"
       },
-      "headline": "Tetairoa McMillan listed as a non-participant Thursday with foot injury",
-      "summary": "Carolina's first Week 12 injury report lists McMillan as a non-participant with a foot injury ahead of Monday night against Tampa Bay. No game designation has been issued.",
+      "headline": "Panthers estimate Tetairoa McMillan as a Thursday non-participant",
+      "summary": "Carolina did not practice on Thanksgiving. On its projected Week 12 report the team listed McMillan as a non-participant with a foot injury. No game designation has been issued for Monday night against Tampa Bay.",
       "fantasyAnalysis": "Hold McMillan and watch Friday and Saturday's reports. Because he plays Monday, keep a late-game replacement available if his status remains uncertain. Jalen Coker could see more targets if McMillan sits.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-11-26T21:16:11Z",
+      "checkedAt": "2026-11-27T00:49:00Z",
       "sources": [
+        {
+          "sourceName": "Carolina Panthers Thursday projected injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.panthers.com/news/week-12-thursday-injury-report-five-listed-as-not-participating-in-projected-practice",
+          "publishedAt": "2026-11-26T21:00:02.601Z",
+          "publishedDate": "2026-11-26",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T00:49:00Z"
+        },
         {
           "sourceName": "Carolina Panthers official Week 12 injury report",
           "sourceType": "OFFICIAL",
@@ -8736,7 +8785,7 @@
       "injury": {
         "isInjuryRelated": true,
         "bodyPart": "Foot",
-        "practiceStatus": "DNP Thursday",
+        "practiceStatus": "Estimated DNP Thursday; team did not practice",
         "gameStatus": "Week 12 designation pending"
       },
       "affectedPlayers": [
@@ -10377,5 +10426,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "aad25fd51528f67d1f5c7f584d64a5b38f08fa428404957e1d722e2877747489"
+  "contentHash": "1efc1300e6070166c85e7e610bb1faae442afa5b671e3708bf73fe93303af1f0"
 }
