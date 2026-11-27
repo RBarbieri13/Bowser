@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T22:40:36Z",
-  "updatedAt": "2026-11-27T22:40:36.877Z",
-  "revision": "bowser-public-news-20261127-herbert-out-chargers-final",
+  "checkedAt": "2026-11-27T22:56:10Z",
+  "updatedAt": "2026-11-27T22:56:11.318Z",
+  "revision": "bowser-public-news-20261127-seattle-san-francisco-final",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -11448,6 +11448,43 @@
       ]
     },
     {
+      "eventId": "sea-sf:20261127:mike-evans-questionable-week12",
+      "player": {
+        "playerId": null,
+        "name": "Mike Evans",
+        "position": "WR",
+        "team": "SF"
+      },
+      "headline": "Mike Evans questionable against Seattle",
+      "summary": "Evans went DNP, limited, limited with an Achilles issue and is questionable in the official matchup report.",
+      "fantasyAnalysis": "Have a late-window replacement ready. San Francisco is also starting Mac Jones in place of Brock Purdy.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T22:56:10Z",
+      "sources": [
+        {
+          "sourceName": "Seahawks official Week 12 injury report",
+          "url": "https://www.seahawks.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Official team table; exact update clock not shown",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:56:10Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Achilles",
+        "practiceStatus": "Limited Friday",
+        "gameStatus": "Questionable Week 12"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "seahawks:20261126:jaxon-smith-njigba-thu-practice",
       "player": {
         "playerId": null,
@@ -11518,6 +11555,90 @@
         "practiceStatus": "FP Wednesday and Thursday",
         "gameStatus": "Week 12 designation pending"
       }
+    },
+    {
+      "eventId": "seahawks:20261127:darnold-no-week12-designation",
+      "player": {
+        "playerId": null,
+        "name": "Sam Darnold",
+        "position": "QB",
+        "team": "SEA"
+      },
+      "headline": "Sam Darnold has no Week 12 game designation",
+      "summary": "Darnold practiced fully all week with a quad injury. Mike Macdonald had said the plan was to start Darnold if practice went well.",
+      "fantasyAnalysis": "Expect Darnold back against San Francisco. Drew Lock is no longer the projected starter.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T22:56:10Z",
+      "sources": [
+        {
+          "sourceName": "Seahawks official Week 12 injury report",
+          "url": "https://www.seahawks.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Official team table; exact update clock not shown",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:56:10Z"
+        },
+        {
+          "sourceName": "Seahawks reporting on Mike Macdonald’s Wednesday press conference",
+          "url": "https://www.seahawks.com/news/updates-on-sam-darnold-the-o-line-other-seahawks-injuries-from-mike-macdonald-s-wednesday-press-conference",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Nov. 25, 2026 at 02:55 PM; timezone not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:56:10Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Quadriceps",
+        "practiceStatus": "Full Friday",
+        "gameStatus": "No Week 12 game designation"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "seahawks:20261127:jsn-no-week12-designation",
+      "player": {
+        "playerId": null,
+        "name": "Jaxon Smith-Njigba",
+        "position": "WR",
+        "team": "SEA"
+      },
+      "headline": "Jaxon Smith-Njigba practices fully Friday with no designation",
+      "summary": "Smith-Njigba went from limited in his first two practices to full on Friday with an ankle injury. Seattle gave him no Week 12 game designation.",
+      "fantasyAnalysis": "Use Smith-Njigba normally against San Francisco; no injury pivot is needed based on the final report.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T22:56:10Z",
+      "sources": [
+        {
+          "sourceName": "Seahawks official Week 12 injury report",
+          "url": "https://www.seahawks.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Official team table; exact update clock not shown",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:56:10Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "Full Friday",
+        "gameStatus": "No Week 12 game designation"
+      },
+      "affectedPlayers": []
     },
     {
       "eventId": "sf:20261127:purdy-out-jones-start-week12",
@@ -12393,5 +12514,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "eb1ce90bf737eae9225d1a66b03114c170a1e49ed09df1bc6e738adbad61ed41"
+  "contentHash": "0cf6a30aecdc7d53078d2f07b100cc5d5885c9d7c50b7fc9ab0e3f26a15a0820"
 }
