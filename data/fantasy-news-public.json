@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-26T23:45:56Z",
-  "updatedAt": "2026-11-26T23:45:56Z",
-  "revision": "bowser-public-news-20261126-week12-bowers",
+  "checkedAt": "2026-11-27T00:03:48Z",
+  "updatedAt": "2026-11-27T00:03:48Z",
+  "revision": "bowser-public-news-20261126-week12-kincaid-active",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -398,6 +398,41 @@
         "isInjuryRelated": true,
         "bodyPart": "Thumb / ankle",
         "practiceStatus": "LP"
+      }
+    },
+    {
+      "eventId": "bills:20261126:dalton-kincaid-active-week12",
+      "player": {
+        "playerId": null,
+        "name": "Dalton Kincaid",
+        "position": "TE",
+        "team": "BUF"
+      },
+      "headline": "Dalton Kincaid active for Thanksgiving against Kansas City",
+      "summary": "Buffalo’s game-day inactive list, as reported by Sean Murphy, does not include Kincaid. He returns after missing Week 11 and being listed questionable with thumb and ankle injuries.",
+      "fantasyAnalysis": "Kincaid is available at tight end. He can be used as planned, but his snap count is not established. Dawson Knox no longer has a clear replacement role.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-26T23:52:05Z",
+      "checkedAt": "2026-11-27T00:03:48Z",
+      "sources": [
+        {
+          "sourceName": "Buffalo Rumblings game-day inactives",
+          "author": "Sean Murphy",
+          "sourceType": "BEAT_WRITER",
+          "url": "https://www.buffalorumblings.com/buffalo-bills-injuries/146451/buffalo-bills-week-12-inactives-vs-the-kansas-city-chiefs",
+          "publishedAt": "2026-11-26T23:52:05Z",
+          "publishedDate": "2026-11-26",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T00:03:48Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb/ankle",
+        "gameStatus": "Active for Week 12 vs Kansas City"
       }
     },
     {
@@ -10246,5 +10281,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "e5438bf18ee53715cdede039942d802e7a1a9fe85f3dde588ff00574bc3920a0"
+  "contentHash": "c9b02e760783e1d933aeaa513f9a5c87770b92cd148f436bb385fcdf9ecf7584"
 }
