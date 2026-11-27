@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T19:15:43Z",
-  "updatedAt": "2026-11-27T19:15:43Z",
-  "revision": "bowser-public-news-20261127-week12-colts-outs-tuten-watch",
+  "checkedAt": "2026-11-27T19:34:30Z",
+  "updatedAt": "2026-11-27T19:34:31Z",
+  "revision": "bowser-public-news-20261127-black-friday-badie-pittman",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6845,6 +6845,53 @@
       ]
     },
     {
+      "eventId": "nfl:20261127:broncos:tyler-badie-active-week12",
+      "player": {
+        "playerId": null,
+        "name": "Tyler Badie",
+        "position": "RB",
+        "team": "DEN"
+      },
+      "headline": "Tyler Badie active against Pittsburgh",
+      "summary": "Denver did not list Badie among its game-day inactives after activating him from injured reserve Thursday. He had been questionable with a thumb injury.",
+      "fantasyAnalysis": "Jonah Coleman remains the lead option. Badie can contribute as a reserve, but his return does not establish a reliable fantasy workload.",
+      "eventType": "RETURN",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T19:34:30Z",
+      "sources": [
+        {
+          "sourceName": "NFL Black Friday inactives",
+          "sourceType": "OFFICIAL",
+          "url": "https://fantasy-www.nfl.com/news/week-12-black-friday-inactives-denver-broncos-at-pittsburgh-steelers",
+          "publishedAt": null,
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 01:38 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T19:34:30Z"
+        },
+        {
+          "sourceName": "Denver Broncos official activation announcement",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.denverbroncos.com/news/broncos-activate-rb-tyler-badie-from-ir-promote-rb-cody-schrader-to-active-roster-ahead-of-week-12-game-vs-steelers",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov 26, 2026 at 03:00 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T19:34:30Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb",
+        "practiceStatus": null,
+        "gameStatus": "Active Week 12"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "nfl:20261127:jaguars:bhayshul-tuten-coen-uncertain",
       "player": {
         "playerId": null,
@@ -10795,6 +10842,53 @@
       }
     },
     {
+      "eventId": "steelers:20261127:michael-pittman-active-week12",
+      "player": {
+        "playerId": null,
+        "name": "Michael Pittman Jr.",
+        "position": "WR",
+        "team": "PIT"
+      },
+      "headline": "Michael Pittman Jr. active against Denver",
+      "summary": "Pittman is not on the Steelers' game-day inactive list after his Thursday activation from injured reserve. Mason Rudolph starts at quarterback.",
+      "fantasyAnalysis": "Pittman is a deep-league watch until his routes and targets are clear in his first game back.",
+      "eventType": "RETURN",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T19:34:30Z",
+      "sources": [
+        {
+          "sourceName": "Pittsburgh Steelers official Week 12 inactives",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.steelers.com/news/steelers-inactives-for-week-12-vs-broncos",
+          "publishedAt": null,
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 01:30 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T19:34:30Z"
+        },
+        {
+          "sourceName": "NFL Black Friday inactives",
+          "sourceType": "OFFICIAL",
+          "url": "https://fantasy-www.nfl.com/news/week-12-black-friday-inactives-denver-broncos-at-pittsburgh-steelers",
+          "publishedAt": null,
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 01:38 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T19:34:30Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot",
+        "practiceStatus": null,
+        "gameStatus": "Active Week 12"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "tennesseetitans:20261121:tyjae-spears-ir",
       "player": {
         "playerId": null,
@@ -11172,5 +11266,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "aa57813fb6e727d7db8c2be1ffbc7c581dbc7e31ef23d2b8ada74e17041c9017"
+  "contentHash": "7f65085f872900b338d47a4fc5348986eb6a2e0434a13a42afd6c11435f0fa9e"
 }
