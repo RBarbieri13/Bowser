@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T21:20:25Z",
-  "updatedAt": "2026-11-27T21:20:26.370Z",
-  "revision": "bowser-public-news-20261127-friday-early-final-designations",
+  "checkedAt": "2026-11-27T21:35:41Z",
+  "updatedAt": "2026-11-27T21:35:41.937Z",
+  "revision": "bowser-public-news-20261127-friday-purdy-bowers-reports",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1483,6 +1483,43 @@
         "isInjuryRelated": false,
         "practiceStatus": "Not listed Thursday",
         "gameStatus": "No Thursday listing; final Week 12 designation pending"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "commanders:20261127:jayden-daniels-no-week12-designation",
+      "player": {
+        "playerId": null,
+        "name": "Jayden Daniels",
+        "position": "QB",
+        "team": "WAS"
+      },
+      "headline": "Jayden Daniels has no Week 12 game designation",
+      "summary": "Daniels logged three full practices with left elbow and left hand injuries and has no final game designation against Arizona.",
+      "fantasyAnalysis": "Use Daniels as planned; no injury-driven replacement required on this report.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:35:41Z",
+      "sources": [
+        {
+          "sourceName": "Commanders official Week 12 injury report",
+          "url": "https://www.commanders.com/news/commanders-vs-cardinals-week-12-injury-report",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Team or league report; exact publication clock not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:35:41Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Left elbow and left hand",
+        "practiceStatus": "Full Friday",
+        "gameStatus": "No Week 12 game designation"
       },
       "affectedPlayers": []
     },
@@ -3583,6 +3620,61 @@
         "bodyPart": "Ankle",
         "gameStatus": "Active for Week 12 vs. Chicago"
       }
+    },
+    {
+      "eventId": "lv:20261127:bowers-kubiak-questionable",
+      "player": {
+        "playerId": null,
+        "name": "Brock Bowers",
+        "position": "TE",
+        "team": "LV"
+      },
+      "headline": "Klint Kubiak says Brock Bowers will be questionable",
+      "summary": "Silver and Black Pride reports Raiders coach Klint Kubiak told reporters Bowers would be questionable for Sunday night against Cleveland. The team table still showed two limited sessions at the time checked.",
+      "fantasyAnalysis": "Have a Sunday-night alternative such as Michael Mayer if active, or use an earlier comparable tight end rather than risk an empty slot.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:35:41Z",
+      "sources": [
+        {
+          "sourceName": "Silver and Black Pride, Matt Holder, attributing Klint Kubiak",
+          "url": "https://www.silverandblackpride.com/las-vegas-raiders-injuries/147529/raiders-browns-sunday-night-football-injury-report-brock-bowers-tonka-hemingway-adam-butler",
+          "sourceType": "NEWS_OUTLET",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Fri Nov 27 16:26:53 2026 UTC-05:00",
+          "publishedAt": "2026-11-27T21:26:53Z",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-27T21:35:41Z"
+        },
+        {
+          "sourceName": "Raiders official Week 12 injury report",
+          "url": "https://www.raiders.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Team or league report; exact publication clock not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:35:41Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": null,
+        "gameStatus": "Questionable per head coach; team table pending when checked"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Michael Mayer",
+          "team": "LV",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Possible late-window fallback if Bowers sits and Mayer is active."
+        }
+      ]
     },
     {
       "eventId": "nbcsports:20261123:kenneth-walker-remains-starter",
@@ -7086,6 +7178,43 @@
       "affectedPlayers": []
     },
     {
+      "eventId": "nfl:20261127:denzel-boston-questionable-week12",
+      "player": {
+        "playerId": null,
+        "name": "Denzel Boston",
+        "position": "WR",
+        "team": "CLE"
+      },
+      "headline": "Denzel Boston questionable against the Raiders",
+      "summary": "The NFL lists Boston questionable with a quad injury for Sunday night.",
+      "fantasyAnalysis": "Check late inactives; use a comparable earlier receiver if no late pivot is available.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:35:41Z",
+      "sources": [
+        {
+          "sourceName": "NFL official Week 12 injury report",
+          "url": "https://www.nfl.com/news/nfl-week-12-injury-report-2026-season",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Team or league report; exact publication clock not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:35:41Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Quadriceps",
+        "practiceStatus": null,
+        "gameStatus": "Questionable Week 12"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "nfl:20261127:jaguars:bhayshul-tuten-coen-uncertain",
       "player": {
         "playerId": null,
@@ -7318,6 +7447,43 @@
         "bodyPart": "Hamstring",
         "practiceStatus": null,
         "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "nfl:20261127:raheim-sanders-questionable-week12",
+      "player": {
+        "playerId": null,
+        "name": "Raheim Sanders",
+        "position": "RB",
+        "team": "CLE"
+      },
+      "headline": "Raheim Sanders questionable against the Raiders",
+      "summary": "The NFL lists Sanders questionable with a hip injury for Sunday night.",
+      "fantasyAnalysis": "Monitor late inactives in deeper formats. No standalone add follows from the designation.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:35:41Z",
+      "sources": [
+        {
+          "sourceName": "NFL official Week 12 injury report",
+          "url": "https://www.nfl.com/news/nfl-week-12-injury-report-2026-season",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Team or league report; exact publication clock not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:35:41Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hip",
+        "practiceStatus": null,
+        "gameStatus": "Questionable Week 12"
       },
       "affectedPlayers": []
     },
@@ -9870,6 +10036,43 @@
       ]
     },
     {
+      "eventId": "patriots:20261127:romeo-doubs-out-week12",
+      "player": {
+        "playerId": null,
+        "name": "Romeo Doubs",
+        "position": "WR",
+        "team": "NE"
+      },
+      "headline": "Romeo Doubs out after not traveling for Week 12",
+      "summary": "The Patriots list Doubs out with a shoulder injury. He was limited Friday and did not travel; A.J. Brown also is out.",
+      "fantasyAnalysis": "Keep Doubs out of lineups. New England's remaining receivers can pick up targets, but the distribution with Tommy DeVito remains uncertain.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:35:41Z",
+      "sources": [
+        {
+          "sourceName": "Patriots official Week 12 final injury report",
+          "url": "https://www.patriots.com/news/week-12-injury-report-patriots-at-chargers",
+          "sourceType": "OFFICIAL",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 04:00 PM; timezone not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:35:41Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Shoulder",
+        "practiceStatus": "Limited Friday",
+        "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "pennlive:20261122:saquon-barkley-arm-week12",
       "player": {
         "playerId": null,
@@ -10937,6 +11140,61 @@
       }
     },
     {
+      "eventId": "sfchronicle:20261127:brock-purdy-friday-media-absence",
+      "player": {
+        "playerId": null,
+        "name": "Brock Purdy",
+        "position": "QB",
+        "team": "SF"
+      },
+      "headline": "Brock Purdy not seen during Friday media access",
+      "summary": "49ers beat reporters Eric Branch and Harrison Rich say Purdy was absent during Friday's open viewing period after two official missed sessions. Mac Jones had taken first-team reps in his absence.",
+      "fantasyAnalysis": "Have Jones or another late-window quarterback ready. The media viewing report does not establish a full-session DNP or that Purdy will sit.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:35:41Z",
+      "sources": [
+        {
+          "sourceName": "San Francisco Chronicle, Eric Branch and Harrison Rich",
+          "url": "https://www.sfchronicle.com/sports/49ers/article/49ers-qb-brock-purdy-s-status-seahawks-game-22552579.php",
+          "sourceType": "NEWS_OUTLET",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Fri Nov 27 21:20:06 2026 UTC in article news metadata",
+          "publishedAt": "2026-11-27T21:20:06Z",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:35:41Z"
+        },
+        {
+          "sourceName": "49ers official Week 12 injury report",
+          "url": "https://www.49ers.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Team or league report; exact publication clock not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:35:41Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Left ankle",
+        "practiceStatus": "Not seen during Friday media access",
+        "gameStatus": "Final designation not verified at check"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Mac Jones",
+          "team": "SF",
+          "position": "QB",
+          "relationship": "BENEFICIARY",
+          "impact": "Took first-team reps and is the presumptive starter if Purdy is unable to play."
+        }
+      ]
+    },
+    {
       "eventId": "sfchronicle:21963120:brandon-aiyuk-waived",
       "player": {
         "playerId": null,
@@ -11710,5 +11968,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "c512a24af7ad475aa41726c4a21d5b43a2f66a40457de09b117193525ad13098"
+  "contentHash": "488bb097907d59c9ad50f34535298b761cf34e2efd708f96c23843b5050dccf1"
 }
