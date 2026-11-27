@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T00:49:00Z",
-  "updatedAt": "2026-11-27T00:49:00Z",
-  "revision": "bowser-public-news-20261126-week12-browning-car-estimate",
+  "checkedAt": "2026-11-27T01:03:53Z",
+  "updatedAt": "2026-11-27T01:03:53Z",
+  "revision": "bowser-public-news-20261126-week12-badie-activated",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -498,16 +498,25 @@
         "position": "RB",
         "team": "DEN"
       },
-      "headline": "Broncos list Tyler Badie questionable; still needs activation",
-      "summary": "Denver listed Badie as questionable for Friday against Pittsburgh after full participation Tuesday and Wednesday and an estimated full walkthrough Thursday. Denver explicitly says he still needs to be activated from injured reserve to play.",
-      "fantasyAnalysis": "Wait for an official roster move and inactives. Even if active, Badie has no established Week 12 role behind Jonah Coleman with J.K. Dobbins suspended.",
-      "eventType": "INJURY",
+      "headline": "Broncos activate Tyler Badie from IR; Friday status still questionable",
+      "summary": "Denver activated Badie from injured reserve and promoted Cody Schrader from the practice squad. Badie was listed as questionable with a thumb injury on the earlier final report after full participation Tuesday and Wednesday and an estimated full Thursday walkthrough.",
+      "fantasyAnalysis": "Badie is eligible to dress now, but check Friday inactives. Jonah Coleman remains the expected lead with J.K. Dobbins suspended; neither Badie nor Schrader has a confirmed standalone role.",
+      "eventType": "TRANSACTION",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
-      "lastUpdatedAt": null,
-      "checkedAt": "2026-11-26T20:56:07Z",
+      "lastUpdatedAt": "2026-11-26T22:00:19.909Z",
+      "checkedAt": "2026-11-27T01:03:53Z",
       "sources": [
+        {
+          "sourceName": "Denver Broncos roster transaction announcement",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.denverbroncos.com/news/broncos-activate-rb-tyler-badie-from-ir-promote-rb-cody-schrader-to-active-roster-ahead-of-week-12-game-vs-steelers",
+          "publishedAt": "2026-11-26T22:00:19.909Z",
+          "publishedDate": "2026-11-26",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T01:03:53Z"
+        },
         {
           "sourceName": "Denver Broncos final Week 12 injury report",
           "sourceType": "OFFICIAL",
@@ -523,7 +532,7 @@
         "isInjuryRelated": true,
         "bodyPart": "Thumb",
         "practiceStatus": "Full Tuesday and Wednesday; estimated full Thursday",
-        "gameStatus": "Questionable; remains on injured reserve pending activation"
+        "gameStatus": "Activated from IR; questionable for Week 12; check inactives"
       },
       "affectedPlayers": [
         {
@@ -10426,5 +10435,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "1efc1300e6070166c85e7e610bb1faae442afa5b671e3708bf73fe93303af1f0"
+  "contentHash": "a7c34c2fddd58962a9d725d16c30f384515f9c7f16ef6005b0c00a5e09bcc9ec"
 }
