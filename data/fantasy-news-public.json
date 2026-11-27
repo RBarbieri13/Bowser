@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T01:42:00Z",
-  "updatedAt": "2026-11-27T01:42:09Z",
-  "revision": "bowser-public-news-20261126-week12-eagles-postgame",
+  "checkedAt": "2026-11-27T04:47:33Z",
+  "updatedAt": "2026-11-27T04:47:47Z",
+  "revision": "bowser-public-news-20261126-week12-bills-postgame",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -444,6 +444,46 @@
         "bodyPart": "Thumb/ankle",
         "gameStatus": "Active for Week 12 vs Kansas City"
       }
+    },
+    {
+      "eventId": "bills:20261126:james-cook-32-carries-week12",
+      "player": {
+        "playerId": null,
+        "name": "James Cook III",
+        "position": "RB",
+        "team": "BUF"
+      },
+      "headline": "James Cook III rushes 32 times in Thanksgiving win",
+      "summary": "Cook carried 32 times for 117 yards and a touchdown and caught one pass for eight yards as Buffalo beat Kansas City 13–10. Josh Allen went 10-of-21 for 81 yards, no passing touchdowns and two interceptions, adding 43 rushing yards.",
+      "fantasyAnalysis": "Cook’s volume was clear in this game. Do not read a permanent passing-volume change into the one-game result.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T04:47:33Z",
+      "sources": [
+        {
+          "sourceName": "Buffalo Bills Week 12 game center",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.buffalobills.com/game-day/2026/reg-week12/chiefs-at-bills/box-score",
+          "publishedDate": "2026-11-26",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T04:47:33Z",
+          "publishedAtRaw": "2026-11-26 (publication clock and timezone unavailable)"
+        },
+        {
+          "sourceName": "ESPN final Week 12 box score",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.espn.com/nfl/boxscore/_/gameId/401873082",
+          "publishedDate": "2026-11-26",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T04:47:33Z",
+          "publishedAtRaw": "2026-11-26 (publication clock and timezone unavailable)"
+        }
+      ]
     },
     {
       "eventId": "broncos:20261122:jonah-coleman-week11-workload",
@@ -978,6 +1018,46 @@
         "bodyPart": "Groin",
         "practiceStatus": "DNP"
       }
+    },
+    {
+      "eventId": "chiefs:20261126:emmett-johnson-21-touches-week12",
+      "player": {
+        "playerId": null,
+        "name": "Emmett Johnson",
+        "position": "RB",
+        "team": "KC"
+      },
+      "headline": "Emmett Johnson handles 21 touches and scores with Walker out",
+      "summary": "Johnson ran 17 times for 72 yards and a touchdown and caught four passes for 24 yards in the 13–10 loss at Buffalo. Kenneth Walker III was inactive with a groin injury.",
+      "fantasyAnalysis": "Johnson handled the lead work again. His Week 13 workload remains conditional on Walker’s health and role; the Thanksgiving line does not establish a permanent change.",
+      "eventType": "PERFORMANCE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T04:47:33Z",
+      "sources": [
+        {
+          "sourceName": "Kansas City Chiefs touchdown highlight",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.chiefs.com/video/touchdown-emmett-johnson-s-sixth-touchdown-of-2026-gives-chiefs-a-9-7-lead-in-buffalo",
+          "publishedDate": "2026-11-26",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T04:47:33Z",
+          "publishedAtRaw": "2026-11-26 (publication clock and timezone unavailable)"
+        },
+        {
+          "sourceName": "ESPN final Week 12 box score",
+          "sourceType": "NEWS_OUTLET",
+          "url": "https://www.espn.com/nfl/boxscore/_/gameId/401873082",
+          "publishedDate": "2026-11-26",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T04:47:33Z",
+          "publishedAtRaw": "2026-11-26 (publication clock and timezone unavailable)"
+        }
+      ]
     },
     {
       "eventId": "chiefs:20261126:noah-gray-active-week12",
@@ -1592,6 +1672,51 @@
           "checkedAt": "2026-11-26T23:35:05Z"
         }
       ]
+    },
+    {
+      "eventId": "eagles:20261126:devonta-smith-fourth-quarter-return",
+      "player": {
+        "playerId": null,
+        "name": "DeVonta Smith",
+        "position": "WR",
+        "team": "PHI"
+      },
+      "headline": "DeVonta Smith returns after late injury in 200-yard game",
+      "summary": "Smith was hurt on a fourth-quarter target, then returned and caught a five-yard pass on the final drive. He finished with 11 catches for 200 yards and two touchdowns. Philadelphia did not announce a Week 13 injury designation.",
+      "fantasyAnalysis": "The return is reassuring for the immediate game but is not a Week 13 clearance. Check the next team report before changing his projection.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T04:47:33Z",
+      "sources": [
+        {
+          "sourceName": "Philadelphia Eagles game recap and play-by-play",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.philadelphiaeagles.com/news/game-recap-eagles-at-cowboys-thanksgiving-2026-nfl-week-12-saquon-barkley-devonta-smith-joe-milton-dak-prescott",
+          "publishedDate": "2026-11-26",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T04:47:33Z",
+          "publishedAtRaw": "2026-11-26 (publication clock and timezone unavailable)"
+        },
+        {
+          "sourceName": "Bleeding Green Nation on-site coverage",
+          "sourceType": "BEAT_WRITER",
+          "url": "https://www.bleedinggreennation.com/philadelphia-eagles-injuries/191668/devonta-smiths-performance-in-the-eagles-win-over-the-cowboys-was-heroic",
+          "publishedDate": "2026-11-26",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T04:47:33Z",
+          "publishedAtRaw": "2026-11-26 (publication clock and timezone unavailable)"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Back/tailbone (reported)",
+        "gameStatus": "Returned in Week 12; Week 13 unknown"
+      }
     },
     {
       "eventId": "eagles:20261126:joe-milton-four-td-week12",
@@ -10485,5 +10610,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "49e27ed61173dca43acca7e19436debe99cecab1c5109bcf053f230203ade5ba"
+  "contentHash": "96bda04ea180b33d8d1987761003a7a1f024f0a4cc8c27e4d7aba677959a8da1"
 }
