@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T00:03:48Z",
-  "updatedAt": "2026-11-27T00:03:48Z",
-  "revision": "bowser-public-news-20261126-week12-kincaid-active",
+  "checkedAt": "2026-11-27T00:16:59Z",
+  "updatedAt": "2026-11-27T00:17:03Z",
+  "revision": "bowser-public-news-20261126-week12-kc-buf-active",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -409,15 +409,25 @@
         "team": "BUF"
       },
       "headline": "Dalton Kincaid active for Thanksgiving against Kansas City",
-      "summary": "Buffalo’s game-day inactive list, as reported by Sean Murphy, does not include Kincaid. He returns after missing Week 11 and being listed questionable with thumb and ankle injuries.",
+      "summary": "Buffalo confirmed Kincaid is active after missing Week 11 and being listed questionable with thumb and ankle injuries.",
       "fantasyAnalysis": "Kincaid is available at tight end. He can be used as planned, but his snap count is not established. Dawson Knox no longer has a clear replacement role.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "HIGH",
       "firstReportedAt": null,
       "lastUpdatedAt": "2026-11-26T23:52:05Z",
-      "checkedAt": "2026-11-27T00:03:48Z",
+      "checkedAt": "2026-11-27T00:16:59Z",
       "sources": [
+        {
+          "sourceName": "Buffalo Bills game-day inactives",
+          "author": "Alec White",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.buffalobills.com/news/buffalo-bills-inactives-vs-chiefs-nfl-thanksgiving",
+          "publishedAt": "2026-11-26T23:49:00Z",
+          "publishedDate": "2026-11-26",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T00:16:59Z"
+        },
         {
           "sourceName": "Buffalo Rumblings game-day inactives",
           "author": "Sean Murphy",
@@ -918,6 +928,41 @@
         "isInjuryRelated": true,
         "bodyPart": "Groin",
         "practiceStatus": "DNP"
+      }
+    },
+    {
+      "eventId": "chiefs:20261126:noah-gray-active-week12",
+      "player": {
+        "playerId": null,
+        "name": "Noah Gray",
+        "position": "TE",
+        "team": "KC"
+      },
+      "headline": "Noah Gray active against Buffalo on Thanksgiving",
+      "summary": "Jared Sapp reports that Gray will dress after being listed questionable with a rib injury. He finished the week with full practice participation.",
+      "fantasyAnalysis": "Gray is available behind Travis Kelce. There is no standalone starting upgrade or established snap count.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": "2026-11-27T00:00:00Z",
+      "checkedAt": "2026-11-27T00:16:59Z",
+      "sources": [
+        {
+          "sourceName": "Arrowhead Pride game-day inactives",
+          "author": "Jared Sapp",
+          "sourceType": "BEAT_WRITER",
+          "url": "https://www.arrowheadpride.com/kansas-city-chiefs-injuries/217680/chiefs-bills-inactives-te-noah-gray-and-dt-peter-woods-will-play",
+          "publishedAt": "2026-11-27T00:00:00Z",
+          "publishedDate": "2026-11-27",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T00:16:59Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Rib",
+        "gameStatus": "Active for Week 12 vs Buffalo"
       }
     },
     {
@@ -10281,5 +10326,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "c9b02e760783e1d933aeaa513f9a5c87770b92cd148f436bb385fcdf9ecf7584"
+  "contentHash": "4c698061da48ccd332726520f0bc1d8db9bbf4346ea19b59b38e5534ed3c4eca"
 }
