@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T21:49:05Z",
-  "updatedAt": "2026-11-27T21:49:06.117Z",
-  "revision": "bowser-public-news-20261127-friday-monday-receivers",
+  "checkedAt": "2026-11-27T22:15:12Z",
+  "updatedAt": "2026-11-27T22:15:13.042Z",
+  "revision": "bowser-public-news-20261127-bowers-official-questionable",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -7205,6 +7205,51 @@
       ]
     },
     {
+      "eventId": "nfl:20261127:brock-bowers-official-questionable-week12",
+      "player": {
+        "playerId": null,
+        "name": "Brock Bowers",
+        "position": "TE",
+        "team": "LV"
+      },
+      "headline": "Brock Bowers officially questionable for Sunday night",
+      "summary": "The NFL's Week 12 report lists Bowers questionable with an ankle injury against Cleveland, confirming Klint Kubiak's earlier update.",
+      "fantasyAnalysis": "Keep a same-window contingency. Michael Mayer could take more tight end work if Bowers is inactive and Mayer is active.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T22:15:12Z",
+      "sources": [
+        {
+          "sourceName": "NFL official Week 12 injury report",
+          "url": "https://www.nfl.com/news/nfl-week-12-injury-report-2026-season",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Official Week 12 status page; exact update clock not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:15:12Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": null,
+        "gameStatus": "Questionable Week 12"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Michael Mayer",
+          "team": "LV",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Potential Sunday-night pivot if active and Bowers sits."
+        }
+      ]
+    },
+    {
       "eventId": "nfl:20261127:broncos:tyler-badie-active-week12",
       "player": {
         "playerId": null,
@@ -12097,5 +12142,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "5f69cdaf03c4410614bdf456e5a54b7dabe3478c92630e662e81a1e18d30ae19"
+  "contentHash": "842a1eeef5b4fed38dcb9bc6c8f560bc2a4b457a41174137e5538ed1fc9cce2d"
 }
