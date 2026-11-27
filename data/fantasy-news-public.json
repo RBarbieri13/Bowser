@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T00:16:59Z",
-  "updatedAt": "2026-11-27T00:17:03Z",
-  "revision": "bowser-public-news-20261126-week12-kc-buf-active",
+  "checkedAt": "2026-11-27T00:19:09Z",
+  "updatedAt": "2026-11-27T00:19:22Z",
+  "revision": "bowser-public-news-20261126-week12-rodgers-clears-waivers",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -8543,6 +8543,47 @@
       "affectedPlayers": []
     },
     {
+      "eventId": "official:2026-11-26:steelers:aaron-rodgers-clears-waivers",
+      "player": {
+        "playerId": null,
+        "name": "Aaron Rodgers",
+        "position": "QB",
+        "team": "PIT"
+      },
+      "headline": "Aaron Rodgers clears NFL waivers and becomes a free agent",
+      "summary": "The NFL transaction log shows Rodgers’ Pittsburgh contract was terminated through waivers on November 26. NFL Network’s Ian Rapoport reports he cleared waivers and is a free agent. No new team is confirmed.",
+      "fantasyAnalysis": "Do not count on Rodgers for Week 12. Mason Rudolph remains the announced Pittsburgh starter against Denver; Rodgers would need to sign and earn a role before he becomes a fantasy option again.",
+      "eventType": "TRANSACTION",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T00:19:09Z",
+      "sources": [
+        {
+          "sourceName": "NFL transaction log",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.nfl.com/transactions/league/waivers/2026/11",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "November 26 transaction listing; publication clock not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T00:19:09Z"
+        },
+        {
+          "sourceName": "NFL Network reporting by Ian Rapoport",
+          "author": "Around the NFL Staff",
+          "sourceType": "INSIDER",
+          "url": "https://amp.nfl.com/news/nfl-network-aaron-rodgers-clears-waivers-now-a-free-agent-after-stunning-release-from-steelers",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov 26, 2026 at 04:33 PM; timezone not displayed",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T00:19:09Z"
+        }
+      ]
+    },
+    {
       "eventId": "packers:20261123:kyren-williams-monday-fp-week12",
       "player": {
         "playerId": null,
@@ -10326,5 +10367,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "4c698061da48ccd332726520f0bc1d8db9bbf4346ea19b59b38e5534ed3c4eca"
+  "contentHash": "60827bf5b3d3172566f67ab9553969b5be7cf93064f13aff84eca9385f3eb0c2"
 }
