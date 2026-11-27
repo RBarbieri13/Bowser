@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T15:46:53Z",
-  "updatedAt": "2026-11-27T15:47:09Z",
-  "revision": "bowser-public-news-20261127-week12-jaguars-thursday",
+  "checkedAt": "2026-11-27T15:57:49Z",
+  "updatedAt": "2026-11-27T15:57:49Z",
+  "revision": "bowser-public-news-20261127-week12-parker-washington-out",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -6656,6 +6656,58 @@
       ]
     },
     {
+      "eventId": "nfl:20261127:jaguars:parker-washington-out-week12",
+      "player": {
+        "playerId": null,
+        "name": "Parker Washington",
+        "position": "WR",
+        "team": "JAX"
+      },
+      "headline": "Jaguars coach rules Parker Washington out for Week 12",
+      "summary": "Liam Coen said Washington will miss Sunday's game against Tennessee after hurting his shoulder in practice and is considered week to week. Jacksonville had listed Washington limited Thursday before the coach's update.",
+      "fantasyAnalysis": "Move Washington out of Week 12 lineups. Brian Thomas Jr. and Brenton Strange could see extra targets, but the distribution is uncertain. Check Jakobi Meyers' ankle designation before treating him as a beneficiary.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T15:57:49Z",
+      "sources": [
+        {
+          "sourceName": "NFL.com Friday roundup, citing Jaguars coach Liam Coen",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.nfl.com/news/nfl-news-roundup-latest-league-updates-from-friday-nov-27",
+          "publishedAt": null,
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Friday, Nov. 27 roundup; publication clock did not render",
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-27T15:57:49Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Shoulder",
+        "practiceStatus": "LP Thursday; Friday practice grade pending",
+        "gameStatus": "Out Week 12 per coach; week to week"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Brian Thomas Jr.",
+          "team": "JAX",
+          "position": "WR",
+          "relationship": "BENEFICIARY",
+          "impact": "Potential for more targets with Washington out; role change not guaranteed."
+        },
+        {
+          "name": "Brenton Strange",
+          "team": "JAX",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Could pick up some targets in the middle of the field; workload not guaranteed."
+        }
+      ]
+    },
+    {
       "eventId": "nflnetwork:20261121:mike-evans-expected-week11",
       "player": {
         "playerId": null,
@@ -10684,5 +10736,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "505f0b3d4084aaf12ded98cd931c330fc29b8ab025dd54ed16dba711516f1488"
+  "contentHash": "959e16e904fbb8598852fb03dda8feb2a61b7d0fecd1e30e7f7ff6385ed570ca"
 }
