@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T21:35:41Z",
-  "updatedAt": "2026-11-27T21:35:41.937Z",
-  "revision": "bowser-public-news-20261127-friday-purdy-bowers-reports",
+  "checkedAt": "2026-11-27T21:49:05Z",
+  "updatedAt": "2026-11-27T21:49:06.117Z",
+  "revision": "bowser-public-news-20261127-friday-monday-receivers",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -803,6 +803,80 @@
         "bodyPart": "Knee",
         "practiceStatus": "FP Thursday",
         "gameStatus": "Designated for return from IR; activation not announced"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "buccaneers:20261127:jalen-mcmillan-limited-friday",
+      "player": {
+        "playerId": null,
+        "name": "Jalen McMillan",
+        "position": "WR",
+        "team": "TB"
+      },
+      "headline": "Jalen McMillan limited with knee and calf issues Friday",
+      "summary": "McMillan went from full Thursday to limited Friday with a knee and calf listing while in his injured-reserve practice window.",
+      "fantasyAnalysis": "Wait for activation and Monday's final status before counting on him. Friday practice does not return him to the active roster.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:49:05Z",
+      "sources": [
+        {
+          "sourceName": "Buccaneers official Week 12 injury report",
+          "url": "https://www.buccaneers.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Official injury report table; exact publication clock not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:49:05Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee and calf",
+        "practiceStatus": "Limited Friday",
+        "gameStatus": "Final Monday game designation pending"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "buccaneers:20261127:tez-johnson-illness-friday-dnp",
+      "player": {
+        "playerId": null,
+        "name": "Tez Johnson",
+        "position": "WR",
+        "team": "TB"
+      },
+      "headline": "Tez Johnson misses Friday practice with an illness",
+      "summary": "The Buccaneers added Johnson to Friday's injury report as a nonparticipant with an illness. He was not listed Thursday.",
+      "fantasyAnalysis": "Check the final report before relying on him in a deep league Monday night.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:49:05Z",
+      "sources": [
+        {
+          "sourceName": "Buccaneers official Week 12 injury report",
+          "url": "https://www.buccaneers.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Official injury report table; exact publication clock not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:49:05Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Illness",
+        "practiceStatus": "Did not practice Friday",
+        "gameStatus": "Final Monday game designation pending"
       },
       "affectedPlayers": []
     },
@@ -10036,6 +10110,61 @@
       ]
     },
     {
+      "eventId": "panthers:20261127:tetairoa-mcmillan-limited-friday",
+      "player": {
+        "playerId": null,
+        "name": "Tetairoa McMillan",
+        "position": "WR",
+        "team": "CAR"
+      },
+      "headline": "Tetairoa McMillan returns to limited work Friday",
+      "summary": "The Panthers list McMillan as limited with a foot injury Friday after Thursday's estimated DNP. Carolina did not practice on Thanksgiving.",
+      "fantasyAnalysis": "Hold him in plans for Monday night, but have a pivot until the final report. Jalen Coker could see extra targets if McMillan sits.",
+      "eventType": "PRACTICE",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:49:05Z",
+      "sources": [
+        {
+          "sourceName": "Panthers official Week 12 injury report",
+          "url": "https://www.panthers.com/team/injury-report/",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Official injury report table; exact publication clock not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:49:05Z"
+        },
+        {
+          "sourceName": "Buccaneers official Week 12 injury report",
+          "url": "https://www.buccaneers.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Official injury report table; exact publication clock not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:49:05Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Foot",
+        "practiceStatus": "Limited Friday",
+        "gameStatus": "Final Monday game designation pending"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Jalen Coker",
+          "team": "CAR",
+          "position": "WR",
+          "relationship": "BENEFICIARY",
+          "impact": "Could gain targets if McMillan is inactive."
+        }
+      ]
+    },
+    {
       "eventId": "patriots:20261127:romeo-doubs-out-week12",
       "player": {
         "playerId": null,
@@ -11968,5 +12097,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "488bb097907d59c9ad50f34535298b761cf34e2efd708f96c23843b5050dccf1"
+  "contentHash": "5f69cdaf03c4410614bdf456e5a54b7dabe3478c92630e662e81a1e18d30ae19"
 }
