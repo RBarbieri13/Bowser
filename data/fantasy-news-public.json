@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T04:47:33Z",
-  "updatedAt": "2026-11-27T04:47:47Z",
-  "revision": "bowser-public-news-20261126-week12-bills-postgame",
+  "checkedAt": "2026-11-27T15:46:53Z",
+  "updatedAt": "2026-11-27T15:47:09Z",
+  "revision": "bowser-public-news-20261127-week12-jaguars-thursday",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -3017,6 +3017,80 @@
           "impact": "Potential for more backfield work if Tuten is inactive; full practice Wednesday and Thursday."
         }
       ]
+    },
+    {
+      "eventId": "jaguars:20261126:jakobi-meyers-second-ankle-lp",
+      "player": {
+        "playerId": null,
+        "name": "Jakobi Meyers",
+        "position": "WR",
+        "team": "JAX"
+      },
+      "headline": "Jakobi Meyers stays limited Thursday with ankle injury",
+      "summary": "Jacksonville lists Meyers as limited Wednesday and Thursday with an ankle injury before Sunday's matchup with Tennessee. Teammate Parker Washington was added Thursday as limited with a shoulder issue. Jacksonville had not issued final game designations.",
+      "fantasyAnalysis": "Watch Friday's report for both Jacksonville receivers. Limited practice is not clearance or a ruling out.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T15:46:53Z",
+      "sources": [
+        {
+          "sourceName": "Jacksonville Jaguars Week 12 Thursday Updates",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.jaguars.com/news/thursday-quick-hits-only-get-better-and-better",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov 26, 2026 at 04:50 PM (site display, time zone not shown)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T15:46:53Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "LP Wednesday and Thursday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "jaguars:20261126:parker-washington-shoulder-lp",
+      "player": {
+        "playerId": null,
+        "name": "Parker Washington",
+        "position": "WR",
+        "team": "JAX"
+      },
+      "headline": "Jaguars add Parker Washington to injury report with shoulder issue",
+      "summary": "Jacksonville added Washington to its Thursday Week 12 injury report as a limited participant with a shoulder injury. He had not been listed Wednesday. No game designation for Sunday against Tennessee was posted at this check.",
+      "fantasyAnalysis": "Check Friday's designation before committing to Washington in a flex slot. Jakobi Meyers was limited with an ankle injury on both Wednesday and Thursday, so do not assume he can absorb the workload if Washington misses time.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T15:46:53Z",
+      "sources": [
+        {
+          "sourceName": "Jacksonville Jaguars Week 12 Thursday Updates",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.jaguars.com/news/thursday-quick-hits-only-get-better-and-better",
+          "publishedAt": null,
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov 26, 2026 at 04:50 PM (site display, time zone not shown)",
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T15:46:53Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Shoulder",
+        "practiceStatus": "LP Thursday; not listed Wednesday",
+        "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
     },
     {
       "eventId": "kelley:20261122:justin-herbert-concussion-protocol-week12",
@@ -10610,5 +10684,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "96bda04ea180b33d8d1987761003a7a1f024f0a4cc8c27e4d7aba677959a8da1"
+  "contentHash": "505f0b3d4084aaf12ded98cd931c330fc29b8ab025dd54ed16dba711516f1488"
 }
