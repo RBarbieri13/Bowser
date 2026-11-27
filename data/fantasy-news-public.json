@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T22:34:55Z",
-  "updatedAt": "2026-11-27T22:34:56.213Z",
-  "revision": "bowser-public-news-20261127-purdy-out-jones-starts",
+  "checkedAt": "2026-11-27T22:40:36Z",
+  "updatedAt": "2026-11-27T22:40:36.877Z",
+  "revision": "bowser-public-news-20261127-herbert-out-chargers-final",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -1103,6 +1103,212 @@
           "impact": "Next in line if Herbert does not clear concussion protocol; not confirmed to start."
         }
       ]
+    },
+    {
+      "eventId": "chargers:20261127:brenen-thompson-doubtful-week12",
+      "player": {
+        "playerId": null,
+        "name": "Brenen Thompson",
+        "position": "WR",
+        "team": "LAC"
+      },
+      "headline": "Brenen Thompson doubtful for Week 12",
+      "summary": "The Chargers listed Thompson doubtful with a hamstring injury after he did not practice Friday.",
+      "fantasyAnalysis": "Plan to use another receiver in deep formats. No standalone add follows from this designation.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T22:40:36Z",
+      "sources": [
+        {
+          "sourceName": "Chargers official Week 12 injury report",
+          "url": "https://www.chargers.com/news/justin-herbert-akheem-mesidor-patriots-injury-report-2026",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Page shows Nov. 26 at 12:15 PM; Friday designation added without a separate update clock",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:40:36Z"
+        },
+        {
+          "sourceName": "NFL official Week 12 injury report",
+          "url": "https://www.nfl.com/news/nfl-week-12-injury-report-2026-season",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Exact Friday report update time not shown",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:40:36Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": "Did not practice Friday",
+        "gameStatus": "Doubtful Week 12"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "chargers:20261127:herbert-out-week12",
+      "player": {
+        "playerId": null,
+        "name": "Justin Herbert",
+        "position": "QB",
+        "team": "LAC"
+      },
+      "headline": "Justin Herbert ruled out against New England",
+      "summary": "The Chargers ruled Herbert out with a concussion. Offensive coordinator Mike McDaniel previously said DJ Uiagalelei would start if Herbert could not play.",
+      "fantasyAnalysis": "Bench Herbert. Uiagalelei is an emergency superflex or deep-league option, not a like-for-like replacement. Treat Chargers pass catchers more cautiously.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T22:40:36Z",
+      "sources": [
+        {
+          "sourceName": "Chargers official Week 12 injury report",
+          "url": "https://www.chargers.com/news/justin-herbert-akheem-mesidor-patriots-injury-report-2026",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Page shows Nov. 26 at 12:15 PM; Friday designation added without a separate update clock",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:40:36Z"
+        },
+        {
+          "sourceName": "NFL official Week 12 injury report",
+          "url": "https://www.nfl.com/news/nfl-week-12-injury-report-2026-season",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Exact Friday report update time not shown",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:40:36Z"
+        },
+        {
+          "sourceName": "Yahoo Sports, quoting Chargers offensive coordinator Mike McDaniel",
+          "url": "https://sports.yahoo.com/fantasy/article/nfl-injury-tracker-week-12-latest-news-fantasy-implications-as-brock-purdy-ankle-misses-practice-again-justin-herbert-concussion-remains-in-protocol-parker-washington-ruled-out-153821312.html",
+          "sourceType": "NEWS_OUTLET",
+          "publishedDate": null,
+          "publishedAtRaw": "Nov. 27 article; exact interview time not shown",
+          "publishedAt": null,
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-27T22:40:36Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion",
+        "practiceStatus": null,
+        "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": [
+        {
+          "name": "DJ Uiagalelei",
+          "team": "LAC",
+          "position": "QB",
+          "relationship": "BENEFICIARY",
+          "impact": "Offensive coordinator named him as the starter if Herbert was ruled out."
+        }
+      ]
+    },
+    {
+      "eventId": "chargers:20261127:keaton-mitchell-out-week12",
+      "player": {
+        "playerId": null,
+        "name": "Keaton Mitchell",
+        "position": "RB",
+        "team": "LAC"
+      },
+      "headline": "Keaton Mitchell ruled out against New England",
+      "summary": "The Chargers ruled Mitchell out with a knee injury.",
+      "fantasyAnalysis": "Do not use Mitchell this week. His absence can narrow the rotation, but does not by itself establish a starting workload for another back.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T22:40:36Z",
+      "sources": [
+        {
+          "sourceName": "Chargers official Week 12 injury report",
+          "url": "https://www.chargers.com/news/justin-herbert-akheem-mesidor-patriots-injury-report-2026",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Page shows Nov. 26 at 12:15 PM; Friday designation added without a separate update clock",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:40:36Z"
+        },
+        {
+          "sourceName": "NFL official Week 12 injury report",
+          "url": "https://www.nfl.com/news/nfl-week-12-injury-report-2026-season",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Exact Friday report update time not shown",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:40:36Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Knee",
+        "practiceStatus": null,
+        "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "chargers:20261127:njoku-questionable-week12",
+      "player": {
+        "playerId": null,
+        "name": "David Njoku",
+        "position": "TE",
+        "team": "LAC"
+      },
+      "headline": "David Njoku questionable for Week 12",
+      "summary": "Njoku was limited Friday after missing two practices with a shoulder injury and carries a questionable tag.",
+      "fantasyAnalysis": "Check inactives before relying on him; avoid counting on a larger role with a backup quarterback.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T22:40:36Z",
+      "sources": [
+        {
+          "sourceName": "Chargers official Week 12 injury report",
+          "url": "https://www.chargers.com/news/justin-herbert-akheem-mesidor-patriots-injury-report-2026",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Page shows Nov. 26 at 12:15 PM; Friday designation added without a separate update clock",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:40:36Z"
+        },
+        {
+          "sourceName": "NFL official Week 12 injury report",
+          "url": "https://www.nfl.com/news/nfl-week-12-injury-report-2026-season",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Exact Friday report update time not shown",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T22:40:36Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Shoulder",
+        "practiceStatus": "Limited Friday",
+        "gameStatus": "Questionable Week 12"
+      },
+      "affectedPlayers": []
     },
     {
       "eventId": "chiefs:20261123:kenneth-walker-monday-dnp-week12",
@@ -12187,5 +12393,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "eacd8656494d4ba2c9f7873e0a744eba510243f23c403f86b2e6edaf0944ef8d"
+  "contentHash": "eb1ce90bf737eae9225d1a66b03114c170a1e49ed09df1bc6e738adbad61ed41"
 }
