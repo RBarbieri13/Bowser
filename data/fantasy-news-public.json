@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T18:14:53Z",
-  "updatedAt": "2026-11-27T18:14:53Z",
-  "revision": "bowser-public-news-20261127-week12-loveland-second-opinion",
+  "checkedAt": "2026-11-27T18:28:45Z",
+  "updatedAt": "2026-11-27T18:28:45Z",
+  "revision": "bowser-public-news-20261127-week12-beck-brown-cooper",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -100,6 +100,51 @@
         }
       ],
       "checkedAt": "2026-11-21T19:44:56.678Z"
+    },
+    {
+      "eventId": "azcardinals:20261127:carson-beck-week12-out",
+      "player": {
+        "playerId": null,
+        "name": "Carson Beck",
+        "position": "QB",
+        "team": "ARI"
+      },
+      "headline": "Carson Beck out against Washington; Josh Johnson starts",
+      "summary": "Coach Mike LaFleur ruled Beck out for Week 12 with back spasms. Johnson gets a second consecutive start. LaFleur said a Week 13 return is possible, not confirmed.",
+      "fantasyAnalysis": "Bench Beck for Week 12. Johnson is an emergency option in superflex or two-quarterback leagues, not a standard one-QB start.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T18:28:45Z",
+      "sources": [
+        {
+          "sourceName": "Arizona Cardinals official Week 12 injury report",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.azcardinals.com/news/injury-report-week-12-vs-commanders",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 10:43 AM; display does not identify timezone",
+          "isOriginalSource": true,
+          "publishedAt": null,
+          "checkedAt": "2026-11-27T18:28:45Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Back",
+        "practiceStatus": null,
+        "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Josh Johnson",
+          "team": "ARI",
+          "position": "QB",
+          "impact": "Confirmed Week 12 starter.",
+          "relationship": "BENEFICIARY"
+        }
+      ]
     },
     {
       "eventId": "bears:20261125:salvon-ahmed-thanksgiving-elevation",
@@ -6770,6 +6815,208 @@
       ]
     },
     {
+      "eventId": "nfl:20261127:jets:omar-cooper-jr-week12-out",
+      "player": {
+        "playerId": null,
+        "name": "Omar Cooper Jr.",
+        "position": "WR",
+        "team": "NYJ"
+      },
+      "headline": "Omar Cooper Jr. out against Miami",
+      "summary": "Coach Aaron Glenn ruled Cooper out with ankle and groin injuries for Week 12.",
+      "fantasyAnalysis": "Keep Cooper benched. Garrett Wilson and Adonai Mitchell remain the Jets receivers to evaluate; no new role or target total is guaranteed.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T18:28:45Z",
+      "sources": [
+        {
+          "sourceName": "NFL.com Friday news roundup",
+          "sourceType": "OFFICIAL",
+          "url": "https://amp.nfl.com/news/nfl-news-roundup-latest-league-updates-from-friday-nov-27",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 10:40 AM; updated at 12:31 PM; page does not identify timezone",
+          "isOriginalSource": true,
+          "publishedAt": null,
+          "checkedAt": "2026-11-27T18:28:45Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle and groin",
+        "practiceStatus": null,
+        "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Adonai Mitchell",
+          "team": "NYJ",
+          "position": "WR",
+          "impact": "Can retain receiving opportunities with Cooper sidelined.",
+          "relationship": "BENEFICIARY"
+        }
+      ]
+    },
+    {
+      "eventId": "nfl:20261127:patriots:aj-brown-week12-out",
+      "player": {
+        "playerId": null,
+        "name": "A.J. Brown",
+        "position": "WR",
+        "team": "NE"
+      },
+      "headline": "A.J. Brown out against Chargers",
+      "summary": "Mike Vrabel ruled Brown out with a hamstring injury. Tommy DeVito starts at quarterback in place of Drake Maye.",
+      "fantasyAnalysis": "Bench Brown. Other New England pass catchers can see more opportunities, but do not assume Brown's targets will shift to one player with DeVito starting.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T18:28:45Z",
+      "sources": [
+        {
+          "sourceName": "NFL.com Friday news roundup",
+          "sourceType": "OFFICIAL",
+          "url": "https://amp.nfl.com/news/nfl-news-roundup-latest-league-updates-from-friday-nov-27",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 10:40 AM; updated at 12:31 PM; page does not identify timezone",
+          "isOriginalSource": true,
+          "publishedAt": null,
+          "checkedAt": "2026-11-27T18:28:45Z"
+        },
+        {
+          "sourceName": "New England Patriots Week 12 game preview",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.patriots.com/news/expert-predictions-week-12-picks-for-patriots-at-chargers",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 09:46 AM; display does not identify timezone",
+          "isOriginalSource": true,
+          "publishedAt": null,
+          "checkedAt": "2026-11-27T18:28:45Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": null,
+        "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "nfl:20261127:rams:davis-allen-high-ankle-sprain",
+      "player": {
+        "playerId": null,
+        "name": "Davis Allen",
+        "position": "TE",
+        "team": "LAR"
+      },
+      "headline": "Report: Davis Allen suffered a high ankle sprain",
+      "summary": "NFL Network's Ian Rapoport reports Allen sustained a high ankle sprain in Wednesday's win over Green Bay. No official Week 13 status was verified.",
+      "fantasyAnalysis": "Colby Parkinson is a speculative Week 13 replacement if Allen and Tyler Higbee miss time. Wait for injury reports before relying on him.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T18:28:45Z",
+      "sources": [
+        {
+          "sourceName": "NFL.com Friday news roundup",
+          "sourceType": "OFFICIAL",
+          "url": "https://amp.nfl.com/news/nfl-news-roundup-latest-league-updates-from-friday-nov-27",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 10:40 AM; updated at 12:31 PM; page does not identify timezone",
+          "isOriginalSource": true,
+          "publishedAt": null,
+          "checkedAt": "2026-11-27T18:28:45Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams unofficial depth chart",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.therams.com/team/depth-chart",
+          "publishedDate": null,
+          "publishedAtRaw": "Current unofficial depth chart; no publication timestamp displayed",
+          "isOriginalSource": true,
+          "publishedAt": null,
+          "checkedAt": "2026-11-27T18:28:45Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": null,
+        "gameStatus": "Week 13 status not confirmed"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Colby Parkinson",
+          "team": "LAR",
+          "position": "TE",
+          "impact": "Could see more work if Allen or Higbee is unavailable.",
+          "relationship": "BENEFICIARY"
+        }
+      ]
+    },
+    {
+      "eventId": "nfl:20261127:rams:tyler-higbee-chest-contusion-week-to-week",
+      "player": {
+        "playerId": null,
+        "name": "Tyler Higbee",
+        "position": "TE",
+        "team": "LAR"
+      },
+      "headline": "Report: Tyler Higbee week to week with chest contusion",
+      "summary": "NFL.com cites ESPN's Adam Schefter reporting that Higbee has a chest contusion. He has a chance to play Thursday against Kansas City; no clearance has been confirmed.",
+      "fantasyAnalysis": "Check the short-week practice report. Colby Parkinson is a speculative deep-league contingency, not a confirmed starter upgrade.",
+      "eventType": "INJURY",
+      "status": "REPORTED",
+      "fantasyImpact": "LOW",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T18:28:45Z",
+      "sources": [
+        {
+          "sourceName": "NFL.com Friday news roundup",
+          "sourceType": "OFFICIAL",
+          "url": "https://amp.nfl.com/news/nfl-news-roundup-latest-league-updates-from-friday-nov-27",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 10:40 AM; updated at 12:31 PM; page does not identify timezone",
+          "isOriginalSource": true,
+          "publishedAt": null,
+          "checkedAt": "2026-11-27T18:28:45Z"
+        },
+        {
+          "sourceName": "Los Angeles Rams unofficial depth chart",
+          "sourceType": "OFFICIAL",
+          "url": "https://www.therams.com/team/depth-chart",
+          "publishedDate": null,
+          "publishedAtRaw": "Current unofficial depth chart; no publication timestamp displayed",
+          "isOriginalSource": true,
+          "publishedAt": null,
+          "checkedAt": "2026-11-27T18:28:45Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Chest",
+        "practiceStatus": null,
+        "gameStatus": "Week to week per report; Week 13 unconfirmed"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Colby Parkinson",
+          "team": "LAR",
+          "position": "TE",
+          "impact": "Could see more snaps if Higbee or Davis Allen misses time.",
+          "relationship": "BENEFICIARY"
+        }
+      ]
+    },
+    {
       "eventId": "nflnetwork:20261121:mike-evans-expected-week11",
       "player": {
         "playerId": null,
@@ -10798,5 +11045,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "51400d89a813fc8f5b4daa95c51a781975a520b20c8725cfa7248e599d109667"
+  "contentHash": "0369b194ee7c6faf71ea02ad9fd506a5e4dc63ccc3ade50a7856632f10f9c850"
 }
