@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T19:34:30Z",
-  "updatedAt": "2026-11-27T19:34:31Z",
-  "revision": "bowser-public-news-20261127-black-friday-badie-pittman",
+  "checkedAt": "2026-11-27T20:56:38Z",
+  "updatedAt": "2026-11-27T20:56:38Z",
+  "revision": "bowser-public-news-20261127-friday-bowers-tuten-observed",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -2759,6 +2759,61 @@
           "url": "https://www.espn.com/nfl/story/_/id/50515291/bears-caleb-williams-moved-4-interception-game-frustration-lingers",
           "isOriginalSource": true,
           "checkedAt": "2026-11-18T04:36:28.145Z"
+        }
+      ]
+    },
+    {
+      "eventId": "fantasypros:20261127:jaguars:bhayshul-tuten-friday-not-seen",
+      "player": {
+        "playerId": null,
+        "name": "Bhayshul Tuten",
+        "position": "RB",
+        "team": "JAX"
+      },
+      "headline": "Bhayshul Tuten not seen during Friday media access",
+      "summary": "FantasyPros cites Jaguars beat reporter Demetrius Harvey, who did not see Tuten during the portion of practice open to reporters. Jacksonville listed Tuten as a nonparticipant Wednesday and Thursday; Friday's designation was not verified.",
+      "fantasyAnalysis": "Have a backup for the early Sunday window. Travis Etienne Jr. could see a larger workload if Tuten sits.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T20:56:38Z",
+      "sources": [
+        {
+          "sourceName": "FantasyPros, citing Jaguars beat reporter Demetrius Harvey",
+          "url": "https://www.fantasypros.com/nfl/news/622888/bhayshul-tuten-footankle-not-seen-practicing-friday.php",
+          "sourceType": "NEWS_OUTLET",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Fri, Nov 27, 2026 at 12:20 PM EST; original reporting timestamp not independently verified",
+          "publishedAt": null,
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-27T20:56:38Z"
+        },
+        {
+          "sourceName": "Jacksonville Jaguars official Week 12 injury report",
+          "url": "https://www.jaguars.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Team practice table; publication timestamp not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T20:56:38Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle and foot",
+        "practiceStatus": "Not seen during media access; official Friday participation pending",
+        "gameStatus": "No final Week 12 designation verified"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Travis Etienne Jr.",
+          "team": "JAX",
+          "position": "RB",
+          "relationship": "BENEFICIARY",
+          "impact": "Could receive a larger share of Jacksonville's backfield touches if Tuten sits."
         }
       ]
     },
@@ -10378,6 +10433,61 @@
       }
     },
     {
+      "eventId": "rotowire:20261127:raiders:brock-bowers-friday-not-seen",
+      "player": {
+        "playerId": null,
+        "name": "Brock Bowers",
+        "position": "TE",
+        "team": "LV"
+      },
+      "headline": "Brock Bowers not seen during Friday media access",
+      "summary": "RotoWire cites ESPN's Ryan McFadden reporting Bowers wasn't on the field during the portion open to media. The Raiders listed him limited Wednesday and Thursday with an ankle injury; Friday participation and game designation were not yet verified.",
+      "fantasyAnalysis": "Have a Sunday night pivot. Michael Mayer could handle more tight end work if Bowers sits against Cleveland.",
+      "eventType": "PRACTICE",
+      "status": "REPORTED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T20:56:38Z",
+      "sources": [
+        {
+          "sourceName": "RotoWire, citing ESPN Raiders reporter Ryan McFadden",
+          "url": "https://aws-prod-web9.rotowire.com/football/headlines/brock-bowers-injury-not-spotted-friday-650107",
+          "sourceType": "NEWS_OUTLET",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27 at 11:16 AM displayed on RotoWire; timezone not shown",
+          "publishedAt": null,
+          "isOriginalSource": false,
+          "checkedAt": "2026-11-27T20:56:38Z"
+        },
+        {
+          "sourceName": "Raiders official Week 12 injury report",
+          "url": "https://www.raiders.com/news/raiders-browns-week-12-injury-report",
+          "sourceType": "OFFICIAL",
+          "publishedDate": "2026-11-26",
+          "publishedAtRaw": "Nov 26 at 02:05 PM displayed; timezone not shown",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T20:56:38Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "Not seen during media access; official Friday participation pending",
+        "gameStatus": "No final Week 12 designation verified"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Michael Mayer",
+          "team": "LV",
+          "position": "TE",
+          "relationship": "BENEFICIARY",
+          "impact": "Likely to take on more tight end work if Bowers is inactive."
+        }
+      ]
+    },
+    {
       "eventId": "rotowire:649365:bhayshul-tuten-ankle-20261123",
       "player": {
         "playerId": null,
@@ -11266,5 +11376,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "7f65085f872900b338d47a4fc5348986eb6a2e0434a13a42afd6c11435f0fa9e"
+  "contentHash": "3f9b57e5bbe5d3f8cd9e4a197d5fb6d071ffe65413e5d805a8e8ce1d1fe21c6d"
 }
