@@ -2,9 +2,9 @@
   "version": 1,
   "scope": "public_nfl_news",
   "mode": "repository_public_snapshot",
-  "checkedAt": "2026-11-27T20:56:38Z",
-  "updatedAt": "2026-11-27T20:56:38Z",
-  "revision": "bowser-public-news-20261127-friday-bowers-tuten-observed",
+  "checkedAt": "2026-11-27T21:20:25Z",
+  "updatedAt": "2026-11-27T21:20:26.370Z",
+  "revision": "bowser-public-news-20261127-friday-early-final-designations",
   "events": [
     {
       "eventId": "49ers:20261122:mike-evans-active-week11",
@@ -2772,13 +2772,13 @@
       },
       "headline": "Bhayshul Tuten not seen during Friday media access",
       "summary": "FantasyPros cites Jaguars beat reporter Demetrius Harvey, who did not see Tuten during the portion of practice open to reporters. Jacksonville listed Tuten as a nonparticipant Wednesday and Thursday; Friday's designation was not verified.",
-      "fantasyAnalysis": "Have a backup for the early Sunday window. Travis Etienne Jr. could see a larger workload if Tuten sits.",
+      "fantasyAnalysis": "Chris Rodriguez Jr. is the next Jacksonville back to monitor if Tuten sits; LeQuint Allen Jr. could share work.",
       "eventType": "PRACTICE",
       "status": "REPORTED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-11-27T20:56:38Z",
+      "checkedAt": "2026-11-27T21:20:25Z",
       "sources": [
         {
           "sourceName": "FantasyPros, citing Jaguars beat reporter Demetrius Harvey",
@@ -2799,6 +2799,16 @@
           "publishedAt": null,
           "isOriginalSource": true,
           "checkedAt": "2026-11-27T20:56:38Z"
+        },
+        {
+          "sourceName": "Jaguars official depth chart",
+          "url": "https://www.jaguars.com/team/depth-chart",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Team report table; exact publication time not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:20:25Z"
         }
       ],
       "injury": {
@@ -2809,11 +2819,11 @@
       },
       "affectedPlayers": [
         {
-          "name": "Travis Etienne Jr.",
+          "name": "Chris Rodriguez Jr.",
           "team": "JAX",
           "position": "RB",
           "relationship": "BENEFICIARY",
-          "impact": "Could receive a larger share of Jacksonville's backfield touches if Tuten sits."
+          "impact": "Next on the official Jacksonville depth chart; practiced fully all week."
         }
       ]
     },
@@ -2851,6 +2861,43 @@
         "bodyPart": "Groin",
         "practiceStatus": "LP Wednesday and Thursday",
         "gameStatus": "Week 12 designation pending"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "giants:20261127:likely-no-week12-designation",
+      "player": {
+        "playerId": null,
+        "name": "Isaiah Likely",
+        "position": "TE",
+        "team": "NYG"
+      },
+      "headline": "Isaiah Likely practices fully Friday, no game designation",
+      "summary": "Likely progressed to a full Friday session after two limited practices with a groin issue. The Giants did not give him a game designation against the Colts.",
+      "fantasyAnalysis": "Keep him in normal Week 12 lineup consideration; no injury replacement needed on the final report.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:20:25Z",
+      "sources": [
+        {
+          "sourceName": "Giants official Week 12 final injury report",
+          "url": "https://www.giants.com/news/injury-report-statuses-for-giants-vs-colts",
+          "sourceType": "OFFICIAL",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 04:00 PM; timezone not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:20:25Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Groin",
+        "practiceStatus": "Full Friday",
+        "gameStatus": "No Week 12 game designation"
       },
       "affectedPlayers": []
     },
@@ -3335,6 +3382,98 @@
         "gameStatus": "Week 12 designation pending"
       },
       "affectedPlayers": []
+    },
+    {
+      "eventId": "jaguars:20261127:meyers-no-week12-designation",
+      "player": {
+        "playerId": null,
+        "name": "Jakobi Meyers",
+        "position": "WR",
+        "team": "JAX"
+      },
+      "headline": "Jakobi Meyers practices fully Friday, no game designation",
+      "summary": "Meyers went limited, limited, full with an ankle injury and received no Week 12 game designation. Parker Washington is out with a shoulder injury.",
+      "fantasyAnalysis": "Meyers is expected to play against Tennessee and could see more targets without Washington.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:20:25Z",
+      "sources": [
+        {
+          "sourceName": "Jaguars official Week 12 injury report",
+          "url": "https://www.jaguars.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Team report table; exact publication time not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:20:25Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle",
+        "practiceStatus": "Full Friday",
+        "gameStatus": "No Week 12 game designation"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "jaguars:20261127:tuten-official-week12-out",
+      "player": {
+        "playerId": null,
+        "name": "Bhayshul Tuten",
+        "position": "RB",
+        "team": "JAX"
+      },
+      "headline": "Bhayshul Tuten ruled out against Tennessee",
+      "summary": "Tuten missed all three practices and is officially out with ankle and foot injuries.",
+      "fantasyAnalysis": "Chris Rodriguez Jr. is the clearest Week 12 replacement against Tennessee; LeQuint Allen Jr. could share work. Travis Etienne Jr. is no longer on Jacksonville's roster.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "HIGH",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:20:25Z",
+      "sources": [
+        {
+          "sourceName": "Jaguars official Week 12 injury report",
+          "url": "https://www.jaguars.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Team report table; exact publication time not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:20:25Z"
+        },
+        {
+          "sourceName": "Jaguars official depth chart",
+          "url": "https://www.jaguars.com/team/depth-chart",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Team report table; exact publication time not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:20:25Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Ankle and foot",
+        "practiceStatus": "Did not practice Friday",
+        "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": [
+        {
+          "name": "Chris Rodriguez Jr.",
+          "team": "JAX",
+          "position": "RB",
+          "relationship": "BENEFICIARY",
+          "impact": "Next on the official Jacksonville depth chart; practiced fully all week."
+        }
+      ]
     },
     {
       "eventId": "kelley:20261122:justin-herbert-concussion-protocol-week12",
@@ -6956,13 +7095,13 @@
       },
       "headline": "Liam Coen unsure if Bhayshul Tuten will face Tennessee",
       "summary": "Coen said Tuten's Week 12 availability is uncertain after two missed practices with ankle and foot injuries. The team had not issued a final designation at the time checked.",
-      "fantasyAnalysis": "Keep a backup for the Sunday early window. A Tuten absence could consolidate more work for Travis Etienne Jr.",
+      "fantasyAnalysis": "Chris Rodriguez Jr. is the next Jacksonville back to monitor if Tuten sits; LeQuint Allen Jr. could share work.",
       "eventType": "INJURY",
       "status": "CONFIRMED",
       "fantasyImpact": "MEDIUM",
       "firstReportedAt": null,
       "lastUpdatedAt": null,
-      "checkedAt": "2026-11-27T19:15:43Z",
+      "checkedAt": "2026-11-27T21:20:25Z",
       "sources": [
         {
           "sourceName": "NFL.com Friday roundup quoting Liam Coen",
@@ -6973,6 +7112,16 @@
           "publishedAtRaw": "Nov 27, 2026 at 10:40 AM; display does not identify timezone",
           "isOriginalSource": true,
           "checkedAt": "2026-11-27T19:15:43Z"
+        },
+        {
+          "sourceName": "Jaguars official depth chart",
+          "url": "https://www.jaguars.com/team/depth-chart",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Team report table; exact publication time not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:20:25Z"
         }
       ],
       "injury": {
@@ -6983,11 +7132,11 @@
       },
       "affectedPlayers": [
         {
-          "name": "Travis Etienne Jr.",
+          "name": "Chris Rodriguez Jr.",
           "team": "JAX",
           "position": "RB",
           "relationship": "BENEFICIARY",
-          "impact": "Could see a larger share of Jacksonville's backfield touches if Tuten sits."
+          "impact": "Next on the official Jacksonville depth chart; practiced fully all week."
         }
       ]
     },
@@ -7087,6 +7236,43 @@
           "relationship": "BENEFICIARY"
         }
       ]
+    },
+    {
+      "eventId": "nfl:20261127:juwan-johnson-out-week12",
+      "player": {
+        "playerId": null,
+        "name": "Juwan Johnson",
+        "position": "TE",
+        "team": "NO"
+      },
+      "headline": "Juwan Johnson ruled out against Cincinnati",
+      "summary": "New Orleans ruled Johnson out with hamstring and wrist injuries. Noah Fant is questionable with a calf injury.",
+      "fantasyAnalysis": "Bench Johnson. Fant is only a deep pivot if active; do not assume he will play.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:20:25Z",
+      "sources": [
+        {
+          "sourceName": "NFL official Week 12 status report",
+          "url": "https://www.nfl.com/news/nfl-week-12-injury-report-2026-season",
+          "sourceType": "OFFICIAL",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27 Friday game designations; exact update time not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:20:25Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring and wrist",
+        "practiceStatus": null,
+        "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": []
     },
     {
       "eventId": "nfl:20261127:patriots:aj-brown-week12-out",
@@ -7244,6 +7430,43 @@
           "relationship": "BENEFICIARY"
         }
       ]
+    },
+    {
+      "eventId": "nfl:20261127:tee-higgins-week12-questionable",
+      "player": {
+        "playerId": null,
+        "name": "Tee Higgins",
+        "position": "WR",
+        "team": "CIN"
+      },
+      "headline": "Tee Higgins questionable against New Orleans",
+      "summary": "The NFL lists Higgins questionable with a hamstring injury for Week 12.",
+      "fantasyAnalysis": "Keep a noon Central fallback and check Cincinnati's inactives. Andrei Iosivas is also questionable and was designated to return from injured reserve.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:20:25Z",
+      "sources": [
+        {
+          "sourceName": "NFL official Week 12 status report",
+          "url": "https://www.nfl.com/news/nfl-week-12-injury-report-2026-season",
+          "sourceType": "OFFICIAL",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27 Friday game designations; exact update time not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:20:25Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hamstring",
+        "practiceStatus": null,
+        "gameStatus": "Questionable Week 12"
+      },
+      "affectedPlayers": []
     },
     {
       "eventId": "nflnetwork:20261121:mike-evans-expected-week11",
@@ -11227,6 +11450,80 @@
       }
     },
     {
+      "eventId": "texans:20261127:boutte-out-week12",
+      "player": {
+        "playerId": null,
+        "name": "Kayshon Boutte",
+        "position": "WR",
+        "team": "HOU"
+      },
+      "headline": "Kayshon Boutte ruled out against Baltimore",
+      "summary": "Boutte missed all three practices with a hip injury. Marvin Harrison Jr. finished with full practices and no game designation.",
+      "fantasyAnalysis": "Bench Boutte in deeper leagues. No need to treat Harrison as an injury pivot on the final report.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:20:25Z",
+      "sources": [
+        {
+          "sourceName": "Texans official Week 12 injury report",
+          "url": "https://www.houstontexans.com/news/week-12-injury-report-texans-vs-ravens",
+          "sourceType": "OFFICIAL",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 02:42 PM; timezone not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:20:25Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Hip",
+        "practiceStatus": "Did not practice Friday",
+        "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": []
+    },
+    {
+      "eventId": "texans:20261127:marks-no-week12-designation",
+      "player": {
+        "playerId": null,
+        "name": "Woody Marks",
+        "position": "RB",
+        "team": "HOU"
+      },
+      "headline": "Woody Marks carries no Week 12 game designation",
+      "summary": "Marks practiced fully all three days after a concussion and was not given a game designation for Baltimore.",
+      "fantasyAnalysis": "Expect Marks available; do not project Montgomery to retain an absence-driven workload.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:20:25Z",
+      "sources": [
+        {
+          "sourceName": "Texans official Week 12 injury report",
+          "url": "https://www.houstontexans.com/news/week-12-injury-report-texans-vs-ravens",
+          "sourceType": "OFFICIAL",
+          "publishedDate": "2026-11-27",
+          "publishedAtRaw": "Nov 27, 2026 at 02:42 PM; timezone not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:20:25Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Concussion",
+        "practiceStatus": "Full Friday",
+        "gameStatus": "No Week 12 game designation"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "titans:20261122:carnell-tate-active-week11",
       "player": {
         "playerId": null,
@@ -11338,6 +11635,43 @@
       }
     },
     {
+      "eventId": "vikings:20261127:addison-out-week12",
+      "player": {
+        "playerId": null,
+        "name": "Jordan Addison",
+        "position": "WR",
+        "team": "MIN"
+      },
+      "headline": "Jordan Addison ruled out against Atlanta",
+      "summary": "Addison did not practice all week and is officially out with a thumb injury.",
+      "fantasyAnalysis": "Keep Addison out of Week 12 lineups. Minnesota's other receivers could see increased opportunity.",
+      "eventType": "INJURY",
+      "status": "CONFIRMED",
+      "fantasyImpact": "MEDIUM",
+      "firstReportedAt": null,
+      "lastUpdatedAt": null,
+      "checkedAt": "2026-11-27T21:20:25Z",
+      "sources": [
+        {
+          "sourceName": "Vikings official Week 12 injury report",
+          "url": "https://www.vikings.com/team/injury-report/week/reg-12",
+          "sourceType": "OFFICIAL",
+          "publishedDate": null,
+          "publishedAtRaw": "Team report table; exact publication time not displayed",
+          "publishedAt": null,
+          "isOriginalSource": true,
+          "checkedAt": "2026-11-27T21:20:25Z"
+        }
+      ],
+      "injury": {
+        "isInjuryRelated": true,
+        "bodyPart": "Thumb",
+        "practiceStatus": "Did not practice Friday",
+        "gameStatus": "Out Week 12"
+      },
+      "affectedPlayers": []
+    },
+    {
       "eventId": "weei:20261123:aj-brown-vrabel-unlikely-week12",
       "player": {
         "playerId": null,
@@ -11376,5 +11710,5 @@
       "checkedAt": "2026-11-23T15:54:23.218Z"
     }
   ],
-  "contentHash": "3f9b57e5bbe5d3f8cd9e4a197d5fb6d071ffe65413e5d805a8e8ce1d1fe21c6d"
+  "contentHash": "c512a24af7ad475aa41726c4a21d5b43a2f66a40457de09b117193525ad13098"
 }
